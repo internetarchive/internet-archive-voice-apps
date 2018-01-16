@@ -1,0 +1,27 @@
+{
+  "actions": [
+    {
+      "description": "Default Welcome Intent",
+      "name": "MAIN",
+      "fulfillment": {
+        "conversationName": "Internet Archive"
+      },
+      "intent": {
+        "name": "actions.intent.MAIN",
+        "trigger": {
+          "queryPatterns": [
+            "talk to Internet Archive"
+          ]
+        }
+      }
+    }
+  ],
+  "conversations": {
+    "Internet Archive": {
+      "name": "Internet Archive",
+      "url": "https://us-central1-mark-music-player.cloudfunctions.net/playMedia",
+      "fulfillmentApiVersion": 1
+
+    }
+  }
+}

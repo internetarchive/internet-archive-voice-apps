@@ -1,0 +1,21 @@
+{
+  "name": "playMedia",
+  "description": "This is the default fulfillment for a Dialogflow agents using Cloud Functions for Firebase",
+  "version": "1.5.1",
+  "private": true,
+  "license": "Apache Version 2.0",
+  "author": "Google Inc.",
+  "engines": {
+    "node": "~6.0"
+  },
+  "scripts": {
+    "start": "firebase serve --only functions:playMedia",
+    "deploy": "firebase deploy --only functions:playMedia"
+  },
+  "dependencies": {
+    "actions-on-google": "file:aog-media-control-eap.tgz",
+    "debug": "^3.1.0",
+    "firebase-admin": "^5.5.1",
+    "firebase-functions": "^0.7.3"
+  }
+}
