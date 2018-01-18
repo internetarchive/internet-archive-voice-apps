@@ -58,7 +58,7 @@ const FINAL_FALLBACK= "I'm sorry I'm having trouble here. Maybe we should try th
 
 
 
-var suggestions = ["Grateful Dead", "Cowboy Junkies", "Random"]
+var suggestions = ["Grateful Dead", "Cowboy Junkies", "Random"];
 
 
 
@@ -546,6 +546,7 @@ console.log("collection_real_name : "+collection);
           log("The Collection " + collection + " has been selected.", collection, null, null, checkCollectionUrl, function (status) {
 
           });
+	suggestions = [CityName + " " + YearName, "Random"];
           ask(app, speechOutput, suggestions);
 
         } else {
@@ -651,7 +652,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       var cardTitle = 'Collection Seventy Eights Has Been Selected.';
       var repromptText = "<speak>Waiting for your responce.<break time='.1s'/>  Please select Topics like Jazz <break time='.5s'/> Instrumental or <break time='.5s'/> Dance</speak>";
       var speechOutput = "<speak>Collection Seventy Eights Has Been Selected.<break time='.1s'/> Please select Topics like Jazz, Instrumental, or Dance</speak>";
-
+	suggestions = ["Jazz", "Instrumental", "Dance"];
       ask(app, speechOutput, suggestions);
 
     }
@@ -665,9 +666,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       topicName = topicName.replace(/ /g, '');
       topicName = topicName.replace("#", " ");
       topicName = topicName.replace(/[^a-zA-Z0-9 ]/g, "");
-      var SeventyEightsSort=['titleSorter desc','date desc','downloads desc','date asc','creatorSorter desc','creatorSorter asc','downloads asc','titleSorter asc'];
-      var sortRandom = Math.floor((Math.random() * 7) + 0);
-      APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]='+SeventyEightsSort[sortRandom]+'&rows=1&page=' + page + '&indent=yes&output=json';
+      APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
       console.log(APIURL);
       https.get(APIURL, function (res) {
         var body = '';
@@ -737,6 +736,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                   var cardTitle = 'No Songs Found';
                   var repromptText = "<speak>No songs found. Please select Topics like Jazz <break time='.5s'/> Instrumental or <break time='.5s'/> Dance.</speak>";
                   var speechOutput = "<speak>Sorry , No songs found. Please select Topics like Jazz, Instrumental or  Dance.</speak>";
+	suggestions = ["Jazz", "Instrumental", "Dance"];
                   ask(app, speechOutput, suggestions);
                 }
 
@@ -905,9 +905,8 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
             }
             
             if (OneGoCollectionRandomPlayAudioStatus == true) {
-              var SeventyEightsSort = ['reviewdate asc', 'titleSorter desc', 'publicdate desc', 'date desc', 'downloads desc', 'reviewdate desc', 'date asc', 'creatorSorter desc', 'publicdate asc', 'creatorSorter asc', 'downloads asc', 'titleSorter asc'];
-              var sortRandom = Math.floor((Math.random() * 11) + 0);
-              APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=' + SeventyEightsSort[sortRandom] + '&rows=1&page=' + page + '&indent=yes&output=json';
+              
+              APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
             }else{
               APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
             }
@@ -920,9 +919,8 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
           used = false;
         }
         if (OneGoCollectionRandomPlayAudioStatus == true) {
-          var SeventyEightsSort = ['reviewdate asc', 'titleSorter desc', 'publicdate desc', 'date desc', 'downloads desc', 'reviewdate desc', 'date asc', 'creatorSorter desc', 'publicdate asc', 'creatorSorter asc', 'downloads asc', 'titleSorter asc'];
-          var sortRandom = Math.floor((Math.random() * 11) + 0);
-          APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=' + SeventyEightsSort[sortRandom] + '&rows=1&page=' + page + '&indent=yes&output=json';
+          
+          APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
         }else{
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
         }
@@ -1158,14 +1156,14 @@ console.log("!autoNext");
         if (app.getIntent() === 'PlayAudioByRandomYear') {
           city = app.getArgument("CITY");
         }
-        APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage:(' + city + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+        APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage:(' + city + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
       } else if (PlayAudioByRandom || app.getIntent() == 'PlayAudioByRandom') {
-        APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+        APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
       } else if (PlayAudioByRandomCity || app.getIntent() == 'PlayAudioByRandomCity') {
         if (app.getIntent() === 'PlayAudioByRandomCity') {
           year = app.getArgument("YEAR");
         }
-        APIURL = podcastAPIURL + collectionQuery + '+AND+year:(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+        APIURL = podcastAPIURL + collectionQuery + '+AND+year:(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
       } else {
         if (used) {
           year = '';
@@ -1190,7 +1188,7 @@ console.log("!autoNext");
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')';
         }
         if (app.getIntent() === 'PlayAudioByCity') {
-          APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=50&page=' + page + '&indent=yes&output=json';
+          APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=50&page=' + page + '&indent=yes&output=json';
         }else{
           APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
         }
@@ -1224,6 +1222,7 @@ console.log("!autoNext");
                 var speechOutput = "<speak> Ok , Available years for City " + city + " are " + YearString + " Please Select year.</speak>";
                 log("Ok , Available years for artist: " + collection + " and City: " + city + " are " + YearString, collection, city, year, APIURL, function (status) {
                 });
+	suggestions = YearString;
                 ask(app, speechOutput, suggestions);
 
               } else if (app.getIntent() === 'PlayAudio' && city == '') {
@@ -1242,6 +1241,7 @@ console.log("!autoNext");
                 var speechOutput = "<speak>  Ok , Available cities for year " + year + " are " + CityString + ' Please Select city.</speak> ';
                 log("Ok , Available cities for artist: " + collection + " and  year: " + year + " are " + CityString, collection, city, year, APIURL, function (status) {
                 });
+	suggestions = CityString;
 	      ask(app, speechOutput, suggestions);
 	
 	      }
@@ -1772,6 +1772,7 @@ function log1(Title, Collection, City, Year, Url, callback) {
   // var speechOutput = "<speak>Welcome To The Internet Archive,<break time='1s'/> Please select a collection by saying.<break time='.5s'/> play Collection name.<break time='.5s'/> like Play The Ditty Bops.<break time='.5s'/> Or  Play Cowboy Junkies.<break time='.5s'/> Or Play GratefulDead.</speak>";
   var cardOutput = "We have more collection like Disco Biscuits, Hot Buttered Rum or Keller Williams.";
   var speechOutput = "<speak>We have more collection.<break time='.5s'/> Like , Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>";
+	suggestions = ["Disco Biscuits", "Hot Buttered Rum", "Keller Williams"];
   ask(app, speechOutput, suggestions);
 }
 
