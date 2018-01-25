@@ -1834,3 +1834,52 @@ app.ask(app.buildRichResponse()
     ).addSuggestions(suggestions));
 }
 
+
+function PlayNextSong(requestType, offsetInMilliseconds) {
+  var track = counter + 1;
+  var prevTrack = counter;
+  if (MusicUrlList.length > 0) {
+    if (track > MusicUrlList.length) {
+      counter = 0;
+      track = counter + 1;
+    }
+    var trackcounter = counter;
+    if (PlayAudioByRandomYear === true || PlayAudioByRandomCity === true || PlayAudioByRandom === true) {
+      var start = TotalTrack - (MusicUrlList.length - 1);
+      var end = TotalTrack;
+      var x = Math.floor((Math.random() * end) + start);
+      console.log('Track - ' + x);
+      console.log('Start - ' + start);
+      console.log('End - ' + end);
+      trackcounter = x;
+      audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
+      if (PlayAudioByRandomYear == true) {
+        log("Auto Next Playing Track URL - " + audioURL + " And Track Name - " + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
+        });
+      } else if (PlayAudioByRandomCity == true) {
+        log("PAuto Next laying Track URL - " + audioURL + " And Track Name - " + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
+        });
+      } else if (PlayAudioByRandom == true) {
+        log("Auto Next Playing Track URL - " + audioURL + " And Track Name - " + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
+        });
+      }
+
+    } else {
+      audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
+      log("Auto Next Playing Track URL - " + audioURL + " And Track Name - " + MusicUrlList[trackcounter]['title'], collection, city, year, APIURL, function (status) {
+      });
+    }
+    // console.log('Auto Next -'+audioURL);
+    askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+
+  } else {
+    console.log('Auto Next - Not Found');
+    var cardTitle = 'Unable to understand your request.';
+    var repromptText = '<speak>Waiting for your responce.Please Try again by saying. City and Year. or <break time=".1s"/>  random.</speak>';
+    var speechOutput = "<speak>Sorry , Error Occured.Please Try again. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+
+    ask(app, speechOutput, suggestions);
+  }
+
+
+};
