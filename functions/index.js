@@ -158,6 +158,7 @@ console.log("RepromptCount : "+app.getRepromptCount());
     }
 
 
+
 function Unknown1(app) {
  var speechOutput = "<speak>Sorry, Unable to understand your request. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>";
   ask(app, speechOutput, suggestions);
@@ -175,6 +176,24 @@ app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
   } else {
     tell(app, FINAL_FALLBACK);
   }
+}
+
+function askAudioWithCoverageYear(app, track, title, coverage, year, audioURL, suggestions) {
+previousSpeechoutput = currentSpeechoutput;
+previousSuggestions = currentSuggestions;
+currentSpeechoutput = null;
+currentSuggestions = null;
+
+console.log("audioURL : "+audioURL);
+
+app.ask(app.buildRichResponse()
+    .addSimpleResponse("Playing track - "+title+", "+coverage+", "+year)
+	.addMediaResponse(app.buildMediaResponse()
+      	.addMediaObjects([app.buildMediaObject("Playing track number - "+track, audioURL)
+          .setDescription("Playing track - "+title+", "+coverage+", "+year)
+          .setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Internet_Archive_logo_and_wordmark.svg/1200px-Internet_Archive_logo_and_wordmark.svg.png", app.Media.ImageType.LARGE)
+      ])
+    ).addSuggestions(suggestions));
 }
 
 
@@ -637,9 +656,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
     console.log(app.getIntent());
     console.log('problem1 : '+audioURL);
     if (app.getIntent() == 'autoNext') {
-      askAudio(app, MusicUrlList[counter]['title'], audioURL, suggestions);
+      askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     } else {
-      askAudio(app, MusicUrlList[counter]['title'], audioURL, suggestions);
+      askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     }
 
 
@@ -697,7 +716,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                         MusicUrlList.push({
                           identifier: result['response']['docs'][0]['identifier'],
                           trackName: resultIdentifier['result'][i]['name'],
-                          title: 'Track Number ' + trackNumber
+                          title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                         });
                       } else {
                         trackNumber = trackNumber + 1;
@@ -705,7 +726,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                         MusicUrlList.push({
                           identifier: result['response']['docs'][0]['identifier'],
                           trackName: resultIdentifier['result'][i]['name'],
-                          title: resultIdentifier['result'][i]['title']
+                          title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                         });
                       }
                       TotalTrack++;
@@ -725,9 +748,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                   audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
                   console.log('problem2 : '+audioURL);
                   if (app.getIntent() == 'autoNext') {
-                    askAudio(app, MusicUrlList[counter]['title'], audioURL, suggestions);
+                    askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   } else {
-                    askAudio(app, MusicUrlList[counter]['title'], audioURL, suggestions);
+                    askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   }
 
 
@@ -817,7 +840,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       });
     }
     // console.log('Auto Next -'+audioURL);
-    askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+    askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
 
   } else {
     console.log('Auto Next - Not Found');
@@ -862,10 +885,10 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
       }
       // console.log(app.getIntent());
       if (app.getIntent() == 'autoNext') {
-            askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+            askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       }
       else {
-            askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+            askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       }
 
 
@@ -968,7 +991,9 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: 'Track Number ' + trackNumber
+                            title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         else {
@@ -977,7 +1002,9 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: resultIdentifier['result'][i]['title']
+                            title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         TotalTrack++;
@@ -1007,10 +1034,10 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
                     }
 
                     if (app.getIntent() == 'autoNext') {
-                          askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                          askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }
                     else {
-                          askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                          askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }
 
 
@@ -1138,10 +1165,10 @@ function getAudioPlayList(app, counter, thisOBJ, offsetInMilliseconds, callback)
       // console.log(app.getIntent());
       if (app.getIntent() == 'autoNext') {
 console.log("autoNext");
-         askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+         askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       } else {
 console.log("!autoNext");
-        askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+        askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       }
 
 
@@ -1279,7 +1306,9 @@ console.log("!autoNext");
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: 'Track Number ' + trackNumber
+                            title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         } else {
                           resultIdentifier['result'][i]['title'] = resultIdentifier['result'][i]['title'].replace(/[^a-zA-Z0-9 ]/g, "");
@@ -1287,7 +1316,9 @@ console.log("!autoNext");
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: resultIdentifier['result'][i]['title']
+                            title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         TotalTrack++;
@@ -1325,10 +1356,10 @@ console.log("!autoNext");
                     
                     if (app.getIntent() == 'autoNext') {
 console.log('autoNext');
-                       askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                       askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }else{
 console.log('audio url : '+audioURL);
-                        askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                        askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }
 
                    
@@ -1362,7 +1393,9 @@ console.log('audio url : '+audioURL);
                 MusicUrlList.push({
                   identifier: result['response']['docs'][i]['identifier'],
                   trackName: MusicUrlList[counter]['identifier'] + '_vbr.m3u',
-                  title: result['response']['docs'][i]['title']
+                  title: result['response']['docs'][i]['title'],
+                          coverage: (result['response']['docs'][i]['coverage'])?result['response']['docs'][i]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][i]['year'])?result['response']['docs'][i]['year']:'Year Not mentioned',
                 });
               }
 
@@ -1396,9 +1429,9 @@ console.log('audio url : '+audioURL);
               }
               
                if (app.getIntent() == 'autoNext') {
-                 askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                 askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                }else{
-                 askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                 askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                  
                }
               
@@ -1428,7 +1461,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: 'Track Number ' + trackNumber
+                            title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         } else {
                           trackNumber = trackNumber + 1;
@@ -1436,7 +1471,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: resultIdentifier['result'][i]['title']
+                            title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         TotalTrack++;
@@ -1472,10 +1509,10 @@ console.log('audio url : '+audioURL);
                     }
                     
                     if (app.getIntent() == 'autoNext') {
-                      askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                      askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                       
                     }else{
-                      askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                      askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }
 
                     
@@ -1485,7 +1522,7 @@ console.log('audio url : '+audioURL);
                     var cardTitle = 'No Songs Found';
                     var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
                     var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
-                    askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                    askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                   }
 
                 });
@@ -1524,7 +1561,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: 'Track Number ' + trackNumber
+                            title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         } else {
                           trackNumber = trackNumber + 1;
@@ -1532,7 +1571,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: resultIdentifier['result'][i]['title']
+                            title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         TotalTrack++;
@@ -1568,9 +1609,9 @@ console.log('audio url : '+audioURL);
                     }
                     
                      if (app.getIntent() == 'autoNext') {
-                        askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                        askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                      }else{
-                      askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                      askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                      }
                   }
                   else {
@@ -1615,7 +1656,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: 'Track Number ' + trackNumber
+                            title: 'Track Number ' + trackNumber,
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         } else {
                           trackNumber = trackNumber + 1;
@@ -1623,7 +1666,9 @@ console.log('audio url : '+audioURL);
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
                             trackName: resultIdentifier['result'][i]['name'],
-                            title: resultIdentifier['result'][i]['title']
+                            title: resultIdentifier['result'][i]['title'],
+                          coverage: (result['response']['docs'][0]['coverage'])?result['response']['docs'][0]['coverage']:'Coverage Not mentioned',
+                          year: (result['response']['docs'][0]['year'])?result['response']['docs'][0]['year']:'Year Not mentioned',
                           });
                         }
                         TotalTrack++;
@@ -1661,9 +1706,9 @@ console.log('audio url : '+audioURL);
                     
                      if (app.getIntent() == 'autoNext') {
                        
-                       askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                       askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                      }else{
-                      askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+                      askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
 }
                     
 
@@ -1816,7 +1861,9 @@ app.ask(app.buildRichResponse()
 	.addSuggestions(suggestions));
 }
 
-function askAudio(app, title, audioURL, suggestions) {
+
+
+function askAudio(app, track, title, coverage, year, audioURL, suggestions) {
 previousSpeechoutput = currentSpeechoutput;
 previousSuggestions = currentSuggestions;
 currentSpeechoutput = null;
@@ -1825,10 +1872,10 @@ currentSuggestions = null;
 console.log("audioURL : "+audioURL);
 
 app.ask(app.buildRichResponse()
-    .addSimpleResponse("Now Playing "+title)
+    .addSimpleResponse("Playing track - "+title)
 	.addMediaResponse(app.buildMediaResponse()
-      	.addMediaObjects([app.buildMediaObject(title, audioURL)
-          .setDescription("Now Playing "+title)
+      	.addMediaObjects([app.buildMediaObject("Playing track number - "+track, audioURL)
+          .setDescription("Playing track - "+title)
           .setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Internet_Archive_logo_and_wordmark.svg/1200px-Internet_Archive_logo_and_wordmark.svg.png", app.Media.ImageType.LARGE)
       ])
     ).addSuggestions(suggestions));
@@ -1870,7 +1917,7 @@ function PlayNextSong(requestType, offsetInMilliseconds) {
       });
     }
     // console.log('Auto Next -'+audioURL);
-    askAudio(app, MusicUrlList[trackcounter]['title'], audioURL, suggestions);
+    askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
 
   } else {
     console.log('Auto Next - Not Found');
