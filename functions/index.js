@@ -178,24 +178,6 @@ app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
   }
 }
 
-function askAudioWithCoverageYear(app, track, title, coverage, year, audioURL, suggestions) {
-previousSpeechoutput = currentSpeechoutput;
-previousSuggestions = currentSuggestions;
-currentSpeechoutput = null;
-currentSuggestions = null;
-
-console.log("audioURL : "+audioURL);
-
-app.ask(app.buildRichResponse()
-    .addSimpleResponse("Playing track - "+title+", "+coverage+", "+year)
-	.addMediaResponse(app.buildMediaResponse()
-      	.addMediaObjects([app.buildMediaObject("Playing track number - "+track, audioURL)
-          .setDescription("Playing track - "+title+", "+coverage+", "+year)
-          .setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Internet_Archive_logo_and_wordmark.svg/1200px-Internet_Archive_logo_and_wordmark.svg.png", app.Media.ImageType.LARGE)
-      ])
-    ).addSuggestions(suggestions));
-}
-
 
 function responseHandler (app) {
   //var requestType = (this.event.request != undefined) ? this.event.request.type : null;
@@ -656,9 +638,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
     console.log(app.getIntent());
     console.log('problem1 : '+audioURL);
     if (app.getIntent() == 'autoNext') {
-      askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
+      askAudioWithoutCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     } else {
-      askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
+      askAudioWithoutCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     }
 
 
@@ -748,9 +730,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                   audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
                   console.log('problem2 : '+audioURL);
                   if (app.getIntent() == 'autoNext') {
-                    askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
+                    askAudioWithoutCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   } else {
-                    askAudioWithCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
+                    askAudioWithoutCoverageYear(app, track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   }
 
 
@@ -1861,9 +1843,7 @@ app.ask(app.buildRichResponse()
 	.addSuggestions(suggestions));
 }
 
-
-
-function askAudio(app, track, title, coverage, year, audioURL, suggestions) {
+function askAudioWithoutCoverageYear(app, track, title, coverage, year, audioURL, suggestions) {
 previousSpeechoutput = currentSpeechoutput;
 previousSuggestions = currentSuggestions;
 currentSpeechoutput = null;
@@ -1876,6 +1856,25 @@ app.ask(app.buildRichResponse()
 	.addMediaResponse(app.buildMediaResponse()
       	.addMediaObjects([app.buildMediaObject("Playing track number - "+track, audioURL)
           .setDescription("Playing track - "+title)
+          .setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Internet_Archive_logo_and_wordmark.svg/1200px-Internet_Archive_logo_and_wordmark.svg.png", app.Media.ImageType.LARGE)
+      ])
+    ).addSuggestions(suggestions));
+}
+
+
+function askAudio(app, track, title, coverage, year, audioURL, suggestions) {
+previousSpeechoutput = currentSpeechoutput;
+previousSuggestions = currentSuggestions;
+currentSpeechoutput = null;
+currentSuggestions = null;
+
+console.log("audioURL : "+audioURL);
+
+app.ask(app.buildRichResponse()
+    .addSimpleResponse("Playing track - "+title+", "+coverage+", "+year)
+	.addMediaResponse(app.buildMediaResponse()
+      	.addMediaObjects([app.buildMediaObject("Playing track number - "+track, audioURL)
+          .setDescription("Playing track - "+title+", "+coverage+", "+year)
           .setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Internet_Archive_logo_and_wordmark.svg/1200px-Internet_Archive_logo_and_wordmark.svg.png", app.Media.ImageType.LARGE)
       ])
     ).addSuggestions(suggestions));
