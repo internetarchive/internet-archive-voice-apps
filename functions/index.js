@@ -58,7 +58,7 @@ const FINAL_FALLBACK= "I'm sorry I'm having trouble here. Maybe we should try th
 
 
 
-var suggestions = ["Grateful Dead", "Cowboy Junkies", "Random"];
+var suggestions = ["Grateful Dead", "Cowboy Junkies", "Ditty Bops"];
 
 
 
@@ -112,7 +112,7 @@ function init(app) {
  previousSpeechoutput = -1;
  previousSuggestions = null;
 
- suggestions = ["Grateful Dead", "Cowboy Junkies", "Random"];
+ suggestions = ["Grateful Dead", "Cowboy Junkies", "Ditty Bops"];
 
 }
 
@@ -135,12 +135,16 @@ function noInput (app) {
 app.data.noInputCount = parseInt(app.data.noInputCount, 10);
 
 
-  if (app.data.noInputCount < 1) {
+  if (app.data.noInputCount == 0) {
   //ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
   app.data.noInputCount++;
-  ask(app, "<speak>Sorry, I didn't hear any input. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>", suggestions);
+	ask(app, `What was that?`, suggestions);
   //app.data.noInputCount = parseInt(app.data.noInputCount, 10);
-  } else {
+  }
+else if(app.data.noInputCount == 1) {
+  ask(app, "<speak>Sorry, I still didn’t get that. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>", suggestions);
+}
+ else {
     tell(app, FINAL_FALLBACK);
   }
 }
@@ -168,12 +172,17 @@ function Unknown (app) {
 app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
 
 
-  if (app.data.unknownInputCount < 3) {
+  if (app.data.unknownInputCount == 0) {
   //ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
   app.data.unknownInputCount++;
-  ask(app, "<speak>Sorry, I didn't understand your request. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>", suggestions);
+
+  ask(app, "<speak>Sorry, which artist?</speak>", suggestions);
   //app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
-  } else {
+  } 
+else if(app.data.unknownInputCount == 1) {
+  ask(app, "<speak>Sorry, I still didn’t get that. Please provide an artist name, like The Ditty Bops,<break time='.5s'/> Cowboy Junkies,<break time='.5s'/> or Grateful Dead.</speak>", suggestions);
+  }
+else {
     tell(app, FINAL_FALLBACK);
   }
 }
@@ -1100,9 +1109,10 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
   var speechOutput = "<speak><audio src='https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3' />  Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies.  </speak>";
   // var speechOutput = "<speak>Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
 
-//if (app.getLastSeen()) {
-//     var speechOutput = "<speak><audio src='https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3' />  Welcome back to the live music collection at the Internet Archive.<break time='.5s'/> /////What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies.  </speak>";
-//  }
+if (app.getLastSeen() != null) {
+     speechOutput = "<speak>Welcome back, choose an artist.<break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
+  }
+
  
   ask(app, speechOutput, suggestions);
 }
