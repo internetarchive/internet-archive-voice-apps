@@ -142,7 +142,7 @@ app.data.noInputCount = parseInt(app.data.noInputCount, 10);
   //app.data.noInputCount = parseInt(app.data.noInputCount, 10);
   }
 else if(app.data.noInputCount == 1) {
-  ask(app, "<speak>Sorry, I still didn’t get that. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>", suggestions);
+  ask(app, "<speak>Sorry, I still didn’t get that. Please try again by saying artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>", suggestions);
 }
  else {
     tell(app, FINAL_FALLBACK);
@@ -164,7 +164,7 @@ console.log("RepromptCount : "+app.getRepromptCount());
 
 
 function Unknown1(app) {
- var speechOutput = "<speak>Sorry, Unable to understand your request. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>";
+ var speechOutput = "<speak>Sorry, Unable to understand your request. Please try again by saying artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
   ask(app, speechOutput, suggestions);
 }
 
@@ -548,11 +548,11 @@ console.log("collection_real_name : "+collection);
             }
           }
           cardTitle = 'Provide City and Year';
-          repromptText = "<speak>Please select a City and year.<break time='.5s'/> Like " + CityName + " " + YearName + "  or <break time='.1s'/>  random.</speak>";
+          repromptText = "<speak>Please select a City and year.<break time='.5s'/> Like " + CityName + " " + YearName + "  or <break time='.1s'/>random.</speak>";
           cardOutput = collection_real_name + " has been selected. Now, please select CITY and YEAR or RANDOM. Like " + CityName + " " + YearName + " or random.";
 
-          speechOutput = "<speak>" + collection_real_name + " has been selected.<break time='.5s'/> Now Please select City and Year or <break time='.1s'/>  random. <break time='.5s'/> Like " + CityName + " " + YearName + " or <break time='.1s'/> random.</speak>";
-
+//          speechOutput = "<speak>" + collection_real_name + " has been selected.<break time='.5s'/> Now Please select City and Year or <break time='.1s'/>random. <break time='.5s'/>Like " + //CityName + " " + YearName + " or <break time='.1s'/> random.</speak>";
+	speechOutput = "<speak>" + collection_real_name + " - great choice! Do you have a specific city and year in mind, like " + CityName + " " + YearName + ", or would you like me to play something random from "+collection_real_name+"?</speak>";
           log("The Collection " + collection + " has been selected.", collection, null, null, checkCollectionUrl, function (status) {
 
           });
@@ -561,9 +561,9 @@ console.log("collection_real_name : "+collection);
 
         } else {
           cardTitle = 'Collection not exists';
-          repromptText = "<speak>" + collection_real_name + " has no song.<break time='.5s'/> Please Try again by saying.<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops.<break time='.5s'/> Or   Cowboy Junkies.<break time='.5s'/> Or  GratefulDead.</speak>";
-          speechOutput = "<speak>Sorry, " + collection_real_name + " has no song. Please Try again by saying.<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>";
-          cardOutput = "Sorry, " + collection_real_name + " has no song. Please try again by saying ARTIST NAME like The Ditty Bops, Cowboy Junkies Or GratefulDead.";
+          repromptText = "<speak>" + collection_real_name + " has no song.<break time='.5s'/> Please try again by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> or Cowboy Junkies,<break time='.5s'/> or Grateful Dead.</speak>";
+          speechOutput = "<speak>Sorry, " + collection_real_name + " has no song. Please try again by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+          cardOutput = "Sorry, " + collection_real_name + " has no song. Please try again by saying ARTIST NAME like The Ditty Bops, Cowboy Junkies Or Grateful Dead.";
 
           log("Sorry Collection: " + collection + " has no songs.", collection, null, null, checkCollectionUrl, function (status) {
 
@@ -582,9 +582,9 @@ console.log("collection_real_name : "+collection);
 	var speechOutput = '';
 	var response = '';
       cardTitle = 'Waiting for your responce.';
-      repromptText = "<speak>Unable to understand your request. Please Try again by saying. artist name. Like  The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>";
-      speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by saying. artist name. Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or GratefulDead.</speak>";
-      cardOutput = "Sorry, unable to understand your request. Please Try again by saying, ARTIST NAME like The Ditty Bops, Cowboy Junkies, Or GratefulDead.";
+      repromptText = "<speak>Unable to understand your request. Please try again by saying artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+      speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by saying artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+      cardOutput = "Sorry, unable to understand your request. Please try again by saying ARTIST NAME like The Ditty Bops, Cowboy Junkies, Or Grateful Dead.";
      
       log("Sorry, Unable to understand your request for collection: " + collection + " request ", collection, null, null, checkCollectionUrl, function (status) {
       });
@@ -660,7 +660,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       console.log('into Seventy Eights');
       console.log(app.getIntent());
       var cardTitle = 'Collection Seventy Eights Has Been Selected.';
-      var repromptText = "<speak>Waiting for your responce.<break time='.1s'/>  Please select Topics like Jazz <break time='.5s'/> Instrumental or <break time='.5s'/> Dance</speak>";
+      var repromptText = "<speak>Waiting for your responce.<break time='.1s'/> Please select Topics like Jazz <break time='.5s'/> Instrumental or <break time='.5s'/> Dance</speak>";
       var speechOutput = "<speak>Collection Seventy Eights Has Been Selected.<break time='.1s'/> Please select Topics like Jazz, Instrumental, or Dance</speak>";
 	suggestions = ["Jazz", "Instrumental", "Dance"];
       ask(app, speechOutput, suggestions);
@@ -749,24 +749,24 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
                 else {
                   var cardTitle = 'No Songs Found';
                   var repromptText = "<speak>No songs found. Please select Topics like Jazz <break time='.5s'/> Instrumental or <break time='.5s'/> Dance.</speak>";
-                  var speechOutput = "<speak>Sorry , No songs found. Please select Topics like Jazz, Instrumental or  Dance.</speak>";
+                  var speechOutput = "<speak>Sorry , No songs found. Please select Topics like Jazz, Instrumental or Dance.</speak>";
 	suggestions = ["Jazz", "Instrumental", "Dance"];
                   ask(app, speechOutput, suggestions);
                 }
 
               });
             }).on('error', function (e) {
-              var cardTitle = 'Unable to understand your request. Please Try again.';
+              var cardTitle = 'Unable to understand your request. Please try again.';
               var repromptText = '<speak>Waiting for your responce.</speak>';
-              var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again.</speak>";
+              var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again.</speak>";
               ask(app, speechOutput, suggestions);
             });
 
 
           } else {
             var cardTitle = 'No Songs Found';
-            var repromptText = '<speak>No songs found. Please Try again.</speak>';
-            var speechOutput = "<speak>Sorry , No songs found. Please Try again.</speak>";
+            var repromptText = '<speak>No songs found. Please try again.</speak>';
+            var speechOutput = "<speak>Sorry , No songs found. Please try again.</speak>";
             ask(app, speechOutput, suggestions);
 
           }
@@ -775,9 +775,9 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       }).on('error', function (e) {
         year = '';
         city = '';
-        var cardTitle = 'Unable to understand your request. Please Try again.';
+        var cardTitle = 'Unable to understand your request. Please try again.';
         var repromptText = '<speak>Waiting for your responce.</speak>';
-        var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again.</speak>";
+        var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again.</speak>";
         ask(app, speechOutput, suggestions);
       });
 
@@ -787,7 +787,7 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
   else {
     var cardTitle = 'Unable to understand your request.';
     var repromptText = '<speak>Waiting for your responce.</speak>';
-    var speechOutput = "<speak>Sorry, Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+    var speechOutput = "<speak>Sorry, Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
 
     ask(app, speechOutput, suggestions);
 
@@ -836,8 +836,8 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
   } else {
     console.log('Auto Next - Not Found');
     var cardTitle = 'Unable to understand your request.';
-    var repromptText = '<speak>Waiting for your responce.Please Try again by saying. City and Year. or <break time=".1s"/>  random.</speak>';
-    var speechOutput = "<speak>Sorry , Error Occured.Please Try again. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+    var repromptText = '<speak>Waiting for your responce.Please try again by saying City and Year. or <break time=".1s"/>random.</speak>';
+    var speechOutput = "<speak>Sorry , Error Occured.Please try again. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
 
     ask(app, speechOutput, suggestions);
   }
@@ -1037,18 +1037,18 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
                   }
                   else {
                     var cardTitle = 'No Songs Found';
-                    var repromptText = '<speak> No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-                    var speechOutput = "<speak>  Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random </speak>";
-                    var cardOutput = "Sorry, No songs found. Please Try again by saying City and Year or Random";
+                    var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+                    var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
+                    var cardOutput = "Sorry, No songs found. Please try again by saying City and Year or Random";
                     ask(app, speechOutput, suggestions);
                   }
 
                 });
               }).on('error', function (e) {
                 var cardTitle = 'Unable to understand your request. ';
-                var repromptText = '<speak>Waiting for your responce.Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-                var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
-                var cardOutput = "Sorry, Unable to understand your request. Please Try again by saying City and Year or Random.";
+                var repromptText = '<speak>Waiting for your responce.Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+                var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+                var cardOutput = "Sorry, Unable to understand your request. Please try again by saying City and Year or Random.";
                 ask(app, speechOutput, suggestions);
               });
 
@@ -1066,9 +1066,9 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
             year = '';
             city = '';
             var cardTitle = 'No Songs Found';
-            var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-            var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/>  random.</speak>";
-            var cardOutput = "Sorry, No songs found. Please Try again by saying City and Year or random.";
+            var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+            var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/>  random.</speak>";
+            var cardOutput = "Sorry, No songs found. Please try again by saying City and Year or random.";
             ask(app, speechOutput, suggestions);
 
           }
@@ -1078,16 +1078,16 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
         year = '';
         city = '';
         var cardTitle = 'Unable to understand your request.';
-        var repromptText = '<speak>Waiting for your responce. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-        var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
-        var cardOutput = "Sorry, Unable to understand your request. Please Try again by saying City and Year or Random.";
+        var repromptText = '<speak>Waiting for your responce. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+        var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
+        var cardOutput = "Sorry, Unable to understand your request. Please try again by saying City and Year or Random.";
         ask(app, speechOutput, suggestions);
       });
       }else {
         var cardTitle = 'Unable to understand your request.';
-        var repromptText = '<speak>Waiting for your responce. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-        var speechOutput = "<speak>Sorry, Unable to understand your request. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
-        var cardOutput = "Sorry, Unable to understand your request. Please Try again by saying City and Year or Random.";
+        var repromptText = '<speak>Waiting for your responce. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+        var speechOutput = "<speak>Sorry, Unable to understand your request. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
+        var cardOutput = "Sorry, Unable to understand your request. Please try again by saying City and Year or Random.";
   
         ask(app, speechOutput, suggestions);
   
@@ -1110,7 +1110,7 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
   // var speechOutput = "<speak>Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
 
 if (app.getLastSeen() != null) {
-     speechOutput = "<speak>Welcome back, choose an artist.<break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
+     speechOutput = "<speak>Welcome back, choose an artist.<break time='.5s'/> For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
   }
 
  
@@ -1234,14 +1234,14 @@ console.log("!autoNext");
                 YearList = YearList.unique();
                 YearList = YearList.sort();
                 for (var i = 0; i < YearList.length; i++) {
-                  YearString = YearString + YearList[i] + '. ';
+                  YearString = YearString + YearList[i] + ', ';
                 }
                 var cardTitle = 'Please Select Year.';
                 var repromptText = '<speak> Waiting for your responce.</speak>';
-                var speechOutput = "<speak> Ok , Available years for City " + city + " are " + YearString + " Please Select year.</speak>";
-                log("Ok , Available years for artist: " + collection + " and City: " + city + " are " + YearString, collection, city, year, APIURL, function (status) {
+                var speechOutput = "<speak> Ok , available years for City " + city + " are " + YearString + " Please Select year.</speak>";
+                log("Ok , available years for artist: " + collection + " and City: " + city + " are " + YearString, collection, city, year, APIURL, function (status) {
                 });
-	suggestions = YearString;
+	suggestions = YearList;
                 ask(app, speechOutput, suggestions);
 
               } else if (app.getIntent() === 'PlayAudio' && city == '') {
@@ -1252,15 +1252,15 @@ console.log("!autoNext");
                 CityList = CityList.unique();
                 CityList = CityList.sort();
                 for (var i = 0; i < CityList.length; i++) {
-                  CityString = CityString + CityList[i] + '. ';
+                  CityString = CityString + CityList[i] + ', ';
                 }
 
                 var cardTitle = 'Please Select City.';
                 var repromptText = '<speak> Waiting for your responce.</speak>';
-                var speechOutput = "<speak>  Ok , Available cities for year " + year + " are " + CityString + ' Please Select city.</speak> ';
-                log("Ok , Available cities for artist: " + collection + " and  year: " + year + " are " + CityString, collection, city, year, APIURL, function (status) {
+                var speechOutput = "<speak>Ok , available cities for year " + year + " are " + CityString + ' Please Select city.</speak> ';
+                log("Ok , available cities for artist: " + collection + " and year: " + year + " are " + CityString, collection, city, year, APIURL, function (status) {
                 });
-	suggestions = CityString;
+	suggestions = CityList;
 	      ask(app, speechOutput, suggestions);
 	
 	      }
@@ -1359,16 +1359,16 @@ console.log('audio url : '+audioURL);
                    
                   } else {
                     var cardTitle = 'No Songs Found';
-                    var repromptText = '<speak> No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-                    var speechOutput = "<speak>  Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random </speak>";
+                    var repromptText = '<speak> No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+                    var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
                     ask(app, speechOutput, suggestions);
                   }
 
                 });
               }).on('error', function (e) {
                 var cardTitle = 'Unable to understand your request. ';
-                var repromptText = '<speak>Waiting for your responce.Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-                var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+                var repromptText = '<speak>Waiting for your responce.Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+                var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
                 ask(app, speechOutput, suggestions);
               });
 
@@ -1512,16 +1512,16 @@ console.log('audio url : '+audioURL);
                   }
                   else {
                     var cardTitle = 'No Songs Found';
-                    var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-                    var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+                    var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+                    var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
                     askAudio(app, track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                   }
 
                 });
               }).on('error', function (e) {
                 var cardTitle = 'Unable to understand your request.';
-                var repromptText = '<speak>Waiting for your responce. Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-                var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+                var repromptText = '<speak>Waiting for your responce. Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+                var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
                 ask(app, speechOutput, suggestions);
               });
 
@@ -1608,16 +1608,16 @@ console.log('audio url : '+audioURL);
                   }
                   else {
                     var cardTitle = 'No Songs Found';
-                    var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-                    var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+                    var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+                    var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
                     ask(app, speechOutput, suggestions);
                   }
 
                 });
               }).on('error', function (e) {
                 var cardTitle = 'Unable to understand your request.';
-                var repromptText = '<speak>Waiting for your responce. Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-                var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+                var repromptText = '<speak>Waiting for your responce. Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+                var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
                 ask(app, speechOutput, suggestions);
               });
             }
@@ -1707,8 +1707,8 @@ console.log('audio url : '+audioURL);
                   }
                   else {
                     var cardTitle = 'No Songs Found';
-                    var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-                    var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+                    var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+                    var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
                    
                       ask(app, speechOutput, suggestions);
                   }
@@ -1716,8 +1716,8 @@ console.log('audio url : '+audioURL);
                 });
               }).on('error', function (e) {
                 var cardTitle = 'Unable to understand your request.';
-                var repromptText = '<speak>Waiting for your responce. Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-                var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+                var repromptText = '<speak>Waiting for your responce. Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+                var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
                 ask(app, speechOutput, suggestions);
               });
             }
@@ -1736,8 +1736,8 @@ console.log('audio url : '+audioURL);
             year = '';
             city = '';
             var cardTitle = 'No Songs Found';
-            var repromptText = '<speak>No songs found. Please Try again by saying. City and Year. or <break time=".1s"/> random.</speak>';
-            var speechOutput = "<speak>Sorry , No songs found. Please Try again by saying. City and Year. or <break time='.1s'/>  random.</speak>";
+            var repromptText = '<speak>No songs found. Please try again by saying City and Year. or <break time=".1s"/> random.</speak>';
+            var speechOutput = "<speak>Sorry , No songs found. Please try again by saying City and Year. or <break time='.1s'/>  random.</speak>";
             ask(app, speechOutput, suggestions);
 
           }
@@ -1747,22 +1747,22 @@ console.log('audio url : '+audioURL);
         year = '';
         city = '';
         var cardTitle = 'Unable to understand your request.';
-        var repromptText = '<speak>Waiting for your responce. Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-        var speechOutput = "<speak>Sorry , Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+        var repromptText = '<speak>Waiting for your responce. Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+        var speechOutput = "<speak>Sorry , Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
         ask(app, speechOutput, suggestions);
       });
     } else {
       var cardTitle = 'Unable to understand your request.';
-      var repromptText = '<speak>Waiting for your responce. Please Try again by select. City and Year. or <break time=".1s"/> random.</speak>';
-      var speechOutput = "<speak>Sorry, Unable to understand your request. Please Try again by select. City and Year. or <break time='.1s'/> random.</speak>";
+      var repromptText = '<speak>Waiting for your responce. Please try again by select. City and Year. or <break time=".1s"/> random.</speak>';
+      var speechOutput = "<speak>Sorry, Unable to understand your request. Please try again by select. City and Year. or <break time='.1s'/> random.</speak>";
 
       ask(app, speechOutput, suggestions);
 
     }
   } else {
     var cardTitle = 'Please select artist';
-    var repromptText = "<speak>Please select an artist by saying.<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or  GratefulDead.</speak>";
-    var speechOutput = "<speak>Please select an artist by saying.<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops.<break time='.5s'/> Or  Cowboy Junkies.<break time='.5s'/> Or  GratefulDead.</speak>";
+    var repromptText = "<speak>Please select an artist by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> or Grateful Dead.</speak>";
+    var speechOutput = "<speak>Please select an artist by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> or Grateful Dead.</speak>";
 
     ask(app, speechOutput, suggestions);
   }
@@ -1805,8 +1805,8 @@ function log1(Title, Collection, City, Year, Url, callback) {
   function Discovery(app) {
 
   var cardTitle = 'Discover more';
-  var repromptText = "<speak>Waiting for your responce.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  Like , Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>";
-  // var speechOutput = "<speak>Welcome To The Internet Archive,<break time='1s'/> Please select a collection by saying.<break time='.5s'/> play Collection name.<break time='.5s'/> like Play The Ditty Bops.<break time='.5s'/> Or  Play Cowboy Junkies.<break time='.5s'/> Or Play GratefulDead.</speak>";
+  var repromptText = "<speak>Waiting for your responce.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/> Like , Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>";
+  // var speechOutput = "<speak>Welcome To The Internet Archive,<break time='1s'/> Please select a collection by saying<break time='.5s'/> play Collection name.<break time='.5s'/> like Play The Ditty Bops,<break time='.5s'/> Or Play Cowboy Junkies.<break time='.5s'/> Or Play Grateful Dead.</speak>";
   var cardOutput = "We have more collection like Disco Biscuits, Hot Buttered Rum or Keller Williams.";
   var speechOutput = "<speak>We have more collection.<break time='.5s'/> Like , Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>";
 	suggestions = ["Disco Biscuits", "Hot Buttered Rum", "Keller Williams"];
@@ -1931,8 +1931,8 @@ function PlayNextSong(requestType, offsetInMilliseconds) {
   } else {
     console.log('Auto Next - Not Found');
     var cardTitle = 'Unable to understand your request.';
-    var repromptText = '<speak>Waiting for your responce.Please Try again by saying. City and Year. or <break time=".1s"/>  random.</speak>';
-    var speechOutput = "<speak>Sorry , Error Occured.Please Try again. Please Try again by saying. City and Year. or <break time='.1s'/> random.</speak>";
+    var repromptText = '<speak>Waiting for your responce.Please try again by saying City and Year. or <break time=".1s"/>  random.</speak>';
+    var speechOutput = "<speak>Sorry , Error Occured.Please try again. Please try again by saying City and Year. or <break time='.1s'/> random.</speak>";
 
     ask(app, speechOutput, suggestions);
   }
