@@ -16,6 +16,7 @@
     "actions-on-google": "file:aog-media-control-eap.tgz",
     "debug": "^3.1.0",
     "firebase-admin": "^5.5.1",
-    "firebase-functions": "^0.7.3"
+    "firebase-functions": "^0.7.3",
+    "replaceall": "^0.1.6"
   }
 }
