@@ -1,16 +1,22 @@
 'use strict';
+//Bimlendra
 var https = require('https');
 var http = require('http');
 const util = require('util');
+
 var replaceall = require("replaceall");
+
+
+var host='web.archive.org';
 var lastPlayedByUser = {};
 var imageURL = "https://archive.org/services/img/";
-var podcastAPIURL = "https://archive.org/advancedsearch.php?q=collection:";
-var podcastCityAPIURL = "https://archive.org/advancedsearch.php?q=collection:";
-var podcastAPIURLNEW = "https://archive.org/advancedsearch.php?q=";
-var SeventyEightsAPIURL = " https://archive.org/advancedsearch.php?q=collection:(georgeblood)+AND+subject:";
-var APIURLIdentifier = "https://archive.org/metadata/";
+var podcastAPIURL = "/advancedsearch.php?q=collection:";
+var podcastCityAPIURL = "/advancedsearch.php?q=collection:";
+var podcastAPIURLNEW = "/advancedsearch.php?q=";
+var SeventyEightsAPIURL = "/advancedsearch.php?q=collection:(georgeblood)+AND+subject:";
+var APIURLIdentifier = "/metadata/";
 var MusicUrlList = [];
+
 var page = 1;
 var counter = 0;
 var audioURL;
@@ -78,12 +84,14 @@ exports.playMedia = functions.https.onRequest((req, res) => {
 });
 
 function init(app) {
+
+ host='web.archive.org';
  lastPlayedByUser = {};
- podcastAPIURL = "https://archive.org/advancedsearch.php?q=collection:";
- podcastCityAPIURL = "https://archive.org/advancedsearch.php?q=collection:";
- podcastAPIURLNEW = "https://archive.org/advancedsearch.php?q=";
- SeventyEightsAPIURL = " https://archive.org/advancedsearch.php?q=collection:(georgeblood)+AND+subject:";
- APIURLIdentifier = "https://archive.org/metadata/";
+ podcastAPIURL = "/advancedsearch.php?q=collection:";
+ podcastCityAPIURL = "/advancedsearch.php?q=collection:";
+ podcastAPIURLNEW = "/advancedsearch.php?q=";
+ SeventyEightsAPIURL = "/advancedsearch.php?q=collection:(georgeblood)+AND+subject:";
+ APIURLIdentifier = "/metadata/";
  MusicUrlList = [];
  page = 1;
  counter = 0;
@@ -547,10 +555,18 @@ console.log("collection_real_name : "+collection);
       collectionQuery = '(' + collectionQuery + '(' + collection + ')+OR+collection:(the' + collection + '))';
     }
 
-    var checkCollectionUrl = podcastAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=50&page=0&indent=yes&output=json';
-    console.log(checkCollectionUrl);
+    var checkCollectionUrl = podcastAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=50&page=0&indent=yes&output=json';
+      var optionscheckCollectionUrl = {
+        host: host,
+        path: checkCollectionUrl,
+        method: 'GET',
+        headers: {
+           "User-Agent" : 'Google_Action_Internet_Archive'
+        }
+      };
+    console.log(optionscheckCollectionUrl);
 
-    https.get(checkCollectionUrl, function (res) {
+    https.get(optionscheckCollectionUrl, function (res) {
       var body = '';
       res.on('data', function (data) {
         body += data;
@@ -707,9 +723,19 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
       topicName = topicName.replace(/ /g, '');
       topicName = topicName.replace("#", " ");
       topicName = topicName.replace(/[^a-zA-Z0-9 ]/g, "");
-      APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
-      console.log(APIURL);
-      https.get(APIURL, function (res) {
+      //APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
+		APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
+      var options = {
+        host: host,
+        path: APIURL,
+        method: 'GET',
+        headers: {
+           "User-Agent" : 'Google_Action_Internet_Archive'
+        }
+      };
+
+      console.log(options);
+      https.get(options, function (res) {
         var body = '';
         res.on('data', function (data) {
           body += data;
@@ -718,7 +744,16 @@ function getAudioPlayListSeventyEights(app, counter, thisOBJ, offsetInMillisecon
           var result = JSON.parse(body);
           if (result != null && result['response']['docs'].length > 0) {
             APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-            https.get(APIURLIDENTIFIER, function (responce) {
+            var optionsIdentifier = {
+              host: host,
+              path: APIURLIDENTIFIER,
+              method: 'GET',
+              headers: {
+                  "User-Agent": 'Google_Action_Internet_Archive'
+              }
+            };
+
+            https.get(optionsIdentifier, function (responce) {
               var bodyIdentifier = '';
               responce.on('data', function (dataIdentifier) {
                 bodyIdentifier += dataIdentifier;
@@ -953,7 +988,7 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
               
               APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
             }else{
-              APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+              APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
             }
         
          
@@ -967,11 +1002,19 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
           
           APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
         }else{
-          APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+          APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
         }
       }
-      console.log('APIURL- ' + APIURL);
-      https.get(APIURL, function (res) {
+var options = {
+        host: host,
+        path: APIURL,
+        method: 'GET',
+        headers: {
+           "User-Agent" : 'Google_Action_Internet_Archive'
+        }
+      };
+      console.log('options- ' + options);
+      https.get(options, function (res) {
         var body = '';
         res.on('data', function (data) {
           body += data;
@@ -995,8 +1038,17 @@ function getOneGoPlayAudio(app, counter, thisOBJ, offsetInMilliseconds, callback
               //New Https Request for mp3 tracks
               //track=counter+1;
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-              console.log(APIURLIDENTIFIER);
-              https.get(APIURLIDENTIFIER, function (responce) {
+                           var optionsIdentifier = {
+                host: host,
+                path: APIURLIDENTIFIER,
+                method: 'GET',
+                headers: {
+                    "User-Agent": 'Google_Action_Internet_Archive'
+                }
+              };
+
+              console.log(optionsIdentifier);
+              https.get(optionsIdentifier, function (responce) {
                 var bodyIdentifier = '';
                 responce.on('data', function (dataIdentifier) {
                   bodyIdentifier += dataIdentifier;
@@ -1201,7 +1253,7 @@ console.log("!autoNext");
         if (app.getIntent() === 'PlayAudioQuery') {
           title = app.getArgument("TITLE");
         }
-        APIURL = podcastAPIURLNEW + title + '%20AND(mediatype:audio)&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+        APIURL = podcastAPIURLNEW + title + '%20AND(mediatype:audio)&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
       } else if (PlayAudioByRandomYear || app.getIntent() == 'PlayAudioByRandomYear') {
         if (app.getIntent() === 'PlayAudioByRandomYear') {
           city = app.getArgument("CITY");
@@ -1240,11 +1292,19 @@ console.log("!autoNext");
         if (app.getIntent() === 'PlayAudioByCity') {
           APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=50&page=' + page + '&indent=yes&output=json';
         }else{
-          APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads desc&rows=1&page=' + page + '&indent=yes&output=json';
+          APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
         }
       }
-      console.log('APIURL- ' + APIURL);
-      https.get(APIURL, function (res) {
+      var options = {
+        host: host,
+        path: APIURL,
+        method: 'GET',
+        headers: {
+           "User-Agent" : 'Google_Action_Internet_Archive'
+        }
+      };
+      console.log('options- ' + options);
+      https.get(options, function (res) {
         var body = '';
         res.on('data', function (data) {
           body += data;
@@ -1323,8 +1383,17 @@ console.log("!autoNext");
               //New Https Request for mp3 tracks
               //track=counter+1;
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-              console.log(APIURLIDENTIFIER);
-              https.get(APIURLIDENTIFIER, function (responce) {
+                            var optionsIdentifier = {
+                host: host,
+                path: APIURLIDENTIFIER,
+                method: 'GET',
+                headers: {
+                    "User-Agent": 'Google_Action_Internet_Archive'
+                }
+              };
+
+              console.log(optionsIdentifier);
+              https.get(optionsIdentifier, function (responce) {
                 var bodyIdentifier = '';
                 responce.on('data', function (dataIdentifier) {
                   bodyIdentifier += dataIdentifier;
@@ -1479,7 +1548,16 @@ console.log('audio url : '+audioURL);
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-              https.get(APIURLIDENTIFIER, function (responce) {
+                            var optionsIdentifier = {
+                host: host,
+                path: APIURLIDENTIFIER,
+                method: 'GET',
+                headers: {
+                    "User-Agent": 'Google_Action_Internet_Archive'
+                }
+              };
+
+              https.get(optionsIdentifier, function (responce) {
                 var bodyIdentifier = '';
                 responce.on('data', function (dataIdentifier) {
                   bodyIdentifier += dataIdentifier;
@@ -1579,7 +1657,16 @@ console.log('audio url : '+audioURL);
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-              https.get(APIURLIDENTIFIER, function (responce) {
+                            var optionsIdentifier = {
+                host: host,
+                path: APIURLIDENTIFIER,
+                method: 'GET',
+                headers: {
+                    "User-Agent": 'Google_Action_Internet_Archive'
+                }
+              };
+
+              https.get(optionsIdentifier, function (responce) {
                 var bodyIdentifier = '';
                 responce.on('data', function (dataIdentifier) {
                   bodyIdentifier += dataIdentifier;
@@ -1673,7 +1760,16 @@ console.log('audio url : '+audioURL);
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-              https.get(APIURLIDENTIFIER, function (responce) {
+                            var optionsIdentifier = {
+                host: host,
+                path: APIURLIDENTIFIER,
+                method: 'GET',
+                headers: {
+                    "User-Agent": 'Google_Action_Internet_Archive'
+                }
+              };
+
+              https.get(optionsIdentifier, function (responce) {
                 var bodyIdentifier = '';
                 responce.on('data', function (dataIdentifier) {
                   bodyIdentifier += dataIdentifier;
@@ -2018,3 +2114,4 @@ function PlayNextSong(requestType, offsetInMilliseconds) {
 
 
 };
+
