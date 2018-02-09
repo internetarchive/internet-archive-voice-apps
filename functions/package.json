@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "actions-on-google": "file:aog-media-control-eap.tgz",
+    "bespoken-tools": "^1.2.8",
+    "dashbot": "^9.4.6",
     "debug": "^3.1.0",
     "firebase-admin": "^5.5.1",
     "firebase-functions": "^0.7.3",
