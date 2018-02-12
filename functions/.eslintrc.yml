@@ -1,0 +1,33 @@
+env:
+  browser: true
+  es6: true
+  node: true
+extends: 'eslint:recommended'
+parserOptions:
+  ecmaFeatures:
+    classes: true
+    experimentalObjectRestSpread: true
+    jsx: true
+  sourceType: module
+rules:
+  eqeqeq:
+    - error
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - unix
+  no-console:
+    - error
+    - allow:
+      - warn
+      - error
+  no-var:
+    - error
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
