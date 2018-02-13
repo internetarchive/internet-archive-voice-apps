@@ -156,18 +156,19 @@ function noInput (app) {
 app.data.noInputCount = parseInt(app.data.noInputCount, 10);
 
 
-  if (app.data.noInputCount == 0) {
-  //ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
   app.data.noInputCount++;
+  if (app.data.noInputCount == 1) {
+  //ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
 	ask(app, `What was that?`, suggestions);
   //app.data.noInputCount = parseInt(app.data.noInputCount, 10);
   }
-else if(app.data.noInputCount == 1) {
+else if(app.data.noInputCount == 2) {
   ask(app, "<speak>Sorry, I still didn’t get that. "+currentRepromptText+"</speak>", suggestions);
 }
  else {
     tell(app, FINAL_FALLBACK);
   }
+
 }
 
 
@@ -192,20 +193,21 @@ function Unknown1(app) {
 function Unknown (app) {
 app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
 
-
-  if (app.data.unknownInputCount == 0) {
-  //ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
   app.data.unknownInputCount++;
+  if (app.data.unknownInputCount == 1) {
+  //ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
 
   ask(app, "<speak>That was not a correct choice!</speak>", suggestions);
   //app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
   } 
-else if(app.data.unknownInputCount == 1) {
+else if(app.data.unknownInputCount == 2) {
   ask(app, "<speak>Sorry, I still didn’t get that. "+currentRepromptText+"</speak>", suggestions);
   }
 else {
     tell(app, FINAL_FALLBACK);
   }
+
+
 }
 
 
