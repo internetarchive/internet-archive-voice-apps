@@ -98,7 +98,6 @@ function init (app) {
   MusicUrlList = [];
   page = 1;
   counter = 0;
-  audioURL;
   year = '';
   typeQuery = false;
   searchBYTitle = false;
@@ -132,11 +131,11 @@ function init (app) {
   suggestions = ['Grateful Dead', 'Cowboy Junkies', 'Ditty Bops'];
 }
 
-Array.prototype.unique = function () {
-  return this.filter(function (value, index, self) {
+function unique (ar) {
+  return ar.filter(function (value, index, self) {
     return self.indexOf(value) === index;
   });
-};
+}
 
 function repeatInput (app) {
   if (currentSpeechoutput === null) {
@@ -646,11 +645,6 @@ function getCollection (app) {
   }
 }
 
-function unique () {
-  return this.filter(function (value, index, self) {
-    return self.indexOf(value) === index;
-  });
-}
 
 var MyAudioPlayer = function (event, context) {
   this.event = event;
@@ -1275,7 +1269,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 for (var i = 0; i < result['response']['docs'].length; i++) {
                   YearList.push(result['response']['docs'][i]['year']);
                 }
-                YearList = YearList.unique();
+                YearList = unique(YearList);
                 YearList = YearList.sort();
 
                 // for (var i = 0; i < YearList.length; i++) {
@@ -1303,7 +1297,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                   CityList.push(result['response']['docs'][i]['coverage']);
                 }
 
-                CityList = CityList.unique();
+                CityList = unique(CityList);
                 CityList = CityList.sort();
                 for (var i = 0; i < CityList.length; i++) {
                   CityString = CityString + CityList[i] + ', ';
@@ -1825,7 +1819,7 @@ function checkYear (year) {
     var tempYearList = [];
     tempYearList.push(YearList);
     tempYearList.push(year);
-    tempYearList = tempYearList.unique();
+    tempYearList = unique(tempYearList);
     tempYearList = tempYearList.sort();
     var yearIndex = tempYearList.indexOf(year);
     // speechOutput = tempYearList;
