@@ -636,15 +636,14 @@ function getCollection (app) {
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     });
   } else {
-    cardTitle = 'Please provide valid artist';
-    repromptText = '<speak>Waiting for your response.</speak>';
-    speechOutput = '<speak>Please provide a artist name.</speak>';
-    cardOutput = 'Please provide an artist name.';
+    let cardTitle = 'Please provide valid artist';
+    let repromptText = '<speak>Waiting for your response.</speak>';
+    let speechOutput = '<speak>Please provide a artist name.</speak>';
+    let cardOutput = 'Please provide an artist name.';
 
     askWithReprompt(app, speechOutput, repromptText, suggestions);
   }
 }
-
 
 let MyAudioPlayer = function (event, context) {
   this.event = event;
@@ -810,7 +809,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
             let cardTitle = 'No Songs Found';
             let repromptText = '<speak>No songs found. Please try again.</speak>';
             let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try again.</speak>";
-            (app, speechOutput, repromptText, suggestions);
+            askWithReprompt(app, speechOutput, repromptText, suggestions);
           }
         });
       }).on('error', function (e) {
@@ -832,7 +831,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
 }
 // SeventyEights
 
-function PlayNext (requestType, offsetInMilliseconds) {
+function PlayNext (app, requestType, offsetInMilliseconds) {
   let track = counter + 1;
   let prevTrack = counter;
   if (MusicUrlList.length > 0) {
@@ -930,7 +929,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
         year = app.getArgument('YEAR');
       }
       collection = app.getArgument('COLLECTION');
-      let collection_real_name = app.getArgument('COLLECTION');
+      let collectionRealName = app.getArgument('COLLECTION');
       if (collection !== null && collection !== '' && collection !== undefined) {
         collectionQuery = '';
         let collectionArray = collection.split(/[ ,]+/);
@@ -1556,6 +1555,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     }
                   } else {
+                    let trackcounter = counter;
                     let cardTitle = 'No Songs Found';
                     let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
                     let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
@@ -1842,7 +1842,7 @@ function checkYear (year) {
   return speechOutput;
 }
 
-function handleSessionEndRequest () {
+function handleSessionEndRequest (app) {
   let cardTitle = 'Good bye';
   let speechOutput = '<speak>Thanks for rocking with the Internet Archive’s live music collection!</speak>';
   let repromptText = '<speak>Thanks for rocking with the Internet Archive’s live music collection!</speak>';
@@ -1971,7 +1971,7 @@ function askAudio (app, identifier, track, title, coverage, year, audioURL, sugg
     .addSuggestionLink('on Archive.org', audioURL));
 }
 
-function PlayNextSong (requestType, offsetInMilliseconds) {
+function PlayNextSong (app, requestType, offsetInMilliseconds) {
   let track = counter + 1;
   let prevTrack = counter;
   if (MusicUrlList.length > 0) {
