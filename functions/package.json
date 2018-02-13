@@ -10,8 +10,10 @@
   },
   "scripts": {
     "lint": "eslint *.js",
+    "mocha": "echo 'Unit tests -- will be here soon!'",
     "start": "firebase serve --only functions:playMedia",
-    "deploy": "firebase deploy --only functions:playMedia"
+    "deploy": "firebase deploy --only functions:playMedia",
+    "test": "npm run lint"
   },
   "dependencies": {
     "actions-on-google": "file:aog-media-control-eap.tgz",
