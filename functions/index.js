@@ -1,3 +1,7 @@
+/* eslint no-unused-vars: "warn" */
+// disabled temporary because we have so much unused variables
+// but should be fixed soon
+
 'use strict';
 // Bimlendra
 const https = require('https');
@@ -384,9 +388,9 @@ function responseHandler (app) {
       OneGoPlayAudioStatus = true;
       OneGoPlayAudio(app, 0);
     } else if (app.getIntent() === 'SongAvailableYears') {
-      var cardTitle = 'Available Years';
-      var repromptText = '';
-      var speechOutput = '';
+      let cardTitle = 'Available Years';
+      let repromptText = '';
+      let speechOutput = '';
       suggestions = ['Disco Biscuits', 'Hot Buttered Rum', 'Keller Williams'];
 
       if (collection === '') {
@@ -410,9 +414,9 @@ function responseHandler (app) {
         }
       }
     } else if (app.getIntent() === 'SongDetail') {
-      var cardTitle = 'Available Years';
-      var repromptText = '';
-      var speechOutput = '';
+      let cardTitle = 'Available Years';
+      let repromptText = '';
+      let speechOutput = '';
       if (MusicUrlList.length >= 1) {
         repromptText = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
         speechOutput = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
