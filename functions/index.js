@@ -1863,10 +1863,10 @@ function log1 (Title, Collection, City, Year, Url, callback) {
       body += data;
     });
     res.on('end', function () {
-      callback(true);
+      callback();
     });
   }).on('error', function (e) {
-    callback(true);
+    callback(null, e);
   });
 }
 
@@ -2032,10 +2032,10 @@ function logKibana (callback) {
       body += data;
     });
     res.on('end', function () {
-      callback(true);
+      callback();
     });
   }).on('error', function (e) {
-    callback(true);
+    callback(null, e);
   });
   // To Log Request to Kibana
 }
