@@ -529,7 +529,7 @@ function responseHandler (app) {
 
 function getCollection (app) {
   collection = app.getArgument('COLLECTION');
-  let collection_real_name = app.getArgument('COLLECTION');
+  let collectionRealName = app.getArgument('COLLECTION');
   logger('collection : ' + collection);
   logger('collection_real_name : ' + collection);
   if (collection !== '' || collection !== undefined) {
@@ -597,10 +597,10 @@ function getCollection (app) {
           }
           cardTitle = 'Provide City and Year';
           repromptText = "<speak>Please select a City and year.<break time='.5s'/> Like " + CityName + ' ' + YearName + "  or <break time='.1s'/>random.</speak>";
-          cardOutput = collection_real_name + ' has been selected. Now, please select CITY and YEAR or RANDOM. Like ' + CityName + ' ' + YearName + ' or random.';
+          cardOutput = collectionRealName + ' has been selected. Now, please select CITY and YEAR or RANDOM. Like ' + CityName + ' ' + YearName + ' or random.';
 
           //          speechOutput = "<speak>" + collection_real_name + " has been selected.<break time='.5s'/> Now Please select City and Year or <break time='.1s'/>random. <break time='.5s'/>Like " + //CityName + " " + YearName + " or <break time='.1s'/> random.</speak>";
-          speechOutput = '<speak>' + collection_real_name + ' - great choice! Do you have a specific city and year in mind, like ' + CityName + ' ' + YearName + ', or would you like me to play something randomly from ' + collection_real_name + '?</speak>';
+          speechOutput = '<speak>' + collectionRealName + ' - great choice! Do you have a specific city and year in mind, like ' + CityName + ' ' + YearName + ', or would you like me to play something randomly from ' + collectionRealName + '?</speak>';
           log('The Collection ' + collection + ' has been selected.', collection, null, null, checkCollectionUrl, function (status) {
 
           });
@@ -608,9 +608,9 @@ function getCollection (app) {
           askWithReprompt(app, speechOutput, repromptText, suggestions);
         } else {
           cardTitle = 'Collection not exists';
-          repromptText = '<speak>' + collection_real_name + ' has no songs. Please try a different artist.</speak>';
-          speechOutput = '<speak>Sorry, ' + collection_real_name + " has no song. Please try again by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
-          cardOutput = 'Sorry, ' + collection_real_name + ' has no song. Please try again by saying ARTIST NAME like The Ditty Bops, Cowboy Junkies Or Grateful Dead.';
+          repromptText = '<speak>' + collectionRealName + ' has no songs. Please try a different artist.</speak>';
+          speechOutput = '<speak>Sorry, ' + collectionRealName + " has no song. Please try again by saying<break time='.5s'/> artist name.<break time='.5s'/> Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+          cardOutput = 'Sorry, ' + collectionRealName + ' has no song. Please try again by saying ARTIST NAME like The Ditty Bops, Cowboy Junkies Or Grateful Dead.';
 
           log('Sorry Collection: ' + collection + ' has no songs.', collection, null, null, checkCollectionUrl, function (status) {
 
