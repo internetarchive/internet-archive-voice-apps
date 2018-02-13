@@ -8,8 +8,10 @@
 npm test
 ```
 
-:star2: We follow [standard javascript code style](https://standardjs.com/)
+:star2: We follow [standard javascript code style](https://standardjs.com/).
+
+Automatic style fixing, it doesn't solve any problem but could be very helpful
 
 ```
-npm run lint
+npm run lint -- --fix
 ```
