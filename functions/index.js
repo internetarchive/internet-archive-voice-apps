@@ -146,11 +146,11 @@ function noInput (app) {
   app.data.noInputCount = parseInt(app.data.noInputCount, 10);
 
   app.data.noInputCount++;
-  if (app.data.noInputCount == 1) {
-  // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
+  if (app.data.noInputCount === 1) {
+    // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
     ask(app, `What was that?`, suggestions);
-  // app.data.noInputCount = parseInt(app.data.noInputCount, 10);
-  } else if (app.data.noInputCount == 2) {
+    // app.data.noInputCount = parseInt(app.data.noInputCount, 10);
+  } else if (app.data.noInputCount === 2) {
     ask(app, '<speak>Sorry, I still didn’t get that. ' + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
@@ -177,12 +177,12 @@ function Unknown (app) {
   app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
 
   app.data.unknownInputCount++;
-  if (app.data.unknownInputCount == 1) {
-  // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
+  if (app.data.unknownInputCount === 1) {
+    // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
 
     ask(app, '<speak>That was not a correct choice!</speak>', suggestions);
-  // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
-  } else if (app.data.unknownInputCount == 2) {
+    // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
+  } else if (app.data.unknownInputCount === 2) {
     ask(app, '<speak>Sorry, I still didn’t get that. ' + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
@@ -190,7 +190,7 @@ function Unknown (app) {
 }
 
 function responseHandler (app) {
-  // var requestType = (this.event.request != undefined) ? this.event.request.type : null;
+  // var requestType = (this.event.request !== undefined) ? this.event.request.type : null;
 
   logger('previousSpeechoutput : ' + previousSpeechoutput);
   logger('previousSuggestions : ' + previousSuggestions);
@@ -389,16 +389,16 @@ function responseHandler (app) {
       var speechOutput = '';
       suggestions = ['Disco Biscuits', 'Hot Buttered Rum', 'Keller Williams'];
 
-      if (collection == '') {
+      if (collection === '') {
         repromptText = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
         speechOutput = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
         askWithReprompt(app, speechOutput, repromptText, suggestions);
-      } else if (city == '') {
+      } else if (city === '') {
         repromptText = '<speak>Please select city first.</speak>';
         speechOutput = '<speak>Please select city first.</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       } else if (YearList.length > 0) {
-        if (YearList.length == 1) {
+        if (YearList.length === 1) {
           repromptText = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
           speechOutput = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
           askWithReprompt(app, speechOutput, repromptText, suggestions);
@@ -422,7 +422,7 @@ function responseHandler (app) {
         speechOutput = '<speak>No song id Playing now. Please select collection first.</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       }
-    } else if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+    } else if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
       // else if (app.getIntent() === MEDIA_STATUS_INTENT) {
       console.log('PlaybackNearlyFinished');
       // counter++;
@@ -441,10 +441,10 @@ function responseHandler (app) {
       console.log('page -' + page);
       console.log('Type -' + typeQuery);
 
-      if (SeventyEights == true) {
+      if (SeventyEights === true) {
         playSeventyEights(app, 0);
       } else {
-      // .play(app, 0);
+        // .play(app, 0);
         if (OneGoPlayAudioStatus) {
           OneGoPlayAudio(app, 0);
         } else {
@@ -452,9 +452,9 @@ function responseHandler (app) {
         }
       }
     } else if ((app.getIntent() === 'AMAZON.NextIntent')) {
-      if (currentSpeechoutput != null) {
+      if (currentSpeechoutput !== null) {
         repeatInput(app);
-      } else if (SeventyEights == true) {
+      } else if (SeventyEights === true) {
         var cardTitle = 'Available Years';
         var repromptText = '';
         var speechOutput = '';
@@ -477,7 +477,7 @@ function responseHandler (app) {
         var cardTitle = 'Available Years';
         var repromptText = '';
         var speechOutput = '';
-        if (TotalTrack == 0) {
+        if (TotalTrack === 0) {
           repromptText = '<speak>Please Select City and year first</speak>';
           speechOutput = '<speak>Please Select City and year first</speak>';
           askWithReprompt(app, speechOutput, repromptText, suggestions);
@@ -489,7 +489,7 @@ function responseHandler (app) {
           } else {
             typeQuery = false;
           }
- 	if (OneGoPlayAudioStatus) {
+          if (OneGoPlayAudioStatus) {
             OneGoPlayAudio(app, 0);
           } else {
             play(app, 0);
@@ -497,11 +497,11 @@ function responseHandler (app) {
         }
       }
     } else if (app.getIntent() === 'AMAZON.PreviousIntent') {
-      if (previousSpeechoutput == -1) {
+      if (previousSpeechoutput === -1) {
         repeatInput(app);
-      } else if (previousSpeechoutput != null) {
+      } else if (previousSpeechoutput !== null) {
         ask(app, previousSpeechoutput, previousSuggestions);
-      } else if (SeventyEights == true) {
+      } else if (SeventyEights === true) {
         if (counter > 0) {
           counter--;
         } else {
@@ -529,7 +529,7 @@ function getCollection (app) {
   var collection_real_name = app.getArgument('COLLECTION');
   logger('collection : ' + collection);
   logger('collection_real_name : ' + collection);
-  if (collection != '' || collection != undefined) {
+  if (collection !== '' || collection !== undefined) {
     collectionQuery = '';
     var collectionArray = collection.split(/[ ,]+/);
 
@@ -553,7 +553,7 @@ function getCollection (app) {
     }
 
     var checkCollectionUrl = podcastAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=50&page=0&indent=yes&output=json';
-            	checkCollectionUrl = customEncodeUri(checkCollectionUrl);
+    checkCollectionUrl = customEncodeUri(checkCollectionUrl);
     var optionscheckCollectionUrl = {
       host: host,
       path: checkCollectionUrl,
@@ -580,10 +580,10 @@ function getCollection (app) {
         var response = '';
         var resultCollection = parseJsonBody(body);
         logger('resultCollection length : ' + resultCollection['response']['docs'].length);
-        if (resultCollection != null && resultCollection['response']['docs'].length > 0) {
+        if (resultCollection !== null && resultCollection['response']['docs'].length > 0) {
           // http to node server collection title city =null year=null url=checkCollectionUrl resultCollection =result
           for (var i = 0; i < resultCollection['response']['docs'].length; i++) {
-            if (resultCollection['response']['docs'][i]['coverage'] != '' && resultCollection['response']['docs'][i]['coverage'] != undefined && resultCollection['response']['docs'][i]['year'] != '' && resultCollection['response']['docs'][i]['year'] != undefined) {
+            if (resultCollection['response']['docs'][i]['coverage'] !== '' && resultCollection['response']['docs'][i]['coverage'] !== undefined && resultCollection['response']['docs'][i]['year'] !== '' && resultCollection['response']['docs'][i]['year'] !== undefined) {
               if (resultCollection['response']['docs'][i]['coverage'].includes(',')) {
                 var resCity = resultCollection['response']['docs'][i]['coverage'].split(',');
                 CityName = resCity[0];
@@ -666,7 +666,7 @@ function playSeventyEights (app, offsetInMilliseconds) {
 
 function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseconds, callback) {
   var track = counter + 1;
-  if ((MusicUrlList.length > 0 && app.getIntent() != 'SeventyEights' && app.getIntent() != 'OneGoSeventyEights' && app.getIntent() != 'PlaByTopic' && typeQuery === false)) {
+  if ((MusicUrlList.length > 0 && app.getIntent() !== 'SeventyEights' && app.getIntent() !== 'OneGoSeventyEights' && app.getIntent() !== 'PlaByTopic' && typeQuery === false)) {
     if (track > MusicUrlList.length) {
       counter = 0;
       track = counter + 1;
@@ -683,13 +683,13 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
     audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
     logger(app.getIntent());
     logger('problem1 : ' + audioURL);
-    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
       askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     } else {
       askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     }
-  } else if (app.getIntent() == 'SeventyEights' || app.getIntent() == 'PlaByTopic' || app.getIntent() == 'OneGoSeventyEights' || typeQuery === true) {
-    if (app.getIntent() == 'SeventyEights') {
+  } else if (app.getIntent() === 'SeventyEights' || app.getIntent() === 'PlaByTopic' || app.getIntent() === 'OneGoSeventyEights' || typeQuery === true) {
+    if (app.getIntent() === 'SeventyEights') {
       logger('into Seventy Eights');
       logger(app.getIntent());
       var cardTitle = 'Collection Seventy Eights Has Been Selected.';
@@ -697,8 +697,8 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
       var speechOutput = "<speak>Collection Seventy Eights Has Been Selected.<break time='.1s'/> Please select a topic like Jazz, Instrumental, or Dance</speak>";
       suggestions = ['Jazz', 'Instrumental', 'Dance'];
       askWithReprompt(app, speechOutput, repromptText, suggestions);
-    } else if (app.getIntent() == 'PlaByTopic' || typeQuery === true || app.getIntent() == 'OneGoSeventyEights') {
-      if (app.getIntent() == 'PlaByTopic' || app.getIntent() == 'OneGoSeventyEights') {
+    } else if (app.getIntent() === 'PlaByTopic' || typeQuery === true || app.getIntent() === 'OneGoSeventyEights') {
+      if (app.getIntent() === 'PlaByTopic' || app.getIntent() === 'OneGoSeventyEights') {
         topicName = title = app.getArgument('TOPIC');
       }
 
@@ -709,7 +709,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
       topicName = topicName.replace(/[^a-zA-Z0-9 ]/g, '');
       // APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
       APIURL = SeventyEightsAPIURL + '(' + topicName + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
-      	APIURL = customEncodeUri(APIURL);
+      APIURL = customEncodeUri(APIURL);
       var options = {
         host: host,
         path: APIURL,
@@ -727,9 +727,9 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
         });
         res.on('end', function () {
           var result = parseJsonBody(body);
-          if (result != null && result['response']['docs'].length > 0) {
+          if (result !== null && result['response']['docs'].length > 0) {
             APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-            	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+            APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
             var optionsIdentifier = {
               host: host,
               path: APIURLIDENTIFIER,
@@ -747,13 +747,13 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
 
               response.on('end', function () {
                 var resultIdentifier = JSON.parse(bodyIdentifier);
-                if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                   var trackNumber = 0;
                   var lastsongsize = '';
                   for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                    if (resultIdentifier['result'][i]['format'] == 'VBR MP3' && lastsongsize != resultIdentifier['result'][i]['length']) {
+                    if (resultIdentifier['result'][i]['format'] === 'VBR MP3' && lastsongsize !== resultIdentifier['result'][i]['length']) {
                       lastsongsize = resultIdentifier['result'][i]['length'];
-                      if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['title'] === undefined) {
                         trackNumber = trackNumber + 1;
                         MusicUrlList.push({
                           identifier: result['response']['docs'][0]['identifier'],
@@ -789,7 +789,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
                   trackcounter = x;
                   audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
                   logger('problem2 : ' + audioURL);
-                  if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                  if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                     askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   } else {
                     askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
@@ -852,13 +852,13 @@ function PlayNext (requestType, offsetInMilliseconds) {
       logger('End - ' + end);
       trackcounter = x;
       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-      if (PlayAudioByRandomYear == true) {
+      if (PlayAudioByRandomYear === true) {
         log('Auto Next Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
         });
-      } else if (PlayAudioByRandomCity == true) {
+      } else if (PlayAudioByRandomCity === true) {
         log('PAuto Next laying Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
         });
-      } else if (PlayAudioByRandom == true) {
+      } else if (PlayAudioByRandom === true) {
         log('Auto Next Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
         });
       }
@@ -884,7 +884,7 @@ function logger (strLog) {
 }
 
 function customEncodeUri (uri) {
-  if (uri != null && uri != '') {
+  if (uri !== null && uri !== '') {
     return replaceall(' ', '+', uri);
   }
   return '';
@@ -893,7 +893,7 @@ function customEncodeUri (uri) {
 function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callback) {
   var track = counter + 1;
 
-  if ((MusicUrlList.length > 0 && app.getIntent() != 'OneGoPlayAudio' && app.getIntent() != 'OneGoCollectionRandomPlayAudio' && typeQuery === false)) {
+  if ((MusicUrlList.length > 0 && app.getIntent() !== 'OneGoPlayAudio' && app.getIntent() !== 'OneGoCollectionRandomPlayAudio' && typeQuery === false)) {
     if (track > MusicUrlList.length) {
       counter = 0;
       track = counter + 1;
@@ -910,28 +910,30 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
       // trackcounter = x;
       var x = trackcounter;
       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-      if (OneGoCollectionRandomPlayAudioStatus == true) {
-        log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {});
+      if (OneGoCollectionRandomPlayAudioStatus === true) {
+        log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
+        });
       }
     } else {
       audioURL = 'https://archive.org/download/' + MusicUrlList[trackcounter]['identifier'] + '/' + MusicUrlList[trackcounter]['trackName'];
-      log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, year, APIURL, function (status) {});
+      log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, year, APIURL, function (status) {
+      });
     }
     // logger(app.getIntent());
-    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
     } else {
       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
     }
-  } else if (app.getIntent() == 'OneGoPlayAudio' || typeQuery === true || app.getIntent() == 'OneGoCollectionRandomPlayAudio') {
-    if (app.getIntent() == 'OneGoPlayAudio' || app.getIntent() == 'OneGoCollectionRandomPlayAudio') {
-      if (OneGoCollectionRandomPlayAudioStatus == false) {
+  } else if (app.getIntent() === 'OneGoPlayAudio' || typeQuery === true || app.getIntent() === 'OneGoCollectionRandomPlayAudio') {
+    if (app.getIntent() === 'OneGoPlayAudio' || app.getIntent() === 'OneGoCollectionRandomPlayAudio') {
+      if (OneGoCollectionRandomPlayAudioStatus === false) {
         city = app.getArgument('CITY');
         year = app.getArgument('YEAR');
       }
       collection = app.getArgument('COLLECTION');
       var collection_real_name = app.getArgument('COLLECTION');
-      if (collection != null && collection != '' && collection != undefined) {
+      if (collection !== null && collection !== '' && collection !== undefined) {
         collectionQuery = '';
         var collectionArray = collection.split(/[ ,]+/);
 
@@ -954,7 +956,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
           collectionQuery = '(' + collectionQuery + '(' + collection + ')+OR+collection:(the' + collection + '))';
         }
 
-        if (OneGoCollectionRandomPlayAudioStatus == true) {
+        if (OneGoCollectionRandomPlayAudioStatus === true) {
           APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
         } else {
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
@@ -965,7 +967,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
           city = '';
           used = false;
         }
-        if (OneGoCollectionRandomPlayAudioStatus == true) {
+        if (OneGoCollectionRandomPlayAudioStatus === true) {
           APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
         } else {
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
@@ -990,9 +992,9 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
         res.on('end', function () {
           logger('body : ' + body);
           var result = parseJsonBody(body);
-          if (result != null && result['response']['docs'].length > 0) {
-            if ((app.getIntent() == 'OneGoPlayAudio') || (app.getIntent() == 'OneGoCollectionRandomPlayAudio') || (((city != '' && year != '') || OneGoCollectionRandomPlayAudioStatus == true) && collectionQuery != '')) {
-              if (app.getIntent() == 'OneGoPlayAudio' || app.getIntent() == 'OneGoCollectionRandomPlayAudio' || page == 0) {
+          if (result !== null && result['response']['docs'].length > 0) {
+            if ((app.getIntent() === 'OneGoPlayAudio') || (app.getIntent() === 'OneGoCollectionRandomPlayAudio') || (((city !== '' && year !== '') || OneGoCollectionRandomPlayAudioStatus === true) && collectionQuery !== '')) {
+              if (app.getIntent() === 'OneGoPlayAudio' || app.getIntent() === 'OneGoCollectionRandomPlayAudio' || page === 0) {
                 counter = 0;
                 MusicUrlList = [];
               }
@@ -1004,7 +1006,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
               // New Https Request for mp3 tracks
               // track=counter+1;
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-                           	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+              APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
               var optionsIdentifier = {
                 host: host,
                 path: APIURLIDENTIFIER,
@@ -1023,11 +1025,11 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
 
                 response.on('end', function () {
                   var resultIdentifier = JSON.parse(bodyIdentifier);
-                  if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                  if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                     var trackNumber = 0;
                     for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                      if (resultIdentifier['result'][i]['format'] == 'VBR MP3') {
-                        if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['format'] === 'VBR MP3') {
+                        if (resultIdentifier['result'][i]['title'] === undefined) {
                           trackNumber = trackNumber + 1;
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
@@ -1064,15 +1066,17 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
                       // trackcounter = x;
                       var x = trackcounter;
                       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-                      if (OneGoCollectionRandomPlayAudioStatus == true) {
-                        log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {});
+                      if (OneGoCollectionRandomPlayAudioStatus === true) {
+                        log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
+                        });
                       }
                     } else {
                       audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
-                      log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, year, APIURL, function (status) {});
+                      log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, year, APIURL, function (status) {
+                      });
                     }
 
-                    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1095,9 +1099,11 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
             }
           } else {
             if (PlayAudioByRandom) {
-              log('Sorry , No result found for command play ' + collection + ' random  ', collection, 'random', 'random', APIURL, function (status) {});
+              log('Sorry , No result found for command play ' + collection + ' random  ', collection, 'random', 'random', APIURL, function (status) {
+              });
             } else {
-              log('Sorry , No result found for command play ' + collection + ' ' + city + ' ' + year + '   ', collection, city, year, APIURL, function (status) {});
+              log('Sorry , No result found for command play ' + collection + ' ' + city + ' ' + year + '   ', collection, city, year, APIURL, function (status) {
+              });
             }
             year = '';
             city = '';
@@ -1143,7 +1149,7 @@ function Welcome (app) {
   var speechOutput = "<speak><audio src='https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3' />  Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies.  </speak>";
   // var speechOutput = "<speak>Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
 
-  if (app.getLastSeen() != null) {
+  if (app.getLastSeen() !== null) {
     speechOutput = "<speak>Welcome back, choose an artist.<break time='.5s'/> For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
   }
 
@@ -1151,10 +1157,10 @@ function Welcome (app) {
 }
 
 function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback) {
-  if (collection != '' || searchBYTitle) {
+  if (collection !== '' || searchBYTitle) {
     var track = counter + 1;
 
-    if ((MusicUrlList.length > 0 && app.getIntent() != 'PlayAudio' && app.getIntent() != 'PlayAudioByRandom' && app.getIntent() != 'PlayAudioByCity' && app.getIntent() != 'PlayAudioByRandomYear' && app.getIntent() != 'PlayAudioByRandomCity' && app.getIntent() != 'PlayAudioQuery' && typeQuery === false)) {
+    if ((MusicUrlList.length > 0 && app.getIntent() !== 'PlayAudio' && app.getIntent() !== 'PlayAudioByRandom' && app.getIntent() !== 'PlayAudioByCity' && app.getIntent() !== 'PlayAudioByRandomYear' && app.getIntent() !== 'PlayAudioByRandomCity' && app.getIntent() !== 'PlayAudioQuery' && typeQuery === false)) {
       if (track > MusicUrlList.length) {
         counter = 0;
         track = counter + 1;
@@ -1170,13 +1176,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
         logger('End - ' + end);
         trackcounter = x;
         audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-        if (PlayAudioByRandomYear == true) {
+        if (PlayAudioByRandomYear === true) {
           log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
           });
-        } else if (PlayAudioByRandomCity == true) {
+        } else if (PlayAudioByRandomCity === true) {
           log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
           });
-        } else if (PlayAudioByRandom == true) {
+        } else if (PlayAudioByRandom === true) {
           log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
           });
         }
@@ -1186,27 +1192,27 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
         });
       }
       // logger(app.getIntent());
-      if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+      if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
         logger('autoNext');
         askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       } else {
         logger('!autoNext');
         askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       }
-    } else if (app.getIntent() == 'PlayAudio' || app.getIntent() == 'PlayAudioByCity' || app.getIntent() == 'PlayAudioByRandom' || app.getIntent() == 'PlayAudioByRandomYear' || app.getIntent() == 'PlayAudioByRandomCity' || app.getIntent() == 'PlayAudioByYearCity' || app.getIntent() == 'PlayAudioQuery' || typeQuery === true) {
-      if (searchBYTitle || app.getIntent() == 'PlayAudioQuery') {
+    } else if (app.getIntent() === 'PlayAudio' || app.getIntent() === 'PlayAudioByCity' || app.getIntent() === 'PlayAudioByRandom' || app.getIntent() === 'PlayAudioByRandomYear' || app.getIntent() === 'PlayAudioByRandomCity' || app.getIntent() === 'PlayAudioByYearCity' || app.getIntent() === 'PlayAudioQuery' || typeQuery === true) {
+      if (searchBYTitle || app.getIntent() === 'PlayAudioQuery') {
         if (app.getIntent() === 'PlayAudioQuery') {
           title = app.getArgument('TITLE');
         }
         APIURL = podcastAPIURLNEW + title + '%20AND(mediatype:audio)&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
-      } else if (PlayAudioByRandomYear || app.getIntent() == 'PlayAudioByRandomYear') {
+      } else if (PlayAudioByRandomYear || app.getIntent() === 'PlayAudioByRandomYear') {
         if (app.getIntent() === 'PlayAudioByRandomYear') {
           city = app.getArgument('CITY');
         }
         APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage:(' + city + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
-      } else if (PlayAudioByRandom || app.getIntent() == 'PlayAudioByRandom') {
+      } else if (PlayAudioByRandom || app.getIntent() === 'PlayAudioByRandom') {
         APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + page + '&indent=yes&output=json';
-      } else if (PlayAudioByRandomCity || app.getIntent() == 'PlayAudioByRandomCity') {
+      } else if (PlayAudioByRandomCity || app.getIntent() === 'PlayAudioByRandomCity') {
         if (app.getIntent() === 'PlayAudioByRandomCity') {
           year = app.getArgument('YEAR');
         }
@@ -1229,7 +1235,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')';
         }
 
-        if (year != '' && city != '') {
+        if (year !== '' && city !== '') {
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + city + ')+AND+year%3A(' + year + ')';
         }
         if (app.getIntent() === 'PlayAudioByCity') {
@@ -1238,7 +1244,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
           APIURL = APIURL + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + page + '&indent=yes&output=json';
         }
       }
-      	APIURL = customEncodeUri(APIURL);
+      APIURL = customEncodeUri(APIURL);
       var options = {
         host: host,
         path: APIURL,
@@ -1256,12 +1262,12 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
         res.on('end', function () {
           var result = parseJsonBody(body);
-          if (result != null && result['response']['docs'].length > 0) {
-            if ((app.getIntent() === 'PlayAudioByCity' || app.getIntent() == 'PlayAudio') && (year == '' || city == '')) {
+          if (result !== null && result['response']['docs'].length > 0) {
+            if ((app.getIntent() === 'PlayAudioByCity' || app.getIntent() === 'PlayAudio') && (year === '' || city === '')) {
               var YearString = '';
               var CityList = [];
               var CityString = '';
-              if (app.getIntent() === 'PlayAudioByCity' && year == '') {
+              if (app.getIntent() === 'PlayAudioByCity' && year === '') {
                 for (var i = 0; i < result['response']['docs'].length; i++) {
                   YearList.push(result['response']['docs'][i]['year']);
                 }
@@ -1276,7 +1282,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 var repromptText = '<speak> Waiting for your response.</speak>';
                 var speechOutput = '<speak> Year list for ' + city + ' is not available. Please select random.</speak>';
 
-                if (YearList.length == 1) {
+                if (YearList.length === 1) {
                   YearString = YearList[0];
                   speechOutput = '<speak> Ok, Grateful Dead has played in ' + city + ' in ' + YearString + '. Do you have a particular year in mind?</speak>';
                 } else if (YearList.length > 1) {
@@ -1288,7 +1294,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 });
                 suggestions = YearList;
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
-              } else if (app.getIntent() === 'PlayAudio' && city == '') {
+              } else if (app.getIntent() === 'PlayAudio' && city === '') {
                 for (var i = 0; i < result['response']['docs'].length; i++) {
                   CityList.push(result['response']['docs'][i]['coverage']);
                 }
@@ -1305,10 +1311,10 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 log('Ok , available cities for artist: ' + collection + ' and year: ' + year + ' are ' + CityString, collection, city, year, APIURL, function (status) {
                 });
                 suggestions = CityList;
-	      askWithReprompt(app, speechOutput, repromptText, suggestions);
-	      }
-            } else if ((app.getIntent() == 'PlayAudioByYearCity') || (city != '' && year != '')) {
-              if (app.getIntent() == 'PlayAudioByYearCity' || page == 0) {
+                askWithReprompt(app, speechOutput, repromptText, suggestions);
+              }
+            } else if ((app.getIntent() === 'PlayAudioByYearCity') || (city !== '' && year !== '')) {
+              if (app.getIntent() === 'PlayAudioByYearCity' || page === 0) {
                 counter = 0;
                 MusicUrlList = [];
               }
@@ -1320,7 +1326,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               // New Https Request for mp3 tracks
               // track=counter+1;
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-                            	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+              APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
               var optionsIdentifier = {
                 host: host,
                 path: APIURLIDENTIFIER,
@@ -1339,11 +1345,11 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 response.on('end', function () {
                   var resultIdentifier = JSON.parse(bodyIdentifier);
-                  if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                  if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                     var trackNumber = 0;
                     for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                      if (resultIdentifier['result'][i]['format'] == 'VBR MP3') {
-                        if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['format'] === 'VBR MP3') {
+                        if (resultIdentifier['result'][i]['title'] === undefined) {
                           trackNumber = trackNumber + 1;
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
@@ -1379,13 +1385,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       logger('End - ' + end);
                       trackcounter = x;
                       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-                      if (PlayAudioByRandomYear == true) {
+                      if (PlayAudioByRandomYear === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandomCity == true) {
+                      } else if (PlayAudioByRandomCity === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandom == true) {
+                      } else if (PlayAudioByRandom === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
                         });
                       }
@@ -1395,7 +1401,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       logger(MEDIA_STATUS_INTENT);
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
@@ -1415,7 +1421,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 var speechOutput = '<speak>Sorry, could you repeat that?</speak>';
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() == 'PlayAudioQuery' || searchBYTitle) {
+            } else if (app.getIntent() === 'PlayAudioQuery' || searchBYTitle) {
               if (app.getIntent() === 'PlayAudioQuery') {
                 counter = 0;
                 MusicUrlList = [];
@@ -1435,7 +1441,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               log('Result for search ' + title, collection, null, null, APIURL, function (status) {
               });
               var trackcounter = counter;
-              if (PlayAudioByRandomYear == true || PlayAudioByRandomCity == true || PlayAudioByRandom == true) {
+              if (PlayAudioByRandomYear === true || PlayAudioByRandomCity === true || PlayAudioByRandom === true) {
                 var start = page * 50;
                 var end = (page * 50) + MusicUrlList.length - 1;
                 var x = Math.floor((Math.random() * end) + start);
@@ -1444,13 +1450,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 logger('End - ' + end);
                 trackcounter = x;
                 audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
-                if (PlayAudioByRandomYear == true) {
+                if (PlayAudioByRandomYear === true) {
                   log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
                   });
-                } else if (PlayAudioByRandomCity == true) {
+                } else if (PlayAudioByRandomCity === true) {
                   log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
                   });
-                } else if (PlayAudioByRandom == true) {
+                } else if (PlayAudioByRandom === true) {
                   log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
                   });
                 }
@@ -1460,12 +1466,12 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 });
               }
 
-              if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+              if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                 askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
               } else {
                 askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
               }
-            } else if (app.getIntent() == 'PlayAudioByRandomYear' || PlayAudioByRandomYear) {
+            } else if (app.getIntent() === 'PlayAudioByRandomYear' || PlayAudioByRandomYear) {
               if (app.getIntent() === 'PlayAudioByRandomYear') {
                 counter = 0;
                 MusicUrlList = [];
@@ -1473,7 +1479,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-                            	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+              APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
               var optionsIdentifier = {
                 host: host,
                 path: APIURLIDENTIFIER,
@@ -1491,11 +1497,11 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 response.on('end', function () {
                   var resultIdentifier = JSON.parse(bodyIdentifier);
-                  if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                  if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                     var trackNumber = 0;
                     for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                      if (resultIdentifier['result'][i]['format'] == 'VBR MP3') {
-                        if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['format'] === 'VBR MP3') {
+                        if (resultIdentifier['result'][i]['title'] === undefined) {
                           trackNumber = trackNumber + 1;
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
@@ -1530,13 +1536,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       logger('End - ' + end);
                       trackcounter = x;
                       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-                      if (PlayAudioByRandomYear == true) {
+                      if (PlayAudioByRandomYear === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandomCity == true) {
+                      } else if (PlayAudioByRandomCity === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandom == true) {
+                      } else if (PlayAudioByRandom === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
                         });
                       }
@@ -1546,7 +1552,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1564,7 +1570,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 var speechOutput = '<speak>Sorry, could you repeat that?</speak>';
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() == 'PlayAudioByRandomCity' || PlayAudioByRandomYear) {
+            } else if (app.getIntent() === 'PlayAudioByRandomCity' || PlayAudioByRandomYear) {
               if (app.getIntent() === 'PlayAudioByRandomCity') {
                 counter = 0;
                 MusicUrlList = [];
@@ -1572,7 +1578,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-                            	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+              APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
               var optionsIdentifier = {
                 host: host,
                 path: APIURLIDENTIFIER,
@@ -1590,11 +1596,11 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 response.on('end', function () {
                   var resultIdentifier = JSON.parse(bodyIdentifier);
-                  if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                  if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                     var trackNumber = 0;
                     for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                      if (resultIdentifier['result'][i]['format'] == 'VBR MP3') {
-                        if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['format'] === 'VBR MP3') {
+                        if (resultIdentifier['result'][i]['title'] === undefined) {
                           trackNumber = trackNumber + 1;
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
@@ -1629,13 +1635,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       logger('End - ' + end);
                       trackcounter = x;
                       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-                      if (PlayAudioByRandomYear == true) {
+                      if (PlayAudioByRandomYear === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandomCity == true) {
+                      } else if (PlayAudioByRandomCity === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandom == true) {
+                      } else if (PlayAudioByRandom === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
                         });
                       }
@@ -1645,7 +1651,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1663,7 +1669,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 var speechOutput = '<speak>Sorry, can you repeat that?</speak>';
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() == 'PlayAudioByRandom' || PlayAudioByRandom) {
+            } else if (app.getIntent() === 'PlayAudioByRandom' || PlayAudioByRandom) {
               if (app.getIntent() === 'PlayAudioByRandom') {
                 counter = 0;
                 MusicUrlList = [];
@@ -1671,7 +1677,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               }
 
               APIURLIDENTIFIER = APIURLIdentifier + result['response']['docs'][0]['identifier'] + '/files';
-                            	APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
+              APIURLIDENTIFIER = customEncodeUri(APIURLIDENTIFIER);
               var optionsIdentifier = {
                 host: host,
                 path: APIURLIDENTIFIER,
@@ -1689,11 +1695,11 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 response.on('end', function () {
                   var resultIdentifier = JSON.parse(bodyIdentifier);
-                  if (resultIdentifier != null && resultIdentifier['result'].length > 0) {
+                  if (resultIdentifier !== null && resultIdentifier['result'].length > 0) {
                     var trackNumber = 0;
                     for (var i = 0; i < resultIdentifier['result'].length; i++) {
-                      if (resultIdentifier['result'][i]['format'] == 'VBR MP3') {
-                        if (resultIdentifier['result'][i]['title'] == undefined) {
+                      if (resultIdentifier['result'][i]['format'] === 'VBR MP3') {
+                        if (resultIdentifier['result'][i]['title'] === undefined) {
                           trackNumber = trackNumber + 1;
                           MusicUrlList.push({
                             identifier: result['response']['docs'][0]['identifier'],
@@ -1729,13 +1735,13 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       logger('End - ' + end);
                       trackcounter = x;
                       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-                      if (PlayAudioByRandomYear == true) {
+                      if (PlayAudioByRandomYear === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandomCity == true) {
+                      } else if (PlayAudioByRandomCity === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
                         });
-                      } else if (PlayAudioByRandom == true) {
+                      } else if (PlayAudioByRandom === true) {
                         log('Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
                         });
                       }
@@ -1745,7 +1751,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() == MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status == app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1777,10 +1783,10 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
             var cardTitle = 'No Songs Found';
             var repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
             var speechOutput = checkYear(year);
-            if (speechOutput == '') {
+            if (speechOutput === '') {
               speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
             }
-	    // year = '';
+            // year = '';
             // city = '';
             askWithReprompt(app, speechOutput, repromptText, suggestions);
           }
@@ -1823,10 +1829,10 @@ function checkYear (year) {
     logger('tempYearList : ' + tempYearList);
     if (yearIndex > 0 && yearIndex < tempYearList.length - 1) {
       speechOutput = '<speak> I don’t have anything for ' + year + '. The two closest years for ' + city + '. I would have are in ' + tempYearList[yearIndex - 1] + ' or ' + tempYearList[yearIndex + 1] + '. Which year would you like? </speak>';
-    } else if (yearIndex == 0 || yearIndex == tempYearList.length - 1) {
+    } else if (yearIndex === 0 || yearIndex === tempYearList.length - 1) {
       speechOutput = '<speak> I don’t have anything for ' + year + '. Please select within suggested range. </speak>';
       var YearString = '';
-      if (YearList.length == 1) {
+      if (YearList.length === 1) {
         YearString = YearList[0];
         speechOutput = '<speak> I don’t have anything for ' + year + '. Available year for ' + city + ' is ' + YearString + '.</speak>';
       } else if (YearList.length > 1) {
@@ -1907,7 +1913,7 @@ function askWithReprompt (app, speechOutput, repromptText, suggestions) {
 }
 
 function ask (app, speechOutput, suggestions) {
-  if (speechOutput != currentSpeechoutput) {
+  if (speechOutput !== currentSpeechoutput) {
     previousSpeechoutput = currentSpeechoutput;
     previousSuggestions = currentSuggestions;
     currentSpeechoutput = speechOutput;
@@ -1930,7 +1936,7 @@ function askAudioWithoutCoverageYear (app, identifier, track, title, coverage, y
   app.ask(app.buildRichResponse()
     .addSimpleResponse('Playing track - ' + title)
     .addMediaResponse(app.buildMediaResponse()
-      	.addMediaObjects([app.buildMediaObject('Playing track number - ' + track, audioURL)
+      .addMediaObjects([app.buildMediaObject('Playing track number - ' + track, audioURL)
         .setDescription('Playing track - ' + title)
         // .setImage(imageURL+replaceall(" ", "", collection), app.Media.ImageType.LARGE)
         // .setImage(imageURL+identifier, app.Media.ImageType.LARGE)
@@ -1951,12 +1957,13 @@ function askAudio (app, identifier, track, title, coverage, year, audioURL, sugg
   logger('audioURL : ' + audioURL);
 
   // To Log Request to Kibana
-  logKibana(function (status) {});
+  logKibana(function (status) {
+  });
 
   app.ask(app.buildRichResponse()
     .addSimpleResponse('Playing track - ' + title + ', ' + coverage + ', ' + year)
     .addMediaResponse(app.buildMediaResponse()
-      	.addMediaObjects([app.buildMediaObject('Playing track number - ' + track, audioURL)
+      .addMediaObjects([app.buildMediaObject('Playing track number - ' + track, audioURL)
         .setDescription('Playing track - ' + title + ', ' + coverage + ', ' + year)
         // .setImage(imageURL+identifier, app.Media.ImageType.LARGE)
         .setImage('http://archive.org/images/notfound.png', app.Media.ImageType.LARGE)
@@ -1984,13 +1991,13 @@ function PlayNextSong (requestType, offsetInMilliseconds) {
       logger('End - ' + end);
       trackcounter = x;
       audioURL = 'https://archive.org/download/' + MusicUrlList[x]['identifier'] + '/' + MusicUrlList[x]['trackName'];
-      if (PlayAudioByRandomYear == true) {
+      if (PlayAudioByRandomYear === true) {
         log('Auto Next Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, city, 'random', APIURL, function (status) {
         });
-      } else if (PlayAudioByRandomCity == true) {
+      } else if (PlayAudioByRandomCity === true) {
         log('PAuto Next laying Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', year, APIURL, function (status) {
         });
-      } else if (PlayAudioByRandom == true) {
+      } else if (PlayAudioByRandom === true) {
         log('Auto Next Playing Track URL - ' + audioURL + ' And Track Name - ' + MusicUrlList[trackcounter]['title'], collection, 'random', 'random', APIURL, function (status) {
         });
       }
