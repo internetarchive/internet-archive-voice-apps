@@ -1,10 +1,10 @@
 'use strict';
 //Bimlendra
-var https = require('https');
-var http = require('http');
+const https = require('https');
+const http = require('http');
 const util = require('util');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
-var bst = require('bespoken-tools');
+const bst = require('bespoken-tools');
 //var logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 
 var replaceall = require("replaceall");
