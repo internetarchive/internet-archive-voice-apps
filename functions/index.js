@@ -1431,11 +1431,11 @@ logger("!autoNext");
 
 		if(YearList.length == 1) {
 		YearString = YearList[0];
-                speechOutput = "<speak> Ok... for " + city + " I have music from " + YearString + ", please select a year.</speak>";
+                speechOutput = "<speak> Ok, Grateful Dead has played in " + city + " in " + YearString + ". Do you have a particular year in mind?</speak>";
 		}
 		else if(YearList.length > 1) {
 		YearString = YearList[0]+" to "+YearList[YearList.length-1];
-                speechOutput = "<speak> Ok... for " + city + " I have music from " + YearString + ", please select a year.</speak>";
+                speechOutput = "<speak> Ok, Grateful Dead has played in " + city + " sometime between " + YearString + ". Do you have a particular year in mind?</speak>";
 		}
 
 
