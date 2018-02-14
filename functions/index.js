@@ -9,6 +9,8 @@ const http = require('http');
 const util = require('util');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
 const bst = require('bespoken-tools');
+const strings = require('./strings');
+const actions = require('./actions');
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 
 let replaceall = require('replaceall');
@@ -51,10 +53,10 @@ const functions = require('firebase-functions');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 logger('Start');
 
-const WELCOME_INTENT = 'input.welcome';
-const TEXT_INTENT = 'input.text';
-const UNKNOWN_INTENT = 'input.unknown';
-const MEDIA_STATUS_INTENT = 'media_status_update';
+const WELCOME_INTENT = actions.welcomeInput;
+const TEXT_INTENT = actions.textInput;
+const UNKNOWN_INTENT = actions.unknownInput;
+const MEDIA_STATUS_INTENT = actions.mediaStatusInput;
 
 let currentSpeechoutput = -1;
 let currentSuggestions = null;
@@ -66,14 +68,18 @@ let previousSuggestions = null;
 let YearList = [];
 
 const LIST_FALLBACK = [
-  'Sorry, what was that?',
-  "I didn't catch that. Could you tell me which one you liked?",
-  "I'm having trouble understanding you. Which one of those did you like?"
+  strings.fallback.whatWasThat,
+  strings.fallback.didntCatchThat,
+  strings.fallback.misunderstand
 ];
 
-const FINAL_FALLBACK = "I'm sorry I'm having trouble here. Maybe we should try this again later.";
+const FINAL_FALLBACK = strings.fallback.finalReprompt;
 
-let suggestions = ['Grateful Dead', 'Cowboy Junkies', 'Ditty Bops'];
+let suggestions = [
+  strings.suggestion.artist.gratefulDead, 
+  strings.suggestion.artist.cowboyJunkies,
+  strings.suggestion.artist.dittyBops
+];
 
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
 // exports.playMedia = functions.https.onRequest(((req, res) => {
@@ -83,7 +89,7 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
-    app.tell("Sorry, your device doesn't support media response.");
+    app.tell(strings.errors.device.mediaResponse);
   }
 }));
 
@@ -128,7 +134,7 @@ function init (app) {
   previousSuggestions = null;
   YearList = [];
 
-  suggestions = ['Grateful Dead', 'Cowboy Junkies', 'Ditty Bops'];
+  // suggestions = ['Grateful Dead', 'Cowboy Junkies', 'Ditty Bops'];
 }
 
 function unique (ar) {
@@ -151,10 +157,10 @@ function noInput (app) {
   app.data.noInputCount++;
   if (app.data.noInputCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
-    ask(app, `What was that?`, suggestions);
+    ask(app, strings.errors.noInput.first, suggestions);
     // app.data.noInputCount = parseInt(app.data.noInputCount, 10);
   } else if (app.data.noInputCount === 2) {
-    ask(app, '<speak>Sorry, I still didn’t get that. ' + currentRepromptText + '</speak>', suggestions);
+    ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
   }
@@ -163,16 +169,16 @@ function noInput (app) {
 function noInput1 (app) {
   logger('RepromptCount : ' + app.getRepromptCount());
   if (app.getRepromptCount() === 0) {
-    ask(app, `What was that?`, suggestions);
+    ask(app, strings.errors.noInput.first, suggestions);
   } else if (app.getRepromptCount() === 1) {
-    ask(app, `Sorry I didn't catch that. Could you repeat yourself?`, suggestions);
+    ask(app, strings.errors.noInput.reprompt, suggestions);
   } else if (app.isFinalReprompt()) {
-    tell(app, `Okay let's try this again later.`);
+    tell(app, strings.appExit);
   }
 }
 
 function Unknown1 (app) {
-  let speechOutput = '<speak>Sorry, can you say the artist name again?</speak>';
+  let speechOutput = '<speak>' + strings.errors.unknownInput.first + '</speak>';
   ask(app, speechOutput, suggestions);
 }
 
@@ -183,10 +189,10 @@ function Unknown (app) {
   if (app.data.unknownInputCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
 
-    ask(app, '<speak>That was not a correct choice!</speak>', suggestions);
+    ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
     // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
   } else if (app.data.unknownInputCount === 2) {
-    ask(app, '<speak>Sorry, I still didn’t get that. ' + currentRepromptText + '</speak>', suggestions);
+    ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
   }
@@ -202,7 +208,7 @@ function responseHandler (app) {
   logger('responseHandler : ' + app.getIntent());
   logger('noInputCount : ' + app.data.noInputCount);
 
-  if (app.getIntent() === 'No.Input') {
+  if (app.getIntent() === actions.noInput) {
     noInput(app);
     app.data.unknownInputCount = 0;
   } else if (app.getIntent() === UNKNOWN_INTENT) {
@@ -211,15 +217,15 @@ function responseHandler (app) {
   } else {
     app.data.noInputCount = 0;
     app.data.unknownInputCount = 0;
-    if (app.getIntent() === 'Repeat.Input') {
+    if (app.getIntent() === actions.repeatInput) {
       repeatInput(app);
     } else if (app.getIntent() === WELCOME_INTENT) {
       SeventyEights = false;
       Welcome(app);
-    } else if (app.getIntent() === 'Discovery') {
+    } else if (app.getIntent() === actions.discovery) {
       SeventyEights = false;
       Discovery(app);
-    } else if (app.getIntent() === 'PlayAudio') {
+    } else if (app.getIntent() === actions.playAudio.noOptions) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -233,13 +239,13 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'SearchCollection') {
+    } else if (app.getIntent() === actions.searchCollection) {
       TotalTrack = -1;
       SeventyEights = false;
       city = '';
       year = '';
       getCollection(app);
-    } else if (app.getIntent() === 'PlayAudioByCity') {
+    } else if (app.getIntent() === actions.playAudio.byCity) {
       page = 0;
       MusicUrlList = [];
       TotalTrack = -1;
@@ -253,7 +259,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'PlayAudioByYearCity') {
+    } else if (app.getIntent() === actions.playAudio.byYearAndCity) {
       page = 0;
       MusicUrlList = [];
       TotalTrack = -1;
@@ -267,7 +273,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'PlayAudioQuery') {
+    } else if (app.getIntent() === actions.playAudio.query) {
       page = 0;
       MusicUrlList = [];
       TotalTrack = 0;
@@ -281,7 +287,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'PlayAudioByRandomYear') {
+    } else if (app.getIntent() === actions.playAudio.random.year) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -295,7 +301,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'PlayAudioByRandomCity') {
+    } else if (app.getIntent() === actions.playAudio.random.city) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -309,7 +315,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'PlayAudioByRandom') {
+    } else if (app.getIntent() === actions.playAudio.random.yearAndCity) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -323,7 +329,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = false;
       play(app, 0);
-    } else if (app.getIntent() === 'SeventyEights') {
+    } else if (app.getIntent() === actions.seventyEights.noOptions) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -334,7 +340,7 @@ function responseHandler (app) {
       SeventyEights = true;
       topicName = '';
       playSeventyEights(app, 0);
-    } else if (app.getIntent() === 'PlaByTopic') {
+    } else if (app.getIntent() === actions.seventyEights.byTopic) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -344,7 +350,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = true;
       playSeventyEights(app, 0);
-    } else if (app.getIntent() === 'OneGoSeventyEights') {
+    } else if (app.getIntent() === actions.oneGo.seventyEights) {
       page = 0;
       TotalTrack = -1;
       IdentifierCount = 0;
@@ -354,7 +360,7 @@ function responseHandler (app) {
       counter = 0;
       SeventyEights = true;
       playSeventyEights(app, 0);
-    } else if (app.getIntent() === 'OneGoPlayAudio') {
+    } else if (app.getIntent() === actions.oneGo.playAudio) {
       logger('OneGoPlayAudio');
       page = 0;
       TotalTrack = -1;
@@ -370,7 +376,7 @@ function responseHandler (app) {
       SeventyEights = false;
       OneGoPlayAudioStatus = true;
       OneGoPlayAudio(app, 0);
-    } else if (app.getIntent() === 'OneGoCollectionRandomPlayAudio') {
+    } else if (app.getIntent() === actions.oneGo.randomPlayAudio) {
       logger('OneGoCollectionRandomPlayAudio');
       page = 0;
       TotalTrack = -1;
@@ -386,11 +392,15 @@ function responseHandler (app) {
       SeventyEights = false;
       OneGoPlayAudioStatus = true;
       OneGoPlayAudio(app, 0);
-    } else if (app.getIntent() === 'SongAvailableYears') {
+    } else if (app.getIntent() === actions.information.availableYears) {
       let cardTitle = 'Available Years';
       let repromptText = '';
       let speechOutput = '';
-      suggestions = ['Disco Biscuits', 'Hot Buttered Rum', 'Keller Williams'];
+      suggestions = [
+        strings.suggestion.artist.discoBiscuits, 
+        strings.suggestion.artist.hotButteredRum, 
+        strings.suggestion.artist.kellerWilliams
+      ];
 
       if (collection === '') {
         repromptText = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
