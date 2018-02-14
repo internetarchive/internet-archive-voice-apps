@@ -76,7 +76,7 @@ const LIST_FALLBACK = [
 const FINAL_FALLBACK = strings.fallback.finalReprompt;
 
 let suggestions = [
-  strings.suggestion.artist.gratefulDead, 
+  strings.suggestion.artist.gratefulDead,
   strings.suggestion.artist.cowboyJunkies,
   strings.suggestion.artist.dittyBops
 ];
@@ -397,8 +397,8 @@ function responseHandler (app) {
       let repromptText = '';
       let speechOutput = '';
       suggestions = [
-        strings.suggestion.artist.discoBiscuits, 
-        strings.suggestion.artist.hotButteredRum, 
+        strings.suggestion.artist.discoBiscuits,
+        strings.suggestion.artist.hotButteredRum,
         strings.suggestion.artist.kellerWilliams
       ];
 
