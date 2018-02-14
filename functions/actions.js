@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
 	noInput: "No.Input",
 	unknownInput: "input.unknown",
 	welcomeInput: "input.welcome",
