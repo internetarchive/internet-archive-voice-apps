@@ -2,7 +2,7 @@ const basicHeaderRequest = {
   'content-type': 'application/json; charset=UTF-8',
 };
 
-function getBody ({action, lastSeen = '2018-02-15T15:54:15Z'}) {
+function getBody ({action, data = {}, lastSeen = '2018-02-15T15:54:15Z'}) {
   return {
     'originalRequest': {
       'source': 'google',
@@ -25,7 +25,7 @@ function getBody ({action, lastSeen = '2018-02-15T15:54:15Z'}) {
           'intent': 'actions.intent.MAIN'
         }],
         'user': {
-          'userStorage': '{"data":{}}',
+          'userStorage': `{"data":${JSON.stringify(data)}}`,
           'lastSeen': lastSeen,
           'locale': 'en-US',
           'userId': 'ABwppHF87C7vRsEg2MsfxhYPar0beTkSw3KHiQEWc5OznoqwWNjh2Tko0Pp30Oow2Qak6BtTYs25J6HlSR03oQT70OVv'
@@ -49,9 +49,9 @@ function getBody ({action, lastSeen = '2018-02-15T15:54:15Z'}) {
         'parameters': {},
         'lifespan': 0
       }, {
-        'name': 'actions_capability_screen_output',
-        'parameters': {},
-        'lifespan': 0
+        'name': '_actions_on_google_',
+        'parameters': data,
+        'lifespan': 99
       }, {
         'name': 'actions_capability_audio_output',
         'parameters': {},
