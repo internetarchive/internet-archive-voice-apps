@@ -2,7 +2,7 @@ const basicHeaderRequest = {
   'content-type': 'application/json; charset=UTF-8',
 };
 
-function getBody ({action}) {
+function getBody ({action, lastSeen = '2018-02-15T15:54:15Z'}) {
   return {
     'originalRequest': {
       'source': 'google',
@@ -26,7 +26,7 @@ function getBody ({action}) {
         }],
         'user': {
           'userStorage': '{"data":{}}',
-          'lastSeen': '2018-02-15T15:54:15Z',
+          'lastSeen': lastSeen,
           'locale': 'en-US',
           'userId': 'ABwppHF87C7vRsEg2MsfxhYPar0beTkSw3KHiQEWc5OznoqwWNjh2Tko0Pp30Oow2Qak6BtTYs25J6HlSR03oQT70OVv'
         },
@@ -110,6 +110,13 @@ class MockResponse {
   append (header, value) {
     this.headers[header] = value;
     return this;
+  }
+
+  /**
+   * just get plain speech text for matching with expectation
+   */
+  speech () {
+    return this.body.data.google.richResponse.items.map(i => i.simpleResponse.ssml).join('\n');
   }
 }
 

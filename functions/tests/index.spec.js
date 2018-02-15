@@ -1,9 +1,6 @@
-const rewire = require('rewire');
-
 const {expect} = require('chai');
-const sinon = require('sinon');
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-const index = rewire('..');
+const index = require('..');
 
 describe('playMedia', () => {
   it('should be defined', () => {
@@ -11,9 +8,8 @@ describe('playMedia', () => {
   });
 
   it('should handle welcome action', () => {
-    const WelcomeHandler = sinon.spy();
-    index.__set__('Welcome', WelcomeHandler);
-    index.playMedia(buildIntentRequest({action: 'input.welcome'}), new MockResponse());
-    expect(WelcomeHandler).to.have.been.calledOnce;
+    const res = new MockResponse();
+    index.playMedia(buildIntentRequest({action: 'input.welcome'}), res);
+    expect(res.speech()).to.contain('Welcome back, choose an artist.');
   });
 });
