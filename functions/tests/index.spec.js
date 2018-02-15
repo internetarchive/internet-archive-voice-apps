@@ -45,6 +45,7 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'No.Input',
           data: {
+            previousAction: 'No.Input',
             noInputCount: 1,
           },
         });
@@ -54,11 +55,12 @@ describe('playMedia', () => {
         expect(res.speech()).to.contain(strings.errors.noInput.reprompt);
       });
 
-      it('should 2nd time', () => {
+      it('should 3rd time', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
           action: 'No.Input',
           data: {
+            previousAction: 'No.Input',
             noInputCount: 2,
           },
         });
@@ -66,6 +68,21 @@ describe('playMedia', () => {
         expect(res.statusCode).to.be.equal(200);
         expect(res.userResponse()).to.be.false;
         expect(res.speech()).to.contain(strings.fallback.finalReprompt);
+      });
+
+      it('should not fallback 3rd time if previous action was not no-input', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'No.Input',
+          data: {
+            previousAction: 'some.other.action',
+            noInputCount: 2,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
+        expect(res.speech()).to.contain(strings.errors.noInput.first);
       });
     });
   });
