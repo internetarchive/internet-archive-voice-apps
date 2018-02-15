@@ -1,8 +1,8 @@
 # deps
 
-node_modules
+functions/node_modules
 
 
 # dev env
 
-firebase-debug.log
+functions/firebase-debug.log
