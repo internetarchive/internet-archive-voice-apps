@@ -29,13 +29,28 @@ describe('playMedia', () => {
   });
 
   describe('no input action', () => {
-    it('should speech back', () => {
-      const res = new MockResponse();
-      index.playMedia(buildIntentRequest({
-        action: 'No.Input',
-      }), res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.speech()).to.contain(strings.errors.noInput.first);
+    describe('speech back', () => {
+      it('should 1st time', () => {
+        const res = new MockResponse();
+        index.playMedia(buildIntentRequest({
+          action: 'No.Input',
+        }), res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.speech()).to.contain(strings.errors.noInput.first);
+      });
+
+      it('should 2nd time', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'No.Input',
+          data: {
+            noInputCount: 1,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.speech()).to.contain(strings.errors.noInput.reprompt);
+      });
     });
   });
 });
