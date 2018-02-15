@@ -116,7 +116,7 @@ class MockResponse {
    * just get plain speech text for matching with expectation
    */
   speech () {
-    return this.body.data.google.richResponse.items.map(i => i.simpleResponse.ssml).join('\n');
+    return this.body.speech || this.body.data.google.richResponse.items.map(i => i.simpleResponse.ssml).join('\n');
   }
 }
 
