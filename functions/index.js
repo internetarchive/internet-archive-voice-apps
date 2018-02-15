@@ -158,7 +158,12 @@ function repeatInput (app) {
 }
 
 function noInput (app) {
-  app.data.noInputCount = parseInt(app.data.noInputCount, 10) || 0;
+  if (app.data.previousAction !== actions.noInput) {
+    app.data.noInputCount = 0;
+  } else {
+    app.data.noInputCount = app.data.noInputCount || 0;
+  }
+
   app.data.noInputCount++;
   if (app.data.noInputCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
