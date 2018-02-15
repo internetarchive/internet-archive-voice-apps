@@ -91,13 +91,13 @@ actionMap.set(WELCOME_INTENT, Welcome);
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
 // exports.playMedia = functions.https.onRequest(((req, res) => {
   const app = new DialogflowApp({request: req, response: res});
-  dashbot.configHandler(app);
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
     app.tell(strings.errors.device.mediaResponse);
   }
   app.data.previousAction = app.getIntent();
+  dashbot.configHandler(app);
 }));
 
 function init (app) {
