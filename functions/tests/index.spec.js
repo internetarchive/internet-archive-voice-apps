@@ -8,6 +8,15 @@ describe('playMedia', () => {
     expect(index.playMedia).to.be.ok;
   });
 
+  it('should store last used action', () => {
+    const res = new MockResponse();
+    index.playMedia(buildIntentRequest({
+      action: 'input.welcome',
+      lastSeen: null,
+    }), res);
+    expect(res.data()).to.have.property('lastAction', 'input.welcome');
+  });
+
   describe('welcome action', () => {
     it('should handle for a new user', () => {
       const res = new MockResponse();

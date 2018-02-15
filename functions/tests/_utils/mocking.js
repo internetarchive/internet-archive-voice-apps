@@ -112,6 +112,10 @@ class MockResponse {
     return this;
   }
 
+  data() {
+    return this.body.contextOut[0].parameters;
+  }
+
   userResponse() {
     return this.body.data.google.expectUserResponse;
   }
