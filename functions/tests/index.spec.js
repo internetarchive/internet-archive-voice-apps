@@ -36,6 +36,7 @@ describe('playMedia', () => {
           action: 'No.Input',
         }), res);
         expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
         expect(res.speech()).to.contain(strings.errors.noInput.first);
       });
 
@@ -49,7 +50,22 @@ describe('playMedia', () => {
         });
         index.playMedia(req, res);
         expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
         expect(res.speech()).to.contain(strings.errors.noInput.reprompt);
+      });
+
+      it('should 2nd time', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'No.Input',
+          data: {
+            noInputCount: 2,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.false;
+        expect(res.speech()).to.contain(strings.fallback.finalReprompt);
       });
     });
   });

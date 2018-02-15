@@ -112,6 +112,10 @@ class MockResponse {
     return this;
   }
 
+  userResponse() {
+    return this.body.data.google.expectUserResponse;
+  }
+
   /**
    * just get plain speech text for matching with expectation
    */
