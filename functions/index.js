@@ -158,7 +158,7 @@ function repeatInput (app) {
 }
 
 function noInput (app) {
-  app.data.noInputCount = parseInt(app.data.noInputCount, 10);
+  app.data.noInputCount = parseInt(app.data.noInputCount, 10) || 0;
 
   app.data.noInputCount++;
   if (app.data.noInputCount === 1) {
@@ -536,10 +536,10 @@ function responseHandler (app) {
           play(app, 0);
         }
       }
+    } else {
+      app.handleRequestAsync(actionMap);
     }
   }
-
-  app.handleRequestAsync(actionMap);
 }
 
 function getCollection (app) {
