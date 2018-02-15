@@ -1,1 +1,8 @@
+# deps
+
 node_modules
+
+
+# dev env
+
+firebase-debug.log
