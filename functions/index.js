@@ -10,7 +10,7 @@ const util = require('util');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
 const bst = require('bespoken-tools');
 const strings = require('./strings');
-const actions = require('./actions');
+const actions = require('./actions/names');
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 
 let replaceall = require('replaceall');
