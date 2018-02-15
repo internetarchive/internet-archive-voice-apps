@@ -14,7 +14,7 @@ describe('playMedia', () => {
       action: 'input.welcome',
       lastSeen: null,
     }), res);
-    expect(res.data()).to.have.property('lastAction', 'input.welcome');
+    expect(res.data()).to.have.property('previousAction', 'input.welcome');
   });
 
   describe('welcome action', () => {
