@@ -1,14 +1,19 @@
+const rewire = require('rewire');
+
 const {expect} = require('chai');
-const mocking = require('./_utils/mocking');
+const sinon = require('sinon');
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-const {playMedia} = require('..');
+const index = rewire('..');
 
 describe('playMedia', () => {
   it('should be defined', () => {
-    expect(playMedia).to.be.ok;
+    expect(index.playMedia).to.be.ok;
   });
 
-  it('should handle common intend', () => {
-    playMedia(buildIntentRequest({action: 'input.welcome'}), new MockResponse());
+  it('should handle welcome action', () => {
+    const WelcomeHandler = sinon.spy();
+    index.__set__('Welcome', WelcomeHandler);
+    index.playMedia(buildIntentRequest({action: 'input.welcome'}), new MockResponse());
+    expect(WelcomeHandler).to.have.been.calledOnce;
   });
 });
