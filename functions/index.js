@@ -88,8 +88,7 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   const app = new DialogflowApp({request: req, response: res});
   dashbot.configHandler(app);
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
-    app.handleRequestAsync(actionMap)
-      .catch(() => responseHandler(app));
+    app.handleRequest(responseHandler);
   } else {
     app.tell(strings.errors.device.mediaResponse);
   }

@@ -10,7 +10,7 @@
   },
   "scripts": {
     "lint": "eslint ./**/*.js",
-    "mocha": "mocha ./tests/**/*spec.js",
+    "mocha": "mocha --opts ./tests/mocha.opts",
     "start": "firebase serve --only functions:playMedia",
     "deploy": "firebase deploy --only functions:playMedia",
     "test": "npm run lint && npm run mocha"
@@ -35,6 +35,9 @@
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^5.0.1"
+    "mocha": "^5.0.1",
+    "rewire": "^3.0.2",
+    "sinon": "^4.3.0",
+    "sinon-chai": "^2.14.0"
   }
 }

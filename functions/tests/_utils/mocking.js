@@ -114,7 +114,7 @@ class MockResponse {
 }
 
 module.exports = {
-  buildIntentRequest: (opts) => new MockRequest(body = getBody(opts)),
+  buildIntentRequest: (opts) => new MockRequest(getBody(opts)),
   MockRequest,
   MockResponse,
 };
