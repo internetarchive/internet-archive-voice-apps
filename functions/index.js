@@ -87,6 +87,7 @@ let suggestions = [
  */
 const actionMap = new Map();
 actionMap.set(WELCOME_INTENT, Welcome);
+actionMap.set(actions.noInput, noInput);
 
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
 // exports.playMedia = functions.https.onRequest(((req, res) => {
@@ -219,14 +220,9 @@ function responseHandler (app) {
   logger('responseHandler : ' + app.getIntent());
   logger('noInputCount : ' + app.data.noInputCount);
 
-  if (app.getIntent() === actions.noInput) {
-    noInput(app);
-    app.data.unknownInputCount = 0;
-  } else if (app.getIntent() === UNKNOWN_INTENT) {
+  if (app.getIntent() === UNKNOWN_INTENT) {
     Unknown(app);
-    app.data.noInputCount = 0;
   } else {
-    app.data.noInputCount = 0;
     app.data.unknownInputCount = 0;
     if (app.getIntent() === actions.repeatInput) {
       repeatInput(app);
