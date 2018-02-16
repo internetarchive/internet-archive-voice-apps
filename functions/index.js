@@ -178,24 +178,12 @@ function noInput (app) {
   }
 }
 
-function noInput1 (app) {
-  logger('RepromptCount : ' + app.getRepromptCount());
-  if (app.getRepromptCount() === 0) {
-    ask(app, strings.errors.noInput.first, suggestions);
-  } else if (app.getRepromptCount() === 1) {
-    ask(app, strings.errors.noInput.reprompt, suggestions);
-  } else if (app.isFinalReprompt()) {
-    tell(app, strings.appExit);
-  }
-}
-
-function Unknown1 (app) {
-  let speechOutput = '<speak>' + strings.errors.unknownInput.first + '</speak>';
-  ask(app, speechOutput, suggestions);
-}
-
 function Unknown (app) {
-  app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
+  if (app.data.previousAction !== actions.unknownInput) {
+    app.data.unknownInputCount = 0;
+  } else {
+    app.data.unknownInputCount = app.data.unknownInputCount || 0;
+  }
 
   app.data.unknownInputCount++;
   if (app.data.unknownInputCount === 1) {
