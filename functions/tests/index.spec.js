@@ -95,4 +95,63 @@ describe('playMedia', () => {
       });
     });
   });
+
+  describe('unknown action', () => {
+    describe('speech back', () => {
+      it('should 1st time', () => {
+        const res = new MockResponse();
+        index.playMedia(buildIntentRequest({
+          action: 'input.unknown',
+        }), res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
+        expect(res.speech()).to.contain(strings.errors.unknownInput.first);
+      });
+
+      it('should 2nd time', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'input.unknown',
+          data: {
+            previousAction: 'input.unknown',
+            unknownInputCount: 1,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
+        expect(res.speech()).to.contain(strings.errors.unknownInput.reprompt);
+      });
+
+      it('should 3rd time', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'input.unknown',
+          data: {
+            previousAction: 'input.unknown',
+            unknownInputCount: 2,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.false;
+        expect(res.speech()).to.contain(strings.fallback.finalReprompt);
+      });
+
+      it('should not fallback 3rd time if previous action was not no-input', () => {
+        const res = new MockResponse();
+        const req = buildIntentRequest({
+          action: 'input.unknown',
+          data: {
+            previousAction: 'some.other.action',
+            unknownInputCount: 2,
+          },
+        });
+        index.playMedia(req, res);
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userResponse()).to.be.true;
+        expect(res.speech()).to.contain(strings.errors.unknownInput.first);
+      });
+    });
+  });
 });
