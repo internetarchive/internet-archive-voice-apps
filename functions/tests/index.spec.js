@@ -14,7 +14,7 @@ describe('playMedia', () => {
       action: 'input.welcome',
       lastSeen: null,
     }), res);
-    expect(res.data()).to.have.property('previousAction', 'input.welcome');
+    expect(res.data()).to.have.property('repetition').to.have.property('action', 'input.welcome');
   });
 
   describe('welcome action', () => {
@@ -54,8 +54,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'No.Input',
           data: {
-            previousAction: 'No.Input',
-            repeatActionCount: 1,
+            repetition: {
+              action: 'No.Input',
+              count: 1,
+            },
           },
         });
         index.playMedia(req, res);
@@ -69,8 +71,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'No.Input',
           data: {
-            previousAction: 'No.Input',
-            repeatActionCount: 2,
+            repetition: {
+              action: 'No.Input',
+              count: 2,
+            },
           },
         });
         index.playMedia(req, res);
@@ -84,8 +88,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'No.Input',
           data: {
-            previousAction: 'some.other.action',
-            repeatActionCount: 2,
+            repetition: {
+              action: 'some.other.action',
+              count: 2,
+            },
           },
         });
         index.playMedia(req, res);
@@ -113,8 +119,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'input.unknown',
           data: {
-            previousAction: 'input.unknown',
-            repeatActionCount: 1,
+            repetition: {
+              action: 'input.unknown',
+              count: 1,
+            },
           },
         });
         index.playMedia(req, res);
@@ -128,8 +136,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'input.unknown',
           data: {
-            previousAction: 'input.unknown',
-            repeatActionCount: 2,
+            repetition: {
+              action: 'input.unknown',
+              count: 2,
+            },
           },
         });
         index.playMedia(req, res);
@@ -143,8 +153,10 @@ describe('playMedia', () => {
         const req = buildIntentRequest({
           action: 'input.unknown',
           data: {
-            previousAction: 'some.other.action',
-            repeatActionCount: 2,
+            repetition: {
+              action: 'some.other.action',
+              count: 2,
+            },
           },
         });
         index.playMedia(req, res);
