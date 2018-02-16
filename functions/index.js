@@ -173,48 +173,50 @@ function getRepetitionAction(state) {
 }
 
 function noInput (app) {
-  let count;
-  if (getRepetitionAction(app.data) !== actions.noInput) {
-    count = 0;
-  } else {
+  let count = 0;
+
+  if (getRepetitionAction(app.data) === actions.noInput) {
     count = app.data.repetition.count || 0;
   }
 
-  count++;
-  if (count === 1) {
-    // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
-    ask(app, strings.errors.noInput.first, suggestions);
-  } else if (count === 2) {
-    ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
-  } else {
-    tell(app, FINAL_FALLBACK);
+  switch(count) {
+    case 0:
+      ask(app, strings.errors.noInput.first, suggestions);
+      break;
+    case 1:
+      ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
+      break;
+    default:
+      tell(app, FINAL_FALLBACK);
+      break;
   }
+
   app.data.repetition = Object.assign({}, app.data.repetition, {
-    count: count,
+    count: count + 1,
   });
 }
 
 function Unknown (app) {
   let count = 0;
-  if (getRepetitionAction(app.data) !== actions.unknownInput) {
-    count = 0;
-  } else {
+
+  if (getRepetitionAction(app.data) === actions.unknownInput) {
     count = app.data.repetition.count || 0;
   }
 
-  count++;
-  if (count === 1) {
-    // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
-
-    ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
-    // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
-  } else if (count === 2) {
-    ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
-  } else {
-    tell(app, FINAL_FALLBACK);
+  switch(count) {
+    case 0:
+      ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
+      break;
+    case 1:
+      ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
+      break;
+    default:
+      tell(app, FINAL_FALLBACK);
+      break;
   }
+
   app.data.repetition = Object.assign({}, app.data.repetition, {
-    count: count,
+    count: count + 1,
   });
 }
 
