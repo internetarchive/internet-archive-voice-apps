@@ -161,17 +161,17 @@ function repeatInput (app) {
 
 function noInput (app) {
   if (app.data.previousAction !== actions.noInput) {
-    app.data.noInputCount = 0;
+    app.data.repeatActionCount = 0;
   } else {
-    app.data.noInputCount = app.data.noInputCount || 0;
+    app.data.repeatActionCount = app.data.repeatActionCount || 0;
   }
 
-  app.data.noInputCount++;
-  if (app.data.noInputCount === 1) {
+  app.data.repeatActionCount++;
+  if (app.data.repeatActionCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
     ask(app, strings.errors.noInput.first, suggestions);
     // app.data.noInputCount = parseInt(app.data.noInputCount, 10);
-  } else if (app.data.noInputCount === 2) {
+  } else if (app.data.repeatActionCount === 2) {
     ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
@@ -180,18 +180,18 @@ function noInput (app) {
 
 function Unknown (app) {
   if (app.data.previousAction !== actions.unknownInput) {
-    app.data.unknownInputCount = 0;
+    app.data.repeatActionCount = 0;
   } else {
-    app.data.unknownInputCount = app.data.unknownInputCount || 0;
+    app.data.repeatActionCount = app.data.repeatActionCount || 0;
   }
 
-  app.data.unknownInputCount++;
-  if (app.data.unknownInputCount === 1) {
+  app.data.repeatActionCount++;
+  if (app.data.repeatActionCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
 
     ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
     // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
-  } else if (app.data.unknownInputCount === 2) {
+  } else if (app.data.repeatActionCount === 2) {
     ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);

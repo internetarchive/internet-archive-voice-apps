@@ -55,7 +55,7 @@ describe('playMedia', () => {
           action: 'No.Input',
           data: {
             previousAction: 'No.Input',
-            noInputCount: 1,
+            repeatActionCount: 1,
           },
         });
         index.playMedia(req, res);
@@ -70,7 +70,7 @@ describe('playMedia', () => {
           action: 'No.Input',
           data: {
             previousAction: 'No.Input',
-            noInputCount: 2,
+            repeatActionCount: 2,
           },
         });
         index.playMedia(req, res);
@@ -85,7 +85,7 @@ describe('playMedia', () => {
           action: 'No.Input',
           data: {
             previousAction: 'some.other.action',
-            noInputCount: 2,
+            repeatActionCount: 2,
           },
         });
         index.playMedia(req, res);
@@ -114,7 +114,7 @@ describe('playMedia', () => {
           action: 'input.unknown',
           data: {
             previousAction: 'input.unknown',
-            unknownInputCount: 1,
+            repeatActionCount: 1,
           },
         });
         index.playMedia(req, res);
@@ -129,7 +129,7 @@ describe('playMedia', () => {
           action: 'input.unknown',
           data: {
             previousAction: 'input.unknown',
-            unknownInputCount: 2,
+            repeatActionCount: 2,
           },
         });
         index.playMedia(req, res);
@@ -144,7 +144,7 @@ describe('playMedia', () => {
           action: 'input.unknown',
           data: {
             previousAction: 'some.other.action',
-            unknownInputCount: 2,
+            repeatActionCount: 2,
           },
         });
         index.playMedia(req, res);
