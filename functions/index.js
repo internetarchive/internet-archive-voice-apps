@@ -16,7 +16,6 @@ const actions = require('./actions/names');
 let replaceall = require('replaceall');
 
 let host = 'web.archive.org';
-let lastPlayedByUser = {};
 let imageURL = 'https://archive.org/services/img/';
 let podcastAPIURL = '/advancedsearch.php?q=collection:';
 let podcastCityAPIURL = '/advancedsearch.php?q=collection:';
@@ -53,9 +52,6 @@ const functions = require('firebase-functions');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 logger('Start');
 
-const WELCOME_INTENT = actions.welcomeInput;
-const TEXT_INTENT = actions.textInput;
-const UNKNOWN_INTENT = actions.unknownInput;
 const MEDIA_STATUS_INTENT = actions.mediaStatusInput;
 
 let currentSpeechoutput = -1;
@@ -88,7 +84,7 @@ let suggestions = [
 const actionMap = new Map();
 actionMap.set(actions.noInput, noInput);
 actionMap.set(actions.unknownInput, Unknown);
-actionMap.set(WELCOME_INTENT, Welcome);
+actionMap.set(actions.welcomeInput, Welcome);
 //TODO: add all actions here
 
 /**
@@ -107,17 +103,10 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   app.data.repetition = Object.assign({}, app.data.repetition, {
     action: app.getIntent(),
   });
-  console.log(app.data);
   dashbot.configHandler(app);
 }));
 
 function init (app) {
-  host = 'web.archive.org';
-  lastPlayedByUser = {};
-  podcastAPIURL = '/advancedsearch.php?q=collection:';
-  podcastCityAPIURL = '/advancedsearch.php?q=collection:';
-  podcastAPIURLNEW = '/advancedsearch.php?q=';
-  SeventyEightsAPIURL = '/advancedsearch.php?q=collection:(georgeblood)+AND+subject:';
   APIURLIdentifier = '/metadata/';
   MusicUrlList = [];
   page = 1;
