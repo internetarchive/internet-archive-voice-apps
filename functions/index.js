@@ -51,9 +51,6 @@ let OneGoCollectionRandomPlayAudioStatus = false;
 let topicName = '';
 let TotalTrack = -1;
 let IdentifierCount = 0;
-logger('Start');
-
-const MEDIA_STATUS_INTENT = actions.mediaStatusInput;
 
 let currentSpeechoutput = -1;
 let currentSuggestions = null;
@@ -63,6 +60,8 @@ let previousSpeechoutput = -1;
 let previousSuggestions = null;
 
 let YearList = [];
+
+logger('Start');
 
 const LIST_FALLBACK = [
   strings.fallback.whatWasThat,
@@ -441,8 +440,8 @@ function responseHandler (app) {
       speechOutput = '<speak>No song id Playing now. Please select collection first.</speak>';
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     }
-  } else if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
-    // else if (app.getIntent() === MEDIA_STATUS_INTENT) {
+  } else if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+    // else if (app.getIntent() === actions.mediaStateInput) {
     console.log('PlaybackNearlyFinished');
     // counter++;
     // PlayNext(requestType, 0);
@@ -697,7 +696,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
     audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
     logger(app.getIntent());
     logger('problem1 : ' + audioURL);
-    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
       askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
     } else {
       askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
@@ -803,7 +802,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
                   trackcounter = x;
                   audioURL = 'https://archive.org/download/' + MusicUrlList[counter]['identifier'] + '/' + MusicUrlList[counter]['trackName'];
                   logger('problem2 : ' + audioURL);
-                  if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                  if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                     askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
                   } else {
                     askAudioWithoutCoverageYear(app, MusicUrlList[counter]['identifier'], track, MusicUrlList[counter]['title'], MusicUrlList[counter]['coverage'], MusicUrlList[counter]['year'], audioURL, suggestions);
@@ -934,7 +933,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
       });
     }
     // logger(app.getIntent());
-    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
     } else {
       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1090,7 +1089,7 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
                       });
                     }
 
-                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1206,7 +1205,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
         });
       }
       // logger(app.getIntent());
-      if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+      if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
         logger('autoNext');
         askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
       } else {
@@ -1415,8 +1414,8 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
-                      logger(MEDIA_STATUS_INTENT);
+                    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                      logger(actions.mediaStateInput);
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       logger('audio url : ' + audioURL);
@@ -1480,7 +1479,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 });
               }
 
-              if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+              if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                 askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
               } else {
                 askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1566,7 +1565,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1666,7 +1665,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
@@ -1766,7 +1765,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                       });
                     }
 
-                    if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+                    if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                     } else {
                       askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
