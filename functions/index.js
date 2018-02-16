@@ -97,7 +97,10 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   } else {
     app.tell(strings.errors.device.mediaResponse);
   }
-  app.data.previousAction = app.getIntent();
+  app.data.repetition = Object.assign({}, app.data.repetition, {
+    action: app.getIntent(),
+  });
+  console.log(app.data);
   dashbot.configHandler(app);
 }));
 
@@ -159,42 +162,60 @@ function repeatInput (app) {
   }
 }
 
+/**
+ * repetition action
+ *
+ * @param state
+ * @returns {req.data.repetition|{action, count}|*|string|string|string}
+ */
+function getRepetitionAction(state) {
+  return state.repetition && state.repetition.action;
+}
+
 function noInput (app) {
-  if (app.data.previousAction !== actions.noInput) {
-    app.data.repeatActionCount = 0;
+  let count;
+  if (getRepetitionAction(app.data) !== actions.noInput) {
+    count = 0;
   } else {
-    app.data.repeatActionCount = app.data.repeatActionCount || 0;
+    count = app.data.repetition.count || 0;
   }
 
-  app.data.repeatActionCount++;
-  if (app.data.repeatActionCount === 1) {
+  count++;
+  if (count === 1) {
     // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
     ask(app, strings.errors.noInput.first, suggestions);
-  } else if (app.data.repeatActionCount === 2) {
+  } else if (count === 2) {
     ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
   }
+  app.data.repetition = Object.assign({}, app.data.repetition, {
+    count: count,
+  });
 }
 
 function Unknown (app) {
-  if (app.data.previousAction !== actions.unknownInput) {
-    app.data.repeatActionCount = 0;
+  let count = 0;
+  if (getRepetitionAction(app.data) !== actions.unknownInput) {
+    count = 0;
   } else {
-    app.data.repeatActionCount = app.data.repeatActionCount || 0;
+    count = app.data.repetition.count || 0;
   }
 
-  app.data.repeatActionCount++;
-  if (app.data.repeatActionCount === 1) {
+  count++;
+  if (count === 1) {
     // ask(app, LIST_FALLBACK[app.data.unknownInputCount++], suggestions);
 
     ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
     // app.data.unknownInputCount = parseInt(app.data.unknownInputCount, 10);
-  } else if (app.data.repeatActionCount === 2) {
+  } else if (count === 2) {
     ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
     tell(app, FINAL_FALLBACK);
   }
+  app.data.repetition = Object.assign({}, app.data.repetition, {
+    count: count,
+  });
 }
 
 function responseHandler (app) {
