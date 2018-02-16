@@ -86,9 +86,16 @@ let suggestions = [
  * @type {Map}
  */
 const actionMap = new Map();
-actionMap.set(WELCOME_INTENT, Welcome);
 actionMap.set(actions.noInput, noInput);
+actionMap.set(actions.unknownInput, Unknown);
+actionMap.set(WELCOME_INTENT, Welcome);
+//TODO: add all actions here
 
+/**
+ * Action Endpoint
+ *
+ * @type {HttpsFunction}
+ */
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
 // exports.playMedia = functions.https.onRequest(((req, res) => {
   const app = new DialogflowApp({request: req, response: res});
@@ -168,7 +175,7 @@ function repeatInput (app) {
  * @param state
  * @returns {req.data.repetition|{action, count}|*|string|string|string}
  */
-function getRepetitionAction(state) {
+function getRepetitionAction (state) {
   return state.repetition && state.repetition.action;
 }
 
@@ -179,7 +186,7 @@ function noInput (app) {
     count = app.data.repetition.count || 0;
   }
 
-  switch(count) {
+  switch (count) {
     case 0:
       ask(app, strings.errors.noInput.first, suggestions);
       break;
@@ -203,7 +210,7 @@ function Unknown (app) {
     count = app.data.repetition.count || 0;
   }
 
-  switch(count) {
+  switch (count) {
     case 0:
       ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
       break;
@@ -229,325 +236,321 @@ function responseHandler (app) {
   logger('currentSuggestions : ' + currentSuggestions);
   logger('responseHandler : ' + app.getIntent());
 
-  if (app.getIntent() === UNKNOWN_INTENT) {
-    Unknown(app);
-  } else {
-    if (app.getIntent() === actions.repeatInput) {
+  if (app.getIntent() === actions.repeatInput) {
+    repeatInput(app);
+  } else if (app.getIntent() === actions.discovery) {
+    SeventyEights = false;
+    Discovery(app);
+  } else if (app.getIntent() === actions.playAudio.noOptions) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.searchCollection) {
+    TotalTrack = -1;
+    SeventyEights = false;
+    city = '';
+    year = '';
+    getCollection(app);
+  } else if (app.getIntent() === actions.playAudio.byCity) {
+    page = 0;
+    MusicUrlList = [];
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.playAudio.byYearAndCity) {
+    page = 0;
+    MusicUrlList = [];
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.playAudio.query) {
+    page = 0;
+    MusicUrlList = [];
+    TotalTrack = 0;
+    IdentifierCount = 0;
+    typeQuery = false;
+    searchBYTitle = true;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.playAudio.random.year) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    PlayAudioByRandomYear = true;
+    PlayAudioByRandomCity = false;
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.playAudio.random.city) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = true;
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandom = false;
+    OneGoPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.playAudio.random.yearAndCity) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = true;
+    OneGoPlayAudioStatus = false;
+    typeQuery = false;
+    searchBYTitle = false;
+    counter = 0;
+    SeventyEights = false;
+    play(app, 0);
+  } else if (app.getIntent() === actions.seventyEights.noOptions) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    counter = 0;
+    SeventyEights = true;
+    topicName = '';
+    playSeventyEights(app, 0);
+  } else if (app.getIntent() === actions.seventyEights.byTopic) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    counter = 0;
+    SeventyEights = true;
+    playSeventyEights(app, 0);
+  } else if (app.getIntent() === actions.oneGo.seventyEights) {
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    counter = 0;
+    SeventyEights = true;
+    playSeventyEights(app, 0);
+  } else if (app.getIntent() === actions.oneGo.playAudio) {
+    logger('OneGoPlayAudio');
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoCollectionRandomPlayAudioStatus = false;
+    counter = 0;
+    SeventyEights = false;
+    OneGoPlayAudioStatus = true;
+    OneGoPlayAudio(app, 0);
+  } else if (app.getIntent() === actions.oneGo.randomPlayAudio) {
+    logger('OneGoCollectionRandomPlayAudio');
+    page = 0;
+    TotalTrack = -1;
+    IdentifierCount = 0;
+    MusicUrlList = [];
+    typeQuery = false;
+    searchBYTitle = false;
+    PlayAudioByRandomYear = false;
+    PlayAudioByRandomCity = false;
+    PlayAudioByRandom = false;
+    OneGoCollectionRandomPlayAudioStatus = true;
+    counter = 0;
+    SeventyEights = false;
+    OneGoPlayAudioStatus = true;
+    OneGoPlayAudio(app, 0);
+  } else if (app.getIntent() === actions.information.availableYears) {
+    let cardTitle = 'Available Years';
+    let repromptText = '';
+    let speechOutput = '';
+    suggestions = [
+      strings.suggestion.artist.discoBiscuits,
+      strings.suggestion.artist.hotButteredRum,
+      strings.suggestion.artist.kellerWilliams
+    ];
+
+    if (collection === '') {
+      repromptText = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+      speechOutput = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
+      askWithReprompt(app, speechOutput, repromptText, suggestions);
+    } else if (city === '') {
+      repromptText = '<speak>Please select city first.</speak>';
+      speechOutput = '<speak>Please select city first.</speak>';
+      askWithReprompt(app, speechOutput, repromptText, suggestions);
+    } else if (YearList.length > 0) {
+      if (YearList.length === 1) {
+        repromptText = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
+        speechOutput = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
+        askWithReprompt(app, speechOutput, repromptText, suggestions);
+      }
+      if (YearList.length > 1) {
+        repromptText = '<speak>Available years for ' + city + ' are ' + YearList + ', please select a year.</speak>';
+        speechOutput = '<speak>Available years for ' + city + ' are ' + YearList + ', please select a year.</speak>';
+        askWithReprompt(app, speechOutput, repromptText, suggestions);
+      }
+    }
+  } else if (app.getIntent() === 'SongDetail') {
+    let cardTitle = 'Available Years';
+    let repromptText = '';
+    let speechOutput = '';
+    if (MusicUrlList.length >= 1) {
+      repromptText = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
+      speechOutput = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
+      askWithReprompt(app, speechOutput, repromptText, suggestions);
+    } else {
+      repromptText = '<speak>No song id Playing now. Please select collection first.</speak>';
+      speechOutput = '<speak>No song id Playing now. Please select collection first.</speak>';
+      askWithReprompt(app, speechOutput, repromptText, suggestions);
+    }
+  } else if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
+    // else if (app.getIntent() === MEDIA_STATUS_INTENT) {
+    console.log('PlaybackNearlyFinished');
+    // counter++;
+    // PlayNext(requestType, 0);
+    counter++;
+    console.log('counter -' + counter);
+    console.log('TotalTrack -' + TotalTrack);
+    if (counter > TotalTrack) {
+      page++;
+      typeQuery = true;
+      console.log('true');
+    } else {
+      console.log('false');
+      typeQuery = false;
+    }
+    console.log('page -' + page);
+    console.log('Type -' + typeQuery);
+
+    if (SeventyEights === true) {
+      playSeventyEights(app, 0);
+    } else {
+      // .play(app, 0);
+      if (OneGoPlayAudioStatus) {
+        OneGoPlayAudio(app, 0);
+      } else {
+        play(app, 0);
+      }
+    }
+  } else if ((app.getIntent() === 'AMAZON.NextIntent')) {
+    if (currentSpeechoutput !== null) {
       repeatInput(app);
-    } else if (app.getIntent() === actions.discovery) {
-      SeventyEights = false;
-      Discovery(app);
-    } else if (app.getIntent() === actions.playAudio.noOptions) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.searchCollection) {
-      TotalTrack = -1;
-      SeventyEights = false;
-      city = '';
-      year = '';
-      getCollection(app);
-    } else if (app.getIntent() === actions.playAudio.byCity) {
-      page = 0;
-      MusicUrlList = [];
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.playAudio.byYearAndCity) {
-      page = 0;
-      MusicUrlList = [];
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.playAudio.query) {
-      page = 0;
-      MusicUrlList = [];
-      TotalTrack = 0;
-      IdentifierCount = 0;
-      typeQuery = false;
-      searchBYTitle = true;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.playAudio.random.year) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      PlayAudioByRandomYear = true;
-      PlayAudioByRandomCity = false;
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.playAudio.random.city) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = true;
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandom = false;
-      OneGoPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.playAudio.random.yearAndCity) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = true;
-      OneGoPlayAudioStatus = false;
-      typeQuery = false;
-      searchBYTitle = false;
-      counter = 0;
-      SeventyEights = false;
-      play(app, 0);
-    } else if (app.getIntent() === actions.seventyEights.noOptions) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      counter = 0;
-      SeventyEights = true;
-      topicName = '';
-      playSeventyEights(app, 0);
-    } else if (app.getIntent() === actions.seventyEights.byTopic) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      counter = 0;
-      SeventyEights = true;
-      playSeventyEights(app, 0);
-    } else if (app.getIntent() === actions.oneGo.seventyEights) {
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      counter = 0;
-      SeventyEights = true;
-      playSeventyEights(app, 0);
-    } else if (app.getIntent() === actions.oneGo.playAudio) {
-      logger('OneGoPlayAudio');
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoCollectionRandomPlayAudioStatus = false;
-      counter = 0;
-      SeventyEights = false;
-      OneGoPlayAudioStatus = true;
-      OneGoPlayAudio(app, 0);
-    } else if (app.getIntent() === actions.oneGo.randomPlayAudio) {
-      logger('OneGoCollectionRandomPlayAudio');
-      page = 0;
-      TotalTrack = -1;
-      IdentifierCount = 0;
-      MusicUrlList = [];
-      typeQuery = false;
-      searchBYTitle = false;
-      PlayAudioByRandomYear = false;
-      PlayAudioByRandomCity = false;
-      PlayAudioByRandom = false;
-      OneGoCollectionRandomPlayAudioStatus = true;
-      counter = 0;
-      SeventyEights = false;
-      OneGoPlayAudioStatus = true;
-      OneGoPlayAudio(app, 0);
-    } else if (app.getIntent() === actions.information.availableYears) {
+    } else if (SeventyEights === true) {
       let cardTitle = 'Available Years';
       let repromptText = '';
       let speechOutput = '';
-      suggestions = [
-        strings.suggestion.artist.discoBiscuits,
-        strings.suggestion.artist.hotButteredRum,
-        strings.suggestion.artist.kellerWilliams
-      ];
-
-      if (collection === '') {
-        repromptText = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
-        speechOutput = "<speak>Please select artist name. Like The Ditty Bops,<break time='.5s'/> Or Cowboy Junkies,<break time='.5s'/> Or Grateful Dead.</speak>";
-        askWithReprompt(app, speechOutput, repromptText, suggestions);
-      } else if (city === '') {
-        repromptText = '<speak>Please select city first.</speak>';
-        speechOutput = '<speak>Please select city first.</speak>';
-        askWithReprompt(app, speechOutput, repromptText, suggestions);
-      } else if (YearList.length > 0) {
-        if (YearList.length === 1) {
-          repromptText = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
-          speechOutput = '<speak>Available year for ' + city + ' is ' + YearList + ', please select a year.</speak>';
-          askWithReprompt(app, speechOutput, repromptText, suggestions);
-        }
-        if (YearList.length > 1) {
-          repromptText = '<speak>Available years for ' + city + ' are ' + YearList + ', please select a year.</speak>';
-          speechOutput = '<speak>Available years for ' + city + ' are ' + YearList + ', please select a year.</speak>';
-          askWithReprompt(app, speechOutput, repromptText, suggestions);
-        }
-      }
-    } else if (app.getIntent() === 'SongDetail') {
-      let cardTitle = 'Available Years';
-      let repromptText = '';
-      let speechOutput = '';
-      if (MusicUrlList.length >= 1) {
-        repromptText = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
-        speechOutput = '<speak>You are listening ' + MusicUrlList[counter]['title'] + ', ' + MusicUrlList[counter]['coverage'] + ', ' + MusicUrlList[counter]['year'] + '.</speak>';
+      if (TotalTrack < 0) {
+        repromptText = '<speak>Please Select Topic first</speak>';
+        speechOutput = '<speak>Please Select Topic first</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       } else {
-        repromptText = '<speak>No song id Playing now. Please select collection first.</speak>';
-        speechOutput = '<speak>No song id Playing now. Please select collection first.</speak>';
-        askWithReprompt(app, speechOutput, repromptText, suggestions);
-      }
-    } else if ((app.getIntent() === MEDIA_STATUS_INTENT) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
-      // else if (app.getIntent() === MEDIA_STATUS_INTENT) {
-      console.log('PlaybackNearlyFinished');
-      // counter++;
-      // PlayNext(requestType, 0);
-      counter++;
-      console.log('counter -' + counter);
-      console.log('TotalTrack -' + TotalTrack);
-      if (counter > TotalTrack) {
-        page++;
-        typeQuery = true;
-        console.log('true');
-      } else {
-        console.log('false');
-        typeQuery = false;
-      }
-      console.log('page -' + page);
-      console.log('Type -' + typeQuery);
+        counter++;
+        if (counter > (TotalTrack - 1) && TotalTrack >= 0) {
+          page++;
+          typeQuery = true;
+        } else {
+          typeQuery = false;
+        }
 
-      if (SeventyEights === true) {
         playSeventyEights(app, 0);
-      } else {
-        // .play(app, 0);
-        if (OneGoPlayAudioStatus) {
-          OneGoPlayAudio(app, 0);
-        } else {
-          play(app, 0);
-        }
-      }
-    } else if ((app.getIntent() === 'AMAZON.NextIntent')) {
-      if (currentSpeechoutput !== null) {
-        repeatInput(app);
-      } else if (SeventyEights === true) {
-        let cardTitle = 'Available Years';
-        let repromptText = '';
-        let speechOutput = '';
-        if (TotalTrack < 0) {
-          repromptText = '<speak>Please Select Topic first</speak>';
-          speechOutput = '<speak>Please Select Topic first</speak>';
-          askWithReprompt(app, speechOutput, repromptText, suggestions);
-        } else {
-          counter++;
-          if (counter > (TotalTrack - 1) && TotalTrack >= 0) {
-            page++;
-            typeQuery = true;
-          } else {
-            typeQuery = false;
-          }
-
-          playSeventyEights(app, 0);
-        }
-      } else {
-        let cardTitle = 'Available Years';
-        let repromptText = '';
-        let speechOutput = '';
-        if (TotalTrack === 0) {
-          repromptText = '<speak>Please Select City and year first</speak>';
-          speechOutput = '<speak>Please Select City and year first</speak>';
-          askWithReprompt(app, speechOutput, repromptText, suggestions);
-        } else {
-          counter++;
-          if (counter > (TotalTrack - 1) && TotalTrack > 0) {
-            page++;
-            typeQuery = true;
-          } else {
-            typeQuery = false;
-          }
-          if (OneGoPlayAudioStatus) {
-            OneGoPlayAudio(app, 0);
-          } else {
-            play(app, 0);
-          }
-        }
-      }
-    } else if (app.getIntent() === 'AMAZON.PreviousIntent') {
-      if (previousSpeechoutput === -1) {
-        repeatInput(app);
-      } else if (previousSpeechoutput !== null) {
-        ask(app, previousSpeechoutput, previousSuggestions);
-      } else if (SeventyEights === true) {
-        if (counter > 0) {
-          counter--;
-        } else {
-          counter = 0;
-        }
-        playSeventyEights(app, 0);
-      } else {
-        if (counter > 0) {
-          counter--;
-        } else {
-          counter = 0;
-        }
-        if (OneGoPlayAudioStatus) {
-          OneGoPlayAudio(app, 0);
-        } else {
-          play(app, 0);
-        }
       }
     } else {
-      app.handleRequestAsync(actionMap);
+      let cardTitle = 'Available Years';
+      let repromptText = '';
+      let speechOutput = '';
+      if (TotalTrack === 0) {
+        repromptText = '<speak>Please Select City and year first</speak>';
+        speechOutput = '<speak>Please Select City and year first</speak>';
+        askWithReprompt(app, speechOutput, repromptText, suggestions);
+      } else {
+        counter++;
+        if (counter > (TotalTrack - 1) && TotalTrack > 0) {
+          page++;
+          typeQuery = true;
+        } else {
+          typeQuery = false;
+        }
+        if (OneGoPlayAudioStatus) {
+          OneGoPlayAudio(app, 0);
+        } else {
+          play(app, 0);
+        }
+      }
     }
+  } else if (app.getIntent() === 'AMAZON.PreviousIntent') {
+    if (previousSpeechoutput === -1) {
+      repeatInput(app);
+    } else if (previousSpeechoutput !== null) {
+      ask(app, previousSpeechoutput, previousSuggestions);
+    } else if (SeventyEights === true) {
+      if (counter > 0) {
+        counter--;
+      } else {
+        counter = 0;
+      }
+      playSeventyEights(app, 0);
+    } else {
+      if (counter > 0) {
+        counter--;
+      } else {
+        counter = 0;
+      }
+      if (OneGoPlayAudioStatus) {
+        OneGoPlayAudio(app, 0);
+      } else {
+        play(app, 0);
+      }
+    }
+  } else {
+    app.handleRequestAsync(actionMap);
   }
 }
 
