@@ -1,6 +1,15 @@
 env:
- node: true
+  mocha: true
+  node: true
 extends: 'semistandard'
+plugins:
+  - 'chai-friendly'
+  - 'mocha'
 parserOptions:
   ecmaVersion: 7
   sourceType: script
+rules:
+  chai-friendly/no-unused-expressions: 2
+  comma-dangle: 0
+  mocha/no-exclusive-tests: error
+  no-unused-expressions: 0
