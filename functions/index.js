@@ -170,7 +170,6 @@ function noInput (app) {
   if (app.data.repeatActionCount === 1) {
     // ask(app, LIST_FALLBACK[app.data.noInputCount++], suggestions);
     ask(app, strings.errors.noInput.first, suggestions);
-    // app.data.noInputCount = parseInt(app.data.noInputCount, 10);
   } else if (app.data.repeatActionCount === 2) {
     ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
   } else {
@@ -206,12 +205,10 @@ function responseHandler (app) {
   logger('currentSpeechoutput : ' + currentSpeechoutput);
   logger('currentSuggestions : ' + currentSuggestions);
   logger('responseHandler : ' + app.getIntent());
-  logger('noInputCount : ' + app.data.noInputCount);
 
   if (app.getIntent() === UNKNOWN_INTENT) {
     Unknown(app);
   } else {
-    app.data.unknownInputCount = 0;
     if (app.getIntent() === actions.repeatInput) {
       repeatInput(app);
     } else if (app.getIntent() === actions.discovery) {
