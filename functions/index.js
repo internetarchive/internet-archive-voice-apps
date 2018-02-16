@@ -4,16 +4,19 @@
 
 'use strict';
 // Bimlendra
+const DialogflowApp = require('actions-on-google').DialogflowApp;
+const bst = require('bespoken-tools');
+const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
+const functions = require('firebase-functions');
 const https = require('https');
 const http = require('http');
+const replaceall = require('replaceall');
 const util = require('util');
-const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
-const bst = require('bespoken-tools');
-const strings = require('./strings');
-const actions = require('./actions/names');
-// let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 
-let replaceall = require('replaceall');
+const actions = require('./actions/names');
+const strings = require('./strings');
+
+// let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 
 let host = 'web.archive.org';
 let imageURL = 'https://archive.org/services/img/';
@@ -48,8 +51,6 @@ let OneGoCollectionRandomPlayAudioStatus = false;
 let topicName = '';
 let TotalTrack = -1;
 let IdentifierCount = 0;
-const functions = require('firebase-functions');
-const DialogflowApp = require('actions-on-google').DialogflowApp;
 logger('Start');
 
 const MEDIA_STATUS_INTENT = actions.mediaStatusInput;
