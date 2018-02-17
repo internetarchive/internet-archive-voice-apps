@@ -1308,17 +1308,17 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 if (YearList.length === 1) {
                   YearString = YearList[0];
-                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + city + ' in ' + YearString + '. Do you have a particular year in mind?</speak>';
+                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + city + ' in ' + YearString + strings.prompts.select.year + '</speak>';
                 } else if (YearList.length > 1) {
                   YearString = YearList[0] + ' to ' + YearList[YearList.length - 1];
-                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + city + ' sometime between ' + YearString + '. Do you have a particular year in mind?</speak>';
+                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + city + ' from ' + YearString + strings.prompts.select.year + '</speak>';
                 }
 
                 log('Ok, for ' + collection + ' in ' + city + ' I have music from ' + YearString, collection, city, year, APIURL, function (status) {
                 });
                 suggestions = YearList;
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
-              } else if (app.getIntent() === 'PlayAudio' && city === '') {
+              } else if (app.getIntent() === actions.playAudio.noOptions && city === '') {
                 for (let i = 0; i < result['response']['docs'].length; i++) {
                   CityList.push(result['response']['docs'][i]['coverage']);
                 }
@@ -1330,15 +1330,15 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 }
 
                 let cardTitle = 'Please Select City.';
-                let repromptText = '<speak> Waiting for your response.</speak>';
-                let speechOutput = '<speak>Ok, for ' + year + ' I have music from ' + CityString + ' Please select a city.</speak> ';
+                let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+                let speechOutput = '<speak>Ok, for ' + year + ' I have music from ' + CityString + strings.prompts.select.city '</speak> ';
                 log('Ok , available cities for artist: ' + collection + ' and year: ' + year + ' are ' + CityString, collection, city, year, APIURL, function (status) {
                 });
                 suggestions = CityList;
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               }
-            } else if ((app.getIntent() === 'PlayAudioByYearCity') || (city !== '' && year !== '')) {
-              if (app.getIntent() === 'PlayAudioByYearCity' || page === 0) {
+            } else if ((app.getIntent() === actions.playAudio.byYearAndCity) || (city !== '' && year !== '')) {
+              if (app.getIntent() === actions.playAudio.byYearAndCity || page === 0) {
                 counter = 0;
                 MusicUrlList = [];
               }
@@ -1434,19 +1434,19 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                     }
                   } else {
                     let cardTitle = 'No Songs Found';
-                    let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city and year, or say random.</speak>";
-                    let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city and year, or say random.</speak>";
+                    let repromptText = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
+                    let speechOutput = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
                     askWithReprompt(app, speechOutput, repromptText, suggestions);
                   }
                 });
               }).on('error', function (e) {
                 let cardTitle = 'Unable to understand your request. ';
-                let repromptText = '<speak>Waiting for your response.</speak>';
-                let speechOutput = '<speak>Sorry, could you repeat that?</speak>';
+                let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+                let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() === 'PlayAudioQuery' || searchBYTitle) {
-              if (app.getIntent() === 'PlayAudioQuery') {
+            } else if (app.getIntent() === actions.playAudio.query || searchBYTitle) {
+              if (app.getIntent() === actions.playAudio.query) {
                 counter = 0;
                 MusicUrlList = [];
                 track = counter + 1;
@@ -1495,8 +1495,8 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
               } else {
                 askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
               }
-            } else if (app.getIntent() === 'PlayAudioByRandomYear' || PlayAudioByRandomYear) {
-              if (app.getIntent() === 'PlayAudioByRandomYear') {
+            } else if (app.getIntent() === actions.playAudio.random.year || PlayAudioByRandomYear) {
+              if (app.getIntent() === actions.playAudio.random.year) {
                 counter = 0;
                 MusicUrlList = [];
                 track = counter + 1;
@@ -1584,19 +1584,19 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                   } else {
                     let trackcounter = counter;
                     let cardTitle = 'No Songs Found';
-                    let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
-                    let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
+                    let repromptText = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
+                    let speechOutput = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
                     askAudio(app, MusicUrlList[trackcounter]['identifier'], track, MusicUrlList[trackcounter]['title'], MusicUrlList[trackcounter]['coverage'], MusicUrlList[trackcounter]['year'], audioURL, suggestions);
                   }
                 });
               }).on('error', function (e) {
                 let cardTitle = 'Unable to understand your request.';
-                let repromptText = '<speak>Sorry, could you repeat that?</speak>';
-                let speechOutput = '<speak>Sorry, could you repeat that?</speak>';
+                let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+                let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() === 'PlayAudioByRandomCity' || PlayAudioByRandomYear) {
-              if (app.getIntent() === 'PlayAudioByRandomCity') {
+            } else if (app.getIntent() === actions.playAudio.random.city || PlayAudioByRandomYear) {
+              if (app.getIntent() === actions.playAudio.random.city) {
                 counter = 0;
                 MusicUrlList = [];
                 track = counter + 1;
@@ -1683,19 +1683,19 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                     }
                   } else {
                     let cardTitle = 'No Songs Found';
-                    let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
-                    let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
+                    let repromptText = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
+                    let speechOutput = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
                     askWithReprompt(app, speechOutput, repromptText, suggestions);
                   }
                 });
               }).on('error', function (e) {
                 let cardTitle = 'Unable to understand your request.';
-                let repromptText = '<speak>Sorry, can you repeat that?</speak>';
-                let speechOutput = '<speak>Sorry, can you repeat that?</speak>';
+                let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+                let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
-            } else if (app.getIntent() === 'PlayAudioByRandom' || PlayAudioByRandom) {
-              if (app.getIntent() === 'PlayAudioByRandom') {
+            } else if (app.getIntent() === actions.playAudio.random.yearAndCity || PlayAudioByRandom) {
+              if (app.getIntent() === actions.playAudio.random.yearAndCity) {
                 counter = 0;
                 MusicUrlList = [];
                 track = counter + 1;
@@ -1783,16 +1783,16 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                     }
                   } else {
                     let cardTitle = 'No Songs Found';
-                    let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
-                    let speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
+                    let repromptText = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
+                    let speechOutput = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
 
                     askWithReprompt(app, speechOutput, repromptText, suggestions);
                   }
                 });
               }).on('error', function (e) {
                 let cardTitle = 'Unable to understand your request.';
-                let repromptText = '<speak>Sorry, can you say that again?</speak>';
-                let speechOutput = '<speak>Sorry, can you say that again?</speak>';
+                let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+                let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
                 askWithReprompt(app, speechOutput, repromptText, suggestions);
               });
             }
@@ -1806,10 +1806,10 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
             }
 
             let cardTitle = 'No Songs Found';
-            let repromptText = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
+            let repromptText = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
             let speechOutput = checkYear(year);
             if (speechOutput === '') {
-              speechOutput = "<speak>Sorry, I couldn't find any songs. Please try a different city or year, or say random.</speak>";
+              speechOutput = "<speak>" + strings.errors.yearAndCity.notFound + "</speak>";
             }
             // year = '';
             // city = '';
@@ -1820,21 +1820,21 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
         year = '';
         city = '';
         let cardTitle = 'Unable to understand your request.';
-        let repromptText = '<speak>Sorry, can you say that again?</speak>';
-        let speechOutput = '<speak>Sorry, can you say that again?</speak>';
+        let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+        let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       });
     } else {
       let cardTitle = 'Unable to understand your request.';
-      let repromptText = '<speak>Sorry, can you say that again?</speak>';
-      let speechOutput = '<speak>Sorry, can you say that again?</speak>';
+      let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+      let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
 
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     }
   } else {
     let cardTitle = 'Please select artist';
-    let repromptText = "<speak>Please say an artist name.<break time='.1s'/> Like The Ditty Bops,<break time='.1s'/> Or Cowboy Junkies,<break time='.1s'/> or Grateful Dead.</speak>";
-    let speechOutput = "<speak>Please say an artist name.<break time='.1s'/> Like The Ditty Bops,<break time='.1s'/> Or Cowboy Junkies,<break time='.1s'/> or Grateful Dead.</speak>";
+    let repromptText = "<speak>" + strings.prompts.select.artist + "</speak>";
+    let speechOutput = "<speak>" + strings.prompts.select.artistAlternative + "</speak>";
 
     askWithReprompt(app, speechOutput, repromptText, suggestions);
   }
@@ -1853,16 +1853,16 @@ function checkYear (year) {
     logger('yearIndex : ' + yearIndex);
     logger('tempYearList : ' + tempYearList);
     if (yearIndex > 0 && yearIndex < tempYearList.length - 1) {
-      speechOutput = '<speak> I don’t have anything for ' + year + '. The two closest years for ' + city + '. I would have are in ' + tempYearList[yearIndex - 1] + ' or ' + tempYearList[yearIndex + 1] + '. Which year would you like? </speak>';
+      speechOutput = '<speak> I don’t have anything for ' + year + '. The two closest years for ' + city + ' I have are ' + tempYearList[yearIndex - 1] + ' and ' + tempYearList[yearIndex + 1] + " " + strings.prompts.select.year '</speak>';
     } else if (yearIndex === 0 || yearIndex === tempYearList.length - 1) {
-      speechOutput = '<speak> I don’t have anything for ' + year + '. Please select within suggested range. </speak>';
+      speechOutput = '<speak> I don’t have anything for ' + year + '. Please select within the given range. </speak>';
       let YearString = '';
       if (YearList.length === 1) {
         YearString = YearList[0];
-        speechOutput = '<speak> I don’t have anything for ' + year + '. Available year for ' + city + ' is ' + YearString + '.</speak>';
+        speechOutput = '<speak> I don’t have anything for ' + year + '. The only year I have for ' + city + ' is ' + YearString + '</speak>';
       } else if (YearList.length > 1) {
         YearString = YearList[0] + ' to ' + YearList[YearList.length - 1];
-        speechOutput = '<speak> I don’t have anything for ' + year + '. Available years for ' + city + ' are ' + YearString + '.</speak>';
+        speechOutput = '<speak> I don’t have anything for ' + year + '. Available years for ' + city + ' are from ' + YearString + '</speak>';
       }
     }
   }
@@ -1871,8 +1871,8 @@ function checkYear (year) {
 
 function handleSessionEndRequest (app) {
   let cardTitle = 'Good bye';
-  let speechOutput = '<speak>Thanks for rocking with the Internet Archive’s live music collection!</speak>';
-  let repromptText = '<speak>Thanks for rocking with the Internet Archive’s live music collection!</speak>';
+  let speechOutput = "<speak>" + strings.statements.salutation.thankYou.liveMusicCollection + "</speak>";
+  let repromptText = "<speak>" + strings.statements.salutation.thankYou.liveMusicCollection + "</speak>";
   askWithReprompt(app, speechOutput, repromptText, suggestions);
 }
 
@@ -1899,10 +1899,10 @@ function log1 (Title, Collection, City, Year, Url, callback) {
 
 function Discovery (app) {
   let cardTitle = 'Discover more';
-  let repromptText = "<speak>Waiting for your response.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/> Like , Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>";
+  let repromptText = "<speak>" + strings.fallback.didntCatchThat + "</speak>";
   // let speechOutput = "<speak>Welcome To The Internet Archive,<break time='1s'/> Please select a collection by saying<break time='.5s'/> play Collection name.<break time='.5s'/> like Play The Ditty Bops,<break time='.5s'/> Or Play Cowboy Junkies.<break time='.5s'/> Or Play Grateful Dead.</speak>";
   let cardOutput = 'We have more collection like Disco Biscuits, Hot Buttered Rum or Keller Williams.';
-  let speechOutput = '<speak>We have more collections like Disco Biscuits, Hot Buttered Rum, or Keller Williams.</speak>';
+  let speechOutput = "<speak>" + strings.suggestion.artistsPromptAlternative + "</speak>";
   suggestions = ['Disco Biscuits', 'Hot Buttered Rum', 'Keller Williams'];
   askWithReprompt(app, speechOutput, repromptText, suggestions);
 }
@@ -2036,8 +2036,8 @@ function PlayNextSong (app, requestType, offsetInMilliseconds) {
   } else {
     logger('Auto Next - Not Found');
     let cardTitle = 'Unable to understand your request.';
-    let repromptText = '<speak>Sorry, can you say that again?</speak>';
-    let speechOutput = '<speak>Sorry, can you say that again?</speak>';
+    let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
+    let speechOutput = "<speak>" + strings.fallback.misunderstand + "</speak>";
 
     askWithReprompt(app, speechOutput, repromptText, suggestions);
   }

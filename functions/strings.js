@@ -55,6 +55,7 @@ module.exports = {
       kellerWilliams: 'Keller Williams'
     }, 
     artistsPrompt: "I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example",
+    artistsPromptAlternative: "We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams",
     randomPrompt: "I can play something randomly"
   },
   statements: {
@@ -63,6 +64,11 @@ module.exports = {
         liveMusicCollection: "Welcome to the live music collection at the Internet Archive."
       }, 
       welcomeBack: "Welcome back"
+    },
+    salutation: {
+      thankYou: {
+        liveMusicCollection: "Thanks for rocking with the Internet Archive’s live music collection!"
+      }
     }
   }
   
