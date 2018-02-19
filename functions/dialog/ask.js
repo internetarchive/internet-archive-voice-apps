@@ -5,10 +5,10 @@ const {savePhrase} = require('../state/context');
  *
  * @param app
  * @param message
- * @param suggestions
  * @param reprompt
+ * @param suggestions
  */
-module.exports = function (app, message, suggestions = null, reprompt = null) {
+module.exports = function (app, message, reprompt = null, suggestions = null) {
   app.ask(app.buildRichResponse()
     .addSimpleResponse(message)
     .addSuggestions(suggestions));
