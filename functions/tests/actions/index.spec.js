@@ -5,7 +5,7 @@ describe('actions', () => {
   describe('defaultActions', () => {
     it('should grab all actions and map to file name', () => {
       const actions = defaultActions();
-      expect(actions).to.have.property('welcome');
+      expect(actions).to.have.key('welcome');
     });
   });
 });
