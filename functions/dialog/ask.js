@@ -1,3 +1,5 @@
+const {savePhrase} = require('../state/context');
+
 /**
  * ask user with suggestions
  *
@@ -10,14 +12,8 @@ module.exports = function (app, message, suggestions = null) {
     .addSimpleResponse(message)
     .addSuggestions(suggestions));
 
-  app.data.context = {};
-  app.data.context.dialog = {
+  savePhrase(app, {
     message,
     suggestions,
-  };
-
-  // context.saveDialog(app, {
-  //   text: speechOutput,
-  //   suggestion: suggestions,
-  // });
+  });
 };
