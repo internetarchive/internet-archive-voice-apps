@@ -1,8 +1,17 @@
 const {expect} = require('chai');
 const sinon = require('sinon');
-const ask = require('../../dialog/ask');
+const rewire = require('rewire');
+const ask = rewire('../../dialog/ask');
 
 describe('dialog', () => {
+
+  let savePhrase;
+
+  beforeEach(() => {
+    savePhrase = sinon.spy();
+    ask.__set__('savePhrase', savePhrase)
+  });
+
   describe('ask', () => {
     it('should construct response', () => {
       const app = {};
@@ -21,8 +30,7 @@ describe('dialog', () => {
       expect(app.buildRichResponse).to.be.calledOnce;
       expect(app.addSimpleResponse).to.be.calledWith(message);
       expect(app.addSuggestions).to.be.calledWith(suggestions);
-      expect(app.data.context.dialog).to.have.property('message', message);
-      expect(app.data.context.dialog).to.have.property('suggestions', suggestions);
+      expect(savePhrase).to.be.calledOnce;
     });
   });
 });
