@@ -1,14 +1,12 @@
 const dialog = require('../dialog');
 const intentStrings = require('../strings').intents.welcome;
 
-const NAME = 'Welcome';
-
 /**
  * handle app intent
  *
  * @param app
  */
-function welcome (app) {
+function handler (app) {
   // init(app);
   // askAudio(app, "Test Song", "https://ia802307.us.archive.org/20/items/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Booklet/center_vbr.mp3", suggestions);
 
@@ -26,6 +24,6 @@ function welcome (app) {
 }
 
 module.exports = {
-  NAME,
-  welcome,
+  name: 'input.welcome',
+  handler,
 };
