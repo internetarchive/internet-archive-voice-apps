@@ -2,7 +2,7 @@ const dialog = require('../dialog');
 const intentStrings = require('../strings').intents.welcome;
 
 /**
- * handle app intent
+ * handle app welcome intent
  *
  * @param app
  */
