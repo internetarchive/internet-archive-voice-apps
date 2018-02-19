@@ -4,9 +4,24 @@
 
 'use strict';
 // Bimlendra
+
+// FIXME: this version of actions-on-google has bug:
+//
+// it overwrites process.env.DEBUG
+//
+// file  node_modules/actions-on-google/utils/transform.js
+//
+// // Enable actions-on-google debug logging
+// process.env.DEBUG = 'actions-on-google:*';
+//
+const storeDEBUG = process.env.DEBUG;
 const DialogflowApp = require('actions-on-google').DialogflowApp;
+process.env.DEBUG = storeDEBUG;
+
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
+const debug = require('debug')('ia:index:debug');
+debug.log = console.log.bind(console);
 const functions = require('firebase-functions');
 const https = require('https');
 const http = require('http');
@@ -899,7 +914,7 @@ function PlayNext (app, requestType, offsetInMilliseconds) {
 }
 
 function logger (strLog) {
-  console.log(util.inspect(strLog, false, null));
+  debug(util.inspect(strLog, false, null));
 }
 
 function customEncodeUri (uri) {

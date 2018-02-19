@@ -1,10 +1,10 @@
 module.exports = {
   noInput: 'No.Input',
   unknownInput: 'input.unknown',
-  welcomeInput: 'input.welcome',
+  welcomeInput: 'welcome',
   textInput: 'input.text',
   mediaStateInput: 'media_status_update',
-  repeatInput: 'Repeat.Input',
+  repeatInput: 'repeat',
   discovery: 'Discovery',
   searchCollection: 'SearchCollection',
   playAudio: {

@@ -11,17 +11,17 @@ describe('playMedia', () => {
   it('should store last used action', () => {
     const res = new MockResponse();
     index.playMedia(buildIntentRequest({
-      action: 'input.welcome',
+      action: 'welcome',
       lastSeen: null,
     }), res);
-    expect(res.data()).to.have.property('repetition').to.have.property('action', 'input.welcome');
+    expect(res.data()).to.have.property('repetition').to.have.property('action', 'welcome');
   });
 
   describe('welcome action', () => {
     it('should handle for a new user', () => {
       const res = new MockResponse();
       index.playMedia(buildIntentRequest({
-        action: 'input.welcome',
+        action: 'welcome',
         lastSeen: null,
       }), res);
       expect(res.speech()).to.not.contain('Welcome back');
@@ -31,7 +31,7 @@ describe('playMedia', () => {
     it('should handle for return user', () => {
       const res = new MockResponse();
       index.playMedia(buildIntentRequest({
-        action: 'input.welcome',
+        action: 'welcome',
       }), res);
       expect(res.speech()).to.contain('Welcome back, choose an artist.');
     });
