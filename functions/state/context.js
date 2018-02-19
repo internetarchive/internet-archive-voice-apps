@@ -18,7 +18,7 @@ function savePhrase (app, phrase) {
  * @param app
  * @returns {undefined|string}
  */
-function getLastPhrase(app) {
+function getLastPhrase (app) {
   return _.at(app, 'data.context.lastPhrase')[0];
 }
 
@@ -28,7 +28,7 @@ function getLastPhrase(app) {
  * @param app
  * @returns {undefined|string}
  */
-function getLastReprompt(app) {
+function getLastReprompt (app) {
   return _.at(app, 'data.context.lastPhrase.reprompt')[0];
 }
 

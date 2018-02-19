@@ -17,7 +17,7 @@ function stripName (fullPath) {
  * @returns {Map}
  */
 function defaultActions () {
-  const res = glob.sync(__dirname + '/*.js')
+  const res = glob.sync(path.join(__dirname, '*.js'))
     .map(filename => ([stripName(filename), require(filename).handler]))
     .filter(action => action[1]);
   return new Map(res);
