@@ -28,5 +28,14 @@ module.exports = {
       kellerWilliams: 'Keller Williams'
     }
   },
-  appExit: "Okay, let's try this again later."
+  appExit: "Okay, let's try this again later.",
+  intents: {
+    welcome: {
+      suggestions: [
+        'Grateful Dead',
+        'Cowboy Junkies',
+        'Ditty Bops',
+      ]
+    }
+  }
 };
