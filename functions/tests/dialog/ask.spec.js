@@ -23,6 +23,7 @@ describe('dialog', () => {
 
       const message = 'hello world!';
       const suggestions = ['one', 'two'];
+      const reprompt = 'Hello!?';
 
       ask(app, message, suggestions);
 
