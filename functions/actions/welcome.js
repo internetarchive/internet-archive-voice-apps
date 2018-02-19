@@ -24,6 +24,5 @@ function handler (app) {
 }
 
 module.exports = {
-  name: 'input.welcome',
   handler,
 };
