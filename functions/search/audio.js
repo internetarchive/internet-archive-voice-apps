@@ -1,7 +1,13 @@
 const fetch = require('node-fetch');
 
-const ALBUM_URL = 'http://web.archive.org/metadata/${id}';
+const ALBUM_URL = 'https://web.archive.org/metadata/${id}';
+const SONG_URL = 'https://archive.org/download/${albumId}/${filename}'
 
+/**
+ * Get details about Album
+ *
+ * @param id {string} id of album
+ */
 function getAlbumById (id) {
   return fetch(ALBUM_URL.replace('${id}', id))
     .then(res => res.json())
@@ -21,6 +27,20 @@ function getAlbumById (id) {
     });
 }
 
+/**
+ * Get full url to song by id of album and filename of song
+ *
+ * @param albumId {string}
+ * @param filename {string}
+ * @returns {string}
+ */
+function getSongUrlByAlbumIdAndFileName(albumId, filename) {
+  return SONG_URL
+    .replace('${albumId}', albumId)
+    .replace('${filename}', filename);
+}
+
 module.exports = {
   getAlbumById,
+  getSongUrlByAlbumIdAndFileName,
 };
