@@ -76,7 +76,11 @@ let previousSuggestions = null;
 
 let availableYears = [];
 
-logger('Start');
+debug('[Start]');
+debug('-----------------------------------------');
+debug('Environment:');
+debug(`Node.js Version: ${process.version}`);
+debug('-----------------------------------------');
 
 const LIST_FALLBACK = [
   strings.fallback.whatWasThat,
