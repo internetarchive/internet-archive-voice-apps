@@ -24,7 +24,7 @@ describe('actions', () => {
       storeAction(app, 'welcome');
       storeRepetitionCount(app, 123);
       storeAction(app, 'run');
-      expect(getLastRepetitionCount(app)).to.be.equal(0);
+      expect(getLastRepetitionCount(app)).to.be.equal(1);
     });
 
     it('should increase count if new action is the same as was before', () => {

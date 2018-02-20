@@ -34,8 +34,19 @@ function getLastReprompt (app) {
   return _.at(getData(app), 'lastPhrase.reprompt')[0];
 }
 
+/**
+ * get the last suggestions
+ *
+ * @param app
+ * @returns {undefined|string}
+ */
+function getLastSuggestions (app) {
+  return _.at(getData(app), 'lastPhrase.suggestions')[0];
+}
+
 module.exports = {
   getLastPhrase,
   getLastReprompt,
+  getLastSuggestions,
   savePhrase,
 };
