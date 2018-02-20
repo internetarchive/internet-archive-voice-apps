@@ -1,5 +1,8 @@
 const _ = require('lodash');
 
+const getContext = (app) => app.data.context;
+const setContext = (app, value) => app.data.context = value;
+
 /**
  * save last phrase, could we useful in case of repetition
  *
@@ -7,9 +10,9 @@ const _ = require('lodash');
  * @param phrase
  */
 function savePhrase (app, phrase) {
-  app.data.context = Object.assign({}, app.data.context, {
+  setContext(app, Object.assign({}, getContext(app), {
     lastPhrase: phrase,
-  });
+  }));
 }
 
 /**
@@ -19,7 +22,7 @@ function savePhrase (app, phrase) {
  * @returns {undefined|string}
  */
 function getLastPhrase (app) {
-  return _.at(app, 'data.context.lastPhrase')[0];
+  return _.at(getContext(app), 'lastPhrase')[0];
 }
 
 /**
@@ -29,7 +32,7 @@ function getLastPhrase (app) {
  * @returns {undefined|string}
  */
 function getLastReprompt (app) {
-  return _.at(app, 'data.context.lastPhrase.reprompt')[0];
+  return _.at(getContext(app), 'lastPhrase.reprompt')[0];
 }
 
 module.exports = {
