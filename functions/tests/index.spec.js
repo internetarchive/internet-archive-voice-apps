@@ -42,7 +42,7 @@ describe('playMedia', () => {
       it('should 1st time', () => {
         const res = new MockResponse();
         index.playMedia(buildIntentRequest({
-          action: 'No.Input',
+          action: 'no-input',
         }), res);
         expect(res.statusCode).to.be.equal(200);
         expect(res.userResponse()).to.be.true;
@@ -52,10 +52,10 @@ describe('playMedia', () => {
       it('should 2nd time', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'No.Input',
+          action: 'no-input',
           data: {
             repetition: {
-              action: 'No.Input',
+              action: 'no-input',
               count: 1,
             },
           },
@@ -69,10 +69,10 @@ describe('playMedia', () => {
       it('should 3rd time', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'No.Input',
+          action: 'no-input',
           data: {
             repetition: {
-              action: 'No.Input',
+              action: 'no-input',
               count: 2,
             },
           },
@@ -86,7 +86,7 @@ describe('playMedia', () => {
       it('should not fallback 3rd time if previous action was not no-input', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'No.Input',
+          action: 'no-input',
           data: {
             repetition: {
               action: 'some.other.action',
@@ -107,7 +107,7 @@ describe('playMedia', () => {
       it('should 1st time', () => {
         const res = new MockResponse();
         index.playMedia(buildIntentRequest({
-          action: 'input.unknown',
+          action: 'unknown',
         }), res);
         expect(res.statusCode).to.be.equal(200);
         expect(res.userResponse()).to.be.true;
@@ -117,10 +117,10 @@ describe('playMedia', () => {
       it('should 2nd time', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'input.unknown',
+          action: 'unknown',
           data: {
             repetition: {
-              action: 'input.unknown',
+              action: 'unknown',
               count: 1,
             },
           },
@@ -134,10 +134,10 @@ describe('playMedia', () => {
       it('should 3rd time', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'input.unknown',
+          action: 'unknown',
           data: {
             repetition: {
-              action: 'input.unknown',
+              action: 'unknown',
               count: 2,
             },
           },
@@ -151,7 +151,7 @@ describe('playMedia', () => {
       it('should not fallback 3rd time if previous action was not no-input', () => {
         const res = new MockResponse();
         const req = buildIntentRequest({
-          action: 'input.unknown',
+          action: 'unknown',
           data: {
             repetition: {
               action: 'some.other.action',
