@@ -1,15 +1,6 @@
 const glob = require('glob');
 const path = require('path');
-
-/**
- * strip file name from full path
- *
- * @param fullPath
- * @returns {string}
- */
-function stripName (fullPath) {
-  return path.basename(fullPath, path.extname(fullPath));
-}
+const {actionNameByFileName} = require('./helpers/handlers');
 
 /**
  * grab all default actions here
@@ -18,7 +9,7 @@ function stripName (fullPath) {
  */
 function defaultActions () {
   const res = glob.sync(path.join(__dirname, '*.js'))
-    .map(filename => ([stripName(filename), require(filename).handler]))
+    .map(filename => ([actionNameByFileName(filename), require(filename).handler]))
     .filter(action => action[1]);
   return new Map(res);
 }
