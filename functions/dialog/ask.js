@@ -1,4 +1,4 @@
-const {savePhrase} = require('../state/context');
+const {savePhrase} = require('../state/dialog');
 
 /**
  * ask user with suggestions

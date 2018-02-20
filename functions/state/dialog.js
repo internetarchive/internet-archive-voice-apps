@@ -1,7 +1,8 @@
 const _ = require('lodash');
 
-const getContext = (app) => app.data.context;
-const setContext = (app, value) => app.data.context = value;
+const name = 'dialog';
+const getContext = (app) => app.data[name];
+const setContext = (app, value) => app.data[name] = value;
 
 /**
  * save last phrase, could we useful in case of repetition

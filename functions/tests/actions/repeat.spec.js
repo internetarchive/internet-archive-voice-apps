@@ -18,7 +18,7 @@ describe('actions', () => {
       const message = 'Which direction do you go?';
       const reprompt = 'Where are you go?';
       const suggestions = ['west', 'east', 'north', 'south'];
-      app.data.context = {
+      app.data.dialog = {
         lastPhrase: {
           message, reprompt, suggestions,
         },
