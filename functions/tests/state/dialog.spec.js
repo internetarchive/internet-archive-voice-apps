@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const {getLastPhrase, getLastReprompt, savePhrase} = require('../../state/context');
+const {getLastPhrase, getLastReprompt, savePhrase} = require('../../state/dialog');
 
 describe('state', () => {
   let app;
@@ -8,7 +8,7 @@ describe('state', () => {
     app = {data: {}};
   });
 
-  describe('context', () => {
+  describe('dialog', () => {
     describe('savePhrase', () => {
       it('should store phrase and we could pick up it', () => {
         app.data.somethingElse = 'hello world';

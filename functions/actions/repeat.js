@@ -1,5 +1,5 @@
 const dialog = require('../dialog');
-const {getLastPhrase, getLastReprompt} = require('../state/context');
+const {getLastPhrase, getLastReprompt} = require('../state/dialog');
 
 /**
  * handle repeat intent
