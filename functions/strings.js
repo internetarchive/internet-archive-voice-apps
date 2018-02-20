@@ -35,6 +35,11 @@ module.exports = {
       reprompt: 'Sorry, can you repeat that? ${reprompt}',
       fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     },
+    unknown: {
+      first: "I'm not sure what you said. Can you repeat that?",
+      reprompt: "I still didn't get that. ${reprompt}",
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
     welcome: {
       suggestions: [
         'Grateful Dead',
