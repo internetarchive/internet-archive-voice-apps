@@ -29,7 +29,7 @@ const replaceall = require('replaceall');
 const util = require('util');
 
 const actions = require('./actions/names');
-const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('./state/repetition');
+const {getLastAction, storeAction, getLastRepetitionCount} = require('./state/repetition');
 const strings = require('./strings');
 
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
