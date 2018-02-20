@@ -12,7 +12,7 @@ describe('search', () => {
 
     describe('getAlbumById', () => {
       it('should return list of songs by album id', function () {
-        this.timeout(4000);
+        this.timeout(5000);
         return audio.getAlbumById('gd73-06-10.sbd.hollister.174.sbeok.shnf')
           .then(album => {
             expect(album).to.have.property('creator', 'Grateful Dead');
@@ -29,6 +29,19 @@ describe('search', () => {
             expect(songs[30]).to.have.property('title', 'Johnny B. Goode');
           });
       });
+    });
+
+    describe('getSongUrlByAlbumFileName', () => {
+      it('should return url of song', () => {
+        expect(audio.getSongUrlByAlbumIdAndFileName(
+          'gd73-06-10.sbd.hollister.174.sbeok.shnf',
+          'gd73-06-10d1t01.mp3'
+        )).to.be.equal(
+          'https://archive.org/download/' +
+          'gd73-06-10.sbd.hollister.174.sbeok.shnf/' +
+          'gd73-06-10d1t01.mp3'
+        )
+      })
     });
   });
 });
