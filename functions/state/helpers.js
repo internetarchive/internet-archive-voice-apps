@@ -5,10 +5,10 @@ module.exports = {
    * @param name {string} - name of module
    * @returns {{getData: (function(*)), setData: (function(*, *): *)}}
    */
-  group: function (name) {
-    return {
-      getData: (app) => app.data[name],
-      setData: (app, value) => app.data[name] = value,
-    }
-  }
+  group: (name) => ({
+    getData: (app) => app.data[name],
+    setData: (app, value) => {
+      app.data[name] = value;
+    },
+  }),
 };
