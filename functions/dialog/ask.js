@@ -1,3 +1,5 @@
+const debug = require('debug')('ia:ask');
+debug.log = console.log.bind(console);
 const {savePhrase} = require('../state/dialog');
 
 /**
@@ -9,6 +11,7 @@ const {savePhrase} = require('../state/dialog');
  * @param suggestions
  */
 module.exports = function (app, message, reprompt = null, suggestions = null) {
+  debug('ask', message, suggestions);
   app.ask(app.buildRichResponse()
     .addSimpleResponse(message)
     .addSuggestions(suggestions));
