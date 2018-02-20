@@ -183,7 +183,7 @@ function noInput (app) {
   let count = 0;
 
   if (getLastAction(app) === actions.noInput) {
-    count = app.data.repetition.count || 0;
+    count = getLastRepetitionCount(app);
   }
 
   switch (count) {
@@ -197,17 +197,13 @@ function noInput (app) {
       tell(app, FINAL_FALLBACK);
       break;
   }
-
-  app.data.repetition = Object.assign({}, app.data.repetition, {
-    count: count + 1,
-  });
 }
 
 function Unknown (app) {
   let count = 0;
 
   if (getLastAction(app) === actions.unknownInput) {
-    count = app.data.repetition.count || 0;
+    count = getLastRepetitionCount(app);
   }
 
   switch (count) {
@@ -221,10 +217,6 @@ function Unknown (app) {
       tell(app, FINAL_FALLBACK);
       break;
   }
-
-  app.data.repetition = Object.assign({}, app.data.repetition, {
-    count: count + 1,
-  });
 }
 
 function responseHandler (app) {
