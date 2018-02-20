@@ -183,9 +183,7 @@ function responseHandler (app) {
   logger('currentSuggestions : ' + currentSuggestions);
   logger('responseHandler : ' + app.getIntent());
 
-  if (app.getIntent() === actions.repeatInput) {
-    repeatInput(app);
-  } else if (app.getIntent() === actions.discovery) {
+  if (app.getIntent() === actions.discovery) {
     searchForSeventyEights = false;
     Discovery(app);
   } else if (app.getIntent() === actions.playAudio.noOptions) {
