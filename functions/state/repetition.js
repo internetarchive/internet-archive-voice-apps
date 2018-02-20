@@ -9,6 +9,9 @@ const {getData, setData} = require('./helpers').group('repetition');
  */
 function storeAction (app, action) {
   if (getLastAction(app) === action) {
+    setData(app, Object.assign({}, getData(app), {
+      count: getLastRepetitionCount(app) + 1,
+    }));
     return;
   }
 
@@ -33,7 +36,7 @@ function getLastAction (app) {
  *
  * @param count
  */
-function storeRepetitionCount(app, count) {
+function storeRepetitionCount (app, count) {
   setData(app, Object.assign({}, getData(app), {
     count,
   }));
@@ -43,7 +46,7 @@ function storeRepetitionCount(app, count) {
  * get last action count
  * @returns {*}
  */
-function getLastRepetitionCount(app) {
+function getLastRepetitionCount (app) {
   return _.at(getData(app), 'count')[0];
 }
 

@@ -26,5 +26,12 @@ describe('actions', () => {
       storeAction(app, 'run');
       expect(getLastRepetitionCount(app)).to.be.equal(0);
     });
+
+    it('should increase count if new action is the same as was before', () => {
+      storeAction(app, 'run');
+      storeRepetitionCount(app, 1);
+      storeAction(app, 'run');
+      expect(getLastRepetitionCount(app)).to.be.equal(2);
+    });
   });
 });
