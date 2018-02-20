@@ -1,8 +1,6 @@
 const _ = require('lodash');
 
-const name = 'dialog';
-const getContext = (app) => app.data[name];
-const setContext = (app, value) => app.data[name] = value;
+const {getData, setData} = require('./helpers').group('dialog');
 
 /**
  * save last phrase, could we useful in case of repetition
@@ -11,7 +9,7 @@ const setContext = (app, value) => app.data[name] = value;
  * @param phrase
  */
 function savePhrase (app, phrase) {
-  setContext(app, Object.assign({}, getContext(app), {
+  setData(app, Object.assign({}, getData(app), {
     lastPhrase: phrase,
   }));
 }
@@ -23,7 +21,7 @@ function savePhrase (app, phrase) {
  * @returns {undefined|string}
  */
 function getLastPhrase (app) {
-  return _.at(getContext(app), 'lastPhrase')[0];
+  return _.at(getData(app), 'lastPhrase')[0];
 }
 
 /**
@@ -33,7 +31,7 @@ function getLastPhrase (app) {
  * @returns {undefined|string}
  */
 function getLastReprompt (app) {
-  return _.at(getContext(app), 'lastPhrase.reprompt')[0];
+  return _.at(getData(app), 'lastPhrase.reprompt')[0];
 }
 
 module.exports = {
