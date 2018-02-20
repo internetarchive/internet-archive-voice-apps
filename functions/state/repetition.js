@@ -17,7 +17,7 @@ function storeAction (app, action) {
 
   setData(app, Object.assign({}, getData(app), {
     action,
-    count: 0,
+    count: 1,
   }));
 }
 

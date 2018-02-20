@@ -30,6 +30,11 @@ module.exports = {
   },
   appExit: "Okay, let's try this again later.",
   intents: {
+    noInput: {
+      first: "Sorry, I couldn't hear you.",
+      reprompt: 'Sorry, can you repeat that? ${reprompt}',
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
     welcome: {
       suggestions: [
         'Grateful Dead',
