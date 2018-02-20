@@ -14,6 +14,10 @@ function savePhrase (app, phrase) {
   }));
 }
 
+function getLastMessage (app) {
+  return _.at(getData(app), 'lastPhrase.message')[0];
+}
+
 /**
  * get the last told phrase
  *
@@ -45,6 +49,7 @@ function getLastSuggestions (app) {
 }
 
 module.exports = {
+  getLastMessage,
   getLastPhrase,
   getLastReprompt,
   getLastSuggestions,

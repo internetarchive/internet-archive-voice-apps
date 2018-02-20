@@ -1,5 +1,5 @@
 const dialog = require('../dialog');
-const {getLastPhrase, getLastReprompt} = require('../state/dialog');
+const {getLastMessage, getLastReprompt, getLastSuggestions} = require('../state/dialog');
 
 /**
  * handle repeat intent
@@ -7,11 +7,15 @@ const {getLastPhrase, getLastReprompt} = require('../state/dialog');
  * @param app
  */
 function handler (app) {
+  console.log('repeat handler');
   // TODO: repeat currently playing song
   // play(app, 0);
-  const phrase = getLastPhrase(app);
+  const message = getLastMessage(app);
   const reprompt = getLastReprompt(app);
-  dialog.ask(app, phrase.message, reprompt, phrase.suggestions);
+  const suggestions = getLastSuggestions(app);
+  console.log(message, reprompt, suggestions);
+  dialog.ask(app, message, reprompt, suggestions);
+  console.log('repeat handler after');
 }
 
 module.exports = {
