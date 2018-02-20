@@ -29,6 +29,7 @@ const replaceall = require('replaceall');
 const util = require('util');
 
 const actions = require('./actions/names');
+const {getLastAction, storeAction} = require('./state/repetition');
 const strings = require('./strings');
 
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
@@ -116,9 +117,7 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   } else {
     app.tell(strings.errors.device.mediaResponse);
   }
-  app.data.repetition = Object.assign({}, app.data.repetition, {
-    action: app.getIntent(),
-  });
+  storeAction(app, app.getIntent());
   dashbot.configHandler(app);
 }));
 
@@ -179,20 +178,11 @@ function repeatInput (app) {
   }
 }
 
-/**
- * repetition action
- *
- * @param state
- * @returns {req.data.repetition|{action, count}|*|string|string|string}
- */
-function getRepetitionAction (state) {
-  return state.repetition && state.repetition.action;
-}
 
 function noInput (app) {
   let count = 0;
 
-  if (getRepetitionAction(app.data) === actions.noInput) {
+  if (getLastAction(app) === actions.noInput) {
     count = app.data.repetition.count || 0;
   }
 
@@ -216,7 +206,7 @@ function noInput (app) {
 function Unknown (app) {
   let count = 0;
 
-  if (getRepetitionAction(app.data) === actions.unknownInput) {
+  if (getLastAction(app) === actions.unknownInput) {
     count = app.data.repetition.count || 0;
   }
 
