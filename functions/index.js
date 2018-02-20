@@ -28,6 +28,7 @@ const http = require('http');
 const replaceall = require('replaceall');
 const util = require('util');
 
+const {defaultActions} = require('./actions');
 const actions = require('./actions/names');
 const {getLastAction, storeAction, getLastRepetitionCount} = require('./state/repetition');
 const strings = require('./strings');
@@ -98,15 +99,6 @@ let defaultSuggestions = [
 
 let suggestions;
 
-/**
- * map actions to handlers
- * @type {Map}
- */
-const actionMap = new Map();
-actionMap.set(actions.noInput, noInput);
-actionMap.set(actions.unknownInput, Unknown);
-actionMap.set(actions.welcomeInput, Welcome);
-//TODO: add all actions here
 
 /**
  * Action Endpoint
@@ -179,47 +171,6 @@ function repeatInput (app) {
     play(app, 0);
   } else {
     ask(app, currentSpeechoutput, currentSuggestions);
-  }
-}
-
-
-function noInput (app) {
-  let count = 0;
-
-  if (getLastAction(app) === actions.noInput) {
-    count = getLastRepetitionCount(app);
-  }
-
-  switch (count) {
-    case 0:
-      ask(app, strings.errors.noInput.first, suggestions);
-      break;
-    case 1:
-      ask(app, '<speak>' + strings.errors.noInput.reprompt + currentRepromptText + '</speak>', suggestions);
-      break;
-    default:
-      tell(app, FINAL_FALLBACK);
-      break;
-  }
-}
-
-function Unknown (app) {
-  let count = 0;
-
-  if (getLastAction(app) === actions.unknownInput) {
-    count = getLastRepetitionCount(app);
-  }
-
-  switch (count) {
-    case 0:
-      ask(app, '<speak>' + strings.errors.unknownInput.first + '</speak>', suggestions);
-      break;
-    case 1:
-      ask(app, '<speak>' + strings.errors.unknownInput.reprompt + currentRepromptText + '</speak>', suggestions);
-      break;
-    default:
-      tell(app, FINAL_FALLBACK);
-      break;
   }
 }
 
@@ -546,7 +497,7 @@ function responseHandler (app) {
       }
     }
   } else {
-    app.handleRequestAsync(actionMap);
+    app.handleRequestAsync(defaultActions());
   }
 }
 
