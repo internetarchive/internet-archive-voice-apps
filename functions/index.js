@@ -18,24 +18,23 @@ const storeDEBUG = process.env.DEBUG;
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 process.env.DEBUG = storeDEBUG;
 
-// it fails in local env with error:
-//
-const functions = require('firebase-functions');
-let functionsConfig;
-try {
-  functionsConfig = functions.config();
-} catch (e) {
-  functionsConfig = {};
-}
-
-console.info(`initial process.env.DEBUG: ${JSON.stringify(process.env)}`);
-console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
+const _ = require('lodash');
 
 // it seems google firebase function doesn't give access to env variables
 // https://firebase.google.com/docs/functions/config-env
 // so we use its native firebase.config() instead
-process.env.DEBUG = process.env.DEBUG !== undefined ? process.env.DEBUG : functionsConfig.debugger.scope;
 
+const functions = require('firebase-functions');
+let functionsConfig;
+try {
+  functionsConfig = functions.config();
+  process.env.DEBUG = _.at(functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
+} catch (e) {
+  functionsConfig = {debugger: {scope: null}};
+}
+
+console.info(`initial process.env: ${JSON.stringify(process.env)}`);
+console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
 
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
