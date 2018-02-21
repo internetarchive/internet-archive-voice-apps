@@ -8,11 +8,17 @@
  * - filename: ./actions/welcome.js
  *
  * The way we have some limitations on intent names and recommendations
- * we should use lower case and `-` (hyphen) as delimiter
+ * we should use lower case and `.` (dot) as delimiter
  *
  * For example:
  *
- * no-input
+ * search.artist
+ *
+ *
+ * Predefined actions in Dialog Flow:
+ *
+ * - input.unknown
+ * - no.input
  *
  */
 
