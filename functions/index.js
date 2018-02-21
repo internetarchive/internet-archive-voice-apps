@@ -126,11 +126,16 @@ debug(`We can handle actions: ${actionNames}`);
 function logSessionStart (app) {
   debug('\n\n')
   debug(`start handling action: ${app.getIntent()}`);
-  debug(`user id: ${app.getUser().userId}`);
-  debug(`user name: ${app.getUser().userName}`);
+  const user = app.getUser();
+  if (user) {
+    debug(`user id: ${app.getUser().userId}`);
+    debug(`user name: ${app.getUser().userName}`);
+    debug(`last seen: ${app.getUser().lastSeen}`);
+  } else {
+    debug('<unknown user>');
+  }
   debug(`user's session data: ${JSON.stringify(app.data)}`);
   debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
-  debug(`last seen: ${app.getUser().lastSeen}`);
   debug('\n\n')
 }
 
