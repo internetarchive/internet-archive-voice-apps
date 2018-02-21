@@ -1,7 +1,6 @@
 const {expect} = require('chai');
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
 const index = require('..');
-const strings = require('../strings');
 
 describe('playMedia', () => {
   it('should be defined', () => {

@@ -8,8 +8,8 @@ const ALBUMS_OF_CREATOR_URL = 'https://web.archive.org/advancedsearch.php' +
   '&sort[]={{sort}}' +
   '&rows={{limit}}' +
   '&page={{page}}' +
-  '&output=json'
-const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}'
+  '&output=json';
+const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}';
 
 /**
  * Get details about Album
@@ -47,16 +47,19 @@ function getAlbumById (id) {
  * @returns {Promise}
  */
 function getAlbumsByCreatorId (creatorId,
-                               {
-                                 limit = 1,
-                                 page = 1,
-                                 sort = 'downloads+desc',
-                               } = {}) {
+  {
+    limit = 1,
+    page = 1,
+    sort = 'downloads+desc',
+  } = {}) {
   return fetch(
     mustache.render(
       ALBUMS_OF_CREATOR_URL,
       {
-        creatorId, limit, page, sort,
+        creatorId,
+        limit,
+        page,
+        sort,
         fields: 'coverage,identifier,subject,year,title'
         // fields: 'coverage,creator,description,downloads,identifier,mediatype,subject,year,location,title'
       }
