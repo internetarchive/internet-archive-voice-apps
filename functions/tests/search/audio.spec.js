@@ -73,6 +73,9 @@ describe('search', () => {
               'title',
               'Grateful Dead Live at Robert F. Kennedy Stadium on 1973-06-10'
             )
+            expect(albums[0]).to.have.property(
+              'year', 1973
+            )
             expect(albums[4]).to.have.property(
               'id',
               'gd77-05-07.sbd.eaton.wizard.26085.sbeok.shnf'
@@ -88,6 +91,9 @@ describe('search', () => {
             expect(albums[4]).to.have.property(
               'title',
               'Grateful Dead Live at Boston Garden on 1977-05-07'
+            )
+            expect(albums[4]).to.have.property(
+              'year', 1977
             )
           });
       });

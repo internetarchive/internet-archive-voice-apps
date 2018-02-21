@@ -4,7 +4,7 @@ const mustache = require('mustache');
 const ALBUM_URL = 'https://web.archive.org/metadata/{{id}}';
 const ALBUMS_OF_CREATOR_URL = 'https://web.archive.org/advancedsearch.php' +
   '?q=collection:({{creatorId}})' +
-  '&fl[]=coverage,creator,description,downloads,identifier,mediatype,subject,year,location,title' +
+  '&fl[]={{fields}}' +
   '&sort[]={{sort}}' +
   '&rows={{limit}}' +
   '&page={{page}}' +
@@ -55,7 +55,11 @@ function getAlbumsByCreatorId (creatorId,
   return fetch(
     mustache.render(
       ALBUMS_OF_CREATOR_URL,
-      {creatorId, limit, page, sort}
+      {
+        creatorId, limit, page, sort,
+        fields: 'coverage,identifier,subject,year,title'
+        // fields: 'coverage,creator,description,downloads,identifier,mediatype,subject,year,location,title'
+      }
     )
   )
     .then(res => res.json())
@@ -64,6 +68,7 @@ function getAlbumsByCreatorId (creatorId,
       name: a.coverage,
       subject: a.subject,
       title: a.title,
+      year: parseInt(a.year),
     })));
 }
 
