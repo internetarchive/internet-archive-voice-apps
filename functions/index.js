@@ -503,6 +503,12 @@ function responseHandler (app) {
     }
   } else {
     app.handleRequestAsync(actionsMap);
+
+    //TODO: should be removed.
+    //left for back compotability
+    if (app.getIntent() === 'welcome') {
+      init(app);
+    }
   }
 }
 
