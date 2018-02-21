@@ -12,13 +12,14 @@ const {savePhrase} = require('../state/dialog');
  */
 module.exports = function (app, message, reprompt = null, suggestions = null) {
   debug('ask', message, suggestions);
-  app.ask(app.buildRichResponse()
-    .addSimpleResponse(message)
-    .addSuggestions(suggestions));
 
   savePhrase(app, {
     message,
     reprompt,
     suggestions,
   });
+
+  app.ask(app.buildRichResponse()
+    .addSimpleResponse(message)
+    .addSuggestions(suggestions));
 };
