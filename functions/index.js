@@ -100,6 +100,13 @@ let defaultSuggestions = [
 let suggestions;
 
 
+const actionsMap = defaultActions();
+const actionNames = Array.from(actionsMap.keys())
+  .map(name => `"${name}"`)
+  .join(', ');
+
+debug(`We can handle actions: ${actionNames}`);
+
 /**
  * Action Endpoint
  *
@@ -495,7 +502,7 @@ function responseHandler (app) {
       }
     }
   } else {
-    app.handleRequestAsync(defaultActions());
+    app.handleRequestAsync(actionsMap);
   }
 }
 
