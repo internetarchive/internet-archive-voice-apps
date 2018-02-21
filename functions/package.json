@@ -22,7 +22,12 @@
     "debug": "^3.1.0",
     "firebase-admin": "^5.5.1",
     "firebase-functions": "^0.7.3",
-    "replaceall": "^0.1.6"
+    "glob": "^7.1.2",
+    "lodash": "^4.17.5",
+    "mustache": "^2.3.0",
+    "node-fetch": "^2.0.0",
+    "replaceall": "^0.1.6",
+    "supports-color": "^5.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -35,6 +40,7 @@
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "fetch-mock": "^6.0.0",
     "mocha": "^5.0.1",
     "rewire": "^3.0.2",
     "sinon": "^4.3.0",

@@ -64,7 +64,11 @@ function getBody ({action, data = {}, lastSeen = '2018-02-15T15:54:15Z'}) {
         'name': 'actions_capability_web_browser',
         'parameters': {},
         'lifespan': 0
-      }, {'name': 'actions_capability_media_response_audio', 'parameters': {}, 'lifespan': 0}],
+      }, {
+        'name': 'actions_capability_media_response_audio',
+        'parameters': {},
+        'lifespan': 0
+      }],
       'metadata': {
         'intentId': '903bd4f5-bfbd-4018-b245-961d595a492e',
         'webhookUsed': 'true',
@@ -112,12 +116,16 @@ class MockResponse {
     return this;
   }
 
-  data() {
+  data () {
     return this.body.contextOut[0].parameters;
   }
 
-  userResponse() {
+  userResponse () {
     return this.body.data.google.expectUserResponse;
+  }
+
+  suggestions () {
+    return this.body.data.google.richResponse.suggestions.map(i => i.title);
   }
 
   /**
