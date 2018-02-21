@@ -1,0 +1,76 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 28,
+    "params": {
+      "query": "collection:(GratefulDead )",
+      "qin": "collection:(GratefulDead)",
+      "fields": "coverage,creator,description,downloads,identifier,mediatype,subject,year,location,title",
+      "wt": "json",
+      "sort": "downloads desc",
+      "rows": "5",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 12210,
+    "start": 0,
+    "docs": [
+      {
+        "coverage": "Washington, DC",
+        "creator": "Grateful Dead",
+        "description": "Morning Dew, Beat It On Down The Line, Ramble On Rose, Jack Straw, Wave That Flag, Looks Like Rain, Box Of Rain, They Love Each Other, The Race is On, Row Jimmy, El Paso, Bird Song, Playin' In The Band Eyes Of The World-> Stella Blue, Big River, Here Comes Sunshine, Around & Around, Dark Star-> He's Gone-> Wharf Rat-> Truckin', Sugar Magnolia It Takes A Lot To Laugh It Takes A Train To Cry*, That's Alright Mama*, Promised Land*, Not Fade Away*-> Goin' Down The Road Feelin' Bad*-> Drums*-> Not Fade Away*, Johnny B. Goode*",
+        "downloads": 926677,
+        "identifier": "gd73-06-10.sbd.hollister.174.sbeok.shnf",
+        "mediatype": "etree",
+        "subject": "Soundboard",
+        "title": "Grateful Dead Live at Robert F. Kennedy Stadium on 1973-06-10",
+        "year": "1973"
+      },
+      {
+        "coverage": "Madison, WI",
+        "creator": "Grateful Dead",
+        "description": "Soundcheck: Jack Straw, Box of Rain Loose Lucy, Beat It On Down The Line, Brown Eyed Women, Mexicali Blues, Tennessee Jed, Looks Like Rain, Box Of Rain, Row Jimmy, Jack Straw, China Cat Sunflower-> I Know You Rider, Me & My Uncle, Bertha, Playin' In The Band, Casey Jones Here Comes Sunshine, El Paso, You Ain't Woman Enough, They Love Each Other, Big River, Dark Star-> Eyes Of The World-> China Doll, Promised Land, Sugaree, Sugar Magnolia, E: Uncle John's Band, E: One More Saturday Night",
+        "downloads": 817857,
+        "identifier": "gd73-02-15.sbd.hall.1580.sbeok.shnf",
+        "mediatype": "etree",
+        "subject": "Live concert",
+        "title": "Grateful Dead Live at Dane County Coliseum on 1973-02-15",
+        "year": "1973"
+      },
+      {
+        "coverage": "Worcester, MA",
+        "creator": "Grateful Dead",
+        "description": "Hell In A Bucket, Sugaree, CC Rider, It Must Have Been The Roses, It's All Over Now, Big Railroad Blues, Let It Grow-> Don't Ease Me In China Cat Sunflower-> I Know You Rider-> Women Are Smarter-> Crazy Fingers-> Samson & Delilah-> Drums-> Space-> The Other One-> Wharf Rat-> Th",
+        "downloads": 714356,
+        "identifier": "gd87-04-03.sennme80.clark-miller.24898.sbeok.shnf",
+        "mediatype": "etree",
+        "subject": "Live concert",
+        "title": "Grateful Dead Live at The Centrum on 1987-04-03",
+        "year": "1987"
+      },
+      {
+        "coverage": "Ithaca, NY",
+        "creator": "Grateful Dead",
+        "description": "Minglewood Blues, Loser, El Paso, They Love Each Other, Jack Straw, Deal, Lazy Lightning-> Supplication, Brown Eyed Women, Mama Tried, Row Jimmy, Dancin' In The Streets Scarlet Begonias-> Fire On The Mountain, Estimated Prophet, Saint Stephen-> Not Fade Away-> Saint Stephen-> Morning Dew, E: One More Saturday Night",
+        "downloads": 651238,
+        "identifier": "gd77-05-08.sbd.hicks.4982.sbeok.shnf",
+        "mediatype": "etree",
+        "subject": "Live concert",
+        "title": "Grateful Dead Live at Barton Hall, Cornell University on 1977-05-08",
+        "year": "1977"
+      },
+      {
+        "coverage": "Boston, MA",
+        "creator": "Grateful Dead",
+        "description": "Bertha, Cassidy, Deal, Jack Straw, Peggy-O, Minglewood Blues, Mississippi Half Step-> Big River, Tennessee Jed, The Music Never Stopped Terrapin Station-> Samson & Delilah, Friend Of The Devil, Estimated Prophet, Eyes Of The World-> Drums-> The Wheel-> Wharf Rat-> Around & Around, E: U.S. Blues",
+        "downloads": 605626,
+        "identifier": "gd77-05-07.sbd.eaton.wizard.26085.sbeok.shnf",
+        "mediatype": "etree",
+        "subject": "Live concert",
+        "title": "Grateful Dead Live at Boston Garden on 1977-05-07",
+        "year": "1977"
+      }
+    ]
+  }
+}

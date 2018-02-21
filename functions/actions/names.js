@@ -1,10 +1,6 @@
 module.exports = {
-  noInput: 'No.Input',
-  unknownInput: 'input.unknown',
-  welcomeInput: 'input.welcome',
   textInput: 'input.text',
   mediaStateInput: 'media_status_update',
-  repeatInput: 'Repeat.Input',
   discovery: 'Discovery',
   searchCollection: 'SearchCollection',
   playAudio: {
@@ -30,5 +26,4 @@ module.exports = {
   information: {
     availableYears: 'SongAvailableYears'
   }
-
 };
