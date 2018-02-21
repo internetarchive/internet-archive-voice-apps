@@ -37,7 +37,10 @@ console.info(`initial process.env: ${JSON.stringify(process.env)}`);
 console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
 
 const bst = require('bespoken-tools');
-const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
+const dashbot = require('dashbot')(
+  '54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg', {
+    printErrors: false,
+  }).google;
 
 const debugCreator = require('debug');
 //by default it will be just blank log messages
@@ -100,7 +103,6 @@ let availableYears = [];
 
 debug('[Start]');
 debug('-----------------------------------------');
-debug('Environment:');
 debug(`Node.js Version: ${process.version}`);
 debug('-----------------------------------------');
 
