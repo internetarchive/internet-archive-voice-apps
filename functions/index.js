@@ -34,7 +34,7 @@ const util = require('util');
 
 const {defaultActions} = require('./actions');
 const actions = require('./actions/names');
-const {getLastAction, storeAction, getLastRepetitionCount} = require('./state/repetition');
+const {storeAction} = require('./state/actions');
 const strings = require('./strings');
 
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");

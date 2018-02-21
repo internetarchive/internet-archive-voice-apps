@@ -1,6 +1,6 @@
 const dialog = require('../../dialog');
+const {getLastAction, getLastRepetitionCount} = require('../../state/actions');
 const {getLastReprompt, getLastSuggestions} = require('../../state/dialog');
-const {getLastAction, getLastRepetitionCount} = require('../../state/repetition');
 
 module.exports = {
   /**

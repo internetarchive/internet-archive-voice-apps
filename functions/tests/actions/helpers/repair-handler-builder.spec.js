@@ -4,7 +4,7 @@ const mockApp = require('../../_utils/mocking/app');
 const mockDialog = require('../../_utils/mocking/dialog');
 const builder = rewire('../../../actions/helpers/repair-handler-builder');
 const strings = require('../../../strings').intents.noInput;
-const {storeAction} = require('../../../state/repetition');
+const {storeAction} = require('../../../state/actions');
 
 describe('actions', () => {
   let dialog;
