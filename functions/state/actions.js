@@ -22,7 +22,7 @@ function storeAction (app, action) {
 }
 
 /**
- * get repetition action
+ * get last action
  *
  * @param app
  * @returns {undefined|string}
@@ -43,7 +43,7 @@ function storeRepetitionCount (app, count) {
 }
 
 /**
- * get last action count
+ * get last action repetition count
  * @returns {*}
  */
 function getLastRepetitionCount (app) {

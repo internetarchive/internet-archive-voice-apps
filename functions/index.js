@@ -138,12 +138,14 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
 
   logSessionStart(app);
 
+  storeAction(app, app.getIntent());
+
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
     app.tell(strings.errors.device.mediaResponse);
   }
-  storeAction(app, app.getIntent());
+
   dashbot.configHandler(app);
 }));
 
