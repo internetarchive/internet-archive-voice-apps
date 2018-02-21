@@ -1,3 +1,5 @@
+const debug = require('debug')('ia:state:debug');
+
 module.exports = {
   /**
    * return getter and setter for sub-group of user's data
@@ -8,6 +10,7 @@ module.exports = {
   group: (name) => ({
     getData: (app) => app.data[name],
     setData: (app, value) => {
+      debug(`set user's state ${name} to ${JSON.stringify(value)}`)
       app.data[name] = value;
     },
   }),

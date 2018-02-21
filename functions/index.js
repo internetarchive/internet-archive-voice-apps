@@ -20,8 +20,12 @@ process.env.DEBUG = storeDEBUG;
 
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
-const debug = require('debug')('ia:index:debug');
-debug.log = console.log.bind(console);
+
+const debugCreator = require('debug');
+//by default it will be just blank log messages
+debugCreator.log = console.log.bind(console);
+const debug = debugCreator('ia:index:debug');
+
 const functions = require('firebase-functions');
 const https = require('https');
 const http = require('http');
