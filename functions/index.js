@@ -23,7 +23,7 @@ const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').g
 
 const debugCreator = require('debug');
 //by default it will be just blank log messages
-debugCreator.log = console.log.bind(console);
+debugCreator.log = console.info.bind(console);
 const debug = debugCreator('ia:index:debug');
 
 const functions = require('firebase-functions');
@@ -112,6 +112,22 @@ const actionNames = Array.from(actionsMap.keys())
 debug(`We can handle actions: ${actionNames}`);
 
 /**
+ * log information about started session
+ *
+ * @param app
+ */
+function logSessionStart (app) {
+  debug('\n\n')
+  debug(`start handling action: ${app.getIntent()}`);
+  debug(`user id: ${app.getUser().userId}`);
+  debug(`user name: ${app.getUser().userName}`);
+  debug(`user's session data: ${JSON.stringify(app.data)}`);
+  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
+  debug(`last seen: ${app.getUser().lastSeen}`);
+  debug('\n\n')
+}
+
+/**
  * Action Endpoint
  *
  * @type {HttpsFunction}
@@ -119,6 +135,9 @@ debug(`We can handle actions: ${actionNames}`);
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
 // exports.playMedia = functions.https.onRequest(((req, res) => {
   const app = new DialogflowApp({request: req, response: res});
+
+  logSessionStart(app);
+
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
