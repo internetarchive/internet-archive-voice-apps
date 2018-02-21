@@ -1,16 +1,17 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
+fetchMock.config.overwriteRoutes = true;
 const audio = require('../../search/audio');
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
+const gratefulAlbums = require('./fixtures/grateful-dead-5-albums.json');
 
 describe('search', () => {
   describe('audio', () => {
-    beforeEach(() => {
-      fetchMock.config.overwriteRoutes = true;
-      fetchMock.get('begin:http://web.archive.org/metadata/', gratefulAlbum);
-    });
-
     describe('getAlbumById', () => {
+      beforeEach(() => {
+        fetchMock.get('begin:http://web.archive.org/metadata/', gratefulAlbum);
+      });
+
       it('should return list of songs by album id', function () {
         this.timeout(5000);
         return audio.getAlbumById('gd73-06-10.sbd.hollister.174.sbeok.shnf')
@@ -42,6 +43,54 @@ describe('search', () => {
           'gd73-06-10d1t01.mp3'
         )
       })
+    });
+
+    describe('getAlbumsByCreator', () => {
+      beforeEach(() => {
+        fetchMock.get(
+          'begin:https://web.archive.org/advancedsearch.php',
+          gratefulAlbums
+        );
+      });
+
+      it('should return list of albums', () => {
+        return audio.getAlbumsByCreatorId('GratefulDead', {limit: 5})
+          .then(albums => {
+            expect(albums).to.have.length(5);
+            expect(albums[0]).to.have.property(
+              'id',
+              'gd73-06-10.sbd.hollister.174.sbeok.shnf'
+            )
+            expect(albums[0]).to.have.property(
+              'name',
+              'Washington, DC'
+            )
+            expect(albums[0]).to.have.property(
+              'subject',
+              'Soundboard'
+            )
+            expect(albums[0]).to.have.property(
+              'title',
+              'Grateful Dead Live at Robert F. Kennedy Stadium on 1973-06-10'
+            )
+            expect(albums[4]).to.have.property(
+              'id',
+              'gd77-05-07.sbd.eaton.wizard.26085.sbeok.shnf'
+            )
+            expect(albums[4]).to.have.property(
+              'name',
+              'Boston, MA'
+            )
+            expect(albums[4]).to.have.property(
+              'subject',
+              'Live concert'
+            )
+            expect(albums[4]).to.have.property(
+              'title',
+              'Grateful Dead Live at Boston Garden on 1977-05-07'
+            )
+          });
+      });
     });
   });
 });
