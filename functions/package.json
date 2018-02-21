@@ -24,6 +24,7 @@
     "firebase-functions": "^0.7.3",
     "glob": "^7.1.2",
     "lodash": "^4.17.5",
+    "mustache": "^2.3.0",
     "node-fetch": "^2.0.0",
     "replaceall": "^0.1.6",
     "supports-color": "^5.2.0"
