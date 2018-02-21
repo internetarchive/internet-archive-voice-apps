@@ -28,7 +28,7 @@ describe('actions', () => {
 
   describe('repair handler', () => {
     it('should 1st time give suggestion', () => {
-      storeAction(app, 'welcome');
+      storeAction(app, 'no-input');
       handler(app);
       expect(dialog.ask).to.be.calledWith(
         app,
@@ -39,6 +39,7 @@ describe('actions', () => {
 
     it('should 2nd time reprompt', () => {
       storeAction(app, 'no-input');
+      storeAction(app, 'no-input');
       handler(app);
       expect(dialog.ask).to.be.calledWith(
         app,
@@ -48,6 +49,7 @@ describe('actions', () => {
     });
 
     it('should 3rd time fallback', () => {
+      storeAction(app, 'no-input');
       storeAction(app, 'no-input');
       storeAction(app, 'no-input');
       handler(app);

@@ -17,7 +17,7 @@ module.exports = {
      * @param app
      */
     return (app) => {
-      let count = 0;
+      let count = 1;
 
       if (getLastAction(app) === actionName) {
         count = getLastRepetitionCount(app);
@@ -26,10 +26,10 @@ module.exports = {
       const suggestions = getLastSuggestions(app);
 
       switch (count) {
-        case 0:
+        case 1:
           dialog.ask(app, intentStrings.first, suggestions);
           break;
-        case 1:
+        case 2:
           dialog.ask(
             app,
             intentStrings.reprompt.replace('${reprompt}', getLastReprompt(app)),
