@@ -33,6 +33,7 @@ describe('actions', () => {
       expect(dialog.ask).to.be.calledWith(
         app,
         strings.first,
+        reprompt,
         suggestions
       );
     });
@@ -44,6 +45,7 @@ describe('actions', () => {
       expect(dialog.ask).to.be.calledWith(
         app,
         strings.reprompt.replace('${reprompt}', reprompt),
+        reprompt,
         suggestions
       );
     });

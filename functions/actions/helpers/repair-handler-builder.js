@@ -23,16 +23,18 @@ module.exports = {
         count = getLastRepetitionCount(app);
       }
 
+      const reprompt = getLastReprompt(app);
       const suggestions = getLastSuggestions(app);
 
       switch (count) {
         case 1:
-          dialog.ask(app, intentStrings.first, suggestions);
+          dialog.ask(app, intentStrings.first, reprompt, suggestions);
           break;
         case 2:
           dialog.ask(
             app,
-            intentStrings.reprompt.replace('${reprompt}', getLastReprompt(app)),
+            intentStrings.reprompt.replace('${reprompt}', reprompt),
+            reprompt,
             suggestions
           );
           break;
