@@ -13,7 +13,7 @@ describe('search', () => {
       });
 
       it('should return list of songs by album id', function () {
-        this.timeout(5000);
+        this.timeout(10000);
         return audio.getAlbumById('gd73-06-10.sbd.hollister.174.sbeok.shnf')
           .then(album => {
             expect(album).to.have.property('creator', 'Grateful Dead');
