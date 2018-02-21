@@ -18,16 +18,29 @@ const storeDEBUG = process.env.DEBUG;
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 process.env.DEBUG = storeDEBUG;
 
+const _ = require('lodash');
 
-const functions = require('firebase-functions');
 // it seems google firebase function doesn't give access to env variables
 // https://firebase.google.com/docs/functions/config-env
 // so we use its native firebase.config() instead
-process.env.DEBUG = process.env.DEBUG || functions.config().debugger.scope;
 
+const functions = require('firebase-functions');
+let functionsConfig;
+try {
+  functionsConfig = functions.config();
+  process.env.DEBUG = _.at(functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
+} catch (e) {
+  functionsConfig = {debugger: {scope: null}};
+}
+
+console.info(`initial process.env: ${JSON.stringify(process.env)}`);
+console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
 
 const bst = require('bespoken-tools');
-const dashbot = require('dashbot')('54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg').google;
+const dashbot = require('dashbot')(
+  '54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg', {
+    printErrors: false,
+  }).google;
 
 const debugCreator = require('debug');
 //by default it will be just blank log messages
@@ -90,7 +103,6 @@ let availableYears = [];
 
 debug('[Start]');
 debug('-----------------------------------------');
-debug('Environment:');
 debug(`Node.js Version: ${process.version}`);
 debug('-----------------------------------------');
 
@@ -126,11 +138,16 @@ debug(`We can handle actions: ${actionNames}`);
 function logSessionStart (app) {
   debug('\n\n')
   debug(`start handling action: ${app.getIntent()}`);
-  debug(`user id: ${app.getUser().userId}`);
-  debug(`user name: ${app.getUser().userName}`);
+  const user = app.getUser();
+  if (user) {
+    debug(`user id: ${app.getUser().userId}`);
+    debug(`user name: ${app.getUser().userName}`);
+    debug(`last seen: ${app.getUser().lastSeen}`);
+  } else {
+    debug('<unknown user>');
+  }
   debug(`user's session data: ${JSON.stringify(app.data)}`);
   debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
-  debug(`last seen: ${app.getUser().lastSeen}`);
   debug('\n\n')
 }
 
