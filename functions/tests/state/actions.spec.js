@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../state/repetition');
+const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../state/actions');
 const mockApp = require('../_utils/mocking/app');
 
 describe('actions', () => {
@@ -9,7 +9,7 @@ describe('actions', () => {
     app = mockApp();
   });
 
-  describe('repetition', () => {
+  describe('actions', () => {
     it('should store action', () => {
       storeAction(app, 'welcome');
       expect(getLastAction(app)).to.be.equal('welcome');

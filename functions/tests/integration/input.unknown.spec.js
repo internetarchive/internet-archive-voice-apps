@@ -30,7 +30,7 @@ describe('integration', () => {
               reprompt: 'Direction?',
             }
           },
-          repetition: {
+          actions: {
             action: 'input.unknown',
             count: 1,
           },
@@ -49,7 +49,7 @@ describe('integration', () => {
       const req = buildIntentRequest({
         action: 'input.unknown',
         data: {
-          repetition: {
+          actions: {
             action: 'input.unknown',
             count: 2,
           },
@@ -66,7 +66,7 @@ describe('integration', () => {
       const req = buildIntentRequest({
         action: 'input.unknown',
         data: {
-          repetition: {
+          actions: {
             action: 'some.other.action',
             count: 2,
           },

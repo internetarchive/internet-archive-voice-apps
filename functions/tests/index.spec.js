@@ -14,6 +14,6 @@ describe('playMedia', () => {
       action: 'welcome',
       lastSeen: null,
     }), res);
-    expect(res.data()).to.have.property('repetition').to.have.property('action', 'welcome');
+    expect(res.data()).to.have.property('actions').to.have.property('action', 'welcome');
   });
 });
