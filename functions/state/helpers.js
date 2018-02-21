@@ -10,7 +10,7 @@ module.exports = {
   group: (name) => ({
     getData: (app) => app.data[name],
     setData: (app, value) => {
-      debug(`set user's state ${name} to ${JSON.stringify(value)}`)
+      debug(`set user's state ${name} to ${JSON.stringify(value)}`);
       app.data[name] = value;
     },
   }),
