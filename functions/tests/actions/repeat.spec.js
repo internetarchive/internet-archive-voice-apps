@@ -15,16 +15,16 @@ describe('actions', () => {
   describe('repeat handler', () => {
     it('should ask user', () => {
       let app = mockApp();
-      const message = 'Which direction do you go?';
+      const speech = 'Which direction do you go?';
       const reprompt = 'Where are you go?';
       const suggestions = ['west', 'east', 'north', 'south'];
       app.data.dialog = {
         lastPhrase: {
-          message, reprompt, suggestions,
+          speech, reprompt, suggestions,
         },
       };
       action.handler(app);
-      expect(dialog.ask).to.be.calledWith(app, message, reprompt, suggestions);
+      expect(dialog.ask).to.be.calledWith(app, {speech, reprompt, suggestions});
     });
   });
 });

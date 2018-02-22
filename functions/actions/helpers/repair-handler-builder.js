@@ -28,18 +28,27 @@ module.exports = {
 
       switch (count) {
         case 1:
-          dialog.ask(app, intentStrings.first, reprompt, suggestions);
+          dialog.ask(
+            app,
+            {
+              speech: intentStrings.first,
+              reprompt: reprompt,
+              suggestions: suggestions,
+            }
+          );
           break;
         case 2:
           dialog.ask(
             app,
-            intentStrings.reprompt.replace('${reprompt}', reprompt),
-            reprompt,
-            suggestions
+            {
+              speech: intentStrings.reprompt.replace('${reprompt}', reprompt),
+              reprompt,
+              suggestions,
+            }
           );
           break;
         default:
-          dialog.tell(app, intentStrings.fallback);
+          dialog.tell(app, {speech: intentStrings.fallback});
           break;
       }
     }
