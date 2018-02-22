@@ -8,7 +8,15 @@ const dialog = require('../dialog');
  * @param app
  */
 function handler(app) {
-  dialog.ask(app, {speech: 'We got debug action!'});
+  dialog.song(app, {
+    audioURL: 'https://archive.org/download/gd73-06-10.sbd.hollister.174.sbeok.shnf/gd73-06-10d1t01.mp3',
+    coverage: 'Washington, DC',
+    imageURL: 'https://archive.org/services/img/gd73-06-10.sbd.hollister.174.sbeok.shnf',
+    suggestions: ['rewind', 'next'],
+    title: 'Morning Dew',
+    track: 1,
+    year: 197,
+  });
 }
 
 module.exports = {
