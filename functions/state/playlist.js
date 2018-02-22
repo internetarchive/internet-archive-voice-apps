@@ -1,7 +1,7 @@
 const {getData, setData} = require('./helpers').group('playlist');
 
 /**
- * Current song in the Playlist
+ * Selector. Current song in the Playlist
  *
  * @param app
  * @returns {{id: string, title: string}}
@@ -12,7 +12,7 @@ function getCurrentSong (app) {
 }
 
 /**
- * Do we have next song
+ * Selector. Do we have next song
  *
  * @param app
  * @returns {boolean}
@@ -23,7 +23,20 @@ function hasNextSong (app) {
 }
 
 /**
- * Choose next song
+ * Reducer: Create new playlist
+ *
+ * @param app
+ * @param {Array} list - new songs
+ */
+function create (app, list) {
+  setData(app, Object.assign({}, getData(app), {
+    current: 0,
+    list,
+  }));
+}
+
+/**
+ * Reducer: Choose next song
  *
  * @param app
  */
@@ -37,6 +50,7 @@ function next (app) {
 
 module.exports = {
   getCurrentSong,
+  create,
   hasNextSong,
   next,
 };
