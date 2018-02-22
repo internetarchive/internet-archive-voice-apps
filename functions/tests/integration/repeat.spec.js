@@ -16,7 +16,7 @@ describe('integration', () => {
         data: {
           dialog: {
             lastPhrase: {
-              message: 'Where to go?',
+              speech: 'Where to go?',
               reprompt: 'Direction?',
               suggestions: ['east', 'west'],
             },

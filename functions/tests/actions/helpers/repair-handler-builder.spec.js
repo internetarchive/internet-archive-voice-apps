@@ -10,7 +10,7 @@ describe('actions', () => {
   let dialog;
   let app;
   let handler;
-  const message = 'Which direction do you go?';
+  const speech = 'Which direction do you go?';
   const reprompt = 'Where are you go?';
   const suggestions = ['west', 'east', 'north', 'south'];
 
@@ -21,7 +21,7 @@ describe('actions', () => {
     app = mockApp();
     app.data.dialog = {
       lastPhrase: {
-        message, reprompt, suggestions,
+        speech, reprompt, suggestions,
       },
     };
   });
@@ -32,9 +32,11 @@ describe('actions', () => {
       handler(app);
       expect(dialog.ask).to.be.calledWith(
         app,
-        strings.first,
-        reprompt,
-        suggestions
+        {
+          speech: strings.first,
+          reprompt,
+          suggestions,
+        }
       );
     });
 
@@ -44,9 +46,11 @@ describe('actions', () => {
       handler(app);
       expect(dialog.ask).to.be.calledWith(
         app,
-        strings.reprompt.replace('${reprompt}', reprompt),
-        reprompt,
-        suggestions
+        {
+          speech: strings.reprompt.replace('${reprompt}', reprompt),
+          reprompt,
+          suggestions,
+        },
       );
     });
 
