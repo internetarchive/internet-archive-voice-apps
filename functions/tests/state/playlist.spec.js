@@ -36,6 +36,11 @@ describe('playlist', () => {
     it('should return true if we have next song', () => {
       expect(playlist.hasNextSong(app)).to.be.true;
     });
+
+    it('should return false if we do not have next song', () => {
+      app.data.playlist.current = 2;
+      expect(playlist.hasNextSong(app)).to.be.false;
+    });
   });
 
   describe('next', () => {
