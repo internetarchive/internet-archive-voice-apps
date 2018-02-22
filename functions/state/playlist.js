@@ -47,7 +47,6 @@ function next (app) {
   }));
 }
 
-
 module.exports = {
   getCurrentSong,
   create,
