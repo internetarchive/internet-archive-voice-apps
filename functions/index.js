@@ -26,15 +26,25 @@ const _ = require('lodash');
 
 const functions = require('firebase-functions');
 let functionsConfig;
+let runOnFunctionFireBaseServer = false;
 try {
   functionsConfig = functions.config();
-  process.env.DEBUG = _.at(functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
+  runOnFunctionFireBaseServer = true;
+  process.env.DEBUG = _.at(
+    functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
 } catch (e) {
   functionsConfig = {debugger: {scope: null}};
 }
 
-console.info(`initial process.env: ${JSON.stringify(process.env)}`);
-console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
+if (runOnFunctionFireBaseServer) {
+  // we shouldn't use console
+  // but it is trade-off because we can't be sure
+  // that process.env will be patched form functions.config correctly
+  console.info(`initial process.env: 
+                ${JSON.stringify(process.env)}`);
+  console.info(`initial functions.config(): 
+                ${JSON.stringify(functionsConfig)}`);
+}
 
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')(
