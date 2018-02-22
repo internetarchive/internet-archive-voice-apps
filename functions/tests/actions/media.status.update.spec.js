@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const action = rewire('../../actions/media.status.update');
+const action = rewire('../../actions/media-status-update');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
