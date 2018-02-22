@@ -1,3 +1,4 @@
+const debug = require('debug')('ia:dialog:audio:debug');
 const mustache = require('mustache');
 
 const config = require('../config');
@@ -17,6 +18,7 @@ const strings = require('../strings').dialog.song;
  * @param {number} options.year
  */
 function song (app, options) {
+  debug(`Play song: ${JSON.stringify(options)}`);
   const description = mustache.render(strings.description, options);
   app.ask(app.buildRichResponse()
     .addSimpleResponse(description)
