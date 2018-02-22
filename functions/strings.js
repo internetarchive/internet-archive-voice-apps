@@ -80,7 +80,7 @@ module.exports = {
   dialog: {
     song: {
       description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
-      title: 'Playing track number - ${track}',
+      title: 'Playing track number - {{track}}',
       suggestionLink: 'on Archive.org',
     }
   },
