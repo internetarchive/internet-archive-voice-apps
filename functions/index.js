@@ -26,15 +26,25 @@ const _ = require('lodash');
 
 const functions = require('firebase-functions');
 let functionsConfig;
+let runOnFunctionFireBaseServer = false;
 try {
   functionsConfig = functions.config();
-  process.env.DEBUG = _.at(functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
+  runOnFunctionFireBaseServer = true;
+  process.env.DEBUG = _.at(
+    functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
 } catch (e) {
   functionsConfig = {debugger: {scope: null}};
 }
 
-console.info(`initial process.env: ${JSON.stringify(process.env)}`);
-console.info(`initial functions.config(): ${JSON.stringify(functionsConfig)}`);
+if (runOnFunctionFireBaseServer) {
+  // we shouldn't use console
+  // but it is trade-off because we can't be sure
+  // that process.env will be patched form functions.config correctly
+  console.info(`initial process.env: 
+                ${JSON.stringify(process.env)}`);
+  console.info(`initial functions.config(): 
+                ${JSON.stringify(functionsConfig)}`);
+}
 
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')(
@@ -43,7 +53,7 @@ const dashbot = require('dashbot')(
   }).google;
 
 const debugCreator = require('debug');
-//by default it will be just blank log messages
+// by default it will be just blank log messages
 debugCreator.log = console.info.bind(console);
 const debug = debugCreator('ia:index:debug');
 
@@ -101,19 +111,6 @@ let previousSuggestions = null;
 
 let availableYears = [];
 
-debug('[Start]');
-debug('-----------------------------------------');
-debug(`Node.js Version: ${process.version}`);
-debug('-----------------------------------------');
-
-const LIST_FALLBACK = [
-  strings.fallback.whatWasThat,
-  strings.fallback.didntCatchThat,
-  strings.fallback.misunderstand
-];
-
-const FINAL_FALLBACK = strings.fallback.finalReprompt;
-
 let defaultSuggestions = [
   strings.suggestion.artist.gratefulDead,
   strings.suggestion.artist.cowboyJunkies,
@@ -122,39 +119,17 @@ let defaultSuggestions = [
 
 let suggestions;
 
-
 const actionsMap = defaultActions();
 const actionNames = Array.from(actionsMap.keys())
   .map(name => `"${name}"`)
   .join(', ');
 
+debug('[Start]');
+debug('-----------------------------------------');
+debug(`Node.js Version: ${process.version}`);
+debug('-----------------------------------------');
+
 debug(`We can handle actions: ${actionNames}`);
-
-function logRequest(req) {
-  debug(`request body: ${JSON.stringify(req.body)}`);
-  debug(`request headers: ${JSON.stringify(req.headers)}`);
-}
-
-/**
- * log information about started session
- *
- * @param app
- */
-function logSessionStart (app) {
-  debug('\n\n')
-  debug(`start handling action: ${app.getIntent()}`);
-  const user = app.getUser();
-  if (user) {
-    debug(`user id: ${app.getUser().userId}`);
-    debug(`user name: ${app.getUser().userName}`);
-    debug(`last seen: ${app.getUser().lastSeen}`);
-  } else {
-    debug('<unknown user>');
-  }
-  debug(`user's session data: ${JSON.stringify(app.data)}`);
-  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
-  debug('\n\n')
-}
 
 /**
  * Action Endpoint
@@ -178,6 +153,40 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   dashbot.configHandler(app);
 }));
 
+function logRequest (req) {
+  debug(`request body: ${JSON.stringify(req.body)}`);
+  debug(`request headers: ${JSON.stringify(req.headers)}`);
+}
+
+/**
+ * log information about started session
+ *
+ * @param app
+ */
+function logSessionStart (app) {
+  debug('\n\n');
+  debug(`start handling action: ${app.getIntent()}`);
+  const user = app.getUser();
+  if (user) {
+    debug(`user id: ${app.getUser().userId}`);
+    debug(`user name: ${app.getUser().userName}`);
+    debug(`last seen: ${app.getUser().lastSeen}`);
+  } else {
+    debug('<unknown user>');
+  }
+  debug(`user's session data: ${JSON.stringify(app.data)}`);
+  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
+  debug('\n\n');
+}
+
+/**
+ * @deprecated seens version 2.0
+ *
+ * Please don't rely on this code.
+ * It is temporal and will be replaced very soon
+ *
+ * @param app
+ */
 function init (app) {
   // search
 
@@ -235,6 +244,15 @@ function repeatInput (app) {
   }
 }
 
+/**
+ * @deprecated seens version 2.0
+ *
+ * Please don't relay on this code
+ * because it will be replace with app.handleRequestAsync(actionsMap);
+ * very soon
+ *
+ * @param app
+ */
 function responseHandler (app) {
   // let requestType = (this.event.request !== undefined) ? this.event.request.type : null;
 
