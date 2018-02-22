@@ -1,4 +1,6 @@
 const mustache = require('mustache');
+
+const config = require('../config');
 const strings = require('../strings').dialog.song;
 
 /**
@@ -25,7 +27,7 @@ function song (app, options) {
       )
         .setDescription(description)
         .setImage(
-          options.imageURL || 'http://archive.org/images/notfound.png',
+          options.imageURL || config.defaultSongImage,
           app.Media.ImageType.LARGE
         )
       ])
