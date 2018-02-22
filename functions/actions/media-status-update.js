@@ -31,7 +31,7 @@ function handleFinished(app) {
   if (playlist.hasNextSong(app)) {
     // TODO: we should fetch new songs
     playlist.next(app);
-    dialog.song(app, playlist.getCurrentSong(app));
+    dialog.playSong(app, playlist.getCurrentSong(app));
   } else {
     // TODO: react when we reach the end of playlist
     dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});

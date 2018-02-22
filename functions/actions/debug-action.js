@@ -27,7 +27,7 @@ function handler(app) {
     year: 1973,
   }]);
 
-  dialog.song(app, playlist.getCurrentSong(app));
+  dialog.playSong(app, playlist.getCurrentSong(app));
 }
 
 module.exports = {
