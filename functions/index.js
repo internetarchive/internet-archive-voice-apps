@@ -179,6 +179,14 @@ function logSessionStart (app) {
   debug('\n\n');
 }
 
+/**
+ * @deprecated seens version 2.0
+ *
+ * Please don't rely on this code.
+ * It is temporal and will be replaced very soon
+ *
+ * @param app
+ */
 function init (app) {
   // search
 
@@ -236,6 +244,15 @@ function repeatInput (app) {
   }
 }
 
+/**
+ * @deprecated seens version 2.0
+ *
+ * Please don't relay on this code
+ * because it will be replace with app.handleRequestAsync(actionsMap);
+ * very soon
+ *
+ * @param app
+ */
 function responseHandler (app) {
   // let requestType = (this.event.request !== undefined) ? this.event.request.type : null;
 
