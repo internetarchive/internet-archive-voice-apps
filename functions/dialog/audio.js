@@ -1,27 +1,43 @@
+const mustache = require('mustache');
+const strings = require('../strings').dialog.song;
+
 /**
- * play audio response to the user
+ * play song to the user
  *
  * @param app
- * @param audioURL {string}
- * @param coverage {string}
- * @param suggestions {string|Array<string>}
- * @param track {number}
- * @param title {string}
- * @param year {number}
+ * @param {Object} options
+ * @param {string} options.audioURL - The Link to the track
+ * @param {string} options.coverage - The Desciption of Places
+ * @param {string} options.imageURL - The Link to the track image
+ * @param {string|Array<string>} options.suggestions
+ * @param {number} options.track
+ * @param {string} options.title
+ * @param {number} options.year
  */
-function audio (app, {audioURL, coverage, suggestions, track, title, year}) {
+function song (app, options) {
+  const description = mustache.render(strings.description, options);
   app.ask(app.buildRichResponse()
-    .addSimpleResponse('Playing track - ' + title + ', ' + coverage + ', ' + year)
+    .addSimpleResponse(description)
     .addMediaResponse(app.buildMediaResponse()
-      .addMediaObjects([app.buildMediaObject('Playing track number - ' + track, audioURL)
-        .setDescription('Playing track - ' + title + ', ' + coverage + ', ' + year)
-        .setImage('http://archive.org/images/notfound.png', app.Media.ImageType.LARGE)
+      .addMediaObjects([app.buildMediaObject(
+        mustache.render(strings.title, options),
+        options.audioURL
+      )
+        .setDescription(description)
+        .setImage(
+          options.imageURL || 'http://archive.org/images/notfound.png',
+          app.Media.ImageType.LARGE
+        )
       ])
     )
-    .addSuggestions(suggestions)
-    .addSuggestionLink('on Archive.org', audioURL));
+    .addSuggestions(options.suggestions)
+    .addSuggestionLink(
+      mustache.render(strings.suggestionLink, options),
+      options.audioURL
+    )
+  );
 }
 
 module.exports = {
-  audio,
+  song,
 };
