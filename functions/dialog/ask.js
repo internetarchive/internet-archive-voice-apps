@@ -6,20 +6,20 @@ const {savePhrase} = require('../state/dialog');
  * ask user with suggestions
  *
  * @param app
- * @param message
- * @param reprompt
- * @param suggestions
+ * @param speech {string} assistant will speak it
+ * @param reprompt {string}
+ * @param suggestions {array}
  */
-module.exports = function (app, message, reprompt = null, suggestions = null) {
-  debug('ask', message, suggestions);
+module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
+  debug('ask', speech, suggestions);
 
   savePhrase(app, {
-    message,
+    speech,
     reprompt,
     suggestions,
   });
 
   app.ask(app.buildRichResponse()
-    .addSimpleResponse(message)
+    .addSimpleResponse(speech)
     .addSuggestions(suggestions));
 };

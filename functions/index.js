@@ -130,6 +130,11 @@ const actionNames = Array.from(actionsMap.keys())
 
 debug(`We can handle actions: ${actionNames}`);
 
+function logRequest(req) {
+  debug(`request body: ${JSON.stringify(req.body)}`);
+  debug(`request headers: ${JSON.stringify(req.headers)}`);
+}
+
 /**
  * log information about started session
  *
@@ -157,10 +162,10 @@ function logSessionStart (app) {
  * @type {HttpsFunction}
  */
 exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
-// exports.playMedia = functions.https.onRequest(((req, res) => {
   const app = new DialogflowApp({request: req, response: res});
 
   logSessionStart(app);
+  logRequest(req);
 
   storeAction(app, app.getIntent());
 

@@ -14,8 +14,8 @@ function savePhrase (app, phrase) {
   }));
 }
 
-function getLastMessage (app) {
-  return _.at(getData(app), 'lastPhrase.message')[0];
+function getLastSpeech (app) {
+  return _.at(getData(app), 'lastPhrase.speech')[0];
 }
 
 /**
@@ -49,9 +49,9 @@ function getLastSuggestions (app) {
 }
 
 module.exports = {
-  getLastMessage,
   getLastPhrase,
   getLastReprompt,
+  getLastSpeech,
   getLastSuggestions,
   savePhrase,
 };
