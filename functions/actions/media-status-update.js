@@ -2,6 +2,7 @@ const debug = require('debug')('ia:actions:media-status-update:debug');
 const warning = require('debug')('ia:actions:media-status-update:warn');
 
 const dialog = require('../dialog');
+const playlist = require('../state/playlist');
 
 /**
  * handle 'media status update' action
@@ -14,7 +15,7 @@ function handler(app) {
   if (status === app.Media.Status.FINISHED) {
     handleFinished(app);
   } else {
-    // TODO: log that we got unknown status
+    // log that we got unknown status
     // for example (app.Media.Status.UNSPECIFIED)
     warning(`Got unexpected media update ${status}`);
   }
@@ -27,8 +28,14 @@ function handler(app) {
  */
 function handleFinished(app) {
   debug(`handle media action`);
-  // TODO: play next song or notify to user that playlist is finished
-  dialog.song(app, {});
+  if (playlist.hasNextSong(app)) {
+    // TODO: we should fetch new songs
+    playlist.next(app);
+    dialog.song(app, playlist.getCurrentSong(app));
+  } else {
+    // TODO: react when we reach the end of playlist
+    dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
+  }
 }
 
 module.exports = {

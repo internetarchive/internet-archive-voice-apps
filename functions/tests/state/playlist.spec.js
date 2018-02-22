@@ -11,22 +11,24 @@ describe('playlist', () => {
     app = mockApp();
     app.data.playlist = {
       current: 1,
-      items: [{
-        id: '1',
-        title: 'song 1',
-      }, {
-        id: '2',
-        title: 'song 2',
-      }, {
-        id: '3',
-        title: 'song 3',
-      }],
+      items: [
+          {track: 1, title: 'song 1'},
+          {track: 2, title: 'song 2'},
+          {track: 3, title: 'song 3'},
+      ],
     };
   });
 
   describe('reducers', () => {
     describe('create', () => {
+      it('should populate list of items and reset current song', () => {
+        playlist.create(app, [
+          {track: 3, title: 'song 3'},
+          {track: 4, title: 'song 4'},
+        ]);
 
+        expect(playlist.getCurrentSong(app)).to.have.property('title', 'song 3');
+      });
     });
 
     describe('next', () => {
@@ -41,7 +43,7 @@ describe('playlist', () => {
     describe('getCurrentSong', () => {
       it('should return current song', () => {
         const song = playlist.getCurrentSong(app);
-        expect(song).to.have.property('id', '2');
+        expect(song).to.have.property('track', 2);
         expect(song).to.have.property('title', 'song 2');
       });
     });

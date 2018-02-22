@@ -26,12 +26,12 @@ function hasNextSong (app) {
  * Reducer: Create new playlist
  *
  * @param app
- * @param {Array} list - new songs
+ * @param {Array} items - new songs
  */
-function create (app, list) {
+function create (app, items) {
   setData(app, Object.assign({}, getData(app), {
     current: 0,
-    list,
+    items,
   }));
 }
 
