@@ -1,8 +1,8 @@
 const {expect} = require('chai');
-const {song} = require('../../dialog/audio');
+const {playSong} = require('../../dialog/audio');
 const mockApp = require('../_utils/mocking/app');
 const mustache = require('mustache');
-const strings = require('../../strings').dialog.song;
+const strings = require('../../strings').dialog.playSong;
 
 describe('dialog', () => {
   let app;
@@ -11,7 +11,7 @@ describe('dialog', () => {
     app = mockApp();
   });
 
-  describe('song', () => {
+  describe('playSong', () => {
     it('should share audio response with user', () => {
       const audioURL = 'https://archive.org/download/gd73-06-10d1t01.mp3';
       const coverage = 'Washington, DC';
@@ -21,7 +21,7 @@ describe('dialog', () => {
       const track = 1;
       const year = 1973;
 
-      song(app, {
+      playSong(app, {
         audioURL,
         coverage,
         imageURL,

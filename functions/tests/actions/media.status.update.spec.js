@@ -25,7 +25,7 @@ describe('actions', () => {
     it('should play next song if we have one', () => {
       app.MEDIA_STATUS.extension.status = app.Media.Status.FINISHED;
       action.handler(app);
-      expect(dialog.song).to.be.calledWith(app, {track: 2, title: 'song 2'});
+      expect(dialog.playSong).to.be.calledWith(app, {track: 2, title: 'song 2'});
     });
   });
 });

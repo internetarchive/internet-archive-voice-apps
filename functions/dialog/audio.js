@@ -2,7 +2,7 @@ const debug = require('debug')('ia:dialog:audio:debug');
 const mustache = require('mustache');
 
 const config = require('../config');
-const strings = require('../strings').dialog.song;
+const strings = require('../strings').dialog.playSong;
 
 /**
  * play song to the user
@@ -17,7 +17,7 @@ const strings = require('../strings').dialog.song;
  * @param {string} options.title
  * @param {number} options.year
  */
-function song (app, options) {
+function playSong (app, options) {
   debug(`Play song: ${JSON.stringify(options)}`);
   const description = mustache.render(strings.description, options);
   app.ask(app.buildRichResponse()
@@ -43,5 +43,5 @@ function song (app, options) {
 }
 
 module.exports = {
-  song,
+  playSong,
 };

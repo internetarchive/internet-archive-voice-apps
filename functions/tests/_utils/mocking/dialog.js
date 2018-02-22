@@ -2,6 +2,6 @@ const sinon = require('sinon');
 
 module.exports = () => ({
   ask: sinon.spy(),
-  song: sinon.spy(),
+  playSong: sinon.spy(),
   tell: sinon.spy(),
 });
