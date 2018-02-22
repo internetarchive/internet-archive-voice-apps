@@ -43,7 +43,7 @@ const dashbot = require('dashbot')(
   }).google;
 
 const debugCreator = require('debug');
-//by default it will be just blank log messages
+// by default it will be just blank log messages
 debugCreator.log = console.info.bind(console);
 const debug = debugCreator('ia:index:debug');
 
@@ -101,19 +101,6 @@ let previousSuggestions = null;
 
 let availableYears = [];
 
-debug('[Start]');
-debug('-----------------------------------------');
-debug(`Node.js Version: ${process.version}`);
-debug('-----------------------------------------');
-
-const LIST_FALLBACK = [
-  strings.fallback.whatWasThat,
-  strings.fallback.didntCatchThat,
-  strings.fallback.misunderstand
-];
-
-const FINAL_FALLBACK = strings.fallback.finalReprompt;
-
 let defaultSuggestions = [
   strings.suggestion.artist.gratefulDead,
   strings.suggestion.artist.cowboyJunkies,
@@ -122,39 +109,17 @@ let defaultSuggestions = [
 
 let suggestions;
 
-
 const actionsMap = defaultActions();
 const actionNames = Array.from(actionsMap.keys())
   .map(name => `"${name}"`)
   .join(', ');
 
+debug('[Start]');
+debug('-----------------------------------------');
+debug(`Node.js Version: ${process.version}`);
+debug('-----------------------------------------');
+
 debug(`We can handle actions: ${actionNames}`);
-
-function logRequest(req) {
-  debug(`request body: ${JSON.stringify(req.body)}`);
-  debug(`request headers: ${JSON.stringify(req.headers)}`);
-}
-
-/**
- * log information about started session
- *
- * @param app
- */
-function logSessionStart (app) {
-  debug('\n\n')
-  debug(`start handling action: ${app.getIntent()}`);
-  const user = app.getUser();
-  if (user) {
-    debug(`user id: ${app.getUser().userId}`);
-    debug(`user name: ${app.getUser().userName}`);
-    debug(`last seen: ${app.getUser().lastSeen}`);
-  } else {
-    debug('<unknown user>');
-  }
-  debug(`user's session data: ${JSON.stringify(app.data)}`);
-  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
-  debug('\n\n')
-}
 
 /**
  * Action Endpoint
@@ -177,6 +142,32 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
 
   dashbot.configHandler(app);
 }));
+
+function logRequest (req) {
+  debug(`request body: ${JSON.stringify(req.body)}`);
+  debug(`request headers: ${JSON.stringify(req.headers)}`);
+}
+
+/**
+ * log information about started session
+ *
+ * @param app
+ */
+function logSessionStart (app) {
+  debug('\n\n');
+  debug(`start handling action: ${app.getIntent()}`);
+  const user = app.getUser();
+  if (user) {
+    debug(`user id: ${app.getUser().userId}`);
+    debug(`user name: ${app.getUser().userName}`);
+    debug(`last seen: ${app.getUser().lastSeen}`);
+  } else {
+    debug('<unknown user>');
+  }
+  debug(`user's session data: ${JSON.stringify(app.data)}`);
+  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
+  debug('\n\n');
+}
 
 function init (app) {
   // search
