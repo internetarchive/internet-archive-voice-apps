@@ -61,7 +61,9 @@ describe('actions', () => {
       handler(app);
       expect(dialog.tell).to.be.calledWith(
         app,
-        strings.fallback
+        {
+          speech: strings.fallback,
+        }
       );
     });
   });

@@ -48,7 +48,7 @@ module.exports = {
           );
           break;
         default:
-          dialog.tell(app, intentStrings.fallback);
+          dialog.tell(app, {speech: intentStrings.fallback});
           break;
       }
     }
