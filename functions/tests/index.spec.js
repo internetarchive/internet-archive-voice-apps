@@ -7,7 +7,6 @@ const index = rewire('..');
 
 const {wait} = require('./_utils/wait');
 
-
 describe('playMedia', () => {
   let res;
 

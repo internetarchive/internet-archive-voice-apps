@@ -9,7 +9,7 @@ const playlist = require('../state/playlist');
  *
  * @param app
  */
-function handler(app) {
+function handler (app) {
   const status = app.getArgument('MEDIA_STATUS').extension.status;
 
   if (status === app.Media.Status.FINISHED) {
@@ -26,7 +26,7 @@ function handler(app) {
  *
  * @param app
  */
-function handleFinished(app) {
+function handleFinished (app) {
   debug(`handle media action`);
   if (playlist.hasNextSong(app)) {
     // TODO: we should fetch new songs

@@ -8,7 +8,7 @@ const playlist = require('../state/playlist');
  *
  * @param app
  */
-function handler(app) {
+function handler (app) {
   playlist.create(app, [{
     audioURL: 'https://archive.org/download/gd73-06-10.sbd.hollister.174.sbeok.shnf/gd73-06-10d1t01.mp3',
     coverage: 'Washington, DC',
