@@ -6,9 +6,9 @@ const {savePhrase} = require('../state/dialog');
  * ask user with suggestions
  *
  * @param app
- * @param speech
- * @param reprompt
- * @param suggestions
+ * @param speech {string} assistant will speak it
+ * @param reprompt {string}
+ * @param suggestions {array}
  */
 module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
   debug('ask', speech, suggestions);
