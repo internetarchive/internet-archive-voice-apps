@@ -6,11 +6,17 @@ const sinon = require('sinon');
  *
  * @returns {{}}
  */
-module.exports = function mockApp ({lastSeen = Date.now()} = {}) {
+module.exports = function mockApp ({
+                                     lastSeen = Date.now(),
+                                   } = {}) {
   const app = {};
   app.ask = sinon.stub().returns(app);
   app.data = {};
   _.set(app, 'Media.ImageType.LARGE', 'Media.ImageType.LARGE');
+  _.set(app, 'MEDIA_STATUS.extension.status', null);
+  _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
+
+  app.getArgument = sinon.stub().returns(app.MEDIA_STATUS);
   app.addMediaObjects = sinon.stub().returns(app);
   app.addMediaResponse = sinon.stub().returns(app);
   app.addSimpleResponse = sinon.stub().returns(app);
