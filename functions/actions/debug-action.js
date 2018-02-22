@@ -21,9 +21,10 @@ function handler (app) {
       debug(`We get album ${JSON.stringify(album)}`);
       const songs = album.songs
         .map((song, idx) => Object.assign({}, song, {
-          audioURL: `https://archive.org/download/${albumId}/${song.filename}`,
+          audioURL: search.getSongUrlByAlbumIdAndFileName(albumId, song.filename),
           coverage: album.coverage,
           imageURL: `https://archive.org/services/img/${albumId}`,
+          // TODO : add recommendations
           suggestions: ['TODO'],
           track: idx + 1,
           year: album.year,

@@ -29,7 +29,7 @@ function playSong (app, options) {
       )
         .setDescription(description)
         .setImage(
-          options.imageURL || config.defaultSongImage,
+          options.imageURL || config.media.DEFAULT_SONG_IMAGE,
           app.Media.ImageType.LARGE
         )
       ])
