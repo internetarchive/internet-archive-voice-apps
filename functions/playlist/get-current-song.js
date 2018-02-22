@@ -7,7 +7,7 @@
  */
 function getCurrentSong({getData}, app) {
   const playlist = getData(app);
-  return playlist.list[playlist.current];
+  return playlist.items[playlist.current];
 }
 
 module.exports = {
