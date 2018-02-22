@@ -24,29 +24,37 @@ describe('playlist', () => {
     };
   });
 
-  describe('getCurrentSong', () => {
-    it('should return current song', () => {
-      const song = playlist.getCurrentSong(app);
-      expect(song).to.have.property('id', '2');
-      expect(song).to.have.property('title', 'song 2');
+  describe('reducers', () => {
+    describe('create', () => {
+
+    });
+
+    describe('next', () => {
+      it('should move pointer to the next song', () => {
+        playlist.next(app);
+        expect(app.data.playlist).to.have.property('current', 2);
+      });
     });
   });
 
-  describe('hasNextSong', () => {
-    it('should return true if we have next song', () => {
-      expect(playlist.hasNextSong(app)).to.be.true;
+  describe('selectors', () => {
+    describe('getCurrentSong', () => {
+      it('should return current song', () => {
+        const song = playlist.getCurrentSong(app);
+        expect(song).to.have.property('id', '2');
+        expect(song).to.have.property('title', 'song 2');
+      });
     });
 
-    it('should return false if we do not have next song', () => {
-      app.data.playlist.current = 2;
-      expect(playlist.hasNextSong(app)).to.be.false;
-    });
-  });
+    describe('hasNextSong', () => {
+      it('should return true if we have next song', () => {
+        expect(playlist.hasNextSong(app)).to.be.true;
+      });
 
-  describe('next', () => {
-    it('should move pointer to the next song', () => {
-      playlist.next(app);
-      expect(app.data.playlist).to.have.property('current', 2);
+      it('should return false if we do not have next song', () => {
+        app.data.playlist.current = 2;
+        expect(playlist.hasNextSong(app)).to.be.false;
+      });
     });
   });
 });
