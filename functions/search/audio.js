@@ -1,15 +1,7 @@
 const fetch = require('node-fetch');
 const mustache = require('mustache');
 
-const ALBUM_URL = 'https://web.archive.org/metadata/{{id}}';
-const ALBUMS_OF_CREATOR_URL = 'https://web.archive.org/advancedsearch.php' +
-  '?q=collection:({{creatorId}})' +
-  '&fl[]={{fields}}' +
-  '&sort[]={{sort}}' +
-  '&rows={{limit}}' +
-  '&page={{page}}' +
-  '&output=json';
-const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}';
+const config = require('../config');
 
 /**
  * Get details about Album
@@ -19,7 +11,7 @@ const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}';
  */
 function getAlbumById (id) {
   return fetch(
-    mustache.render(ALBUM_URL, {id})
+    mustache.render(config.endpoints.ALBUM_URL, {id})
   )
     .then(res => res.json())
     .then(json => {
@@ -54,7 +46,7 @@ function getAlbumsByCreatorId (creatorId,
   } = {}) {
   return fetch(
     mustache.render(
-      ALBUMS_OF_CREATOR_URL,
+      config.endpoints.ALBUMS_OF_CREATOR_URL,
       {
         creatorId,
         limit,
@@ -83,7 +75,7 @@ function getAlbumsByCreatorId (creatorId,
  * @returns {string}
  */
 function getSongUrlByAlbumIdAndFileName (albumId, filename) {
-  return mustache.render(SONG_URL, {albumId, filename});
+  return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
 }
 
 module.exports = {
