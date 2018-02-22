@@ -1,5 +1,8 @@
+const debug = require('debug')('ai:actions:debug-action:debug');
+
 const dialog = require('../dialog');
 const playlist = require('../state/playlist');
+const search = require('../search/audio');
 
 /**
  * it is special handler for debug-action
@@ -9,25 +12,31 @@ const playlist = require('../state/playlist');
  * @param app
  */
 function handler (app) {
-  playlist.create(app, [{
-    audioURL: 'https://archive.org/download/gd73-06-10.sbd.hollister.174.sbeok.shnf/gd73-06-10d1t01.mp3',
-    coverage: 'Washington, DC',
-    imageURL: 'https://archive.org/services/img/gd73-06-10.sbd.hollister.174.sbeok.shnf',
-    suggestions: ['rewind', 'next'],
-    title: 'Morning Dew',
-    track: 1,
-    year: 1973,
-  }, {
-    audioURL: 'https://archive.org/download/gd73-06-10.sbd.hollister.174.sbeok.shnf/gd73-06-10d1t02.mp3',
-    coverage: 'Washington, DC',
-    imageURL: 'https://archive.org/services/img/gd73-06-10.sbd.hollister.174.sbeok.shnf',
-    suggestions: ['rewind', 'next'],
-    title: 'Beat It On Down The Line',
-    track: 1,
-    year: 1973,
-  }]);
+  debug(`Start debug action handler`);
 
-  dialog.playSong(app, playlist.getCurrentSong(app));
+  // TODO: should fetch only few songs from album
+  const albumId = 'gd73-06-10.sbd.hollister.174.sbeok.shnf';
+  search.getAlbumById(albumId)
+    .then(album => {
+      debug(`We get album ${JSON.stringify(album)}`);
+      const songs = album.songs
+        .map((song, idx) => Object.assign({}, song, {
+          audioURL: `https://archive.org/download/${albumId}/${song.filename}`,
+          coverage: album.coverage,
+          imageURL: `https://archive.org/services/img/${albumId}`,
+          suggestions: ['TODO'],
+          track: idx + 1,
+          year: album.year,
+        }));
+
+      playlist.create(app, songs);
+
+      dialog.playSong(app, playlist.getCurrentSong(app));
+    })
+    .catch(err => {
+      dialog.ask(`We got an error: ${JSON.stringify(err)}.
+                  Do you want to try again?`);
+    });
 }
 
 module.exports = {
