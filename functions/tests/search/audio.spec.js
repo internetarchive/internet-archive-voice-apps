@@ -1,17 +1,27 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
-const audio = require('../../search/audio');
+const rewire = require('rewire');
+
+const audio = rewire('../../search/audio');
+
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const gratefulAlbums = require('./fixtures/grateful-dead-5-albums.json');
+const hippopotamus = require('./fixtures/i-want-a-hippopotamus-for-christmas.json');
 
 describe('search', () => {
-  describe('audio', () => {
-    describe('getAlbumById', () => {
-      beforeEach(() => {
-        fetchMock.get('begin:http://web.archive.org/metadata/', gratefulAlbum);
-      });
 
+  describe('audio', () => {
+    beforeEach(() => {
+      audio.__set__(
+        'fetch',
+        fetchMock
+          .sandbox()
+          .get('begin:https://web.archive.org/metadata/', gratefulAlbum)
+      );
+    });
+
+    describe('getAlbumById', () => {
       it('should return list of songs by album id', function () {
         this.timeout(10000);
         return audio.getAlbumById('gd73-06-10.sbd.hollister.174.sbeok.shnf')
@@ -47,9 +57,11 @@ describe('search', () => {
 
     describe('getAlbumsByCreator', () => {
       beforeEach(() => {
-        fetchMock.get(
-          'begin:https://web.archive.org/advancedsearch.php',
-          gratefulAlbums
+        audio.__set__(
+          'fetch',
+          fetchMock
+            .sandbox()
+            .get('begin:https://web.archive.org/advancedsearch.php', gratefulAlbums)
         );
       });
 
@@ -95,6 +107,37 @@ describe('search', () => {
             expect(albums[4]).to.have.property(
               'year', 1977
             )
+          });
+      });
+    });
+
+    describe('fetchNewMusic', () => {
+      beforeEach(() => {
+        audio.__set__(
+          'fetch',
+          fetchMock
+            .sandbox()
+            .get('begin:https://web.archive.org/metadata/', hippopotamus)
+        );
+      });
+
+      it('should fetch album, when we have its id', function() {
+        this.timeout(5000);
+
+        const search = {
+          albumId: 'qwerty',
+        };
+
+        return audio.fetchNewMusic(search)
+          .then(songs => {
+            console.log(songs.items);
+            expect(songs).to.have.property('items').to.have.length(5);
+            expect(songs).to.have.property('total', 5);
+            expect(songs.items[0]).to.have.property('audioURL');
+            expect(songs.items[0]).to.have.property('coverage');
+            expect(songs.items[0]).to.have.property('imageURL');
+            expect(songs.items[0]).to.have.property('track');
+            expect(songs.items[0]).to.have.property('year');
           });
       });
     });

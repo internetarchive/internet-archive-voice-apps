@@ -50,7 +50,7 @@ describe('actions', () => {
           speech: strings.reprompt.replace('${reprompt}', reprompt),
           reprompt,
           suggestions,
-        },
+        }
       );
     });
 
