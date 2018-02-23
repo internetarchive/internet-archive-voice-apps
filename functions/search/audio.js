@@ -1,15 +1,7 @@
 const fetch = require('node-fetch');
 const mustache = require('mustache');
 
-const ALBUM_URL = 'https://web.archive.org/metadata/{{id}}';
-const ALBUMS_OF_CREATOR_URL = 'https://web.archive.org/advancedsearch.php' +
-  '?q=collection:({{creatorId}})' +
-  '&fl[]={{fields}}' +
-  '&sort[]={{sort}}' +
-  '&rows={{limit}}' +
-  '&page={{page}}' +
-  '&output=json';
-const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}';
+const config = require('../config');
 
 /**
  * Get details about Album
@@ -19,7 +11,7 @@ const SONG_URL = 'https://archive.org/download/{{albumId}}/{{filename}}';
  */
 function getAlbumById (id) {
   return fetch(
-    mustache.render(ALBUM_URL, {id})
+    mustache.render(config.endpoints.ALBUM_URL, {id})
   )
     .then(res => res.json())
     .then(json => {
@@ -41,9 +33,10 @@ function getAlbumById (id) {
 /**
  * Get albums of creator by id
  *
- * @param creatorId {string}
- * @param [limit] {number}
- * @param [page] {number}
+ * @param {string} creatorId
+ * @param {number} [limit]
+ * @param {number} [page]
+ * @param {string} [sort]
  * @returns {Promise}
  */
 function getAlbumsByCreatorId (creatorId,
@@ -54,7 +47,7 @@ function getAlbumsByCreatorId (creatorId,
   } = {}) {
   return fetch(
     mustache.render(
-      ALBUMS_OF_CREATOR_URL,
+      config.endpoints.ALBUMS_OF_CREATOR_URL,
       {
         creatorId,
         limit,
@@ -83,11 +76,35 @@ function getAlbumsByCreatorId (creatorId,
  * @returns {string}
  */
 function getSongUrlByAlbumIdAndFileName (albumId, filename) {
-  return mustache.render(SONG_URL, {albumId, filename});
+  return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
+}
+
+/**
+ * Fetch new music according to search parameters
+ *
+ * @param {object} search - search context
+ */
+function fetchNewMusic (search) {
+  const albumId = search.albumId;
+  return getAlbumById(albumId)
+    .then(album => ({
+      total: album.songs.length,
+      items: album.songs
+        .map((song, idx) => Object.assign({}, song, {
+          audioURL: getSongUrlByAlbumIdAndFileName(albumId, song.filename),
+          coverage: album.coverage,
+          imageURL: mustache.render(config.media.POSTER_OF_ALBUM, {albumId}),
+          // TODO : add recommendations
+          // suggestions: ['TODO'],
+          track: idx + 1,
+          year: album.year,
+        })),
+    }));
 }
 
 module.exports = {
   getAlbumById,
   getAlbumsByCreatorId,
   getSongUrlByAlbumIdAndFileName,
+  fetchNewMusic,
 };
