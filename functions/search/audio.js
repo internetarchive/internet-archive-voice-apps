@@ -11,7 +11,7 @@ const config = require('../config');
  */
 function getAlbumById (id) {
   return fetch(
-    mustache.render(config.endpoints.ALBUM_URL, {id})
+    mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
     .then(res => res.json())
     .then(json => {

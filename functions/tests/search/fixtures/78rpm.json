@@ -1,0 +1,167 @@
+{
+  "created": 1517937127,
+  "d1": "ia600208.us.archive.org",
+  "d2": "ia800208.us.archive.org",
+  "dir": "/3/items/78rpm",
+  "files": [
+    {
+      "name": "78rpm-header.png",
+      "source": "original",
+      "mtime": "1420059827",
+      "size": "16055",
+      "md5": "b103f7818e1bf507bdde153de1e24935",
+      "crc32": "17ef0290",
+      "sha1": "53c377588b5f83af0260a42ebc0708ce0f09a62f",
+      "format": "PNG"
+    },
+    {
+      "name": "78rpm-header_thumb.jpg",
+      "source": "derivative",
+      "format": "JPEG Thumb",
+      "original": "78rpm-header.png",
+      "mtime": "1422570885",
+      "size": "4195",
+      "md5": "b7656de9f1f13109245b46783a35f967",
+      "crc32": "8b7fea61",
+      "sha1": "8df7685c9e5d3489d04ac00bf0b68f71cb4c6b5e"
+    },
+    {
+      "name": "78rpm.png",
+      "source": "original",
+      "format": "Collection Header",
+      "mtime": "1422569943",
+      "size": "664588",
+      "md5": "fa06afea520672d6c210157463d102c3",
+      "crc32": "a413f408",
+      "sha1": "93a5d5594e830681fbe4db5326e268aca23a49f7"
+    },
+    {
+      "name": "78rpm_archive.torrent",
+      "source": "metadata",
+      "btih": "138dcbeb65b3042d51202f95bbf51100a15fc3f1",
+      "mtime": "1494542030",
+      "size": "2266",
+      "md5": "81c9e763267509216b00935f6c801ff2",
+      "crc32": "600071ee",
+      "sha1": "9c3a1c8c9d61423ce1509bda36fa9c1244846807",
+      "format": "Archive BitTorrent"
+    },
+    {
+      "name": "78rpm_files.xml",
+      "source": "metadata",
+      "format": "Metadata",
+      "md5": "710cb54158958c93dbb471b95eeda16f"
+    },
+    {
+      "name": "78rpm_meta.sqlite",
+      "source": "original",
+      "mtime": "1420059861",
+      "size": "6144",
+      "md5": "bdfb636cd2a2f60c00871172bb97354c",
+      "crc32": "73af0995",
+      "sha1": "8ddee5d98473bce52211dd362ea2c11b182d15fd",
+      "format": "Metadata"
+    },
+    {
+      "name": "78rpm_meta.xml",
+      "source": "metadata",
+      "format": "Metadata",
+      "size": "2934",
+      "mtime": "1494542029",
+      "md5": "c1f6dbce1cb4331d2859570188162a75",
+      "crc32": "5711586a",
+      "sha1": "2e027a99c8b8bbb7e7ed2bb988fed8a0a431b2da"
+    },
+    {
+      "name": "icon.gif",
+      "source": "original",
+      "format": "Animated GIF",
+      "mtime": "1422569960",
+      "size": "211497",
+      "md5": "73f8d2d58c67ee2ee807942dec0916b9",
+      "crc32": "c39e2753",
+      "sha1": "b3ea65b67e13699cd38b758ee0e8ebb30da8d85a"
+    },
+    {
+      "name": "oldicon.gif",
+      "source": "original",
+      "format": "Animated GIF",
+      "md5": "98877a67e2247ccae77b99236234bbcd",
+      "size": "1981",
+      "mtime": "1153954908",
+      "crc32": "7f904caa",
+      "sha1": "947b09c71ff4d752d2cb56a5c178d8b4ed3c5ab8"
+    }
+  ],
+  "files_count": 9,
+  "is_collection": true,
+  "item_size": 909660,
+  "metadata": {
+    "identifier": "78rpm",
+    "title": "78 RPMs and Cylinder Recordings",
+    "mediatype": "collection",
+    "collection": [
+      "audio_music",
+      "audio"
+    ],
+    "description": "<p>The <a href=\"http://great78.archive.org\">Great 78 Project</a>! Listen to this collection of 78rpm records and cylinder recordings released in the early 20th century. These recordings were contributed to the Archive by users through the <a href=\"http://www.archive.org/details/opensource_audio\">Open Source Audio</a> collection. Also the Internet Archive has <a href=\"https://archive.org/details/georgeblood\">digitized many</a>.<br></p><p>Artists available here include Ada Jones, Caruso, Eddie Cantor, Edison Concert Band, Harry MacDonough, Len Spencer, Paul Whiteman, and many others.</p>",
+    "hidden": "true",
+    "publicdate": "2005-12-14 12:43:16",
+    "addeddate": "2005-12-14 12:43:16",
+    "uploader": "jon@archive.org",
+    "updater": [
+      "tracey pooh",
+      "ARossi",
+      "ARossi",
+      "ewingrr",
+      "ewingrr",
+      "ewingrr",
+      "ewingrr",
+      "ARossi",
+      "ewingrr",
+      "ARossi",
+      "ewingrr",
+      "ewingrr",
+      "ARossi",
+      "jordonz",
+      "ARossi",
+      "Jeff Kaplan",
+      "Jeff Kaplan"
+    ],
+    "updatedate": [
+      "2006-01-02 21:23:10",
+      "2006-06-20 21:08:41",
+      "2006-07-12 21:16:49",
+      "2006-07-25 17:15:10",
+      "2006-07-25 17:17:49",
+      "2006-07-25 18:24:36",
+      "2006-07-25 18:32:24",
+      "2006-07-25 21:09:53",
+      "2006-07-25 22:50:15",
+      "2006-07-26 23:03:21",
+      "2006-08-17 21:27:26",
+      "2006-08-21 16:24:01",
+      "2007-11-01 16:16:45",
+      "2008-03-13 17:37:30",
+      "2008-04-16 01:13:02",
+      "2010-10-27 21:24:58",
+      "2010-10-27 22:01:29"
+    ],
+    "num_recent_reviews": "5",
+    "num_top_dl": "5",
+    "spotlight_identifier": "OldMacdonaldHadAFarmBySamPattersonTrio1926",
+    "publisher": "Internet Archive",
+    "show_browse_title_link": "true",
+    "show_browse_author_link": "true",
+    "show_browse_by_creator": "true",
+    "show_browse_collection_link": "true",
+    "backup_location": "ia903600_11",
+    "show_search_by_year": "true"
+  },
+  "server": "ia600208.us.archive.org",
+  "uniq": 2102437095,
+  "workable_servers": [
+    "ia600208.us.archive.org",
+    "ia800208.us.archive.org"
+  ]
+}
