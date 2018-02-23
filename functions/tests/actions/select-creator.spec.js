@@ -6,19 +6,19 @@ const querySlots = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
-const mockSearchCreator = require('../_utils/mocking/provider/creator');
+const mockSearchCollection = require('../_utils/mocking/provider/collection');
 
 describe('actions', () => {
   let app;
-  let creator;
+  let collection;
   let dialog;
 
   beforeEach(() => {
     dialog = mockDialog();
-    creator = mockSearchCreator({
+    collection = mockSearchCollection({
       fetchDetailsResponse: {title: 'Cool Band'}
     });
-    action.__set__('creator', creator);
+    action.__set__('collection', collection);
     action.__set__('dialog', dialog);
     app = mockApp({
       argument: 'cool-band',
@@ -29,7 +29,7 @@ describe('actions', () => {
     it('should tell user about creator, and ask more', () => {
       return action.handler(app)
         .then(() => {
-          expect(creator.fetchDetails).to.be.calledWith('cool-band');
+          expect(collection.fetchDetails).to.be.calledWith('cool-band');
           expect(dialog.ask).to.be.calledOnce;
         });
     });

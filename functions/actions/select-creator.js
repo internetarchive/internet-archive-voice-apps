@@ -1,7 +1,10 @@
 const debug = require('debug')('ai:actions:select-creator:debug');
 
 const dialog = require('../dialog');
-const creator = require('../provider/creator');
+
+// we can use collection here because creator collection as well
+// and we could create dedicated provider once we need extra features
+const collection = require('../provider/collection');
 const querySlots = require('../state/query');
 
 function handler (app) {
@@ -10,7 +13,7 @@ function handler (app) {
   const creatorId = app.getArgument('creator');
   querySlots.setSlot(app, 'creator', creatorId);
 
-  return creator.fetchDetails(creatorId)
+  return collection.fetchDetails(creatorId)
     .then(details => {
       // TODO: we could add storage of fetched creator
       // if we will need his details later
