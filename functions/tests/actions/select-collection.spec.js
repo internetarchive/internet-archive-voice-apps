@@ -5,12 +5,19 @@ const action = rewire('../../actions/select-collection');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
+const mockSearchCollection = require('../_utils/mocking/search/collection');
 
 describe('actions', () => {
   let app;
+  let collection;
+  let dialog;
 
   beforeEach(() => {
     dialog = mockDialog();
+    collection = mockSearchCollection({
+      fetchDetailsResponse: {title:'The Best Collection'}
+    });
+    action.__set__('collection', collection);
     action.__set__('dialog', dialog);
     app = mockApp({
       argument: 'the-best-collection',
@@ -19,8 +26,11 @@ describe('actions', () => {
 
   describe('select collection handler', () => {
     it('should tell user about collection, and ask more', () => {
-      action.handler(app);
-      expect(dialog.ask).to.be.calledOnce;
+      return action.handler(app)
+        .then(() => {
+          expect(collection.fetchDetails).to.be.calledWith('the-best-collection');
+          expect(dialog.ask).to.be.calledOnce;
+        });
     });
   });
 });
