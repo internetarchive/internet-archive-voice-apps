@@ -33,9 +33,10 @@ function getAlbumById (id) {
 /**
  * Get albums of creator by id
  *
- * @param creatorId {string}
- * @param [limit] {number}
- * @param [page] {number}
+ * @param {string} creatorId
+ * @param {number} [limit]
+ * @param {number} [page]
+ * @param {string} [sort]
  * @returns {Promise}
  */
 function getAlbumsByCreatorId (creatorId,
@@ -78,8 +79,32 @@ function getSongUrlByAlbumIdAndFileName (albumId, filename) {
   return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
 }
 
+/**
+ * Fetch new music according to search parameters
+ *
+ * @param {object} search - search context
+ */
+function fetchNewMusic (search) {
+  const albumId = search.albumId;
+  return getAlbumById(albumId)
+    .then(album => ({
+      total: album.songs.length,
+      items: album.songs
+        .map((song, idx) => Object.assign({}, song, {
+          audioURL: getSongUrlByAlbumIdAndFileName(albumId, song.filename),
+          coverage: album.coverage,
+          imageURL: mustache.render(config.media.POSTER_OF_ALBUM, {albumId}),
+          // TODO : add recommendations
+          // suggestions: ['TODO'],
+          track: idx + 1,
+          year: album.year,
+        })),
+    }));
+}
+
 module.exports = {
   getAlbumById,
   getAlbumsByCreatorId,
   getSongUrlByAlbumIdAndFileName,
+  fetchNewMusic,
 };
