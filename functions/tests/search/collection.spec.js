@@ -5,7 +5,7 @@ const rewire = require('rewire');
 
 const collection = rewire('../../search/collection')
 
-const seventyEight = require('./fixtures/78rpm.json');
+const seventyEight = require('./fixtures/georgeblood.json');
 
 describe('collection', () => {
   describe('fetchCollection', () => {
@@ -21,7 +21,10 @@ describe('collection', () => {
     it('should fetch information about collection', () => {
       return collection.fetchDetails('78rpm')
         .then(details => {
-          expect(details).to.have.property('title', '78 RPMs and Cylinder Recordings');
+          expect(details).to.have.property(
+            'title',
+            '78rpm Records Digitized by George Blood, L.P.'
+          );
         });
     });
   });
