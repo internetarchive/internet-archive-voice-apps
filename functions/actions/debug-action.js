@@ -2,7 +2,7 @@ const debug = require('debug')('ai:actions:debug-action:debug');
 
 const dialog = require('../dialog');
 const playlist = require('../state/playlist');
-const search = require('../search/audio');
+const search = require('../provider/audio');
 
 /**
  * it is special handler for debug-action
