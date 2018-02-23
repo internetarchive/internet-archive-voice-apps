@@ -1,7 +1,7 @@
 const debug = require('debug')('ai:actions:select-collection:debug');
 
 const dialog = require('../dialog');
-const collection = require('../search/collection');
+const collection = require('../provider/collection');
 
 function handler (app) {
   debug(`Start handle select collection`);

@@ -5,7 +5,7 @@ const action = rewire('../../actions/select-collection');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
-const mockSearchCollection = require('../_utils/mocking/search/collection');
+const mockSearchCollection = require('../_utils/mocking/provider/collection');
 
 describe('actions', () => {
   let app;
