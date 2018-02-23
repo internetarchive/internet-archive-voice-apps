@@ -3,7 +3,7 @@ const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const audio = rewire('../../search/audio');
+const audio = rewire('../../provider/audio');
 
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const gratefulAlbums = require('./fixtures/grateful-dead-5-albums.json');
@@ -21,10 +21,10 @@ describe('search', () => {
       );
     });
 
-    describe('getAlbumById', () => {
+    describe('fetchAlbumDetails', () => {
       it('should return list of songs by album id', function () {
         this.timeout(10000);
-        return audio.getAlbumById('gd73-06-10.sbd.hollister.174.sbeok.shnf')
+        return audio.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
           .then(album => {
             expect(album).to.have.property('creator', 'Grateful Dead');
             expect(album).to.have.property('year', 1973);
@@ -55,7 +55,7 @@ describe('search', () => {
       })
     });
 
-    describe('getAlbumsByCreator', () => {
+    describe('fetchAlbumsByCreatorId', () => {
       beforeEach(() => {
         audio.__set__(
           'fetch',
@@ -66,7 +66,7 @@ describe('search', () => {
       });
 
       it('should return list of albums', () => {
-        return audio.getAlbumsByCreatorId('GratefulDead', {limit: 5})
+        return audio.fetchAlbumsByCreatorId('GratefulDead', {limit: 5})
           .then(albums => {
             expect(albums).to.have.length(5);
             expect(albums[0]).to.have.property(
@@ -130,7 +130,6 @@ describe('search', () => {
 
         return audio.fetchNewMusic(search)
           .then(songs => {
-            console.log(songs.items);
             expect(songs).to.have.property('items').to.have.length(5);
             expect(songs).to.have.property('total', 5);
             expect(songs.items[0]).to.have.property('audioURL');

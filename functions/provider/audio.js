@@ -4,14 +4,14 @@ const mustache = require('mustache');
 const config = require('../config');
 
 /**
- * Get details about Album
+ * Fetch details about Album
  *
  * @param id {string} id of album
  * @returns {Promise}
  */
-function getAlbumById (id) {
+function fetchAlbumDetails (id) {
   return fetch(
-    mustache.render(config.endpoints.ALBUM_URL, {id})
+    mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
     .then(res => res.json())
     .then(json => {
@@ -31,7 +31,7 @@ function getAlbumById (id) {
 }
 
 /**
- * Get albums of creator by id
+ * Fetch albums of creator by id
  *
  * @param {string} creatorId
  * @param {number} [limit]
@@ -39,7 +39,7 @@ function getAlbumById (id) {
  * @param {string} [sort]
  * @returns {Promise}
  */
-function getAlbumsByCreatorId (creatorId,
+function fetchAlbumsByCreatorId (creatorId,
   {
     limit = 1,
     page = 1,
@@ -69,24 +69,13 @@ function getAlbumsByCreatorId (creatorId,
 }
 
 /**
- * Get full url to song by id of album and filename of song
- *
- * @param albumId {string}
- * @param filename {string}
- * @returns {string}
- */
-function getSongUrlByAlbumIdAndFileName (albumId, filename) {
-  return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
-}
-
-/**
  * Fetch new music according to search parameters
  *
  * @param {object} search - search context
  */
 function fetchNewMusic (search) {
   const albumId = search.albumId;
-  return getAlbumById(albumId)
+  return fetchAlbumDetails(albumId)
     .then(album => ({
       total: album.songs.length,
       items: album.songs
@@ -102,9 +91,20 @@ function fetchNewMusic (search) {
     }));
 }
 
+/**
+ * Get full url to song by id of album and filename of song
+ *
+ * @param albumId {string}
+ * @param filename {string}
+ * @returns {string}
+ */
+function getSongUrlByAlbumIdAndFileName (albumId, filename) {
+  return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
+}
+
 module.exports = {
-  getAlbumById,
-  getAlbumsByCreatorId,
-  getSongUrlByAlbumIdAndFileName,
+  fetchAlbumDetails,
+  fetchAlbumsByCreatorId,
   fetchNewMusic,
+  getSongUrlByAlbumIdAndFileName,
 };
