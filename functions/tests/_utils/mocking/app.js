@@ -7,6 +7,7 @@ const sinon = require('sinon');
  * @returns {{}}
  */
 module.exports = function mockApp ({
+                                     argument = null,
                                      lastSeen = Date.now(),
                                    } = {}) {
   const app = {};
@@ -16,7 +17,7 @@ module.exports = function mockApp ({
   _.set(app, 'MEDIA_STATUS.extension.status', null);
   _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
 
-  app.getArgument = sinon.stub().returns(app.MEDIA_STATUS);
+  app.getArgument = sinon.stub().returns(argument || app.MEDIA_STATUS);
   app.addMediaObjects = sinon.stub().returns(app);
   app.addMediaResponse = sinon.stub().returns(app);
   app.addSimpleResponse = sinon.stub().returns(app);

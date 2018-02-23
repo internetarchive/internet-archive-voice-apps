@@ -130,7 +130,6 @@ describe('search', () => {
 
         return audio.fetchNewMusic(search)
           .then(songs => {
-            console.log(songs.items);
             expect(songs).to.have.property('items').to.have.length(5);
             expect(songs).to.have.property('total', 5);
             expect(songs.items[0]).to.have.property('audioURL');
