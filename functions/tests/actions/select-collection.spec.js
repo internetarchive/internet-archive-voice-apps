@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 
 const action = rewire('../../actions/select-collection');
+const querySlots = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -15,7 +16,7 @@ describe('actions', () => {
   beforeEach(() => {
     dialog = mockDialog();
     collection = mockSearchCollection({
-      fetchDetailsResponse: {title:'The Best Collection'}
+      fetchDetailsResponse: {title: 'The Best Collection'}
     });
     action.__set__('collection', collection);
     action.__set__('dialog', dialog);
@@ -32,5 +33,12 @@ describe('actions', () => {
           expect(dialog.ask).to.be.calledOnce;
         });
     });
+
+    it('should store selected collection', () => {
+      return action.handler(app)
+        .then(() => {
+          expect(querySlots.getSlot(app, 'collection')).to.be.equal('the-best-collection');
+        })
+    })
   });
 });
