@@ -1,8 +1,10 @@
 const {expect} = require('chai');
+
 const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../state/actions');
+
 const mockApp = require('../_utils/mocking/app');
 
-describe('actions', () => {
+describe('state', () => {
   let app;
 
   beforeEach(() => {
