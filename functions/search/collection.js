@@ -16,7 +16,7 @@ const config = require('../config');
  title_message:"Free Music"
  */
 /**
- * fetch details about collection
+ * Fetch details about collection
  *
  * @param {string} id - identifier of collection
  */
