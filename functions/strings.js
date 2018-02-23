@@ -34,6 +34,7 @@ module.exports = {
   },
   prompts: {
     select: {
+      welcome: "Would you like to listen to music from our collections of 78s or Live Concerts?",
       artist: "What artist do you want to hear?",
       artistAlternative: "What artist would you like to listen to?",
       city: "Please select a city",
@@ -46,6 +47,10 @@ module.exports = {
     }
   },
   suggestion: {
+    welcome: {
+      seventyEights: '78s',
+      liveConcerts: 'Live Concerts'
+    },
     artist: {
       gratefulDead: 'Grateful Dead',
       cowboyJunkies: 'Cowboy Junkies',
@@ -80,7 +85,7 @@ module.exports = {
   statements: {
     greeting: {
       welcome: {
-        liveMusicCollection: "Welcome to the live music collection at the Internet Archive."
+        liveMusicCollection: "Welcome to music at the Internet Archive."
       }, 
       welcomeBack: "Welcome back"
     },
