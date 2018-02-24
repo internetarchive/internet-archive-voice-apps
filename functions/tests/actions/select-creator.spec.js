@@ -58,7 +58,6 @@ describe('actions', () => {
       return action.handler(app)
         .then(() => {
           expect(dialog.ask).to.be.calledOnce;
-          console.log(dialog.ask.args[0][1]);
           expect(dialog.ask.args[0][1])
             .to.have.property('suggestions')
             .to.have.length(3);

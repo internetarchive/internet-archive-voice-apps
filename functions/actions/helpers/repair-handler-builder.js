@@ -1,3 +1,5 @@
+const mustache = require('mustache');
+
 const dialog = require('../../dialog');
 const {getLastAction, getLastRepetitionCount} = require('../../state/actions');
 const {getLastReprompt, getLastSuggestions} = require('../../state/dialog');
@@ -29,26 +31,27 @@ module.exports = {
       switch (count) {
         case 1:
           dialog.ask(
-            app,
-            {
-              speech: intentStrings.first,
-              reprompt: reprompt,
-              suggestions: suggestions,
-            }
+            app, Object.assign({}, intentStrings[0], {
+              reprompt,
+              suggestions,
+            })
           );
           break;
         case 2:
           dialog.ask(
             app,
             {
-              speech: intentStrings.reprompt.replace('${reprompt}', reprompt),
+              speech: mustache.render(
+                intentStrings[1].speech,
+                {reprompt}
+              ),
               reprompt,
               suggestions,
             }
           );
           break;
         default:
-          dialog.tell(app, {speech: intentStrings.fallback});
+          dialog.tell(app, intentStrings[2]);
           break;
       }
     }

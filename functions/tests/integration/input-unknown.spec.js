@@ -3,6 +3,7 @@
  */
 
 const {expect} = require('chai');
+const mustache = require('mustache');
 const index = require('../..');
 const strings = require('../../strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
@@ -17,7 +18,7 @@ describe('integration', () => {
       }), res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.unknown.first);
+      expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
     });
 
     it('should 2nd time', () => {
@@ -40,7 +41,10 @@ describe('integration', () => {
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
       expect(res.speech()).to.contain(
-        strings.intents.unknown.reprompt.replace('${reprompt}', 'Direction?')
+        mustache.render(
+          strings.intents.unknown[1].speech,
+          { reprompt: 'Direction?' },
+        )
       );
     });
 
@@ -58,7 +62,7 @@ describe('integration', () => {
       index.playMedia(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.false;
-      expect(res.speech()).to.contain(strings.intents.unknown.fallback);
+      expect(res.speech()).to.contain(strings.intents.unknown[2].speech);
     });
 
     it('should not fallback 3rd time if previous action was not no-input', () => {
@@ -75,7 +79,7 @@ describe('integration', () => {
       index.playMedia(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.unknown.first);
+      expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
     });
   });
 });
