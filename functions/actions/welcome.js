@@ -1,7 +1,6 @@
 const dialog = require('../dialog');
-const intentStrings = require('../strings').intents;
+const welcomeStrings = require('../strings').intents.welcome;
 const greetingStrings = require('../strings').statements.greeting;
-const suggestionStrings = require('../strings').suggestion;
 const fallbackStrings = require('../strings').fallback;
 
 /**
@@ -14,16 +13,16 @@ function handler (app) {
   // askAudio(app, "Test Song", "https://ia802307.us.archive.org/20/items/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Booklet/center_vbr.mp3", suggestions);
 
   // let cardTitle = 'Welcome';
-  let reprompt = fallbackStrings.didntCatchThat + ' ' + intentStrings.welcome;
+  let reprompt = fallbackStrings.didntCatchThat + ' ' + welcomeStrings.speech;
   // let cardOutput = 'Welcome to the live music collection at the Internet Archive. What artist would you like to listen to? For example The Ditty Bops, The Grateful Dead or The Cowboy Junkies.';
-  let speech = '<speak> <audio src="https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3" />' + greetingStrings.welcome.liveMusicCollection + ' ' + intentStrings.welcome + '</speak>';
+  let speech = '<speak> <audio src="https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3" />' + greetingStrings.welcome.liveMusicCollection + ' ' + welcomeStrings.speech + '</speak>';
   // let speechOutput = "<speak>Welcome to the live music collection at the Internet Archive.<break time='.5s'/> What artist would you like to listen to? <break time='.5s'/>  For example, the ditty bops, the grateful dead, or the cowboy junkies. </speak>";
 
   if (app.getLastSeen() !== null) {
-    speech = greetingStrings.welcomeBack + ' ' + intentStrings.welcome;
+    speech = greetingStrings.welcomeBack + ' ' + welcomeStrings.speech;
   }
 
-  const suggestions = suggestionStrings.welcome;
+  const suggestions = welcomeStrings.suggestions;
 
   dialog.ask(app, {speech, reprompt, suggestions});
 }
