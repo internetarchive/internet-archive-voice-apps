@@ -70,11 +70,8 @@ module.exports = {
       fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     },
     welcome: {
-      suggestions: [
-        'Grateful Dead',
-        'Cowboy Junkies',
-        'Ditty Bops',
-      ]
+      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      suggestions: ['78s', 'Live Concerts']
     }
   },
   dialog: {
@@ -87,9 +84,9 @@ module.exports = {
   statements: {
     greeting: {
       welcome: {
-        liveMusicCollection: "Welcome to the live music collection at the Internet Archive."
-      },
-      welcomeBack: "Welcome back"
+        liveMusicCollection: "Welcome to music at the Internet Archive."
+      }, 
+      welcomeBack: "Welcome back,"
     },
     salutation: {
       thankYou: {
