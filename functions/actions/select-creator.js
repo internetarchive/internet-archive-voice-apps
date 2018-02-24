@@ -2,23 +2,19 @@ const debug = require('debug')('ai:actions:select-creator:debug');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
-const thanksStrings = require('../strings').intents.selectCreator;
-const stepInStrings = require('../strings').stepIn;
+const intentStrings = require('../strings').intents.selectCreator;
+const prompt = intentStrings.prompts.coverageAndYear;
 
 const collection = require('../provider/collection');
 const creator = require('../provider/creator');
 const querySlots = require('../state/query');
 
 /**
- * Concert title: join coverage (place) and year
+ * handle select-creator action
  *
- * @param {Object} album
- * @param {string} album.coverage
- * @param {string} album.year
- * @return {string}
+ * @param app
+ * @returns {Promise.<TResult>}
  */
-const concertToTitle = (album) => `${album.coverage} ${album.year}`;
-
 function handler (app) {
   debug(`Start handle select creator`);
 
@@ -46,7 +42,7 @@ function handler (app) {
 
       const suggestions = popular.items
         .slice(0, 3)
-        .map(concertToTitle);
+        .map((album) => mustache.render(prompt.suggestion, album));
 
       const state = {
         title: details.title,
@@ -54,8 +50,8 @@ function handler (app) {
       };
 
       const speech = [
-        mustache.render(thanksStrings.speech, state),
-        mustache.render(stepInStrings.askForLocationAndYear.speech, state),
+        mustache.render(intentStrings.speech, state),
+        mustache.render(prompt.speech, state),
       ].join(' ');
       dialog.ask(app, {speech, suggestions});
     });
