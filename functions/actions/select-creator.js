@@ -20,7 +20,9 @@ function handler (app) {
   return Promise.all([
     collection.fetchDetails(creatorId),
     // get the most popular album of artist
-    creator.fetchTheMostPopularAlbum(creatorId),
+    creator.fetchAlbums(creatorId, {
+      sort: 'downloads+desc',
+    }),
   ])
     .then(values => {
       // TODO: we could add storage of fetched creator and they albums
@@ -29,7 +31,7 @@ function handler (app) {
       const state = {
         title: details.title,
         suggestions: `${popular.items[0].title} ${popular.items[0].year}`,
-      }
+      };
 
       // TODO: generate suggestions from popular.items
       const speech = [
