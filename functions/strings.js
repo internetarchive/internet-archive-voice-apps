@@ -1,36 +1,61 @@
 module.exports = {
   // v2
-  intents: {
-    noInput: {
-      first: "Sorry, I couldn't hear you.",
-      reprompt: 'Sorry, can you repeat that? ${reprompt}',
-      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    },
-    unknown: {
-      first: "I'm not sure what you said. Can you repeat that?",
-      reprompt: "I still didn't get that. ${reprompt}",
-      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    },
-    selectCreator: {
-      speech: '{{title}} - great choice!',
-    },
-    welcome: {
-      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
-      suggestions: ['78s', 'Live Concerts']
-    }
-  },
-  stepIn: {
-    askForLocationAndYear: {
-      speech: `Do you have a specific city and year in mind, like {{suggestions}},
-               or would you like me to play something randomly from {{title}}`
-    },
-  },
   dialog: {
     playSong: {
       description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
       title: 'Playing track number - {{track}}',
       suggestionLink: 'on Archive.org',
     }
+  },
+
+  intents: {
+    noInput: {
+      first: "Sorry, I couldn't hear you.",
+      reprompt: 'Sorry, can you repeat that? ${reprompt}',
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
+
+    unknown: {
+      first: "I'm not sure what you said. Can you repeat that?",
+      reprompt: "I still didn't get that. ${reprompt}",
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
+
+    selectCreator: {
+      speech: '{{title}} - great choice!',
+      prompts: {
+        coverageAndYear: {
+          speech: `Do you have a specific city and year in mind, like {{suggestions}},
+                   or would you like me to play something randomly from {{title}}`,
+          suggestion: '{{coverage}} {{year}}',
+        }
+      }
+    },
+
+    welcome: {
+      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      suggestions: ['78s', 'Live Concerts']
+    }
+  },
+
+  prompts: {
+    select: {
+      artist: [
+        "What artist do you want to hear?",
+        "What artist would you like to listen to?",
+      ],
+      city: "Please select a city",
+      collection: "Please select a collection",
+      topic: [
+        "Please select a topic",
+        "Please select a topic - like Jazz, Alternative, or Dance",
+      ],
+      year: "Please select a year",
+      yearAndCity: [
+        "Please select a city and year",
+        "Do you have a specific city and year in mind?",
+      ],
+    },
   },
 
   // v1
@@ -66,19 +91,6 @@ module.exports = {
     misunderstand: "I'm having trouble understanding you",
     sayAgain: "Sorry, can you say that again?",
     finalReprompt: "I'm sorry I'm having trouble here. Maybe we should try this again later."
-  },
-  prompts: {
-    select: {
-      artist: "What artist do you want to hear?",
-      artistAlternative: "What artist would you like to listen to?",
-      city: "Please select a city",
-      year: "Please select a year",
-      yearAndCity: "Please select a city and year",
-      yearAndCityAlternative: "Do you have a specific city and year in mind?",
-      collection: "Please select a collection",
-      topic: "Please select a topic",
-      topicAlternative: "Please select a topic - like Jazz, Alternative, or Dance"
-    }
   },
   suggestion: {
     artist: {
