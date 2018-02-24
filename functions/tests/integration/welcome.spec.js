@@ -15,8 +15,8 @@ describe('integration', () => {
         action: 'welcome',
         lastSeen: null,
       }), res);
-      expect(res.speech()).to.not.contain('Welcome back');
-      expect(res.speech()).to.contain('Welcome to the live music collection at the Internet Archive.');
+      expect(res.speech()).to.not.contain('Welcome back,');
+      expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
 
     it('should handle for return user', () => {
@@ -24,7 +24,7 @@ describe('integration', () => {
       index.playMedia(buildIntentRequest({
         action: 'welcome',
       }), res);
-      expect(res.speech()).to.contain('Welcome back, choose an artist.');
+      expect(res.speech()).to.contain('Welcome back,');
     });
   });
 });
