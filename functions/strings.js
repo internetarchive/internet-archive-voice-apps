@@ -46,10 +46,6 @@ module.exports = {
     }
   },
   suggestion: {
-    welcome: {
-      seventyEights: '78s',
-      liveConcerts: 'Live Concerts'
-    },
     artist: {
       gratefulDead: 'Grateful Dead',
       cowboyJunkies: 'Cowboy Junkies',
@@ -73,7 +69,10 @@ module.exports = {
       reprompt: "I still didn't get that. ${reprompt}",
       fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     },
-    welcome: "Would you like to listen to music from our collections of 78s or Live Concerts?"
+    welcome: {
+      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      suggestions: ['78s', 'Live Concerts']
+    }
   },
   statements: {
     greeting: {
