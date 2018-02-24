@@ -12,7 +12,7 @@ describe('integration', () => {
       }), res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.noInput.first);
+      expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
     });
 
     it('should 2nd time', () => {
@@ -35,7 +35,7 @@ describe('integration', () => {
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
       expect(res.speech()).to.contain(
-        strings.intents.noInput.reprompt.replace('${reprompt}', 'Direction?')
+        strings.intents.noInput[1].speech.replace('{{reprompt}}', 'Direction?')
       );
     });
 
@@ -53,7 +53,7 @@ describe('integration', () => {
       index.playMedia(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.false;
-      expect(res.speech()).to.contain(strings.intents.noInput.fallback);
+      expect(res.speech()).to.contain(strings.intents.noInput[2].speech);
     });
 
     it('should not fallback 3rd time if previous action was not no-input', () => {
@@ -70,7 +70,7 @@ describe('integration', () => {
       index.playMedia(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.noInput.first);
+      expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
     });
   });
 });

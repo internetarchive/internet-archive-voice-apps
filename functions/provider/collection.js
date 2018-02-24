@@ -35,6 +35,26 @@ function fetchDetails (id) {
     });
 }
 
+/**
+ * Fetch items of collection
+ *
+ * @param {string} id - identifier of collection
+ * @returns {Promise}
+ */
+function fetchItems (id) {
+  debug(`fetch collection items ${id}`);
+  return fetch(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
+    .then(res => res.json())
+    .then(data => {
+      return data.response.docs;
+    })
+    .catch(e => {
+      error(`Get error on fetching collection ${id} items, error: ${JSON.stringify(e)}`);
+      return Promise.reject(e);
+    });
+}
+
 module.exports = {
   fetchDetails,
+  fetchItems,
 };
