@@ -34,7 +34,6 @@ module.exports = {
   },
   prompts: {
     select: {
-      welcome: "Would you like to listen to music from our collections of 78s or Live Concerts?",
       artist: "What artist do you want to hear?",
       artistAlternative: "What artist would you like to listen to?",
       city: "Please select a city",
@@ -74,13 +73,7 @@ module.exports = {
       reprompt: "I still didn't get that. ${reprompt}",
       fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     },
-    welcome: {
-      suggestions: [
-        'Grateful Dead',
-        'Cowboy Junkies',
-        'Ditty Bops',
-      ]
-    }
+    welcome: "Would you like to listen to music from our collections of 78s or Live Concerts?"
   },
   statements: {
     greeting: {
