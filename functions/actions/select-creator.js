@@ -5,8 +5,6 @@ const dialog = require('../dialog');
 const thanksStrings = require('../strings').intents.selectCreator;
 const stepInStrings = require('../strings').stepIn;
 
-// we can use collection here because creator collection as well
-// and we could create dedicated provider once we need extra features
 const collection = require('../provider/collection');
 const creator = require('../provider/creator');
 const querySlots = require('../state/query');
@@ -14,10 +12,14 @@ const querySlots = require('../state/query');
 function handler (app) {
   debug(`Start handle select creator`);
 
-  const creatorId = app.getArgument('creator');
-  querySlots.setSlot(app, 'creator', creatorId);
+  const creatorId = app.getArgument('creators');
+  debug(`creatorId: ${creatorId}`);
+
+  querySlots.setSlot(app, 'creators', creatorId);
 
   return Promise.all([
+    // we can use collection here because creator collection as well
+    // and we could create dedicated provider once we need extra features
     collection.fetchDetails(creatorId),
     // get the most popular album of artist
     creator.fetchAlbums(creatorId, {
@@ -30,7 +32,8 @@ function handler (app) {
       const [details, popular] = values;
       const state = {
         title: details.title,
-        suggestions: `${popular.items[0].title} ${popular.items[0].year}`,
+        // join coverage (place) and year
+        suggestions: `${popular.items[0].coverage} ${popular.items[0].year}`,
       };
 
       // TODO: generate suggestions from popular.items

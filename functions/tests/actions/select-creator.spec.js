@@ -48,7 +48,7 @@ describe('actions', () => {
     it('should store selected creator', () => {
       return action.handler(app)
         .then(() => {
-          expect(querySlots.getSlot(app, 'creator')).to.be.equal('cool-band');
+          expect(querySlots.getSlot(app, 'creators')).to.be.equal('cool-band');
         })
     })
   });
