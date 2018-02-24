@@ -1,0 +1,396 @@
+{
+  "created": 1519370383,
+  "d1": "ia601909.us.archive.org",
+  "d2": "ia801909.us.archive.org",
+  "dir": "/16/items/georgeblood",
+  "files": [
+    {
+      "name": "14909MetadataExport.xls",
+      "source": "original",
+      "mtime": "1490311667",
+      "size": "16384",
+      "md5": "938e941642d84239192d8c59935ca72f",
+      "crc32": "196d196f",
+      "sha1": "7b33d05af6052d9f6681ce260b72971c2f0e6451",
+      "format": "Excel"
+    },
+    {
+      "name": "15068MetadataExport.xls",
+      "source": "original",
+      "mtime": "1475792098",
+      "size": "496128",
+      "md5": "7d0324116297a6c6c73bc3423d2475db",
+      "crc32": "d256aac0",
+      "sha1": "dc1c33a6c807defa87b385eef1846f269154863b",
+      "format": "Excel"
+    },
+    {
+      "name": "15068RejectReport.xls",
+      "source": "original",
+      "mtime": "1475792102",
+      "size": "46592",
+      "md5": "49d040a898252eff48cba8c6a849b847",
+      "crc32": "eb1e3915",
+      "sha1": "2242cfee91153aa0df034d5cb2b6dd17b8989d80",
+      "format": "Excel"
+    },
+    {
+      "name": "15186MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1490311750",
+      "size": "71448",
+      "md5": "4ab824fc26a458d04fb2a2cb219e99be",
+      "crc32": "65e11df9",
+      "sha1": "fdc6709ec34f1818073c96dc9e14d7f8c4537b10",
+      "format": "Excel"
+    },
+    {
+      "name": "15446MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1490311772",
+      "size": "818073",
+      "md5": "0c75d3576eb9e9aff45787844e517f29",
+      "crc32": "c499cee5",
+      "sha1": "4d51d325bc6379e2df1d2cf7855ccb279ec81a3e",
+      "format": "Excel"
+    },
+    {
+      "name": "15659MetadataExport.xls",
+      "source": "original",
+      "mtime": "1490307523",
+      "size": "32768",
+      "md5": "f6ecd8e46bb1f447eb84d1c0030cb8fa",
+      "crc32": "0c7faf7b",
+      "sha1": "24a71cae101c46945733a8a3d73dd244e7c8c231",
+      "format": "Excel"
+    },
+    {
+      "name": "15861_15947MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1490311810",
+      "size": "777547",
+      "md5": "c4106fce051936c955c1933fe73625dd",
+      "crc32": "3c0a6097",
+      "sha1": "c28e386d0725cef90913fa84f9ace044d166f70a",
+      "format": "Excel"
+    },
+    {
+      "name": "15936MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1490311828",
+      "size": "41388",
+      "md5": "086ee22f6160147d05938250ee7a6206",
+      "crc32": "affe4fc0",
+      "sha1": "43f8ec4999b5fa1534a1ff22ff859eb94edbc0a2",
+      "format": "Excel"
+    },
+    {
+      "name": "16052_16099_16170MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1490389500",
+      "size": "1013773",
+      "md5": "4aa34676e77360bdae77cfe979a64ed6",
+      "crc32": "c5db22f1",
+      "sha1": "02f81140e24986e66996301f0661361835feba99",
+      "format": "Excel"
+    },
+    {
+      "name": "16210_16265_16312_16372MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1493155915",
+      "size": "1357410",
+      "md5": "48f96a4651038cd8faa63f3622594937",
+      "crc32": "a96389b3",
+      "sha1": "2724da531ab9d71df479e796537159dde2d5378c",
+      "format": "Excel"
+    },
+    {
+      "name": "16628_16456_16427_16541MetadataExport-revised.xlsx",
+      "source": "original",
+      "mtime": "1497374809",
+      "size": "1181094",
+      "md5": "8904af360acdcacb9d6e0a7172412a63",
+      "crc32": "b2d79d7d",
+      "sha1": "c2f712ec5bf38e495a28b022ab687a29bceacc87",
+      "format": "Excel"
+    },
+    {
+      "name": "16628_16456_16427_16541MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1495740272",
+      "size": "1068801",
+      "md5": "dada42fed26d7ed96d18fb70d3fe3ef9",
+      "crc32": "f32ba89c",
+      "sha1": "dd5d81d6dfcd17866b65c98509b7717711cc1cb2",
+      "format": "Excel"
+    },
+    {
+      "name": "16651_16727_16776_16831MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1499108098",
+      "size": "1540070",
+      "md5": "cb80a00b7ab65e0a8fbc93bc5d41f2b5",
+      "crc32": "534c3f1b",
+      "sha1": "5518411b107fdf714967e9c332e08052c4d3d4e5",
+      "format": "Excel"
+    },
+    {
+      "name": "16879_16938_17007_17009_17010MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1501785279",
+      "size": "1620779",
+      "md5": "3a9252599eb585062b7a928bc7b5161e",
+      "crc32": "6a6894fa",
+      "sha1": "14221dfdcb47accb2d9f4e5da0a4968e51593017",
+      "format": "Excel"
+    },
+    {
+      "name": "17021_17056_17062_17087_17136_17113MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1513631602",
+      "size": "1919409",
+      "md5": "b258480b204a4c422c66677310e14a9c",
+      "crc32": "45f7f6d8",
+      "sha1": "d390d1877d9ea6851c38c577a56038f939a31043",
+      "format": "Excel"
+    },
+    {
+      "name": "17179_17195_17235_17253_17310MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1506111156",
+      "size": "1765863",
+      "md5": "8c72240908713eafaf10fdccc600c40f",
+      "crc32": "59d3a9f8",
+      "sha1": "5a51dfe7077b863c4bfcb00865eeea89afe9b413",
+      "format": "Excel"
+    },
+    {
+      "name": "17348_17371_17421_17448_17462MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1509473006",
+      "size": "1070385",
+      "format": "Excel",
+      "md5": "670dc4e262282586d09cd71e1d5713ae",
+      "crc32": "a0580e24",
+      "sha1": "5fdba03d2897e880ba61ffa164321f61046c526d"
+    },
+    {
+      "name": "17418MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1507312975",
+      "size": "219359",
+      "md5": "e7cfe669b2a6848f9ec35c228964466e",
+      "crc32": "a5fde615",
+      "sha1": "ad74a2de30d3dd4ab57a0b7677bc5cf36f5a2ceb",
+      "format": "Excel"
+    },
+    {
+      "name": "17492_17506_17516_17548_17568_17607_17661MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1510866309",
+      "size": "1856926",
+      "md5": "5574563c7053dcf89364b83c4a42105a",
+      "crc32": "5749caad",
+      "sha1": "9fbb046f90dbfea23c3d8386d32d8547e5f328eb",
+      "format": "Excel"
+    },
+    {
+      "name": "17693_17713_17748_17753_17777MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1513636323",
+      "size": "2265624",
+      "md5": "bc85b963f7ca60f739193449267936fa",
+      "crc32": "7dfcd0f5",
+      "sha1": "84c86af4ba0b5a4158c64a8972d2df0e0be6d679",
+      "format": "Excel"
+    },
+    {
+      "name": "17804_17908_17972_17973_17991_17995MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1516126296",
+      "size": "1634133",
+      "md5": "6579e971fa1753c6ec812cedc2c9339d",
+      "crc32": "0c198ef2",
+      "sha1": "ed0f0ea12c9f59cfea2900d9a48954386369b75d",
+      "format": "Excel"
+    },
+    {
+      "name": "18028_18062_18088_18119_18145_18171_18206MetadataExport.xlsx",
+      "source": "original",
+      "mtime": "1518820671",
+      "size": "2537819",
+      "md5": "f0f2e2f4ae40d0a5d6337ec37051ecf0",
+      "crc32": "d78e60ee",
+      "sha1": "de5ebb468c142379a2e279d49695a36406f3de69",
+      "format": "Excel"
+    },
+    {
+      "name": "2015539 Internet Archive Shipment Metadata 20170822.xlsx",
+      "source": "original",
+      "mtime": "1503603082",
+      "size": "1669116",
+      "md5": "6f78f59cec4d3ee442e7290c9ed290f1",
+      "crc32": "36d5dc96",
+      "sha1": "d138ed0155a7786b666e8d98bdfc299f35b58a7e",
+      "format": "Excel"
+    },
+    {
+      "name": "78rpm.png",
+      "source": "original",
+      "mtime": "1475791497",
+      "size": "664588",
+      "md5": "fa06afea520672d6c210157463d102c3",
+      "crc32": "a413f408",
+      "sha1": "93a5d5594e830681fbe4db5326e268aca23a49f7",
+      "format": "PNG"
+    },
+    {
+      "name": "78rpm_thumb.jpg",
+      "source": "derivative",
+      "format": "JPEG Thumb",
+      "original": "78rpm.png",
+      "mtime": "1475791571",
+      "size": "4295",
+      "md5": "f401b063e0a2cda965d813e28dcb2225",
+      "crc32": "d91ebfde",
+      "sha1": "2c527800a90f5c1f474fdfd64fd87996306cd600"
+    },
+    {
+      "name": "arc_and_btb_box_information.xlsx",
+      "source": "original",
+      "mtime": "1516653750",
+      "size": "53296",
+      "md5": "e15470f0c9b21ec8af862b67a053f8de",
+      "crc32": "6582d4ae",
+      "sha1": "cc4c496ba5b5a450cc4601e30e13d2276472895c",
+      "format": "Excel"
+    },
+    {
+      "name": "blood_turntable.jpg",
+      "source": "original",
+      "format": "JPEG",
+      "rotation": "0",
+      "mtime": "1476381023",
+      "size": "2218982",
+      "md5": "cf4ff6f9fe0d18ef63c3fe7773814a3b",
+      "crc32": "dadd18ea",
+      "sha1": "d9c690de077aa3dfee110f75d64258e8fd00646b"
+    },
+    {
+      "name": "blood_turntable_700p.jpg",
+      "source": "original",
+      "format": "Collection Header",
+      "rotation": "0",
+      "mtime": "1476393812",
+      "size": "114895",
+      "md5": "e024754ad4a44fece86b39d1e0891e23",
+      "crc32": "30395642",
+      "sha1": "cd1b1f707e888917d539cbf5a06fd87979517a5a"
+    },
+    {
+      "name": "blood_turntable_thumb.jpg",
+      "source": "derivative",
+      "format": "JPEG Thumb",
+      "original": "blood_turntable.jpg",
+      "mtime": "1490307537",
+      "size": "5604",
+      "md5": "7cd68087c0795964686b1d90831970a1",
+      "crc32": "5557843f",
+      "sha1": "5dc7a7084456764ab3690ce559712c8ca9ffd7eb"
+    },
+    {
+      "name": "georgeblood.jpg",
+      "source": "original",
+      "mtime": "1475791718",
+      "size": "6799",
+      "md5": "edad9938b61a2a4d00060dead9855948",
+      "crc32": "1e7a3d9d",
+      "sha1": "891fa414820c2eb20795d473ba2a20c6b47faa27",
+      "format": "JPEG",
+      "rotation": "0"
+    },
+    {
+      "name": "georgeblood_archive.torrent",
+      "source": "metadata",
+      "btih": "a89014eddf6bbdf8cb41543a28d3e5c747ac9fea",
+      "mtime": "1518820683",
+      "size": "8372",
+      "md5": "c5a3bd6265f3298f5ea7eaf8df61eabb",
+      "crc32": "075d836d",
+      "sha1": "db11bf3e4c99c8e6254d16a296e0a6938a48291b",
+      "format": "Archive BitTorrent"
+    },
+    {
+      "name": "georgeblood_files.xml",
+      "source": "original",
+      "format": "Metadata",
+      "md5": "f59bcef9a3bd70e68867c8a83d408644"
+    },
+    {
+      "name": "georgeblood_meta.sqlite",
+      "source": "original",
+      "mtime": "1518820680",
+      "size": "37888",
+      "format": "Metadata",
+      "md5": "4805b8dd75d46648d75fabb7eb3c3ca8",
+      "crc32": "109dbb4a",
+      "sha1": "c760b8e86849e4dc9310d543baa630a79bab3a2d"
+    },
+    {
+      "name": "georgeblood_meta.xml",
+      "source": "original",
+      "mtime": "1502250758",
+      "size": "3428",
+      "format": "Metadata",
+      "md5": "1010b696667f2bb1006a875a113bb574",
+      "crc32": "0e388557",
+      "sha1": "79e379f086472f4f43f6dcf1c3d2c59cadf86eea"
+    },
+    {
+      "name": "georgeblood_thumb.jpg",
+      "source": "derivative",
+      "format": "JPEG Thumb",
+      "original": "georgeblood.jpg",
+      "mtime": "1490307539",
+      "size": "3065",
+      "md5": "4161cdffd9d3bd7d4e22816565177d6d",
+      "crc32": "0c0af2e4",
+      "sha1": "34a306571579c19df5b44203d48827fc83b15fe6"
+    }
+  ],
+  "files_count": 35,
+  "is_collection": true,
+  "item_size": 28142101,
+  "metadata": {
+    "identifier": "georgeblood",
+    "mediatype": "collection",
+    "description": "<a href=\"https://archive.org/details/georgeblood?&amp;sort=-publicdate\">Newest uploads!</a> <a href=\"https://twitter.com/great78project\">Auto-78-twitter</a>.&nbsp; Through <a href=\"http://great78.archive.org\">the Great 78 Project</a> the Internet Archive has begun to digitize 78rpm discs for preservation, research, and discovery with the help of <a href=\"http://www.georgeblood.com/\">George Blood, L.P.</a>.  78s were mostly made from shellac, i.e., beetle resin, and were the brittle predecessors to the LP (microgroove) era.&nbsp;&nbsp; <a href=\"https://twitter.com/great78project\">@great78project</a> for uploads as they happen.<img src=\"../../download/georgeblood/blood_turntable_700p.jpg\">\n<br>\n<i>Turntable used for 78rpm digitization of four simultaneous recordings with different needles.</i>\n<br><br>\nThe digitization project currently focuses on discs that are less likely to be commercially available--or available at all in digital form--particularly focusing on underrepresented artists and genres.  Digitization will make this less commonly available music accessible to researchers in a format where it can be manipulated and studied without harming the physical artifacts.  We have preserved the often very prominent surface noise and imperfections and included files generated by different sizes and shapes of stylus to facilitate different kinds of analysis.\n<br><br>\nThere\u2019s no way to predict if the digital versions of these 78s will outlast the physical items, so we are preserving both to ensure the survival of these cultural materials for future generations to study and enjoy.\n<br><br>\nRights Information\n<br><br>\nThis collection has been made available for use in research, teaching, and private study only. Copyrights that may exist in these materials have not been transferred to the Internet Archive. The Internet Archive does not advise as to the copyright status of items in our collections. Our <a href=\"http://www.archive.org/about/terms.php\">terms of use</a> require that users make use of the Internet Archive's collections at their own risk and ensure that such use is non-infringing and in accordance with all applicable laws. It is the user\u2019s responsibility to determine whether permission may be required for a given use of these materials, or whether such use is authorized by law.",
+    "language": "eng",
+    "scanner": "Internet Archive HTML5 Uploader 1.6.3",
+    "subject": [
+      "78rpm",
+      "digitization"
+    ],
+    "title": "78rpm Records Digitized by George Blood, L.P.",
+    "uploader": "alexis@archive.org",
+    "addeddate": "2016-10-06 22:04:58",
+    "curation": "[curator]validator@archive.org[/curator][date]20161006220534[/date][comment]checked for malware[/comment]",
+    "publicdate": "2016-10-06 22:05:34",
+    "hidden": "true",
+    "num_recent_reviews": "5",
+    "num_top_dl": "5",
+    "backup_location": "ia906208_9",
+    "show_search_by_year": "true",
+    "collection": [
+      "78rpm",
+      "audio_music",
+      "audio"
+    ]
+  },
+  "server": "ia801909.us.archive.org",
+  "uniq": 2121633864,
+  "workable_servers": [
+    "ia801909.us.archive.org",
+    "ia601909.us.archive.org"
+  ]
+}

@@ -53,7 +53,7 @@ module.exports = {
       discoBiscuits: 'Disco Biscuits',
       hotButteredRum: 'Hot Buttered Rum',
       kellerWilliams: 'Keller Williams'
-    }, 
+    },
     artistsPrompt: "I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example",
     artistsPromptAlternative: "We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams",
     randomPrompt: "I can play something randomly"
@@ -72,6 +72,13 @@ module.exports = {
     welcome: {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
+    }
+  },
+  dialog: {
+    playSong: {
+      description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
+      title: 'Playing track number - {{track}}',
+      suggestionLink: 'on Archive.org',
     }
   },
   statements: {
