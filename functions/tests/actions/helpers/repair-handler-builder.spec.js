@@ -33,7 +33,7 @@ describe('actions', () => {
       expect(dialog.ask).to.be.calledWith(
         app,
         {
-          speech: strings.first,
+          speech: strings[0].speech,
           reprompt,
           suggestions,
         }
@@ -47,7 +47,7 @@ describe('actions', () => {
       expect(dialog.ask).to.be.calledWith(
         app,
         {
-          speech: strings.reprompt.replace('${reprompt}', reprompt),
+          speech: strings[1].speech.replace('{{reprompt}}', reprompt),
           reprompt,
           suggestions,
         }
@@ -61,9 +61,7 @@ describe('actions', () => {
       handler(app);
       expect(dialog.tell).to.be.calledWith(
         app,
-        {
-          speech: strings.fallback,
-        }
+        strings[2],
       );
     });
   });
