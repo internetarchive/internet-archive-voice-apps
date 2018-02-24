@@ -1,0 +1,2538 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 36,
+    "params": {
+      "query": "( collection:OfARevolution )",
+      "qin": "(collection:OfARevolution)",
+      "fields": "avg_rating,backup_location,btih,call_number,collection,contributor,coverage,creator,date,description,downloads,external-identifier,foldoutcount,format,genre,headerImage,identifier,imagecount,indexflag,item_size,language,licenseurl,mediatype,members,month,name,noindex,num_reviews,oai_updatedate,publicdate,publisher,related-external-id,reviewdate,rights,scanningcentre,source,stripped_tags,subject,title,type,volume,week,year",
+      "wt": "json",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 658,
+    "start": 0,
+    "docs": [
+      {
+        "backup_location": "ia903600_5",
+        "btih": "3531199fbb02c4ac06e4cd09ef3b97a7aae54f05",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbus, OH",
+        "creator": "Of A Revolution",
+        "date": "2000-09-27T00:00:00Z",
+        "description": "Disc One: 01: About Mr. Brown 02: City On Down 03: Naked 04: King Of The Thing 05: Favorite Book Of Poetry 06: Untitled 07: Black Rock Disc Two: 01: Hey Girl * 02: That Was A Crazy Game Of Poker * 03: Delicate Few * 04: If Only She Knew * 05: Get Away *",
+        "downloads": 529,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar00-09-27",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 872622555,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2004-03-08T18:18:23Z",
+          "2004-03-08T18:18:23Z",
+          "2006-04-22T00:00:22Z",
+          "2017-04-07T01:56:07Z"
+        ],
+        "publicdate": "2004-03-08T18:18:23Z",
+        "publisher": [
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)",
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)"
+        ],
+        "source": "Audio Technica AT853 Cardiods -> BRBox @ 16Hz -> Zefiro InBox -> Sony POC-DA12P -> Sony TCD-D7",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at South Oval - Ohio State University on 2000-09-27",
+        "type": "sound",
+        "week": 1,
+        "year": "2000"
+      },
+      {
+        "avg_rating": "4.00",
+        "backup_location": "ia903600_4",
+        "btih": "16bfe89f4182e6e950a5dec295ca9e154caea694",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Tuscon, AZ",
+        "creator": "Of A Revolution",
+        "date": "2002-11-01T00:00:00Z",
+        "description": "01: Introduction 02: Ladanday 03: About Mr. Brown 04: Black Rock 05: Hey Girl 06: Whose Chariot 07: Conquering Fools 08: On Top The Cage 09: Dara Meyod 10: Night Shift -> Stir It Up Disc Two: 01: Mr. Moon 02: Anyway 03: City On Down 04: Delicate Few 05: She Gone -> 06: That Was A Crazy Game Of Poker 07: Short A Try 08: Missing Pieces",
+        "downloads": 430,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-11-01.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1206430508,
+        "mediatype": "etree",
+        "month": 2,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2003-03-09T10:39:03Z",
+          "2003-03-09T10:39:03Z",
+          "2004-05-22T18:33:51Z",
+          "2017-04-07T01:16:36Z",
+          "2006-03-28T04:30:00Z"
+        ],
+        "publicdate": "2003-03-09T10:39:03Z",
+        "publisher": [
+          "O.A.R.",
+          "O.A.R."
+        ],
+        "reviewdate": "2006-03-28T04:30:00Z",
+        "source": "SBD -> Tascam DA-20mkII",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Rialto Theater on 2002-11-01",
+        "type": "sound",
+        "week": 2,
+        "year": "2002"
+      },
+      {
+        "backup_location": "ia903600_24",
+        "btih": "8f4a99e6452af1411b6ef468b07ee33b66d1e777",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Bloomington, IL",
+        "creator": "Of A Revolution",
+        "date": "2006-10-19T00:00:00Z",
+        "description": "Disc 1: 01: Intro 02: Lay Down 03: Wonderful Day 04: Black Rock 05: James 06: Dinner Last Night 07: About An Hour Ago 08: Delicate Few 09: Something Coming Over 10: Heard The World 11: Hey Girl Total: 63:52 Disc 2: 01: Mr. Moon 02: Anyway 03: Love And Memories 04: 52-50 ENCORE 05: Short A Try # 06: That Was A Crazy Game Of Poker Total: 51:33",
+        "downloads": 631,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2006-10-19.sbd.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 902498960,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2006-10-31T00:29:41Z",
+          "2006-10-31T03:16:15Z",
+          "2006-10-31T03:27:16Z",
+          "2006-10-31T03:43:01Z",
+          "2006-10-31T06:59:44Z",
+          "2006-10-31T15:33:17Z",
+          "2016-06-02T01:19:40Z"
+        ],
+        "publicdate": "2006-10-31T03:16:15Z",
+        "publisher": "Reid Eickhorst",
+        "source": "SBD > Creative Nomad Jukebox 3",
+        "title": "Of A Revolution Live at U.S. Cellular Coliseum on 2006-10-19",
+        "type": "sound",
+        "week": 1,
+        "year": "2006"
+      },
+      {
+        "backup_location": "ia903600_20",
+        "btih": "60255e2f8e223c7c5b3d965765d40200fba3b00a",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "George, WA",
+        "creator": "Of A Revolution",
+        "date": "2006-09-03T00:00:00Z",
+        "description": "01: Intro - 03:43.29 02: Black Rock - 07:57.56 03: About An Hour Ago - 06:05.24 04: Whose Chariot? - 08:12.30 05: Night Shift * - 05:17.05 06: That Was A Crazy Game Of Poker - 13:13.08 07: Sunday Bloody Sunday - 05:26.28",
+        "downloads": 2294,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2006-09-03.km140.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 423276227,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2006-09-05T04:42:09Z",
+          "2006-09-05T04:44:25Z",
+          "2006-09-05T04:47:24Z",
+          "2017-04-07T01:24:30Z"
+        ],
+        "publicdate": "2006-09-05T04:44:25Z",
+        "publisher": "Mike Vernal",
+        "source": "Neumann KM140s > Lunatec V2 > Sound Devices 722 (24/44.1)",
+        "title": "Of A Revolution Live at Gorge Amphitheatre on 2006-09-03",
+        "type": "sound",
+        "week": 0,
+        "year": "2006"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "fe92309948bc1b3406c79a15aa4b5755e536223f",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Gainesville, Florida",
+        "creator": "Of A Revolution",
+        "date": "2002-04-23T00:00:00Z",
+        "description": "Disk 1: 01. Introduction 02. The Wanderer 03. About Mr. Brown 04. Delicate Few** 05. On Top Da Cage** 06. Nightshift 07. 59th Street Bridge Song 08. City On Down (With or Without You outro) 09. Hold On True 10. Anyway 11. Missing Pieces Disk 2: 01. Intro 02. To Zion Goes I 03. Get Away 04. Hey Girl 05. About an Hour Ago 06. That Was a Crazy Game of Poker** 07. Conquering Fools",
+        "downloads": 262,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-04-23.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1196759236,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-05-01T06:46:36Z",
+          "2004-05-01T11:28:19Z",
+          "2004-05-01T06:50:54Z",
+          "2017-04-07T01:55:58Z"
+        ],
+        "publicdate": "2004-05-01T11:28:19Z",
+        "publisher": [
+          "Elana Gershuny",
+          "Elana Gershuny"
+        ],
+        "source": "Audio Technica AT853 Cardiods (point at stack) -> Sharp MD MT-15",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at The Palace on 2002-04-23",
+        "type": "sound",
+        "week": 1,
+        "year": "2002"
+      },
+      {
+        "backup_location": "ia903600_4",
+        "btih": "3f866b9b2b85d3a144d189b9da6027d1f8737846",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Green Bay, WI",
+        "creator": "Of A Revolution",
+        "date": "2003-03-25T00:00:00Z",
+        "description": "Disc 1 01: Intro 02: Blackbird & 03: Anyway 04: Conquering Fools D'yer Mak'er 05: Mr. Moon 06: City On Down 07: So Moved On 08: Road Outside Columbus 09: Missing Pieces 10: When Can I Go Home 11: Whose Chariot Disc 2 01: I Feel Home & 02: Night Shift 03: Untitled 04: That Was A Crazy Game Of Poker -> No Woman No Cry 05: Dareh Meyod 06: Hey Girl 07: Sunday Bloody Sunday",
+        "downloads": 918,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-03-25.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1158336503,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2003-04-10T10:57:03Z",
+          "2003-04-10T10:57:03Z",
+          "2004-02-09T05:58:47Z",
+          "2017-04-07T01:16:52Z"
+        ],
+        "publicdate": "2003-04-10T10:57:03Z",
+        "publisher": [
+          "Ed Paff (edpaff_jr@oarsa.org)",
+          "Ed Paff (edpaff_jr@oarsa.org)"
+        ],
+        "source": "Audio Technica AT853 Cardiods -> BRBox @ 69Hz -> Creative Nomad Jukebox 3",
+        "stripped_tags": "-",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Riverside Ballroom on 2003-03-25",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "avg_rating": "4.00",
+        "backup_location": "ia903600_4",
+        "btih": "5a19d8898bdb7e0a40ffe0e9479a788389d6e416",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Ashland, OH",
+        "creator": "Of A Revolution",
+        "date": "2003-03-29T00:00:00Z",
+        "description": "Disc One: 01. Intro 02. Revisited 03. Hold On True 04. About An Hour Ago 05. Mr. Moon 06. Anyway $ 07. On Top The Cage (Black Outro) * 08. Ran Away To The Top Of The World Today -> 09. Exodus (Bob Marley Cover) Disc Two: 01. Hey Girl 02. Coal Miner # 03. Road Outside Columbus 04. About Mr. Brown 05. Blackbird (Beatles Cover) & 06. I Feel Home & 07. That Was A Crazy Game Of Poker Encore: 08. Sunday Bloody Sunday (U2 Cover)",
+        "downloads": 701,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Flac",
+          "Flac FingerPrint",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-03-29.tangus.SBD.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 945427828,
+        "mediatype": "etree",
+        "month": 0,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2003-07-14T13:27:49Z",
+          "2003-07-14T13:27:49Z",
+          "2003-07-15T08:35:56Z",
+          "2016-05-27T01:53:28Z",
+          "2003-07-15T13:37:37Z"
+        ],
+        "publicdate": "2003-07-14T13:27:49Z",
+        "publisher": [
+          "Robert Klabik (tangus999@speakeasy.net)",
+          "Robert Klabik (tangus999@speakeasy.net)"
+        ],
+        "reviewdate": "2003-07-15T13:37:37Z",
+        "source": "SBD > Henry Engineering Patchbox > MH Mobile 2882+DSP > Macintosh G4 Pismo > P3.11 (24/44.1)",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Ashland University (Kates Gym) on 2003-03-29",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903601_27",
+        "btih": "9dd6adad40a25be0026754728d39c962ad9b24e7",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Cleveland, OH",
+        "creator": "Of A Revolution",
+        "date": "2007-08-05T00:00:00Z",
+        "description": "Set 1: 1. Love And Memories 2. Program Director 3. Delicate Few 4. Road Outside Columbus 5. The Wanderer 6. About An Hour Ago 7. Daylight The Dog -> 8. Living In The End 9. Toy Store 10. Black Rock (Bongo Intro / Blood Outro) 11. The Stranger 12. Lay Down 13. Big Easy * 14. Night Shift 15. Hey Girl Encore: 16. Heard The World 17. That Was A Crazy Game Of Poker",
+        "downloads": 1570,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Flac",
+          "Flac FingerPrint",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "ofarevolution2007-08-05.sbd.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 905117824,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2008-03-13T10:08:18Z",
+          "2008-03-13T10:08:42Z",
+          "2008-03-13T10:38:10Z",
+          "2008-03-13T11:00:31Z",
+          "2008-04-02T14:32:08Z",
+          "2010-03-02T19:42:50Z",
+          "2016-06-24T07:28:16Z"
+        ],
+        "publicdate": "2008-03-13T10:08:42Z",
+        "publisher": "Joel Hawksley",
+        "source": "SBD -> Henry Engineering Patchbox -> Sony MD",
+        "title": "Of A Revolution Live at Time Warner Amphitheater on 2007-08-05",
+        "type": "sound",
+        "week": 0,
+        "year": "2007"
+      },
+      {
+        "avg_rating": "5.00",
+        "backup_location": "ia903600_9",
+        "btih": "401e4b6f06a806465f2445a8a594920c5e892ee1",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Chicago, IL",
+        "creator": "Of A Revolution",
+        "date": "2005-08-20T00:00:00Z",
+        "description": "Disc 1 01: Intro 02: The Wanderer 03: Old Man Time 04: Love And Memories $ 05: King Of The Thing 06: The Stranger 07: Wonderful Day 08: Anyway # 09: Lay Down 10: Heard The World 11: On Top The Cage % 12: Mr. Moon Disc 2 01: Devil's Intro -> 02: That Was A Crazy Game Of Poker 03: The Way You Do The Things You Do @ 04: Hey Girl 05: Long Day Intro -> 06: Black Rock 07: Encore Break 08: Dakota & 09: City On Down 10: You Can't Always Get What You Want ^",
+        "downloads": 3474,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2005-08-20.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 994954374,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2005-08-24T16:10:11Z",
+          "2005-08-24T21:57:17Z",
+          "2006-04-17T00:02:01Z",
+          "2006-08-08T21:13:23Z",
+          "2017-04-07T01:29:31Z",
+          "2005-08-25T11:08:01Z"
+        ],
+        "publicdate": "2005-08-24T21:57:17Z",
+        "publisher": [
+          "Ed Paff (edpaff_jr@oarsa.org)",
+          "Ed Paff (edpaff_jr@oarsa.org)"
+        ],
+        "reviewdate": "2005-08-25T11:08:01Z",
+        "source": "SP-CMC-4 Cardiods -> SP-SPSB-1 -> Creative Nomad Jukebox 3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Charter One Pavilion At Northerly Island on 2005-08-20",
+        "type": "sound",
+        "week": 3,
+        "year": "2005"
+      },
+      {
+        "backup_location": "ia903600_6",
+        "btih": "76f86952db35e9a202576fd0c4cb18e88821006b",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Kansas City, MO",
+        "creator": "Of A Revolution",
+        "date": "2004-07-26T00:00:00Z",
+        "description": "Disc 1 01: Intro 02: Windy City Man 03: Risen 04: So Moved On 05: King Of The Thing 06: Anyway 07: Patiently 08: Mr. Moon 09: Delicate Few Disc 2 01: Intro 02: Lay Down 03: Release 04: Hey Girl 05: Dareh Meyod 06: That Was A Crazy Game Of Poker # 07: Sunday Bloody Sunday $",
+        "downloads": 5835,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-07-26.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 851251035,
+        "mediatype": "etree",
+        "month": 9,
+        "oai_updatedate": [
+          "2004-07-28T04:53:57Z",
+          "2004-07-28T10:44:34Z",
+          "2004-08-01T13:14:35Z",
+          "2007-02-13T17:58:54Z",
+          "2017-04-07T00:44:40Z"
+        ],
+        "publicdate": "2004-07-28T10:44:34Z",
+        "publisher": [
+          "Ed Paff (edpaff_jr@oarsa.org)",
+          "Ed Paff (edpaff_jr@oarsa.org)"
+        ],
+        "source": "Audio Technica AT853 Cardiods -> BRBox @ 95Hz -> Creative Nomad Jukebox 3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at City Market on 2004-07-26",
+        "type": "sound",
+        "week": 1,
+        "year": "2004"
+      },
+      {
+        "avg_rating": "5.00",
+        "backup_location": "ia903600_4",
+        "btih": "03fddfc3c6292e7e5844262015f953ed7b8f2f17",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Worcester, MA",
+        "creator": "Of A Revolution",
+        "date": "2003-11-24T00:00:00Z",
+        "description": "01. Intro 02. Wanderer 03. Someone In The Road 04. Revisited 05. Old Man Time 06. City On Down 07. Ran Away To The Top Of The World Today 08. Here's To You 09. Right On Time 10. Toy Store 01. Delicate Few $% 02. Whose Chariot 03. Patiently 04. Hey girl -Encore- 05. Sunday Bloody Sunday ! 06. That Was A Crazy Game Of Poker",
+        "downloads": 911,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-11-24.sbd",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 996312377,
+        "mediatype": "etree",
+        "month": 4,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2003-12-29T04:04:52Z",
+          "2003-12-29T04:04:52Z",
+          "2004-02-17T17:50:23Z",
+          "2017-04-07T01:17:07Z",
+          "2004-01-01T21:46:36Z"
+        ],
+        "publicdate": "2003-12-29T04:04:52Z",
+        "publisher": [
+          "Derek Gilbert (dgillyerek@prettytheworld.com)",
+          "Derek Gilbert (dgillyerek@prettytheworld.com)"
+        ],
+        "reviewdate": "2004-01-01T21:46:36Z",
+        "source": "SBD > RCA > MT 770 (line)",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at The Palladium on 2003-11-24",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903600_9",
+        "btih": "b1bab31a6c60624a8fd73c61157d713928fd6421",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Washington, DC",
+        "creator": "Of A Revolution",
+        "date": "2005-07-14T00:00:00Z",
+        "description": "01. Elliott intro with Flounder and Marc 02. Interview 03. I Feel Home 04. Phone Calls 05. More Phone Calls* 06. Heard the World 07. Interview/Calls 08. Risen 09. Conclusion",
+        "downloads": 1951,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2005-07-14.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 398124915,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2005-07-15T03:39:46Z",
+          "2005-07-15T12:45:19Z",
+          "2016-05-20T06:15:12Z"
+        ],
+        "publicdate": "2005-07-15T12:45:19Z",
+        "publisher": [
+          "Jay Klauminzer (jklauminzer@yahoo.com)",
+          "Jay Klauminzer (jklauminzer@yahoo.com)"
+        ],
+        "source": "FM -> Pioneer VSX-D514 -> JB3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Elliott in the Morning Radio Show on 2005-07-14",
+        "type": "sound",
+        "week": 1,
+        "year": "2005"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "9199e154cc2032d68d70e880bd175e65e44c96b3",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Birmingham, AL",
+        "creator": "Of A Revolution",
+        "date": "2003-07-26T00:00:00Z",
+        "description": "01: Revisited 02: Destination 03: City On Down (1st half) -> 04: Delicate Few (2nd half) 05: Mr. Moon* 06: About Mr. Brown 07: On Top The Cage ! 08: Old Man Time 09: Blackbird (Beatles cover) # 10: More Than It Would Seem @ 01: Night Shift 02: Risen* 03: Get Away (1st half) -> 04: Get Away (2nd half) 05: Hey Girl --------------- 06: Sunday, Bloody Sunday (U2 cover) 07: That Was a Crazy Game of Poker -> No Woman, No Cry (Bob Marley cover)",
+        "downloads": 616,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-07-26",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1132367038,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2004-03-02T04:10:04Z",
+          "2004-03-02T04:10:04Z",
+          "2004-03-02T06:42:01Z",
+          "2017-04-07T01:55:23Z"
+        ],
+        "publicdate": "2004-03-02T04:10:04Z",
+        "publisher": [
+          "Matt Roberts (moepanic79@yahoo.com)",
+          "Matt Roberts (moepanic79@yahoo.com)"
+        ],
+        "source": "mic stand in front of the sound board",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Sloss Furnace on 2003-07-26",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "06867f9d4be4bb0604fd8f4508f4701363537392",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Macomb, IL",
+        "creator": "Of A Revolution",
+        "date": "2002-01-22T00:00:00Z",
+        "description": "Hey Girl Untitled About An Hour Ago Black Rock 59th Street Bridge Song(Simon & Garfunkel cover)-> City on Down(With or Without You Outro) I feel Home* Night Shift-> Stir it Up On Top of the Cage Missing Pieces Delicate Few About Mr. Brown That Was a Crazy Game of Poker(So Lonely Outro)",
+        "downloads": 285,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Files Metadata",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-01-22.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 860717875,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2004-02-17T14:12:18Z",
+          "2004-02-17T14:12:18Z",
+          "2004-02-17T17:16:02Z",
+          "2017-04-07T01:55:51Z"
+        ],
+        "publicdate": "2004-02-17T14:12:18Z",
+        "publisher": [
+          "Josh Davis",
+          "Josh Davis"
+        ],
+        "source": "SBD > Sony MZ R37",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Western Hall on 2002-01-22",
+        "type": "sound",
+        "week": 0,
+        "year": "2002"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "793652ce036df5f1209de7d0eb88c6ba683b09ed",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "DeKalb, Illinois",
+        "creator": "Of A Revolution",
+        "date": "2004-02-06T00:00:00Z",
+        "description": "Disc 1: 01. Intro. 02. About Mr. Brown 03. Destination 04. Old Man Time 05. Mr. Moon 06. Right On Time 07. About An Hour Ago 08. Missing Pieces 09. James 10. 52 50 11. Hey Girl Disc 2: 01. Sunday Bloody Sunday 02. Delicate Few 03. That Was A Crazy Game of Poker* 04. Dareh Meyod 05. Wonderful 06. Nightshift",
+        "downloads": 235,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Flac",
+          "Flac FingerPrint",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-02-06.fries.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1051670356,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2004-02-19T23:39:23Z",
+          "2004-02-19T23:39:23Z",
+          "2004-02-20T06:19:51Z",
+          "2016-05-07T13:33:50Z"
+        ],
+        "publicdate": "2004-02-19T23:39:23Z",
+        "publisher": [
+          "Michael Fries (two_step_fan@hotmail.com)",
+          "Michael Fries (two_step_fan@hotmail.com)"
+        ],
+        "source": "SBD -> Henry Engineering Patchbox -> MZ-R50 -> Edirol UA-3 -> Dell Dimension 2400 -> Cool Edit Pro -> CD WAV",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Convocation Center on 2004-02-06",
+        "type": "sound",
+        "week": 0,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_4",
+        "btih": "287f62fe3b0cad4a27e90df8a1eec71810f17d00",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Philadelphia, PA",
+        "creator": "Of A Revolution",
+        "date": "2001-12-07T00:00:00Z",
+        "description": "Disc One: 01: Introduction 02: City On Down 03: About An Hour Ago 04: Nightshift -> Stir It Up 05: Hey Girl 06: Delicate Few * 07: On Top Da Cage * Disc Two: 01: Conquering Fools (D'yer Mak'er) 02: Patiently 03: About Mr. Brown 04: Black Rock 05: Untitled 06: Missing Pieces Disc Three: 01: Feelin' Groovy -> 02: That Was A Crazy Game Of Poker 03: I Feel Home 04: Get Away 05: Whose Chariot",
+        "downloads": 313,
+        "format": [
+          "MovingImage",
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-12-07.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1321280163,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2003-03-07T08:39:04Z",
+          "2003-03-07T08:39:04Z",
+          "2003-03-10T07:02:02Z",
+          "2017-04-07T01:16:47Z"
+        ],
+        "publicdate": "2003-03-07T08:39:04Z",
+        "publisher": [
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)",
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)"
+        ],
+        "source": "Earthworks SR-71 > Stewart BPS-1 > Zefiro InBox > Oade Active Cable > Sony TCD-D7",
+        "stripped_tags": "-",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Electric Factory on 2001-12-07",
+        "type": "sound",
+        "week": 0,
+        "year": "2001"
+      },
+      {
+        "backup_location": "ia903600_6",
+        "btih": "de264ed541b8edd2217a74fe7706f3bb41f8c423",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Sylvania, OH",
+        "creator": "Of A Revolution",
+        "date": "2001-06-21T00:00:00Z",
+        "description": "Disc One: 01: Destination 02: City On Down 03: About Mr. Brown 04: Sail Away 05: Conquering Fools (D'yer Mak'er) 06: Delicate Few $ 07: She Gone # Disc Two: 01: Nightshift -> Stir It Up 02: That Was A Crazy Game Of Poker 03: I Feel Home 04: Naked 05: Hey Girl $ (Louie Louie) 06: Short A Try *",
+        "downloads": 419,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-06-21.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1018831680,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-06-20T17:04:11Z",
+          "2004-06-21T08:40:49Z",
+          "2006-04-13T00:00:25Z",
+          "2011-10-20T18:55:20Z",
+          "2017-04-07T00:44:46Z"
+        ],
+        "publicdate": "2004-06-21T08:40:49Z",
+        "publisher": [
+          "Mike Sarnovsky",
+          "Mike Sarnovsky"
+        ],
+        "source": "SBD - > Sony PCM-M1",
+        "stripped_tags": "-",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Centennial Terrace on 2001-06-21",
+        "type": "sound",
+        "week": 0,
+        "year": "2001"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "debf8898b617cac09732ca4cd606c4ba95931d9a",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbus, Ohio",
+        "creator": "Of A Revolution",
+        "date": "2001-05-25T00:00:00Z",
+        "description": "Disc 1 1. Ladanday# 2. King Of The Thing 3. Night Shift -> 4. Stir It Up (Bob Marley Cover) 5. Wonderful Day 6. Sail Away 7. She Gone * 8. That Was A Crazy Game Of Poker 9. I Feel Home 10. O.A.R chant by crowd",
+        "downloads": 1080,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-05-25.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 558348794,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2004-03-05T03:48:29Z",
+          "2004-03-05T03:48:29Z",
+          "2004-03-05T04:36:47Z",
+          "2011-10-20T18:54:10Z",
+          "2017-04-07T01:55:55Z"
+        ],
+        "publicdate": "2004-03-05T03:48:29Z",
+        "publisher": [
+          "Bob Klabik",
+          "Bob Klabik"
+        ],
+        "source": "SBD + Audio Technic ATR30 cardiod ->RolandED UA-30 (external A/D converter)->",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at The Big Free Concert on 2001-05-25",
+        "type": "sound",
+        "week": 0,
+        "year": "2001"
+      },
+      {
+        "avg_rating": "5.00",
+        "backup_location": "ia903601_0",
+        "btih": "5dcc8eb93b18898b1fd0673125f5699f1cb61092",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Charlottesville, VA",
+        "creator": "Of A Revolution",
+        "date": "2007-05-05T00:00:00Z",
+        "description": "O.A.R. (.....of a revolution.) May 05, 2007 Charlottesville Pavilion - Charlottesville, VA Taper: Mike Sarnovsky (mike@oarfans.com) Source: Neumann km-184s -> Sound Devices 722 Location: FOH / DFC Conversion: Mike Sarnovsky (mike@oarfans.com) Equipment: 722 -> PC -> Wavelab (Dither to 16bit) -> SHN ------------------------------------------------------------ Disc One: 01: 52-50 ! 02: Lay Down 03: Missing Pieces 04: Anyway 05: The Stranger 06: What Ever Happened 07: Old Man Time 08: Black Rock Disc Two: 01: Watching The Detectives * 02: Heard The World 03: Hey Girl 04: Here's To You 05: Love And Memories 06: I Feel Home 07: That Was A Crazy Game Of Poker ------------------------------------------------------------ * - with Andrew Volpe of Ludo on vocals ! - first couple seconds cut",
+        "downloads": 1844,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2007-05-05.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 862421787,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 3,
+        "oai_updatedate": [
+          "2007-05-12T20:00:33Z",
+          "2007-05-12T20:01:24Z",
+          "2007-05-12T20:04:54Z",
+          "2016-06-03T01:00:20Z",
+          "2007-07-29T02:47:48Z"
+        ],
+        "publicdate": "2007-05-12T20:01:24Z",
+        "publisher": "Mike Sarnovsky",
+        "reviewdate": "2007-07-29T02:47:48Z",
+        "source": "Neumann km-184s -> Sound Devices 722",
+        "title": "Of A Revolution Live at Charlottesville Pavilon on 2007-05-05",
+        "type": "sound",
+        "week": 1,
+        "year": "2007"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "b3f06ecb4703f392087c491fd6a4ee68e8a0ace2",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Providence, RI",
+        "creator": "Of A Revolution",
+        "date": "2004-04-19T00:00:00Z",
+        "description": "Intro Risen Revisited Lay Down About Mr. Brown Wonderful Day Release ! Here's To You Delicate Few Anyway * Right on Time Missing Pieces Dareh Meyod Whose Chariot Intro to... > That Was a Crazy Game of Poker Encore: Hey Girl",
+        "downloads": 782,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "OAR2004-04-19.mix",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1064284104,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2004-05-04T10:16:46Z",
+          "2004-05-05T13:19:10Z",
+          "2004-05-04T10:18:20Z",
+          "2017-04-07T01:55:04Z"
+        ],
+        "publicdate": "2004-05-05T13:19:10Z",
+        "publisher": [
+          "Derek Gilbert (dgillyerek@prettytheworld.com)",
+          "Derek Gilbert (dgillyerek@prettytheworld.com)"
+        ],
+        "source": "SBD + AUD Mix",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Lupo's at the Strand on 2004-04-19",
+        "type": "sound",
+        "week": 0,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_6",
+        "btih": "1e04e495545fe6cf46c59dd8ec5944deafd284ae",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Redmond, WA",
+        "creator": "Of A Revolution",
+        "date": "2004-08-25T00:00:00Z",
+        "description": "52-50 City On Down Risen Nasim Joon \u00bb Hey Girl Windy City Man Black Rock Sunday Bloody Sunday ~ That Was A Crazy Game Of Poker \u00bb No Woman No Cry Delicate Few",
+        "downloads": 454,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-08-25-at943.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 596388911,
+        "mediatype": "etree",
+        "month": 3,
+        "oai_updatedate": [
+          "2004-08-28T08:12:20Z",
+          "2004-08-28T15:33:02Z",
+          "2004-10-24T11:07:01Z",
+          "2016-06-20T03:51:27Z"
+        ],
+        "publicdate": "2004-08-28T15:33:02Z",
+        "publisher": [
+          "Coach K(blu666z@hotmail.com)",
+          "Coach K(blu666z@hotmail.com)"
+        ],
+        "source": "AT ES943s(Omni, Split 2') \u00bb UA-5(Oade wmod) \u00bb JB3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Marymoor Amphitheatre on 2004-08-25",
+        "type": "sound",
+        "week": 0,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_7",
+        "btih": "fdebac065282071adbd58ecd2caf32a45ff937c3",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Boston, MA",
+        "creator": "Of A Revolution",
+        "date": "2003-11-12T00:00:00Z",
+        "description": "Intro > About Mr. Brown Night Shift Revisited City On Down James Missing Pieces Mr. Moon Hey Girl Right On Time Anyway Dareh Meyod That Was A Crazy Game Of Poker Delicate Few",
+        "downloads": 423,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-11-12.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 797259143,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2005-01-12T07:58:11Z",
+          "2005-01-14T06:06:24Z",
+          "2005-01-12T18:08:17Z",
+          "2016-05-12T10:53:15Z"
+        ],
+        "publicdate": "2005-01-14T06:06:24Z",
+        "publisher": [
+          "Michael Reilly",
+          "Michael Reilly"
+        ],
+        "source": "SBD > Sony MD MZ-R50",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Conte Forum (BC) on 2003-11-12",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903601_32",
+        "btih": "8ed394ab70b0fa03aca03fffbfb13a093dd0ee89",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "creator": "Of A Revolution",
+        "date": "2008-04-24T00:00:00Z",
+        "description": "Tape is messed up, trying to get it removed.",
+        "downloads": 178,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2008-04-24.oar2008-04-24.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 881465751,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2008-04-28T14:56:31Z",
+          "2008-04-29T00:06:08Z",
+          "2008-04-29T00:09:27Z",
+          "2008-04-29T00:25:16Z",
+          "2008-05-01T00:52:54Z",
+          "2008-05-01T01:11:11Z",
+          "2016-06-01T22:41:08Z"
+        ],
+        "publicdate": "2008-04-29T00:06:08Z",
+        "title": "Of A Revolution Live at do not dl on 2008-04-24",
+        "type": "sound",
+        "week": 0,
+        "year": "2008"
+      },
+      {
+        "avg_rating": "5.00",
+        "backup_location": "ia903600_10",
+        "btih": "56bea9f627d81917c88b246c15a3eb994876c81f",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Boston, MA",
+        "creator": "Of A Revolution",
+        "date": "2005-07-28T00:00:00Z",
+        "description": "01: Intro 02: Wonderful Day 03: Dareh Meyod 04: The Wanderer 05: Old Man Time 06: Heard The World * 07: King Of The Thing 08: About An Hour Ago 09: So Moved On 01: Mr. Moon 02: Untitled 03: That Was A Crazy Game Of Poker (So Lonely) 04: Risen 05: Get Away 06: The Weight * $ 07: Missing Pieces (Lively Up Yourself)",
+        "downloads": 725,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2005-07-28.at853.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 780079019,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2005-10-12T05:47:59Z",
+          "2005-10-12T10:11:33Z",
+          "2016-06-28T19:51:58Z",
+          "2005-10-14T16:58:57Z"
+        ],
+        "publicdate": "2005-10-12T10:11:33Z",
+        "publisher": [
+          "Derek Gilbert (dgillyerek@prettytheworld.com)",
+          "Derek Gilbert (dgillyerek@prettytheworld.com)"
+        ],
+        "reviewdate": "2005-10-14T16:58:57Z",
+        "source": "AT853 > Batbox > JB3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Bank of America Pavilion on 2005-07-28",
+        "type": "sound",
+        "week": 0,
+        "year": "2005"
+      },
+      {
+        "backup_location": "ia903602_12",
+        "btih": "4fe6c10b90f797d1f522d85972665ea866dd12d7",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "George, WA",
+        "creator": "Of A Revolution",
+        "date": "2008-08-30T00:00:00Z",
+        "description": "O.A.R (.....of a revolution.) August 30, 2008 Gorge Amphitheater - George, WA (Supporting Dave Matthews Band) Taper: Mike Sarnovsky (mike@oarfans.com) Source: Neumann km-184s -> Lunatec V3 -> Sound Devices 722 Location: Sec C, Row 11 Conversion: Mike Sarnovsky (mike@oarfans.com) Equipment: 722 -> PC -> Wavelab (Dither to 16bit) -> FLAC ------------------------------------------------------------ Disc One: 01: Introduction By Dave Matthews 02: One Shot 03: Living In The End 04: Black Rock 05: War Song 06: City On Down 07: One Day 08: Love And Memories 09: With A Little Help From My Friends ------------------------------------------------------------",
+        "downloads": 975,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2008-08-30.oar2008-08-30.km184.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 416148686,
+        "mediatype": "etree",
+        "month": 4,
+        "oai_updatedate": [
+          "2008-09-09T15:45:11Z",
+          "2008-09-09T15:46:14Z",
+          "2008-09-09T15:50:56Z",
+          "2016-05-17T15:37:34Z"
+        ],
+        "publicdate": "2008-09-09T15:46:14Z",
+        "publisher": "Mike Sarnovsky (mike@oarfans.com)",
+        "source": "Neumann km-184s -> Lunatec V3 -> Sound Devices 722",
+        "subject": [
+          "oar",
+          "gorge",
+          "amphitheater",
+          "2008"
+        ],
+        "title": "Of A Revolution Live at Gorge Amphitheater on 2008-08-30",
+        "type": "sound",
+        "week": 0,
+        "year": "2008"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "6a118f05be3dcf8d654649ea7b74252dacfa74bf",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "New Orleans, LA",
+        "creator": "Of A Revolution",
+        "date": "2002-02-23T00:00:00Z",
+        "description": "Letter In My Hand Nightshift -> Stir It Up -> Nightshift Reprise Ladanday On Top The Cage Feelin' Groovy City On Down (With Or Without You) About Mr. Brown Anyway Hey Girl Black Rock I Feel Home That Was A Crazy Game Of Poker (So Lonely) Encore Break e: Untitled e: Wonderful Day",
+        "downloads": 225,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Files Metadata",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-02-23.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1058198310,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2004-02-19T20:09:18Z",
+          "2004-02-19T20:09:18Z",
+          "2004-02-20T04:30:41Z",
+          "2017-04-07T01:56:01Z"
+        ],
+        "publicdate": "2004-02-19T20:09:18Z",
+        "publisher": [
+          "Joe Shambro",
+          "Joe Shambro"
+        ],
+        "source": "Oktava MC012 > DMP2 > ADC20 > D7 XY 110, 10 feet high, section C row J seat 1 (10th row FOB/DFC)",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at McAlister Auditorium - Tulane University on 2002-02-23",
+        "type": "sound",
+        "week": 0,
+        "year": "2002"
+      },
+      {
+        "avg_rating": "5.00",
+        "backup_location": "ia903600_5",
+        "btih": "1a073bd5c1d3648f91b9fe20cd888e46d0c4795d",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Chicago, IL",
+        "creator": "Of A Revolution",
+        "date": "2002-01-18T00:00:00Z",
+        "description": "Disc 1: ------- 1. Intro 2. Anyway $% 3. About Mr. Brown 4. Night Shift $ 5. Destination $ 6. Black *$ 7. City on Down (With or Without You outro) $ 8. Black Rock $ 9. Hey Girl$ 10. Random Talk Disc 2: ------- 1. Conquering Fools $% -> D'yer Mak'er (Led Zepplin Cover)$% 2. On Top The Cage $% 3. Missing Pieces $ 4. Delicate Few $ 5. I Feel Home &$ 6. The 59th Street Bridge Song (Simon and Garfunkel Cover) $ -> That Was A Crazy Game Of Poker (So Lonely Outro)$%# 7. Crowd Before Encore Encore: 8. Someone In The Road 9. Here's To You",
+        "downloads": 840,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Files Metadata",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-01-18.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1263416291,
+        "mediatype": "etree",
+        "month": 0,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2004-02-17T14:04:56Z",
+          "2004-02-17T14:04:56Z",
+          "2004-02-19T07:34:16Z",
+          "2017-04-07T01:55:48Z",
+          "2005-02-25T16:05:56Z"
+        ],
+        "publicdate": "2004-02-17T14:04:56Z",
+        "publisher": [
+          "Michael Fries (two_step_fan@hotmail.com)",
+          "Michael Fries (two_step_fan@hotmail.com)"
+        ],
+        "reviewdate": "2005-02-25T16:05:56Z",
+        "source": "SBD > Tascam DA-20mkII > MZ-R50 (MD) > Edirol UA-3 > USB cable > Sony Vaio FX-150 > Cool Edit Pro > CD Wave > SHN",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at House of Blues on 2002-01-18",
+        "type": "sound",
+        "week": 0,
+        "year": "2002"
+      },
+      {
+        "backup_location": "ia903600_8",
+        "btih": "4494dc99705c53b263c7bb1fe29bb10f17320d66",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "West Lafayette, IN",
+        "creator": "Of A Revolution",
+        "date": "2001-09-22T00:00:00Z",
+        "description": "Disc 1 ------ 01. About Mr. Brown 02. Missing Pieces 03. Destination 04. City On Down 05. She Gone 06. Naked 07. Night Shift -> Stir It Up 08. Hey Girl 09. I Feel Home* Disc 2 ------ 01. Intro 02. Black Rock 03. The 59th Street Bridge Song -> That Was A Crazy Game Of Poker 04. Untitled 05. Conquering Fools 06. Delicate Few",
+        "downloads": 753,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-09-22.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1109948851,
+        "mediatype": "etree",
+        "month": 3,
+        "oai_updatedate": [
+          "2005-04-06T02:15:58Z",
+          "2005-04-06T07:16:39Z",
+          "2011-10-20T18:57:51Z",
+          "2017-04-07T01:02:32Z"
+        ],
+        "publicdate": "2005-04-06T07:16:39Z",
+        "publisher": [
+          "Michael Fries",
+          "Michael Fries"
+        ],
+        "source": "SBD -> MZ R50 -> Edirol UA-3 -> USB cable -> Sony Vaio FX-150 -> Cool Edit Pro -> CD WAV",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Sigma Nu Fraternity, Purdue University on 2001-09-22",
+        "type": "sound",
+        "week": 0,
+        "year": "2001"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "75ebd320d86ec57e99a66b1175f24949ff1e0e97",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Sigma Chi Derby Days - Brodie Plaza - Cincinnati, OH",
+        "creator": "Of A Revolution",
+        "date": "2000-05-06T00:00:00Z",
+        "description": "Disc One: 01: Get Away 02: Hey Girl 03: Black Rock 04: On Top Da Cage 05: Untitled 06: About An Hour Ago 07: Missing Pieces -> Lively Up Yourself Disc Two: 01: Favorite Book Of Poetry 02: City On Down 03: About Mr. Brown 04: King Of The Thing 05: Poker",
+        "downloads": 539,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2000-05-06.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 986725921,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-05-04T04:49:01Z",
+          "2004-05-04T13:43:14Z",
+          "2004-05-04T10:46:07Z",
+          "2017-04-07T01:56:05Z"
+        ],
+        "publicdate": "2004-05-04T13:43:14Z",
+        "publisher": [
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)",
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)"
+        ],
+        "source": "Audio Technica AT853 Cardiods -> BRBox @ 95Hz -> ZeFiro InBox -> Sony POC-DA12P -> Sony TCD-D7",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Brodie Plaza on 2000-05-06",
+        "type": "sound",
+        "week": 0,
+        "year": "2000"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "985ce18b38ae4b534e923fc2f86dec75be3ad268",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Salem, VA",
+        "creator": "Of A Revolution",
+        "date": "2002-09-21T00:00:00Z",
+        "description": "Disk 01: 01- Intro (Anyway) 02- Anyway 03- Louie Louie * > 04- Hey Girl (Hush Little Baby) 05- On Top The Cage 06- Night Shift 07- Dara Meyod 08- City On Down 09- Mr. Moon 10- GetAway 11- Black Rock Disk 02: 54:26.36 01- Delicate Few 02- I Feel Home & 03- Risen 04- The 59th Street Bridge Song # > 05- Crazy Game of Poker > 06- No Woman No Cry @ > 07- Crazy Game of Poker (So Lonely) 08- About An Hour Ago",
+        "downloads": 732,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-09-21.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1072948540,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-04-30T04:15:10Z",
+          "2004-04-30T21:40:38Z",
+          "2004-04-30T13:39:30Z",
+          "2017-04-07T01:55:37Z"
+        ],
+        "publicdate": "2004-04-30T21:40:38Z",
+        "publisher": [
+          "Mike Treon (treon@miketreon.com)",
+          "Mike Treon (treon@miketreon.com)"
+        ],
+        "source": "Earthworks SR77s > BPS-1s > Inbox > D100",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Roanoke College Bast Center on 2002-09-21",
+        "type": "sound",
+        "week": 0,
+        "year": "2002"
+      },
+      {
+        "avg_rating": "3.00",
+        "backup_location": "ia903600_5",
+        "btih": "246d96d1cfde2c48afee9a1af09cd5c36a2c9f93",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbus, OH",
+        "creator": "Of A Revolution",
+        "date": "2004-01-31T00:00:00Z",
+        "description": "Disc 1: 01: Intro 02: I Feel Home @ 03: Road Outside Columbus 04: Wonderful Day 05: Right On Time 06: \"JP Birthday Dedication and Matt Nathanson Story\" 07: Hey Girl 08: James 09: Tragedy In Waiting Disc 2: 01: Dareh Meyod 02: On Top The Cage # 03: That Was A Crazy Game Of Poker No Woman No Cry (Bob Marley) 04: Anyway $ 05: Fool In The Rain (Led Zeppelin) %",
+        "downloads": 1427,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-01-31",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 895768192,
+        "mediatype": "etree",
+        "month": 2,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2004-02-01T19:45:23Z",
+          "2004-02-01T19:45:23Z",
+          "2017-04-07T01:55:11Z",
+          "2004-02-01T20:25:49Z"
+        ],
+        "publicdate": "2004-02-01T19:45:23Z",
+        "publisher": [
+          "Jeff Reifschneider (reifscjm@muohio.edu)",
+          "Jeff Reifschneider (reifscjm@muohio.edu)"
+        ],
+        "reviewdate": "2004-02-01T20:25:49Z",
+        "source": "AT853 mics > Battery Box > Creative Nomad JukeBox 3",
+        "stripped_tags": "--",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Promowest Pavilion on 2004-01-31",
+        "type": "sound",
+        "week": 1,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "de624b2857647af521967ce0f68e00087d266beb",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "San Diego, CA",
+        "creator": "Of A Revolution",
+        "date": "2004-03-04T00:00:00Z",
+        "description": "dareh meyod missing pieces->> lively up yoursel right on time about an hour ago james if only she knew 52-50 about mr brown 59th st. bridge song ->>city on down dakota black rock sunday bloody sunday delicate few - > right foot outro poker->> so lonely outro hey girl",
+        "downloads": 688,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-03-04",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 565619914,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-03-10T00:57:49Z",
+          "2004-03-10T00:57:49Z",
+          "2004-03-10T09:06:37Z",
+          "2016-05-07T16:07:36Z"
+        ],
+        "publicdate": "2004-03-10T00:57:49Z",
+        "publisher": [
+          "Patrick T",
+          "Patrick T"
+        ],
+        "source": "Soundboard--> Minidisc",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at University of San Diego on 2004-03-04",
+        "type": "sound",
+        "week": 1,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_4",
+        "btih": "2d9ab3bdafdcd0ce0d0e6fd1b77c4e42fc521652",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Boston, MA",
+        "creator": "Of A Revolution",
+        "date": "2002-11-23T00:00:00Z",
+        "description": "01: Intro (Start Me Up*) 01:50.341 02: Anyway 04:42.250 03: About Mr. Brown 06:20.896 04: Hold On True 03:50.001 05: Here's To You 07:29.867 06: Louie Louie! > Hey Girl 09:28.242 07: Ladanday 07:05.134 08: Black Rock 07:13.655 09: Mr. Moon 04:21.571 10: The 59th Street Bridge Song@ > 02:44.599 11: City On Down > 03:32.155 12: With Or without You#$ 09:34.545 --------- Disk 1 Total: 68:13.260 Disk 2: 01: Tonight 07:07.572 02: Night Shift 06:20.779 03: I Feel Home%& 09:20.595 04: That Was A Crazy Game Of Poker > No Woman No Cry+ (So Lonely Outro) 17:39.879 --encore-- 05: Jerry and Benj Jam > Missing Pieces 07:54.463 06: Get Away 07:26.943 --------- Disk 2 Total: 55:50.232",
+        "downloads": 801,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-11-23.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1170777442,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2003-03-07T08:47:48Z",
+          "2003-03-07T08:47:48Z",
+          "2003-03-10T07:21:29Z",
+          "2017-04-07T01:16:40Z"
+        ],
+        "publicdate": "2003-03-07T08:47:48Z",
+        "publisher": [
+          "Greg Cram (TriscitMan@thehdtb.com)",
+          "Greg Cram (TriscitMan@thehdtb.com)"
+        ],
+        "source": "Neumann KM184s > MP2 > SBM-1 > Sony D8",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Orpheum Theatre on 2002-11-23",
+        "type": "sound",
+        "week": 0,
+        "year": "2002"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "63b6161d66185982dfd6adb16e08e6f934a50171",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Tacoma, WA",
+        "creator": "Of A Revolution",
+        "date": "2004-03-07T00:00:00Z",
+        "description": "01: Intro 02: Right On Time 03: About an Hour Ago 04: Anyway 05: Destination 06: Dareh Meyod 07: Hey Girl 01: Risen 02: Whose Chariot 03: I Feel Home * 04: That Was a Crazy Game of Poker (Encore) 05: Delicate Few * Marc and Richard",
+        "downloads": 236,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-03-07.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 814417114,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-03-17T07:58:59Z",
+          "2004-03-17T07:58:59Z",
+          "2004-03-22T10:53:00Z",
+          "2016-05-07T16:11:57Z"
+        ],
+        "publicdate": "2004-03-17T07:58:59Z",
+        "publisher": [
+          "DAT -> Fostex D5(Optical) -> m-audio DiO 2496 -> CD Wave 1.93 -> shntool 1.2.2 -> FLAC Frontend 1.7.1 -> .FLAC",
+          "blu666z@hotmail.com"
+        ],
+        "source": "AT ES943_Cs(SP Mod, DIN) -> SP-SPSB-7(69HZ) -> Sony D7(Line-In)",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Memorial Fieldhouse : UPS on 2004-03-07",
+        "type": "sound",
+        "week": 1,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903601_33",
+        "btih": "fe130965ac9e8a501c01bf3e8bb9f058ced441e1",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Aiken, SC",
+        "creator": "Of A Revolution",
+        "date": "2008-04-24T00:00:00Z",
+        "description": "Disc 1 01. Intro 02. Delicate Few 03. Revisted 04. Untitled 05. About an Hour Ago 06. On Top the Cage 07. Hey Girl 08. Heres To You Disc 2 01. One Shot 02. That was a Crazy Game of Poker 03. Missing Pieces 04. Black Rock 05. Anyway* 06. Love and Memories 07. City On Down",
+        "downloads": 1018,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2008-04-24",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 835164866,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2008-05-04T00:59:12Z",
+          "2008-05-04T00:59:36Z",
+          "2008-05-04T01:01:41Z",
+          "2016-06-24T10:13:09Z"
+        ],
+        "publicdate": "2008-05-04T00:59:36Z",
+        "publisher": "Jonathan Hudson",
+        "source": "SP-CMC-4 > SP-SPSB-1 > JB3",
+        "title": "Of A Revolution Live at USCA Convocation Center on 2008-04-24",
+        "type": "sound",
+        "week": 0,
+        "year": "2008"
+      },
+      {
+        "backup_location": "ia903600_6",
+        "btih": "17eb43f1c62781189234eae4c87e47573d287364",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Noblesville, IN",
+        "creator": "Of A Revolution",
+        "date": "2004-06-21T00:00:00Z",
+        "description": "01: Introduction By Dave Matthews 02: Windy City Man 03: Missing Pieces 04: About Mr. Brown 05: So Moved On 06: Sunday Bloody Sunday 07: That Was A Crazy Game Of Poker 08: Delicate Few (2nd Half)",
+        "downloads": 700,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-06-21.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 442083176,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2004-06-24T10:08:37Z",
+          "2004-06-25T07:23:15Z",
+          "2004-06-25T06:33:01Z",
+          "2017-04-07T00:44:36Z"
+        ],
+        "publicdate": "2004-06-25T07:23:15Z",
+        "publisher": [
+          "Mike Sarnovsky (mike@oarfans.com) & Brandon Weaver",
+          "Mike Sarnovsky (mike@oarfans.com) & Brandon Weaver"
+        ],
+        "source": "Neumann km-184s -> Sound Devices MP-2 -> Oade Modified Sony SBM-1 ->",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Verizon Wireless Amphitheatre on 2004-06-21",
+        "type": "sound",
+        "week": 0,
+        "year": "2004"
+      },
+      {
+        "backup_location": "ia903600_4",
+        "btih": "11c09b00213076dbfc9cf20249acf10d1ad9047d",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbia, MO",
+        "creator": "Of A Revolution",
+        "date": "2003-08-02T00:00:00Z",
+        "description": "Disc 01: -------- 01. Intro [02:02] 02. The Wanderer [07:21] 03. If Only She Knew [06:49] 04. Conquering Fools [07:16] 05. Old Man Time [05:01] 06. Untitled [06:02] 07. Mr. Moon [07:31] 08. Get Away [07:17] 09. More Than It Would Seem*[05:13] 10. Tiny Dancer* [04:21] Disc Total [58:53] Disc 02: -------- 01. Hey Girl [10:53] 02. James [05:51] 03. Risen [06:18] 04. City On Down > [03:26] 05. Delicate Few [08:53] 06. Revisited [07:29] 07. Sunday Bloody Sunday [06:06] 08. E: Crazy Game of Poker [09:57] 09. No Woman No Cry [06:30] Disc Total [65:23]",
+        "downloads": 764,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3",
+          "XML"
+        ],
+        "identifier": "oar2003-08-02",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1098099417,
+        "mediatype": "etree",
+        "month": 0,
+        "oai_updatedate": [
+          "2003-08-06T12:39:30Z",
+          "2003-08-06T12:39:30Z",
+          "2006-01-05T07:04:33Z",
+          "2017-04-07T01:17:21Z"
+        ],
+        "publicdate": "2003-08-06T12:39:30Z",
+        "publisher": [
+          "Joe Shambro",
+          "Joe Shambro"
+        ],
+        "source": "EW SR-77 > Edirol UA-5 > RCA Out > M1",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at The Blue Note on 2003-08-02",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "e51bfe52f1e8abc5ace9a3479e071b8ee987ff09",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Denver, CO",
+        "creator": "Of A Revolution",
+        "date": "2002-01-29T00:00:00Z",
+        "description": "Disc One: 01: About An Hour Ago 02: Black Rock 03: To Zion Goes I 04: Untitled 05: Anyway 06: Delicate Few 07: Hey Girl 08: Ran Away To The Top Of The World Away -> 09: Exodus Disc Two: 01: About Mr. Brown 02: Whose Chariot 03: Feelin' Groovy -> 04: City On Down 05: I Feel Home 06: That Was A Crazy Game Of Poker 07: Nightshift",
+        "downloads": 449,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2002-01-29.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1002688960,
+        "mediatype": "etree",
+        "month": 8,
+        "oai_updatedate": [
+          "2004-02-18T18:43:57Z",
+          "2004-02-18T18:43:57Z",
+          "2004-02-19T07:35:07Z",
+          "2017-04-07T01:56:02Z"
+        ],
+        "publicdate": "2004-02-18T18:43:57Z",
+        "publisher": [
+          "O.A.R.",
+          "O.A.R."
+        ],
+        "source": "SBD > Tascam DA-20mkII",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Gothic Theatre on 2002-01-29",
+        "type": "sound",
+        "week": 1,
+        "year": "2002"
+      },
+      {
+        "avg_rating": "0",
+        "backup_location": "ia903600_19",
+        "btih": "2d2b47de18eed0263009a2d6d74c1d9415ed58bd",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Dallas, TX",
+        "creator": "Of A Revolution",
+        "date": "2006-08-19T00:00:00Z",
+        "description": "01: Introduction By Dave Matthews 02: Love And Memories 03: Dareh Meyod 04: Lay Down 05: Risen 06: About An Hour Ago 07: Heard The World 08: Anyway 09: 52 - 50",
+        "downloads": 388,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2006-08-19.km184",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 401844521,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2006-08-22T18:40:45Z",
+          "2006-08-22T18:41:17Z",
+          "2006-08-22T18:42:41Z",
+          "2017-04-07T00:23:20Z",
+          "2008-04-01T02:36:12Z"
+        ],
+        "publicdate": "2006-08-22T18:41:17Z",
+        "publisher": "Mike Sarnovsky",
+        "reviewdate": "2008-04-01T02:36:12Z",
+        "source": "Neumann km-184s -> Sound Devices 722",
+        "title": "Of A Revolution Live at Smirnoff Music Center on 2006-08-19",
+        "type": "sound",
+        "week": 1,
+        "year": "2006"
+      },
+      {
+        "backup_location": "ia903603_0",
+        "btih": "a96997e65cdf98d95f9a8c37ddd98fcc33e666ef",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Vail, CO",
+        "creator": "Of A Revolution",
+        "date": "2009-04-19T00:00:00Z",
+        "description": "Disc 1: 49:51 01: Intro 01:02 02: Night Shift 04:08 03: This Town 04:19 04: Risen 04:40 05: Hey Girl 08:00 06: Delicate Few 09:05 07: About An Hour Ago 06:06 08: Love And Memories 05:05 09: Untitled 07:26 Disc 2: 48:39 01: Intro 00:38 02: With A Little Help From My Friends 06:51 03: Lay Down 06:28 04: Shattered (Turn The Car Around) 05:39 05: War Song 08:12 06: About Mr. Brown 07:23 Encore: 07: That Was A Crazy Game Of Poker 13:28",
+        "downloads": 956,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Flac FingerPrint",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2009-04-19.flac16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 746671742,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2009-04-22T00:37:15Z",
+          "2009-04-22T00:40:14Z",
+          "2009-04-22T00:43:41Z",
+          "2016-05-25T01:45:00Z"
+        ],
+        "publicdate": "2009-04-22T00:40:14Z",
+        "publisher": "Ed Paff (edpaff_jr@oarsa.org)",
+        "source": "SP-CMC-4 Cardiods -> SP-SPSB-1 @ 69Hz -> Creative Nomad JB3",
+        "title": "Of A Revolution Live at Spring Back To Vail - International Bridge in Vail Village on 2009-04-19",
+        "type": "sound",
+        "week": 0,
+        "year": "2009"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "27682bec1d91599dca44c07c539d79b9221af2c8",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Cincinnati, OH",
+        "creator": "Of A Revolution",
+        "date": "2001-10-19T00:00:00Z",
+        "description": "01: Dareh Meyod ! 02: If Only She Knew 03: City On Down # 04: Conquering Fools (D'yer Mak'er) 05: On Top Da Cage * # 06: Delicate Few 07: Hey Girl 08: Untitled Disc Two: 01: Missing Pieces -> Lively Up Yourself $ 02: Anyway 03: About Mr. Brown 04: I Feel Home 05: Feelin' Groovy -> That Was A Crazy Game Of Poker # 06: Destination",
+        "downloads": 257,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-10-19.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1206822679,
+        "mediatype": "etree",
+        "month": 2,
+        "oai_updatedate": [
+          "2004-04-30T13:21:54Z",
+          "2004-05-02T01:33:29Z",
+          "2004-05-07T23:00:16Z",
+          "2017-04-07T01:56:10Z"
+        ],
+        "publicdate": "2004-05-02T01:33:29Z",
+        "publisher": [
+          "O.A.R.",
+          "O.A.R."
+        ],
+        "source": "Earthworks SR-71 > Stewart BPS-1 > Zefiro InBox > Oade Active Cable > Sony TCD-D7",
+        "stripped_tags": "-",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Bogarts on 2001-10-19",
+        "type": "sound",
+        "week": 0,
+        "year": "2001"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "96de4f3e390f7e5c983da984cef1056914cd0a80",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Chicago, IL",
+        "creator": "Of A Revolution",
+        "date": "2001-02-04T00:00:00Z",
+        "description": "Disc One: 01. Intro 02. The 59th Street Bridge Song (Feelin' Groovy) -> 03. City On Down 04. King of the Thing 05. Nightshift -> Stir it Up 06. Wonderful Day 07. About Mr. Brown 08. About An Hour Ago Disc Two: 01. Delicate Few 02. Hey Girl* 03. Patiently 04. Untitled 05. If Only She Knew 06. Crazy Game of Poker 07. Favorite Book of Poetry",
+        "downloads": 827,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2001-02-04.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1021629493,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2004-04-28T18:36:32Z",
+          "2004-04-30T08:02:37Z",
+          "2004-04-30T04:44:47Z",
+          "2011-10-20T18:50:00Z",
+          "2017-04-07T01:55:57Z"
+        ],
+        "publicdate": "2004-04-30T08:02:37Z",
+        "publisher": [
+          "Michael Fries",
+          "Michael Fries"
+        ],
+        "source": "SBD patch -> Jerry's MD (daisy chained) -> Sony MZ-R50 (mini-disc)",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at House of Blues on 2001-02-04",
+        "type": "sound",
+        "week": 1,
+        "year": "2001"
+      },
+      {
+        "backup_location": "ia903600_5",
+        "btih": "ec1ed0afb3409ca4fd53d27503600cbfee5401c4",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbus, OH",
+        "creator": "Of A Revolution",
+        "date": "2000-05-19T00:00:00Z",
+        "description": "Disc One: 01: Intro 02: Hey Girl 03: Black Rock 04: Untitled 05: On Top Da cage 06: King of the Thing Disc Two: 01: City on Down 02: Delicate Few 03: That Was a Crazy Game of Poker 04: Get Away 05: Naked",
+        "downloads": 595,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar00-05-19.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 820883993,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2004-03-08T18:08:01Z",
+          "2004-03-08T18:08:01Z",
+          "2006-04-18T12:04:41Z",
+          "2017-04-07T01:56:06Z"
+        ],
+        "publicdate": "2004-03-08T18:08:01Z",
+        "publisher": [
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)",
+          "Mike Sarnovsky (sarnovsky.4@osu.edu)"
+        ],
+        "source": "Audio Technica AT853 Cardiods -> BRBox @ 107Hz -> Zefiro InBox -> Sony POC-DA12P -> Sony TCD-D7",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Springfest, OSU Campus on 2000-05-19",
+        "type": "sound",
+        "week": 1,
+        "year": "2000"
+      },
+      {
+        "avg_rating": "3.67",
+        "backup_location": "ia903600_8",
+        "btih": "63a12f4197bfbaa5cd301da8ba4aa48c6254d50f",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Milwaukee, WI",
+        "creator": "Of A Revolution",
+        "date": "2005-03-24T00:00:00Z",
+        "description": "Disc 1 01 - Intro 02 - About Mr. Brown 03 - About an Hour Ago 04 - 52-50 05 - Intro To....> 06 - Nightshift 07 - So Moved On 08 - Untitled 09 - Long Day Intro.... > 10 - Black Rock 11 - Intro To.... > 12 - Landanday 13 - James Disc 2 01 - Here's To You 02 - Get Away (Happy Birthday) 03 - Lay Down 04 - I Feel Home # 05 - (Nasim Joon) > 06 - Hey Girl (Marley Intro/Hush Little Baby Outro) Encore: 07 - Intro To....> 08 - That Was A Crazy Game of Poker",
+        "downloads": 1473,
+        "format": [
+          "MovingImage",
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2005-03-24.at853",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1079706375,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 3,
+        "oai_updatedate": [
+          "2005-03-26T01:48:32Z",
+          "2005-03-26T08:40:02Z",
+          "2005-03-26T09:35:31Z",
+          "2016-06-05T12:45:56Z",
+          "2005-03-30T15:36:35Z"
+        ],
+        "publicdate": "2005-03-26T08:40:02Z",
+        "publisher": [
+          "Chris Drews (laststop40@hotmail.com)",
+          "Chris Drews (laststop40@hotmail.com)"
+        ],
+        "reviewdate": "2005-03-30T15:36:35Z",
+        "source": "at853s > Battery Box > AD-20 > D8",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at The Eagles Ballroom on 2005-03-24",
+        "type": "sound",
+        "week": 0,
+        "year": "2005"
+      },
+      {
+        "avg_rating": "3.00",
+        "backup_location": "ia903600_5",
+        "btih": "f6cd7dd1d9355951ced600363500be13b6e2f491",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Boston, MA",
+        "creator": "Of A Revolution",
+        "date": "2004-02-13T00:00:00Z",
+        "description": "Disc One: 01: Introduction 02: Dareh Meyod 03: Someone In The Road 04: Get Away 05: Right On Time 06: Here's To You 07: Hey Girl Disc Two: 01: Sunday Bloody Sunday 02: That Was A Crazy Game Of Poker % 03: Night Shift 04: Anyway *",
+        "downloads": 608,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "Unknown",
+          "VBR MP3"
+        ],
+        "identifier": "oar2004-02-13.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 851102855,
+        "mediatype": "etree",
+        "month": 1,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2004-03-04T03:51:05Z",
+          "2004-03-04T03:51:05Z",
+          "2004-03-09T11:08:47Z",
+          "2017-04-07T01:55:12Z",
+          "2005-01-06T22:23:08Z"
+        ],
+        "publicdate": "2004-03-04T03:51:05Z",
+        "publisher": [
+          "Aaron Liber (aaron@oarfans.com)",
+          "Aaron Liber (aaron@oarfans.com)"
+        ],
+        "reviewdate": "2005-01-06T22:23:08Z",
+        "source": "SBD -> DAT",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Orpheum Theater on 2004-02-13",
+        "type": "sound",
+        "week": 0,
+        "year": "2004"
+      },
+      {
+        "avg_rating": "1.00",
+        "backup_location": "ia903600_4",
+        "btih": "e5a7630de83c369d2066a142aa520d2aaac6009b",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Eugene, Oregon",
+        "creator": "Of A Revolution",
+        "date": "2003-04-16T00:00:00Z",
+        "description": "Disc One: 01: Introduction 02: The Wanderer 03: If Only She Knew 04: Anyway 05: Mr. Moon 06: Get Away 07: Destination 08: About Mr. Brown 09: The 59th Street Bride Song (Feelin' Groovy) (Simon and Garfunkel cover) -> 10: City On Down 11: Someone In The Road Disc Two: 01: I Feel Home 02: Delicate Few 03: That Was A Crazy Game Of Poker -> 04: No Woman No Cry (Bob Marley cover) 05: Hey Girl 06: Sunday, Bloody Sunday (U2 cover)",
+        "downloads": 348,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-04-16",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1085058598,
+        "mediatype": "etree",
+        "month": 0,
+        "num_reviews": 1,
+        "oai_updatedate": [
+          "2003-05-16T16:53:50Z",
+          "2003-05-16T16:53:50Z",
+          "2003-05-16T18:47:47Z",
+          "2017-04-07T01:16:50Z",
+          "2003-10-01T21:04:13Z"
+        ],
+        "publicdate": "2003-05-16T16:53:50Z",
+        "publisher": [
+          "Jake Pommier (jacobpommier@wbc.edu)",
+          "Jake Pommier (jacobpommier@wbc.edu)"
+        ],
+        "reviewdate": "2003-10-01T21:04:13Z",
+        "source": "Unknown",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at WOW Hall on 2003-04-16",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "avg_rating": "4.60",
+        "backup_location": "ia903600_4",
+        "btih": "62c285af75608d8be8bfbbee85a1c805f01ab65a",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Crawfordsville, IN",
+        "creator": "Of A Revolution",
+        "date": "2003-03-28T00:00:00Z",
+        "description": "Disc One: 01: She Gone 02: If Only She Knew 03: Anyway * 04: Get Away * 05: Patiently 06: The 59th Street Bridge Song -> 07: City On Down 08: Old Man Time Disc Two: 01: Hey Girl 02: Blackbird 03: I Feel Home 04: About Mr. Brown 05: Coal Miner # 06: That Was A Crazy Game Of Poker No Woman No Cry % 07: Night Shift 08: Sunday Bloody Sunday",
+        "downloads": 2744,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-03-28",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 966447137,
+        "mediatype": "etree",
+        "month": 3,
+        "num_reviews": 5,
+        "oai_updatedate": [
+          "2003-03-29T18:18:14Z",
+          "2003-03-29T18:18:14Z",
+          "2003-03-30T06:53:29Z",
+          "2017-04-07T01:16:53Z",
+          "2004-06-02T19:32:13Z"
+        ],
+        "publicdate": "2003-03-29T18:18:14Z",
+        "publisher": [
+          "Tom Pacyk",
+          "Tom Pacyk"
+        ],
+        "reviewdate": "2004-06-02T19:32:13Z",
+        "source": "Soundboard",
+        "stripped_tags": "-",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Wabash College (Chadwick Court) on 2003-03-28",
+        "type": "sound",
+        "week": 1,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903600_4",
+        "btih": "ff3328faf010afe31ba13d0aca5dd057065b2a11",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Milwaukee, WI",
+        "creator": "Of A Revolution",
+        "date": "2003-03-24T00:00:00Z",
+        "description": "James * Hey Girl Blackbird Risen Here's To You City On Down",
+        "downloads": 511,
+        "format": [
+          "Archive BitTorrent",
+          "Checksums",
+          "Columbia Peaks",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Shorten",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2003-03-24.shnf",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 264569505,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2003-04-08T18:01:07Z",
+          "2003-04-08T18:01:07Z",
+          "2004-02-09T06:00:56Z",
+          "2017-04-07T01:16:44Z"
+        ],
+        "publicdate": "2003-04-08T18:01:07Z",
+        "publisher": [
+          "Ed Paff (edpaff_jr@oarsa.org)",
+          "Ed Paff (edpaff_jr@oarsa.org)"
+        ],
+        "source": "Audio Technica AT853 Cardiods > BRBox @ 69Hz > Creative Nomad Jukebox 3",
+        "subject": "Live concert",
+        "title": "Of A Revolution Live at Exclusive Company on 2003-03-24",
+        "type": "sound",
+        "week": 0,
+        "year": "2003"
+      },
+      {
+        "backup_location": "ia903601_5",
+        "btih": "fcd8bdde4150c21b1d95bff25c9f54f0b2855257",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Morrison, CO",
+        "creator": "Of A Revolution",
+        "date": "2007-07-14T00:00:00Z",
+        "description": "O.A.R. (Of a Revolution) July 14, 2007 Red Rocks Amphitheater Morrison, CO Source: AT-PRO24 -> Sony TCD-D8 (stand @ 10 ft) Location: Center Behind Soundboard/Mixer (SBD hookups were not available) Transfer: Sony TCD-D8 -> audacity-> CDWAV-> FLAC Taper: Chuck Sclafani (sclafani@cornerofgrey-street.com) Transferred by: Chuck Sclafani (sclafani@cornerofgrey-street.com) Disc 01: Total: 57.33 01 - Intro 02 - Love and Memories 03 - Hey Girl 04 - Risen 05 - Untitled 06 - Dareh Meyod 07 - Something Coming Over 08 - I Feel Home* 09 - 52-50 10 - The Downeaster 'Alexa'^ Disc 2: Total: 68.13 01 - Lay Down 02 - Patiently 03 - Whose Chariot 04 - Heard The World 05 - Delicate Few 06 - Black Rock (Bongo Intro/Blood Outro) Encore: 07 - Encore Break 08 - See You Cry~ 09 - That Was A Crazy Game of Poker Notes: * Marc and Richard ^ Billy Joel cover ~ Marc solo Throughout the recording, especially from Something Coming Over forward, you will hear drunken teens screaming like wolves. If only they learned to be quiet around tapers this recording would have been much improved. So we can thank them for killing the recording. Enjoy!",
+        "downloads": 3133,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2007-07-14.at-pro24-tcd-d8.flac",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1097129716,
+        "mediatype": "etree",
+        "month": 4,
+        "oai_updatedate": [
+          "2007-07-26T10:37:59Z",
+          "2007-07-27T00:10:52Z",
+          "2007-07-27T02:01:19Z",
+          "2007-07-29T01:08:41Z",
+          "2016-05-09T03:16:23Z"
+        ],
+        "publicdate": "2007-07-27T00:10:52Z",
+        "publisher": "Chuck Sclafani",
+        "source": "AT-PRO24 -> Sony TCD-D8 (stand @ 10 ft)",
+        "subject": "rock,oar,red rocks",
+        "title": "Of A Revolution Live at Red Rocks Amphitheater on 2007-07-14",
+        "type": "sound",
+        "week": 0,
+        "year": "2007"
+      },
+      {
+        "backup_location": "ia903603_0",
+        "btih": "b5168fde19a62d9e4c2c35acad98fb6a1fc85908",
+        "collection": [
+          "OfARevolution",
+          "etree"
+        ],
+        "coverage": "Columbus, OH",
+        "creator": "Of A Revolution",
+        "date": "2008-08-14T00:00:00Z",
+        "description": "Disc One: 01: Introduction (Ohio State Fight Song) 02: That Was A Crazy Game Of Poker 03: Shattered 04: King Of The Thing 05: This Town 06: Revisited 07: Anyway 08: About An Hour Ago 09: Mr. Moon 10: One Day 11: Lay Down Disc Two: 01: The Fallout 02: Black Rock 03: The Wanderer 04: Fool In The Rain 05: Whatever Happened * 06: Love And Memories 07: Road Outside Columbus 08: War Song 09: 52 - 50",
+        "downloads": 559,
+        "format": [
+          "Archive BitTorrent",
+          "Columbia Peaks",
+          "Essentia High GZ",
+          "Essentia Low GZ",
+          "Flac",
+          "Metadata",
+          "Ogg Vorbis",
+          "PNG",
+          "Spectrogram",
+          "Text",
+          "VBR MP3"
+        ],
+        "identifier": "oar2008-08-14.km184",
+        "indexflag": [
+          "index",
+          "nonoindex"
+        ],
+        "item_size": 1105431144,
+        "mediatype": "etree",
+        "month": 1,
+        "oai_updatedate": [
+          "2009-04-15T14:09:44Z",
+          "2009-04-15T20:02:16Z",
+          "2009-04-15T20:03:37Z",
+          "2009-04-16T15:51:56Z",
+          "2016-05-25T01:50:37Z"
+        ],
+        "publicdate": "2009-04-15T20:02:16Z",
+        "publisher": "Mike Sarnovsky",
+        "source": "Neumann km-184s -> Lunatec V3 -> Sound Devices 722",
+        "title": "Of A Revolution Live at Lifestyle Communuties Pavilion on 2008-08-14",
+        "type": "sound",
+        "week": 0,
+        "year": "2008"
+      }
+    ]
+  }
+}

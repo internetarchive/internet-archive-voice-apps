@@ -35,6 +35,21 @@ function fetchDetails (id) {
     });
 }
 
+/**
+ * Fetch items of collection
+ *
+ * @param {string} id - identifier of collection
+ * @returns {Promise}
+ */
+function fetchItems (id) {
+  return fetch(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
+    .then(res => res.json())
+    .then(data => {
+      return data.response.docs;
+    })
+}
+
 module.exports = {
   fetchDetails,
+  fetchItems,
 };

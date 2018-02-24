@@ -8,6 +8,7 @@ module.exports = {
     '&page={{page}}' +
     '&output=json',
     COLLECTION_URL: 'https://web.archive.org/metadata/{{id}}',
+    COLLECTION_ITEMS_URL: 'https://web.archive.org/advancedsearch.php?q=(collection:{{id}})&output=json',
     SONG_URL: 'https://archive.org/download/{{albumId}}/{{filename}}',
   },
 
