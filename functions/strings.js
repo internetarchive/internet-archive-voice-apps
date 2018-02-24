@@ -69,10 +69,19 @@ module.exports = {
       reprompt: "I still didn't get that. ${reprompt}",
       fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     },
+    selectCreator: {
+      speech: '{{title}} - great choice!',
+    },
     welcome: {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
     }
+  },
+  stepIn: {
+    askForLocationAndYear: {
+      speech: `Do you have a specific city and year in mind, like {{suggestions}},
+               or would you like me to play something randomly from {{title}}`
+    },
   },
   dialog: {
     playSong: {
