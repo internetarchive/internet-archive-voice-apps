@@ -9,11 +9,11 @@ const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
 
 describe('integration', () => {
-  describe('input.unknown', () => {
+  describe('input-unknown', () => {
     it('should 1st time', () => {
       const res = new MockResponse();
       index.playMedia(buildIntentRequest({
-        action: 'input.unknown',
+        action: 'input-unknown',
       }), res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
@@ -23,7 +23,7 @@ describe('integration', () => {
     it('should 2nd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
-        action: 'input.unknown',
+        action: 'input-unknown',
         data: {
           dialog: {
             lastPhrase: {
@@ -31,7 +31,7 @@ describe('integration', () => {
             }
           },
           actions: {
-            action: 'input.unknown',
+            action: 'input-unknown',
             count: 1,
           },
         },
@@ -47,10 +47,10 @@ describe('integration', () => {
     it('should 3rd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
-        action: 'input.unknown',
+        action: 'input-unknown',
         data: {
           actions: {
-            action: 'input.unknown',
+            action: 'input-unknown',
             count: 2,
           },
         },
@@ -64,7 +64,7 @@ describe('integration', () => {
     it('should not fallback 3rd time if previous action was not no-input', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
-        action: 'input.unknown',
+        action: 'input-unknown',
         data: {
           actions: {
             action: 'some.other.action',

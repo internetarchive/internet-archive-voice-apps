@@ -5,7 +5,9 @@ describe('actions', () => {
   describe('defaultActions', () => {
     it('should grab all actions and map to file name', () => {
       const actions = defaultActions();
-      expect(actions).to.have.any.key(['repeat', 'welcome']);
+      expect(actions).to.have.any.key([
+        'media-status-update', 'repeat', 'welcome',
+      ]);
     });
   });
 });
