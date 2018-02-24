@@ -1,4 +1,39 @@
 module.exports = {
+  // v2
+  intents: {
+    noInput: {
+      first: "Sorry, I couldn't hear you.",
+      reprompt: 'Sorry, can you repeat that? ${reprompt}',
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
+    unknown: {
+      first: "I'm not sure what you said. Can you repeat that?",
+      reprompt: "I still didn't get that. ${reprompt}",
+      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+    },
+    selectCreator: {
+      speech: '{{title}} - great choice!',
+    },
+    welcome: {
+      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      suggestions: ['78s', 'Live Concerts']
+    }
+  },
+  stepIn: {
+    askForLocationAndYear: {
+      speech: `Do you have a specific city and year in mind, like {{suggestions}},
+               or would you like me to play something randomly from {{title}}`
+    },
+  },
+  dialog: {
+    playSong: {
+      description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
+      title: 'Playing track number - {{track}}',
+      suggestionLink: 'on Archive.org',
+    }
+  },
+
+  // v1
   appExit: "Okay, let's try this again later.",
   errors: {
     device: {
@@ -58,43 +93,11 @@ module.exports = {
     artistsPromptAlternative: "We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams",
     randomPrompt: "I can play something randomly"
   },
-  intents: {
-    noInput: {
-      first: "Sorry, I couldn't hear you.",
-      reprompt: 'Sorry, can you repeat that? ${reprompt}',
-      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    },
-    unknown: {
-      first: "I'm not sure what you said. Can you repeat that?",
-      reprompt: "I still didn't get that. ${reprompt}",
-      fallback: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    },
-    selectCreator: {
-      speech: '{{title}} - great choice!',
-    },
-    welcome: {
-      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
-      suggestions: ['78s', 'Live Concerts']
-    }
-  },
-  stepIn: {
-    askForLocationAndYear: {
-      speech: `Do you have a specific city and year in mind, like {{suggestions}},
-               or would you like me to play something randomly from {{title}}`
-    },
-  },
-  dialog: {
-    playSong: {
-      description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
-      title: 'Playing track number - {{track}}',
-      suggestionLink: 'on Archive.org',
-    }
-  },
   statements: {
     greeting: {
       welcome: {
         liveMusicCollection: "Welcome to music at the Internet Archive."
-      }, 
+      },
       welcomeBack: "Welcome back,"
     },
     salutation: {
