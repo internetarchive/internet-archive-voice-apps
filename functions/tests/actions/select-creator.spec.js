@@ -23,7 +23,9 @@ describe('actions', () => {
     creator = mockSearchCreator({
       fetchAlbumsResponse: {
         items: [
-          {title: 'Excellent Concert', year: 1999},
+          {coverage: 'Washington, DC', year: 1999},
+          {coverage: 'Madison, WI', year: 2000},
+          {coverage: 'Worcester, MA', year: 2001},
         ],
       },
     });
@@ -50,6 +52,23 @@ describe('actions', () => {
         .then(() => {
           expect(querySlots.getSlot(app, 'creators')).to.be.equal('cool-band');
         })
-    })
+    });
+
+    it('should suggest the top 3 concerts of creator', () => {
+      return action.handler(app)
+        .then(() => {
+          expect(dialog.ask).to.be.calledOnce;
+          console.log(dialog.ask.args[0][1]);
+          expect(dialog.ask.args[0][1])
+            .to.have.property('suggestions')
+            .to.have.length(3);
+          expect(dialog.ask.args[0][1].suggestions)
+            .to.have.members([
+            'Washington, DC 1999',
+            'Madison, WI 2000',
+            'Worcester, MA 2001',
+          ]);
+        });
+    });
   });
 });

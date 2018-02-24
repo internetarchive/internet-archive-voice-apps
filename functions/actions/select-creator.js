@@ -9,6 +9,8 @@ const collection = require('../provider/collection');
 const creator = require('../provider/creator');
 const querySlots = require('../state/query');
 
+const concertToTitle = (album) => `${album.coverage} ${album.year}`;
+
 function handler (app) {
   debug(`Start handle select creator`);
 
@@ -33,8 +35,11 @@ function handler (app) {
       const state = {
         title: details.title,
         // join coverage (place) and year
-        suggestions: `${popular.items[0].coverage} ${popular.items[0].year}`,
+        suggestions: concertToTitle(popular.items[0]),
       };
+
+      const suggestions = popular.items.slice(0, 3)
+        .map(concertToTitle);
 
       // TODO: generate suggestions from popular.items
       const speech = [
@@ -43,7 +48,7 @@ function handler (app) {
         // and choose between album and location + year
         mustache.render(stepInStrings.askForLocationAndYear.speech, state),
       ].join(' ');
-      dialog.ask(app, {speech});
+      dialog.ask(app, {speech, suggestions});
     });
 }
 
