@@ -9,6 +9,14 @@ const collection = require('../provider/collection');
 const creator = require('../provider/creator');
 const querySlots = require('../state/query');
 
+/**
+ * Concert title: join coverage (place) and year
+ *
+ * @param {Object} album
+ * @param {string} album.coverage
+ * @param {string} album.year
+ * @return {string}
+ */
 const concertToTitle = (album) => `${album.coverage} ${album.year}`;
 
 function handler (app) {
@@ -18,6 +26,9 @@ function handler (app) {
   debug(`creatorId: ${creatorId}`);
 
   querySlots.setSlot(app, 'creators', creatorId);
+
+  // TODO: this moment we should be aware what we need here
+  // and choose between album and location + year
 
   return Promise.all([
     // we can use collection here because creator collection as well
@@ -32,20 +43,18 @@ function handler (app) {
       // TODO: we could add storage of fetched creator and they albums
       // if we will need these details later
       const [details, popular] = values;
-      const state = {
-        title: details.title,
-        // join coverage (place) and year
-        suggestions: concertToTitle(popular.items[0]),
-      };
 
-      const suggestions = popular.items.slice(0, 3)
+      const suggestions = popular.items
+        .slice(0, 3)
         .map(concertToTitle);
 
-      // TODO: generate suggestions from popular.items
+      const state = {
+        title: details.title,
+        suggestions: suggestions[0],
+      };
+
       const speech = [
         mustache.render(thanksStrings.speech, state),
-        // TODO: this moment we should be aware what we need here
-        // and choose between album and location + year
         mustache.render(stepInStrings.askForLocationAndYear.speech, state),
       ].join(' ');
       dialog.ask(app, {speech, suggestions});
