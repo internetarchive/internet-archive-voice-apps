@@ -24,7 +24,7 @@ describe('integration', () => {
       index.playMedia(buildIntentRequest({
         action: 'welcome',
       }), res);
-      expect(res.speech()).to.contain('Welcome back,');
+      expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
   });
 });
