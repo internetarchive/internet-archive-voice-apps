@@ -1,5 +1,4 @@
 const debug = require('debug')('ia:dialog:ask:debug');
-debug.log = console.log.bind(console);
 const {savePhrase} = require('../state/dialog');
 
 /**
