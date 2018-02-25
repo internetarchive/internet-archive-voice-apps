@@ -152,7 +152,8 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   // it seems preflight request from google assitant,
   // we shouldn't handle it by actions
   if (!req.body || !app.getIntent()) {
-    debug('weg get empty body. so we drop request');
+    debug('we get empty body. so we ignore request');
+    app.ask('Internet Archive is here!');
     return;
   }
 
