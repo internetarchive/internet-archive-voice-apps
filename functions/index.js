@@ -151,7 +151,7 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
 
   // it seems preflight request from google assitant,
   // we shouldn't handle it by actions
-  if (!req.body) {
+  if (!req.body || !app.getIntent()) {
     debug('weg get empty body. so we drop request');
     return;
   }
