@@ -66,7 +66,9 @@ module.exports = {
   appExit: "Okay, let's try this again later.",
   errors: {
     device: {
-      mediaResponse: "Sorry, your device doesn't support media response."
+      mediaResponse: {
+        speech: "Sorry, your device doesn't support media response.",
+      },
     },
     noInput: {
       first: "Sorry, I couldn't hear you.",
