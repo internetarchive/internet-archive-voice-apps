@@ -1,4 +1,4 @@
-const debug = require('debug')('ai:actions:debug-action:debug');
+const debug = require('debug')('ia:actions:debug-action:debug');
 
 const dialog = require('../dialog');
 const playlist = require('../state/playlist');
@@ -35,8 +35,9 @@ function handler (app) {
       dialog.playSong(app, playlist.getCurrentSong(app));
     })
     .catch(err => {
-      dialog.ask(`We got an error: ${JSON.stringify(err)}.
-                  Do you want to try again?`);
+      dialog.ask(app, {
+        speech: `We got an error: ${JSON.stringify(err)}. Do you want to try again?`
+      });
     });
 }
 

@@ -1,4 +1,4 @@
-const debug = require('debug')('ai:actions:select-creator:debug');
+const debug = require('debug')('ia:actions:select-creator:debug');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
