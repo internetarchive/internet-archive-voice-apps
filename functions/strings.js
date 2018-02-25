@@ -114,7 +114,7 @@ module.exports = {
       welcome: {
         liveMusicCollection: "Welcome to music at the Internet Archive."
       },
-      welcomeBack: "Welcome back,"
+      welcomeBack: "Welcome to music at the Internet Archive."
     },
     salutation: {
       thankYou: {
