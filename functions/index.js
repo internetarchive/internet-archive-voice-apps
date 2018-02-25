@@ -178,6 +178,7 @@ function logSessionStart (app) {
   } else {
     debug('<unknown user>');
   }
+  debug(`surface capabilities: ${app.getSurfaceCapabilities()}`);
   debug(`user's session data: ${JSON.stringify(app.data)}`);
   debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
   debug('\n\n');
