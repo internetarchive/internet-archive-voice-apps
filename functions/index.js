@@ -68,6 +68,7 @@ const util = require('util');
 
 const {defaultActions} = require('./actions');
 const actions = require('./actions/names');
+const dialog = require('./dialog');
 const {storeAction} = require('./state/actions');
 const strings = require('./strings');
 
@@ -148,10 +149,18 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
 
   storeAction(app, app.getIntent());
 
+  // it seems preflight request from google assitant,
+  // we shouldn't handle it by actions
+  if (!req.body || !app.getIntent()) {
+    debug('we get empty body. so we ignore request');
+    app.ask('Internet Archive is here!');
+    return;
+  }
+
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
-    app.tell(strings.errors.device.mediaResponse);
+    dialog.tell(app, strings.errors.device.mediaResponse);
   }
 
   dashbot.configHandler(app);
@@ -178,6 +187,7 @@ function logSessionStart (app) {
   } else {
     debug('<unknown user>');
   }
+  debug(`surface capabilities: ${app.getSurfaceCapabilities()}`);
   debug(`user's session data: ${JSON.stringify(app.data)}`);
   debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
   debug('\n\n');
@@ -1965,11 +1975,6 @@ function play (app, offsetInMilliseconds) {
       logger('Error : ' + response);
     }
   });
-}
-
-function tell (app, speechOutput) {
-  app.tell(app.buildRichResponse()
-    .addSimpleResponse(speechOutput));
 }
 
 function askWithReprompt (app, speechOutput, repromptText, suggestions) {
