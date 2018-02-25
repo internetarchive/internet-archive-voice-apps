@@ -159,7 +159,7 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b
   if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
     app.handleRequest(responseHandler);
   } else {
-    dialog.tell(strings.errors.device.mediaResponse);
+    dialog.tell(app, strings.errors.device.mediaResponse);
   }
 
   dashbot.configHandler(app);
