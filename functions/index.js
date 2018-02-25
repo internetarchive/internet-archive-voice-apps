@@ -1976,11 +1976,6 @@ function play (app, offsetInMilliseconds) {
   });
 }
 
-function tell (app, speechOutput) {
-  app.tell(app.buildRichResponse()
-    .addSimpleResponse(speechOutput));
-}
-
 function askWithReprompt (app, speechOutput, repromptText, suggestions) {
   currentRepromptText = repromptText;
   ask(app, speechOutput, suggestions);
