@@ -1,4 +1,4 @@
-const debug = require('debug')('ai:actions:select-collection:debug');
+const debug = require('debug')('ia:actions:select-collection:debug');
 
 const dialog = require('../dialog');
 const collection = require('../provider/collection');
