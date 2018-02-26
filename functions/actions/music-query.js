@@ -21,20 +21,11 @@ const intentStrings = require('../strings').intents.musicQuery;
 function handler (app) {
   debug('Start music query handler');
 
-  const newNames = [];
-  const newValues = {};
   const answer = {
     speech: [],
   };
 
-  for (let slotName in intentStrings.slots) {
-    const value = app.getArgument(slotName);
-    if (value) {
-      querySlots.setSlot(app, slotName, value);
-      newNames.push(slotName);
-      newValues[slotName] = value;
-    }
-  }
+  const newValues = fillSlots(app);
 
   let greeting = generateGreeting(app, newValues);
   if (greeting) {
@@ -52,6 +43,27 @@ function handler (app) {
       speech: answer.speech.join('. '),
     });
   }
+}
+
+/**
+ * Put all received values to slots
+ * and return list of new values
+ *
+ * @param app
+ * @returns {{}}
+ */
+function fillSlots (app) {
+  const newValues = {};
+
+  for (let slotName in intentStrings.slots) {
+    const value = app.getArgument(slotName);
+    if (value) {
+      querySlots.setSlot(app, slotName, value);
+      newValues[slotName] = value;
+    }
+  }
+
+  return newValues;
 }
 
 /**
@@ -116,7 +128,6 @@ function generatePrompt (app) {
   }
 
   debug('we missed slots:', missedSlots);
-  // const missedSlot = missedSlots[0];
   const prompts = getPromptsForSlots(
     intentStrings.prompts,
     missedSlots
