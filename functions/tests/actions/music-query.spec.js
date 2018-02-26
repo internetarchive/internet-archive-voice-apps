@@ -52,8 +52,18 @@ describe('actions', () => {
       expect(getSlot(app, 'year')).to.be.equal(2017);
     });
 
-    it('should greet', () => {
-
+    xit('should greet', () => {
+      app = mockApp({
+        argument: {
+          coverage: 'Kharkiv',
+          year: 2017,
+        },
+      });
+      action.handler(app);
+      expect(dialog.ask).to.have.been.calledOnce;
+      expect(dialog.ask.args[0][1])
+            .to.have.property('speech')
+            .to.include('Kharkiv 2017 - great choice!');
     });
 
     it('should ask next question', () => {
