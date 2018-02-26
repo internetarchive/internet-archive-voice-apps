@@ -25,9 +25,31 @@ describe('actions', () => {
   });
 
   describe('music query', () => {
-    it('should feel slot', () => {
+    it('should fill single slot', () => {
+      app = mockApp({
+        argument: {
+          collection: 'live',
+        },
+      });
       action.handler(app);
       expect(getSlot(app, 'collection')).to.be.equal('live');
+      expect(getSlot(app, 'creator')).to.be.undefined;
+      expect(getSlot(app, 'coverage')).to.be.undefined;
+      expect(getSlot(app, 'year')).to.be.undefined;
+    });
+
+    it('should fill multiple slots', () => {
+      app = mockApp({
+        argument: {
+          coverage: 'Kharkiv',
+          year: 2017,
+        },
+      });
+      action.handler(app);
+      expect(getSlot(app, 'collection')).to.be.undefined;
+      expect(getSlot(app, 'creator')).to.be.undefined;
+      expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
+      expect(getSlot(app, 'year')).to.be.equal(2017);
     });
 
     it('should greet', () => {
