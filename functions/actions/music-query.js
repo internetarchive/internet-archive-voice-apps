@@ -3,24 +3,12 @@ const _ = require('lodash');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
-const querySlots = require('../state/query');
 const {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
 } = require('../slots/slots-of-template');
-
-const greetings = [
-  '{{coverage}} - good place!',
-  '{{coverage}} {{year}} - great choice!',
-  '{{year}} - it was excellent year!',
-];
-
-const slots = {
-  'collection': {},
-  'creator': {},
-  'coverage': {},
-  'year': {},
-};
+const querySlots = require('../state/query');
+const intentStrings = require('../strings').intents.musicQuery;
 
 /**
  * handle music query action
@@ -37,7 +25,7 @@ function handler (app) {
     speech: [],
   };
 
-  for (let slotName in slots) {
+  for (let slotName in intentStrings.slots) {
     const value = app.getArgument(slotName);
     if (value) {
       querySlots.setSlot(app, slotName, value);
@@ -51,9 +39,16 @@ function handler (app) {
   // we get new values
   if (newNames.length > 0) {
     // find the list of greetings which match recieved slots
-    let validGreetings = getMatchedTemplatesExactly(greetings, newNames);
+    let validGreetings = getMatchedTemplatesExactly(
+      intentStrings.greetings,
+      newNames
+    );
+
     if (validGreetings.length === 0) {
-      validGreetings = getMatchedTemplates(greetings, newNames);
+      validGreetings = getMatchedTemplates(
+        intentStrings.greetings,
+        newNames
+      );
     }
 
     debug('We have few valid greetings', validGreetings);

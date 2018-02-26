@@ -7,6 +7,20 @@ const {getSlot} = require('../../state/query');
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
+const strings = {
+  greetings: [
+    '{{coverage}} - good place!',
+    '{{coverage}} {{year}} - great choice!',
+    '{{year}} - it was excellent year!',
+  ],
+
+  slots: {
+    'collection': {},
+    'creator': {},
+    'coverage': {},
+    'year': {},
+  },
+};
 
 describe('actions', () => {
   let app;
@@ -22,6 +36,7 @@ describe('actions', () => {
     });
     dialog = mockDialog();
     action.__set__('dialog', dialog);
+    action.__set__('intentStrings', strings);
   });
 
   describe('music query', () => {
@@ -62,8 +77,8 @@ describe('actions', () => {
       action.handler(app);
       expect(dialog.ask).to.have.been.calledOnce;
       expect(dialog.ask.args[0][1])
-            .to.have.property('speech')
-            .to.include('Kharkiv 2017 - great choice!');
+        .to.have.property('speech')
+        .to.include('Kharkiv 2017 - great choice!');
     });
 
     it('should ask next question', () => {
