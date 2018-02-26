@@ -1,5 +1,12 @@
 const querySlots = require('../state/query');
 
+const slots = {
+  'collection': {},
+  'creator': {},
+  'coverage': {},
+  'year': {},
+};
+
 /**
  * handle music query action
  * - fill slots of music query
@@ -7,8 +14,10 @@ const querySlots = require('../state/query');
  * @param app
  */
 function handler (app) {
-  const collectionId = app.getArgument('collection');
-  querySlots.setSlot(app, 'collection', collectionId);
+  for (let slotName in slots) {
+    const value = app.getArgument(slotName);
+    querySlots.setSlot(app, slotName, value);
+  }
 }
 
 module.exports = {
