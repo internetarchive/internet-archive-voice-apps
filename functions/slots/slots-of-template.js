@@ -60,7 +60,7 @@ function getMatchedTemplatesExactly (templates, slots) {
  * @param {Array} prompts
  * @param {Array} slots
  */
-function getPromptsForSlots(prompts, slots) {
+function getPromptsForSlots (prompts, slots) {
   const criticalSlot = slots[0];
   const maximumIntersection = slots.length;
   return prompts

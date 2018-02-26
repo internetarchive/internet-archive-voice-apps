@@ -13,6 +13,93 @@ const querySlots = require('../state/query');
 const intentStrings = require('../strings').intents.musicQuery;
 
 /**
+ * handle music query action
+ * - fill slots of music query
+ *
+ * @param app
+ */
+function handler (app) {
+  debug('Start music query handler');
+
+  const newNames = [];
+  const newValues = {};
+  const answer = {
+    speech: [],
+  };
+
+  for (let slotName in intentStrings.slots) {
+    const value = app.getArgument(slotName);
+    if (value) {
+      querySlots.setSlot(app, slotName, value);
+      newNames.push(slotName);
+      newValues[slotName] = value;
+    }
+  }
+
+  let greeting = generateGreeting(app, newValues);
+  if (greeting) {
+    answer.speech.push(greeting.speech);
+  }
+
+  let prompt = generatePrompt(app);
+  // TODO: should be simplified
+  if (prompt) {
+    answer.speech.push(prompt.speech);
+  }
+
+  if (answer.speech.length > 0) {
+    dialog.ask(app, {
+      speech: answer.speech.join('. '),
+    });
+  }
+}
+
+/**
+ * Generate greeting for received values
+ *
+ * @param app
+ * @param newValues
+ * @returns {*}
+ */
+function generateGreeting (app, newValues) {
+  const newNames = Object.keys(newValues);
+  // we get new values
+  if (newNames.length === 0) {
+    // TODO: we don't get any new values
+    debug(`we don't get any new values`);
+    return null;
+  }
+
+  debug('We get few new slots', newValues);
+
+  // find the list of greetings which match recieved slots
+  let validGreetings = getMatchedTemplatesExactly(
+    intentStrings.greetings,
+    newNames
+  );
+
+  if (validGreetings.length === 0) {
+    validGreetings = getMatchedTemplates(
+      intentStrings.greetings,
+      newNames
+    );
+  }
+
+  if (validGreetings.length === 0) {
+    warning(`there is no valid greetings for ${newNames}. Maybe we should write few?`);
+    return null;
+  }
+
+  debug('we have few valid greetings', validGreetings);
+
+  // choose one
+
+  return {
+    speech: mustache.render(_.sample(validGreetings), newValues)
+  };
+}
+
+/**
  * Generate prompt for missed slots
  *
  * @param app
@@ -44,72 +131,6 @@ function generatePrompt (app) {
       // TODO: pass all slots and suggestions as context
     }),
   };
-}
-
-/**
- * handle music query action
- * - fill slots of music query
- *
- * @param app
- */
-function handler (app) {
-  debug('Start music query handler');
-
-  const newNames = [];
-  const newValues = {};
-  const answer = {
-    speech: [],
-  };
-
-  for (let slotName in intentStrings.slots) {
-    const value = app.getArgument(slotName);
-    if (value) {
-      querySlots.setSlot(app, slotName, value);
-      newNames.push(slotName);
-      newValues[slotName] = value;
-    }
-  }
-
-  debug('We get few new slots', newValues);
-
-  // we get new values
-  if (newNames.length > 0) {
-    // find the list of greetings which match recieved slots
-    let validGreetings = getMatchedTemplatesExactly(
-      intentStrings.greetings,
-      newNames
-    );
-
-    if (validGreetings.length === 0) {
-      validGreetings = getMatchedTemplates(
-        intentStrings.greetings,
-        newNames
-      );
-    }
-
-    debug('We have few valid greetings', validGreetings);
-
-    // choose one
-    const oneGreeting = _.sample(validGreetings);
-    if (oneGreeting) {
-      answer.speech.push(mustache.render(oneGreeting, newValues));
-    }
-  } else {
-    // TODO: we don't get any new values
-    debug(`we don't get any new values`);
-  }
-
-  let prompt = generatePrompt(app);
-  // TODO: should be simplified
-  if (prompt) {
-    answer.speech.push(prompt.speech);
-  }
-
-  if (answer.speech.length > 0) {
-    dialog.ask(app, {
-      speech: answer.speech.join('. '),
-    });
-  }
 }
 
 module.exports = {
