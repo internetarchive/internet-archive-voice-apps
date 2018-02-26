@@ -1,4 +1,5 @@
 const debug = require('debug')('ia:actions:music-query:debug');
+const warning = require('debug')('ia:actions:music-query:warning');
 const _ = require('lodash');
 const mustache = require('mustache');
 
@@ -6,9 +7,44 @@ const dialog = require('../dialog');
 const {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
+  getPromptsForSlots,
 } = require('../slots/slots-of-template');
 const querySlots = require('../state/query');
 const intentStrings = require('../strings').intents.musicQuery;
+
+/**
+ * Generate prompt for missed slots
+ *
+ * @param app
+ * @returns {*}
+ */
+function generatePrompt (app) {
+  const missedSlots =
+    Object.keys(intentStrings.slots)
+      .filter(slotName => !querySlots.hasSlot(app, slotName));
+
+  if (missedSlots.length === 0) {
+    debug(`we don't have any missed slots`);
+    return null;
+  }
+
+  debug('we missed slots:', missedSlots);
+  // const missedSlot = missedSlots[0];
+  const prompts = getPromptsForSlots(
+    intentStrings.prompts,
+    missedSlots
+  );
+  if (!prompts) {
+    warning(`we don't have any matched prompts`);
+    return null;
+  }
+
+  return {
+    speech: mustache.render(_.sample(prompts), {
+      // TODO: pass all slots and suggestions as context
+    }),
+  };
+}
 
 /**
  * handle music query action
@@ -33,10 +69,6 @@ function handler (app) {
       newValues[slotName] = value;
     }
   }
-
-  // const missedSlots =
-  //   Object.keys(intentStrings.slots)
-  //     .filter(slotName => !querySlots.hasSlot(slotName));
 
   debug('We get few new slots', newValues);
 
@@ -65,6 +97,12 @@ function handler (app) {
   } else {
     // TODO: we don't get any new values
     debug(`we don't get any new values`);
+  }
+
+  let prompt = generatePrompt(app);
+  // TODO: should be simplified
+  if (prompt) {
+    answer.speech.push(prompt.speech);
   }
 
   if (answer.speech.length > 0) {

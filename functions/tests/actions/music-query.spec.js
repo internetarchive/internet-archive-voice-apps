@@ -18,14 +18,14 @@ const strings = {
     requirements: [
       'collection'
     ],
-    prompt: [
+    prompts: [
       'Would you like to listen to music from our collections of 78s or Live Concerts?',
     ],
   }, {
     requirements: [
       'creator'
     ],
-    prompt: [
+    prompts: [
       'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
     ],
   }, {
@@ -33,7 +33,7 @@ const strings = {
       'coverage',
       'year',
     ],
-    prompt: [
+    prompts: [
       'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
     ],
   }],
@@ -105,7 +105,7 @@ describe('actions', () => {
         .to.include('Kharkiv 2017 - great choice!');
     });
 
-    xit('should ask next question', () => {
+    it('should prompt to the next slot with a question', () => {
       app = mockApp({
         argument: {
           collection: 'live',

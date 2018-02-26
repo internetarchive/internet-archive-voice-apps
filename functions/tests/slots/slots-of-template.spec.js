@@ -1,6 +1,11 @@
 const {expect} = require('chai');
 
-const {getListOfRequiredSlots, getMatchedTemplates, getMatchedTemplatesExactly} = require('../../slots/slots-of-template');
+const {
+  getListOfRequiredSlots,
+  getMatchedTemplates,
+  getMatchedTemplatesExactly,
+  getPromptsForSlots,
+} = require('../../slots/slots-of-template');
 
 describe('slots', () => {
   describe('getListOfRequiredSlots', () => {
@@ -57,6 +62,50 @@ describe('slots', () => {
         'Album {{coverage}} {{year}}!',
         '{{coverage}} {{year}} - great choice!',
       ]);
+    });
+  });
+
+  describe('getPromptsForSlots', () => {
+    it('should return prompts with maximum intersection', () => {
+      const prompts = [{
+        requirements: [
+          'collection'
+        ],
+        prompts: [
+          'Would you like to listen to music from our collections of 78s or Live Concerts?',
+        ],
+      }, {
+        requirements: [
+          'creator'
+        ],
+        prompts: [
+          'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
+        ],
+      }, {
+        requirements: [
+          'coverage',
+        ],
+        prompts: [
+          'Which location?',
+        ],
+      }, {
+        requirements: [
+          'coverage',
+          'year',
+        ],
+        prompts: [
+          'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
+        ],
+      }];
+      const slots = [
+        'coverage',
+        'year',
+      ];
+      const res = getPromptsForSlots(prompts, slots);
+      console.log(res);
+      expect(res).to.includes(
+        'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
+      )
     });
   });
 });
