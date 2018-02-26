@@ -53,8 +53,29 @@ function getMatchedTemplatesExactly (templates, slots) {
     .map(({template}) => template);
 }
 
+/**
+ * Get prompts which match covers 1st slot
+ * and has the maximum intersection with other slots
+ *
+ * @param {Array} prompts
+ * @param {Array} slots
+ */
+function getPromptsForSlots(prompts, slots) {
+  const criticalSlot = slots[0];
+  const maximumIntersection = slots.length;
+  return prompts
+    .filter(p => _.includes(p.requirements, criticalSlot))
+    .map(p => ({
+      priority: _.intersection(p.requirements, slots).length / maximumIntersection,
+      p,
+    }))
+    .sort((a, b) => b.priority - a.priority)
+    .map(({p}) => p.prompts)[0];
+}
+
 module.exports = {
   getListOfRequiredSlots,
   getMatchedTemplates,
   getMatchedTemplatesExactly,
+  getPromptsForSlots,
 };
