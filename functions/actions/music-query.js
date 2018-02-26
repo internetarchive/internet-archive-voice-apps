@@ -34,6 +34,10 @@ function handler (app) {
     }
   }
 
+  // const missedSlots =
+  //   Object.keys(intentStrings.slots)
+  //     .filter(slotName => !querySlots.hasSlot(slotName));
+
   debug('We get few new slots', newValues);
 
   // we get new values

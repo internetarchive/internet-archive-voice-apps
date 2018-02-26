@@ -14,6 +14,30 @@ const strings = {
     '{{year}} - it was excellent year!',
   ],
 
+  prompts: [{
+    requirements: [
+      'collection'
+    ],
+    prompt: [
+      'Would you like to listen to music from our collections of 78s or Live Concerts?',
+    ],
+  }, {
+    requirements: [
+      'creator'
+    ],
+    prompt: [
+      'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
+    ],
+  }, {
+    requirements: [
+      'coverage',
+      'year',
+    ],
+    prompt: [
+      'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
+    ],
+  }],
+
   slots: {
     'collection': {},
     'creator': {},
@@ -81,8 +105,17 @@ describe('actions', () => {
         .to.include('Kharkiv 2017 - great choice!');
     });
 
-    it('should ask next question', () => {
-
+    xit('should ask next question', () => {
+      app = mockApp({
+        argument: {
+          collection: 'live',
+        },
+      });
+      action.handler(app);
+      expect(dialog.ask).to.have.been.calledOnce;
+      expect(dialog.ask.args[0][1])
+        .to.have.property('speech')
+        .to.include('What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?');
     });
   });
 });
