@@ -1,9 +1,13 @@
+const debug = require('debug')('ia:actions:music-query:debug');
 const _ = require('lodash');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
 const querySlots = require('../state/query');
-const {getListOfRequiredSlots} = require('../slots/slots-of-template');
+const {
+  getMatchedTemplates,
+  getMatchedTemplatesExactly,
+} = require('../slots/slots-of-template');
 
 const greetings = [
   '{{coverage}} - good place!',
@@ -25,6 +29,8 @@ const slots = {
  * @param app
  */
 function handler (app) {
+  debug('Start music query handler');
+
   const newNames = [];
   const newValues = {};
   const answer = {
@@ -35,28 +41,31 @@ function handler (app) {
     const value = app.getArgument(slotName);
     if (value) {
       querySlots.setSlot(app, slotName, value);
-      newNames.push(value);
+      newNames.push(slotName);
       newValues[slotName] = value;
     }
   }
 
+  debug('We get few new slots', newValues);
+
   // we get new values
   if (newNames.length > 0) {
     // find the list of greetings which match recieved slots
-    const matchedGreetings = greetings
-      .map(greeting => ({
-        template: greeting,
-        requirements: getListOfRequiredSlots(greeting)
-      }))
-      .filter(
-        ({requirements}) => requirements.every(r => r in newNames)
-      );
+    let validGreetings = getMatchedTemplatesExactly(greetings, newNames);
+    if (validGreetings.length === 0) {
+      validGreetings = getMatchedTemplates(greetings, newNames);
+    }
+
+    debug('We have few valid greetings', validGreetings);
 
     // choose one
-    const oneGreeting = _.sample(matchedGreetings);
+    const oneGreeting = _.sample(validGreetings);
     if (oneGreeting) {
       answer.speech.push(mustache.render(oneGreeting, newValues));
     }
+  } else {
+    // TODO: we don't get any new values
+    debug(`we don't get any new values`);
   }
 
   if (answer.speech.length > 0) {
