@@ -52,7 +52,7 @@ describe('actions', () => {
       expect(getSlot(app, 'year')).to.be.equal(2017);
     });
 
-    xit('should greet', () => {
+    it('should greet', () => {
       app = mockApp({
         argument: {
           coverage: 'Kharkiv',
