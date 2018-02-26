@@ -33,7 +33,28 @@ function getMatchedTemplates (templates, slots) {
     .map(({template}) => template);
 }
 
+/**
+ * get list of templates which match slots
+ *
+ * @param {Array} templates
+ * @param {Object} slots
+ * @returns {Array
+ */
+function getMatchedTemplatesExactly (templates, slots) {
+  const numOfSlots = slots.length;
+  return templates
+    .map(greeting => ({
+      template: greeting,
+      requirements: getListOfRequiredSlots(greeting)
+    }))
+    .filter(
+      ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
+    )
+    .map(({template}) => template);
+}
+
 module.exports = {
   getListOfRequiredSlots,
   getMatchedTemplates,
+  getMatchedTemplatesExactly,
 };
