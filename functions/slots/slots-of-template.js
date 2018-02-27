@@ -1,8 +1,9 @@
+const warning = require('debug')('ia:slots-template');
+
 const _ = require('lodash');
 const mustache = require('mustache');
 
 const resolvers = require('./resolvers');
-
 
 /**
  * TODO: should be implemented as actions:
@@ -14,13 +15,15 @@ const resolvers = require('./resolvers');
  */
 const extensions = {
   __resolvers: (name) => {
-    const resolver = resolvers.getByName(name.split('.')[1]);
-    if (!resolver || !resolver.requirements) {
+    const resolverName = name.split('.')[1];
+    const resolver = resolvers.getByName(resolverName);
+    if (!resolver) {
+      warning('we missed one resolver here for:', resolverName);
       return name;
     }
     return resolver.requirements;
   }
-}
+};
 
 /**
  * @param item
