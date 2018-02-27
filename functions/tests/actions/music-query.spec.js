@@ -21,7 +21,7 @@ const strings = {
     ],
 
     prompts: [
-      'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      'Would you like to listen to music from our collections of {{join(suggestions)}}?',
     ],
 
     suggestions: [
@@ -138,9 +138,7 @@ describe('actions', () => {
     describe('suggestions', () => {
       it('should return list of statis suggestions', () => {
         app = mockApp({
-          argument: {
-            // collection: 'live',
-          },
+          argument: {},
         });
         return action.handler(app)
           .then(() => {
@@ -180,6 +178,21 @@ describe('actions', () => {
               .to.have.property('suggestions')
             // fetch bands for the collection
               .to.have.members(['barcelona', 'london', 'lviv']);
+          });
+      });
+
+      xit('should use suggestion to generate prompt speech', () => {
+        app = mockApp({
+          argument: {},
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include(
+              'Would you like to listen to music from our collections of 78s or Live Concerts?'
+            );
           });
       });
     });

@@ -213,6 +213,8 @@ function generatePrompt (app) {
     .then((suggestions) => {
       const speech = mustache.render(prompt, {
         // TODO: pass all slots and suggestions as context
+        join: list => list.join(', '),
+        suggestions,
       });
 
       return Promise.resolve({speech, suggestions});
