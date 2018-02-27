@@ -135,6 +135,9 @@ function generateGreeting (app, newValues) {
 
   const greetingRequirements = extractRequrements(intentStrings.greetings);
 
+  console.log('greetingRequirements');
+  console.log(greetingRequirements);
+
   // find the list of greetings which match recieved slots
   let validGreetings = getMatchedTemplatesExactly(
     greetingRequirements,

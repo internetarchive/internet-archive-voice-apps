@@ -13,8 +13,8 @@ const strings = {
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
     '{{year}} - it was excellent year!',
-    'Ok! Lets go with {{_resolver.creator.title}} band!',
-    `You've selected {{_resolver.collection.title}}`,
+    'Ok! Lets go with {{__resolvers.creator.title}} band!',
+    `You've selected {{__resolvers.collection.title}}`,
   ],
 
   prompts: [{
