@@ -1,5 +1,6 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
+const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
 const {getSlot} = require('../../state/query');
@@ -78,11 +79,13 @@ describe('actions', () => {
           collection: 'live',
         },
       });
-      action.handler(app);
-      expect(getSlot(app, 'collection')).to.be.equal('live');
-      expect(getSlot(app, 'creator')).to.be.undefined;
-      expect(getSlot(app, 'coverage')).to.be.undefined;
-      expect(getSlot(app, 'year')).to.be.undefined;
+      return action.handler(app)
+        .then(() => {
+          expect(getSlot(app, 'collection')).to.be.equal('live');
+          expect(getSlot(app, 'creator')).to.be.undefined;
+          expect(getSlot(app, 'coverage')).to.be.undefined;
+          expect(getSlot(app, 'year')).to.be.undefined;
+        });
     });
 
     it('should fill multiple slots', () => {
@@ -92,11 +95,13 @@ describe('actions', () => {
           year: 2017,
         },
       });
-      action.handler(app);
-      expect(getSlot(app, 'collection')).to.be.undefined;
-      expect(getSlot(app, 'creator')).to.be.undefined;
-      expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
-      expect(getSlot(app, 'year')).to.be.equal(2017);
+      return action.handler(app)
+        .then(() => {
+          expect(getSlot(app, 'collection')).to.be.undefined;
+          expect(getSlot(app, 'creator')).to.be.undefined;
+          expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
+          expect(getSlot(app, 'year')).to.be.equal(2017);
+        });
     });
 
     it('should greet', () => {
@@ -106,11 +111,13 @@ describe('actions', () => {
           year: 2017,
         },
       });
-      action.handler(app);
-      expect(dialog.ask).to.have.been.calledOnce;
-      expect(dialog.ask.args[0][1])
-        .to.have.property('speech')
-        .to.include('Kharkiv 2017 - great choice!');
+      return action.handler(app)
+        .then(() => {
+          expect(dialog.ask).to.have.been.calledOnce;
+          expect(dialog.ask.args[0][1])
+            .to.have.property('speech')
+            .to.include('Kharkiv 2017 - great choice!');
+        });
     });
 
     it('should prompt to the next slot with a question', () => {
@@ -119,11 +126,13 @@ describe('actions', () => {
           collection: 'live',
         },
       });
-      action.handler(app);
-      expect(dialog.ask).to.have.been.calledOnce;
-      expect(dialog.ask.args[0][1])
-        .to.have.property('speech')
-        .to.include('What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?');
+      return action.handler(app)
+        .then(() => {
+          expect(dialog.ask).to.have.been.calledOnce;
+          expect(dialog.ask.args[0][1])
+            .to.have.property('speech')
+            .to.include('What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?');
+        });
     });
 
     describe('suggestions', () => {
@@ -133,26 +142,41 @@ describe('actions', () => {
             // collection: 'live',
           },
         });
-        action.handler(app);
-        expect(dialog.ask).to.have.been.calledOnce;
-        expect(dialog.ask.args[0][1])
-          .to.have.property('suggestions')
-          .to.have.members(['78s', 'Live Concerts']);
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('suggestions')
+              .to.have.members(['78s', 'Live Concerts']);
+          });
       });
 
-      xit('should generate suggestions on fly', () => {
+      it('should generate suggestions on fly', () => {
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: [
+            {coverage: 'barcelona'},
+            {coverage: 'london'},
+            {coverage: 'lviv'},
+            {coverage: 'tokyo'},
+          ],
+        }));
+        const getSuggestionProviderForSlots = sinon.stub().returns(provider);
+        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
         app = mockApp({
           argument: {
             collection: 'live',
             year: 2018,
           },
         });
-        action.handler(app);
-        expect(dialog.ask).to.have.been.calledOnce;
-        expect(dialog.ask.args[0][1])
-          .to.have.property('suggestions')
-        // fetch bands for the collection
-          .to.have.members(['barcelona', 'london', 'lviv']);
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('suggestions')
+            // fetch bands for the collection
+              .to.have.members(['barcelona', 'london', 'lviv']);
+          });
       });
     });
   });

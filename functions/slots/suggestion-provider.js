@@ -1,5 +1,10 @@
 const _ = require('lodash');
 
+/**
+ * TODO: should be implemented in the way actions were done:
+ * invert dependency - each provider describe which slots it could fill
+ */
+
 const nope = () => null;
 const providers = _([
   {slots: ['coverage'], provider: nope},

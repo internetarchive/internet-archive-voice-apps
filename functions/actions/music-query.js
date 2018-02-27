@@ -39,15 +39,18 @@ function handler (app) {
 
   const answer = [];
   answer.push(generateGreeting(app, newValues));
-  answer.push(generatePrompt(app));
+  return generatePrompt(app)
+    .then(res => {
+      answer.push(res);
 
-  const groupedAnswers = groupAnswers(answer);
-  if (groupedAnswers.speech.length > 0) {
-    dialog.ask(app, {
-      speech: groupedAnswers.speech.join('. '),
-      suggestions: groupedAnswers.suggestions,
+      const groupedAnswers = groupAnswers(answer);
+      if (groupedAnswers.speech.length > 0) {
+        dialog.ask(app, {
+          speech: groupedAnswers.speech.join('. '),
+          suggestions: groupedAnswers.suggestions,
+        });
+      }
     });
-  }
 }
 
 /**
@@ -143,6 +146,41 @@ function generateGreeting (app, newValues) {
 }
 
 /**
+ * Fetch suggestions for slots
+ *
+ * @param app
+ * @param promptScheme
+ * @returns {Promise}
+ */
+function fetchSuggestions(app, promptScheme) {
+  let suggestions = promptScheme.suggestions;
+
+  if (suggestions) {
+    debug('have static suggestions', suggestions);
+    return Promise.resolve(suggestions);
+  }
+
+  const provider = getSuggestionProviderForSlots(promptScheme.requirements);
+  if (!provider) {
+    warning(`don't have any suggestions for: ${promptScheme.requirements}. Maybe we should add them.`);
+    return Promise.resolve(null);
+  }
+
+  return provider(/* TODO: pass context here */).then(res => {
+    const suggestions = res.items.slice(0, 3);
+    if (promptScheme.suggestionTemplate) {
+      return suggestions.map(
+        item => mustache.render(promptScheme.suggestionTemplate, item)
+      );
+    } else {
+      return suggestions.map(
+        item => _.values(item).join(' ')
+      );
+    }
+  });
+}
+
+/**
  * Generate prompt for missed slots
  *
  * @param app
@@ -155,7 +193,7 @@ function generatePrompt (app) {
 
   if (missedSlots.length === 0) {
     debug(`we don't have any missed slots`);
-    return null;
+    return Promise.resolve(null);
   }
 
   debug('we missed slots:', missedSlots);
@@ -166,42 +204,19 @@ function generatePrompt (app) {
 
   if (!promptScheme) {
     warning(`we don't have any matched prompts`);
-    return null;
+    return Promise.resolve(null);
   }
 
   const prompt = _.sample(promptScheme.prompts);
 
-  // does it have static suggestions?
-  let suggestions = promptScheme.suggestions;
-
-  if (suggestions) {
-    debug('has static suggestions', suggestions);
-  } else {
-    // TODO: it could have dynamic suggestion provider
-    const provider = getSuggestionProviderForSlots(promptScheme.requirements);
-    if (provider) {
-      return provider({}).then(res => {
-        const suggestions = res.items.slice(0, 3);
-        if (prompt.suggestionTemplate) {
-          return suggestions.map(
-            item => mustache.render(prompt.suggestionTemplate, item)
-          );
-        } else {
-          return suggestions.map(
-            item => item.toString()
-          );
-        }
+  return fetchSuggestions(app, promptScheme)
+    .then((suggestions) => {
+      const speech = mustache.render(prompt, {
+        // TODO: pass all slots and suggestions as context
       });
-    } else {
-      warning(`don't have any suggestions for`, promptScheme.requirements);
-    }
-  }
 
-  const speech = mustache.render(prompt, {
-    // TODO: pass all slots and suggestions as context
-  });
-
-  return {speech, suggestions};
+      return Promise.resolve({speech, suggestions});
+    });
 }
 
 module.exports = {
