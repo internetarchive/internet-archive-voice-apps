@@ -42,7 +42,7 @@ module.exports = {
     },
 
     selectCollection: {
-      speech: 'Ok, you selected the live %s, what artist would you like to listen to?  For example, the Grateful Dead, the Ditty Bops or the Cowboy Junkies.',
+      speech: 'Ok, you selected {{title}}, what artist would you like to listen to?  For example, the Grateful Dead, the Ditty Bops or the Cowboy Junkies.',
       suggestions: ['Grateful Dead', 'Ditty Bops', 'Cowboy Junkies']
     }
   },
