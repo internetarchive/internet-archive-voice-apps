@@ -11,7 +11,7 @@ const {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
-  packRequiredExtensions,
+  getRequiredExtensionProviders,
 } = require('../slots/slots-of-template');
 const {getSuggestionProviderForSlots} = require('../slots/suggestion-provider');
 const querySlots = require('../state/query');
@@ -160,11 +160,11 @@ function generateGreeting (app, newValues) {
  * @returns {Promise.<TResult>}
  */
 function resolveSlots (context, template) {
-  const extensions = packRequiredExtensions(template);
+  const extensions = getRequiredExtensionProviders(template);
   return Promise
     .all(
       extensions
-        .map(({extension}) => extension(context))
+        .map(({provider}) => provider(context))
     )
     .then(solutions => {
       // TODO: should pack result in the way:
