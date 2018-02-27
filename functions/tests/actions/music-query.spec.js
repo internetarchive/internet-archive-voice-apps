@@ -43,7 +43,7 @@ const strings = {
     ],
 
     prompts: [
-      'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
+      'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
     ],
   }],
 
@@ -194,6 +194,34 @@ describe('actions', () => {
               .to.have.property('speech')
               .to.include(
               'Would you like to listen to music from our collections of 78s or Live Concerts?'
+            );
+          });
+      });
+
+      it('should use one suggestion to generate prompt speech', () => {
+        provider = sinon.stub().returns(Promise.resolve({
+          items: [
+            {coverage: 'Washington, DC', year: 1973},
+            {coverage: 'Madison, WI', year: 2000},
+            {coverage: 'Worcester, MA', year: 2001},
+          ],
+        }));
+        getSuggestionProviderForSlots = sinon.stub().returns(provider);
+        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
+        app = mockApp({
+          argument: {
+            collection: 'live',
+            creator: 'the band',
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include(
+              'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
             );
           });
       });
