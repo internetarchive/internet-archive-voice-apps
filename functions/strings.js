@@ -37,8 +37,7 @@ module.exports = {
       speech: '{{title}} - great choice!',
       prompts: {
         coverageAndYear: {
-          speech: 'Do you have a specific city and year in mind, like {{suggestions}},
-                   or would you like me to play something random?',
+          speech: 'Do you have a specific city and year in mind, like {{suggestions}}, or would you like me to play something random?',
           suggestion: '{{coverage}} {{year}}',
         }
       }
