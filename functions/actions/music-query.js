@@ -25,19 +25,6 @@ const intentStrings = require('../strings').intents.musicQuery;
 function handler (app) {
   debug('Start music query handler');
 
-  // TODO: should use resolvers here
-  //
-  // to fetch right name of entity
-  // for example creator should be fetch by
-  //
-  // collection.fetchDetails(creatorId),
-  //
-  // and result is populated to newValue/slots?
-  //
-  // # Alternative:
-  // fetch title on-demand -
-  // for example when it is really needed for greeting generation
-
   const answer = [];
   const newValues = fillSlots(app);
   return resolveSlots(app)
@@ -51,7 +38,7 @@ function handler (app) {
       const groupedAnswers = groupAnswers(answer);
       if (groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
-          speech: groupedAnswers.speech.join('. '),
+          speech: groupedAnswers.speech.join(' '),
           suggestions: groupedAnswers.suggestions,
         });
       }
@@ -137,6 +124,7 @@ function generateGreeting (app, newValues) {
 
   console.log('greetingRequirements');
   console.log(greetingRequirements);
+  console.log(newValues);
 
   // find the list of greetings which match recieved slots
   let validGreetings = getMatchedTemplatesExactly(
