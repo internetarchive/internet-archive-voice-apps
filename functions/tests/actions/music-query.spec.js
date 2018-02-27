@@ -32,7 +32,7 @@ const strings = {
     ],
   }, {
     requirements: [
-      'creator'
+      'creatorId'
     ],
 
     prompts: [
@@ -51,7 +51,7 @@ const strings = {
 
   slots: {
     'collection': {},
-    'creator': {},
+    'creatorId': {},
     'coverage': {},
     'year': {},
   },
@@ -67,7 +67,7 @@ describe('actions', () => {
     app = mockApp({
       argument: {
         collection: 'live',
-        creator: 'the-band',
+        creatorId: 'the-band',
         coverage: 'ny',
       },
     });
@@ -98,7 +98,7 @@ describe('actions', () => {
         return action.handler(app)
           .then(() => {
             expect(getSlot(app, 'collection')).to.be.equal('live');
-            expect(getSlot(app, 'creator')).to.be.undefined;
+            expect(getSlot(app, 'creatorId')).to.be.undefined;
             expect(getSlot(app, 'coverage')).to.be.undefined;
             expect(getSlot(app, 'year')).to.be.undefined;
           });
@@ -114,7 +114,7 @@ describe('actions', () => {
         return action.handler(app)
           .then(() => {
             expect(getSlot(app, 'collection')).to.be.undefined;
-            expect(getSlot(app, 'creator')).to.be.undefined;
+            expect(getSlot(app, 'creatorId')).to.be.undefined;
             expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
             expect(getSlot(app, 'year')).to.be.equal(2017);
           });
@@ -234,7 +234,7 @@ describe('actions', () => {
         app = mockApp({
           argument: {
             collection: 'live',
-            creator: 'the band',
+            creatorId: 'the band',
           },
         });
         return action.handler(app)
