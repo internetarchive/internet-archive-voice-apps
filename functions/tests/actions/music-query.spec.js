@@ -18,13 +18,20 @@ const strings = {
     requirements: [
       'collection'
     ],
+
     prompts: [
       'Would you like to listen to music from our collections of 78s or Live Concerts?',
+    ],
+
+    suggestions: [
+      '78s',
+      'Live Concerts',
     ],
   }, {
     requirements: [
       'creator'
     ],
+
     prompts: [
       'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
     ],
@@ -33,6 +40,7 @@ const strings = {
       'coverage',
       'year',
     ],
+
     prompts: [
       'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
     ],
@@ -116,6 +124,21 @@ describe('actions', () => {
       expect(dialog.ask.args[0][1])
         .to.have.property('speech')
         .to.include('What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?');
+    });
+
+    describe('suggestions', () => {
+      it('should return list of statis suggestions', () => {
+        app = mockApp({
+          argument: {
+            // collection: 'live',
+          },
+        });
+        action.handler(app);
+        expect(dialog.ask).to.have.been.calledOnce;
+        expect(dialog.ask.args[0][1])
+          .to.have.property('suggestions')
+          .to.have.members(['78s', 'Live Concerts']);
+      });
     });
   });
 });

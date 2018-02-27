@@ -70,7 +70,7 @@ function getPromptsForSlots (prompts, slots) {
       p,
     }))
     .sort((a, b) => b.priority - a.priority)
-    .map(({p}) => p.prompts)[0];
+    .map(({p}) => p)[0];
 }
 
 module.exports = {
