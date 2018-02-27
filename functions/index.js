@@ -458,21 +458,21 @@ function responseHandler (app) {
 
     if (searchByCollectionValue === '') {
       repromptText = "<speak>" + strings.prompts.select.artist + strings.suggestion.artistsPrompt + "</speak>";
-      speechOutput = "<speak>" + strings.prompts.select.artist + strings.suggestion.artistsPrompt + "</speak>";
+      speechOutput = "<speak>" + strings.acknowledger.sample() + strings.prompts.select.artist + strings.suggestion.artistsPrompt + "</speak>";
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     } else if (searchByCity === '') {
       repromptText = "<speak>" + strings.prompts.select.city + "</speak>";
-      speechOutput = "<speak>" + strings.prompts.select.city + "</speak>";
+      speechOutput = "<speak>" + strings.acknowledger.sample() + strings.prompts.select.city + "</speak>";
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     } else if (availableYears.length > 0) {
       if (availableYears.length === 1) {
         repromptText = '<speak>Available year for ' + searchByCity + ' is ' + availableYears + ', please select a year.</speak>';
-        speechOutput = '<speak>Available year for ' + searchByCity + ' is ' + availableYears + ', please select a year.</speak>';
+        speechOutput = '<speak>' + strings.acknowledger.sample() + 'Available year for ' + searchByCity + ' is ' + availableYears + ', please select a year.</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       }
       if (availableYears.length > 1) {
         repromptText = '<speak>Available years for ' + searchByCity + ' are ' + availableYears + ', please select a year.</speak>';
-        speechOutput = '<speak>Available years for ' + searchByCity + ' are ' + availableYears + ', please select a year.</speak>';
+        speechOutput = '<speak>' + strings.acknowledger.sample() + 'Available years for ' + searchByCity + ' are ' + availableYears + ', please select a year.</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       }
     }
@@ -486,7 +486,7 @@ function responseHandler (app) {
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     } else {
       repromptText = '<speak>' + strings.prompts.select.collection + '</speak>';
-      speechOutput = '<speak>' + strings.prompts.select.collection + '</speak>';
+      speechOutput = '<speak>' + strings.acknowledger.sample() + strings.prompts.select.collection + '</speak>';
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     }
   } else if ((app.getIntent() === actions.mediaStateInput) && (app.getArgument('MEDIA_STATUS').extension.status === app.Media.Status.FINISHED)) {
@@ -527,7 +527,7 @@ function responseHandler (app) {
       let speechOutput = '';
       if (totalTrackNumber < 0) {
         repromptText = '<speak>' + strings.prompts.select.topic + '</speak>';
-        speechOutput = '<speak>' + strings.prompts.select.topic + '</speak>';
+        speechOutput = '<speak>' + strings.acknowledger.sample() + strings.prompts.select.topic + '</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       } else {
         currentTrackIdx++;
@@ -546,7 +546,7 @@ function responseHandler (app) {
       let speechOutput = '';
       if (totalTrackNumber === 0) {
         repromptText = '<speak>' + strings.prompts.select.yearAndCity + '</speak>';
-        speechOutput = '<speak>' + strings.prompts.select.yearAndCity + '</speak>';
+        speechOutput = '<speak>' + strings.acknowledger.sample() + strings.prompts.select.yearAndCity + '</speak>';
         askWithReprompt(app, speechOutput, repromptText, suggestions);
       } else {
         currentTrackIdx++;
@@ -675,7 +675,7 @@ function getCollection (app) {
           cardOutput = collectionRealName + ' has been selected. Now, please select CITY and YEAR or RANDOM. Like ' + availableCity + ' ' + availableYear + ' or random.';
 
           //          speechOutput = "<speak>" + collection_real_name + " has been selected.<break time='.5s'/> Now Please select City and Year or <break time='.1s'/>random. <break time='.5s'/>Like " + //CityName + " " + YearName + " or <break time='.1s'/> random.</speak>";
-          speechOutput = '<speak>' + collectionRealName + ' - great choice! Do you have a specific city and year in mind, like ' + availableCity + ' ' + availableYear + ', or would you like me to play something random?</speak>';
+          speechOutput = '<speak>' + strings.acknowledger.sample() + collectionRealName + ' - great choice! Do you have a specific city and year in mind, like ' + availableCity + ' ' + availableYear + ', or would you like me to play something random?</speak>';
           log('The Collection ' + searchByCollectionValue + ' has been selected.', searchByCollectionValue, null, null, checkCollectionUrl, function (status) {
 
           });
@@ -684,7 +684,7 @@ function getCollection (app) {
         } else {
           cardTitle = 'Collection not exists';
           repromptText = '<speak>' + collectionRealName + strings.errors.collection.notFound + "</speak>";
-          speechOutput = '<speak>' + collectionRealName + strings.errors.collection.notFound + "</speak>";
+          speechOutput = '<speak>' + strings.acknowledger.sample() + collectionRealName + strings.errors.collection.notFound + "</speak>";
           cardOutput = '<speak>' + collectionRealName + strings.errors.collection.notFound + "</speak>";
 
           log('Sorry Collection: ' + searchByCollectionValue + ' has no songs.', searchByCollectionValue, null, null, checkCollectionUrl, function (status) {
@@ -766,7 +766,7 @@ function getAudioPlayListSeventyEights (app, counter, thisOBJ, offsetInMilliseco
       logger(app.getIntent());
       let cardTitle = 'The Seventy Eights collection has been selected.';
       let repromptText = '<speak>' + strings.fallback.whatWasThat + '</speak>';
-      let speechOutput = "<speak>The Seventy Eights collection has been selected." + strings.prompts.select.topicAlternative + "</speak>";
+      let speechOutput = "<speak>" + strings.acknowledger.sample() + "The Seventy Eights collection has been selected." + strings.prompts.select.topicAlternative + "</speak>";
       suggestions = ['Jazz', 'Instrumental', 'Dance'];
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     } else if (app.getIntent() === actions.seventyEights.byTopic || invalidSearchPage === true || app.getIntent() === actions.oneGo.seventyEights) {
@@ -1354,14 +1354,14 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 let cardTitle = 'Please select a year.';
                 let repromptText = '<speak> Waiting for your response.</speak>';
-                let speechOutput = '<speak> Year list for ' + searchByCity + ' is not available. Please select random.</speak>';
+                let speechOutput = '<speak>' + strings.acknowledger.sample() + 'Year list for ' + searchByCity + ' is not available. Please select random.</speak>';
 
                 if (availableYears.length === 1) {
                   YearString = availableYears[0];
-                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + searchByCity + ' in ' + YearString + '. Do you have a particular year in mind?</speak>';
+                  speechOutput = '<speak>' + strings.acknowledger.sample() + 'Grateful Dead has played in ' + searchByCity + ' in ' + YearString + '. Do you have a particular year in mind?</speak>';
                 } else if (availableYears.length > 1) {
                   YearString = availableYears[0] + ' to ' + availableYears[availableYears.length - 1];
-                  speechOutput = '<speak> Ok, Grateful Dead has played in ' + searchByCity + ' sometime between ' + YearString + '. Do you have a particular year in mind?</speak>';
+                  speechOutput = '<speak>' + strings.acknowledger.sample() + 'Grateful Dead has played in ' + searchByCity + ' sometime between ' + YearString + '. Do you have a particular year in mind?</speak>';
                 }
 
                 log('Ok, for ' + searchByCollectionValue + ' in ' + searchByCity + ' I have music from ' + YearString, searchByCollectionValue, searchByCity, searchByYear, APIURL, function (status) {
@@ -1381,7 +1381,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
 
                 let cardTitle = 'Please Select City.';
                 let repromptText = "<speak>" + strings.fallback.sayAgain + "</speak>";
-                let speechOutput = '<speak>Ok, for ' + searchByYear + ' I have music from ' + CityString + ' Please select a city.</speak> ';
+                let speechOutput = '<speak>' + strings.acknowledger.sample() + 'for ' + searchByYear + ' I have music from ' + CityString + ' Please select a city.</speak> ';
                 log('Ok , available cities for artist: ' + searchByCollectionValue + ' and year: ' + searchByYear + ' are ' + CityString, searchByCollectionValue, searchByCity, searchByYear, APIURL, function (status) {
                 });
                 suggestions = CityList;
@@ -1952,7 +1952,7 @@ function Discovery (app) {
   let repromptText = "<speak>" + strings.fallback.didntCatchThat + "</speak>";
   // let speechOutput = "<speak>Welcome To The Internet Archive,<break time='1s'/> Please select a collection by saying<break time='.5s'/> play Collection name.<break time='.5s'/> like Play The Ditty Bops,<break time='.5s'/> Or Play Cowboy Junkies.<break time='.5s'/> Or Play Grateful Dead.</speak>";
   let cardOutput = 'We have more collection like Disco Biscuits, Hot Buttered Rum or Keller Williams.';
-  let speechOutput = "<speak>" + strings.suggestion.artistsPromptAlternative + "</speak>";
+  let speechOutput = "<speak>" + strings.acknowledger.sample() + strings.suggestion.artistsPromptAlternative + "</speak>";
   suggestions = ['Disco Biscuits', 'Hot Buttered Rum', 'Keller Williams'];
   askWithReprompt(app, speechOutput, repromptText, suggestions);
 }
