@@ -217,6 +217,7 @@ function generatePrompt (app) {
         // TODO: pass all slots and suggestions as context
         suggestions: {
           humanized: humanize.list.toFriendlyString(suggestions, {ends: ' or '}),
+          values: suggestions,
         },
       });
 
