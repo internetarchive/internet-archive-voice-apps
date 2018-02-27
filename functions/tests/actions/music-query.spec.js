@@ -86,67 +86,72 @@ describe('actions', () => {
   });
 
   describe('music query', () => {
-    it('should fill single slot', () => {
-      app = mockApp({
-        argument: {
-          collection: 'live',
-        },
-      });
-      return action.handler(app)
-        .then(() => {
-          expect(getSlot(app, 'collection')).to.be.equal('live');
-          expect(getSlot(app, 'creator')).to.be.undefined;
-          expect(getSlot(app, 'coverage')).to.be.undefined;
-          expect(getSlot(app, 'year')).to.be.undefined;
+    describe('slot updater', () => {
+      it('should fill single slot', () => {
+        app = mockApp({
+          argument: {
+            collection: 'live',
+          },
         });
+        return action.handler(app)
+          .then(() => {
+            expect(getSlot(app, 'collection')).to.be.equal('live');
+            expect(getSlot(app, 'creator')).to.be.undefined;
+            expect(getSlot(app, 'coverage')).to.be.undefined;
+            expect(getSlot(app, 'year')).to.be.undefined;
+          });
+      });
+
+      it('should fill multiple slots', () => {
+        app = mockApp({
+          argument: {
+            coverage: 'Kharkiv',
+            year: 2017,
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(getSlot(app, 'collection')).to.be.undefined;
+            expect(getSlot(app, 'creator')).to.be.undefined;
+            expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
+            expect(getSlot(app, 'year')).to.be.equal(2017);
+          });
+      });
     });
 
-    it('should fill multiple slots', () => {
-      app = mockApp({
-        argument: {
-          coverage: 'Kharkiv',
-          year: 2017,
-        },
-      });
-      return action.handler(app)
-        .then(() => {
-          expect(getSlot(app, 'collection')).to.be.undefined;
-          expect(getSlot(app, 'creator')).to.be.undefined;
-          expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
-          expect(getSlot(app, 'year')).to.be.equal(2017);
+    describe('greetings', () => {
+      it('should greet', () => {
+        app = mockApp({
+          argument: {
+            coverage: 'Kharkiv',
+            year: 2017,
+          },
         });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include('Kharkiv 2017 - great choice!');
+          });
+      });
+
+      it('should prompt to the next slot with a question', () => {
+        app = mockApp({
+          argument: {
+            collection: 'live',
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include('What artist would you like to listen to, e.g. barcelona, london or lviv?');
+          });
+      });
     });
 
-    it('should greet', () => {
-      app = mockApp({
-        argument: {
-          coverage: 'Kharkiv',
-          year: 2017,
-        },
-      });
-      return action.handler(app)
-        .then(() => {
-          expect(dialog.ask).to.have.been.calledOnce;
-          expect(dialog.ask.args[0][1])
-            .to.have.property('speech')
-            .to.include('Kharkiv 2017 - great choice!');
-        });
-    });
-
-    it('should prompt to the next slot with a question', () => {
-      app = mockApp({
-        argument: {
-          collection: 'live',
-        },
-      });
-      return action.handler(app)
-        .then(() => {
-          expect(dialog.ask).to.have.been.calledOnce;
-          expect(dialog.ask.args[0][1])
-            .to.have.property('speech')
-            .to.include('What artist would you like to listen to, e.g. barcelona, london or lviv?');
-        });
-    });
 
     describe('suggestions', () => {
       it('should return list of statis suggestions', () => {
