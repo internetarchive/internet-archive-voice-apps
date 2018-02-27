@@ -21,7 +21,7 @@ const strings = {
     ],
 
     prompts: [
-      'Would you like to listen to music from our collections of {{join(suggestions)}}?',
+      'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
     ],
 
     suggestions: [
@@ -34,7 +34,7 @@ const strings = {
     ],
 
     prompts: [
-      'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
+      'What artist would you like to listen to, e.g. {{suggestions.humanized}}?',
     ],
   }, {
     requirements: [
@@ -58,6 +58,8 @@ const strings = {
 describe('actions', () => {
   let app;
   let dialog;
+  let getSuggestionProviderForSlots;
+  let provider;
 
   beforeEach(() => {
     app = mockApp({
@@ -70,6 +72,17 @@ describe('actions', () => {
     dialog = mockDialog();
     action.__set__('dialog', dialog);
     action.__set__('intentStrings', strings);
+
+    provider = sinon.stub().returns(Promise.resolve({
+      items: [
+        {coverage: 'barcelona'},
+        {coverage: 'london'},
+        {coverage: 'lviv'},
+        {coverage: 'tokyo'},
+      ],
+    }));
+    getSuggestionProviderForSlots = sinon.stub().returns(provider);
+    action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
   });
 
   describe('music query', () => {
@@ -131,7 +144,7 @@ describe('actions', () => {
           expect(dialog.ask).to.have.been.calledOnce;
           expect(dialog.ask.args[0][1])
             .to.have.property('speech')
-            .to.include('What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?');
+            .to.include('What artist would you like to listen to, e.g. barcelona, london or lviv?');
         });
     });
 
@@ -150,17 +163,6 @@ describe('actions', () => {
       });
 
       it('should generate suggestions on fly', () => {
-        const provider = sinon.stub().returns(Promise.resolve({
-          items: [
-            {coverage: 'barcelona'},
-            {coverage: 'london'},
-            {coverage: 'lviv'},
-            {coverage: 'tokyo'},
-          ],
-        }));
-        const getSuggestionProviderForSlots = sinon.stub().returns(provider);
-        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
-
         app = mockApp({
           argument: {
             collection: 'live',
@@ -181,7 +183,7 @@ describe('actions', () => {
           });
       });
 
-      xit('should use suggestion to generate prompt speech', () => {
+      it('should use suggestion to generate prompt speech', () => {
         app = mockApp({
           argument: {},
         });

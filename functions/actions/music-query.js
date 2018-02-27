@@ -3,6 +3,8 @@ const warning = require('debug')('ia:actions:music-query:warning');
 const _ = require('lodash');
 const mustache = require('mustache');
 
+const humanize = require('../humanize');
+
 const dialog = require('../dialog');
 const {
   getMatchedTemplates,
@@ -213,8 +215,9 @@ function generatePrompt (app) {
     .then((suggestions) => {
       const speech = mustache.render(prompt, {
         // TODO: pass all slots and suggestions as context
-        join: list => list.join(', '),
-        suggestions,
+        suggestions: {
+          humanized: humanize.list.toFriendlyString(suggestions, {ends: ' or '}),
+        },
       });
 
       return Promise.resolve({speech, suggestions});
