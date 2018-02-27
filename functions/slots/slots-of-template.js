@@ -46,6 +46,9 @@ function getMatchedTemplatesExactly (templates, slots) {
     .map(greeting => ({
       template: greeting,
       requirements: getListOfRequiredSlots(greeting)
+      // some slots could be described in temples like slotName.field
+      // we should only consider slotName and drop field here
+        .map(slot => slot.split('.')[0])
     }))
     .filter(
       ({requirements}) => _.intersection(requirements, slots).length === numOfSlots

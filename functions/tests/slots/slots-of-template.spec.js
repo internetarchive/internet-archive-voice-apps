@@ -39,7 +39,7 @@ describe('slots', () => {
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
-      ])
+      ]);
     });
   });
 
@@ -61,6 +61,22 @@ describe('slots', () => {
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} {{year}} - great choice!',
+      ]);
+    });
+
+    it('should also respect dot notation', () => {
+      const templates = [
+        'Ok! Lets go with {{creator.title}} band!',
+      ];
+
+      const slots = [
+        'creator',
+      ];
+
+      expect(
+        getMatchedTemplatesExactly(templates, slots)
+      ).to.have.members([
+        'Ok! Lets go with {{creator.title}} band!',
       ]);
     });
   });
