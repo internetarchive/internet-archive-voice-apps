@@ -11,6 +11,7 @@ const {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
+  packRequiredExtensions,
 } = require('../slots/slots-of-template');
 const {getSuggestionProviderForSlots} = require('../slots/suggestion-provider');
 const querySlots = require('../state/query');
@@ -27,9 +28,9 @@ function handler (app) {
 
   const answer = [];
   const newValues = fillSlots(app);
-  return resolveSlots(app)
-    .then(() => {
-      answer.push(generateGreeting(app, newValues));
+  return generateGreeting(app, newValues)
+    .then(res => {
+      answer.push(res);
       return generatePrompt(app);
     })
     .then(res => {
@@ -93,16 +94,6 @@ function fillSlots (app) {
 }
 
 /**
- * some slots could be resolved in more friendly look
- * for example we could convert creatorId to {title: <band-name>}
- *
- */
-function resolveSlots () {
-  // TODO:
-  return Promise.resolve();
-}
-
-/**
  * Generate greeting for received values
  *
  * @param app
@@ -115,16 +106,12 @@ function generateGreeting (app, newValues) {
   if (newNames.length === 0) {
     // TODO: we don't get any new values
     debug(`we don't get any new values`);
-    return null;
+    return Promise.resolve(null);
   }
 
   debug('We get few new slots', newValues);
 
   const greetingRequirements = extractRequrements(intentStrings.greetings);
-
-  console.log('greetingRequirements');
-  console.log(greetingRequirements);
-  console.log(newValues);
 
   // find the list of greetings which match recieved slots
   let validGreetings = getMatchedTemplatesExactly(
@@ -141,16 +128,49 @@ function generateGreeting (app, newValues) {
 
   if (validGreetings.length === 0) {
     warning(`there is no valid greetings for ${newNames}. Maybe we should write few?`);
-    return null;
+    return Promise.resolve(null);
   }
 
   debug('we have few valid greetings', validGreetings);
 
-  // choose one
+  const template = _.sample(validGreetings);
+  const context = querySlots.getSlots(app);
 
-  return {
-    speech: mustache.render(_.sample(validGreetings), newValues)
-  };
+  // mustachejs doesn't support promises on-fly
+  // so we should solve all them before and fetch needed data
+  return resolveSlots(context, template)
+    .then(resolvedSlots => {
+      return {
+        speech: mustache.render(
+          template,
+          Object.assign({}, newValues, resolvedSlots)
+        )
+      };
+    });
+}
+
+/**
+ * Resolve all template slots which refers to extensions
+ *
+ * some slots could be resolved in more friendly look
+ * for example we could convert creatorId to {title: <band-name>}
+ *
+ * @param context
+ * @param template
+ * @returns {Promise.<TResult>}
+ */
+function resolveSlots (context, template) {
+  const extensions = packRequiredExtensions(template);
+  return Promise
+    .all(
+      extensions
+        .map(extension => extension(context))
+    )
+    .then(solutions => {
+      // TODO: should pack result in the way:
+      // [__<extension_type>].[<extension_name>] = result
+      return {};
+    });
 }
 
 /**
