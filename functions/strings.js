@@ -1,5 +1,13 @@
 module.exports = {
   // v2
+  acknowledger: [
+    "OK, ",
+    "Got it, ",
+    "Sure, ",
+    "Alright, ",
+    "Thanks, "
+  ],
+
   dialog: {
     playSong: {
       description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
