@@ -102,8 +102,7 @@ describe('slots', () => {
         'year',
       ];
       const res = getPromptsForSlots(prompts, slots);
-      console.log(res);
-      expect(res).to.includes(
+      expect(res.prompts).to.includes(
         'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
       )
     });

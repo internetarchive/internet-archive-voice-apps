@@ -31,6 +31,7 @@ function handler (app) {
   if (groupedAnswers.speech.length > 0) {
     dialog.ask(app, {
       speech: groupedAnswers.speech.join('. '),
+      suggestions: groupedAnswers.suggestions,
     });
   }
 }
@@ -54,7 +55,7 @@ function groupAnswers (answer) {
             (acc, newKey) =>
               // and patch initial object with it
               Object.assign(acc, {
-                [newKey]: [].concat(acc[newKey], value[newKey]),
+                [newKey]: (acc[newKey] || []).concat(value[newKey]),
               }),
             acc),
       {}
@@ -144,20 +145,26 @@ function generatePrompt (app) {
   }
 
   debug('we missed slots:', missedSlots);
-  const prompts = getPromptsForSlots(
+  const promptScheme = getPromptsForSlots(
     intentStrings.prompts,
     missedSlots
   );
-  if (!prompts) {
+
+  if (!promptScheme) {
     warning(`we don't have any matched prompts`);
     return null;
   }
 
-  return {
-    speech: mustache.render(_.sample(prompts), {
-      // TODO: pass all slots and suggestions as context
-    }),
-  };
+  const prompt = _.sample(promptScheme.prompts);
+
+  console.log(prompt);
+
+  const suggestions = promptScheme.suggestions;
+  const speech = mustache.render(prompt, {
+    // TODO: pass all slots and suggestions as context
+  });
+
+  return {speech, suggestions};
 }
 
 module.exports = {
