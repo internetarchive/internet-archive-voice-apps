@@ -152,7 +152,7 @@ function generateGreeting (app, newValues) {
  * @param promptScheme
  * @returns {Promise}
  */
-function fetchSuggestions(app, promptScheme) {
+function fetchSuggestions (app, promptScheme) {
   let suggestions = promptScheme.suggestions;
 
   if (suggestions) {
@@ -166,7 +166,7 @@ function fetchSuggestions(app, promptScheme) {
     return Promise.resolve(null);
   }
 
-  return provider(/* TODO: pass context here */).then(res => {
+  return provider(querySlots.getSlots(app)).then(res => {
     const suggestions = res.items.slice(0, 3);
     if (promptScheme.suggestionTemplate) {
       return suggestions.map(

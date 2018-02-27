@@ -3,7 +3,7 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
-const {getSlot} = require('../../state/query');
+const {getSlot, setSlot} = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -171,6 +171,10 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
+            expect(provider).to.have.been.calledWith({
+              collection: 'live',
+              year: 2018,
+            });
             expect(dialog.ask).to.have.been.calledOnce;
             expect(dialog.ask.args[0][1])
               .to.have.property('suggestions')
