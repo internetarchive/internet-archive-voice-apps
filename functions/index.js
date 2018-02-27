@@ -675,7 +675,7 @@ function getCollection (app) {
           cardOutput = collectionRealName + ' has been selected. Now, please select CITY and YEAR or RANDOM. Like ' + availableCity + ' ' + availableYear + ' or random.';
 
           //          speechOutput = "<speak>" + collection_real_name + " has been selected.<break time='.5s'/> Now Please select City and Year or <break time='.1s'/>random. <break time='.5s'/>Like " + //CityName + " " + YearName + " or <break time='.1s'/> random.</speak>";
-          speechOutput = '<speak>' + collectionRealName + ' - great choice! Do you have a specific city and year in mind, like ' + availableCity + ' ' + availableYear + ', or would you like me to play something randomly from ' + collectionRealName + '?</speak>';
+          speechOutput = '<speak>' + collectionRealName + ' - great choice! Do you have a specific city and year in mind, like ' + availableCity + ' ' + availableYear + ', or would you like me to play something random?</speak>';
           log('The Collection ' + searchByCollectionValue + ' has been selected.', searchByCollectionValue, null, null, checkCollectionUrl, function (status) {
 
           });
