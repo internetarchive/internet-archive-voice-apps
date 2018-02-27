@@ -72,10 +72,11 @@ function getListOfRequiredExtensions (template) {
     .map(name => {
       const fullPath = name.split('.');
       return {
-        extType: fullPath[0],
+        extType: extensions.getExtensionTypeFromValue(fullPath[0]),
         name: fullPath[1],
       };
-    });
+    })
+    .filter(({extType, name}) => extType && name);
 }
 
 /**
@@ -132,18 +133,23 @@ function getPromptsForSlots (prompts, slots) {
 /**
  * Returns list of required extensions in the format:
  *
- * - extension
+ * - extension handler - function which gets context and return Promise
  * - extension name
  * - extension type
  *
  * @param template
  * @returns {Array}
  */
-function packRequiredExtensions (template) {
-  const extensions = getListOfRequiredExtensions(template);
-  console.log(extensions);
-  // TODO: ...
-  return [];
+function getRequiredExtensionProviders (template) {
+  return getListOfRequiredExtensions(template)
+    .map(({extType, name}) => {
+      const extension = extensions.getExtensionTypeSet(extType)(name);
+      return {
+        handler: extension && extension.handler,
+        extType, name
+      }
+    })
+    .filter(({handler}) => handler);
 }
 
 module.exports = {
@@ -153,5 +159,5 @@ module.exports = {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
-  packRequiredExtensions,
+  getRequiredExtensionProviders,
 };

@@ -1,9 +1,10 @@
 const {expect} = require('chai');
+const rewire = require('rewire');
+const sinon = require('sinon');
 
-const slotLogic = require('../../slots/slots-of-template');
+const templateSlots = rewire('../../slots/slots-of-template');
 
 describe('slots', () => {
-
   describe('extractRequrements', () => {
     it('should extract plain slot requrements', () => {
       const templates = [
@@ -14,7 +15,7 @@ describe('slots', () => {
         'I love {{collection}} collection too',
       ];
 
-      const res = slotLogic.extractRequrements(templates);
+      const res = templateSlots.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['coverage', 'year']);
@@ -27,7 +28,7 @@ describe('slots', () => {
         'Ok! Lets go with {{creator.title}} band!',
       ];
 
-      const res = slotLogic.extractRequrements(templates);
+      const res = templateSlots.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creator']);
@@ -38,7 +39,7 @@ describe('slots', () => {
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
       ];
 
-      const res = slotLogic.extractRequrements(templates);
+      const res = templateSlots.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creatorId']);
@@ -48,12 +49,12 @@ describe('slots', () => {
   describe('getListOfRequiredExtensions', () => {
     it('should return list of extension type and name', () => {
       const template =
-        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}}';
+        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}} at {{time}}';
       expect(
-        slotLogic.getListOfRequiredExtensions(template)
+        templateSlots.getListOfRequiredExtensions(template)
       ).to.have.been.deep.equal([
-        {extType: '__resolvers', name: 'creator'},
-        {extType: '__resolvers', name: 'location'},
+        {extType: 'resolvers', name: 'creator'},
+        {extType: 'resolvers', name: 'location'},
       ]);
     });
   });
@@ -61,7 +62,7 @@ describe('slots', () => {
   describe('getListOfRequiredSlots', () => {
     it('should return list of names of needed slots', () => {
       expect(
-        slotLogic.getListOfRequiredSlots('{{coverage}} {{year}} - great choice!')
+        templateSlots.getListOfRequiredSlots('{{coverage}} {{year}} - great choice!')
       ).to.have.members([
         'coverage',
         'year',
@@ -83,7 +84,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        slotLogic.getMatchedTemplates(slotLogic.extractRequrements(templates), slots)
+        templateSlots.getMatchedTemplates(templateSlots.extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} - good place!',
@@ -107,7 +108,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        slotLogic.getMatchedTemplatesExactly(slotLogic.extractRequrements(templates), slots)
+        templateSlots.getMatchedTemplatesExactly(templateSlots.extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} {{year}} - great choice!',
@@ -124,7 +125,7 @@ describe('slots', () => {
       ];
 
       expect(
-        slotLogic.getMatchedTemplatesExactly(slotLogic.extractRequrements(templates), slots)
+        templateSlots.getMatchedTemplatesExactly(templateSlots.extractRequrements(templates), slots)
       ).to.have.members([
         'Ok! Lets go with {{creator.title}} band!',
       ]);
@@ -167,10 +168,38 @@ describe('slots', () => {
         'coverage',
         'year',
       ];
-      const res = slotLogic.getPromptsForSlots(prompts, slots);
+      const res = templateSlots.getPromptsForSlots(prompts, slots);
       expect(res.prompts).to.includes(
         'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
       )
     });
   });
+
+  describe('getRequiredExtensionProviders', () => {
+    it('should return packed list of providers', () => {
+      const handler1 = () => {
+      };
+      const handler2 = () => {
+      };
+      const getExtender = sinon.stub();
+      getExtender.onCall(0).returns({handler: handler1});
+      getExtender.onCall(1).returns({handler: handler2});
+      templateSlots.__set__('extensions', {
+        getExtensionTypeSet: sinon.stub().returns(getExtender),
+        getExtensionTypeFromValue: sinon.stub().returns('resolvers')
+      });
+
+      expect(templateSlots.getRequiredExtensionProviders(
+        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}}'
+      )).to.have.been.deep.equal([{
+        handler: handler1,
+        name: 'creator',
+        extType: 'resolvers',
+      }, {
+        handler: handler2,
+        name: 'location',
+        extType: 'resolvers',
+      }]);
+    });
+  })
 });

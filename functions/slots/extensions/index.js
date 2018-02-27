@@ -32,10 +32,25 @@ const extensionTypes = {
 /**
  * Just return nothing
  *
+ * @private
  * @param item
  * @returns {*}
  */
-const noop = () => {};
+const noop = () => {
+};
+
+/**
+ * Get extension type from value
+ *
+ * @param value
+ * @returns {null}
+ */
+function getExtensionTypeFromValue (value) {
+  if (value.slice(0, 2) !== '__') {
+    return null;
+  }
+  return value.slice(2);
+}
 
 /**
  * get slot extension by name
@@ -50,5 +65,6 @@ function getExtensionTypeSet (name) {
 }
 
 module.exports = {
+  getExtensionTypeFromValue,
   getExtensionTypeSet,
 };
