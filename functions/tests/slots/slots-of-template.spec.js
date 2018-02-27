@@ -1,12 +1,6 @@
 const {expect} = require('chai');
 
-const {
-  extractRequrements,
-  getListOfRequiredSlots,
-  getMatchedTemplates,
-  getMatchedTemplatesExactly,
-  getPromptsForSlots,
-} = require('../../slots/slots-of-template');
+const slotLogic = require('../../slots/slots-of-template');
 
 describe('slots', () => {
 
@@ -20,7 +14,7 @@ describe('slots', () => {
         'I love {{collection}} collection too',
       ];
 
-      const res = extractRequrements(templates);
+      const res = slotLogic.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['coverage', 'year']);
@@ -33,7 +27,7 @@ describe('slots', () => {
         'Ok! Lets go with {{creator.title}} band!',
       ];
 
-      const res = extractRequrements(templates);
+      const res = slotLogic.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creator']);
@@ -44,17 +38,30 @@ describe('slots', () => {
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
       ];
 
-      const res = extractRequrements(templates);
+      const res = slotLogic.extractRequrements(templates);
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creatorId']);
     });
   });
 
+  describe('getListOfRequiredExtensions', () => {
+    it('should return list of extension type and name', () => {
+      const template =
+        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}}';
+      expect(
+        slotLogic.getListOfRequiredExtensions(template)
+      ).to.have.been.deep.equal([
+        {extType: '__resolvers', name: 'creator'},
+        {extType: '__resolvers', name: 'location'},
+      ]);
+    });
+  });
+
   describe('getListOfRequiredSlots', () => {
     it('should return list of names of needed slots', () => {
       expect(
-        getListOfRequiredSlots('{{coverage}} {{year}} - great choice!')
+        slotLogic.getListOfRequiredSlots('{{coverage}} {{year}} - great choice!')
       ).to.have.members([
         'coverage',
         'year',
@@ -76,7 +83,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        getMatchedTemplates(extractRequrements(templates), slots)
+        slotLogic.getMatchedTemplates(slotLogic.extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} - good place!',
@@ -100,7 +107,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        getMatchedTemplatesExactly(extractRequrements(templates), slots)
+        slotLogic.getMatchedTemplatesExactly(slotLogic.extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} {{year}} - great choice!',
@@ -117,7 +124,7 @@ describe('slots', () => {
       ];
 
       expect(
-        getMatchedTemplatesExactly(extractRequrements(templates), slots)
+        slotLogic.getMatchedTemplatesExactly(slotLogic.extractRequrements(templates), slots)
       ).to.have.members([
         'Ok! Lets go with {{creator.title}} band!',
       ]);
@@ -160,7 +167,7 @@ describe('slots', () => {
         'coverage',
         'year',
       ];
-      const res = getPromptsForSlots(prompts, slots);
+      const res = slotLogic.getPromptsForSlots(prompts, slots);
       expect(res.prompts).to.includes(
         'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
       )

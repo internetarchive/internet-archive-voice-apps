@@ -1,9 +1,13 @@
+/**
+ * TODO: looks a messy should be reorganized
+ */
+
 const warning = require('debug')('ia:slots-template');
 
 const _ = require('lodash');
 const mustache = require('mustache');
 
-const resolvers = require('./resolvers');
+const resolvers = require('./extensions/resolvers');
 
 /**
  * TODO: should be implemented as actions:
@@ -92,6 +96,23 @@ function getListOfRequiredSlots (template) {
 }
 
 /**
+ * Get list of extension which we would need in the template
+ *
+ * @param template
+ * @returns {Array}
+ */
+function getListOfRequiredExtensions (template) {
+  return getListOfRequiredSlots(template)
+    .map(name => {
+      const fullPath = name.split('.');
+      return {
+        extType: fullPath[0],
+        name: fullPath[1],
+      };
+    });
+}
+
+/**
  * Get list of templates which match slots
  *
  * @param {Array} templateRequirements
@@ -142,10 +163,19 @@ function getPromptsForSlots (prompts, slots) {
     .map(({p}) => p)[0];
 }
 
+function packRequiredExtensions (template) {
+  const extensions = getListOfRequiredExtensions(template);
+  console.log(extensions);
+  // TODO: ...
+  return [];
+}
+
 module.exports = {
   extractRequrements,
+  getListOfRequiredExtensions,
   getListOfRequiredSlots,
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
+  packRequiredExtensions,
 };
