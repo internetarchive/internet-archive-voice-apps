@@ -119,9 +119,9 @@ module.exports = {
   statements: {
     greeting: {
       welcome: {
-        liveMusicCollection: "Welcome to music at the Internet Archive."
+        liveMusicCollection: "Welcome to the live music collection at the Internet Archive."
       },
-      welcomeBack: "Welcome to music at the Internet Archive."
+      welcomeBack: "Welcome to the live music collection at the Internet Archive."
     },
     salutation: {
       thankYou: {
