@@ -67,6 +67,16 @@ function getSlot (app, name) {
 }
 
 /**
+ * Get all slots
+ *
+ * @param app
+ * @returns {*}
+ */
+function getSlots (app) {
+  return getData(app);
+}
+
+/**
  * Update slot name
  *
  * @param app
@@ -82,5 +92,6 @@ function setSlot (app, name, value) {
 module.exports = {
   hasSlot,
   getSlot,
+  getSlots,
   setSlot,
 };
