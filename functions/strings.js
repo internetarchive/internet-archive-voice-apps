@@ -39,6 +39,11 @@ module.exports = {
     welcome: {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
+    },
+
+    selectCollection: {
+      speech: 'Ok, you selected {{title}}, what artist would you like to listen to?  For example, the Grateful Dead, the Ditty Bops or the Cowboy Junkies.',
+      suggestions: ['Grateful Dead', 'Ditty Bops', 'Cowboy Junkies']
     }
   },
 
