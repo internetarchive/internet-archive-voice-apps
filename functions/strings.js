@@ -30,7 +30,7 @@ module.exports = {
       prompts: {
         coverageAndYear: {
           speech: `Do you have a specific city and year in mind, like {{suggestions}},
-                   or would you like me to play something randomly from {{title}}`,
+                   or would you like me to play something random?`,
           suggestion: '{{coverage}} {{year}}',
         }
       }
