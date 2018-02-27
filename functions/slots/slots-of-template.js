@@ -140,14 +140,15 @@ function getPromptsForSlots (prompts, slots) {
  * @param template
  * @returns {Array}
  */
-function getRequiredExtensionProviders (template) {
+function getRequiredExtensionHandlers (template) {
   return getListOfRequiredExtensions(template)
     .map(({extType, name}) => {
       const extension = extensions.getExtensionTypeSet(extType)(name);
       return {
         handler: extension && extension.handler,
-        extType, name
-      }
+        extType,
+        name
+      };
     })
     .filter(({handler}) => handler);
 }
@@ -159,5 +160,5 @@ module.exports = {
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
-  getRequiredExtensionProviders,
+  getRequiredExtensionHandlers,
 };
