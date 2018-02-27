@@ -37,11 +37,13 @@ function handler (app) {
   // fetch title on-demand -
   // for example when it is really needed for greeting generation
 
-  const newValues = fillSlots(app);
-
   const answer = [];
-  answer.push(generateGreeting(app, newValues));
-  return generatePrompt(app)
+  const newValues = fillSlots(app);
+  return resolveSlots(app)
+    .then(() => {
+      answer.push(generateGreeting(app, newValues));
+      return generatePrompt(app);
+    })
     .then(res => {
       answer.push(res);
 
@@ -103,6 +105,16 @@ function fillSlots (app) {
 }
 
 /**
+ * some slots could be resolved in more friendly look
+ * for example we could convert creatorId to {title: <band-name>}
+ *
+ */
+function resolveSlots () {
+  // TODO:
+  return Promise.resolve();
+}
+
+/**
  * Generate greeting for received values
  *
  * @param app
@@ -120,15 +132,17 @@ function generateGreeting (app, newValues) {
 
   debug('We get few new slots', newValues);
 
+  const greetings = intentStrings.greetings;
+
   // find the list of greetings which match recieved slots
   let validGreetings = getMatchedTemplatesExactly(
-    intentStrings.greetings,
+    greetings,
     newNames
   );
 
   if (validGreetings.length === 0) {
     validGreetings = getMatchedTemplates(
-      intentStrings.greetings,
+      greetings,
       newNames
     );
   }

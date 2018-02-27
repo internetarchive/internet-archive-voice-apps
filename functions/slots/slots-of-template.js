@@ -1,6 +1,17 @@
 const _ = require('lodash');
 const mustache = require('mustache');
 
+function extractRequrements (templates) {
+  return templates
+    .map(greeting => ({
+      template: greeting,
+      requirements: getListOfRequiredSlots(greeting)
+      // some slots could be described in temples like slotName.field
+      // we should only consider slotName and drop field here
+        .map(slot => slot.split('.')[0])
+    }));
+}
+
 /**
  * Get list of slots which need for this template
  *
@@ -22,11 +33,7 @@ function getListOfRequiredSlots (template) {
  * @returns {Array
  */
 function getMatchedTemplates (templates, slots) {
-  return templates
-    .map(greeting => ({
-      template: greeting,
-      requirements: getListOfRequiredSlots(greeting)
-    }))
+  return extractRequrements(templates)
     .filter(
       ({requirements}) => requirements.every(r => _.includes(slots, r))
     )
@@ -42,14 +49,7 @@ function getMatchedTemplates (templates, slots) {
  */
 function getMatchedTemplatesExactly (templates, slots) {
   const numOfSlots = slots.length;
-  return templates
-    .map(greeting => ({
-      template: greeting,
-      requirements: getListOfRequiredSlots(greeting)
-      // some slots could be described in temples like slotName.field
-      // we should only consider slotName and drop field here
-        .map(slot => slot.split('.')[0])
-    }))
+  return extractRequrements(templates)
     .filter(
       ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
     )
@@ -77,6 +77,7 @@ function getPromptsForSlots (prompts, slots) {
 }
 
 module.exports = {
+  extractRequrements,
   getListOfRequiredSlots,
   getMatchedTemplates,
   getMatchedTemplatesExactly,
