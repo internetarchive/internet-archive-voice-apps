@@ -38,6 +38,17 @@ describe('slots', () => {
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creator']);
     });
+
+    it('should fetch requirements from resolvers', () => {
+      const templates = [
+        'Ok! Lets go with {{__resolvers.creator.title}} band!',
+      ];
+
+      const res = extractRequrements(templates);
+      expect(res).to.have.length(templates.length);
+      expect(res[0]).to.have.property('requirements')
+        .to.have.members(['creatorId']);
+    });
   });
 
   describe('getListOfRequiredSlots', () => {
