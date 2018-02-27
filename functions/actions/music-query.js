@@ -9,6 +9,7 @@ const {
   getMatchedTemplatesExactly,
   getPromptsForSlots,
 } = require('../slots/slots-of-template');
+const {getSuggestionProviderForSlots} = require('../slots/suggestion-provider');
 const querySlots = require('../state/query');
 const intentStrings = require('../strings').intents.musicQuery;
 
@@ -20,6 +21,19 @@ const intentStrings = require('../strings').intents.musicQuery;
  */
 function handler (app) {
   debug('Start music query handler');
+
+  // TODO: should use resolvers here
+  //
+  // to fetch right name of entity
+  // for example creator should be fetch by
+  //
+  // collection.fetchDetails(creatorId),
+  //
+  // and result is populated to newValue/slots?
+  //
+  // # Alternative:
+  // fetch title on-demand -
+  // for example when it is really needed for greeting generation
 
   const newValues = fillSlots(app);
 
@@ -157,9 +171,32 @@ function generatePrompt (app) {
 
   const prompt = _.sample(promptScheme.prompts);
 
-  console.log(prompt);
+  // does it have static suggestions?
+  let suggestions = promptScheme.suggestions;
 
-  const suggestions = promptScheme.suggestions;
+  if (suggestions) {
+    debug('has static suggestions', suggestions);
+  } else {
+    // TODO: it could have dynamic suggestion provider
+    const provider = getSuggestionProviderForSlots(promptScheme.requirements);
+    if (provider) {
+      return provider({}).then(res => {
+        const suggestions = res.items.slice(0, 3);
+        if (prompt.suggestionTemplate) {
+          return suggestions.map(
+            item => mustache.render(prompt.suggestionTemplate, item)
+          );
+        } else {
+          return suggestions.map(
+            item => item.toString()
+          );
+        }
+      });
+    } else {
+      warning(`don't have any suggestions for`, promptScheme.requirements);
+    }
+  }
+
   const speech = mustache.render(prompt, {
     // TODO: pass all slots and suggestions as context
   });

@@ -139,6 +139,21 @@ describe('actions', () => {
           .to.have.property('suggestions')
           .to.have.members(['78s', 'Live Concerts']);
       });
+
+      xit('should generate suggestions on fly', () => {
+        app = mockApp({
+          argument: {
+            collection: 'live',
+            year: 2018,
+          },
+        });
+        action.handler(app);
+        expect(dialog.ask).to.have.been.calledOnce;
+        expect(dialog.ask.args[0][1])
+          .to.have.property('suggestions')
+        // fetch bands for the collection
+          .to.have.members(['barcelona', 'london', 'lviv']);
+      });
     });
   });
 });
