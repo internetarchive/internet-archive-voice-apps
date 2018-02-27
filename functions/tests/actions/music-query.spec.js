@@ -13,6 +13,7 @@ const strings = {
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
     '{{year}} - it was excellent year!',
+    'Ok! Lets go with {{creator.title}} band!',
   ],
 
   prompts: [{
@@ -133,6 +134,21 @@ describe('actions', () => {
             expect(dialog.ask.args[0][1])
               .to.have.property('speech')
               .to.include('Kharkiv 2017 - great choice!');
+          });
+      });
+
+      xit('should substitute resolved slots', () => {
+        app = mockApp({
+          argument: {
+            creatorId: 'bandId',
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include('Ok! Lets go with Grateful Dead band!');
           });
       });
 
