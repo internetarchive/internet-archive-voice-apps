@@ -1,13 +1,76 @@
 const _ = require('lodash');
 const mustache = require('mustache');
 
+const resolvers = require('./resolvers');
+
+
+/**
+ * TODO: should be implemented as actions:
+ * extracted from directory structure.
+ *
+ * But only when we get more than one extension
+ *
+ * @type {Object}
+ */
+const extensions = {
+  __resolvers: (name) => {
+    const resolver = resolvers.getByName(name.split('.')[1]);
+    if (!resolver || !resolver.requirements) {
+      return name;
+    }
+    return resolver.requirements;
+  }
+}
+
+/**
+ * @param item
+ * @returns {*}
+ */
+const identity = item => item;
+
+/**
+ * get slot extension by name
+ *
+ * all extensions starts with `__`.
+ *
+ * @param name
+ * @returns {*|(function(*): *)}
+ */
+function getExtension (name) {
+  const extension = extensions[name];
+  return extension || identity;
+}
+
+/**
+ * For each template extract required slots
+ * - it could be plain:
+ * {{coverage}} - good place!' => ['coverage']
+ *
+ * - hierarchy:
+ * Ok! Lets go with {{creator.title}} band!` => ['creator']
+ *
+ * - with extensible resovlers:
+ * 'Ok! Lets go with {{__resolvers.creator.title}} band!' =>
+ * ['creatorId']
+ *
+ * each resolver has list of requirements for example for 'creator':
+ * ['creatorId']
+ *
+ * @param templates
+ */
 function extractRequrements (templates) {
   return templates
     .map(greeting => ({
       template: greeting,
       requirements: getListOfRequiredSlots(greeting)
-      // some slots could be described in temples like slotName.field
-      // we should only consider slotName and drop field here
+        .reduce((acc, item) => {
+          const beforeDot = item.split('.')[0];
+          return acc.concat(
+            getExtension(beforeDot)(item)
+          );
+        }, [])
+        // some slots could be described in temples like slotName.field
+        // we should consider slotName only and drop field here
         .map(slot => slot.split('.')[0])
     }));
 }
@@ -26,7 +89,7 @@ function getListOfRequiredSlots (template) {
 }
 
 /**
- * get list of templates which match slots
+ * Get list of templates which match slots
  *
  * @param {Array} templateRequirements
  * @param {Object} slots
@@ -41,7 +104,7 @@ function getMatchedTemplates (templateRequirements, slots) {
 }
 
 /**
- * get list of templates which match slots
+ * Get list of templates which match slots
  *
  * @param {Array} templates
  * @param {Object} slots
