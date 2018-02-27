@@ -1,52 +1,17 @@
 /**
- * TODO: looks a messy should be reorganized
+ * Here are toolkit for parsing templates and extract information about:
+ * - available slots
+ * - and refered extensions (in particular __resolver)
+ * - searching and matching from the list of templates
+ *
+ * @type {*}
+ * @private
  */
-
-const warning = require('debug')('ia:slots-template');
 
 const _ = require('lodash');
 const mustache = require('mustache');
 
-const resolvers = require('./extensions/resolvers');
-
-/**
- * TODO: should be implemented as actions:
- * extracted from directory structure.
- *
- * But only when we get more than one extension
- *
- * @type {Object}
- */
-const extensions = {
-  __resolvers: (name) => {
-    const resolverName = name.split('.')[1];
-    const resolver = resolvers.getByName(resolverName);
-    if (!resolver) {
-      warning('we missed one resolver here for:', resolverName);
-      return name;
-    }
-    return resolver.requirements;
-  }
-};
-
-/**
- * @param item
- * @returns {*}
- */
-const identity = item => item;
-
-/**
- * get slot extension by name
- *
- * all extensions starts with `__`.
- *
- * @param name
- * @returns {*|(function(*): *)}
- */
-function getExtension (name) {
-  const extension = extensions[name];
-  return extension || identity;
-}
+const extensions = require('./extensions');
 
 /**
  * For each template extract required slots
@@ -67,15 +32,16 @@ function getExtension (name) {
  */
 function extractRequrements (templates) {
   return templates
-    .map(greeting => ({
-      template: greeting,
-      requirements: getListOfRequiredSlots(greeting)
-        .reduce((acc, item) => {
-          const beforeDot = item.split('.')[0];
-          return acc.concat(
-            getExtension(beforeDot)(item)
-          );
-        }, [])
+    .map(template => ({
+      template,
+      requirements: getListOfRequiredSlots(template)
+        .reduce(
+          (acc, item) => {
+            const splitName = item.split('.');
+            const extension = extensions.getExtensionTypeSet(splitName[0])(splitName[1]);
+            return acc.concat(extension ? extension.requirements : item);
+          }, []
+        )
         // some slots could be described in temples like slotName.field
         // we should consider slotName only and drop field here
         .map(slot => slot.split('.')[0])
@@ -128,7 +94,7 @@ function getMatchedTemplates (templateRequirements, slots) {
 }
 
 /**
- * Get list of templates which match slots
+ * Get list of templates which match slots exactly
  *
  * @param {Array} templates
  * @param {Object} slots
@@ -163,6 +129,16 @@ function getPromptsForSlots (prompts, slots) {
     .map(({p}) => p)[0];
 }
 
+/**
+ * Returns list of required extensions in the format:
+ *
+ * - extension
+ * - extension name
+ * - extension type
+ *
+ * @param template
+ * @returns {Array}
+ */
 function packRequiredExtensions (template) {
   const extensions = getListOfRequiredExtensions(template);
   console.log(extensions);

@@ -164,7 +164,7 @@ function resolveSlots (context, template) {
   return Promise
     .all(
       extensions
-        .map(extension => extension(context))
+        .map(({extension}) => extension(context))
     )
     .then(solutions => {
       // TODO: should pack result in the way:
