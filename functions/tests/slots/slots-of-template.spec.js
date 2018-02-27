@@ -175,7 +175,7 @@ describe('slots', () => {
     });
   });
 
-  describe('getRequiredExtensionProviders', () => {
+  describe('getRequiredExtensionHandlers', () => {
     it('should return packed list of providers', () => {
       const handler1 = () => {
       };
@@ -189,7 +189,7 @@ describe('slots', () => {
         getExtensionTypeFromValue: sinon.stub().returns('resolvers')
       });
 
-      expect(templateSlots.getRequiredExtensionProviders(
+      expect(templateSlots.getRequiredExtensionHandlers(
         '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}}'
       )).to.have.been.deep.equal([{
         handler: handler1,
