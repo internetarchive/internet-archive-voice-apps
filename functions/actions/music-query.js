@@ -21,28 +21,44 @@ const intentStrings = require('../strings').intents.musicQuery;
 function handler (app) {
   debug('Start music query handler');
 
-  const answer = {
-    speech: [],
-  };
-
   const newValues = fillSlots(app);
 
-  let greeting = generateGreeting(app, newValues);
-  if (greeting) {
-    answer.speech.push(greeting.speech);
-  }
+  const answer = [];
+  answer.push(generateGreeting(app, newValues));
+  answer.push(generatePrompt(app));
 
-  let prompt = generatePrompt(app);
-  // TODO: should be simplified
-  if (prompt) {
-    answer.speech.push(prompt.speech);
-  }
-
-  if (answer.speech.length > 0) {
+  const groupedAnswers = groupAnswers(answer);
+  if (groupedAnswers.speech.length > 0) {
     dialog.ask(app, {
-      speech: answer.speech.join('. '),
+      speech: groupedAnswers.speech.join('. '),
     });
   }
+}
+
+/**
+ * Squeeze array of answer in the single object of arrays
+ *
+ * @param {Array} answer
+ * @returns {Object}
+ */
+function groupAnswers (answer) {
+  return answer
+  // skip empty responses
+    .filter(a => a)
+    // squeeze fields of answers in the single object
+    .reduce(
+      (acc, value) =>
+        // get each new value ...
+        Object.keys(value)
+          .reduce(
+            (acc, newKey) =>
+              // and patch initial object with it
+              Object.assign(acc, {
+                [newKey]: [].concat(acc[newKey], value[newKey]),
+              }),
+            acc),
+      {}
+    );
 }
 
 /**
