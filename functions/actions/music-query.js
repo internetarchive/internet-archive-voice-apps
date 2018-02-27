@@ -7,6 +7,7 @@ const humanize = require('../humanize');
 
 const dialog = require('../dialog');
 const {
+  extractRequrements,
   getMatchedTemplates,
   getMatchedTemplatesExactly,
   getPromptsForSlots,
@@ -132,17 +133,17 @@ function generateGreeting (app, newValues) {
 
   debug('We get few new slots', newValues);
 
-  const greetings = intentStrings.greetings;
+  const greetingRequirements = extractRequrements(intentStrings.greetings);
 
   // find the list of greetings which match recieved slots
   let validGreetings = getMatchedTemplatesExactly(
-    greetings,
+    greetingRequirements,
     newNames
   );
 
   if (validGreetings.length === 0) {
     validGreetings = getMatchedTemplates(
-      greetings,
+      greetingRequirements,
       newNames
     );
   }

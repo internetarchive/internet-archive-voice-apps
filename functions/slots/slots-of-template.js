@@ -28,12 +28,12 @@ function getListOfRequiredSlots (template) {
 /**
  * get list of templates which match slots
  *
- * @param {Array} templates
+ * @param {Array} templateRequirements
  * @param {Object} slots
  * @returns {Array
  */
-function getMatchedTemplates (templates, slots) {
-  return extractRequrements(templates)
+function getMatchedTemplates (templateRequirements, slots) {
+  return templateRequirements
     .filter(
       ({requirements}) => requirements.every(r => _.includes(slots, r))
     )
@@ -47,9 +47,9 @@ function getMatchedTemplates (templates, slots) {
  * @param {Object} slots
  * @returns {Array
  */
-function getMatchedTemplatesExactly (templates, slots) {
+function getMatchedTemplatesExactly (templateRequirements, slots) {
   const numOfSlots = slots.length;
-  return extractRequrements(templates)
+  return templateRequirements
     .filter(
       ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
     )

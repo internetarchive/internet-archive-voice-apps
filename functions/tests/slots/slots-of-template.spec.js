@@ -65,7 +65,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        getMatchedTemplates(templates, slots)
+        getMatchedTemplates(extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} - good place!',
@@ -89,7 +89,7 @@ describe('slots', () => {
         'year',
       ];
       expect(
-        getMatchedTemplatesExactly(templates, slots)
+        getMatchedTemplatesExactly(extractRequrements(templates), slots)
       ).to.have.members([
         'Album {{coverage}} {{year}}!',
         '{{coverage}} {{year}} - great choice!',
@@ -106,7 +106,7 @@ describe('slots', () => {
       ];
 
       expect(
-        getMatchedTemplatesExactly(templates, slots)
+        getMatchedTemplatesExactly(extractRequrements(templates), slots)
       ).to.have.members([
         'Ok! Lets go with {{creator.title}} band!',
       ]);
