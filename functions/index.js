@@ -1361,7 +1361,7 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                   speechOutput = '<speak>' + strings.acknowledger.sample() + 'Grateful Dead has played in ' + searchByCity + ' in ' + YearString + '. Do you have a particular year in mind?</speak>';
                 } else if (availableYears.length > 1) {
                   YearString = availableYears[0] + ' to ' + availableYears[availableYears.length - 1];
-                  speechOutput = '<speak>' + strings.acknowledger.sample() + 'Grateful Dead has played in ' + searchByCity + ' sometime between ' + YearString + '. Do you have a particular year in mind?</speak>';
+                  speechOutput = '<speak>' + strings.acknowledger.sample() + 'Grateful Dead has played in ' + searchByCity + ' from ' + YearString + '. Do you have a particular year in mind?</speak>';
                 }
 
                 log('Ok, for ' + searchByCollectionValue + ' in ' + searchByCity + ' I have music from ' + YearString, searchByCollectionValue, searchByCity, searchByYear, APIURL, function (status) {
