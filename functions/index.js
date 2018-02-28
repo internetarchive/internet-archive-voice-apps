@@ -95,7 +95,7 @@ let playAudioByRandom = false;
 let searchByCity = '';
 let availableCity = 'Los Angeles';
 let availableYear = '1971';
-let strange_variable_used = true;
+let strangeVariableUsed = true;
 let searchByCollectionValue = '';
 let collectionQuery = '';
 let searchByTrackTitle = '';
@@ -105,7 +105,7 @@ let oneGoPlayAudio = false;
 let oneGoCollectionRandomPlayAudio = false;
 let topicName = '';
 let totalTrackNumber = -1;
-let strange_variable_IdentifierCount = 0;
+let strangeVariableIdentifierCount = 0;
 
 let currentSpeechoutput = -1;
 let currentSuggestions = null;
@@ -211,8 +211,8 @@ function init (app) {
   searchByTitle = false;
   searchByTrackTitle = '';
   searchByYear = '';
-  strange_variable_used = true;
-  strange_variable_IdentifierCount = 0;
+  strangeVariableUsed = true;
+  strangeVariableIdentifierCount = 0;
   collectionQuery = '';
   topicName = '';
   searchForSeventyEights = false;
@@ -282,7 +282,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.playAudio.noOptions) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -303,7 +303,7 @@ function responseHandler (app) {
     currentSearchPage = 0;
     playlist = [];
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     invalidSearchPage = false;
     searchByTitle = false;
     playAudioByRandomYear = false;
@@ -317,7 +317,7 @@ function responseHandler (app) {
     currentSearchPage = 0;
     playlist = [];
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     invalidSearchPage = false;
     searchByTitle = false;
     playAudioByRandomYear = false;
@@ -331,7 +331,7 @@ function responseHandler (app) {
     currentSearchPage = 0;
     playlist = [];
     totalTrackNumber = 0;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     invalidSearchPage = false;
     searchByTitle = true;
     playAudioByRandomYear = false;
@@ -344,7 +344,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.playAudio.random.year) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     playAudioByRandomYear = true;
     playAudioByRandomCity = false;
@@ -358,7 +358,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.playAudio.random.city) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     playAudioByRandomYear = false;
     playAudioByRandomCity = true;
@@ -372,7 +372,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.playAudio.random.yearAndCity) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     playAudioByRandomYear = false;
     playAudioByRandomCity = false;
@@ -386,7 +386,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.seventyEights.noOptions) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -397,7 +397,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.seventyEights.byTopic) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -407,7 +407,7 @@ function responseHandler (app) {
   } else if (app.getIntent() === actions.oneGo.seventyEights) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -418,7 +418,7 @@ function responseHandler (app) {
     logger(actions.oneGo.playAudio);
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -434,7 +434,7 @@ function responseHandler (app) {
     logger(actions.oneGo.randomPlayAudio);
     currentSearchPage = 0;
     totalTrackNumber = -1;
-    strange_variable_IdentifierCount = 0;
+    strangeVariableIdentifierCount = 0;
     playlist = [];
     invalidSearchPage = false;
     searchByTitle = false;
@@ -1035,10 +1035,10 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
           APIURL = podcastCityAPIURL + collectionQuery + '+AND+coverage%3A(' + searchByCity + ')+AND+year%3A(' + searchByYear + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=downloads+desc&rows=1&page=' + currentSearchPage + '&indent=yes&output=json';
         }
       } else {
-        if (strange_variable_used) {
+        if (strangeVariableUsed) {
           searchByYear = '';
           searchByCity = '';
-          strange_variable_used = false;
+          strangeVariableUsed = false;
         }
         if (oneGoCollectionRandomPlayAudio === true) {
           APIURL = podcastCityAPIURL + collectionQuery + '&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + currentSearchPage + '&indent=yes&output=json';
@@ -1071,10 +1071,10 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
                 counter = 0;
                 playlist = [];
               }
-              if (result['response']['numFound'] < strange_variable_IdentifierCount) {
-                strange_variable_used = true;
+              if (result['response']['numFound'] < strangeVariableIdentifierCount) {
+                strangeVariableUsed = true;
               } else {
-                strange_variable_IdentifierCount++;
+                strangeVariableIdentifierCount++;
               }
               // New Https Request for mp3 tracks
               // track=counter+1;
@@ -1292,10 +1292,10 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
         }
         APIURL = podcastAPIURL + collectionQuery + '+AND+year:(' + searchByYear + ')&fl[]=coverage&fl[]=creator&fl[]=description&fl[]=downloads&fl[]=identifier&fl[]=mediatype&fl[]=subject,year,location&fl[]=title&sort[]=random&rows=1&page=' + currentSearchPage + '&indent=yes&output=json';
       } else {
-        if (strange_variable_used) {
+        if (strangeVariableUsed) {
           searchByYear = '';
           searchByCity = '';
-          strange_variable_used = false;
+          strangeVariableUsed = false;
         }
 
         if (app.getIntent() === actions.playAudio.byYearAndCity) {
@@ -1392,10 +1392,10 @@ function getAudioPlayList (app, counter, thisOBJ, offsetInMilliseconds, callback
                 counter = 0;
                 playlist = [];
               }
-              if (result['response']['numFound'] < strange_variable_IdentifierCount) {
-                strange_variable_used = true;
+              if (result['response']['numFound'] < strangeVariableIdentifierCount) {
+                strangeVariableUsed = true;
               } else {
-                strange_variable_IdentifierCount++;
+                strangeVariableIdentifierCount++;
               }
               // New Https Request for mp3 tracks
               // track=counter+1;

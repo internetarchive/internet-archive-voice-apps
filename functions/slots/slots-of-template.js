@@ -8,6 +8,8 @@
  * @private
  */
 
+const debug = require('debug')('ia:templateSlots:debug');
+const warning = require('debug')('ia:templateSlots:warning');
 const _ = require('lodash');
 const mustache = require('mustache');
 
@@ -38,7 +40,8 @@ function extractRequrements (templates) {
         .reduce(
           (acc, item) => {
             const splitName = item.split('.');
-            const extension = extensions.getExtensionTypeSet(splitName[0])(splitName[1]);
+            const extType = extensions.getExtensionTypeFromValue(splitName[0]);
+            const extension = extensions.getExtensionTypeSet(extType)(splitName[1]);
             return acc.concat(extension ? extension.requirements : item);
           }, []
         )
@@ -141,9 +144,16 @@ function getPromptsForSlots (prompts, slots) {
  * @returns {Array}
  */
 function getRequiredExtensionHandlers (template) {
+  debug(`lets search for extensions for "${template}"`);
   return getListOfRequiredExtensions(template)
     .map(({extType, name}) => {
       const extension = extensions.getExtensionTypeSet(extType)(name);
+      debug(`we've found extension "${extType}/${name}"`);
+      if (!extension) {
+        warning(`but we don't have handler for it`);
+      } else if (!extension.handler) {
+        warning(`but ${extType}/${name} doesn't have handler() method`);
+      }
       return {
         handler: extension && extension.handler,
         extType,

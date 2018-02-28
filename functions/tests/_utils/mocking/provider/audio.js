@@ -13,8 +13,8 @@ module.exports = function ({
 } = {}) {
   return {
     fetchAlbumDetails: sinon.stub().returns(
-      fetchAlbumDetailsResolve && Promise.resolve(fetchAlbumDetailsResolve) ||
-      fetchAlbumDetailsReject && Promise.resolve(fetchAlbumDetailsReject)
+      fetchAlbumDetailsResolve ? Promise.resolve(fetchAlbumDetailsResolve)
+        : fetchAlbumDetailsReject && Promise.resolve(fetchAlbumDetailsReject)
     ),
     getSongUrlByAlbumIdAndFileName: sinon.stub().returns(getSongUrlByAlbumIdAndFileNameReturns),
   };

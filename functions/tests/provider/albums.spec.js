@@ -3,14 +3,14 @@ const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const collection = rewire('../../provider/creator');
+const albumsProvider = rewire('../../provider/albums');
 
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
 
 describe('collection', () => {
   describe('fetchAlbums', () => {
     beforeEach(() => {
-      collection.__set__(
+      albumsProvider.__set__(
         'fetch',
         fetchMock
           .sandbox()
@@ -19,7 +19,7 @@ describe('collection', () => {
     });
 
     it('should fetch items of collection', () => {
-      return collection.fetchAlbums('OfARevolution', {limit: 3})
+      return albumsProvider.fetchAlbums('OfARevolution', {limit: 3})
         .then(albums => {
           const items = albums.items;
           expect(items[0]).to.have.property('identifier', 'oar00-09-27');

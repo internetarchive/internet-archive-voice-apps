@@ -1,18 +1,16 @@
 const _ = require('lodash');
 
 /**
- * TODO: should be implemented in the way actions were done:
- * invert dependency - each provider describe which slots it could fill
+ * TODO: should use ./extensions/builder here
  */
 
-const nope = () => null;
 const providers = _([
-  {slots: ['coverage'], provider: nope},
-  {slots: ['coverage', 'year'], provider: nope},
-  // don't think we need it for the moment
-  // because we have fixed recommended artists
-  // [['creator'], (app) => {}],
-  {slots: ['year'], provider: nope},
+  require('./coverage-year'),
+  require('./creators'),
+
+  // TODO: should implement suggestions feeders
+  // {slots: ['coverage'], handler: () => Promise.resolve({items: []});},
+  // {slots: ['year'], handler: () => Promise.resolve({items: []});},
 ]);
 
 /**
@@ -23,7 +21,7 @@ const providers = _([
  */
 function getSuggestionProviderForSlots (slots) {
   const item = providers.find(item => _.isEqual(item.slots, slots));
-  return item && item.provider;
+  return item && item.handle;
 }
 
 module.exports = {

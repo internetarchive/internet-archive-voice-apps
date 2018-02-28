@@ -3,15 +3,15 @@ const sinon = require('sinon');
 /**
  * Mock of search/creator
  *
- * @param fetchAlbumsResponse
+ * @param fetchAlbumsResolve
  * @returns {{fetchDetails: *}}
  */
 module.exports = function ({
-  fetchAlbumsResponse = null,
+  fetchAlbumsResolve = null,
   fetchAlbumsByQueryResolve = null,
 } = {}) {
   return {
-    fetchAlbums: sinon.stub().returns(Promise.resolve(fetchAlbumsResponse)),
+    fetchAlbums: sinon.stub().returns(Promise.resolve(fetchAlbumsResolve)),
     fetchAlbumsByQuery: sinon.stub().returns(Promise.resolve(fetchAlbumsByQueryResolve)),
   };
 };
