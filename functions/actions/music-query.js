@@ -279,7 +279,7 @@ function generatePrompt (app) {
         },
       });
 
-      return Promise.resolve({speech, suggestions});
+      return {speech, suggestions};
     });
 }
 
