@@ -28,7 +28,7 @@ function handler (app) {
 
   const answer = [];
   const newValues = fillSlots(app);
-  return generateGreeting(app, newValues)
+  return generateAcknowledge(app, newValues)
     .then(res => {
       answer.push(res);
       return generatePrompt(app);
@@ -94,13 +94,13 @@ function fillSlots (app) {
 }
 
 /**
- * Generate greeting for received values
+ * Generate acknowledge message for received values
  *
  * @param app
  * @param newValues
  * @returns {*}
  */
-function generateGreeting (app, newValues) {
+function generateAcknowledge (app, newValues) {
   const newNames = Object.keys(newValues);
   // we get new values
   if (newNames.length === 0) {
@@ -110,29 +110,29 @@ function generateGreeting (app, newValues) {
 
   debug('We get few new slots', newValues);
 
-  const greetingRequirements = extractRequrements(intentStrings.greetings);
+  const acknowledgeRequirements = extractRequrements(intentStrings.acknowledges);
 
-  // find the list of greetings which match recieved slots
-  let validGreetings = getMatchedTemplatesExactly(
-    greetingRequirements,
+  // find the list of acknowledges which match recieved slots
+  let validAcknowledges = getMatchedTemplatesExactly(
+    acknowledgeRequirements,
     newNames
   );
 
-  if (validGreetings.length === 0) {
-    validGreetings = getMatchedTemplates(
-      greetingRequirements,
+  if (validAcknowledges.length === 0) {
+    validAcknowledges = getMatchedTemplates(
+      acknowledgeRequirements,
       newNames
     );
   }
 
-  if (validGreetings.length === 0) {
-    warning(`there is no valid greetings for ${newNames}. Maybe we should write few?`);
+  if (validAcknowledges.length === 0) {
+    warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
     return Promise.resolve(null);
   }
 
-  debug('we have few valid greetings', validGreetings);
+  debug('we have few valid acknowledges', validAcknowledges);
 
-  const template = _.sample(validGreetings);
+  const template = _.sample(validAcknowledges);
   const context = querySlots.getSlots(app);
 
   // mustachejs doesn't support promises on-fly

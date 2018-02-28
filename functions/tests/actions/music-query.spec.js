@@ -9,7 +9,7 @@ const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
 const strings = {
-  greetings: [
+  acknowledges: [
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
     '{{year}} - it was excellent year!',
@@ -121,8 +121,8 @@ describe('actions', () => {
       });
     });
 
-    describe('greetings', () => {
-      it('should greet', () => {
+    describe('acknowledge', () => {
+      it('should acknowledge are received values', () => {
         app = mockApp({
           argument: {
             coverage: 'Kharkiv',
