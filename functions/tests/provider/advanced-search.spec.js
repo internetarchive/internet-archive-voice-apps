@@ -4,7 +4,7 @@ const advancedSearch = require('../../provider/advanced-search');
 describe('provider', () => {
   describe('advanced search', () => {
     describe('buildQueryCondition', () => {
-      it('should ..', () => {
+      it('should build query string', () => {
         const condition = advancedSearch.buildQueryCondition({
           coverage: 'london',
           creatorId: 'theband',
