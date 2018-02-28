@@ -17,11 +17,12 @@ class Extensions {
   }
 
   /**
+   * Get extension by its name
    *
    * @param name
+   * @returns {*}
    */
-
-  getExtension (name) {
+  getByName (name) {
     debug('try to get extension:', name);
     // TODO: maybe we should use require.resolve here?
     const location = path.join(this.root, name + '.js');
