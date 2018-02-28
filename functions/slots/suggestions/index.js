@@ -1,5 +1,7 @@
 const _ = require('lodash');
 
+const coverageYear = require('./coverage-year');
+
 /**
  * TODO: should be implemented in the way actions were done:
  * invert dependency - each provider describe which slots it could fill
@@ -9,12 +11,12 @@ const _ = require('lodash');
 const nope = () => Promise.resolve({items: []});
 
 const providers = _([
-  {slots: ['coverage'], provider: nope},
-  {slots: ['coverage', 'year'], provider: nope},
+  {slots: ['coverage'], handler: nope},
+  coverageYear,
   // don't think we need it for the moment
   // because we have fixed recommended artists
   // [['creator'], (app) => {}],
-  {slots: ['year'], provider: nope},
+  {slots: ['year'], handler: nope},
 ]);
 
 /**
@@ -25,7 +27,7 @@ const providers = _([
  */
 function getSuggestionProviderForSlots (slots) {
   const item = providers.find(item => _.isEqual(item.slots, slots));
-  return item && item.provider;
+  return item && item.handler;
 }
 
 module.exports = {

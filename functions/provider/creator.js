@@ -18,7 +18,7 @@ function fetchAlbums (id, {
   page = 0,
   sort = 'downloads+desc',
 } = {}) {
-  debug(`Fetch albums of ${id}`);
+  debug(`fetch albums of ${id}`);
   return fetch(
     mustache.render(
       config.endpoints.COLLECTION_ITEMS_URL,
@@ -32,15 +32,18 @@ function fetchAlbums (id, {
     )
   )
     .then(res => res.json())
-    .then(json => ({
-      items: json.response.docs.map(a => ({
-        identifier: a.identifier,
-        coverage: a.coverage,
-        subject: a.subject,
-        title: a.title,
-        year: parseInt(a.year),
-      })),
-    }))
+    .then(json => {
+      debug(`fetch ${json.response.docs.length} albums`);
+      return {
+        items: json.response.docs.map(a => ({
+          identifier: a.identifier,
+          coverage: a.coverage,
+          subject: a.subject,
+          title: a.title,
+          year: parseInt(a.year),
+        })),
+      };
+    })
     .catch(e => {
       error(`Get error on fetching albums of artist ${id}, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
