@@ -308,8 +308,16 @@ describe('actions', () => {
               action.__get__('querySlots'),
               action.__get__('playlist')
             );
-            expect(albumsFeeder.isEmpty).to.have.been.called;
-            expect(albumsFeeder.getCurrentItem).to.have.been.called;
+            expect(albumsFeeder.isEmpty).to.have.been.calledWith(
+              app,
+              action.__get__('querySlots'),
+              action.__get__('playlist')
+            );
+            expect(albumsFeeder.getCurrentItem).to.have.been.calledWith(
+              app,
+              action.__get__('querySlots'),
+              action.__get__('playlist')
+            );
           });
       });
     });

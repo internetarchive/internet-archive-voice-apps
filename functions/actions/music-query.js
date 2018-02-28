@@ -39,14 +39,14 @@ function handler (app) {
     return feeder
       .build(app, querySlots, playlist)
       .then(() => {
-        if (feeder.isEmpty(querySlots, playlist)) {
+        if (feeder.isEmpty(app, querySlots, playlist)) {
           // TODO: feeder can't find anything by music query
           // isn't covered case should be implemented
           dialog.ask(
             `We haven't find anything by your request would you like something else?`
           );
         } else {
-          dialog.playSong(app, feeder.getCurrentItem(querySlots, playlist));
+          dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
         }
       });
   }
