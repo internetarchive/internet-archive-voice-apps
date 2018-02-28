@@ -9,6 +9,12 @@ describe('slots', () => {
         it('should have requirements', () => {
           expect(creator).to.have.property('requirements').to.not.empty;
         });
+
+        describe('handler', () => {
+          it('should return promise', () => {
+            expect(creator.handler()).to.have.property('then');
+          });
+        });
       });
     });
   });
