@@ -27,6 +27,12 @@ function handler (app) {
 
   const answer = [];
   const newValues = fillSlots(app);
+
+  const completeness = querySlots.hasSlot(app, queryDialogScheme.slots);
+  if (completeness) {
+    debug('we got all needed slots');
+  }
+
   return generateAcknowledge(app, newValues)
     .then(res => {
       answer.push(res);
