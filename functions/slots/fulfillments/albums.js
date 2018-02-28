@@ -101,11 +101,19 @@ function isEmpty (app, slots, playlist) {
   return playlist.isEmpty(app);
 }
 
+/**
+ * Current item of feeder
+ *
+ * @param app
+ * @param slots
+ * @param playlist
+ * @returns {{id: string, title: string}}
+ */
 function getCurrentItem (app, slots, playlist) {
-
+  return playlist.getCurrentSong(app);
 }
 
-function hasNextSong () {
+function hasNext () {
 
 }
 
@@ -117,6 +125,6 @@ module.exports = {
   build,
   isEmpty,
   getCurrentItem,
-  hasNextSong,
+  hasNext,
   next,
 };
