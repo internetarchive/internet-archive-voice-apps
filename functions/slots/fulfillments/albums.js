@@ -82,19 +82,26 @@ function build (app, query, playlist) {
       // so maybe we can put it out of this function?
       playlist.create(app, songs);
     });
-    // .catch(err => {
     // TODO:
+    // .catch(err => {
     // dialog.ask(app, {
     //   speech: `We got an error: ${JSON.stringify(err)}. Do you want to try again?`
     // });
     // });
 }
 
-function isEmpty (slots, playlist) {
-
+/**
+ * Do we have any songs here?
+ *
+ * @param slots
+ * @param playlist
+ * @returns {boolean}
+ */
+function isEmpty (app, slots, playlist) {
+  return playlist.isEmpty(app);
 }
 
-function getCurrentItem (slots, playlist) {
+function getCurrentItem (app, slots, playlist) {
 
 }
 

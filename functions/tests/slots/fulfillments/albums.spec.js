@@ -45,9 +45,9 @@ describe('slots', () => {
         return albums
           .build(app, query, playlist)
           .then(() => {
-            console.log(JSON.stringify(app.data.playlist));
             expect(playlist.hasNextSong(app)).to.be.true;
             expect(playlist.getCurrentSong(app)).to.be.ok;
+            expect(albums.isEmpty(app, query, playlist)).to.be.false;
           });
       });
     });
