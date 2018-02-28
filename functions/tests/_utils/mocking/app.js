@@ -7,9 +7,9 @@ const sinon = require('sinon');
  * @returns {{}}
  */
 module.exports = function mockApp ({
-                                     argument = null,
-                                     lastSeen = Date.now(),
-                                   } = {}) {
+  argument = null,
+  lastSeen = Date.now(),
+} = {}) {
   const app = {};
   app.ask = sinon.stub().returns(app);
   app.data = {};

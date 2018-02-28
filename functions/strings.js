@@ -1,11 +1,11 @@
 module.exports = {
   // v2
   acknowledger: [
-    "OK, ",
-    "Got it, ",
-    "Sure, ",
-    "Alright, ",
-    "Thanks, "
+    'OK, ',
+    'Got it, ',
+    'Sure, ',
+    'Alright, ',
+    'Thanks, '
   ],
 
   dialog: {
@@ -70,19 +70,19 @@ module.exports = {
   prompts: {
     select: {
       artist: [
-        "What artist do you want to hear?",
-        "What artist would you like to listen to?",
+        'What artist do you want to hear?',
+        'What artist would you like to listen to?',
       ],
-      city: "Please select a city",
-      collection: "Please select a collection",
+      city: 'Please select a city',
+      collection: 'Please select a collection',
       topic: [
-        "Please select a topic",
-        "Please select a topic - like Jazz, Alternative, or Dance",
+        'Please select a topic',
+        'Please select a topic - like Jazz, Alternative, or Dance',
       ],
-      year: "Please select a year",
+      year: 'Please select a year',
       yearAndCity: [
-        "Please select a city and year",
-        "Do you have a specific city and year in mind?",
+        'Please select a city and year',
+        'Do you have a specific city and year in mind?',
       ],
     },
   },
@@ -104,7 +104,7 @@ module.exports = {
       reprompt: "I still didn't get that."
     },
     collection: {
-      notFound: "has no available songs to play. Please choose a different artist, random is also an option"
+      notFound: 'has no available songs to play. Please choose a different artist, random is also an option'
     },
     topic: {
       notFound: "I couldn't find any songs. Please select another topic, random is also an option"
@@ -120,7 +120,7 @@ module.exports = {
     whatWasThat: 'Sorry, what was that?',
     didntCatchThat: "I didn't catch that.",
     misunderstand: "I'm having trouble understanding you",
-    sayAgain: "Sorry, can you say that again?",
+    sayAgain: 'Sorry, can you say that again?',
     finalReprompt: "I'm sorry I'm having trouble here. Maybe we should try this again later."
   },
   suggestion: {
@@ -132,20 +132,20 @@ module.exports = {
       hotButteredRum: 'Hot Buttered Rum',
       kellerWilliams: 'Keller Williams'
     },
-    artistsPrompt: "I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example",
-    artistsPromptAlternative: "We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams",
-    randomPrompt: "I can play something randomly"
+    artistsPrompt: 'I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example',
+    artistsPromptAlternative: 'We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams',
+    randomPrompt: 'I can play something randomly'
   },
   statements: {
     greeting: {
       welcome: {
-        liveMusicCollection: "Welcome to the live music collection at the Internet Archive."
+        liveMusicCollection: 'Welcome to the live music collection at the Internet Archive.'
       },
-      welcomeBack: "Welcome to the live music collection at the Internet Archive."
+      welcomeBack: 'Welcome to the live music collection at the Internet Archive.'
     },
     salutation: {
       thankYou: {
-        liveMusicCollection: "Thanks for rocking with the Internet Archive’s live music collection!"
+        liveMusicCollection: 'Thanks for rocking with the Internet Archive’s live music collection!'
       }
     }
   }
