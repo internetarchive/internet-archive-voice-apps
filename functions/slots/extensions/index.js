@@ -1,3 +1,4 @@
+const debug = require('debug')('ia:slots:extensions:debug');
 const warning = require('debug')('ia:slots:extensions:warning');
 
 const resolvers = require('./resolvers');
@@ -18,7 +19,8 @@ const extensionTypes = {
    * @returns {*}
    * @private
    */
-  __resolvers: (resolverName) => {
+  resolvers: (resolverName) => {
+    debug('we are looking for resolver', resolverName);
     const resolver = resolvers.getByName(resolverName);
     if (!resolver) {
       warning('we missed one resolver here for:', resolverName);

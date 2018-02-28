@@ -20,6 +20,7 @@ module.exports = {
     musicQuery: {
       acknowledges: [
         '{{coverage}} - good place!',
+        `Excellent! You've selected {{collection}} collection.`,
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
