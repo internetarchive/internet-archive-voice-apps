@@ -48,6 +48,8 @@ module.exports = {
         prompts: [
           'What artist would you like to listen to? For example, {{suggestions.humanized}}?',
         ],
+
+        suggestionTemplate: 'the {{creator}}',
       }, {
         requirements: [
           'coverage',
