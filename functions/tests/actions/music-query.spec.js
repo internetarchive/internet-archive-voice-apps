@@ -138,14 +138,26 @@ describe('actions', () => {
           });
       });
 
-      xit('should substitute resolved slots', () => {
+      it('should substitute resolved slots', () => {
         app = mockApp({
           argument: {
             creatorId: 'bandId',
           },
         });
+
+        const handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+
+        action.__set__('getRequiredExtensionHandlers', () => [{
+          handler,
+          name: 'creator',
+          extType: 'resolvers',
+        }]);
+
         return action.handler(app)
           .then(() => {
+            expect(handler).to.have.been.calledWith({
+              creatorId: 'bandId',
+            });
             expect(dialog.ask).to.have.been.calledOnce;
             expect(dialog.ask.args[0][1])
               .to.have.property('speech')

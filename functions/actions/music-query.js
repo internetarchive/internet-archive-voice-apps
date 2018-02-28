@@ -139,14 +139,12 @@ function generateGreeting (app, newValues) {
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
   return resolveSlots(context, template)
-    .then(resolvedSlots => {
-      return {
-        speech: mustache.render(
-          template,
-          Object.assign({}, newValues, resolvedSlots)
-        )
-      };
-    });
+    .then(resolvedSlots => ({
+      speech: mustache.render(
+        template,
+        Object.assign({}, newValues, resolvedSlots)
+      )
+    }));
 }
 
 /**
@@ -167,9 +165,21 @@ function resolveSlots (context, template) {
         .map(({handler}) => handler(context))
     )
     .then(solutions => {
-      // TODO: should pack result in the way:
-      // [__<extension_type>].[<extension_name>] = result
-      return {};
+      return solutions
+      // zip/merge to collections
+        .map((res, index) => {
+          const extension = extensions[index];
+          return Object.assign({}, extension, {result: res});
+        })
+        // pack result in the way:
+        // [__<extension_type>].[<extension_name>] = result
+        .reduce((acc, extension) => {
+          return Object.assign({}, acc, {
+            ['__' + extension.extType]: {
+              [extension.name]: extension.result,
+            },
+          });
+        }, {});
     });
 }
 
