@@ -55,6 +55,8 @@ const queryDialogScheme = {
     'coverage': {},
     'year': {},
   },
+
+  fulfillment: 'albums',
 };
 
 describe('actions', () => {
