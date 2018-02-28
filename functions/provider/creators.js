@@ -7,7 +7,12 @@ const config = require('../config');
 
 const {buildQueryCondition} = require('./advanced-search');
 
-function fetchCreators (query) {
+/**
+ * Fetch popular creators by query condition
+ *
+ * @param query
+ */
+function fetchCreatorsBy (query) {
   debug('fetch creators by:', query);
   const {
     limit = 3,
@@ -47,5 +52,5 @@ function fetchCreators (query) {
 }
 
 module.exports = {
-  fetchCreators,
+  fetchCreatorsBy,
 };

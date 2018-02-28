@@ -21,7 +21,7 @@ describe('providers', () => {
     describe('fetchCreators', () => {
       it('should fetch popular creators', () => {
         return creators
-          .fetchCreators({
+          .fetchCreatorsBy({
             coverage: 'london',
             creatorId: 'theband',
             collectionId: '80s',
