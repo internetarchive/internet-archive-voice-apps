@@ -3,9 +3,8 @@ const warning = require('debug')('ia:actions:music-query:warning');
 const _ = require('lodash');
 const mustache = require('mustache');
 
-const humanize = require('../humanize');
-
 const dialog = require('../dialog');
+const humanize = require('../humanize');
 const {
   extractRequrements,
   getMatchedTemplates,
@@ -15,7 +14,7 @@ const {
 } = require('../slots/slots-of-template');
 const {getSuggestionProviderForSlots} = require('../slots/suggestions');
 const querySlots = require('../state/query');
-const intentStrings = require('../strings').intents.musicQuery;
+const queryDialogScheme = require('../strings').intents.musicQuery;
 
 /**
  * handle music query action
@@ -82,7 +81,7 @@ function groupAnswers (answer) {
 function fillSlots (app) {
   const newValues = {};
 
-  for (let slotName in intentStrings.slots) {
+  for (let slotName in queryDialogScheme.slots) {
     const value = app.getArgument(slotName);
     if (value) {
       querySlots.setSlot(app, slotName, value);
@@ -110,7 +109,7 @@ function generateAcknowledge (app, newValues) {
 
   debug('We get few new slots', newValues);
 
-  const acknowledgeRequirements = extractRequrements(intentStrings.acknowledges);
+  const acknowledgeRequirements = extractRequrements(queryDialogScheme.acknowledges);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
@@ -225,7 +224,7 @@ function fetchSuggestions (app, promptScheme) {
  */
 function generatePrompt (app) {
   const missedSlots =
-    Object.keys(intentStrings.slots)
+    Object.keys(queryDialogScheme.slots)
       .filter(slotName => !querySlots.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
@@ -235,7 +234,7 @@ function generatePrompt (app) {
 
   debug('we missed slots:', missedSlots);
   const promptScheme = getPromptsForSlots(
-    intentStrings.prompts,
+    queryDialogScheme.prompts,
     missedSlots
   );
 

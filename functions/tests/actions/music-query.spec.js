@@ -8,7 +8,7 @@ const {getSlot, setSlot} = require('../../state/query');
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
-const strings = {
+const queryDialogScheme = {
   acknowledges: [
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
@@ -73,7 +73,7 @@ describe('actions', () => {
     });
     dialog = mockDialog();
     action.__set__('dialog', dialog);
-    action.__set__('intentStrings', strings);
+    action.__set__('queryDialogScheme', queryDialogScheme);
 
     provider = sinon.stub().returns(Promise.resolve({
       items: [
@@ -180,7 +180,6 @@ describe('actions', () => {
           });
       });
     });
-
 
     describe('suggestions', () => {
       it('should return list of statis suggestions', () => {
