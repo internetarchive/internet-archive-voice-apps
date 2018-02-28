@@ -226,18 +226,19 @@ function fetchSuggestions (app, promptScheme) {
     return Promise.resolve(null);
   }
 
-  return provider(querySlots.getSlots(app)).then(res => {
-    const suggestions = res.items.slice(0, 3);
-    if (promptScheme.suggestionTemplate) {
-      return suggestions.map(
-        item => mustache.render(promptScheme.suggestionTemplate, item)
-      );
-    } else {
-      return suggestions.map(
-        item => _.values(item).join(' ')
-      );
-    }
-  });
+  return provider(querySlots.getSlots(app))
+    .then(res => {
+      const suggestions = res.items.slice(0, 3);
+      if (promptScheme.suggestionTemplate) {
+        return suggestions.map(
+          item => mustache.render(promptScheme.suggestionTemplate, item)
+        );
+      } else {
+        return suggestions.map(
+          item => _.values(item).join(' ')
+        );
+      }
+    });
 }
 
 /**
@@ -269,6 +270,7 @@ function generatePrompt (app) {
 
   const prompt = _.sample(promptScheme.prompts);
 
+  debug('we randombly choice prompt:', prompt);
   return fetchSuggestions(app, promptScheme)
     .then((suggestions) => {
       const speech = mustache.render(prompt, {
