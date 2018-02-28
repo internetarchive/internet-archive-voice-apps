@@ -7,13 +7,13 @@ const albums = rewire('../../../slots/fulfillments/albums');
 
 const mockApp = require('../../_utils/mocking/app');
 const mockAudio = require('../../_utils/mocking/provider/audio');
-const mockCreator = require('../../_utils/mocking/provider/creator');
+const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('slots', () => {
   let app;
   beforeEach(() => {
     app = mockApp();
-    albums.__set__('creatorProvider', mockCreator({
+    albums.__set__('albumsProvider', mockAlbumsProvider({
       fetchAlbumsByQueryResolve: {
         items: [{
           identifier: 'album-1',

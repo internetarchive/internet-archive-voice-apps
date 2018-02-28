@@ -1,23 +1,24 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const mockCreatorProvider = require('../../_utils/mocking/provider/creator');
+const mockAlbumProvider = require('../../_utils/mocking/provider/albums');
 
 const coverageYear = rewire('../../../slots/suggestions/coverage-year');
 
 describe('suggestions', () => {
   describe('coverage & year', () => {
-    let creator = mockCreatorProvider({
-      fetchAlbumsResolve: {
-        items: [{
-          coverage: 'NY',
-          year: 2017,
-        }],
-      },
-    });
+    let albumProvider;
 
     beforeEach(() => {
-      coverageYear.__set__('creator', creator);
+      albumProvider = mockAlbumProvider({
+        fetchAlbumsResolve: {
+          items: [{
+            coverage: 'NY',
+            year: 2017,
+          }],
+        },
+      });
+      coverageYear.__set__('albumsProvider', albumProvider);
     });
 
     it('should have slots', () => {
@@ -25,16 +26,16 @@ describe('suggestions', () => {
     });
 
     it('should have handler', () => {
-      expect(coverageYear).to.have.property('handler');
+      expect(coverageYear).to.have.property('handle');
     });
 
-    it('should ...', () => {
+    it('should fetch popular (coverage, year) pairs', () => {
       const slots = {
         collectionId: 'etree',
         creatorId: 'band',
       };
       return coverageYear
-        .handler(slots)
+        .handle(slots)
         .then(res => {
           expect(res).to.have.property('items').with.deep.members([{
             coverage: 'NY',

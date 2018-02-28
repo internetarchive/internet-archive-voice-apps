@@ -1,4 +1,4 @@
-const creator = require('../../provider/creator');
+const albumsProvider = require('../../provider/albums');
 
 /**
  * Return list of coverage year pair
@@ -6,8 +6,8 @@ const creator = require('../../provider/creator');
  * @param slots
  * @returns {Promise.<{items: Array}>}
  */
-function handler (slots) {
-  return creator
+function handle (slots) {
+  return albumsProvider
     .fetchAlbums(
       slots.creatorId, {
         sort: 'downloads+desc',
@@ -16,6 +16,6 @@ function handler (slots) {
 }
 
 module.exports = {
-  handler,
+  handle,
   slots: ['coverage', 'year'],
 };

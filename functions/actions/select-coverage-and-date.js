@@ -2,8 +2,8 @@ const debug = require('debug')('ia:actions:select-creator:debug');
 
 const dialog = require('../dialog');
 
+const albumsProvider = require('../provider/albums');
 const search = require('../provider/audio');
-const creatorProvider = require('../provider/creator');
 const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 
@@ -36,7 +36,7 @@ function handler (app) {
   // If we have coverage, date, and creator
   // we could get album id
   const creatorId = querySlots.getSlot(app, 'creator');
-  creatorProvider
+  albumsProvider
     .fetchAlbumsByQuery({
       coverage,
       creatorId,

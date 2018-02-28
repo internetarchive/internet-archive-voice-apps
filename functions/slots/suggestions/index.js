@@ -15,7 +15,7 @@ const providers = _([
   coverageYear,
   // don't think we need it for the moment
   // because we have fixed recommended artists
-  // [['creator'], (app) => {}],
+  [['creator'], (app) => {}],
   {slots: ['year'], handler: nope},
 ]);
 
@@ -27,7 +27,7 @@ const providers = _([
  */
 function getSuggestionProviderForSlots (slots) {
   const item = providers.find(item => _.isEqual(item.slots, slots));
-  return item && item.handler;
+  return item && item.handle;
 }
 
 module.exports = {

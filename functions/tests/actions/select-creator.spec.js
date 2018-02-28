@@ -6,21 +6,17 @@ const querySlots = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
+const mockAlbumsProvider = require('../_utils/mocking/provider/albums');
 const mockSearchCollection = require('../_utils/mocking/provider/collection');
-const mockSearchCreator = require('../_utils/mocking/provider/creator');
 
 describe('actions', () => {
+  let albumsProvider;
   let app;
   let collection;
-  let creator;
   let dialog;
 
   beforeEach(() => {
-    dialog = mockDialog();
-    collection = mockSearchCollection({
-      fetchDetailsResponse: {title: 'Cool Band'}
-    });
-    creator = mockSearchCreator({
+    albumsProvider = mockAlbumsProvider({
       fetchAlbumsResolve: {
         items: [
           {coverage: 'Washington, DC', year: 1999},
@@ -29,8 +25,12 @@ describe('actions', () => {
         ],
       },
     });
+    dialog = mockDialog();
+    collection = mockSearchCollection({
+      fetchDetailsResponse: {title: 'Cool Band'}
+    });
+    action.__set__('albumsProvider', albumsProvider);
     action.__set__('collection', collection);
-    action.__set__('creator', creator);
     action.__set__('dialog', dialog);
     app = mockApp({
       argument: 'cool-band',
@@ -42,7 +42,7 @@ describe('actions', () => {
       return action.handler(app)
         .then(() => {
           expect(collection.fetchDetails).to.be.calledWith('cool-band');
-          expect(creator.fetchAlbums).to.be.calledWith('cool-band');
+          expect(albumsProvider.fetchAlbums).to.be.calledWith('cool-band');
           expect(dialog.ask).to.be.calledOnce;
         });
     });
