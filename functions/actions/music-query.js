@@ -37,7 +37,7 @@ function handler (app) {
     debug('we got all needed slots');
     const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
     return feeder
-      .build(querySlots, playlist)
+      .build(app, querySlots, playlist)
       .then(() => {
         if (feeder.isEmpty(querySlots, playlist)) {
           // TODO: feeder can't find anything by music query
