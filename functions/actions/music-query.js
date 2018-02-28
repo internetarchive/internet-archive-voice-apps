@@ -22,6 +22,7 @@ const fulfillments = require('../slots/fulfillments');
 /**
  * handle music query action
  * - fill slots of music query
+ * TODO: it seems we could use express.js/koa middleware architecture here
  *
  * @param app
  */
@@ -40,6 +41,10 @@ function handler (app) {
       .then(() => {
         if (feeder.isEmpty(querySlots, playlist)) {
           // TODO: feeder can't find anything by music query
+          // isn't covered case should be implemented
+          dialog.ask(
+            `We haven't find anything by your request would you like something else?`
+          );
         } else {
           dialog.playSong(app, feeder.getCurrentItem(querySlots, playlist));
         }
