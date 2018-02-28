@@ -37,7 +37,7 @@ describe('providers', () => {
             }, {
               creator: 'Disco Biscuits',
               identifier: 'DiscoBiscuits',
-            }])
+            }]);
           });
       });
     });
