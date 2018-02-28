@@ -18,13 +18,49 @@ module.exports = {
 
   intents: {
     musicQuery: {
-      greetings: [
+      acknowledges: [
+        '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
+        '{{year}} - it was excellent year!',
+        'Ok! Lets go with {{__resolvers.creator.title}} band!',
+        `You've selected {{__resolvers.collection.title}}`,
       ],
+
+      prompts: [{
+        requirements: [
+          'collection'
+        ],
+
+        prompts: [
+          'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
+        ],
+
+        suggestions: [
+          '78s',
+          'Live Concerts',
+        ],
+      }, {
+        requirements: [
+          'creatorId'
+        ],
+
+        prompts: [
+          'What artist would you like to listen to? For example, {{suggestions.humanized}}?',
+        ],
+      }, {
+        requirements: [
+          'coverage',
+          'year',
+        ],
+
+        prompts: [
+          'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
+        ],
+      }],
 
       slots: {
         'collection': {},
-        'creator': {},
+        'creatorId': {},
         'coverage': {},
         'year': {},
       },
