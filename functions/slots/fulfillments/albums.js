@@ -59,7 +59,7 @@ function build (app, query, playlist) {
       return albumId;
     })
     .then((albumId) => {
-      return albumId && audio.fetchAlbumDetails(albumId)
+      return albumId && audio.fetchAlbumDetails(albumId);
     })
     .then(album => {
       if (!album) {
@@ -82,12 +82,12 @@ function build (app, query, playlist) {
       // so maybe we can put it out of this function?
       playlist.create(app, songs);
     });
-    // TODO:
-    // .catch(err => {
-    // dialog.ask(app, {
-    //   speech: `We got an error: ${JSON.stringify(err)}. Do you want to try again?`
-    // });
-    // });
+  // TODO:
+  // .catch(err => {
+  // dialog.ask(app, {
+  //   speech: `We got an error: ${JSON.stringify(err)}. Do you want to try again?`
+  // });
+  // });
 }
 
 /**
