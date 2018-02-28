@@ -261,5 +261,28 @@ describe('actions', () => {
           });
       });
     });
+
+    describe('fulfillment', () => {
+      it(`shouldn't activate when we don't have enough filled slots`, () => {
+        const fulfillments = {
+          getByName: sinon.stub().returns(),
+        };
+        action.__set__('fulfillments', fulfillments);
+
+        app = mockApp({
+          argument: {
+            collection: 'live',
+            creatorId: 'the-band',
+            // missed slots:
+            // coverage: 'ny',
+            // year: 2018,
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(fulfillments.getByName).to.have.not.been.called;
+          });
+      });
+    });
   });
 });
