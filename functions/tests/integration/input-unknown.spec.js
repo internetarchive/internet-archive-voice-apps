@@ -8,7 +8,6 @@ const index = require('../..');
 const strings = require('../../strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
-
 describe('integration', () => {
   describe('input-unknown', () => {
     it('should 1st time', () => {
@@ -43,7 +42,7 @@ describe('integration', () => {
       expect(res.speech()).to.contain(
         mustache.render(
           strings.intents.unknown[1].speech,
-          { reprompt: 'Direction?' },
+          { reprompt: 'Direction?' }
         )
       );
     });

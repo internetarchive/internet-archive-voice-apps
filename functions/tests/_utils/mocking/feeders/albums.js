@@ -7,8 +7,8 @@ const sinon = require('sinon');
  * @returns {{fetchDetails: *}}
  */
 module.exports = function ({
-                             getCurrentItemReturns = null,
-                           } = {}) {
+  getCurrentItemReturns = null,
+} = {}) {
   return {
     build: sinon.stub().returns(Promise.resolve()),
     getCurrentItem: sinon.stub().returns(getCurrentItemReturns),

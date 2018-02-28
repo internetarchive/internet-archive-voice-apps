@@ -13,3 +13,4 @@ rules:
   comma-dangle: 0
   mocha/no-exclusive-tests: error
   no-unused-expressions: 0
+  no-extend-native: ["error", { "exceptions": ["Array"] }]
