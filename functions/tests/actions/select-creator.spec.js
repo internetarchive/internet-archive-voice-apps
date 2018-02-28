@@ -21,7 +21,7 @@ describe('actions', () => {
       fetchDetailsResponse: {title: 'Cool Band'}
     });
     creator = mockSearchCreator({
-      fetchAlbumsResponse: {
+      fetchAlbumsResolve: {
         items: [
           {coverage: 'Washington, DC', year: 1999},
           {coverage: 'Madison, WI', year: 2000},

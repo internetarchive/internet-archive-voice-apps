@@ -57,6 +57,8 @@ module.exports = {
         prompts: [
           'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
         ],
+
+        suggestionTemplate: '{{coverage}} {{year}}',
       }],
 
       slots: {

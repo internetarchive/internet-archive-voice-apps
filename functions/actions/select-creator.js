@@ -10,7 +10,7 @@ const creator = require('../provider/creator');
 const querySlots = require('../state/query');
 
 /**
- * handle select-creator action
+ * Handle select-creator action
  *
  * @param app
  * @returns {Promise.<TResult>}
