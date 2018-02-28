@@ -31,7 +31,7 @@ function handler (app) {
   const answer = [];
   const newValues = fillSlots(app);
 
-  const complete = querySlots.hasSlot(app, queryDialogScheme.slots);
+  const complete = querySlots.hasSlots(app, Object.keys(queryDialogScheme.slots));
   if (complete) {
     debug('we got all needed slots');
     const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);

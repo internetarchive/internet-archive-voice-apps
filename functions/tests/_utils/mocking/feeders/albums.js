@@ -7,15 +7,11 @@ const sinon = require('sinon');
  * @returns {{fetchDetails: *}}
  */
 module.exports = function ({
-                             fetchAlbumDetailsResolve = null,
-                             fetchAlbumDetailsReject = null,
-                             getSongUrlByAlbumIdAndFileNameReturns = null
+                             getCurrentItemReturns = null,
                            } = {}) {
   return {
-    fetchAlbumDetails: sinon.stub().returns(
-      fetchAlbumDetailsResolve && Promise.resolve(fetchAlbumDetailsResolve) ||
-      fetchAlbumDetailsReject && Promise.resolve(fetchAlbumDetailsReject)
-    ),
-    getSongUrlByAlbumIdAndFileName: sinon.stub().returns(getSongUrlByAlbumIdAndFileNameReturns),
+    build: sinon.stub().returns(Promise.resolve()),
+    getCurrentItem: sinon.stub().returns(getCurrentItemReturns),
+    isEmpty: sinon.stub().returns(false),
   };
 };

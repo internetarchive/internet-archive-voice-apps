@@ -7,6 +7,7 @@ const {getSlot} = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
+const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
 
 const queryDialogScheme = {
   acknowledges: [
@@ -263,12 +264,18 @@ describe('actions', () => {
     });
 
     describe('fulfillment', () => {
-      it(`shouldn't activate when we don't have enough filled slots`, () => {
-        const fulfillments = {
-          getByName: sinon.stub().returns(),
+      let albumsFeeder;
+      let fulfillments;
+
+      beforeEach(() => {
+        albumsFeeder = mockAlbumsFeeder();
+        fulfillments = {
+          getByName: sinon.stub().returns(albumsFeeder),
         };
         action.__set__('fulfillments', fulfillments);
+      });
 
+      it(`shouldn't activate when we don't have enough filled slots`, () => {
         app = mockApp({
           argument: {
             collection: 'live',
@@ -281,6 +288,23 @@ describe('actions', () => {
         return action.handler(app)
           .then(() => {
             expect(fulfillments.getByName).to.have.not.been.called;
+          });
+      });
+
+      it(`should activate when we have enough filled slots`, () => {
+        app = mockApp({
+          argument: {
+            collection: 'live',
+            creatorId: 'the-band',
+            coverage: 'ny',
+            year: 2018,
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(fulfillments.getByName).to.have.been.called;
+            expect(albumsFeeder.isEmpty).to.have.been.called;
+            expect(albumsFeeder.getCurrentItem).to.have.been.called;
           });
       });
     });
