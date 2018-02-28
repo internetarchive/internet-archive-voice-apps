@@ -17,6 +17,19 @@ module.exports = {
   },
 
   intents: {
+    musicQuery: {
+      greetings: [
+        '{{coverage}} {{year}} - great choice!',
+      ],
+
+      slots: {
+        'collection': {},
+        'creator': {},
+        'coverage': {},
+        'year': {},
+      },
+    },
+
     noInput: [{
       speech: "Sorry, I couldn't hear you.",
     }, {

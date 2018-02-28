@@ -44,17 +44,54 @@ const {getData, setData} = require('./helpers').group('query');
 //   'order',
 // ];
 
+/**
+ * Slot name is filled
+ *
+ * @param app
+ * @param {String} name
+ * @returns {boolean}
+ */
+function hasSlot (app, name) {
+  return name in getData(app);
+}
+
+/**
+ * Get slot name
+ *
+ * @param app
+ * @param {String} name
+ * @returns {*}
+ */
+function getSlot (app, name) {
+  return getData(app)[name];
+}
+
+/**
+ * Get all slots
+ *
+ * @param app
+ * @returns {*}
+ */
+function getSlots (app) {
+  return getData(app);
+}
+
+/**
+ * Update slot name
+ *
+ * @param app
+ * @param {String} name
+ * @param value
+ */
 function setSlot (app, name, value) {
   setData(app, Object.assign({}, getData(app), {
     [name]: value,
   }));
 }
 
-function getSlot (app, name) {
-  return getData(app)[name];
-}
-
 module.exports = {
-  setSlot,
+  hasSlot,
   getSlot,
+  getSlots,
+  setSlot,
 };
