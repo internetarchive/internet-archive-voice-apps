@@ -125,7 +125,15 @@ function hasNext (app, slots, playlist) {
   return playlist.hasNextSong(app);
 }
 
-function next () {
+/**
+ * Move to the next song
+ *
+ * TODO: should be async because we could have multiple albumns here
+ *
+ * @returns {Promise.<T>}
+ */
+function next (app, slots, playlist) {
+  playlist.next(app);
   return Promise.resolve();
 }
 

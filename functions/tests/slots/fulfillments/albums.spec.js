@@ -37,11 +37,14 @@ describe('slots', () => {
   });
 
   describe('fulfillments', () => {
+    beforeEach(() => {
+      query.setSlot(app, 'collection', 'live');
+      query.setSlot(app, 'creator', 'gratefuldead');
+      query.setSlot(app, 'album', 'the-best');
+    });
+
     describe('albums', () => {
       it('should fetch album', () => {
-        query.setSlot(app, 'collection', 'live');
-        query.setSlot(app, 'creator', 'gratefuldead');
-        query.setSlot(app, 'album', 'the-best');
         return albums
           .build(app, query, playlist)
           .then(() => {
@@ -50,6 +53,20 @@ describe('slots', () => {
             expect(albums.isEmpty(app, query, playlist)).to.be.false;
             expect(albums.getCurrentItem(app, query, playlist)).to.be.ok;
             expect(albums.hasNext(app, query, playlist)).to.be.true;
+          });
+      });
+
+      it('should move to the next song on albums.next', () => {
+        return albums
+          .build(app, query, playlist)
+          .then(() => {
+            expect(albums.getCurrentItem(app, query, playlist))
+              .to.have.property('identifier', 'song-1');
+            return albums.next(app, query, playlist);
+          })
+          .then(() => {
+            expect(albums.getCurrentItem(app, query, playlist))
+              .to.have.property('identifier', 'song-2');
           });
       });
     });
