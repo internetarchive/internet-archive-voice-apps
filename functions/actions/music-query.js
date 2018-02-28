@@ -13,7 +13,7 @@ const {
   getPromptsForSlots,
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
-const {getSuggestionProviderForSlots} = require('../slots/suggestion-provider');
+const {getSuggestionProviderForSlots} = require('../slots/suggestions');
 const querySlots = require('../state/query');
 const intentStrings = require('../strings').intents.musicQuery;
 
@@ -104,7 +104,6 @@ function generateGreeting (app, newValues) {
   const newNames = Object.keys(newValues);
   // we get new values
   if (newNames.length === 0) {
-    // TODO: we don't get any new values
     debug(`we don't get any new values`);
     return Promise.resolve(null);
   }
