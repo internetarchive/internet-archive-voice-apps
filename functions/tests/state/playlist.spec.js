@@ -12,9 +12,9 @@ describe('playlist', () => {
     app.data.playlist = {
       current: 1,
       items: [
-          {track: 1, title: 'song 1'},
-          {track: 2, title: 'song 2'},
-          {track: 3, title: 'song 3'},
+        {track: 1, title: 'song 1'},
+        {track: 2, title: 'song 2'},
+        {track: 3, title: 'song 3'},
       ],
     };
   });

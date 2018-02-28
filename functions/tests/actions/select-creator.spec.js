@@ -51,7 +51,7 @@ describe('actions', () => {
       return action.handler(app)
         .then(() => {
           expect(querySlots.getSlot(app, 'creators')).to.be.equal('cool-band');
-        })
+        });
     });
 
     it('should suggest the top 3 concerts of creator', () => {
@@ -63,10 +63,10 @@ describe('actions', () => {
             .to.have.length(3);
           expect(dialog.ask.args[0][1].suggestions)
             .to.have.members([
-            'Washington, DC 1999',
-            'Madison, WI 2000',
-            'Worcester, MA 2001',
-          ]);
+              'Washington, DC 1999',
+              'Madison, WI 2000',
+              'Worcester, MA 2001',
+            ]);
         });
     });
   });

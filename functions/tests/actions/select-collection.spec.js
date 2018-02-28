@@ -38,7 +38,7 @@ describe('actions', () => {
       return action.handler(app)
         .then(() => {
           expect(querySlots.getSlot(app, 'collection')).to.be.equal('the-best-collection');
-        })
-    })
+        });
+    });
   });
 });

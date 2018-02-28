@@ -3,7 +3,7 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
-const {getSlot, setSlot} = require('../../state/query');
+const {getSlot} = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -226,8 +226,8 @@ describe('actions', () => {
             expect(dialog.ask.args[0][1])
               .to.have.property('speech')
               .to.include(
-              'Would you like to listen to music from our collections of 78s or Live Concerts?'
-            );
+                'Would you like to listen to music from our collections of 78s or Live Concerts?'
+              );
           });
       });
 
@@ -254,8 +254,8 @@ describe('actions', () => {
             expect(dialog.ask.args[0][1])
               .to.have.property('speech')
               .to.include(
-              'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
-            );
+                'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+              );
           });
       });
     });

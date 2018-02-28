@@ -35,7 +35,7 @@ describe('state', () => {
           collection: 'Stoner Rock',
           band: 'Red Scalp',
           album: 'Lost Ghosts',
-        })
+        });
       });
     });
   });
