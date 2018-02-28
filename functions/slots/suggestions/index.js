@@ -1,18 +1,16 @@
 const _ = require('lodash');
 
 /**
- * TODO: should be implemented in the way actions were done:
- * invert dependency - each provider describe which slots it could fill
+ * TODO: should use ./extensions/builder here
  */
 
-// TODO: should implement suggestions feeders
-const nope = () => Promise.resolve({items: []});
-
 const providers = _([
-  {slots: ['coverage'], handler: nope},
   require('./coverage-year'),
   require('./creators'),
-  {slots: ['year'], handler: nope},
+
+  // TODO: should implement suggestions feeders
+  // {slots: ['coverage'], handler: () => Promise.resolve({items: []});},
+  // {slots: ['year'], handler: () => Promise.resolve({items: []});},
 ]);
 
 /**
