@@ -1,4 +1,4 @@
-const creator = require('../../provider/creator');
+const creator = require('../../provider/creators');
 
 /**
  *
