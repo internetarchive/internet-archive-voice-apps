@@ -1,5 +1,5 @@
 /**
- * All fulfillments of
+ * All fulfillments of Slots
  */
 
 const builder = require('../../extensions/builder');

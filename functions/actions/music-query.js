@@ -13,8 +13,11 @@ const {
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const {getSuggestionProviderForSlots} = require('../slots/suggestions');
+const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 const queryDialogScheme = require('../strings').intents.musicQuery;
+
+const fulfillments = require('../slots/fulfillments');
 
 /**
  * handle music query action
@@ -28,9 +31,19 @@ function handler (app) {
   const answer = [];
   const newValues = fillSlots(app);
 
-  const completeness = querySlots.hasSlot(app, queryDialogScheme.slots);
-  if (completeness) {
+  const complete = querySlots.hasSlot(app, queryDialogScheme.slots);
+  if (complete) {
     debug('we got all needed slots');
+    const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
+    return feeder
+      .build(querySlots, playlist)
+      .then(() => {
+        if (feeder.isEmpty(querySlots, playlist)) {
+          // TODO: feeder can't find anything by music query
+        } else {
+          dialog.playSong(app, feeder.getCurrentItem(querySlots, playlist));
+        }
+      });
   }
 
   return generateAcknowledge(app, newValues)
