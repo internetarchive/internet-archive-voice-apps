@@ -26,7 +26,7 @@ module.exports = {
   },
 
   media: {
-    POSTER_OF_ALBUM: 'https://archive.org/services/img/{{albumId}}',
+    POSTER_OF_ALBUM: 'https://archive.org/services/img/{{id}}',
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 };

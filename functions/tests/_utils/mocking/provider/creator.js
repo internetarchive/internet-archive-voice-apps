@@ -8,8 +8,10 @@ const sinon = require('sinon');
  */
 module.exports = function ({
                              fetchAlbumsResponse = null,
+                             fetchAlbumsByQueryResolve = null,
                            } = {}) {
   return {
     fetchAlbums: sinon.stub().returns(Promise.resolve(fetchAlbumsResponse)),
+    fetchAlbumsByQuery: sinon.stub().returns(Promise.resolve(fetchAlbumsByQueryResolve)),
   };
 };

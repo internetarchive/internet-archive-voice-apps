@@ -19,7 +19,7 @@ function getCurrentSong (app) {
  */
 function hasNextSong (app) {
   const playlist = getData(app);
-  return playlist.current < playlist.items.length - 1;
+  return playlist.items ? playlist.current < playlist.items.length - 1 : false;
 }
 
 /**
