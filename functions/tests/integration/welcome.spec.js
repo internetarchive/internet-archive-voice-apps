@@ -6,7 +6,6 @@ const {expect} = require('chai');
 const index = require('../..');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
-
 describe('integration', () => {
   describe('unknown', () => {
     it('should handle for a new user', () => {

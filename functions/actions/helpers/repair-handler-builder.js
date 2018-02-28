@@ -54,6 +54,6 @@ module.exports = {
           dialog.tell(app, intentStrings[2]);
           break;
       }
-    }
+    };
   }
 };

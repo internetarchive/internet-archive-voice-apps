@@ -28,7 +28,6 @@ const extensionTypes = {
   }
 };
 
-
 /**
  * Just return nothing
  *
