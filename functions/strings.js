@@ -20,11 +20,10 @@ module.exports = {
     musicQuery: {
       acknowledges: [
         '{{coverage}} - good place!',
-        `Excellent! You've selected {{collectionId}} collection.`,
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
-        `You've selected {{__resolvers.collection.title}}`,
+        `You've selected {{__resolvers.collection.title}} collection.`,
       ],
 
       prompts: [{
