@@ -20,7 +20,7 @@ module.exports = {
     musicQuery: {
       acknowledges: [
         '{{coverage}} - good place!',
-        `Excellent! You've selected {{collection}} collection.`,
+        `Excellent! You've selected {{collectionId}} collection.`,
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
@@ -29,7 +29,7 @@ module.exports = {
 
       prompts: [{
         requirements: [
-          'collection'
+          'collectionId'
         ],
 
         prompts: [
@@ -60,11 +60,13 @@ module.exports = {
       }],
 
       slots: {
-        'collection': {},
+        'collectionId': {},
         'creatorId': {},
         'coverage': {},
         'year': {},
       },
+
+      fulfillment: 'albums',
     },
 
     noInput: [{
