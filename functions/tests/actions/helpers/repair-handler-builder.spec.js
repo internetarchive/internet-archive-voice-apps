@@ -61,7 +61,7 @@ describe('actions', () => {
       handler(app);
       expect(dialog.tell).to.be.calledWith(
         app,
-        strings[2],
+        strings[2]
       );
     });
   });

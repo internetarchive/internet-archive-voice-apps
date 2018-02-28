@@ -7,9 +7,9 @@ const sinon = require('sinon');
  * @returns {{fetchDetails: *}}
  */
 module.exports = function ({
-                             fetchAlbumsResponse = null,
-                             fetchAlbumsByQueryResolve = null,
-                           } = {}) {
+  fetchAlbumsResponse = null,
+  fetchAlbumsByQueryResolve = null,
+} = {}) {
   return {
     fetchAlbums: sinon.stub().returns(Promise.resolve(fetchAlbumsResponse)),
     fetchAlbumsByQuery: sinon.stub().returns(Promise.resolve(fetchAlbumsByQueryResolve)),
