@@ -5,12 +5,11 @@ const ask = rewire('../../dialog/ask');
 const mockApp = require('../_utils/mocking/app');
 
 describe('dialog', () => {
-
   let savePhrase;
 
   beforeEach(() => {
     savePhrase = sinon.spy();
-    ask.__set__('savePhrase', savePhrase)
+    ask.__set__('savePhrase', savePhrase);
   });
 
   describe('ask', () => {

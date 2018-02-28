@@ -17,7 +17,11 @@ module.exports = function mockApp ({
   _.set(app, 'MEDIA_STATUS.extension.status', null);
   _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
 
-  app.getArgument = sinon.stub().returns(argument || app.MEDIA_STATUS);
+  if (argument && typeof argument === 'object') {
+    app.getArgument = sinon.stub().callsFake(name => argument[name]);
+  } else {
+    app.getArgument = sinon.stub().returns(argument || app.MEDIA_STATUS);
+  }
   app.addMediaObjects = sinon.stub().returns(app);
   app.addMediaResponse = sinon.stub().returns(app);
   app.addSimpleResponse = sinon.stub().returns(app);

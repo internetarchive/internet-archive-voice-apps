@@ -3,7 +3,7 @@
  * @param msec
  * @returns {Promise}
  */
-function wait(msec = 0) {
+function wait (msec = 0) {
   return new Promise(resolve => setTimeout(resolve, msec));
 }
 
@@ -13,7 +13,7 @@ function wait(msec = 0) {
  * @param msec
  * @returns {function()}
  */
-function willWait(msec = 0) {
+function willWait (msec = 0) {
   return () => wait(msec);
 }
 
