@@ -5,12 +5,12 @@ const dialog = require('../dialog');
 const intentStrings = require('../strings').intents.selectCreator;
 const prompt = intentStrings.prompts.coverageAndYear;
 
+const albumsProvider = require('../provider/albums');
 const collection = require('../provider/collection');
-const creator = require('../provider/creator');
 const querySlots = require('../state/query');
 
 /**
- * handle select-creator action
+ * Handle select-creator action
  *
  * @param app
  * @returns {Promise.<TResult>}
@@ -31,7 +31,7 @@ function handler (app) {
     // and we could create dedicated provider once we need extra features
     collection.fetchDetails(creatorId),
     // get the most popular album of artist
-    creator.fetchAlbums(creatorId, {
+    albumsProvider.fetchAlbums(creatorId, {
       sort: 'downloads+desc',
     }),
   ])

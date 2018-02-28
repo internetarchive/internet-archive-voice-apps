@@ -37,16 +37,16 @@ function handler (app) {
     debug('we got all needed slots');
     const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
     return feeder
-      .build(querySlots, playlist)
+      .build(app, querySlots, playlist)
       .then(() => {
-        if (feeder.isEmpty(querySlots, playlist)) {
+        if (feeder.isEmpty(app, querySlots, playlist)) {
           // TODO: feeder can't find anything by music query
           // isn't covered case should be implemented
           dialog.ask(
             `We haven't find anything by your request would you like something else?`
           );
         } else {
-          dialog.playSong(app, feeder.getCurrentItem(querySlots, playlist));
+          dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
         }
       });
   }
@@ -124,6 +124,8 @@ function fillSlots (app) {
  * @returns {*}
  */
 function generateAcknowledge (app, newValues) {
+  debug('we had slots:', Object.keys(querySlots.getSlots(app)));
+
   const newNames = Object.keys(newValues);
   // we get new values
   if (newNames.length === 0) {
@@ -131,7 +133,7 @@ function generateAcknowledge (app, newValues) {
     return Promise.resolve(null);
   }
 
-  debug('We get few new slots', newValues);
+  debug('and get new slots:', newValues);
 
   const acknowledgeRequirements = extractRequrements(queryDialogScheme.acknowledges);
 
@@ -180,13 +182,16 @@ function generateAcknowledge (app, newValues) {
  * @returns {Promise.<TResult>}
  */
 function resolveSlots (context, template) {
+  debug(`resolve slots for "${template}"`);
   const extensions = getRequiredExtensionHandlers(template);
+  debug('we get extensions:', extensions);
   return Promise
     .all(
       extensions
         .map(({handler}) => handler(context))
     )
     .then(solutions => {
+      debug('solutions:', solutions);
       return solutions
       // zip/merge to collections
         .map((res, index) => {
@@ -196,6 +201,7 @@ function resolveSlots (context, template) {
         // pack result in the way:
         // [__<extension_type>].[<extension_name>] = result
         .reduce((acc, extension) => {
+          debug(`we get result extension.result: ${extension.result} to bake for ${extension.name}`);
           return Object.assign({}, acc, {
             ['__' + extension.extType]: {
               [extension.name]: extension.result,
@@ -226,18 +232,19 @@ function fetchSuggestions (app, promptScheme) {
     return Promise.resolve(null);
   }
 
-  return provider(querySlots.getSlots(app)).then(res => {
-    const suggestions = res.items.slice(0, 3);
-    if (promptScheme.suggestionTemplate) {
-      return suggestions.map(
-        item => mustache.render(promptScheme.suggestionTemplate, item)
-      );
-    } else {
-      return suggestions.map(
-        item => _.values(item).join(' ')
-      );
-    }
-  });
+  return provider(querySlots.getSlots(app))
+    .then(res => {
+      const suggestions = res.items.slice(0, 3);
+      if (promptScheme.suggestionTemplate) {
+        return suggestions.map(
+          item => mustache.render(promptScheme.suggestionTemplate, item)
+        );
+      } else {
+        return suggestions.map(
+          item => _.values(item).join(' ')
+        );
+      }
+    });
 }
 
 /**
@@ -269,6 +276,7 @@ function generatePrompt (app) {
 
   const prompt = _.sample(promptScheme.prompts);
 
+  debug('we randombly choice prompt:', prompt);
   return fetchSuggestions(app, promptScheme)
     .then((suggestions) => {
       const speech = mustache.render(prompt, {
@@ -279,7 +287,7 @@ function generatePrompt (app) {
         },
       });
 
-      return Promise.resolve({speech, suggestions});
+      return {speech, suggestions};
     });
 }
 

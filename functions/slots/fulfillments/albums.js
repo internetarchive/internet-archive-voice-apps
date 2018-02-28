@@ -1,9 +1,10 @@
-const debug = require('debug')('ia:feeder:albums');
+const debug = require('debug')('ia:feeder:albums:debug');
+const warning = require('debug')('ia:feeder:albums:warning');
 const mustache = require('mustache');
 
 const config = require('../../config');
+const albumsProvider = require('../../provider/albums');
 const audio = require('../../provider/audio');
-const creatorProvider = require('../../provider/creator');
 
 /**
  * Prefetch some songs from albums
@@ -15,11 +16,14 @@ const creatorProvider = require('../../provider/creator');
  * @returns {Promise.<TResult>}
  */
 function build (app, query, playlist) {
+  debug('lets build albums feeder');
   const slots = query.getSlots(app);
-  return creatorProvider
+  debug('we have slots:', slots);
+  return albumsProvider
     .fetchAlbumsByQuery(slots)
     .then(albums => {
       if (albums === null) {
+        warning(`we received none albums`);
         return;
       }
       debug(`get ${albums.items.length} albums`);
@@ -59,10 +63,12 @@ function build (app, query, playlist) {
       return albumId;
     })
     .then((albumId) => {
+      debug('id of album:', albumId);
       return albumId && audio.fetchAlbumDetails(albumId);
     })
     .then(album => {
       if (!album) {
+        debug('we get none album');
         // TODO: we don't get album
         return;
       }
@@ -80,6 +86,7 @@ function build (app, query, playlist) {
 
       // the only place where we modify state
       // so maybe we can put it out of this function?
+      debug(`let's create playlist for songs`);
       playlist.create(app, songs);
     });
   // TODO:

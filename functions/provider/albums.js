@@ -1,9 +1,11 @@
-const debug = require('debug')('ia:search:creator:debug');
-const error = require('debug')('ia:search:creator:error');
+const debug = require('debug')('ia:provider:albums:debug');
+const error = require('debug')('ia:provider:albums:error');
 const fetch = require('node-fetch');
 const mustache = require('mustache');
 
 const config = require('../config');
+
+const {buildQueryCondition} = require('./advanced-search');
 
 /**
  * Fetch some albums of artist/creator
@@ -18,7 +20,7 @@ function fetchAlbums (id, {
   page = 0,
   sort = 'downloads+desc',
 } = {}) {
-  debug(`Fetch albums of ${id}`);
+  debug(`fetch albums of ${id}`);
   return fetch(
     mustache.render(
       config.endpoints.COLLECTION_ITEMS_URL,
@@ -32,43 +34,23 @@ function fetchAlbums (id, {
     )
   )
     .then(res => res.json())
-    .then(json => ({
-      items: json.response.docs.map(a => ({
-        identifier: a.identifier,
-        coverage: a.coverage,
-        subject: a.subject,
-        title: a.title,
-        year: parseInt(a.year),
-      })),
-    }))
+    .then(json => {
+      debug(`fetch ${json.response.docs.length} albums`);
+      return {
+        items: json.response.docs.map(a => ({
+          identifier: a.identifier,
+          coverage: a.coverage,
+          subject: a.subject,
+          title: a.title,
+          year: parseInt(a.year),
+        })),
+      };
+    })
     .catch(e => {
       error(`Get error on fetching albums of artist ${id}, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
     });
 }
-
-/**
- * Fetch some albums
- *
- * @param query
- * @param limit
- * @param page
- * @param sort
- */
-const nameToParameter = {
-  coverage: 'coverage',
-  creatorId: 'collection',
-  collectionId: 'collection',
-  year: 'year',
-  // TODO: add other parameters
-};
-
-/**
- * Is parameter valid
- *
- * @param value
- */
-const isValidParameter = (value) => (value !== undefined) && (value !== null);
 
 /**
  * Fetch some albums of artist/creator
@@ -93,20 +75,7 @@ function fetchAlbumsByQuery (query) {
   } = query;
 
   // create search query
-  const condition = Object.keys(query)
-    .map(name => ({name, paramName: nameToParameter[name]}))
-    .filter(
-      ({name, paramName}) => paramName && isValidParameter(query[name])
-    )
-    .reduce(
-      (acc, {name, paramName}) => {
-        acc.push(`${paramName}:(${query[name]})`);
-        return acc;
-      },
-      []
-    )
-    .join(' AND ');
-
+  const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
 
   const fields = 'identifier,coverage,title,year';
