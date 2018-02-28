@@ -16,6 +16,7 @@ function fetchAlbumDetails (id) {
     .then(res => res.json())
     .then(json => {
       return {
+        id,
         creator: json.metadata.creator,
         year: parseInt(json.metadata.year),
         coverage: json.metadata.coverage,
@@ -82,7 +83,7 @@ function fetchNewMusic (search) {
         .map((song, idx) => Object.assign({}, song, {
           audioURL: getSongUrlByAlbumIdAndFileName(albumId, song.filename),
           coverage: album.coverage,
-          imageURL: mustache.render(config.media.POSTER_OF_ALBUM, {albumId}),
+          imageURL: mustache.render(config.media.POSTER_OF_ALBUM, {id: albumId}),
           // TODO : add recommendations
           // suggestions: ['TODO'],
           track: idx + 1,

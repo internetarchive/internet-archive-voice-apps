@@ -13,12 +13,16 @@ const {
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const {getSuggestionProviderForSlots} = require('../slots/suggestions');
+const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 const queryDialogScheme = require('../strings').intents.musicQuery;
+
+const fulfillments = require('../slots/fulfillments');
 
 /**
  * handle music query action
  * - fill slots of music query
+ * TODO: it seems we could use express.js/koa middleware architecture here
  *
  * @param app
  */
@@ -27,6 +31,26 @@ function handler (app) {
 
   const answer = [];
   const newValues = fillSlots(app);
+
+  const complete = querySlots.hasSlots(app, Object.keys(queryDialogScheme.slots));
+  if (complete) {
+    debug('we got all needed slots');
+    const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
+    return feeder
+      .build(querySlots, playlist)
+      .then(() => {
+        if (feeder.isEmpty(querySlots, playlist)) {
+          // TODO: feeder can't find anything by music query
+          // isn't covered case should be implemented
+          dialog.ask(
+            `We haven't find anything by your request would you like something else?`
+          );
+        } else {
+          dialog.playSong(app, feeder.getCurrentItem(querySlots, playlist));
+        }
+      });
+  }
+
   return generateAcknowledge(app, newValues)
     .then(res => {
       answer.push(res);

@@ -26,6 +26,16 @@ describe('state', () => {
       });
     });
 
+    describe('hasSlots', () => {
+      it('should return true for list of setup slots', () => {
+        expect(query.hasSlots(app, ['collection', 'creator'])).to.be.false;
+        query.setSlot(app, 'collection', 'the-best-collection-ever');
+        expect(query.hasSlots(app, ['collection', 'creator'])).to.be.false;
+        query.setSlot(app, 'creator', 'the-best-band');
+        expect(query.hasSlots(app, ['collection', 'creator'])).to.be.true;
+      });
+    });
+
     describe('getSlots', () => {
       it('should return all stored slots', () => {
         query.setSlot(app, 'collection', 'Stoner Rock');
