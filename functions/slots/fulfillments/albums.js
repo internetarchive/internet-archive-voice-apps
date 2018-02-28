@@ -3,8 +3,8 @@ const warning = require('debug')('ia:feeder:albums:warning');
 const mustache = require('mustache');
 
 const config = require('../../config');
+const albumsProvider = require('../../provider/albums');
 const audio = require('../../provider/audio');
-const creatorProvider = require('../../provider/creator');
 
 /**
  * Prefetch some songs from albums
@@ -19,7 +19,7 @@ function build (app, query, playlist) {
   debug('lets build albums feeder');
   const slots = query.getSlots(app);
   debug('we have slots:', slots);
-  return creatorProvider
+  return albumsProvider
     .fetchAlbumsByQuery(slots)
     .then(albums => {
       if (albums === null) {
