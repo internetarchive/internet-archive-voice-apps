@@ -56,6 +56,17 @@ function hasSlot (app, name) {
 }
 
 /**
+ * All slots from names are filled
+ *
+ * @param app
+ * @param {Array} names
+ * @returns {boolean}
+ */
+function hasSlots (app, names) {
+  return names.every(name => hasSlot(app, name));
+}
+
+/**
  * Get slot name
  *
  * @param app
@@ -91,6 +102,7 @@ function setSlot (app, name, value) {
 
 module.exports = {
   hasSlot,
+  hasSlots,
   getSlot,
   getSlots,
   setSlot,

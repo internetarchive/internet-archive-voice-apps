@@ -19,7 +19,7 @@ function getCurrentSong (app) {
  */
 function hasNextSong (app) {
   const playlist = getData(app);
-  return playlist.current < playlist.items.length - 1;
+  return playlist.items ? playlist.current < playlist.items.length - 1 : false;
 }
 
 /**
@@ -36,6 +36,17 @@ function create (app, items) {
 }
 
 /**
+ * Is playlist empty
+ *
+ * @param app
+ * @returns {boolean}
+ */
+function isEmpty (app) {
+  const playlist = getData(app);
+  return playlist.items ? playlist.items.length === 0 : true;
+}
+
+/**
  * Reducer: Choose next song
  *
  * @param app
@@ -49,6 +60,7 @@ function next (app) {
 
 module.exports = {
   getCurrentSong,
+  isEmpty,
   create,
   hasNextSong,
   next,

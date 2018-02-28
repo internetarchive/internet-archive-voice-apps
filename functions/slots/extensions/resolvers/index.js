@@ -1,3 +1,5 @@
+const builder = require('../../../extensions/builder');
+
 /**
  * Here will be all resolvers which would need in templates
  *
@@ -10,15 +12,4 @@
  * to the result processed template.
  */
 
-// TODO: we should fetch list of resolvers as we do for actions
-const resolvers = {
-  creator: require('./creator'),
-};
-
-function getByName (name) {
-  return resolvers[name];
-}
-
-module.exports = {
-  getByName,
-};
+module.exports = builder.build({root: __dirname});
