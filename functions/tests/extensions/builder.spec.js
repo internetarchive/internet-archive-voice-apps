@@ -15,7 +15,7 @@ describe('extensions', () => {
       it('should return extension by name', () => {
         expect(extensions.getByName('apple')).to.be.ok;
         expect(extensions.getByName('not-existing')).to.be.null;
-      })
+      });
     });
   });
 });
