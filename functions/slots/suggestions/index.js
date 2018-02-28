@@ -28,5 +28,4 @@ function getSuggestionProviderForSlots (slots) {
 
 module.exports = {
   getSuggestionProviderForSlots,
-  providers,
 };
