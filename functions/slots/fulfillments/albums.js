@@ -113,8 +113,16 @@ function getCurrentItem (app, slots, playlist) {
   return playlist.getCurrentSong(app);
 }
 
-function hasNext () {
-
+/**
+ * Do we have next item?
+ *
+ * @param app
+ * @param slots
+ * @param playlist
+ * @returns {boolean}
+ */
+function hasNext (app, slots, playlist) {
+  return playlist.hasNextSong(app);
 }
 
 function next () {
