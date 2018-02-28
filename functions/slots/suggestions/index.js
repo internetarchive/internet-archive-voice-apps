@@ -5,7 +5,9 @@ const _ = require('lodash');
  * invert dependency - each provider describe which slots it could fill
  */
 
-const nope = () => null;
+// TODO: should implement suggestions feeders
+const nope = () => Promise.resolve({items: []});
+
 const providers = _([
   {slots: ['coverage'], provider: nope},
   {slots: ['coverage', 'year'], provider: nope},
