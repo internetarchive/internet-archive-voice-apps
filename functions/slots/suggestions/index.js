@@ -1,7 +1,5 @@
 const _ = require('lodash');
 
-const coverageYear = require('./coverage-year');
-
 /**
  * TODO: should be implemented in the way actions were done:
  * invert dependency - each provider describe which slots it could fill
@@ -12,10 +10,8 @@ const nope = () => Promise.resolve({items: []});
 
 const providers = _([
   {slots: ['coverage'], handler: nope},
-  coverageYear,
-  // don't think we need it for the moment
-  // because we have fixed recommended artists
-  [['creator'], (app) => {}],
+  require('./coverage-year'),
+  require('./creators'),
   {slots: ['year'], handler: nope},
 ]);
 
