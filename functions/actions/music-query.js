@@ -124,6 +124,8 @@ function fillSlots (app) {
  * @returns {*}
  */
 function generateAcknowledge (app, newValues) {
+  debug('we had slots:', Object.keys(querySlots.getSlots(app)));
+
   const newNames = Object.keys(newValues);
   // we get new values
   if (newNames.length === 0) {
@@ -131,7 +133,7 @@ function generateAcknowledge (app, newValues) {
     return Promise.resolve(null);
   }
 
-  debug('We get few new slots', newValues);
+  debug('and get new slots:', newValues);
 
   const acknowledgeRequirements = extractRequrements(queryDialogScheme.acknowledges);
 
@@ -180,13 +182,16 @@ function generateAcknowledge (app, newValues) {
  * @returns {Promise.<TResult>}
  */
 function resolveSlots (context, template) {
+  debug(`resolve slots for "${template}"`);
   const extensions = getRequiredExtensionHandlers(template);
+  debug('we get extensions:', extensions);
   return Promise
     .all(
       extensions
         .map(({handler}) => handler(context))
     )
     .then(solutions => {
+      debug('solutions:', solutions);
       return solutions
       // zip/merge to collections
         .map((res, index) => {
@@ -196,6 +201,7 @@ function resolveSlots (context, template) {
         // pack result in the way:
         // [__<extension_type>].[<extension_name>] = result
         .reduce((acc, extension) => {
+          debug(`we get result extension.result: ${extension.result} to bake for ${extension.name}`);
           return Object.assign({}, acc, {
             ['__' + extension.extType]: {
               [extension.name]: extension.result,
