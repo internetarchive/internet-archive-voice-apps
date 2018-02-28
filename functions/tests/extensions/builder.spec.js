@@ -13,8 +13,8 @@ describe('extensions', () => {
 
     describe('getExtension', () => {
       it('should return extension by name', () => {
-        expect(extensions.getExtension('apple')).to.be.ok;
-        expect(extensions.getExtension('not-existing')).to.be.null;
+        expect(extensions.getByName('apple')).to.be.ok;
+        expect(extensions.getByName('not-existing')).to.be.null;
       })
     });
   });
