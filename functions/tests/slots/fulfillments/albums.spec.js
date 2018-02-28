@@ -49,6 +49,7 @@ describe('slots', () => {
             expect(playlist.getCurrentSong(app)).to.be.ok;
             expect(albums.isEmpty(app, query, playlist)).to.be.false;
             expect(albums.getCurrentItem(app, query, playlist)).to.be.ok;
+            expect(albums.hasNext(app, query, playlist)).to.be.true;
           });
       });
     });
