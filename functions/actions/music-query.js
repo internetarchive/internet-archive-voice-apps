@@ -32,7 +32,7 @@ function handler (app) {
   const answer = [];
   const newValues = fillSlots(app);
 
-  const complete = querySlots.hasSlots(app, Object.keys(queryDialogScheme.slots));
+  const complete = querySlots.hasSlots(app, queryDialogScheme.slots);
   if (complete) {
     debug('we got all needed slots');
     const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
@@ -103,17 +103,15 @@ function groupAnswers (answer) {
  * @returns {{}}
  */
 function fillSlots (app) {
-  const newValues = {};
-
-  for (let slotName in queryDialogScheme.slots) {
-    const value = app.getArgument(slotName);
-    if (value) {
-      querySlots.setSlot(app, slotName, value);
-      newValues[slotName] = value;
-    }
-  }
-
-  return newValues;
+  return queryDialogScheme.slots
+    .reduce((newValues, slotName) => {
+      const value = app.getArgument(slotName);
+      if (value) {
+        querySlots.setSlot(app, slotName, value);
+        newValues[slotName] = value;
+      }
+      return newValues;
+    }, {});
 }
 
 /**
@@ -255,7 +253,7 @@ function fetchSuggestions (app, promptScheme) {
  */
 function generatePrompt (app) {
   const missedSlots =
-    Object.keys(queryDialogScheme.slots)
+    queryDialogScheme.slots
       .filter(slotName => !querySlots.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {

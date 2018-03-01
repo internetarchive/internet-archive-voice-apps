@@ -50,12 +50,12 @@ const queryDialogScheme = {
     ],
   }],
 
-  slots: {
-    'collection': {},
-    'creatorId': {},
-    'coverage': {},
-    'year': {},
-  },
+  slots: [
+    'collection',
+    'creatorId',
+    'coverage',
+    'year',
+  ],
 
   fulfillment: 'albums',
 };
