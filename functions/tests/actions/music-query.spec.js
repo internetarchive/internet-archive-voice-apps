@@ -19,6 +19,9 @@ const queryDialogScheme = {
   ],
 
   prompts: [{
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'collection'
     ],
@@ -27,11 +30,17 @@ const queryDialogScheme = {
       'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
     ],
 
+    /**
+     * Fixed set of suggestions
+     */
     suggestions: [
       '78s',
       'Live Concerts',
     ],
   }, {
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'creatorId'
     ],
@@ -40,6 +49,9 @@ const queryDialogScheme = {
       'What artist would you like to listen to, e.g. {{suggestions.humanized}}?',
     ],
   }, {
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'coverage',
       'year',
@@ -50,6 +62,9 @@ const queryDialogScheme = {
     ],
   }],
 
+  /**
+   * slots which we need for fulfillement
+   */
   slots: [
     'collection',
     'creatorId',
@@ -57,6 +72,9 @@ const queryDialogScheme = {
     'year',
   ],
 
+  /**
+   * feeder which we should call once we get all slots
+   */
   fulfillment: 'albums',
 };
 

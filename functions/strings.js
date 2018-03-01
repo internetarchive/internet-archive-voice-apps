@@ -18,6 +18,10 @@ module.exports = {
 
   intents: {
     musicQuery: {
+      /**
+       * Acknowledge recieved value and repeat to give user change
+       * to check our undestanding
+       */
       acknowledges: [
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
@@ -26,7 +30,13 @@ module.exports = {
         `You've selected {{__resolvers.collection.title}} collection.`,
       ],
 
+      /**
+       * ask user about needed slots
+       */
       prompts: [{
+        /**
+         * prompt for a single slot
+         */
         requirements: [
           'collectionId'
         ],
@@ -35,11 +45,17 @@ module.exports = {
           'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
         ],
 
+        /**
+         * Fixed set of suggestions
+         */
         suggestions: [
           '78s',
           'Live Concerts',
         ],
       }, {
+        /**
+         * prompt for single slot
+         */
         requirements: [
           'creatorId'
         ],
@@ -48,8 +64,14 @@ module.exports = {
           'What artist would you like to listen to? For example, {{suggestions.humanized}}?',
         ],
 
+        /**
+         * Template for creating suggestions
+         */
         suggestionTemplate: 'the {{creator}}',
       }, {
+        /**
+         * we can prompt to give 2 slots in the same time
+         */
         requirements: [
           'coverage',
           'year',
@@ -59,9 +81,15 @@ module.exports = {
           'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
         ],
 
+        /**
+         * Template for creating suggestions
+         */
         suggestionTemplate: '{{coverage}} {{year}}',
       }],
 
+      /**
+       * slots which we need for fulfillement
+       */
       slots: [
         'collectionId',
         'creatorId',
@@ -69,6 +97,9 @@ module.exports = {
         'year',
       ],
 
+      /**
+       * feeder which we should call once we get all slots
+       */
       fulfillment: 'albums',
     },
 
