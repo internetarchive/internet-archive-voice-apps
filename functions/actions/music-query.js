@@ -38,29 +38,40 @@ function handler (app) {
   const answer = [];
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   checkSlotScheme(slotScheme);
-  const newValues = fillSlots(app, slotScheme);
+  let newValues = fillSlots(app, slotScheme);
 
   // new values could change actual slot scheme
-  slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
-  checkSlotScheme(slotScheme);
+  const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  if (slotScheme !== newScheme) {
+    slotScheme = newScheme;
+    // update slots for new scheme
+    checkSlotScheme(slotScheme);
+    newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+  }
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('we got all needed slots');
     const feeder = feeders.getByName(slotScheme.fulfillment);
-    return feeder
-      .build(app, querySlots, playlist)
-      .then(() => {
-        if (feeder.isEmpty(app, querySlots, playlist)) {
-          // TODO: feeder can't find anything by music query
-          // isn't covered case should be implemented
-          dialog.ask(
-            `We haven't find anything by your request would you like something else?`
-          );
-        } else {
-          dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
-        }
-      });
+    if (!feeder) {
+      // TODO: we should softly fallback here
+      warning(`we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`);
+      return Promise.resolve();
+    } else {
+      return feeder
+        .build(app, querySlots, playlist)
+        .then(() => {
+          if (feeder.isEmpty(app, querySlots, playlist)) {
+            // TODO: feeder can't find anything by music query
+            // isn't covered case should be implemented
+            dialog.ask(
+              `We haven't find anything by your request would you like something else?`
+            );
+          } else {
+            dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
+          }
+        });
+    }
   }
 
   return generateAcknowledge(app, slotScheme, newValues)
