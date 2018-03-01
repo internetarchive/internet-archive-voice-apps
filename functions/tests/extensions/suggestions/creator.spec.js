@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
-const creators = rewire('../../../slots/suggestions/creators');
+const creators = rewire('../../../extensions/suggestions/creators');
 
 describe('suggestions', () => {
   describe('creators', () => {
