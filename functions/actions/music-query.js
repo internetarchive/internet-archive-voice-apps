@@ -38,6 +38,9 @@ function handler (app) {
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   const newValues = fillSlots(app, slotScheme);
 
+  // new values could change actual slot scheme
+  slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+
   const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('we got all needed slots');

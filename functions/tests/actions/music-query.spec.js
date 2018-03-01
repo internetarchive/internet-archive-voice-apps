@@ -76,6 +76,14 @@ describe('actions', () => {
               .to.include('Which plate?');
           });
       });
+
+      it('should recieve value for old slot', () => {
+        // TODO: check "album" slot
+      });
+
+      it('should recieve value for new slot', () => {
+        // TODO: check "plate" slot
+      });
     });
 
     describe('single slot scheme', () => {
