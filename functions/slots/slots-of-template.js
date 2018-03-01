@@ -31,7 +31,7 @@ const extensions = require('./extensions');
  * @param templates
  */
 function extractRequrements (templates) {
-  return templates
+  return templates && templates
     .map(template => ({
       template,
       requirements: getListOfRequiredSlots(template)
@@ -88,7 +88,7 @@ function getListOfRequiredExtensions (template) {
  * @returns {Array
  */
 function getMatchedTemplates (templateRequirements, slots) {
-  return templateRequirements
+  return templateRequirements && templateRequirements
     .filter(
       ({requirements}) => requirements.every(r => _.includes(slots, r))
     )
@@ -104,7 +104,7 @@ function getMatchedTemplates (templateRequirements, slots) {
  */
 function getMatchedTemplatesExactly (templateRequirements, slots) {
   const numOfSlots = slots.length;
-  return templateRequirements
+  return templateRequirements && templateRequirements
     .filter(
       ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
     )
