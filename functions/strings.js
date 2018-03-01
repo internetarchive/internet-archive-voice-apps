@@ -30,11 +30,12 @@ module.exports = {
       name: 'george blood collection',
 
       conditions: [
-        'collectionId == georgeblood'
+        'collectionId == "georgeblood"'
       ],
 
       slots: [
         'collectionId',
+        'subject',
         'creatorId',
       ],
 
@@ -52,20 +53,24 @@ module.exports = {
          * prompt for single slot
          */
         requirements: [
-          'creatorId'
+          'subject'
         ],
 
         /**
          * slots which we need for fulfillement
          */
         prompts: [
-          'What performer would you like to listen to? For example, {{suggestions.humanized}}?',
+          'What genre of music would you like to listen to? Please select a topic like {{suggestions.humanized}}?',
         ],
 
         /**
-         * Template for creating suggestions
+         * Fixed set of suggestions
          */
-        suggestionTemplate: 'the {{creator}}',
+        suggestions: [
+          'Jazz',
+          'Instrumental',
+          'Dance',
+        ],
       }],
 
       /**
