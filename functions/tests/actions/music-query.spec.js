@@ -9,6 +9,8 @@ const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
 
+const slotSchemeWithMultipleCases = require('./fixtures/slots-scheme-with-multiple-cases');
+const slotSchemeWithOneCase = require('./fixtures/slots-scheme-with-one-case');
 
 describe('actions', () => {
   let app;
@@ -41,148 +43,44 @@ describe('actions', () => {
 
   describe('music query', () => {
     beforeEach(() => {
-      const queryDialogScheme = [{
-        slots: [
-          'category',
-          'plate',
-        ],
-
-        conditions: [
-          'category = "plates"'
-        ],
-
-        prompts: [{
-          requirements: [
-            'plate'
-          ],
-
-          prompts: [
-            'Which plate?',
-          ],
-        }]
-      }, {
-        slots: [
-          'category',
-          'album',
-        ],
-
-        prompts: [{
-          requirements: [
-            'plate'
-          ],
-
-          prompts: [
-            'Which album?',
-          ],
-        }],
-      }];
-
-      action.__set__('queryDialogScheme', queryDialogScheme);
+      action.__set__('queryDialogScheme', slotSchemeWithMultipleCases);
     });
 
     xdescribe('multiple slot schemes', () => {
       it('should get slot scheme without conditions', () => {
-          app = mockApp({
-            argument: {
-              // category: 'plate',
-            },
+        app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include('Which album?');
           });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include('Which album?');
-            });
       });
 
       it('should get 1st which matches conditions', () => {
-          app = mockApp({
-            argument: {
-              // category: 'plate',
-            },
+        app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledOnce;
+            expect(dialog.ask.args[0][1])
+              .to.have.property('speech')
+              .to.include('Which plate?');
           });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include('Which plate?');
-            });
       });
     });
 
     describe('single slot scheme', () => {
       beforeEach(() => {
-        const queryDialogScheme = {
-          acknowledges: [
-            '{{coverage}} - good place!',
-            '{{coverage}} {{year}} - great choice!',
-            '{{year}} - it was excellent year!',
-            'Ok! Lets go with {{__resolvers.creator.title}} band!',
-            `You've selected {{__resolvers.collection.title}}`,
-          ],
-
-          prompts: [{
-            /**
-             * prompt for a single slot
-             */
-            requirements: [
-              'collection'
-            ],
-
-            prompts: [
-              'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
-            ],
-
-            /**
-             * Fixed set of suggestions
-             */
-            suggestions: [
-              '78s',
-              'Live Concerts',
-            ],
-          }, {
-            /**
-             * prompt for a single slot
-             */
-            requirements: [
-              'creatorId'
-            ],
-
-            prompts: [
-              'What artist would you like to listen to, e.g. {{suggestions.humanized}}?',
-            ],
-          }, {
-            /**
-             * prompt for a single slot
-             */
-            requirements: [
-              'coverage',
-              'year',
-            ],
-
-            prompts: [
-              'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
-            ],
-          }],
-
-          /**
-           * slots which we need for fulfillement
-           */
-          slots: [
-            'collection',
-            'creatorId',
-            'coverage',
-            'year',
-          ],
-
-          /**
-           * feeder which we should call once we get all slots
-           */
-          fulfillment: 'albums',
-        };
-        action.__set__('queryDialogScheme', queryDialogScheme);
+        action.__set__('queryDialogScheme', slotSchemeWithOneCase);
       });
 
       describe('slot updater', () => {
