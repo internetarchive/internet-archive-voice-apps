@@ -16,8 +16,25 @@ module.exports = {
     }
   },
 
+  /**
+   * Template for actions for Dialog flow
+   */
   intents: {
+
+    /**
+     * Action: with slots scheme for music search query
+     */
     musicQuery: {
+      /**
+       * slots which we need for fulfillement
+       */
+      slots: [
+        'collectionId',
+        'creatorId',
+        'coverage',
+        'year',
+      ],
+
       /**
        * Acknowledge recieved value and repeat to give user change
        * to check our undestanding
@@ -88,16 +105,6 @@ module.exports = {
       }],
 
       /**
-       * slots which we need for fulfillement
-       */
-      slots: [
-        'collectionId',
-        'creatorId',
-        'coverage',
-        'year',
-      ],
-
-      /**
        * feeder which we should call once we get all slots
        */
       fulfillment: 'albums',
@@ -119,25 +126,10 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
-    selectCreator: {
-      speech: '{{title}} - great choice!',
-      prompts: {
-        coverageAndYear: {
-          speech: `Do you have a specific city and year in mind, like {{suggestions}}, or would you like me to play something random?`,
-          suggestion: '{{coverage}} {{year}}',
-        }
-      }
-    },
-
     welcome: {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
     },
-
-    selectCollection: {
-      speech: 'Ok, you selected {{title}}, what artist would you like to listen to?  For example, the Grateful Dead, the Ditty Bops or the Cowboy Junkies.',
-      suggestions: ['Grateful Dead', 'Ditty Bops', 'Cowboy Junkies']
-    }
   },
 
   prompts: {
