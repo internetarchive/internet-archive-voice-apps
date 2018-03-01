@@ -5,6 +5,7 @@ const mustache = require('mustache');
 
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
+const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const humanize = require('../humanize');
 const {
   extractRequrements,
@@ -13,7 +14,6 @@ const {
   getPromptsForSlots,
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
-const {getSuggestionProviderForSlots} = require('../slots/suggestions');
 const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 const queryDialogScheme = require('../strings').intents.musicQuery;

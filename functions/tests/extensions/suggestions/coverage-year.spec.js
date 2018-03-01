@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const mockAlbumProvider = require('../../_utils/mocking/provider/albums');
 
-const coverageYear = rewire('../../../slots/suggestions/coverage-year');
+const coverageYear = rewire('../../../extensions/suggestions/coverage-year');
 
 describe('suggestions', () => {
   describe('coverage & year', () => {
