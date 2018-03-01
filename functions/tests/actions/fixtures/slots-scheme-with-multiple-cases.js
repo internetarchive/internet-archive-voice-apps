@@ -1,11 +1,13 @@
 module.exports = [{
+  name: 'plates',
+
   slots: [
-    'category',
     'plate',
+    'category',
   ],
 
   conditions: [
-    'category = "plates"'
+    'category == "plates"'
   ],
 
   prompts: [{
@@ -18,14 +20,16 @@ module.exports = [{
     ],
   }]
 }, {
+  name: 'albums',
+
   slots: [
-    'category',
     'album',
+    'category',
   ],
 
   prompts: [{
     requirements: [
-      'plate'
+      'album'
     ],
 
     prompts: [

@@ -46,7 +46,7 @@ describe('actions', () => {
       action.__set__('availableSchemes', slotSchemeWithMultipleCases);
     });
 
-    xdescribe('multiple slot schemes', () => {
+    describe('multiple slot schemes', () => {
       it('should get slot scheme without conditions', () => {
         app = mockApp({
           argument: {
