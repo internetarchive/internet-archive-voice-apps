@@ -4,8 +4,9 @@ const warning = require('debug')('ia:slots:extensions:warning');
 const resolvers = require('./resolvers');
 
 /**
- * TODO: should be implemented as actions:
- * extracted from directory structure.
+ * TODO: should be:
+ * - moved to /extensions
+ * - use /extensions/builder
  *
  * But only when we get more than one extension
  *
