@@ -82,7 +82,7 @@ function handler (app) {
  * @param slotsState
  * @returns {*}
  */
-function getActualSlotScheme(availableSchemes, slotsState) {
+function getActualSlotScheme (availableSchemes, slotsState) {
   // TODO:
   return availableSchemes;
 }
