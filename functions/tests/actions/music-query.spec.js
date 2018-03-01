@@ -43,7 +43,7 @@ describe('actions', () => {
 
   describe('music query', () => {
     beforeEach(() => {
-      action.__set__('queryDialogScheme', slotSchemeWithMultipleCases);
+      action.__set__('availableSchemes', slotSchemeWithMultipleCases);
     });
 
     xdescribe('multiple slot schemes', () => {
@@ -65,7 +65,7 @@ describe('actions', () => {
       it('should get 1st which matches conditions', () => {
         app = mockApp({
           argument: {
-            // category: 'plate',
+            category: 'plates',
           },
         });
         return action.handler(app)
@@ -80,7 +80,7 @@ describe('actions', () => {
 
     describe('single slot scheme', () => {
       beforeEach(() => {
-        action.__set__('queryDialogScheme', slotSchemeWithOneCase);
+        action.__set__('availableSchemes', slotSchemeWithOneCase);
       });
 
       describe('slot updater', () => {
