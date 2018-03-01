@@ -4,6 +4,7 @@ const _ = require('lodash');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
+const feeders = require('../extensions/feeders');
 const humanize = require('../humanize');
 const {
   extractRequrements,
@@ -16,8 +17,6 @@ const {getSuggestionProviderForSlots} = require('../slots/suggestions');
 const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 const queryDialogScheme = require('../strings').intents.musicQuery;
-
-const fulfillments = require('../slots/fulfillments');
 
 /**
  * Handle music query action
@@ -41,7 +40,7 @@ function handler (app) {
   const complete = querySlots.hasSlots(app, queryDialogScheme.slots);
   if (complete) {
     debug('we got all needed slots');
-    const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
+    const feeder = feeders.getByName(queryDialogScheme.fulfillment);
     return feeder
       .build(app, querySlots, playlist)
       .then(() => {

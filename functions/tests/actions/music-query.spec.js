@@ -283,14 +283,14 @@ describe('actions', () => {
 
     describe('fulfillment', () => {
       let albumsFeeder;
-      let fulfillments;
+      let feeders;
 
       beforeEach(() => {
         albumsFeeder = mockAlbumsFeeder();
-        fulfillments = {
+        feeders = {
           getByName: sinon.stub().returns(albumsFeeder),
         };
-        action.__set__('fulfillments', fulfillments);
+        action.__set__('feeders', feeders);
       });
 
       it(`shouldn't activate when we don't have enough filled slots`, () => {
@@ -305,7 +305,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(fulfillments.getByName).to.have.not.been.called;
+            expect(feeders.getByName).to.have.not.been.called;
           });
       });
 
@@ -320,7 +320,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(fulfillments.getByName).to.have.been.called;
+            expect(feeders.getByName).to.have.been.called;
             expect(albumsFeeder.build).to.have.been.calledWith(
               app,
               action.__get__('querySlots'),
