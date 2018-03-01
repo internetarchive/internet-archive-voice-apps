@@ -1,8 +1,6 @@
 const debug = require('debug')('ia:actions:debug-action:debug');
 
 const dialog = require('../dialog');
-const playlist = require('../state/playlist');
-const search = require('../provider/audio');
 
 /**
  * it is special handler for debug-action
@@ -13,32 +11,10 @@ const search = require('../provider/audio');
  */
 function handler (app) {
   debug(`Start debug action handler`);
-
-  // TODO: should fetch only few songs from album
-  const albumId = 'gd73-06-10.sbd.hollister.174.sbeok.shnf';
-  search.getAlbumById(albumId)
-    .then(album => {
-      debug(`We get album ${JSON.stringify(album)}`);
-      const songs = album.songs
-        .map((song, idx) => Object.assign({}, song, {
-          audioURL: search.getSongUrlByAlbumIdAndFileName(albumId, song.filename),
-          coverage: album.coverage,
-          imageURL: `https://archive.org/services/img/${albumId}`,
-          // TODO : add recommendations
-          suggestions: ['TODO'],
-          track: idx + 1,
-          year: album.year,
-        }));
-
-      playlist.create(app, songs);
-
-      dialog.playSong(app, playlist.getCurrentSong(app));
-    })
-    .catch(err => {
-      dialog.ask(app, {
-        speech: `We got an error: ${JSON.stringify(err)}. Do you want to try again?`
-      });
-    });
+  dialog.tell(app,
+    `It is example of test debug action. 
+    You could make any number of them, and exclude from git.`
+  );
 }
 
 module.exports = {
