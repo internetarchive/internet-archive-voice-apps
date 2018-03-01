@@ -62,12 +62,12 @@ module.exports = {
         suggestionTemplate: '{{coverage}} {{year}}',
       }],
 
-      slots: {
-        'collectionId': {},
-        'creatorId': {},
-        'coverage': {},
-        'year': {},
-      },
+      slots: [
+        'collectionId',
+        'creatorId',
+        'coverage',
+        'year',
+      ],
 
       fulfillment: 'albums',
     },
