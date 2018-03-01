@@ -142,8 +142,7 @@ function getActualSlotScheme (availableSchemes, slotsState) {
       return scheme.conditions
         .every(condition => math.eval(condition, slotsState));
     } catch (error) {
-      debug(error && error.message);
-
+      debug(`Get error from Math.js:`, error && error.message);
       return false;
     }
   });

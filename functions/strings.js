@@ -26,7 +26,59 @@ module.exports = {
     /**
      * Action: with slots scheme for music search query
      */
-    musicQuery: {
+    musicQuery: [{
+      name: 'george blood collection',
+
+      conditions: [
+        'collectionId == georgeblood'
+      ],
+
+      slots: [
+        'collectionId',
+        'creatorId',
+      ],
+
+      /**
+       * Acknowledge recieved value and repeat to give user change
+       * to check our undestanding
+       */
+      acknowledges: [
+        'Ok! Lets go with {{__resolvers.creator.title}} performer!',
+        `You've selected {{__resolvers.collection.title}} collection.`,
+      ],
+
+      prompts: [{
+        /**
+         * prompt for single slot
+         */
+        requirements: [
+          'creatorId'
+        ],
+
+        /**
+         * slots which we need for fulfillement
+         */
+        prompts: [
+          'What performer would you like to listen to? For example, {{suggestions.humanized}}?',
+        ],
+
+        /**
+         * Template for creating suggestions
+         */
+        suggestionTemplate: 'the {{creator}}',
+      }],
+
+      /**
+       * feeder which we should call once we get all slots
+       *
+       * TODO: we should have special feeder for 'georgeblood'
+       * collection, because almost all albums from this collection
+       * have only 1 song.
+       */
+      fulfillment: 'albums',
+    }, {
+      name: 'DEFAULT music search query',
+
       /**
        * slots which we need for fulfillement
        */
@@ -110,7 +162,7 @@ module.exports = {
        * feeder which we should call once we get all slots
        */
       fulfillment: 'albums',
-    },
+    }],
 
     noInput: [{
       speech: "Sorry, I couldn't hear you.",
