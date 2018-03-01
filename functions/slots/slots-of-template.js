@@ -4,8 +4,6 @@
  * - and refered extensions (in particular __resolver)
  * - searching and matching from the list of templates
  *
- * @type {*}
- * @private
  */
 
 const debug = require('debug')('ia:templateSlots:debug');

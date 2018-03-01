@@ -1,5 +1,7 @@
 module.exports = {
-  // v2
+  /**
+   * v2
+   */
   acknowledger: [
     'OK, ',
     'Got it, ',
@@ -16,8 +18,29 @@ module.exports = {
     }
   },
 
+  /**
+   * Template for actions for Dialog flow
+   */
   intents: {
+
+    /**
+     * Action: with slots scheme for music search query
+     */
     musicQuery: {
+      /**
+       * slots which we need for fulfillement
+       */
+      slots: [
+        'collectionId',
+        'creatorId',
+        'coverage',
+        'year',
+      ],
+
+      /**
+       * Acknowledge recieved value and repeat to give user change
+       * to check our undestanding
+       */
       acknowledges: [
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
@@ -26,7 +49,13 @@ module.exports = {
         `You've selected {{__resolvers.collection.title}} collection.`,
       ],
 
+      /**
+       * ask user about needed slots
+       */
       prompts: [{
+        /**
+         * prompt for a single slot
+         */
         requirements: [
           'collectionId'
         ],
@@ -35,11 +64,17 @@ module.exports = {
           'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
         ],
 
+        /**
+         * Fixed set of suggestions
+         */
         suggestions: [
           '78s',
           'Live Concerts',
         ],
       }, {
+        /**
+         * prompt for single slot
+         */
         requirements: [
           'creatorId'
         ],
@@ -48,8 +83,14 @@ module.exports = {
           'What artist would you like to listen to? For example, {{suggestions.humanized}}?',
         ],
 
+        /**
+         * Template for creating suggestions
+         */
         suggestionTemplate: 'the {{creator}}',
       }, {
+        /**
+         * we can prompt to give 2 slots in the same time
+         */
         requirements: [
           'coverage',
           'year',
@@ -59,16 +100,15 @@ module.exports = {
           'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
         ],
 
+        /**
+         * Template for creating suggestions
+         */
         suggestionTemplate: '{{coverage}} {{year}}',
       }],
 
-      slots: {
-        'collectionId': {},
-        'creatorId': {},
-        'coverage': {},
-        'year': {},
-      },
-
+      /**
+       * feeder which we should call once we get all slots
+       */
       fulfillment: 'albums',
     },
 
@@ -88,25 +128,10 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
-    selectCreator: {
-      speech: '{{title}} - great choice!',
-      prompts: {
-        coverageAndYear: {
-          speech: `Do you have a specific city and year in mind, like {{suggestions}}, or would you like me to play something random?`,
-          suggestion: '{{coverage}} {{year}}',
-        }
-      }
-    },
-
     welcome: {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
     },
-
-    selectCollection: {
-      speech: 'Ok, you selected {{title}}, what artist would you like to listen to?  For example, the Grateful Dead, the Ditty Bops or the Cowboy Junkies.',
-      suggestions: ['Grateful Dead', 'Ditty Bops', 'Cowboy Junkies']
-    }
   },
 
   prompts: {
@@ -129,7 +154,11 @@ module.exports = {
     },
   },
 
-  // v1
+  /**
+   * v1
+   *
+   * @deprecated
+   */
   appExit: "Okay, let's try this again later.",
   errors: {
     device: {

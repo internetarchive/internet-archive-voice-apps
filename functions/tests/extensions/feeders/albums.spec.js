@@ -3,10 +3,9 @@ const rewire = require('rewire');
 
 const playlist = require('../../../state/playlist');
 const query = require('../../../state/query');
-const albums = rewire('../../../slots/fulfillments/albums');
+const albums = rewire('../../../extensions/feeders/albums');
 
 const mockApp = require('../../_utils/mocking/app');
-const mockAudio = require('../../_utils/mocking/provider/audio');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('slots', () => {
@@ -14,13 +13,6 @@ describe('slots', () => {
   beforeEach(() => {
     app = mockApp();
     albums.__set__('albumsProvider', mockAlbumsProvider({
-      fetchAlbumsByQueryResolve: {
-        items: [{
-          identifier: 'album-1',
-        }],
-      }
-    }));
-    albums.__set__('audio', mockAudio({
       fetchAlbumDetailsResolve: {
         id: 'album-1',
         songs: [{
@@ -32,7 +24,12 @@ describe('slots', () => {
         }],
         year: 2017,
         coverage: 'Toronto',
-      }
+      },
+      fetchAlbumsByQueryResolve: {
+        items: [{
+          identifier: 'album-1',
+        }],
+      },
     }));
   });
 
