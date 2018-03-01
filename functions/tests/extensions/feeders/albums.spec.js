@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const playlist = require('../../../state/playlist');
 const query = require('../../../state/query');
-const albums = rewire('../../../slots/fulfillments/albums');
+const albums = rewire('../../../extensions/feeders/albums');
 
 const mockApp = require('../../_utils/mocking/app');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
