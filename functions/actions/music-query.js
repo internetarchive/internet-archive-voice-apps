@@ -1,6 +1,7 @@
 const debug = require('debug')('ia:actions:music-query:debug');
 const warning = require('debug')('ia:actions:music-query:warning');
 const _ = require('lodash');
+const math = require('mathjs');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
@@ -36,10 +37,12 @@ function handler (app) {
 
   const answer = [];
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  checkSlotScheme(slotScheme);
   const newValues = fillSlots(app, slotScheme);
 
   // new values could change actual slot scheme
   slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  checkSlotScheme(slotScheme);
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {
@@ -69,13 +72,29 @@ function handler (app) {
       answer.push(res);
 
       const groupedAnswers = groupAnswers(answer);
-      if (groupedAnswers.speech.length > 0) {
+      if (groupedAnswers.speech && groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
           speech: groupedAnswers.speech.join(' '),
           suggestions: groupedAnswers.suggestions,
         });
+      } else {
+        // TODO: we don't have anything to say should warn about it
       }
     });
+}
+
+/**
+ *
+ * @param slotScheme
+ */
+function checkSlotScheme (slotScheme) {
+  if (!slotScheme) {
+    throw new Error('There are no valid slot scheme. Need at least default');
+  }
+
+  if (slotScheme && slotScheme.name) {
+    debug(`we are going with "${slotScheme.name}" slot scheme`);
+  }
 }
 
 /**
@@ -86,8 +105,37 @@ function handler (app) {
  * @returns {*}
  */
 function getActualSlotScheme (availableSchemes, slotsState) {
-  // TODO:
-  return availableSchemes;
+  if (!Array.isArray(availableSchemes)) {
+    return availableSchemes;
+  }
+
+  return availableSchemes.find((scheme, idx) => {
+    if (!scheme.conditions) {
+      // DEFAULT
+      debug('we get default slot scheme');
+
+      // if scheme doesn't have conditions it is default scheme
+      // usually it is at the end of list
+
+      if (idx < availableSchemes.length - 1) {
+        // if we have schemes after the default one
+        // we should warn about it
+        // because we won't never reach schemes after default one
+        warning('we have schemes after the default one', scheme.name || '');
+      }
+      return true;
+    }
+
+    // all conditionals should be valid
+    try {
+      return scheme.conditions
+        .every(condition => math.eval(condition, slotsState));
+    } catch (error) {
+      debug(error && error.message);
+
+      return false;
+    }
+  });
 }
 
 /**
@@ -162,14 +210,14 @@ function generateAcknowledge (app, slotScheme, newValues) {
     newNames
   );
 
-  if (validAcknowledges.length === 0) {
+  if (validAcknowledges && validAcknowledges.length === 0) {
     validAcknowledges = getMatchedTemplates(
       acknowledgeRequirements,
       newNames
     );
   }
 
-  if (validAcknowledges.length === 0) {
+  if (!validAcknowledges || validAcknowledges.length === 0) {
     warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
     return Promise.resolve(null);
   }
