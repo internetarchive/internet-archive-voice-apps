@@ -20,11 +20,17 @@ const queryDialogScheme = require('../strings').intents.musicQuery;
 const fulfillments = require('../slots/fulfillments');
 
 /**
- * handle music query action
+ * Handle music query action
  * - fill slots of music query
- * TODO: it seems we could use express.js/koa middleware architecture here
+ * - call fulfilment feeder
+ *
+ * TODO:
+ * 1) it seems we could use express.js/koa middleware architecture here
+ * 2) all that could should be builder for any slot-based actions
+ * and should be placed to ./helpers.
  *
  * @param app
+ * @returns {Promise}
  */
 function handler (app) {
   debug('Start music query handler');

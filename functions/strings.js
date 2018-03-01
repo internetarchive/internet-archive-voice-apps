@@ -1,5 +1,7 @@
 module.exports = {
-  // v2
+  /**
+   * v2
+   */
   acknowledger: [
     'OK, ',
     'Got it, ',
@@ -152,7 +154,11 @@ module.exports = {
     },
   },
 
-  // v1
+  /**
+   * v1
+   *
+   * @deprecated
+   */
   appExit: "Okay, let's try this again later.",
   errors: {
     device: {
