@@ -8,6 +8,34 @@ const config = require('../config');
 const {buildQueryCondition} = require('./advanced-search');
 
 /**
+ * Fetch details about Album
+ *
+ * @param id {string} id of album
+ * @returns {Promise}
+ */
+function fetchAlbumDetails (id) {
+  return fetch(
+    mustache.render(config.endpoints.COLLECTION_URL, {id})
+  )
+    .then(res => res.json())
+    .then(json => {
+      return {
+        id,
+        creator: json.metadata.creator,
+        year: parseInt(json.metadata.year),
+        coverage: json.metadata.coverage,
+        title: json.metadata.title,
+        songs: json.files
+          .filter(f => f.format === 'VBR MP3' && f.creator)
+          .map(f => ({
+            filename: f.name,
+            title: f.title,
+          }))
+      };
+    });
+}
+
+/**
  * Fetch some albums of artist/creator
  *
  * @param {string} id - identifier of creator
@@ -110,6 +138,7 @@ function fetchAlbumsByQuery (query) {
 }
 
 module.exports = {
+  fetchAlbumDetails,
   fetchAlbums,
   fetchAlbumsByQuery,
 };

@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 
 /**
- * Mock of search/collection
+ * Mock of provider/collection
  *
  * @param fetchDetailsResponse
  * @returns {{fetchDetails: *}}

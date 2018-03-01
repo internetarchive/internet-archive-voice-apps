@@ -4,7 +4,7 @@ const mustache = require('mustache');
 
 const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
-const audio = require('../../provider/audio');
+const songsProvider = require('../../provider/songs');
 
 /**
  * Prefetch some songs from albums
@@ -64,7 +64,7 @@ function build (app, query, playlist) {
     })
     .then((albumId) => {
       debug('id of album:', albumId);
-      return albumId && audio.fetchAlbumDetails(albumId);
+      return albumId && albumsProvider.fetchAlbumDetails(albumId);
     })
     .then(album => {
       if (!album) {
@@ -75,7 +75,7 @@ function build (app, query, playlist) {
       debug(`We get album ${JSON.stringify(album)}`);
       const songs = album.songs
         .map((song, idx) => Object.assign({}, song, {
-          audioURL: audio.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
+          audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
           coverage: album.coverage,
           imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
           // TODO : add recommendations
