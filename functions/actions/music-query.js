@@ -16,7 +16,7 @@ const {
 } = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
-const queryDialogScheme = require('../strings').intents.musicQuery;
+const availableSchemes = require('../strings').intents.musicQuery;
 
 /**
  * Handle music query action
@@ -35,12 +35,13 @@ function handler (app) {
   debug('Start music query handler');
 
   const answer = [];
-  const newValues = fillSlots(app);
+  let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  const newValues = fillSlots(app, slotScheme);
 
-  const complete = querySlots.hasSlots(app, queryDialogScheme.slots);
+  const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('we got all needed slots');
-    const feeder = feeders.getByName(queryDialogScheme.fulfillment);
+    const feeder = feeders.getByName(slotScheme.fulfillment);
     return feeder
       .build(app, querySlots, playlist)
       .then(() => {
@@ -56,10 +57,10 @@ function handler (app) {
       });
   }
 
-  return generateAcknowledge(app, newValues)
+  return generateAcknowledge(app, slotScheme, newValues)
     .then(res => {
       answer.push(res);
-      return generatePrompt(app);
+      return generatePrompt(app, slotScheme);
     })
     .then(res => {
       answer.push(res);
@@ -72,6 +73,18 @@ function handler (app) {
         });
       }
     });
+}
+
+/**
+ * Get valid slot scheme by to meet conditions
+ *
+ * @param availableSchemes
+ * @param slotsState
+ * @returns {*}
+ */
+function getActualSlotScheme(availableSchemes, slotsState) {
+  // TODO:
+  return availableSchemes;
 }
 
 /**
@@ -107,8 +120,8 @@ function groupAnswers (answer) {
  * @param app
  * @returns {{}}
  */
-function fillSlots (app) {
-  return queryDialogScheme.slots
+function fillSlots (app, slotScheme) {
+  return slotScheme.slots
     .reduce((newValues, slotName) => {
       const value = app.getArgument(slotName);
       if (value) {
@@ -126,7 +139,7 @@ function fillSlots (app) {
  * @param newValues
  * @returns {*}
  */
-function generateAcknowledge (app, newValues) {
+function generateAcknowledge (app, slotScheme, newValues) {
   debug('we had slots:', Object.keys(querySlots.getSlots(app)));
 
   const newNames = Object.keys(newValues);
@@ -138,7 +151,7 @@ function generateAcknowledge (app, newValues) {
 
   debug('and get new slots:', newValues);
 
-  const acknowledgeRequirements = extractRequrements(queryDialogScheme.acknowledges);
+  const acknowledgeRequirements = extractRequrements(slotScheme.acknowledges);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
@@ -256,9 +269,9 @@ function fetchSuggestions (app, promptScheme) {
  * @param app
  * @returns {*}
  */
-function generatePrompt (app) {
+function generatePrompt (app, slotScheme) {
   const missedSlots =
-    queryDialogScheme.slots
+    slotScheme.slots
       .filter(slotName => !querySlots.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
@@ -268,7 +281,7 @@ function generatePrompt (app) {
 
   debug('we missed slots:', missedSlots);
   const promptScheme = getPromptsForSlots(
-    queryDialogScheme.prompts,
+    slotScheme.prompts,
     missedSlots
   );
 
