@@ -24,6 +24,7 @@
     "firebase-functions": "^0.8.1",
     "glob": "^7.1.2",
     "lodash": "^4.17.5",
+    "mathjs": "^3.20.2",
     "mustache": "^2.3.0",
     "node-fetch": "^2.0.0",
     "replaceall": "^0.1.6",
