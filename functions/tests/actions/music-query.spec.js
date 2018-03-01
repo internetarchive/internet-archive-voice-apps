@@ -78,11 +78,29 @@ describe('actions', () => {
       });
 
       it('should recieve value for old slot', () => {
-        // TODO: check "album" slot
+        app = mockApp({
+          argument: {
+            category: 'plates',
+            album: 'album1'
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(getSlot(app, 'album')).to.be.equal('album1');
+          });
       });
 
       it('should recieve value for new slot', () => {
-        // TODO: check "plate" slot
+        app = mockApp({
+          argument: {
+            category: 'plates',
+            plate: 'plate1'
+          },
+        });
+        return action.handler(app)
+          .then(() => {
+            expect(getSlot(app, 'plate')).to.be.equal('plate1');
+          });
       });
     });
 
