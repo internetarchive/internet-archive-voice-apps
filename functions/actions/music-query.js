@@ -4,6 +4,8 @@ const _ = require('lodash');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
+const feeders = require('../extensions/feeders');
+const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const humanize = require('../humanize');
 const {
   extractRequrements,
@@ -12,19 +14,22 @@ const {
   getPromptsForSlots,
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
-const {getSuggestionProviderForSlots} = require('../slots/suggestions');
 const playlist = require('../state/playlist');
 const querySlots = require('../state/query');
 const queryDialogScheme = require('../strings').intents.musicQuery;
 
-const fulfillments = require('../slots/fulfillments');
-
 /**
- * handle music query action
+ * Handle music query action
  * - fill slots of music query
- * TODO: it seems we could use express.js/koa middleware architecture here
+ * - call fulfilment feeder
+ *
+ * TODO:
+ * 1) it seems we could use express.js/koa middleware architecture here
+ * 2) all that could should be builder for any slot-based actions
+ * and should be placed to ./helpers.
  *
  * @param app
+ * @returns {Promise}
  */
 function handler (app) {
   debug('Start music query handler');
@@ -32,10 +37,10 @@ function handler (app) {
   const answer = [];
   const newValues = fillSlots(app);
 
-  const complete = querySlots.hasSlots(app, Object.keys(queryDialogScheme.slots));
+  const complete = querySlots.hasSlots(app, queryDialogScheme.slots);
   if (complete) {
     debug('we got all needed slots');
-    const feeder = fulfillments.getByName(queryDialogScheme.fulfillment);
+    const feeder = feeders.getByName(queryDialogScheme.fulfillment);
     return feeder
       .build(app, querySlots, playlist)
       .then(() => {
@@ -103,17 +108,15 @@ function groupAnswers (answer) {
  * @returns {{}}
  */
 function fillSlots (app) {
-  const newValues = {};
-
-  for (let slotName in queryDialogScheme.slots) {
-    const value = app.getArgument(slotName);
-    if (value) {
-      querySlots.setSlot(app, slotName, value);
-      newValues[slotName] = value;
-    }
-  }
-
-  return newValues;
+  return queryDialogScheme.slots
+    .reduce((newValues, slotName) => {
+      const value = app.getArgument(slotName);
+      if (value) {
+        querySlots.setSlot(app, slotName, value);
+        newValues[slotName] = value;
+      }
+      return newValues;
+    }, {});
 }
 
 /**
@@ -255,7 +258,7 @@ function fetchSuggestions (app, promptScheme) {
  */
 function generatePrompt (app) {
   const missedSlots =
-    Object.keys(queryDialogScheme.slots)
+    queryDialogScheme.slots
       .filter(slotName => !querySlots.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {

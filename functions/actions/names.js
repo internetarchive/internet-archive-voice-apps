@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 module.exports = {
   textInput: 'input.text',
   mediaStateInput: 'media_status_update',

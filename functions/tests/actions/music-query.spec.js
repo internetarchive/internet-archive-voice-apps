@@ -19,6 +19,9 @@ const queryDialogScheme = {
   ],
 
   prompts: [{
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'collection'
     ],
@@ -27,11 +30,17 @@ const queryDialogScheme = {
       'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
     ],
 
+    /**
+     * Fixed set of suggestions
+     */
     suggestions: [
       '78s',
       'Live Concerts',
     ],
   }, {
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'creatorId'
     ],
@@ -40,6 +49,9 @@ const queryDialogScheme = {
       'What artist would you like to listen to, e.g. {{suggestions.humanized}}?',
     ],
   }, {
+    /**
+     * prompt for a single slot
+     */
     requirements: [
       'coverage',
       'year',
@@ -50,13 +62,19 @@ const queryDialogScheme = {
     ],
   }],
 
-  slots: {
-    'collection': {},
-    'creatorId': {},
-    'coverage': {},
-    'year': {},
-  },
+  /**
+   * slots which we need for fulfillement
+   */
+  slots: [
+    'collection',
+    'creatorId',
+    'coverage',
+    'year',
+  ],
 
+  /**
+   * feeder which we should call once we get all slots
+   */
   fulfillment: 'albums',
 };
 
@@ -265,14 +283,14 @@ describe('actions', () => {
 
     describe('fulfillment', () => {
       let albumsFeeder;
-      let fulfillments;
+      let feeders;
 
       beforeEach(() => {
         albumsFeeder = mockAlbumsFeeder();
-        fulfillments = {
+        feeders = {
           getByName: sinon.stub().returns(albumsFeeder),
         };
-        action.__set__('fulfillments', fulfillments);
+        action.__set__('feeders', feeders);
       });
 
       it(`shouldn't activate when we don't have enough filled slots`, () => {
@@ -287,7 +305,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(fulfillments.getByName).to.have.not.been.called;
+            expect(feeders.getByName).to.have.not.been.called;
           });
       });
 
@@ -302,7 +320,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(fulfillments.getByName).to.have.been.called;
+            expect(feeders.getByName).to.have.been.called;
             expect(albumsFeeder.build).to.have.been.calledWith(
               app,
               action.__get__('querySlots'),
