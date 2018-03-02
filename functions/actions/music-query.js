@@ -122,9 +122,6 @@ function applyDefaultSlots (app, slotsScheme) {
     return;
   }
 
-  console.log(querySlots.getSlots(app));
-  console.log('querySlots.hasSlot(app, defaultSlotName)');
-  console.log(querySlots.hasSlot(app, 'sort'));
   const appliedDefaults = Object.keys(slotsScheme.defaults)
     .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
     .map(defaultSlotName => {

@@ -14,15 +14,14 @@
  * right now it just download big chunk of songs and
  * simulates async behaviour.
  *
+ * btw it isn't covered by tests because right now we have
+ * simplified implementation
  */
 
 const debug = require('debug')('ia:feeder:albums:debug');
 const warning = require('debug')('ia:feeder:albums:warning');
-const mustache = require('mustache');
 
-const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
-const songsProvider = require('../../provider/songs');
 
 const DefaultFeeder = require('./_default');
 
@@ -34,7 +33,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param app
    * @param query
    * @param playlist
-   * @returns {Promise.<TResult>}
+   * @returns {Promise}
    */
   build (app, query, playlist) {
     debug('lets build random songs feeder');
@@ -42,78 +41,42 @@ class AsyncAlbums extends DefaultFeeder {
     const slots = query.getSlots(app);
     debug('we have slots:', slots);
 
-    // TODO: fetch random albums
-    // TODO: get 1st mp3 there
     return albumsProvider
       .fetchAlbumsByQuery(Object.assign({}, slots, {
-        // predefined slots
-        // it is not really slot because right now it is just
+        // it is not really slot
+        // because right now it is just simulation of
+        // very large async albums playlist
         limit: 50,
-        // sort: 'random',
       }))
-      .then(albums => {
+      .then((albums) => {
         if (albums === null) {
           warning(`we received none albums`);
           return;
         }
         debug(`get ${albums.items.length} albums`);
-        debug(albums.items);
-        let albumId = null;
-        switch (albums.items.length) {
-          case 0:
-            // TODO: there is no such album
-            // - suggest other albums
-            break;
-          case 1:
-            albumId = albums.items[0].identifier;
-            break;
-          default:
-            // TODO: we get more than 1 album
-            // maybe we should ask user to clarify which album
-            // to play.
-
-            // TODO: of if we pretty sure they are very close like:
-            // - https://archive.org/details/gd73-06-09.sbd.hollister.172.sbeok.shnf
-            // - https://archive.org/details/gd73-06-10.sbd.hollister.174.sbeok.shnf
-            // we should play they are together.
-            // const names = albums.items
-            //   .slice(0, 10)
-            //   .map(album => `${album.coverage} ${album.year}`)
-            //   .join(', ');
-
-            // dialog.ask(app, {
-            //   speech: `DEBUG: we get ${albums.items.length} albums: ${names}`,
-            // });
-
-            // TODO: for the moment just play 1st album
-            // but we should make playlist from all albums
-            albumId = albums.items[0].identifier;
-            break;
-        }
-        return albumId;
+        // right now we fetch details of all albums
+        // TODO: but actually we should get random album (of few of them)
+        // and then get few random songs from those albums
+        return Promise.all(
+          albums.items.map(
+            albumId => albumsProvider.fetchAlbumDetails(albumId)
+          )
+        );
       })
-      .then((albumId) => {
-        debug('id of album:', albumId);
-        return albumId && albumsProvider.fetchAlbumDetails(albumId);
-      })
-      .then(album => {
-        if (!album) {
-          debug('we get none album');
+      .then(albums => {
+        if (!albums || albums.length === 0) {
+          debug('we get none albums');
           // TODO: we don't get album
           return;
         }
-        debug(`We get album ${JSON.stringify(album)}`);
-        const songs = album.songs
-          // exclude songs without title
-          .map((song, idx) => Object.assign({}, song, {
-            audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
-            coverage: album.coverage,
-            imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
-            // TODO : add recommendations
-            suggestions: ['TODO'],
-            track: idx + 1,
-            year: album.year,
-          }));
+
+        const songs = albums
+          .map(this.processAlbumSongs)
+          .reduce((allSongs, albumSongs) => {
+            return allSongs.concat(albumSongs);
+          }, []);
+
+        debug(`We get ${songs.length} songs`);
 
         // the only place where we modify state
         // so maybe we can put it out of this function?

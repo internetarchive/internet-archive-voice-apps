@@ -15,11 +15,8 @@
 
 const debug = require('debug')('ia:feeder:albums:debug');
 const warning = require('debug')('ia:feeder:albums:warning');
-const mustache = require('mustache');
 
-const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
-const songsProvider = require('../../provider/songs');
 
 const DefaultFeeder = require('./_default');
 
@@ -90,18 +87,12 @@ class SyncAlbum extends DefaultFeeder {
           // TODO: we don't get album
           return;
         }
-        debug(`We get album ${JSON.stringify(album)}`);
-        const songs = album.songs
-          .map((song, idx) => Object.assign({}, song, {
-            audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
-            coverage: album.coverage,
-            imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
-            // TODO : add recommendations
-            suggestions: ['TODO'],
-            track: idx + 1,
-            year: album.year,
-          }));
 
+        debug(`We get album ${JSON.stringify(album)}`);
+
+        const songs = this.processAlbumSongs(album);
+
+        debug(`We get ${songs.length} songs`);
         // the only place where we modify state
         // so maybe we can put it out of this function?
         debug(`let's create playlist for songs`);
