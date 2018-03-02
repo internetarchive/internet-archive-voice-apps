@@ -2,14 +2,6 @@ module.exports = {
   name: 'one dialog',
 
   /**
-   * default values for slots
-   * (we don't need to define those slots in `slots` field)
-   */
-  defaults: {
-    sort: 'random',
-  },
-
-  /**
    * slots which we need for fulfillement
    */
   slots: [
@@ -17,7 +9,15 @@ module.exports = {
     'creatorId',
     'coverage',
     'year',
+    'sort',
   ],
+
+  /**
+   * default values for slots
+   */
+  defaults: {
+    sort: 'random',
+  },
 
   acknowledges: [
     '{{coverage}} - good place!',
