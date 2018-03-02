@@ -59,7 +59,7 @@ class AsyncAlbums extends DefaultFeeder {
         // and then get few random songs from those albums
         return Promise.all(
           albums.items.map(
-            albumId => albumsProvider.fetchAlbumDetails(albumId)
+            album => albumsProvider.fetchAlbumDetails(album.identifier)
           )
         );
       })
