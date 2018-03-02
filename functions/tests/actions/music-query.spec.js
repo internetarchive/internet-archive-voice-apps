@@ -251,6 +251,22 @@ describe('actions', () => {
         });
       });
 
+      describe('presets', () => {
+        it('should fill slots', () => {
+          app = mockApp({
+            argument: {
+              preset: 'your-favourite-album',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(getSlot(app, 'creatorId')).to.be.equal('one-band');
+              expect(getSlot(app, 'coverage')).to.be.equal('NY');
+              expect(getSlot(app, 'year')).to.be.equal(1999);
+            });
+        });
+      });
+
       describe('slot updater', () => {
         it('should fill single slot', () => {
           app = mockApp({
