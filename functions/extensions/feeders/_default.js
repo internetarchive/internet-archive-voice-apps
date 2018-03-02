@@ -1,4 +1,8 @@
 const debug = require('debug')('ia:feeder:default:debug');
+const mustache = require('mustache');
+
+const config = require('../../config');
+const songsProvider = require('../../provider/songs');
 
 class DefaultFeeder {
   build (app, query, playlist) {
@@ -51,6 +55,26 @@ class DefaultFeeder {
     debug('move to the next song');
     playlist.next(app);
     return Promise.resolve();
+  }
+
+  /**
+   * Process album songs
+   *
+   * @protected
+   * @param album
+   * @returns {Array}
+   */
+  processAlbumSongs (album) {
+    return album.songs
+      .map((song, idx) => Object.assign({}, song, {
+        audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
+        coverage: album.coverage,
+        imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
+        // TODO : add recommendations
+        suggestions: ['TODO'],
+        track: idx + 1,
+        year: album.year,
+      }));
   }
 }
 
