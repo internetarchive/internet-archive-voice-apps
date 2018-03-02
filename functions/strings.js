@@ -12,8 +12,8 @@ module.exports = {
 
   dialog: {
     playSong: {
-      description: 'Playing track - {{title}}, {{coverage}}, {{year}}',
-      title: 'Playing track number - {{track}}',
+      description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
       suggestionLink: 'on Archive.org',
     }
   },
