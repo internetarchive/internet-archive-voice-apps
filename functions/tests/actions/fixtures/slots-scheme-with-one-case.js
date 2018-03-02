@@ -19,6 +19,16 @@ module.exports = {
     sort: 'random',
   },
 
+  presets: {
+    'your-favourite-album': {
+      defaults: {
+        creatorId: 'one-band',
+        coverage: 'NY',
+        year: 1999,
+      },
+    },
+  },
+
   acknowledges: [
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
