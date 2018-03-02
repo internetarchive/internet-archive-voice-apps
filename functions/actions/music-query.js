@@ -36,8 +36,10 @@ function handler (app) {
   debug('Start music query handler');
 
   const answer = [];
+
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   checkSlotScheme(slotScheme);
+  applyDefaultSlots(app, slotScheme);
   let newValues = fillSlots(app, slotScheme);
 
   // new values could change actual slot scheme
@@ -46,6 +48,7 @@ function handler (app) {
     slotScheme = newScheme;
     // update slots for new scheme
     checkSlotScheme(slotScheme);
+    applyDefaultSlots(app, slotScheme);
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
   }
 
@@ -106,6 +109,27 @@ function checkSlotScheme (slotScheme) {
   if (slotScheme && slotScheme.name) {
     debug(`we are going with "${slotScheme.name}" slot scheme`);
   }
+}
+
+/**
+ * Apply default slots from slotsScheme
+ *
+ * @param app
+ * @param slotsScheme
+ */
+function applyDefaultSlots (app, slotsScheme) {
+  if (!slotsScheme.defaults) {
+    return;
+  }
+
+  Object.keys(slotsScheme.defaults)
+    .forEach(defaultSlotName => {
+      querySlots.setSlot(
+        app,
+        defaultSlotName,
+        slotsScheme.defaults[defaultSlotName]
+      );
+    });
 }
 
 /**
