@@ -40,7 +40,7 @@ function handler (app) {
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
-  applyDefaultSlots(app, slotScheme);
+  applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
   const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
@@ -49,8 +49,10 @@ function handler (app) {
     // update slots for new scheme
     checkSlotScheme(slotScheme);
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
-    applyDefaultSlots(app, slotScheme);
+    applyDefaultSlots(app, slotScheme.defaults);
   }
+
+  processPreset(app, slotScheme);
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {
@@ -115,20 +117,20 @@ function checkSlotScheme (slotScheme) {
  * Apply default slots from slotsScheme
  *
  * @param app
- * @param slotsScheme
+ * @param defaults
  */
-function applyDefaultSlots (app, slotsScheme) {
-  if (!slotsScheme.defaults) {
+function applyDefaultSlots (app, defaults) {
+  if (!defaults) {
     return;
   }
 
-  const appliedDefaults = Object.keys(slotsScheme.defaults)
+  const appliedDefaults = Object.keys(defaults)
     .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
     .map(defaultSlotName => {
       querySlots.setSlot(
         app,
         defaultSlotName,
-        slotsScheme.defaults[defaultSlotName]
+        defaults[defaultSlotName]
       );
 
       return defaultSlotName;
@@ -175,6 +177,31 @@ function getActualSlotScheme (availableSchemes, slotsState) {
       return false;
     }
   });
+}
+
+/**
+ *
+ */
+function processPreset (app, slotScheme) {
+  const name = app.getArgument('preset');
+  if (!name) {
+    debug(`it wasn't preset`);
+    return;
+  }
+
+  debug(`we got preset ${name}`);
+
+  if (!slotScheme.presets || !(name in slotScheme.presets)) {
+    warning(`but we don't have it in presets of ${slotScheme.name}`);
+    return;
+  }
+
+  const preset = slotScheme.presets[name];
+  if ('defaults' in preset) {
+    warning(`but it doesn't have defaults in ${slotScheme.name}`);
+  }
+
+  applyDefaultSlots(app, preset.defaults);
 }
 
 /**
