@@ -26,7 +26,8 @@ function fetchAlbumDetails (id) {
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files
-          .filter(f => f.format === 'VBR MP3' && f.creator)
+          // usually songs don't have 'creator' field as well
+          .filter(f => f.format === 'VBR MP3' && f.title)
           .map(f => ({
             filename: f.name,
             title: f.title,
