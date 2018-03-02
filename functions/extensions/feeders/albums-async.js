@@ -46,7 +46,9 @@ class AsyncAlbums extends DefaultFeeder {
         // it is not really slot
         // because right now it is just simulation of
         // very large async albums playlist
-        limit: 50,
+
+        // IA has limit - maximum 10 requests
+        limit: 10,
       }))
       .then((albums) => {
         if (albums === null) {
@@ -58,12 +60,24 @@ class AsyncAlbums extends DefaultFeeder {
         // TODO: but actually we should get random album (of few of them)
         // and then get few random songs from those albums
         return Promise.all(
-          albums.items.map(
-            album => albumsProvider.fetchAlbumDetails(album.identifier)
-          )
+          albums.items
+            .map(
+              album => albumsProvider
+                .fetchAlbumDetails(album.identifier, {
+                  retry: 3,
+                  delay: 100,
+                })
+                .catch(error => {
+                  warning(`we failed on fetching details about album:`, error);
+                  return null;
+                })
+            )
         );
       })
       .then(albums => {
+        // drop failed albums
+        albums = albums.filter(album => album);
+
         if (!albums || albums.length === 0) {
           debug('we get none albums');
           // TODO: we don't get album

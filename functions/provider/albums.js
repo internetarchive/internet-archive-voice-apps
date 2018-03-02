@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const mustache = require('mustache');
 
 const config = require('../config');
+const delayedPromise = require('../utils/delay');
 
 const {buildQueryCondition} = require('./advanced-search');
 
@@ -11,12 +12,22 @@ const {buildQueryCondition} = require('./advanced-search');
  * Fetch details about Album
  *
  * @param id {string} id of album
+ * @param {number} [retry]
+ * @param {number} [delay] delay between requests
  * @returns {Promise}
  */
-function fetchAlbumDetails (id) {
+function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
   return fetch(
     mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
+    .catch((error) => {
+      if (retry > 0) {
+        return delayedPromise(delay)
+          .then(() => fetchAlbumDetails(id, {retry: retry - 1}));
+      } else {
+        return Promise.reject(error);
+      }
+    })
     .then(res => res.json())
     .then(json => {
       return {
@@ -26,7 +37,7 @@ function fetchAlbumDetails (id) {
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files
-          // usually songs don't have 'creator' field as well
+        // usually songs don't have 'creator' field as well
           .filter(f => f.format === 'VBR MP3' && f.title)
           .map(f => ({
             filename: f.name,
