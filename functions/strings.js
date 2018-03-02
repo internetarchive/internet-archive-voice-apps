@@ -74,12 +74,9 @@ module.exports = {
 
       /**
        * feeder which we should call once we get all slots
-       *
-       * TODO: we should have special feeder for 'georgeblood'
-       * collection, because almost all albums from this collection
-       * have only 1 song.
+       * (we could have a lot of songs here - because we filter by genre)
        */
-      fulfillment: 'albums',
+      fulfillment: 'albums-async',
     }, {
       name: 'DEFAULT music search query',
 
