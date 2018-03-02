@@ -21,6 +21,10 @@ module.exports = {
 
   presets: {
     'your-favourite-album': {
+      acknowledges: [
+        `Cool! You've chosen my favourite album.`,
+      ],
+
       defaults: {
         creatorId: 'one-band',
         coverage: 'NY',

@@ -42,8 +42,6 @@ function handler (app) {
   let newValues = fillSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
-  processPreset(app, slotScheme);
-
   // new values could change actual slot scheme
   const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   if (slotScheme !== newScheme) {
@@ -53,6 +51,8 @@ function handler (app) {
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
     applyDefaultSlots(app, slotScheme.defaults);
   }
+
+  processPreset(app, slotScheme);
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
   if (complete) {

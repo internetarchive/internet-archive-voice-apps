@@ -265,6 +265,26 @@ describe('actions', () => {
               expect(getSlot(app, 'year')).to.be.equal(1999);
             });
         });
+
+        // is not implemented yet
+        // https://github.com/internetarchive/internet-archive-google-action/issues/93
+        // it could be quite a complex issue
+        xit('should acknowledge for chosen preset', () => {
+          app = mockApp({
+            argument: {
+              preset: 'your-favourite-album',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(dialog.ask).to.have.been.calledOnce;
+              expect(dialog.ask.args[0][1])
+                .to.have.property('speech')
+                .to.include(
+                  `Cool! You've chosen my favourite album.`
+                );
+            });
+        });
       });
 
       describe('slot updater', () => {
