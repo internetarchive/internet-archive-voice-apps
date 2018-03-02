@@ -36,7 +36,6 @@ module.exports = {
       slots: [
         'collectionId',
         'subject',
-        'creatorId',
       ],
 
       /**
