@@ -36,9 +36,11 @@ function handler (app) {
   debug('Start music query handler');
 
   const answer = [];
+
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
+  applyDefaultSlots(app, slotScheme);
 
   // new values could change actual slot scheme
   const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
@@ -47,6 +49,7 @@ function handler (app) {
     // update slots for new scheme
     checkSlotScheme(slotScheme);
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+    applyDefaultSlots(app, slotScheme);
   }
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
@@ -109,6 +112,32 @@ function checkSlotScheme (slotScheme) {
 }
 
 /**
+ * Apply default slots from slotsScheme
+ *
+ * @param app
+ * @param slotsScheme
+ */
+function applyDefaultSlots (app, slotsScheme) {
+  if (!slotsScheme.defaults) {
+    return;
+  }
+
+  const appliedDefaults = Object.keys(slotsScheme.defaults)
+    .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
+    .map(defaultSlotName => {
+      querySlots.setSlot(
+        app,
+        defaultSlotName,
+        slotsScheme.defaults[defaultSlotName]
+      );
+
+      return defaultSlotName;
+    });
+
+  debug('We have used defaults:', appliedDefaults);
+}
+
+/**
  * Get valid slot scheme by to meet conditions
  *
  * @param availableSchemes
@@ -142,8 +171,7 @@ function getActualSlotScheme (availableSchemes, slotsState) {
       return scheme.conditions
         .every(condition => math.eval(condition, slotsState));
     } catch (error) {
-      debug(error && error.message);
-
+      debug(`Get error from Math.js:`, error && error.message);
       return false;
     }
   });

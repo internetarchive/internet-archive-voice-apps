@@ -1,4 +1,24 @@
 module.exports = {
+  name: 'one dialog',
+
+  /**
+   * slots which we need for fulfillement
+   */
+  slots: [
+    'collection',
+    'creatorId',
+    'coverage',
+    'year',
+    'sort',
+  ],
+
+  /**
+   * default values for slots
+   */
+  defaults: {
+    sort: 'random',
+  },
+
   acknowledges: [
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
@@ -50,16 +70,6 @@ module.exports = {
       'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
     ],
   }],
-
-  /**
-   * slots which we need for fulfillement
-   */
-  slots: [
-    'collection',
-    'creatorId',
-    'coverage',
-    'year',
-  ],
 
   /**
    * feeder which we should call once we get all slots

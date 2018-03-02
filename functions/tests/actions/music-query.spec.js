@@ -109,39 +109,6 @@ describe('actions', () => {
         action.__set__('availableSchemes', slotSchemeWithOneCase);
       });
 
-      describe('slot updater', () => {
-        it('should fill single slot', () => {
-          app = mockApp({
-            argument: {
-              collection: 'live',
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(getSlot(app, 'collection')).to.be.equal('live');
-              expect(getSlot(app, 'creatorId')).to.be.undefined;
-              expect(getSlot(app, 'coverage')).to.be.undefined;
-              expect(getSlot(app, 'year')).to.be.undefined;
-            });
-        });
-
-        it('should fill multiple slots', () => {
-          app = mockApp({
-            argument: {
-              coverage: 'Kharkiv',
-              year: 2017,
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(getSlot(app, 'collection')).to.be.undefined;
-              expect(getSlot(app, 'creatorId')).to.be.undefined;
-              expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
-              expect(getSlot(app, 'year')).to.be.equal(2017);
-            });
-        });
-      });
-
       describe('acknowledge', () => {
         it('should acknowledge are received values', () => {
           app = mockApp({
@@ -176,9 +143,8 @@ describe('actions', () => {
 
           return action.handler(app)
             .then(() => {
-              expect(handler).to.have.been.calledWith({
-                creatorId: 'bandId',
-              });
+              expect(handler.args[0][0])
+                .to.have.property('creatorId', 'bandId');
               expect(dialog.ask).to.have.been.calledOnce;
               expect(dialog.ask.args[0][1])
                 .to.have.property('speech')
@@ -202,81 +168,26 @@ describe('actions', () => {
         });
       });
 
-      describe('suggestions', () => {
-        it('should return list of statis suggestions', () => {
+      describe('defaults', () => {
+        it(`should automatically populate to user state if we don't have it yet there`, () => {
           app = mockApp({
             argument: {},
           });
           return action.handler(app)
             .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('suggestions')
-                .to.have.members(['78s', 'Live Concerts']);
+              expect(getSlot(app, 'sort')).to.be.equal('random');
             });
         });
 
-        it('should generate suggestions on fly', () => {
+        it(`shouldn't populate to user state if we already have this slot`, () => {
           app = mockApp({
             argument: {
-              collection: 'live',
-              year: 2018,
+              sort: 'the-best',
             },
           });
           return action.handler(app)
             .then(() => {
-              expect(provider).to.have.been.calledWith({
-                collection: 'live',
-                year: 2018,
-              });
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('suggestions')
-              // fetch bands for the collection
-                .to.have.members(['barcelona', 'london', 'lviv']);
-            });
-        });
-
-        it('should use suggestion to generate prompt speech', () => {
-          app = mockApp({
-            argument: {},
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include(
-                  'Would you like to listen to music from our collections of 78s or Live Concerts?'
-                );
-            });
-        });
-
-        it('should use one suggestion to generate prompt speech', () => {
-          provider = sinon.stub().returns(Promise.resolve({
-            items: [
-              {coverage: 'Washington, DC', year: 1973},
-              {coverage: 'Madison, WI', year: 2000},
-              {coverage: 'Worcester, MA', year: 2001},
-            ],
-          }));
-          getSuggestionProviderForSlots = sinon.stub().returns(provider);
-          action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
-
-          app = mockApp({
-            argument: {
-              collection: 'live',
-              creatorId: 'the band',
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include(
-                  'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
-                );
+              expect(getSlot(app, 'sort')).to.be.equal('the-best');
             });
         });
       });
@@ -336,6 +247,116 @@ describe('actions', () => {
                 action.__get__('querySlots'),
                 action.__get__('playlist')
               );
+            });
+        });
+      });
+
+      describe('slot updater', () => {
+        it('should fill single slot', () => {
+          app = mockApp({
+            argument: {
+              collection: 'live',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(getSlot(app, 'collection')).to.be.equal('live');
+              expect(getSlot(app, 'creatorId')).to.be.undefined;
+              expect(getSlot(app, 'coverage')).to.be.undefined;
+              expect(getSlot(app, 'year')).to.be.undefined;
+            });
+        });
+
+        it('should fill multiple slots', () => {
+          app = mockApp({
+            argument: {
+              coverage: 'Kharkiv',
+              year: 2017,
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(getSlot(app, 'collection')).to.be.undefined;
+              expect(getSlot(app, 'creatorId')).to.be.undefined;
+              expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
+              expect(getSlot(app, 'year')).to.be.equal(2017);
+            });
+        });
+      });
+
+      describe('suggestions', () => {
+        it('should return list of statis suggestions', () => {
+          app = mockApp({
+            argument: {},
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(dialog.ask).to.have.been.calledOnce;
+              expect(dialog.ask.args[0][1])
+                .to.have.property('suggestions')
+                .to.have.members(['78s', 'Live Concerts']);
+            });
+        });
+
+        it('should generate suggestions on fly', () => {
+          app = mockApp({
+            argument: {
+              collection: 'live',
+              year: 2018,
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(provider.args[0][0]).to.have.property('collection', 'live');
+              expect(provider.args[0][0]).to.have.property('year', 2018);
+              expect(dialog.ask).to.have.been.calledOnce;
+              expect(dialog.ask.args[0][1])
+                .to.have.property('suggestions')
+              // fetch bands for the collection
+                .to.have.members(['barcelona', 'london', 'lviv']);
+            });
+        });
+
+        it('should use suggestion to generate prompt speech', () => {
+          app = mockApp({
+            argument: {},
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(dialog.ask).to.have.been.calledOnce;
+              expect(dialog.ask.args[0][1])
+                .to.have.property('speech')
+                .to.include(
+                  'Would you like to listen to music from our collections of 78s or Live Concerts?'
+                );
+            });
+        });
+
+        it('should use one suggestion to generate prompt speech', () => {
+          provider = sinon.stub().returns(Promise.resolve({
+            items: [
+              {coverage: 'Washington, DC', year: 1973},
+              {coverage: 'Madison, WI', year: 2000},
+              {coverage: 'Worcester, MA', year: 2001},
+            ],
+          }));
+          getSuggestionProviderForSlots = sinon.stub().returns(provider);
+          action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
+          app = mockApp({
+            argument: {
+              collection: 'live',
+              creatorId: 'the band',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(dialog.ask).to.have.been.calledOnce;
+              expect(dialog.ask.args[0][1])
+                .to.have.property('speech')
+                .to.include(
+                  'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+                );
             });
         });
       });
