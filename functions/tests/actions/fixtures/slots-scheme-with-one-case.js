@@ -19,6 +19,20 @@ module.exports = {
     sort: 'random',
   },
 
+  presets: {
+    'your-favourite-album': {
+      acknowledges: [
+        `Cool! You've chosen my favourite album.`,
+      ],
+
+      defaults: {
+        creatorId: 'one-band',
+        coverage: 'NY',
+        year: 1999,
+      },
+    },
+  },
+
   acknowledges: [
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
