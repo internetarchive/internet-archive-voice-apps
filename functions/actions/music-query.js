@@ -39,8 +39,8 @@ function handler (app) {
 
   let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
   checkSlotScheme(slotScheme);
-  applyDefaultSlots(app, slotScheme);
   let newValues = fillSlots(app, slotScheme);
+  applyDefaultSlots(app, slotScheme);
 
   // new values could change actual slot scheme
   const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
@@ -48,8 +48,8 @@ function handler (app) {
     slotScheme = newScheme;
     // update slots for new scheme
     checkSlotScheme(slotScheme);
-    applyDefaultSlots(app, slotScheme);
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+    applyDefaultSlots(app, slotScheme);
   }
 
   const complete = querySlots.hasSlots(app, slotScheme.slots);
@@ -122,14 +122,22 @@ function applyDefaultSlots (app, slotsScheme) {
     return;
   }
 
-  Object.keys(slotsScheme.defaults)
-    .forEach(defaultSlotName => {
+  console.log(querySlots.getSlots(app));
+  console.log('querySlots.hasSlot(app, defaultSlotName)');
+  console.log(querySlots.hasSlot(app, 'sort'));
+  const appliedDefaults = Object.keys(slotsScheme.defaults)
+    .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
+    .map(defaultSlotName => {
       querySlots.setSlot(
         app,
         defaultSlotName,
         slotsScheme.defaults[defaultSlotName]
       );
+
+      return defaultSlotName;
     });
+
+  debug('We have used defaults:', appliedDefaults);
 }
 
 /**
