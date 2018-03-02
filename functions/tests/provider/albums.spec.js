@@ -69,7 +69,7 @@ describe('collection', () => {
 
       // plates have many of songs duplications
       // but luckly they don't have title field, we will use it
-      return albumsProvider.fetchAlbumDetails('')
+      return albumsProvider.fetchAlbumDetails('78_the-continental-you-kiss-while-youre-dancing_larry-adler-harbach-kern_gbia0034616')
         .then(album => {
           expect(album)
             .to.have.property('songs')
