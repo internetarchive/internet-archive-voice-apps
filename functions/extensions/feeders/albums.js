@@ -1,3 +1,18 @@
+/**
+ * Synchronous Albums feeder
+ * it fetches all data at once and holds it in state of user
+ *
+ * pros:
+ * - it knows exactly its total size
+ * - doesn't have delay on swapping between songs
+ *
+ * cons:
+ * - could have delay on building
+ * - could be exhaustive for user's state
+ *   (because we need to hold all fetched songs).
+ * - not efficient for big playlist and doesn't work for unlimited one
+ */
+
 const debug = require('debug')('ia:feeder:albums:debug');
 const warning = require('debug')('ia:feeder:albums:warning');
 const mustache = require('mustache');
@@ -13,7 +28,7 @@ const songsProvider = require('../../provider/songs');
  * @param app
  * @param query
  * @param playlist
- * @returns {Promise.<TResult>}
+ * @returns {Promise}
  */
 function build (app, query, playlist) {
   debug('lets build albums feeder');

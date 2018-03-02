@@ -102,6 +102,8 @@ function fetchAlbumsByQuery (query) {
     sort = 'downloads+desc'
   } = query;
 
+  debug('limit', limit);
+  debug(query);
   // create search query
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
