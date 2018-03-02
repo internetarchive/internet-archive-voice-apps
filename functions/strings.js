@@ -12,7 +12,7 @@ module.exports = {
 
   dialog: {
     playSong: {
-      description: 'Playing track - {{title}}, {{coverage}}{{#year}}, {{year}}{{/year}}',
+      description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       title: 'Playing track number - {{track}}',
       suggestionLink: 'on Archive.org',
     }
