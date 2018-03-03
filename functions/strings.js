@@ -39,6 +39,13 @@ module.exports = {
       ],
 
       /**
+       * default values for slots
+       */
+      defaults: {
+        sort: 'random',
+      },
+
+      /**
        * Acknowledge recieved value and repeat to give user change
        * to check our undestanding
        */
