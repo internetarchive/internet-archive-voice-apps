@@ -1,77 +1,169 @@
 const fetch = require(`node-fetch`);
-const debug = require(`debug`)(`ia:uploader:getCollectionFromIA:debug`);
+// const debug = require(`debug`)(`ia:uploader:getCollectionFromIA:debug`);
 const error = require(`debug`)(`ia:uploader:getCollectionFromIA:error`);
 const util = require(`util`);
 const _ = require(`lodash`);
+var shouldDelete = false;
+const mustache = require('mustache');
+const config = require('../config');
 
-fetchCollectionsFromIA();
-// deleteAllCollectionDataFromDF();
+const basicHeaderRequest = {
+  'content-type': 'application/json; charset=UTF-8',
+  'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'
+};
+const entityname = 'creators';
 
+fetchNewCollectionsFromIAAndPostToDF();
+if (shouldDelete) {
+  deleteAllCollectionDataFromDF();
+}
 function fetchCollectionsFromIA () {
-  debug(`fetching collection data from IA...`);
-  return fetch(`https://web.archive.org/advancedsearch.php?q=collection%3A(etree)&fl[]=creator&sort[]=downloads+desc&sort[]=&sort[]=&rows=200000&page=1&output=json`)
+  var id = `etree`;
+  var limit = 200000;
+  var page = 0;
+  var sort = 'downloads+desc';
+  console.log(`fetching collection data from IA...`);
+  var url = mustache.render(
+    config.endpoints.COLLECTION_ITEMS_URL,
+    {
+      id,
+      limit,
+      page,
+      sort,
+      fields: 'creator',
+    }
+  );
+  console.log(url);
+  return fetch(url)
     .then(res => res.json())
     .then(data => {
       var creatorsJsonArray = data.response.docs;
       var creators = [];
-      var lookup = {};
       for (let i = 0; i < creatorsJsonArray.length; i++) {
         var creator = JSON.stringify(creatorsJsonArray[i].creator);
-        if (creator != null) {
-          if (!(creator in lookup)) {
-            lookup[creator] = 1;
-            creators.push(creator);
-          }
+        if (creator) {
+          creator = creator.replace(/[^a-zA-Z 0-9]+/g, ` `);
+          creators.push(creator);
         }
       }
-      debug(`fetched Collection successfully.`);
+      creators = unique(creators);
+      console.log(`fetched Collection from IA successfully.`);
       return creators;
     }).catch(e => {
-      error(`Get error on fetching collection from IA, error: ${JSON.stringify(e)}`);
+      error(`Get error in fetching collection from IA, error: ${JSON.stringify(e)}`);
+      return Promise.reject(e);
+    });
+}
+
+function fetchNewCollectionsFromIAAndPostToDF () {
+  return Promise.all([
+    fetchCollectionsFromIA(),
+    fetchCollectionDataFromDF(),
+  ])
+    .then(values => {
+      const [creatorsFromIA, creatorsFromDF] = values;
+      var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
+      console.log(util.inspect(dif, false, null));
+      console.log(`Done`);
+      postCollectionDataToDF(dif, 0, 1000);
+    });
+}
+
+// Maximum 1,000 records per request
+// Maximum 30,000 records per entity
+function postCollectionDataToDF (creators, first, last) {
+  console.log(`first : ` + first);
+  console.log(`Creators Length : ` + creators.length);
+  console.log(`posting Collection to DF...`);
+  var data = [];
+  var maxRequest = 1000;
+  if (last > creators.length) {
+    last = creators.length;
+  }
+  if (first === last) {
+    console.log(`posted Collection to DF Successfully.`);
+    return;
+  }
+  for (let i = first; i < last; i++) {
+    data.push({'synonyms': [creators[i]], 'value': creators[i]});
+  }
+  return fetch(mustache.render(
+    config.endpoints.DF_ENTITY_POST_URL,
+    {
+      entityname,
+    }
+  ), {method: `POST`, body: JSON.stringify(data), headers: basicHeaderRequest})
+    .then(res => res.json())
+    .then(data => {
+      if (data.status.code !== 200) {
+        console.log(`Error : ` + data.status.errorDetails);
+        return;
+      }
+      console.log(util.inspect(data, false, null));
+      console.log(`posted Collection to DF Successfully.`);
+      first = last;
+      last = first + maxRequest;
+      postCollectionDataToDF(creators, first, last);
+    })
+    .catch(e => {
+      error(`Get error in posting collection to DF, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
     });
 }
 
 function fetchCollectionDataFromDF () {
-  
-  return fetch(`https://api.dialogflow.com/v1/entities/f505c2f0-8ffc-4196-a87d-1d6cab3e4b80?v=20150910`, { method: `GET`, headers: { 'Content-Type': 'application/json;charset=UTF-8', 'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'}})
+  console.log(`fetching collection data from DF...`);
+  return fetch(mustache.render(
+    config.endpoints.DF_ENTITY_GET_URL,
+    {
+      entityname,
+    }
+  ), {method: `GET`, headers: basicHeaderRequest})
     .then(res => res.json())
     .then(data => {
-      debug(util.inspect(data, false, null));
-      debug(`posted Collection to dialogflow Successfully.`);
+      console.log(util.inspect(data, false, null));
       var creators = [];
-      for (var i = 0, len = data.entries.length; i<len; i++) {
-      //debug(util.inspect(creators[i], false, null));
-      creators.push(data.entries[i].value);
+      for (var i = 0, len = data.entries.length; i < len; i++) {
+      // console.log(util.inspect(creators[i], false, null));
+        creators.push(data.entries[i].value);
       }
+      console.log(`fetched Collection from DF successfully.`);
       return creators;
     })
     .catch(e => {
-      error(`Get error on fetching collection from IA, error: ${JSON.stringify(e)}`);
+      error(`Get error in fetching collection from DF, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
     });
 }
-
 function deleteAllCollectionDataFromDF () {
- return Promise.all([
-fetchCollectionDataFromDF(),
+  return Promise.all([
+    fetchCollectionDataFromDF(),
   ])
     .then(creators => {
-var my_creators = creators.splice(0, 1);
-deleteCollectionDataFromDF(my_creators);
+      var spliceCreators = creators.splice(0, 1);
+      deleteCollectionDataFromDF(spliceCreators);
+    });
+}
+function deleteCollectionDataFromDF (creators) {
+  return fetch(mustache.render(
+    config.endpoints.DF_ENTITY_DELETE_URL,
+    {
+      entityname,
+    }
+  ), {method: `DELETE`, body: JSON.stringify(creators), headers: basicHeaderRequest})
+    .then(res => res.json())
+    .then(data => {
+      console.log(util.inspect(data, false, null));
+      console.log(`Deleted Collection to dialogflow Successfully.`);
+    })
+    .catch(e => {
+      error(`Get error in deleting collection in DF, error: ${JSON.stringify(e)}`);
+      return Promise.reject(e);
     });
 }
 
-function deleteCollectionDataFromDF (creators) {
-  
-  return fetch(`https://api.dialogflow.com/v1/entities/f505c2f0-8ffc-4196-a87d-1d6cab3e4b80?v=20150910`, { method: `DELETE`, body: JSON.stringify(creators), headers: { 'Content-Type': 'application/json;charset=UTF-8', 'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'}})
-    .then(res => res.json())
-    .then(data => {
-      debug(util.inspect(data, false, null));
-      debug(`posted Collection to dialogflow Successfully.`);
-    })
-    .catch(e => {
-      error(`Get error on fetching collection from IA, error: ${JSON.stringify(e)}`);
-      return Promise.reject(e);
-    });
+function unique (ar) {
+  return ar.filter(function (value, index, self) {
+    return self.indexOf(value) === index;
+  });
 }

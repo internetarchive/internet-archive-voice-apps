@@ -23,6 +23,9 @@ module.exports = {
     '&page={{page}}' +
     '&output=json',
     SONG_URL: 'https://archive.org/download/{{albumId}}/{{filename}}',
+    DF_ENTITY_GET_URL: 'https://api.dialogflow.com/v1/entities/{{entityname}}?v=1518595092',
+    DF_ENTITY_POST_URL: 'https://api.dialogflow.com/v1/entities/{{entityname}}/entries?v=1518595092',
+    DF_ENTITY_DELETE_URL: 'https://api.dialogflow.com/v1/entities/{{entityname}}?v=1518595092',
   },
 
   media: {
