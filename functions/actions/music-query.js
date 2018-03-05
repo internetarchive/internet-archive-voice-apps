@@ -127,11 +127,16 @@ function applyDefaultSlots (app, defaults) {
   const appliedDefaults = Object.keys(defaults)
     .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
     .map(defaultSlotName => {
-      querySlots.setSlot(
-        app,
-        defaultSlotName,
-        defaults[defaultSlotName]
-      );
+      const value = defaults[defaultSlotName];
+      if (value.skip) {
+        querySlots.skipSlot(app, defaultSlotName);
+      } else {
+        querySlots.setSlot(
+          app,
+          defaultSlotName,
+          defaults[defaultSlotName]
+        );
+      }
 
       return defaultSlotName;
     });
@@ -189,7 +194,7 @@ function processPreset (app, slotScheme) {
     return;
   }
 
-  debug(`we got preset ${name}`);
+  debug(`we got preset "${name}" in "${slotScheme.name}"`);
 
   if (!slotScheme.presets || !(name in slotScheme.presets)) {
     warning(`but we don't have it in presets of ${slotScheme.name}`);
@@ -197,8 +202,9 @@ function processPreset (app, slotScheme) {
   }
 
   const preset = slotScheme.presets[name];
-  if ('defaults' in preset) {
-    warning(`but it doesn't have defaults in ${slotScheme.name}`);
+  if (!('defaults' in preset)) {
+    warning(`but it doesn't have defaults`);
+    return;
   }
 
   applyDefaultSlots(app, preset.defaults);

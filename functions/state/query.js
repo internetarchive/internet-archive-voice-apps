@@ -108,12 +108,13 @@ function setSlot (app, name, value) {
  * @param {String} name
  */
 function skipSlot (app, name) {
-  let skipped = getData(app)._skipped || [];
+  let skipped = getSlotSkipped(app);
   if (skipped.indexOf(name) < 0) {
     skipped = skipped.concat(name);
   }
 
   setData(app, Object.assign({}, getData(app), {skipped}));
+  // setSlotSkipped(app, skipped);
 }
 
 module.exports = {
