@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const builder = require('../../../actions/helpers/in-one-go');
+const builder = require('../../../actions/high-order-handlers/in-one-go');
 
 const strings = require('./fixtures/in-on-go.json');
 
