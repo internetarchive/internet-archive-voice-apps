@@ -7,7 +7,7 @@ const debug = require('debug')('ia:actions:middleware:copy-arguments-to-slots:de
  * @param app
  * @param newValues
  * @param query
- * @param slotsScheme
+ * @param slotScheme
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
 module.exports = () =>
