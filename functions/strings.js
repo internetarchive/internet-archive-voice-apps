@@ -39,6 +39,20 @@ module.exports = {
       ],
 
       /**
+       * could be define in follow-up intent
+       * which return preset argument
+       */
+      presets: {
+        randomly: {
+          defaults: {
+            collectionId: {skip: true},
+            subject: {skip: true},
+            sort: 'random',
+          }
+        },
+      },
+
+      /**
        * default values for slots
        */
       defaults: {
@@ -97,6 +111,10 @@ module.exports = {
         'year',
       ],
 
+      /**
+       * could be define in follow-up intent
+       * which return preset argument
+       */
       presets: {
         randomly: {
           defaults: {
