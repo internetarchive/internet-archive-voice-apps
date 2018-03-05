@@ -34,11 +34,11 @@
  *
  */
 
-const {group, subGroup} = require('./helpers');
+const {group, SubGroup} = require('./helpers');
 
-const {getData, setData} = group('query');
-const [getSlotValues, setSlotValues] = subGroup({getData, setData}, 'values');
-const [getSlotSkipped] = subGroup({getData, setData}, 'skipped', []);
+const queryGroup = group('query');
+const skippedGroup = new SubGroup('skipped', queryGroup, []);
+const valuesGroup = new SubGroup('values', queryGroup, {});
 
 /**
  * Slot name is filled
@@ -48,7 +48,7 @@ const [getSlotSkipped] = subGroup({getData, setData}, 'skipped', []);
  * @returns {boolean}
  */
 function hasSlot (app, name) {
-  return name in getSlotValues(app) || getSlotSkipped(app).indexOf(name) >= 0;
+  return name in valuesGroup.getData(app) || skippedGroup.getData(app).indexOf(name) >= 0;
 }
 
 /**
@@ -70,7 +70,7 @@ function hasSlots (app, names) {
  * @returns {*}
  */
 function getSlot (app, name) {
-  return getSlotValues(app)[name];
+  return valuesGroup.getData(app)[name];
 }
 
 /**
@@ -80,8 +80,8 @@ function getSlot (app, name) {
  * @returns {*}
  */
 function getSlots (app) {
-  const values = Object.assign({}, getSlotValues(app));
-  const skipped = getSlotSkipped(app);
+  const values = Object.assign({}, valuesGroup.getData(app));
+  const skipped = skippedGroup.getData(app);
   for (let slotName of skipped) {
     delete values[slotName];
   }
@@ -96,7 +96,7 @@ function getSlots (app) {
  * @param value
  */
 function setSlot (app, name, value) {
-  setSlotValues(app, Object.assign({}, getSlotValues(app), {
+  valuesGroup.setData(app, Object.assign({}, valuesGroup.getData(app), {
     [name]: value,
   }));
 }
@@ -108,13 +108,12 @@ function setSlot (app, name, value) {
  * @param {String} name
  */
 function skipSlot (app, name) {
-  let skipped = getSlotSkipped(app);
+  let skipped = skippedGroup.getData(app);
   if (skipped.indexOf(name) < 0) {
     skipped = skipped.concat(name);
   }
 
-  setData(app, Object.assign({}, getData(app), {skipped}));
-  // setSlotSkipped(app, skipped);
+  skippedGroup.setData(app, skipped);
 }
 
 module.exports = {
