@@ -52,6 +52,10 @@ module.exports = {
    */
   subGroup: ({getData, setData}, name, defaultSubGroup = {}) => [
     (app) => getData(app)[name] || defaultSubGroup,
-    (app, values) => setData(app, {[name]: values}),
+    (app, values) => setData(app, Object.assign(
+      {},
+      getData(app),
+      {[name]: values})
+    ),
   ],
 };
