@@ -41,4 +41,17 @@ module.exports = {
       app.data[name] = value;
     },
   }),
+
+  /**
+   * subgroup getter/setter
+   *
+   * @param getData
+   * @param setData
+   * @param {string} name
+   * @param defaultSubGroup - default value for subgroup
+   */
+  subGroup: ({getData, setData}, name, defaultSubGroup = {}) => [
+    (app) => getData(app)[name] || defaultSubGroup,
+    (app, values) => setData(app, {[name]: values}),
+  ],
 };

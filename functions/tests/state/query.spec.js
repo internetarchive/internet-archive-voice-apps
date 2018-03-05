@@ -48,5 +48,41 @@ describe('state', () => {
         });
       });
     });
+
+    describe('skipped slot', () => {
+      describe(`we haven't defined it before`, () => {
+        it(`should be defined even`, () => {
+          query.setSlot(app, 'slot1', 'value-1');
+          query.skipSlot(app, 'slot2');
+          expect(query.hasSlot(app, 'slot2')).to.be.true;
+        });
+
+        it(`shouldn't get it in get slots function`, () => {
+          query.setSlot(app, 'slot1', 'value-1');
+          query.skipSlot(app, 'slot2');
+          expect(query.getSlots(app)).to.be.deep.equal({
+            slot1: 'value-1',
+          });
+        });
+      });
+
+      describe(`we have defined it before`, () => {
+        it(`should be defined even`, () => {
+          query.setSlot(app, 'slot1', 'value-1');
+          query.setSlot(app, 'slot2', 'value-2');
+          query.skipSlot(app, 'slot2');
+          expect(query.hasSlot(app, 'slot2')).to.be.true;
+        });
+
+        it(`shouldn't get it in get slots function`, () => {
+          query.setSlot(app, 'slot1', 'value-1');
+          query.setSlot(app, 'slot2', 'value-2');
+          query.skipSlot(app, 'slot2');
+          expect(query.getSlots(app)).to.be.deep.equal({
+            slot1: 'value-1',
+          });
+        });
+      });
+    });
   });
 });
