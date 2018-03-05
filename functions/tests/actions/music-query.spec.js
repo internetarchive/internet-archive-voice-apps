@@ -3,7 +3,7 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
-const {getSlot} = require('../../state/query');
+const {getSlot, getSlots, hasSlot} = require('../../state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -266,6 +266,26 @@ describe('actions', () => {
             });
         });
 
+        it('should be able to skip some slots', () => {
+          app = mockApp({
+            argument: {
+              preset: 'your-favourite-albums',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(getSlot(app, 'creatorId')).to.be.equal('one-band');
+              expect(getSlot(app, 'year')).to.be.equal(1999);
+              expect(hasSlot(app, 'coverage')).to.be.true;
+              expect(getSlots(app)).to.be.deep.equal({
+                creatorId: 'one-band',
+                sort: 'random',
+                year: 1999,
+              });
+            });
+        });
+
+        // TODO:
         // is not implemented yet
         // https://github.com/internetarchive/internet-archive-google-action/issues/93
         // it could be quite a complex issue

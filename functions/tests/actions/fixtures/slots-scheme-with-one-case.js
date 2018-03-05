@@ -31,6 +31,15 @@ module.exports = {
         year: 1999,
       },
     },
+
+    'your-favourite-albums': {
+      defaults: {
+        creatorId: 'one-band',
+        // we will explicitly skip this slot
+        coverage: {skip: true},
+        year: 1999,
+      },
+    },
   },
 
   acknowledges: [

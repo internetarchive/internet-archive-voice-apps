@@ -1,5 +1,36 @@
 const debug = require('debug')('ia:state:debug');
 
+/**
+ * Use to build three hierarchy of properties
+ */
+class SubGroup {
+  /**
+   *
+   * @param {string} name name of the group
+   * @param parent
+   * @param defaultSubGroup - default value for subgroup
+   */
+  constructor (name, parent, defaultSubGroup = {}) {
+    this.name = name;
+    this.parent = parent;
+    this.defaultSubGroup = defaultSubGroup;
+  }
+
+  getData (app) {
+    return this.parent.getData(app)[this.name] || this.defaultSubGroup;
+  }
+
+  setData (app, values) {
+    this.parent.setData(app,
+      Object.assign(
+        {},
+        this.parent.getData(app),
+        {[this.name]: values}
+      )
+    );
+  }
+}
+
 module.exports = {
   /**
    * Construct getter and setter for sub-group of user's data
@@ -41,4 +72,6 @@ module.exports = {
       app.data[name] = value;
     },
   }),
+
+  SubGroup,
 };
