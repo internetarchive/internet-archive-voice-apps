@@ -97,6 +97,18 @@ module.exports = {
         'year',
       ],
 
+      presets: {
+        randomly: {
+          defaults: {
+            collectionId: {skip: true},
+            creatorId: {skip: true},
+            coverage: {skip: true},
+            year: {skip: true},
+            sort: 'random',
+          }
+        },
+      },
+
       /**
        * Acknowledge recieved value and repeat to give user change
        * to check our undestanding
