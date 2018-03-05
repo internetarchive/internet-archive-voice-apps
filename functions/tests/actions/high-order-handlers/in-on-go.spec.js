@@ -7,7 +7,7 @@ const mockApp = require('../../_utils/mocking/app');
 const mockFeeders = require('../../_utils/mocking/feeders');
 const mockAlbumFeeder = require('../../_utils/mocking/feeders/albums');
 const mockDialog = require('../../_utils/mocking/dialog');
-const playbackFulfilment = rewire('../../../actions/high-order-handlers/slots/playback-fulfilment');
+const playbackFulfillment = rewire('../../../actions/high-order-handlers/slots/playback-fulfillment');
 
 const strings = require('./fixtures/in-on-go.json');
 
@@ -39,9 +39,9 @@ describe('actions', () => {
             getByNameReturn: albumFeeder,
           });
           dialog = mockDialog();
-          playbackFulfilment.__set__('dialog', dialog);
-          playbackFulfilment.__set__('feeders', feeders);
-          builder.__set__('playbackFulfilment', playbackFulfilment);
+          playbackFulfillment.__set__('dialog', dialog);
+          playbackFulfillment.__set__('feeders', feeders);
+          builder.__set__('playbackFulfillment', playbackFulfillment);
           action = builder.build(strings, query);
         });
 
@@ -59,7 +59,7 @@ describe('actions', () => {
             });
         });
 
-        it('should run fulfilment', () => {
+        it('should run fulfillment', () => {
           app = mockApp({
             argument: {
               creators: 'the-band',

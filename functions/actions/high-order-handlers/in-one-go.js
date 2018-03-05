@@ -2,7 +2,7 @@ const debug = require('debug')('ia:actions:in-one-go:debug');
 const warning = require('debug')('ia:actions:in-one-go:warning');
 
 const copyArgmentToSlots = require('./slots/copy-arguments-to-slots');
-const playbackFulfilment = require('./slots/playback-fulfilment');
+const playbackFulfillment = require('./slots/playback-fulfillment');
 
 function build (intentStrings, query) {
   debug('start handler', intentStrings.name);
@@ -12,7 +12,7 @@ function build (intentStrings, query) {
   }
 
   if (!intentStrings.slots) {
-    warning('missed fulfilments');
+    warning('missed fulfillments');
   }
 
   /**
@@ -26,7 +26,7 @@ function build (intentStrings, query) {
     return Promise
       .resolve({app, slotScheme, query})
       .then(copyArgmentToSlots())
-      .then(playbackFulfilment());
+      .then(playbackFulfillment());
   }
 
   return {
