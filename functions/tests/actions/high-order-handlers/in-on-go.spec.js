@@ -1,8 +1,13 @@
 const {expect} = require('chai');
+const rewire = require('rewire');
 
-const builder = require('../../../actions/high-order-handlers/in-one-go');
+const builder = rewire('../../../actions/high-order-handlers/in-one-go');
 const query = require('../../../state/query');
 const mockApp = require('../../_utils/mocking/app');
+const mockFeeders = require('../../_utils/mocking/feeders');
+const mockAlbumFeeder = require('../../_utils/mocking/feeders/albums');
+const mockDialog = require('../../_utils/mocking/dialog');
+const playbackFulfilment = rewire('../../../actions/high-order-handlers/slots/playback-fulfilment');
 
 const strings = require('./fixtures/in-on-go.json');
 
@@ -21,9 +26,22 @@ describe('actions', () => {
 
       describe('instance', () => {
         let action;
+        let albumFeeder;
         let app;
+        let dialog;
+        let feeders;
 
         beforeEach(() => {
+          albumFeeder = mockAlbumFeeder({
+            getCurrentItemReturns: {},
+          });
+          feeders = mockFeeders({
+            getByNameReturn: albumFeeder,
+          });
+          dialog = mockDialog();
+          playbackFulfilment.__set__('dialog', dialog);
+          playbackFulfilment.__set__('feeders', feeders);
+          builder.__set__('playbackFulfilment', playbackFulfilment);
           action = builder.build(strings, query);
         });
 
@@ -38,6 +56,22 @@ describe('actions', () => {
               expect(query.getSlots(app)).to.be.deep.equal({
                 creators: 'the-band',
               });
+            });
+        });
+
+        it('should run fulfilment', () => {
+          app = mockApp({
+            argument: {
+              creators: 'the-band',
+            },
+          });
+          return action
+            .handler(app)
+            .then(() => {
+              expect(feeders.getByName).to.have.been.calledWith('albums-async');
+              expect(albumFeeder.isEmpty).to.have.been.calledOnce;
+              expect(albumFeeder.getCurrentItem).to.have.been.calledOnce;
+              expect(dialog.playSong).to.have.been.calledOnce;
             });
         });
       });

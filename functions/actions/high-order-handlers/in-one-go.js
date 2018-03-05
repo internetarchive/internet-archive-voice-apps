@@ -2,6 +2,7 @@ const debug = require('debug')('ia:actions:in-one-go:debug');
 const warning = require('debug')('ia:actions:in-one-go:warning');
 
 const copyArgmentToSlots = require('./slots/copy-arguments-to-slots');
+const playbackFulfilment = require('./slots/playback-fulfilment');
 
 function build (intentStrings, query) {
   debug('start handler', intentStrings.name);
@@ -23,10 +24,9 @@ function build (intentStrings, query) {
     debug('start handler', intentStrings.name);
     const slotScheme = intentStrings;
     return Promise
-      .resolve({app, intentStrings, slotScheme, query})
-      // populate slots from arguments
-      .then(copyArgmentToSlots());
-    // TODO: launch fulfilment
+      .resolve({app, slotScheme, query})
+      .then(copyArgmentToSlots())
+      .then(playbackFulfilment());
   }
 
   return {

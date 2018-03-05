@@ -1,3 +1,5 @@
+const debug = require('debug')('ia:actions:middleware:copy-arguments-to-slots:debug');
+
 /**
  * Middleware
  * which transfer arguments to slots
@@ -8,8 +10,9 @@
  * @param slotsScheme
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
-module.exports = function () {
-  return function ({app, newValues = {}, query, slotScheme, ...res}) {
+module.exports = () =>
+  ({app, newValues = {}, query, slotScheme, ...res}) => {
+    debug('apply copy arguments to slots middleware');
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {
         const value = app.getArgument(slotName);
@@ -22,4 +25,3 @@ module.exports = function () {
 
     return Promise.resolve({app, newValues, query, slotScheme, ...res});
   };
-};
