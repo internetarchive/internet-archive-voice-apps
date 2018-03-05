@@ -10,7 +10,7 @@
   },
   "scripts": {
     "lint": "eslint ./",
-    "uploader": "node ./uploader/collection-uploader.js",
+    "uploader": "node ./uploader",
     "mocha": "mocha --opts ./tests/mocha.opts",
     "start": "firebase serve --only functions:playMedia",
     "deploy": "firebase deploy --only functions:playMedia",
