@@ -1,12 +1,12 @@
-const debug = require('debug')('ia:actions:middleware:playback-fulfilment:debug');
-const warning = require('debug')('ia:actions:middleware:playback-fulfilment:warning');
+const debug = require('debug')('ia:actions:middleware:playback-fulfillment:debug');
+const warning = require('debug')('ia:actions:middleware:playback-fulfillment:warning');
 
 const dialog = require('../../../dialog');
 const feeders = require('../../../extensions/feeders');
 
 /**
  * Middleware
- * Create playlist based on fulfilment
+ * Create playlist based on fulfillment
  * and run playback
  *
  * @param app
@@ -16,12 +16,12 @@ const feeders = require('../../../extensions/feeders');
  * @returns {Promise}
  */
 module.exports = () => ({app, playlist, query, slotScheme}) => {
-  debug('apply playback fulfilment middleware');
-  const feeder = feeders.getByName(slotScheme.fulfilment);
+  debug('apply playback fulfillment middleware');
+  const feeder = feeders.getByName(slotScheme.fulfillment);
   if (!feeder) {
     // TODO: we should softly fallback here
     warning(
-      `we need feeder "${slotScheme.fulfilment}" for fulfillment slot dialog`
+      `we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`
     );
   } else {
     return feeder
