@@ -4,16 +4,36 @@ const error = require(`debug`)(`ia:uploader:entities:error`);
 const util = require(`util`);
 const _ = require(`lodash`);
 const mustache = require('mustache');
-const config = require('../../config');
+const config = require('../config');
 
 const basicHeaderRequest = {
   'content-type': 'application/json; charset=UTF-8',
   'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'
 };
-// print process.argv
-process.argv.forEach(function (val, index, array) {
-  debug(index + ': ' + val);
-});
+
+function getUniqueCreators (docs) {
+  var creators = [];
+  var strCreator = ``;
+  for (let i = 0; i < docs.length; i++) {
+    var creator = docs[i].creator;
+    if (_.isArray(creator)) {
+      for (let i = 0; i < creator.length; i++) {
+        strCreator = JSON.stringify(creator[i]);
+        if (strCreator) {
+          strCreator = strCreator.replace(/[()""]+/g, ``);
+          creators.push(strCreator);
+        }
+      }
+    } else {
+      strCreator = JSON.stringify(creator);
+      if (strCreator) {
+        strCreator = strCreator.replace(/[()]+/g, ` `);
+        creators.push(strCreator);
+      }
+    }
+  }
+  return _.uniq(creators);
+}
 
 function fetchEntitiesFromIA (id, limit) {
   var page = 0;
@@ -33,18 +53,8 @@ function fetchEntitiesFromIA (id, limit) {
   return fetch(url)
     .then(res => res.json())
     .then(data => {
-      var creatorsJsonArray = data.response.docs;
-      var creators = [];
-      for (let i = 0; i < creatorsJsonArray.length; i++) {
-        var creator = JSON.stringify(creatorsJsonArray[i].creator);
-        if (creator) {
-          creator = creator.replace(/[^a-zA-Z 0-9]+/g, ` `);
-          creators.push(creator);
-        }
-      }
-      creators = _.uniq(creators);
       debug(`fetched Entity from IA successfully.`);
-      return creators;
+      return getUniqueCreators(data.response.docs);
     }).catch(e => {
       error(`Get error in fetching entity from IA, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
@@ -84,7 +94,7 @@ function postEntitiesToDF (entityname, creators, first) {
     data.push({'synonyms': [creators[i]], 'value': creators[i]});
   }
   return fetch(mustache.render(
-    config.endpoints.DF_ENTITY_POST_URL,
+    config.dfendpoints.DF_ENTITY_POST_URL,
     {
       entityname,
     }
@@ -109,7 +119,7 @@ function postEntitiesToDF (entityname, creators, first) {
 function fetchEntitiesFromDF (entityname) {
   debug(`fetching entity data from DF...`);
   return fetch(mustache.render(
-    config.endpoints.DF_ENTITY_GET_URL,
+    config.dfendpoints.DF_ENTITY_GET_URL,
     {
       entityname,
     }
@@ -141,7 +151,7 @@ function deleteAllEntitiesFromDF (entityname) {
 }
 function deleteEntitiesFromDF (creators, entityname) {
   return fetch(mustache.render(
-    config.endpoints.DF_ENTITY_DELETE_URL,
+    config.dfendpoints.DF_ENTITY_DELETE_URL,
     {
       entityname,
     }
