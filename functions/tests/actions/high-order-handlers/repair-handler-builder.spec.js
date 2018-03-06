@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const mockApp = require('../../_utils/mocking/app');
 const mockDialog = require('../../_utils/mocking/dialog');
-const builder = rewire('../../../actions/helpers/repair-handler-builder');
+const builder = rewire('../../../actions/high-order-handlers/repair-handler-builder');
 const strings = require('../../../strings').intents.noInput;
 const {storeAction} = require('../../../state/actions');
 

@@ -1,0 +1,8 @@
+{
+  "name": "in one go artist playback",
+  "slots": [
+    "creators",
+    "origin"
+  ],
+  "fulfillment": "albums-async"
+}
