@@ -12,7 +12,19 @@ const playbackFulfillment = require('./slots/playback-fulfillment');
  * @param query - storage for search query data
  * @returns {{handler: handler}}
  */
-function build (intentStrings, query) {
+function build (intentStrings, playlist, query) {
+  if (!intentStrings) {
+    warning('it seems we have missed intentStrings argument');
+  }
+
+  if (!playlist) {
+    warning('it seems we have missed playlist argument');
+  }
+
+  if (!query) {
+    warning('it seems we have missed query argument');
+  }
+
   debug('start handler', intentStrings.name);
 
   if (!intentStrings.slots) {
@@ -35,7 +47,7 @@ function build (intentStrings, query) {
 
     // pipe line of actions handling
     return Promise
-      .resolve({app, slotScheme, query})
+      .resolve({app, playlist, slotScheme, query})
       .then(copyArgmentToSlots())
       .then(playbackFulfillment());
   }
