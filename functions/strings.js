@@ -22,6 +22,16 @@ module.exports = {
    * Template for actions for Dialog flow
    */
   intents: {
+    inOneGoArtistPlaybay: {
+      name: 'in one go artist playback',
+
+      slots: [
+        'creators',
+        'origin',
+      ],
+
+      fulfillment: 'albums-async',
+    },
 
     /**
      * Action: with slots scheme for music search query
