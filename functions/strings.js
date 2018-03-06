@@ -26,7 +26,7 @@ module.exports = {
       name: 'in one go artist playback',
 
       slots: [
-        'creators',
+        'creatorId',
         'origin',
       ],
 

@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 
 const builder = rewire('../../../actions/high-order-handlers/in-one-go');
+const playlist = require('../../../state/playlist');
 const query = require('../../../state/query');
 const mockApp = require('../../_utils/mocking/app');
 const mockFeeders = require('../../_utils/mocking/feeders');
@@ -42,7 +43,7 @@ describe('actions', () => {
           playbackFulfillment.__set__('dialog', dialog);
           playbackFulfillment.__set__('feeders', feeders);
           builder.__set__('playbackFulfillment', playbackFulfillment);
-          action = builder.build(strings, query);
+          action = builder.build(strings, playlist, query);
         });
 
         it('should populate to slots passed arguments', () => {
