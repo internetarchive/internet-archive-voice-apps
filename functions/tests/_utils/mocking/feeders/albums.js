@@ -12,6 +12,8 @@ module.exports = function ({
   return {
     build: sinon.stub().returns(Promise.resolve()),
     getCurrentItem: sinon.stub().returns(getCurrentItemReturns),
+    hasNext: sinon.stub().returns(true),
+    next: sinon.stub().returns(Promise.resolve()),
     isEmpty: sinon.stub().returns(false),
   };
 };

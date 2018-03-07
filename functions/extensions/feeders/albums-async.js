@@ -52,7 +52,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build (app, query, playlist) {
+  build ({app, query, playlist}) {
     debug('build async songs feeder');
 
     return this.fetchChunkOfSongs({app, query, playlist})
@@ -201,7 +201,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext (app, query, playlist) {
+  hasNext ({app, query, playlist}) {
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
@@ -217,7 +217,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next (app, query, playlist) {
+  next ({app, query, playlist}) {
     debug('move to the next song');
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
