@@ -1,11 +1,13 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
+const sinon = require('sinon');
 
 const feeder = rewire('../../../extensions/feeders/albums-async');
 const playlist = require('../../../state/playlist');
 const query = require('../../../state/query');
 
 const mockApp = require('../../_utils/mocking/app');
+const mockOrderStrategy = require('../../_utils/mocking/orders/orderStategy');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('feeders', () => {
@@ -204,7 +206,13 @@ describe('feeders', () => {
         }));
     });
 
-    xit('should fetch next random song', () => {
+    it('should fetch next random song', () => {
+      const orderStrategy = mockOrderStrategy();
+      const orderStrategies = {
+        getByName: sinon.stub().returns(orderStrategy),
+      };
+      feeder.__set__('orderStrategies', orderStrategies);
+
       app = mockApp();
       query.setSlot(app, 'order', 'random');
 
