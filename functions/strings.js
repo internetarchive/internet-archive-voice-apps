@@ -22,8 +22,8 @@ module.exports = {
    * Template for actions for Dialog flow
    */
   intents: {
-    inOneGoArtistPlayback: {
-      name: 'in one go artist playback',
+    inOneGoMusicPlayback: {
+      name: 'in one go music playback',
 
       slots: [
         'collectionId',
