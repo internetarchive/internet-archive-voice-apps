@@ -4,6 +4,7 @@ const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
 const {getSlot, getSlots, hasSlot} = require('../../state/query');
+const playlist = require('../../state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -231,7 +232,8 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(feeders.getByName).to.have.been.called;
+              expect(feeders.getByName).to.have.been.calledWith('albums');
+              expect(playlist.getFeeder(app)).to.be.equal('albums');
               expect(albumsFeeder.build).to.have.been.calledWith(
                 app,
                 action.__get__('querySlots'),

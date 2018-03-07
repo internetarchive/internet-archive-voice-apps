@@ -63,6 +63,7 @@ function handler (app) {
       warning(`we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`);
       return Promise.resolve();
     } else {
+      playlist.setFeeder(app, slotScheme.fulfillment);
       return feeder
         .build(app, querySlots, playlist)
         .then(() => {
