@@ -211,31 +211,19 @@ class AsyncAlbums extends DefaultFeeder {
   /**
    * Move to the next song
    *
+   * @param app
+   * @param query
+   * @param playlist
+   *
    * @returns {Promise.<T>}
    */
   next (app, query, playlist) {
     debug('move to the next song');
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
 
-    // move source cursor to the next position
-    const cursor = playlist.getExtra(app).cursor;
-    const current = Object.assign({}, cursor.current);
-    current.song++;
-    if (current.song >= cursor.total.songs) {
-      debug('move cursor to a next album');
-      current.song = 0;
-      current.album++;
-      if (current.album >= cursor.total.albums) {
-        debug('the end of playlist');
-        current.album--;
-      }
-    } else {
-      debug('move cursor to a next song');
-    }
-
-    // store cursor
-    playlist.setExtra(app, {
-      cursor: Object.assign({}, cursor, {current}),
-    });
+    orderStrategy.moveSourceCursorToTheNextPosition({app, query, playlist});
 
     // check whether we need to fetch new chunk
     if (playlist.hasNextSong(app, query, playlist)) {
