@@ -11,7 +11,10 @@ const debug = require('debug')('ia:actions:middleware:copy-arguments-to-slots:de
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
 module.exports = () =>
-  ({app, newValues = {}, query, slotScheme, ...res}) => {
+// sadly Google Firebase doesn't support modern Node.js
+//   ({app, newValues = {}, query, slotScheme, ...res}) => {
+  args => {
+    let {app, newValues = {}, query, slotScheme} = args;
     debug('apply copy arguments to slots middleware');
     debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
@@ -25,5 +28,9 @@ module.exports = () =>
       }, newValues);
 
     debug(`and copied ${JSON.stringify(newValues)} slot(s)`);
-    return Promise.resolve({app, newValues, query, slotScheme, ...res});
+    return Promise.resolve(
+      Object.assign({}, args, {app, newValues, query, slotScheme})
+    );
+    // sadly Google Firebase doesn't support modern Node.js
+    // return Promise.resolve({app, newValues, query, slotScheme, ...res});
   };
