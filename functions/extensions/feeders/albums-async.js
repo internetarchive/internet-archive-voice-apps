@@ -235,11 +235,10 @@ class AsyncAlbums extends DefaultFeeder {
       return this.fetchChunkOfSongs({app, query, playlist})
         .then(({songs, songsInFirstAlbum}) => {
           // we'll append new chunk of songs
-          const feederConfig = this.getConfigForOrder(app, query);
-
           let items = playlist.getItems(app).concat(songs);
 
           // but we shouldn't exceed available size of chunk
+          const feederConfig = this.getConfigForOrder(app, query);
           if (items.length > feederConfig.chunk.songs) {
             const shift = items.length - feederConfig.chunk.songs;
             debug(`drop ${shift} old song(s)`);
@@ -248,15 +247,11 @@ class AsyncAlbums extends DefaultFeeder {
           }
           playlist.updateItems(app, items);
 
-          // should update total number of songs
-          // actually we could get new number
-          // when we switch to the new album
-          const cursor = playlist.getExtra(app).cursor;
-          const total = Object.assign({}, cursor.total);
-          total.songs = songsInFirstAlbum;
-          playlist.setExtra(app, {
-            cursor: Object.assign({}, cursor, {total}),
-          });
+          orderStrategy.updateCursorTotal({
+            app,
+            playlist,
+            songsInFirstAlbum,
+          })
 
           playlist.next(app);
         });
