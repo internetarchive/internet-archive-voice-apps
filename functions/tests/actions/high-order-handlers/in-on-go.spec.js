@@ -21,7 +21,7 @@ describe('actions', () => {
         });
 
         it('should create object with handler method', () => {
-          expect(builder.build(strings)).to.have.property('handler');
+          expect(builder.build({strings})).to.have.property('handler');
         });
       });
 
@@ -43,7 +43,7 @@ describe('actions', () => {
           playbackFulfillment.__set__('dialog', dialog);
           playbackFulfillment.__set__('feeders', feeders);
           builder.__set__('playbackFulfillment', playbackFulfillment);
-          action = builder.build(strings, playlist, query);
+          action = builder.build({strings, playlist, query});
         });
 
         it('should populate to slots passed arguments', () => {

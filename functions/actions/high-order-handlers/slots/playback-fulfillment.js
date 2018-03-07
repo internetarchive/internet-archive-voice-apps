@@ -24,17 +24,18 @@ module.exports = () => ({app, playlist, query, slotScheme}) => {
       `we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`
     );
   } else {
+    playlist.setFeeder(app, slotScheme.fulfillment);
     return feeder
-      .build(app, query, playlist)
+      .build({app, query, playlist})
       .then(() => {
-        if (feeder.isEmpty(app, query, playlist)) {
+        if (feeder.isEmpty({app, query, playlist})) {
           // TODO: feeder can't find anything by music query
           // isn't covered case should be implemented
           dialog.ask(
             `We haven't find anything by your request would you like something else?`
           );
         } else {
-          dialog.playSong(app, feeder.getCurrentItem(app, query, playlist));
+          dialog.playSong(app, feeder.getCurrentItem({app, query, playlist}));
         }
       });
   }

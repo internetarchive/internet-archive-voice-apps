@@ -8,7 +8,7 @@ const creator = require('../../provider/creators');
 function handle (slots) {
   return creator
     .fetchCreatorsBy(Object.assign({}, slots, {
-      sort: 'downloads+desc',
+      order: 'downloads+desc',
     }));
 }
 

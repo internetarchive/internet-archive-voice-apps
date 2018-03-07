@@ -17,7 +17,7 @@ function fetchCreatorsBy (query) {
   const {
     limit = 3,
     page = 0,
-    sort = 'downloads+desc'
+    order = 'downloads+desc'
   } = query;
 
   // create search query
@@ -34,7 +34,7 @@ function fetchCreatorsBy (query) {
         condition,
         limit,
         page,
-        sort,
+        order,
         fields,
       }
     )
