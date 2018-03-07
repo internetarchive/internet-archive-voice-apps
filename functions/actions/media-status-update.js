@@ -2,6 +2,7 @@ const debug = require('debug')('ia:actions:media-status-update:debug');
 const warning = require('debug')('ia:actions:media-status-update:warn');
 
 const dialog = require('../dialog');
+const feeders = require('../extensions/feeders');
 const playlist = require('../state/playlist');
 
 /**
@@ -28,6 +29,14 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug(`handle media action`);
+  const feederName = playlist.getFeeder(app);
+
+  let feeder = feeders.getByName(feederName);
+  if (feeder && feederName) {
+    warning('we have detached playlist chunk');
+    feeder = playlist;
+  }
+
   if (playlist.hasNextSong(app)) {
     // TODO: we should fetch new songs
     playlist.next(app);

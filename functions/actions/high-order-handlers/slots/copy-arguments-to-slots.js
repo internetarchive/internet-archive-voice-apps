@@ -13,6 +13,7 @@ const debug = require('debug')('ia:actions:middleware:copy-arguments-to-slots:de
 module.exports = () =>
   ({app, newValues = {}, query, slotScheme, ...res}) => {
     debug('apply copy arguments to slots middleware');
+    debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {
         const value = app.getArgument(slotName);
@@ -23,5 +24,6 @@ module.exports = () =>
         return newValues;
       }, newValues);
 
+    debug(`and copied ${JSON.stringify(newValues)} slot(s)`);
     return Promise.resolve({app, newValues, query, slotScheme, ...res});
   };
