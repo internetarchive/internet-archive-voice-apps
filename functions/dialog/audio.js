@@ -37,7 +37,7 @@ function playSong (app, options) {
     .addSuggestions(options.suggestions)
     .addSuggestionLink(
       mustache.render(strings.suggestionLink, options),
-      options.audioURL
+      mustache.render(config.endpoints.ALBUM_DETAIL, options)
     )
   );
 }
