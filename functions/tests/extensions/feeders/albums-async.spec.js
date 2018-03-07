@@ -43,7 +43,8 @@ describe('feeders', () => {
           expect(feeder.getCurrentItem({app, query, playlist}))
             .to.have.property('filename', filename);
           expect(feeder.getCurrentItem({app, query, playlist}))
-            .to.have.property('albumTitle', album);
+            .to.have.property('album')
+            .to.have.property('title', album);
           expect(feeder.hasNext({app, query, playlist})).to.be.equal(hasNext);
         });
     }

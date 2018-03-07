@@ -72,7 +72,10 @@ class DefaultFeeder {
         imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
         // TODO : add recommendations
         suggestions: ['Next'],
-        albumTitle: album.title,
+        album: {
+          id: album.id,
+          title: album.title,
+        },
         track: idx + 1,
         year: album.year,
       }));
