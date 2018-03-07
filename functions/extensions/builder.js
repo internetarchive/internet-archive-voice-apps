@@ -5,6 +5,9 @@ const path = require('path');
 
 /**
  * Builder for pluggable extension
+ *
+ * TODO:
+ * 1. support default extension
  */
 
 class Extensions {

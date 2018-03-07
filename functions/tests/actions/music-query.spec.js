@@ -4,6 +4,7 @@ const sinon = require('sinon');
 
 const action = rewire('../../actions/music-query');
 const {getSlot, getSlots, hasSlot} = require('../../state/query');
+const playlist = require('../../state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -175,19 +176,19 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'sort')).to.be.equal('random');
+              expect(getSlot(app, 'order')).to.be.equal('random');
             });
         });
 
         it(`shouldn't populate to user state if we already have this slot`, () => {
           app = mockApp({
             argument: {
-              sort: 'the-best',
+              order: 'the-best',
             },
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'sort')).to.be.equal('the-best');
+              expect(getSlot(app, 'order')).to.be.equal('the-best');
             });
         });
       });
@@ -231,22 +232,23 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(feeders.getByName).to.have.been.called;
-              expect(albumsFeeder.build).to.have.been.calledWith(
+              expect(feeders.getByName).to.have.been.calledWith('albums');
+              expect(playlist.getFeeder(app)).to.be.equal('albums');
+              expect(albumsFeeder.build).to.have.been.calledWith({
                 app,
-                action.__get__('querySlots'),
-                action.__get__('playlist')
-              );
-              expect(albumsFeeder.isEmpty).to.have.been.calledWith(
+                playlist: action.__get__('playlist'),
+                query: action.__get__('query'),
+              });
+              expect(albumsFeeder.isEmpty).to.have.been.calledWith({
                 app,
-                action.__get__('querySlots'),
-                action.__get__('playlist')
-              );
-              expect(albumsFeeder.getCurrentItem).to.have.been.calledWith(
+                playlist: action.__get__('playlist'),
+                query: action.__get__('query'),
+              });
+              expect(albumsFeeder.getCurrentItem).to.have.been.calledWith({
                 app,
-                action.__get__('querySlots'),
-                action.__get__('playlist')
-              );
+                playlist: action.__get__('playlist'),
+                query: action.__get__('query'),
+              });
             });
         });
       });
@@ -279,7 +281,7 @@ describe('actions', () => {
               expect(hasSlot(app, 'coverage')).to.be.true;
               expect(getSlots(app)).to.be.deep.equal({
                 creatorId: 'one-band',
-                sort: 'random',
+                order: 'random',
                 year: 1999,
               });
             });

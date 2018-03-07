@@ -1,6 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
+const playlist = require('../../../../state/playlist');
 const query = require('../../../../state/query');
 
 const mockApp = require('../../../_utils/mocking/app');
@@ -37,10 +38,11 @@ describe('actions', () => {
         const slotScheme = {
           fulfillment: 'test-function',
         };
-        return Promise.resolve({app, query, slotScheme})
+        return Promise.resolve({app, playlist, query, slotScheme})
           .then(middleware())
           .then(() => {
             expect(feeders.getByName).to.have.been.calledWith('test-function');
+            expect(playlist.getFeeder(app)).to.be.equal('test-function');
             expect(albumFeeder.build).to.have.been.calledOnce;
             expect(albumFeeder.isEmpty).to.have.been.calledOnce;
             expect(albumFeeder.getCurrentItem).to.have.been.calledOnce;

@@ -8,30 +8,19 @@ const playbackFulfillment = require('./slots/playback-fulfillment');
  * High-order handler
  * for construction in-on-go intent handler
  *
- * @param intentStrings - strings and configuration of handler
+ * @param playlist - storage for playlist chunk
+ * @param strings - strings and configuration of handler
  * @param query - storage for search query data
  * @returns {{handler: handler}}
  */
-function build (intentStrings, playlist, query) {
-  if (!intentStrings) {
-    warning('it seems we have missed intentStrings argument');
-  }
+function build ({playlist, strings, query}) {
+  debug('start handler', strings.name);
 
-  if (!playlist) {
-    warning('it seems we have missed playlist argument');
-  }
-
-  if (!query) {
-    warning('it seems we have missed query argument');
-  }
-
-  debug('start handler', intentStrings.name);
-
-  if (!intentStrings.slots) {
+  if (!strings.slots) {
     warning('Missed slots');
   }
 
-  if (!intentStrings.slots) {
+  if (!strings.slots) {
     warning('missed fulfillments');
   }
 
@@ -42,12 +31,12 @@ function build (intentStrings, playlist, query) {
    * @returns {Promise.<T>}
    */
   function handler (app) {
-    debug('start handler', intentStrings.name);
-    const slotScheme = intentStrings;
+    debug('start handler', strings.name);
+    const slotScheme = strings;
 
     // pipe line of actions handling
     return Promise
-      .resolve({app, playlist, slotScheme, query})
+      .resolve({app, slotScheme, playlist, query})
       .then(copyArgmentToSlots())
       .then(playbackFulfillment());
   }

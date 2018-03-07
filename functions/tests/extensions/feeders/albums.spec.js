@@ -8,7 +8,7 @@ const albums = rewire('../../../extensions/feeders/albums');
 const mockApp = require('../../_utils/mocking/app');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
-describe('slots', () => {
+describe('feeders', () => {
   let app;
   beforeEach(() => {
     app = mockApp();
@@ -31,41 +31,36 @@ describe('slots', () => {
         }],
       },
     }));
+    query.setSlot(app, 'collection', 'live');
+    query.setSlot(app, 'creator', 'gratefuldead');
+    query.setSlot(app, 'album', 'the-best');
   });
 
-  describe('fulfillments', () => {
-    beforeEach(() => {
-      query.setSlot(app, 'collection', 'live');
-      query.setSlot(app, 'creator', 'gratefuldead');
-      query.setSlot(app, 'album', 'the-best');
+  describe('albums', () => {
+    it('should fetch album', () => {
+      return albums
+        .build({app, playlist, query})
+        .then(() => {
+          expect(playlist.hasNextSong(app)).to.be.true;
+          expect(playlist.getCurrentSong(app)).to.be.ok;
+          expect(albums.isEmpty({app, query, playlist})).to.be.false;
+          expect(albums.getCurrentItem({app, playlist, query})).to.be.ok;
+          expect(albums.hasNext({app, query, playlist})).to.be.true;
+        });
     });
 
-    describe('albums', () => {
-      it('should fetch album', () => {
-        return albums
-          .build(app, query, playlist)
-          .then(() => {
-            expect(playlist.hasNextSong(app)).to.be.true;
-            expect(playlist.getCurrentSong(app)).to.be.ok;
-            expect(albums.isEmpty(app, query, playlist)).to.be.false;
-            expect(albums.getCurrentItem(app, query, playlist)).to.be.ok;
-            expect(albums.hasNext(app, query, playlist)).to.be.true;
-          });
-      });
-
-      it('should move to the next song on albums.next', () => {
-        return albums
-          .build(app, query, playlist)
-          .then(() => {
-            expect(albums.getCurrentItem(app, query, playlist))
-              .to.have.property('identifier', 'song-1');
-            return albums.next(app, query, playlist);
-          })
-          .then(() => {
-            expect(albums.getCurrentItem(app, query, playlist))
-              .to.have.property('identifier', 'song-2');
-          });
-      });
+    it('should move to the next song on albums.next', () => {
+      return albums
+        .build({app, playlist, query})
+        .then(() => {
+          expect(albums.getCurrentItem({app, query, playlist}))
+            .to.have.property('identifier', 'song-1');
+          return albums.next({app, query, playlist});
+        })
+        .then(() => {
+          expect(albums.getCurrentItem({app, query, playlist}))
+            .to.have.property('identifier', 'song-2');
+        });
     });
   });
 });
