@@ -67,12 +67,15 @@ class DefaultFeeder {
   processAlbumSongs (album) {
     return album.songs
       .map((song, idx) => Object.assign({}, song, {
-        audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, song.filename),
+        audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(album.id, encodeURIComponent(song.filename)),
         coverage: album.coverage,
         imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
         // TODO : add recommendations
         suggestions: ['Next'],
-        albumTitle: album.title,
+        album: {
+          id: album.id,
+          title: album.title,
+        },
         track: idx + 1,
         year: album.year,
       }));
