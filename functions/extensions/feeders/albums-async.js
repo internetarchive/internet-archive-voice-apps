@@ -238,7 +238,7 @@ class AsyncAlbums extends DefaultFeeder {
     }
 
     // store cursor
-    playlist.updateExtra(app, {
+    playlist.setExtra(app, {
       cursor: Object.assign({}, cursor, {current}),
     });
 
@@ -271,7 +271,7 @@ class AsyncAlbums extends DefaultFeeder {
           const cursor = playlist.getExtra(app).cursor;
           const total = Object.assign({}, cursor.total);
           total.songs = songsInFirstAlbum;
-          playlist.updateExtra(app, {
+          playlist.setExtra(app, {
             cursor: Object.assign({}, cursor, {total}),
           });
 
