@@ -1,3 +1,5 @@
+const debug = require('debug')('ia:order:natural:debug');
+
 class NaturalOrderStrategy {
   /**
    * Get paging for fetching data from source
@@ -24,7 +26,7 @@ class NaturalOrderStrategy {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext({app, query, playlist}) {
+  hasNext ({app, query, playlist}) {
     const cursor = playlist.getExtra(app).cursor;
     // Isn't it the last album
     if (cursor.current.album < cursor.total.albums - 1) {
@@ -32,6 +34,34 @@ class NaturalOrderStrategy {
     }
     // Isn't it the last song?
     return cursor.current.song < cursor.total.songs - 1;
+  }
+
+  /**
+   * move source cursor to the next position
+   * @param app
+   * @param query
+   * @param playlist
+   */
+  moveSourceCursorToTheNextPosition({app, query, playlist}) {
+    const cursor = playlist.getExtra(app).cursor;
+    const current = Object.assign({}, cursor.current);
+    current.song++;
+    if (current.song >= cursor.total.songs) {
+      debug('move cursor to a next album');
+      current.song = 0;
+      current.album++;
+      if (current.album >= cursor.total.albums) {
+        debug('the end of playlist');
+        current.album--;
+      }
+    } else {
+      debug('move cursor to a next song');
+    }
+
+    // store cursor
+    playlist.setExtra(app, {
+      cursor: Object.assign({}, cursor, {current}),
+    });
   }
 
   /**
