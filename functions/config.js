@@ -1,5 +1,6 @@
 module.exports = {
   endpoints: {
+    ALBUM_DETAIL: 'https://archive.org/details/{{album.id}}',
     ALBUMS_OF_CREATOR_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
@@ -7,7 +8,6 @@ module.exports = {
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
-    COLLECTION_URL: 'https://web.archive.org/metadata/{{id}}',
     COLLECTION_ITEMS_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q=collection:({{id}})' +
     '&fl[]={{fields}}' +
@@ -15,6 +15,7 @@ module.exports = {
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
+    COLLECTION_URL: 'https://web.archive.org/metadata/{{id}}',
     QUERY_COLLECTIONS_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q={{condition}}' +
     '&fl[]={{fields}}' +
