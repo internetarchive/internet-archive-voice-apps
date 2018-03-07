@@ -204,6 +204,9 @@ describe('feeders', () => {
         }));
     });
 
+    // TODO: before this test
+    // we should cover other functions from playlist
+    // as we it would be good to cover fetchAlbumsByQuery
     xit('should fetch next random song', () => {
       app = mockApp();
       query.setSlot(app, 'order', 'random');

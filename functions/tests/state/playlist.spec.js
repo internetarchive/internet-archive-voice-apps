@@ -19,6 +19,21 @@ describe('playlist', () => {
     };
   });
 
+  describe('extra parameters', () => {
+    beforeEach(() => {
+      app = mockApp();
+    });
+
+    it('should have empty extra parameters by default', () => {
+      expect(playlist.getExtra(app)).to.be.undefined;
+    });
+
+    it('should allow to store extra parameters', () => {
+      playlist.setExtra(app, 'hello world!');
+      expect(playlist.getExtra(app)).to.be.equal('hello world!');
+    });
+  });
+
   describe('reducers', () => {
     describe('create', () => {
       it('should populate list of items and reset current song', () => {
@@ -35,6 +50,18 @@ describe('playlist', () => {
       it('should move pointer to the next song', () => {
         playlist.next(app);
         expect(app.data.playlist).to.have.property('current', 2);
+      });
+    });
+
+    describe('isEmpty', () => {
+      it('should be true for empty playlist', () => {
+        app = mockApp();
+        expect(playlist.isEmpty(app)).to.be.true;
+      });
+
+      it('should be false for non-empty playlist', () => {
+        playlist.create(app, [1, 2, 3]);
+        expect(playlist.isEmpty(app)).to.be.false;
       });
     });
   });

@@ -46,12 +46,12 @@ function getExtra (app) {
 }
 
 /**
- * update extra parameters
+ * set extra parameters
  *
  * @param app
  * @param extra
  */
-function updateExtra (app, extra) {
+function setExtra (app, extra) {
   setData(app, Object.assign({}, getData(app), {extra}));
 }
 
@@ -118,7 +118,7 @@ module.exports = {
   isEmpty,
   create,
   getExtra,
-  updateExtra,
+  setExtra,
   hasNextSong,
   next,
   shift,
