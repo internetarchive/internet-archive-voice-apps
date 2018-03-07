@@ -53,12 +53,12 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
  * @param {string} id - identifier of creator
  * @param {number} limit
  * @param {number} page
- * @param {string} sort - by default we fetch the most popular
+ * @param {string} order - by default we fetch the most popular
  */
 function fetchAlbums (id, {
   limit = 3,
   page = 0,
-  sort = 'downloads+desc',
+  order = 'downloads+desc',
 } = {}) {
   debug(`fetch albums of ${id}`);
   return fetch(
@@ -68,7 +68,7 @@ function fetchAlbums (id, {
         id,
         limit,
         page,
-        sort,
+        order,
         fields: 'identifier,coverage,title,year',
       }
     )
@@ -104,7 +104,7 @@ function fetchAlbums (id, {
  *
  * @param {number} query.limit
  * @param {number} query.page
- * @param {string} query.sort
+ * @param {string} query.order
  *
  * @return {Promise}
  */
@@ -112,7 +112,7 @@ function fetchAlbumsByQuery (query) {
   const {
     limit = 3,
     page = 0,
-    sort = 'downloads+desc'
+    order = 'downloads+desc'
   } = query;
 
   debug('limit', limit);
@@ -131,7 +131,7 @@ function fetchAlbumsByQuery (query) {
         condition,
         limit,
         page,
-        sort,
+        order,
         fields,
       }
     )

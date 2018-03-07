@@ -3,7 +3,7 @@ module.exports = {
     ALBUMS_OF_CREATOR_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
-    '&sort[]={{sort}}' +
+    '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
@@ -11,14 +11,14 @@ module.exports = {
     COLLECTION_ITEMS_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q=collection:({{id}})' +
     '&fl[]={{fields}}' +
-    '&sort[]={{sort}}' +
+    '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
     QUERY_COLLECTIONS_URL: 'https://web.archive.org/advancedsearch.php' +
     '?q={{condition}}' +
     '&fl[]={{fields}}' +
-    '&sort[]={{sort}}' +
+    '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',

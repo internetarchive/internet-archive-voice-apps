@@ -5,7 +5,7 @@ const config = require('../../config');
 const songsProvider = require('../../provider/songs');
 
 class DefaultFeeder {
-  build (app, query, playlist) {
+  build ({app, query, playlist}) {
     throw new Error('Not Implemented!');
   }
 
@@ -16,7 +16,7 @@ class DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  isEmpty (app, slots, playlist) {
+  isEmpty ({app, slots, playlist}) {
     return playlist.isEmpty(app);
   }
 
@@ -28,7 +28,7 @@ class DefaultFeeder {
    * @param playlist
    * @returns {{id: string, title: string}}
    */
-  getCurrentItem (app, slots, playlist) {
+  getCurrentItem ({app, playlist}) {
     return playlist.getCurrentSong(app);
   }
 
@@ -40,7 +40,7 @@ class DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext (app, slots, playlist) {
+  hasNext ({app, slots, playlist}) {
     return playlist.hasNextSong(app);
   }
 
@@ -51,7 +51,7 @@ class DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next (app, slots, playlist) {
+  next ({app, slots, playlist}) {
     debug('move to the next song');
     playlist.next(app);
     return Promise.resolve();

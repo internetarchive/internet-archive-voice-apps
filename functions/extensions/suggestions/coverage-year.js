@@ -10,7 +10,7 @@ function handle (slots) {
   return albumsProvider
     .fetchAlbums(
       slots.creatorId, {
-        sort: 'downloads+desc',
+        order: 'downloads+desc',
       }
     );
 }

@@ -16,7 +16,7 @@ const {
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
-const querySlots = require('../state/query');
+const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
 
 /**
@@ -37,13 +37,13 @@ function handler (app) {
 
   const answer = [];
 
-  let slotScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  let slotScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
-  const newScheme = getActualSlotScheme(availableSchemes, querySlots.getSlots(app));
+  const newScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
   if (slotScheme !== newScheme) {
     slotScheme = newScheme;
     // update slots for new scheme
@@ -54,7 +54,7 @@ function handler (app) {
 
   processPreset(app, slotScheme);
 
-  const complete = querySlots.hasSlots(app, slotScheme.slots);
+  const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('we got all needed slots');
     const feeder = feeders.getByName(slotScheme.fulfillment);
@@ -65,16 +65,16 @@ function handler (app) {
     } else {
       playlist.setFeeder(app, slotScheme.fulfillment);
       return feeder
-        .build(app, querySlots, playlist)
+        .build({app, query, playlist})
         .then(() => {
-          if (feeder.isEmpty(app, querySlots, playlist)) {
+          if (feeder.isEmpty({app, query, playlist})) {
             // TODO: feeder can't find anything by music query
             // isn't covered case should be implemented
             dialog.ask(
               `We haven't find anything by your request would you like something else?`
             );
           } else {
-            dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
+            dialog.playSong(app, feeder.getCurrentItem({app, query, playlist}));
           }
         });
     }
@@ -126,13 +126,13 @@ function applyDefaultSlots (app, defaults) {
   }
 
   const appliedDefaults = Object.keys(defaults)
-    .filter(defaultSlotName => !querySlots.hasSlot(app, defaultSlotName))
+    .filter(defaultSlotName => !query.hasSlot(app, defaultSlotName))
     .map(defaultSlotName => {
       const value = defaults[defaultSlotName];
       if (value.skip) {
-        querySlots.skipSlot(app, defaultSlotName);
+        query.skipSlot(app, defaultSlotName);
       } else {
-        querySlots.setSlot(
+        query.setSlot(
           app,
           defaultSlotName,
           defaults[defaultSlotName]
@@ -249,7 +249,7 @@ function fillSlots (app, slotScheme) {
     .reduce((newValues, slotName) => {
       const value = app.getArgument(slotName);
       if (value) {
-        querySlots.setSlot(app, slotName, value);
+        query.setSlot(app, slotName, value);
         newValues[slotName] = value;
       }
       return newValues;
@@ -264,7 +264,7 @@ function fillSlots (app, slotScheme) {
  * @returns {*}
  */
 function generateAcknowledge (app, slotScheme, newValues) {
-  debug('we had slots:', Object.keys(querySlots.getSlots(app)));
+  debug('we had slots:', Object.keys(query.getSlots(app)));
 
   const newNames = Object.keys(newValues);
   // we get new values
@@ -298,7 +298,7 @@ function generateAcknowledge (app, slotScheme, newValues) {
   debug('we have few valid acknowledges', validAcknowledges);
 
   const template = _.sample(validAcknowledges);
-  const context = querySlots.getSlots(app);
+  const context = query.getSlots(app);
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
@@ -372,7 +372,7 @@ function fetchSuggestions (app, promptScheme) {
     return Promise.resolve(null);
   }
 
-  return provider(querySlots.getSlots(app))
+  return provider(query.getSlots(app))
     .then(res => {
       const suggestions = res.items.slice(0, 3);
       if (promptScheme.suggestionTemplate) {
@@ -396,7 +396,7 @@ function fetchSuggestions (app, promptScheme) {
 function generatePrompt (app, slotScheme) {
   const missedSlots =
     slotScheme.slots
-      .filter(slotName => !querySlots.hasSlot(app, slotName));
+      .filter(slotName => !query.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
     debug(`we don't have any missed slots`);

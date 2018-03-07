@@ -53,11 +53,11 @@ module.exports = {
        * which return preset argument
        */
       presets: {
-        randomly: {
+        random: {
           defaults: {
             collectionId: {skip: true},
             subject: {skip: true},
-            sort: 'random',
+            order: 'random',
           }
         },
       },
@@ -66,7 +66,7 @@ module.exports = {
        * default values for slots
        */
       defaults: {
-        sort: 'random',
+        order: 'random',
       },
 
       /**
@@ -126,13 +126,13 @@ module.exports = {
        * which return preset argument
        */
       presets: {
-        randomly: {
+        random: {
           defaults: {
             collectionId: {skip: true},
             creatorId: {skip: true},
             coverage: {skip: true},
             year: {skip: true},
-            sort: 'random',
+            order: 'random',
           }
         },
       },

@@ -30,7 +30,7 @@ class SyncAlbum extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build (app, query, playlist) {
+  build ({app, query, playlist}) {
     debug('lets build albums feeder');
     const slots = query.getSlots(app);
     debug('we have slots:', slots);

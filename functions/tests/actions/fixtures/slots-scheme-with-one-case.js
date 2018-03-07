@@ -9,14 +9,14 @@ module.exports = {
     'creatorId',
     'coverage',
     'year',
-    'sort',
+    'order',
   ],
 
   /**
    * default values for slots
    */
   defaults: {
-    sort: 'random',
+    order: 'random',
   },
 
   presets: {
