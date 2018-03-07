@@ -84,6 +84,7 @@ function fetchAlbums (id, {
           title: a.title,
           year: parseInt(a.year),
         })),
+        total: json.response.numFound,
       };
     })
     .catch(e => {
@@ -144,6 +145,7 @@ function fetchAlbumsByQuery (query) {
         title: a.title,
         year: parseInt(a.year),
       })),
+      total: json.response.numFound,
     }))
     .catch(e => {
       error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);
