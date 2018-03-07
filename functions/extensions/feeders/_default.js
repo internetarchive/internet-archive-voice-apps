@@ -71,7 +71,7 @@ class DefaultFeeder {
         coverage: album.coverage,
         imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
         // TODO : add recommendations
-        suggestions: ['TODO'],
+        suggestions: ['Next'],
         albumTitle: album.title,
         track: idx + 1,
         year: album.year,

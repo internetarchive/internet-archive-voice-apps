@@ -30,6 +30,7 @@ function handler (app) {
 function handleFinished (app) {
   debug(`handle media action`);
   const feederName = playlist.getFeeder(app);
+  debug(`playlist is based on "${feederName}" feeder`);
 
   let feeder = feeders.getByName(feederName);
   if (feeder && feederName) {
