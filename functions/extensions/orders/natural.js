@@ -37,7 +37,7 @@ class NaturalOrderStrategy {
   }
 
   /**
-   * move source cursor to the next position
+   * Move source cursor to the next position
    * @param app
    * @param query
    * @param playlist

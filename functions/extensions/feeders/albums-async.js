@@ -251,7 +251,7 @@ class AsyncAlbums extends DefaultFeeder {
             app,
             playlist,
             songsInFirstAlbum,
-          })
+          });
 
           playlist.next(app);
         });
