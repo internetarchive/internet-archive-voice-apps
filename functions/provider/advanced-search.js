@@ -2,6 +2,7 @@ const nameToParameter = {
   coverage: 'coverage',
   creatorId: 'collection',
   collectionId: 'collection',
+  subject: 'subject',
   year: 'year',
   // TODO: add other parameters
 };
