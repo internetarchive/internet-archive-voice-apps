@@ -29,4 +29,30 @@ module.exports = {
     POSTER_OF_ALBUM: 'https://archive.org/services/img/{{id}}',
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
+
+  feeders: {
+    'albums-async': {
+      chunk: {
+        size: 4,
+      },
+
+      defaults: {
+        chunk: {
+          // how many albums we would fetch in one chunk
+          albums: 1,
+          // how many songs we would sample in one chunk
+          songs: 2,
+        },
+      },
+
+      random: {
+        chunk: {
+          // how many albums we would fetch in one chunk
+          albums: 2,
+          // how many songs we would sample in one chunk
+          songs: 2,
+        }
+      },
+    }
+  },
 };

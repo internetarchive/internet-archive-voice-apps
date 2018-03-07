@@ -27,12 +27,32 @@ function hasNextSong (app) {
  *
  * @param app
  * @param {Array} items - new songs
+ * @param {Object} [extra] - extra options
  */
-function create (app, items) {
-  setData(app, Object.assign({}, getData(app), {
+function create (app, items, extra = {}) {
+  setData(app, Object.assign({}, getData(app), {extra}, {
     current: 0,
     items,
   }));
+}
+
+/**
+ * get extra parameters
+ *
+ * @param app
+ */
+function getExtra (app) {
+  return getData(app).extra;
+}
+
+/**
+ * update extra parameters
+ *
+ * @param app
+ * @param extra
+ */
+function updateExtra (app, extra) {
+  setData(app, Object.assign({}, getData(app), {extra}));
 }
 
 /**
@@ -58,10 +78,50 @@ function next (app) {
   }));
 }
 
+/**
+ * Shift current position in chunk
+ *
+ * @param app
+ * @param value
+ */
+function shift (app, value) {
+  const playlist = getData(app);
+  setData(app, Object.assign({}, playlist, {
+    current: playlist.current + value,
+  }));
+}
+
+/**
+ * Get playlist items
+ *
+ * @param app
+ * @return {Array}
+ */
+function getItems (app) {
+  return getData(app).items;
+}
+
+/**
+ * update items in playlist
+ *
+ * @param app
+ * @param items
+ */
+function updateItems (app, items) {
+  setData(app, Object.assign({}, getData(app), {
+    items,
+  }));
+}
+
 module.exports = {
   getCurrentSong,
   isEmpty,
   create,
+  getExtra,
+  updateExtra,
   hasNextSong,
   next,
+  shift,
+  getItems,
+  updateItems,
 };
