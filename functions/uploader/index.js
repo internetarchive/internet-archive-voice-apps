@@ -53,5 +53,11 @@ function execute (level1, level2) {
     all[level1][level2]();
   } else {
     error(NOT_VALID);
+    return NOT_VALID;
   }
 }
+
+module.exports = {
+  handle,
+  execute,
+};

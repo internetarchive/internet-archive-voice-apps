@@ -1,4 +1,4 @@
-const {fetchNewEntitiesFromIAAndPostToDF} = require('./entities');
+const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
 const ENTITY_NAME = `testing-collection`;
 const debug = require(`debug`)(`ia:uploader:collection:debug`);
 const ID = `etree`;

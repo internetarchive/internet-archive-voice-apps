@@ -2,96 +2,37 @@ const fetch = require(`node-fetch`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
 const util = require(`util`);
-const _ = require(`lodash`);
 const mustache = require('mustache');
 const config = require('../config');
+const MAX_ENTITY = 30000;
+const MAX_REQUEST = 1000;
 
 const basicHeaderRequest = {
   'content-type': 'application/json; charset=UTF-8',
   'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'
 };
 
-function getUniqueCreators (docs) {
-  var creators = [];
-  var strCreator = ``;
-  for (let i = 0; i < docs.length; i++) {
-    var creator = docs[i].creator;
-    if (_.isArray(creator)) {
-      for (let i = 0; i < creator.length; i++) {
-        strCreator = JSON.stringify(creator[i]);
-        if (strCreator) {
-          strCreator = strCreator.replace(/[()""]+/g, ``);
-          creators.push(strCreator);
-        }
-      }
-    } else {
-      strCreator = JSON.stringify(creator);
-      if (strCreator) {
-        strCreator = strCreator.replace(/[()]+/g, ` `);
-        creators.push(strCreator);
-      }
-    }
-  }
-  return _.uniq(creators);
-}
-
-function fetchEntitiesFromIA (id, limit) {
-  var page = 0;
-  var sort = 'downloads+desc';
-  debug(`fetching entity data from IA...`);
-  var url = mustache.render(
-    config.endpoints.COLLECTION_ITEMS_URL,
-    {
-      id,
-      limit,
-      page,
-      sort,
-      fields: 'creator',
-    }
-  );
-  debug(url);
-  return fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      debug(`fetched Entity from IA successfully.`);
-      return getUniqueCreators(data.response.docs);
-    }).catch(e => {
-      error(`Get error in fetching entity from IA, error: ${JSON.stringify(e)}`);
-      return Promise.reject(e);
-    });
-}
-
-function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
-  return Promise.all([
-    fetchEntitiesFromIA(id, limit),
-    fetchEntitiesFromDF(entityname),
-  ])
-    .then(values => {
-      const [creatorsFromIA, creatorsFromDF] = values;
-      var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      debug(util.inspect(dif, false, null));
-      postEntitiesToDF(entityname, dif, 0);
-    });
-}
-
 // Maximum 1,000 records per request
 // Maximum 30,000 records per entity
-function postEntitiesToDF (entityname, creators, first) {
+function postEntitiesToDF (entityname, entities, first) {
   debug(`first : ` + first);
-  debug(`Creators Length : ` + creators.length);
+  debug(`Entities Length : ` + entities.length);
   debug(`posting Entity to DF...`);
-  var data = [];
-  var maxRequest = 1000;
-  var last = first + maxRequest;
-  if (last > creators.length) {
-    last = creators.length;
+  if (entities.length > MAX_ENTITY) {
+    error(`Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`);
+    return `Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`;
   }
-  if (first >= creators.length) {
+  var data = [];
+  var last = first + MAX_REQUEST;
+  if (last > entities.length) {
+    last = entities.length;
+  }
+  if (first >= entities.length) {
     debug(`posted Entity to DF Successfully.`);
     return;
   }
   for (let i = first; i < last; i++) {
-    data.push({'synonyms': [creators[i]], 'value': creators[i]});
+    data.push({'synonyms': [entities[i]], 'value': entities[i]});
   }
   return fetch(mustache.render(
     config.dfendpoints.DF_ENTITY_POST_URL,
@@ -108,7 +49,7 @@ function postEntitiesToDF (entityname, creators, first) {
       debug(util.inspect(data, false, null));
       debug(`posted Entity to DF Successfully.`);
       first = last;
-      postEntitiesToDF(entityname, creators, first);
+      postEntitiesToDF(entityname, entities, first);
     })
     .catch(e => {
       error(`Get error in posting entity to DF, error: ${JSON.stringify(e)}`);
@@ -127,13 +68,13 @@ function fetchEntitiesFromDF (entityname) {
     .then(res => res.json())
     .then(data => {
       debug(util.inspect(data, false, null));
-      var creators = [];
+      var entities = [];
       for (var i = 0, len = data.entries.length; i < len; i++) {
-      // debug(util.inspect(creators[i], false, null));
-        creators.push(data.entries[i].value);
+        entities.push(data.entries[i].value);
       }
+      console.log(util.inspect(entities, false, null));
       debug(`fetched Entity from DF successfully.`);
-      return creators;
+      return entities;
     })
     .catch(e => {
       error(`Get error in fetching entity from DF, error: ${JSON.stringify(e)}`);
@@ -144,18 +85,18 @@ function deleteAllEntitiesFromDF (entityname) {
   return Promise.all([
     fetchEntitiesFromDF(entityname),
   ])
-    .then(creators => {
-      var spliceCreators = creators.splice(0, 1);
+    .then(entities => {
+      var spliceCreators = entities.splice(0, 1);
       deleteEntitiesFromDF(spliceCreators);
     });
 }
-function deleteEntitiesFromDF (creators, entityname) {
+function deleteEntitiesFromDF (entities, entityname) {
   return fetch(mustache.render(
     config.dfendpoints.DF_ENTITY_DELETE_URL,
     {
       entityname,
     }
-  ), {method: `DELETE`, body: JSON.stringify(creators), headers: basicHeaderRequest})
+  ), {method: `DELETE`, body: JSON.stringify(entities), headers: basicHeaderRequest})
     .then(res => res.json())
     .then(data => {
       debug(util.inspect(data, false, null));
@@ -168,6 +109,8 @@ function deleteEntitiesFromDF (creators, entityname) {
 }
 
 module.exports = {
-  fetchNewEntitiesFromIAAndPostToDF,
+  postEntitiesToDF,
+  fetchEntitiesFromDF,
   deleteAllEntitiesFromDF,
+  deleteEntitiesFromDF,
 };
