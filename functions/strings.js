@@ -22,9 +22,15 @@ module.exports = {
    * Template for actions for Dialog flow
    */
   intents: {
+    /**
+     * In one go actions for playback music
+     */
     inOneGoMusicPlayback: {
       name: 'in one go music playback',
 
+      /**
+       * it tries to fill those slots
+       */
       slots: [
         'collectionId',
         'coverage',
@@ -34,10 +40,18 @@ module.exports = {
         'year',
       ],
 
+      /**
+       * the rest gets from defaults
+       */
       defaults: {
         'order': 'random',
+        // TODO: list of parameters is not supported yet
+        // 'collectionId': ['etree', 'georgeblood'],
       },
 
+      /**
+       * and ask fulfillment for a feeder
+       */
       fulfillment: 'albums-async',
     },
 
