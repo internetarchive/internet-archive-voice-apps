@@ -56,6 +56,26 @@ function setExtra (app, extra) {
 }
 
 /**
+ * get feeder name
+ *
+ * @param app
+ * @returns {*}
+ */
+function getFeeder (app) {
+  return getData(app).feederName;
+}
+
+/**
+ * set feeder name
+ *
+ * @param app
+ * @param feederName
+ */
+function setFeeder (app, feederName) {
+  setData(app, Object.assign({}, getData(app), {feederName}));
+}
+
+/**
  * Is playlist empty
  *
  * @param app
@@ -119,6 +139,8 @@ module.exports = {
   create,
   getExtra,
   setExtra,
+  getFeeder,
+  setFeeder,
   hasNextSong,
   next,
   shift,
