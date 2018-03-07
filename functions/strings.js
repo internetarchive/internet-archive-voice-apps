@@ -26,9 +26,15 @@ module.exports = {
       name: 'in one go artist playback',
 
       slots: [
+        'collectionId',
         'creatorId',
         'order',
+        'subject',
       ],
+
+      defaults: {
+        'order': 'random',
+      },
 
       fulfillment: 'albums-async',
     },
