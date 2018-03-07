@@ -42,7 +42,7 @@ class NaturalOrderStrategy {
    * @param query
    * @param playlist
    */
-  moveSourceCursorToTheNextPosition({app, query, playlist}) {
+  moveSourceCursorToTheNextPosition ({app, query, playlist}) {
     const cursor = playlist.getExtra(app).cursor;
     const current = Object.assign({}, cursor.current);
     current.song++;
@@ -61,6 +61,23 @@ class NaturalOrderStrategy {
     // store cursor
     playlist.setExtra(app, {
       cursor: Object.assign({}, cursor, {current}),
+    });
+  }
+
+  /**
+   * Should update total number of songs
+   * actually we could get new number
+   * when we switch to the new album
+   *
+   * @param playlist
+   * @param songsInFirstAlbum
+   */
+  updateCursorTotal ({app, playlist, songsInFirstAlbum}) {
+    const cursor = playlist.getExtra(app).cursor;
+    const total = Object.assign({}, cursor.total);
+    total.songs = songsInFirstAlbum;
+    playlist.setExtra(app, {
+      cursor: Object.assign({}, cursor, {total}),
     });
   }
 
