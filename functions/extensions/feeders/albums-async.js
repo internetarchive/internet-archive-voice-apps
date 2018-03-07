@@ -19,8 +19,9 @@ const _ = require('lodash');
 
 const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
-const comporators = require('../../utils/sort-comparators');
 const stripFileName = require('../../utils/strip-filename');
+
+const orderStrategies = require('../orders');
 
 const DefaultFeeder = require('./_default');
 
@@ -93,13 +94,18 @@ class AsyncAlbums extends DefaultFeeder {
     const cursor = this.getCursor(app, playlist);
     let totalNumOfAlbums = 0;
 
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+
     return albumsProvider
-      .fetchAlbumsByQuery(Object.assign({}, slots, {
-        // size of chunk
-        limit: feederConfig.chunk.albums,
-        // request next portion of albums
-        page: Math.floor(cursor.current.album / feederConfig.chunk.albums),
-      }))
+      .fetchAlbumsByQuery(
+        Object.assign(
+          {},
+          slots,
+          orderStrategy.getPage({app, cursor, feederConfig})
+        )
+      )
       .then((albums) => {
         if (albums === null) {
           warning(`we received none albums`);
@@ -145,15 +151,7 @@ class AsyncAlbums extends DefaultFeeder {
 
         debug(`we get ${songs.length} songs`);
 
-        // shuffle songs
-        const order = query.getSlot(app, 'order');
-        if (order) {
-          const comporator = comporators.getOne(order);
-          songs = songs.sort(comporator);
-        }
-
-        // start from songs we need
-        songs = songs.slice(cursor.current.song);
+        songs = orderStrategy.songsPostProcessing({songs, cursor});
 
         // get chunk of songs
         if (feederConfig.chunk.songs) {

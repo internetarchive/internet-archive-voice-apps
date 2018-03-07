@@ -48,8 +48,8 @@ describe('feeders', () => {
 
     it('should fetch next ordered song', () => {
       app = mockApp();
-      // TODO: do we need to set the order slot ?
-      // query.setSlot(app, 'order', 'natural');
+      // TODO: should try with undefined order
+      query.setSlot(app, 'order', 'natural');
       mockNewAlbum({
         title: 'album-1',
         songs: [{
@@ -204,42 +204,63 @@ describe('feeders', () => {
         }));
     });
 
-    // TODO: before this test
-    // we should cover other functions from playlist
-    // as we it would be good to cover fetchAlbumsByQuery
     xit('should fetch next random song', () => {
       app = mockApp();
       query.setSlot(app, 'order', 'random');
-      return feeder.build(app, query, playlist)
+
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }, {
+          filename: 'filename-3',
+        }]
+      });
+
+      return feeder
+        .build(app, query, playlist)
         .then(() => testNextSong({
+          album: 'album-1',
           app,
           feeder,
           filename: 'filename-1',
           playlist,
-          query
+          query,
+          moveToNext: false,
         }))
         .then(() => testNextSong({
+          album: 'album-1',
           app,
           feeder,
           filename: 'filename-2',
           playlist,
           query
         }))
+        .then(() => {
+          // we will request next chunk of songs
+          mockNewAlbum({
+            title: 'album-2',
+            songs: [{
+              filename: 'filename-1',
+            }, {
+              filename: 'filename-2',
+            }, {
+              filename: 'filename-3',
+            }]
+          });
+        })
         .then(() => testNextSong({
-          app,
-          feeder,
-          filename: 'filename-3',
-          playlist,
-          query
-        }))
-        .then(() => testNextSong({
+          album: 'album-2',
           app,
           feeder,
           filename: 'filename-1',
           playlist,
-          query
+          query,
         }))
         .then(() => testNextSong({
+          album: 'album-2',
           app,
           feeder,
           filename: 'filename-2',
