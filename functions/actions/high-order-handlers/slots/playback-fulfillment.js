@@ -24,6 +24,7 @@ module.exports = () => ({app, playlist, query, slotScheme}) => {
       `we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`
     );
   } else {
+    playlist.setFeeder(app, slotScheme.fulfillment);
     return feeder
       .build(app, query, playlist)
       .then(() => {
