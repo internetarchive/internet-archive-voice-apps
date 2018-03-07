@@ -45,7 +45,7 @@ function fetchEntitiesFromIA (id, limit) {
       fields: 'creator',
     }
   );
-  console.log(url);
+  debug(url);
   return fetch(url)
     .then(res => res.json())
     .then(data => {

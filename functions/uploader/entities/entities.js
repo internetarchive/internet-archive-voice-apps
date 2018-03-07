@@ -72,7 +72,7 @@ function fetchEntitiesFromDF (entityname) {
       for (var i = 0, len = data.entries.length; i < len; i++) {
         entities.push(data.entries[i].value);
       }
-      console.log(util.inspect(entities, false, null));
+      debug(util.inspect(entities, false, null));
       debug(`fetched Entity from DF successfully.`);
       return entities;
     })
