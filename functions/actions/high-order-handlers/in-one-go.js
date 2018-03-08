@@ -1,7 +1,8 @@
 const debug = require('debug')('ia:actions:in-one-go:debug');
 const warning = require('debug')('ia:actions:in-one-go:warning');
 
-const copyArgmentToSlots = require('./middlewares/copy-arguments-to-slots');
+const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
+const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
 const playbackFulfillment = require('./middlewares/playback-fulfillment');
 
 /**
@@ -14,7 +15,7 @@ const playbackFulfillment = require('./middlewares/playback-fulfillment');
  * @returns {{handler: handler}}
  */
 function build ({playlist, strings, query}) {
-  debug('start handler', strings.name);
+  debug(`build handler "${strings.name}"`);
 
   if (!strings.slots) {
     warning('Missed slots');
@@ -31,13 +32,14 @@ function build ({playlist, strings, query}) {
    * @returns {Promise.<T>}
    */
   function handler (app) {
-    debug('start handler', strings.name);
+    debug(`start handler "${strings.name}"`);
     const slotScheme = strings;
 
-    // pipe line of actions handling
+    // pipeline of actions handling
     return Promise
       .resolve({app, slotScheme, playlist, query})
-      .then(copyArgmentToSlots())
+      .then(copyArgumentToSlots())
+      .then(copyDefaultsToSlots())
       .then(playbackFulfillment());
   }
 
