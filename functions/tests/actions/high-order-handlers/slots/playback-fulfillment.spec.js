@@ -8,7 +8,7 @@ const mockApp = require('../../../_utils/mocking/app');
 const mockDialog = require('../../../_utils/mocking/dialog');
 const mockAlbumFeeder = require('../../../_utils/mocking/feeders/albums');
 const mockFeeders = require('../../../_utils/mocking/feeders');
-const middleware = rewire('../../../../actions/high-order-handlers/slots/playback-fulfillment');
+const middleware = rewire('../../../../actions/high-order-handlers/middlewares/playback-fulfillment');
 
 describe('actions', () => {
   describe('middlewares', () => {

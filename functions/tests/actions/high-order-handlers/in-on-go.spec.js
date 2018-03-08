@@ -8,7 +8,7 @@ const mockApp = require('../../_utils/mocking/app');
 const mockFeeders = require('../../_utils/mocking/feeders');
 const mockAlbumFeeder = require('../../_utils/mocking/feeders/albums');
 const mockDialog = require('../../_utils/mocking/dialog');
-const playbackFulfillment = rewire('../../../actions/high-order-handlers/slots/playback-fulfillment');
+const playbackFulfillment = rewire('../../../actions/high-order-handlers/middlewares/playback-fulfillment');
 
 const strings = require('./fixtures/in-on-go.json');
 
