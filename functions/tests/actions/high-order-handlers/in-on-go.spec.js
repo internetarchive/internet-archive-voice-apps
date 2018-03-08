@@ -54,8 +54,27 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
+              expect(query.getSlots(app)).to.have.property(
+                'creators', 'the-band'
+              );
+            });
+        });
+
+        it('should pupulate defaults', () => {
+          app = mockApp({
+            argument: {
+              creators: 'the-band',
+            },
+          });
+          return action.handler(app)
+            .then(() => {
               expect(query.getSlots(app)).to.be.deep.equal({
+                collectionId: [
+                  'etree',
+                  'georgeblood',
+                ],
                 creators: 'the-band',
+                order: 'random',
               });
             });
         });
