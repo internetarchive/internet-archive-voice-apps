@@ -1,8 +1,8 @@
 const debug = require('debug')('ia:actions:in-one-go:debug');
 const warning = require('debug')('ia:actions:in-one-go:warning');
 
-const copyArgmentToSlots = require('./slots/copy-arguments-to-slots');
-const playbackFulfillment = require('./slots/playback-fulfillment');
+const copyArgmentToSlots = require('./middlewares/copy-arguments-to-slots');
+const playbackFulfillment = require('./middlewares/playback-fulfillment');
 
 /**
  * High-order handler
