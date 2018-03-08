@@ -4,5 +4,12 @@
     "creators",
     "origin"
   ],
+  "defaults": {
+    "order": "random",
+    "collectionId": [
+      "etree",
+      "georgeblood"
+    ]
+  },
   "fulfillment": "albums-async"
 }

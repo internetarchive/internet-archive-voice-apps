@@ -29,7 +29,7 @@ module.exports = () =>
 
     debug(`and copied ${JSON.stringify(newValues)} slot(s)`);
     return Promise.resolve(
-      Object.assign({}, args, {app, newValues, query, slotScheme})
+      Object.assign({}, args, {newValues})
     );
     // sadly Google Firebase doesn't support modern Node.js
     // return Promise.resolve({app, newValues, query, slotScheme, ...res});
