@@ -9,10 +9,7 @@ describe('actions', () => {
   describe('middleware', () => {
     describe('copy defaults to slots', () => {
       it('should populate defaults to slots', () => {
-        const app = mockApp({
-          argument: {
-          },
-        });
+        const app = mockApp();
         const slotScheme = {
           defaults: {
             band: 'the-band',
@@ -27,6 +24,23 @@ describe('actions', () => {
               band: 'the-band',
               album: 'the-album',
               collections: ['etree', 'georgeblood'],
+            });
+          });
+      });
+
+      it(`should shouldn't ovewrited already defined slots`, () => {
+        const app = mockApp();
+        query.setSlot(app, 'band', 'other one');
+        const slotScheme = {
+          defaults: {
+            band: 'the-band',
+          }
+        };
+        return Promise.resolve({app, query, slotScheme})
+          .then(middleware())
+          .then(({app, query, slotsScheme}) => {
+            expect(query.getSlots(app)).to.be.deep.equal({
+              band: 'other one',
             });
           });
       });

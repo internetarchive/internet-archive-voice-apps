@@ -20,7 +20,7 @@ module.exports = () =>
       debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
       newValues = Object.entries(slotScheme.defaults)
         .reduce((newValues, [slotName, value]) => {
-          if (value) {
+          if (value && !query.hasSlot(app, slotName)) {
             query.setSlot(app, slotName, value);
             newValues = Object.assign({}, newValues, {[slotName]: value});
           }
@@ -30,7 +30,7 @@ module.exports = () =>
     }
 
     return Promise.resolve(
-      Object.assign({}, args, {app, newValues, query, slotScheme})
+      Object.assign({}, args, {newValues})
     );// use this one, once firebase would support modern node.js
     // return Promise.resolve({app, newValues, query, slotScheme, ...res});
   };
