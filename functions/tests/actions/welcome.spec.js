@@ -24,5 +24,12 @@ describe('actions', () => {
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
         .with.members(['78s', 'Live Concerts']);
     });
+
+    it('should reprompt with speech', () => {
+      let app = mockApp();
+      welcome.handler(app);
+      expect(dialog.ask.args[0][1]).to.have.property('reprompt').
+        to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
+    });
   });
 });
