@@ -1,5 +1,5 @@
-const debug = require('debug')('ia:actions:music-query:debug');
-const warning = require('debug')('ia:actions:music-query:warning');
+const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
+
 const _ = require('lodash');
 const math = require('mathjs');
 const mustache = require('mustache');
