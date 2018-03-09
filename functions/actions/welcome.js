@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const mustache = require('mustache');
 
 const dialog = require('../dialog');
 const welcomeStrings = require('../strings').intents.welcome;
@@ -9,9 +10,9 @@ const welcomeStrings = require('../strings').intents.welcome;
  * @param app
  */
 function handler (app) {
-  let reprompt = welcomeStrings.reprompt + ' ' + welcomeStrings.speech;
-  let speech;
+  let reprompt = mustache.render(welcomeStrings.reprompt, welcomeStrings);
 
+  let speech;
   if (app.getLastSeen() === null) {
     speech = '<speak> <audio src="https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3" />' + _.sample(welcomeStrings.acknowledges) + ' ' + welcomeStrings.speech + '</speak>';
   } else {
