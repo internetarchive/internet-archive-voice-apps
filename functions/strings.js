@@ -45,8 +45,11 @@ module.exports = {
        */
       defaults: {
         'order': 'random',
-        // TODO: list of parameters is not supported yet
-        // 'collectionId': ['etree', 'georgeblood'],
+        // restricted to the allowed collections
+        // so user could ask
+        // > play jazz
+        // and we fetch all jazz from these collections
+        'collectionId': ['etree', 'georgeblood'],
       },
 
       /**
