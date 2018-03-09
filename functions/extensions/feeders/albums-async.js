@@ -149,6 +149,12 @@ class AsyncAlbums extends DefaultFeeder {
             return allSongs.concat(albumSongs);
           }, []);
 
+        if (songs.length === 0) {
+          warning(`we received zero songs. It doesn't sound ok`);
+          // let's try again
+          return this.fetchChunkOfSongs({app, query, playlist});
+        }
+
         debug(`we get ${songs.length} songs`);
 
         songs = orderStrategy.songsPostProcessing({songs, cursor});
