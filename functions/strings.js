@@ -254,6 +254,7 @@ module.exports = {
     }],
 
     welcome: {
+      reprompt: `I didn't catch that.`,
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
     },
