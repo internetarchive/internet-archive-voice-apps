@@ -126,7 +126,7 @@ function getPromptsForSlots (prompts, slots) {
   return prompts
     .filter(p => _.includes(p.requirements, criticalSlot))
     .map(p => ({
-      priority: _.intersection(p.requirements, slots).length / maximumIntersection,
+      priority: _.intersection(p.requirements, slots).length / (p.requirements.length + maximumIntersection),
       p,
     }))
     .sort((a, b) => b.priority - a.priority)

@@ -80,7 +80,7 @@ function handler (app) {
     }
   }
 
-  return generateAcknowledge(app, slotScheme, newValues)
+  return generateAcknowledge({app, slotScheme, newValues})
     .then(res => {
       answer.push(res);
       return generatePrompt(app, slotScheme);
@@ -263,7 +263,7 @@ function fillSlots (app, slotScheme) {
  * @param newValues
  * @returns {*}
  */
-function generateAcknowledge (app, slotScheme, newValues) {
+function generateAcknowledge ({app, slotScheme, newValues}) {
   debug('we had slots:', Object.keys(query.getSlots(app)));
 
   const newNames = Object.keys(newValues);
