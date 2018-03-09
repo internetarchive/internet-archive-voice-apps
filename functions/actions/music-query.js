@@ -283,19 +283,21 @@ function generateAcknowledge (app, slotScheme, newValues) {
     newNames
   );
 
-  if (validAcknowledges && validAcknowledges.length === 0) {
+  if (!validAcknowledges || validAcknowledges.length === 0) {
     validAcknowledges = getMatchedTemplates(
       acknowledgeRequirements,
       newNames
     );
-  }
 
-  if (!validAcknowledges || validAcknowledges.length === 0) {
-    warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
-    return Promise.resolve(null);
-  }
+    if (!validAcknowledges || validAcknowledges.length === 0) {
+      warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
+      return Promise.resolve(null);
+    }
 
-  debug('we have few valid acknowledges', validAcknowledges);
+    debug('we have partly matched acknowledges', validAcknowledges);
+  } else {
+    debug('we have exactly matched acknowledges', validAcknowledges);
+  }
 
   const template = _.sample(validAcknowledges);
   const context = query.getSlots(app);
