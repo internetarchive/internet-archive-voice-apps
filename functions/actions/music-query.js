@@ -83,7 +83,7 @@ function handler (app) {
   return generateAcknowledge({app, slotScheme, newValues})
     .then(res => {
       answer.push(res);
-      return generatePrompt(app, slotScheme);
+      return generatePrompt({app, slotScheme});
     })
     .then(res => {
       answer.push(res);
@@ -300,11 +300,10 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
   }
 
   const template = _.sample(validAcknowledges);
-  const context = query.getSlots(app);
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
-  return resolveSlots(context, template)
+  return resolveSlots(app, template)
     .then(resolvedSlots => ({
       speech: mustache.render(
         template,
@@ -319,12 +318,12 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
  * some slots could be resolved in more friendly look
  * for example we could convert creatorId to {title: <band-name>}
  *
- * @param context
  * @param template
  * @returns {Promise.<TResult>}
  */
-function resolveSlots (context, template) {
+function resolveSlots (app, template) {
   debug(`resolve slots for "${template}"`);
+  const context = query.getSlots(app);
   const extensions = getRequiredExtensionHandlers(template);
   debug('we get extensions:', extensions);
   return Promise
@@ -360,7 +359,7 @@ function resolveSlots (context, template) {
  * @param promptScheme
  * @returns {Promise}
  */
-function fetchSuggestions (app, promptScheme) {
+function fetchSuggestions ({app, promptScheme}) {
   let suggestions = promptScheme.suggestions;
 
   if (suggestions) {
@@ -393,9 +392,10 @@ function fetchSuggestions (app, promptScheme) {
  * Generate prompt for missed slots
  *
  * @param app
+ * @param slotScheme
  * @returns {*}
  */
-function generatePrompt (app, slotScheme) {
+function generatePrompt ({app, slotScheme}) {
   const missedSlots =
     slotScheme.slots
       .filter(slotName => !query.hasSlot(app, slotName));
@@ -416,18 +416,22 @@ function generatePrompt (app, slotScheme) {
     return Promise.resolve(null);
   }
 
-  const prompt = _.sample(promptScheme.prompts);
+  const context = query.getSlots(app);
+  const template = _.sample(promptScheme.prompts);
 
-  debug('we randombly choice prompt:', prompt);
-  return fetchSuggestions(app, promptScheme)
-    .then((suggestions) => {
-      const speech = mustache.render(prompt, {
-        // TODO: pass all slots and suggestions as context
+  debug('we randomly choice prompt:', template);
+  return Promise.all([
+    fetchSuggestions({app, promptScheme}),
+    resolveSlots(app, template),
+  ])
+    .then(res => {
+      const [suggestions, resolvedSlots] = res;
+      const speech = mustache.render(template, Object.assign({}, context, resolvedSlots, {
         suggestions: {
           humanized: humanize.list.toFriendlyString(suggestions, {ends: ' or '}),
           values: suggestions,
         },
-      });
+      }));
 
       return {speech, suggestions};
     });
