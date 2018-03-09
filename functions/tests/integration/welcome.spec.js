@@ -7,7 +7,7 @@ const index = require('../..');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
 describe('integration', () => {
-  describe('unknown', () => {
+  describe('welcome', () => {
     it('should handle for a new user', () => {
       const res = new MockResponse();
       index.playMedia(buildIntentRequest({
@@ -15,7 +15,7 @@ describe('integration', () => {
         lastSeen: null,
       }), res);
       expect(res.speech()).to.not.contain('Welcome back,');
-      expect(res.speech()).to.contain('Welcome to the live music collection at the Internet Archive.');
+      expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
 
     it('should handle for return user', () => {
@@ -23,7 +23,7 @@ describe('integration', () => {
       index.playMedia(buildIntentRequest({
         action: 'welcome',
       }), res);
-      expect(res.speech()).to.contain('Welcome to the live music collection at the Internet Archive.');
+      expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
   });
 });
