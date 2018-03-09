@@ -8,6 +8,7 @@ const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 const sinon = require('sinon');
 
 describe('integration', () => {
+<<<<<<< HEAD
   before(() => {
     admin = require('firebase-admin');
     adminInitStub = sinon.stub(admin, 'initializeApp');
@@ -18,7 +19,10 @@ describe('integration', () => {
     configStub = sinon.stub(functions, 'config').returns(require(`../../../.runtimeconfig.json`));
     index = require('../..');
   });
+  describe('unknown', () => {
+=======
   describe('welcome', () => {
+>>>>>>> origin/master
     it('should handle for a new user', () => {
       const res = new MockResponse();
       index.playMedia(buildIntentRequest({
