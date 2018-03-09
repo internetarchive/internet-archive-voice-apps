@@ -591,7 +591,7 @@ function responseHandler (app) {
     app.handleRequestAsync(actionsMap)
       .catch(err => {
         warning(`We missed action: "${app.getIntent()}".
-                 And got error: ${JSON.stringify(err)}`);
+                 And got an error:`, err);
       });
 
     // TODO: should be removed.
