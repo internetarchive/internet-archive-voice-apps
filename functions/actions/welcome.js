@@ -21,9 +21,7 @@ function handler (app) {
     speech = greetingStrings.welcomeBack + ' ' + welcomeStrings.speech;
   }
 
-  const suggestions = welcomeStrings.suggestions;
-
-  dialog.ask(app, {speech, reprompt, suggestions});
+  dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
 }
 
 module.exports = {
