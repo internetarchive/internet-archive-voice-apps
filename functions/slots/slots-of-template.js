@@ -105,9 +105,11 @@ function getMatchedTemplates (templateRequirements, slots) {
 function getMatchedTemplatesExactly (templateRequirements, slots) {
   const numOfSlots = slots.length;
   return templateRequirements && templateRequirements
-    .filter(
-      ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
-    )
+    .filter(({requirements}) => {
+      const intersection = _.intersection(requirements, slots);
+      return intersection.length === requirements.length &&
+        intersection.length === numOfSlots;
+    })
     .map(({template}) => template);
 }
 
