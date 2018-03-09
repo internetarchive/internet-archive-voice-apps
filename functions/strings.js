@@ -254,7 +254,7 @@ module.exports = {
     }],
 
     welcome: {
-      acknowledges:[
+      acknowledges: [
         'Welcome to music at the Internet Archive.'
       ],
       reprompt: `I didn't catch that.`,
@@ -337,12 +337,6 @@ module.exports = {
     randomPrompt: 'I can play something randomly'
   },
   statements: {
-    greeting: {
-      welcome: {
-        liveMusicCollection: 'Welcome to the live music collection at the Internet Archive.'
-      },
-      welcomeBack: 'Welcome to the live music collection at the Internet Archive.'
-    },
     salutation: {
       thankYou: {
         liveMusicCollection: 'Thanks for rocking with the Internet Archive’s live music collection!'
