@@ -115,6 +115,24 @@ describe('slots', () => {
       ]);
     });
 
+    it('should match exactly templates which has all needed slots', () => {
+      const templates = [
+        'Album {{coverage}} {{year}}!',
+        '{{coverage}} - good place!',
+        '{{coverage}} {{year}} - great choice!',
+        '{{year}} - it was excellent year!',
+        'I love {{collection}} collection too',
+      ];
+      const slots = [
+        'coverage',
+      ];
+      expect(
+        templateSlots.getMatchedTemplatesExactly(templateSlots.extractRequrements(templates), slots)
+      ).to.have.members([
+        '{{coverage}} - good place!',
+      ]);
+    });
+
     it('should also respect dot notation', () => {
       const templates = [
         'Ok! Lets go with {{creator.title}} band!',
