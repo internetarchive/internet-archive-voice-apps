@@ -28,8 +28,8 @@ describe('actions', () => {
     it('should reprompt with speech', () => {
       let app = mockApp();
       welcome.handler(app);
-      expect(dialog.ask.args[0][1]).to.have.property('reprompt').
-        to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
+      expect(dialog.ask.args[0][1]).to.have.property('reprompt')
+        .to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
     });
   });
 });

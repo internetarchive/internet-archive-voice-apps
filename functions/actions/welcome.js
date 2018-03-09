@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const mustache = require('mustache');
 
 const dialog = require('../dialog');
 const welcomeStrings = require('../strings').intents.welcome;
@@ -10,7 +9,7 @@ const welcomeStrings = require('../strings').intents.welcome;
  * @param app
  */
 function handler (app) {
-  let reprompt = mustache.render(welcomeStrings.reprompt, welcomeStrings);
+  let reprompt = welcomeStrings.reprompt || welcomeStrings.speech;
 
   let speech;
   if (app.getLastSeen() === null) {
