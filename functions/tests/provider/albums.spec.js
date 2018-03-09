@@ -80,4 +80,57 @@ describe('collection', () => {
         });
     });
   });
+
+  describe('fetchAlbumsByQuery', () => {
+    let f;
+    beforeEach(() => {
+      f = fetchMock
+        .sandbox()
+        .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution);
+      albumsProvider.__set__('fetch', f);
+    });
+
+    it('should fetch single collection', () => {
+      return albumsProvider
+        .fetchAlbumsByQuery({
+          collectionId: 'collection-1',
+        })
+        .then((res) => {
+          expect(res).to.be.ok;
+          expect(f.lastUrl(
+            'begin:https://web.archive.org/advancedsearch.php?q=',
+            'GET'
+          )).to.be.equal(
+            'https://web.archive.org/advancedsearch.php?q=' +
+            'collection:(collection-1)' +
+            '&fl[]=identifier,coverage,title,year' +
+            '&sort[]=downloads+desc' +
+            '&rows=3' +
+            '&page=0' +
+            '&output=json'
+          );
+        });
+    });
+
+    it('should fetch group of collections', () => {
+      return albumsProvider
+        .fetchAlbumsByQuery({
+          collectionId: ['collection-1', 'collection-2'],
+        })
+        .then((res) => {
+          expect(f.lastUrl(
+            'begin:https://web.archive.org/advancedsearch.php?q=',
+            'GET'
+          )).to.be.equal(
+            'https://web.archive.org/advancedsearch.php?q=' +
+            '(collection:(collection-1) OR collection:(collection-2))' +
+            '&fl[]=identifier,coverage,title,year' +
+            '&sort[]=downloads+desc' +
+            '&rows=3' +
+            '&page=0' +
+            '&output=json'
+          );
+        });
+    });
+  });
 });
