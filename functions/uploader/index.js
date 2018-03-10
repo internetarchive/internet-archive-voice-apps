@@ -4,12 +4,13 @@
 // "npm run uploader entities collection" to execute uploader script for collection in entities
 
 const _ = require(`lodash`);
-const ALL = `all`;
-const NOT_VALID = `That was not a valid command.`;
 const debug = require(`debug`)(`ia:uploader:index:debug`);
 const error = require(`debug`)(`ia:uploader:index:error`);
+
 const {uploadCollection} = require('./entities/collection');
 const {uploadGenres} = require('./entities/genres');
+
+const ALL = `all`;
 
 const entities = {
   collection: uploadCollection,
@@ -52,8 +53,8 @@ function execute (level1, level2) {
   } else if (_.has(all, level1) && _.has(all[level1], level2)) {
     all[level1][level2]();
   } else {
-    error(NOT_VALID);
-    return NOT_VALID;
+    error(`That was not a valid command.`);
+    return `That was not a valid command.`;
   }
 }
 

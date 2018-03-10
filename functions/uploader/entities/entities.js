@@ -1,9 +1,11 @@
-const fetch = require(`node-fetch`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const util = require(`util`);
+const fetch = require(`node-fetch`);
 const mustache = require('mustache');
+const util = require(`util`);
+
 const config = require('../config');
+
 const MAX_ENTITY = 30000;
 const MAX_REQUEST = 1000;
 
@@ -20,7 +22,8 @@ function postEntitiesToDF (entityname, entities, first) {
   debug(`posting Entity to DF...`);
   if (entities.length > MAX_ENTITY) {
     error(`Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`);
-    return `Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`;
+    // return `Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`;
+    return Promise.reject(new Error(`Can't upload ${entities.length} records in single entity. Maximum allowed limit per entity is ${MAX_ENTITY}.`));
   }
   var data = [];
   var last = first + MAX_REQUEST;

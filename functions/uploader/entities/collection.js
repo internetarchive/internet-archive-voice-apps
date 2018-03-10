@@ -1,12 +1,11 @@
-const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
-const ENTITY_NAME = `testing-collection`;
 const debug = require(`debug`)(`ia:uploader:collection:debug`);
-const ID = `etree`;
-const LIMIT = 200000;
+
+const config = require('../config');
+const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
 
 function uploadCollection () {
-  debug(`uploading...`);
-  fetchNewEntitiesFromIAAndPostToDF(ENTITY_NAME, ID, LIMIT);
+  debug(`uploadCollection...`);
+  fetchNewEntitiesFromIAAndPostToDF(config.constants.collection.ENTITY, config.constants.collection.ID, config.constants.collection.LIMIT);
 }
 
 module.exports = {

@@ -1,12 +1,11 @@
-const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
-const ENTITY_NAME = `testing-genres`;
 const debug = require(`debug`)(`ia:uploader:collection:debug`);
-const ID = `georgeblood`;
-const LIMIT = 100000;
+
+const config = require('../config');
+const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
 
 function uploadGenres () {
-  debug(`uploading...`);
-  fetchNewEntitiesFromIAAndPostToDF(ENTITY_NAME, ID, LIMIT);
+  debug(`uploadGenres...`);
+  fetchNewEntitiesFromIAAndPostToDF(config.constants.genres.ENTITY, config.constants.genres.ID, config.constants.genres.LIMIT);
 }
 
 module.exports = {

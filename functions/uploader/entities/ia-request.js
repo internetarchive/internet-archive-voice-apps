@@ -1,10 +1,10 @@
-const fetch = require(`node-fetch`);
+const _ = require(`lodash`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const util = require(`util`);
-const _ = require(`lodash`);
+const fetch = require(`node-fetch`);
 const mustache = require('mustache');
-const config = require('../config');
+
+const config = require('../../config');
 const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
 
 function getUniqueCreatorsFromIA (docs) {
@@ -65,7 +65,6 @@ function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
     .then(values => {
       const [creatorsFromIA, creatorsFromDF] = values;
       var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      debug(util.inspect(dif, false, null));
       postEntitiesToDF(entityname, dif, 0);
     });
 }

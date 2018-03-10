@@ -1,4 +1,5 @@
 const {expect} = require('chai');
+
 const iaRequest = require('../../../uploader/entities/ia-request');
 
 describe('uploader', () => {
@@ -22,6 +23,20 @@ describe('uploader', () => {
       describe('fetchEntitiesFromIA', () => {
         it('should be defined', () => {
           expect(iaRequest.fetchEntitiesFromIA).to.be.ok;
+        });
+        it('should fetch information from IA', function (done) {
+          this.timeout(3000);
+          iaRequest.fetchEntitiesFromIA(`etree`, `10`)
+            .then(items => {
+              for (let i = 0; i < items.length; i++) {
+                expect(items[i]).to.be.a('string');
+              }
+              done();
+            })
+            .catch((err) => {
+              expect(err).be.an.instanceOf(Error);
+              done();
+            });
         });
       });
       describe('fetchNewEntitiesFromIAAndPostToDF', () => {
