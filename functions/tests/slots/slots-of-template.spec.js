@@ -115,6 +115,24 @@ describe('slots', () => {
       ]);
     });
 
+    it('should match exactly templates which has all needed slots', () => {
+      const templates = [
+        'Album {{coverage}} {{year}}!',
+        '{{coverage}} - good place!',
+        '{{coverage}} {{year}} - great choice!',
+        '{{year}} - it was excellent year!',
+        'I love {{collection}} collection too',
+      ];
+      const slots = [
+        'coverage',
+      ];
+      expect(
+        templateSlots.getMatchedTemplatesExactly(templateSlots.extractRequrements(templates), slots)
+      ).to.have.members([
+        '{{coverage}} - good place!',
+      ]);
+    });
+
     it('should also respect dot notation', () => {
       const templates = [
         'Ok! Lets go with {{creator.title}} band!',
@@ -133,7 +151,7 @@ describe('slots', () => {
   });
 
   describe('getPromptsForSlots', () => {
-    it('should return prompts with maximum intersection', () => {
+    it('should return prompts with maximum true positive', () => {
       const prompts = [{
         requirements: [
           'collection'
@@ -171,6 +189,53 @@ describe('slots', () => {
       const res = templateSlots.getPromptsForSlots(prompts, slots);
       expect(res.prompts).to.includes(
         'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
+      );
+    });
+
+    it('should return prompts with minimum false positive', () => {
+      const prompts = [{
+        requirements: [
+          'collection'
+        ],
+        prompts: [
+          'Would you like to listen to music from our collections of 78s or Live Concerts?',
+        ],
+      }, {
+        requirements: [
+          'creator'
+        ],
+        prompts: [
+          'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
+        ],
+      }, {
+        requirements: [
+          'coverage',
+        ],
+        prompts: [
+          'Which location?',
+        ],
+      }, {
+        requirements: [
+          'coverage',
+          'year',
+        ],
+        prompts: [
+          'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
+        ],
+      }, {
+        requirements: [
+          'year',
+        ],
+        prompts: [
+          'Which year?',
+        ],
+      }];
+      const slots = [
+        'year',
+      ];
+      const res = templateSlots.getPromptsForSlots(prompts, slots);
+      expect(res.prompts).to.includes(
+        'Which year?'
       );
     });
   });
