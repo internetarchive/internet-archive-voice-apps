@@ -59,7 +59,7 @@ module.exports = {
     ],
 
     prompts: [
-      'Would you like to listen to music from our collections of {{__resolvers.humanized.suggestions}}?',
+      'Would you like to listen to music from our collections of {{__resolvers.shortoptions.suggestions}}?',
     ],
 
     /**
@@ -78,7 +78,7 @@ module.exports = {
     ],
 
     prompts: [
-      'What artist would you like to listen to, e.g. {{__resolvers.humanized.suggestions}}?',
+      'What artist would you like to listen to, e.g. {{__resolvers.shortoptions.suggestions}}?',
     ],
   }, {
     /**
