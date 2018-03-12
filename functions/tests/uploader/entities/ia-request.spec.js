@@ -49,6 +49,9 @@ describe('uploader', () => {
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
+              })
+              .catch((err) => {
+                expect(err).be.an.instanceOf(Error);
               });
           });
         });
@@ -69,6 +72,9 @@ describe('uploader', () => {
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
+              })
+              .catch((err) => {
+                expect(err).be.an.instanceOf(Error);
               });
           });
         });
