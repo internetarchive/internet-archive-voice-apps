@@ -115,7 +115,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          'What genre of music would you like to listen to? Please select a topic like {{__resolvers.shortoptions.suggestions}}?',
+          'What genre of music would you like to listen to? Please select a topic like {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -186,7 +186,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Would you like to listen to music from our collections of {{__resolvers.shortoptions.suggestions}}?',
+          'Would you like to listen to music from our collections of {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -205,7 +205,7 @@ module.exports = {
         ],
 
         prompts: [
-          'What artist would you like to listen to? For example, {{__resolvers.shortoptions.suggestions}}?',
+          'What artist would you like to listen to? For example, {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -238,7 +238,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearinterval.suggestions}}. Do you have a particular year in mind?',
+          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
       }],
 
