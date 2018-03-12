@@ -33,7 +33,7 @@ npm test
 
 :star2: We follow [standard javascript code style](https://standardjs.com/).
 
-_Automatic style fixing, it doesn't solve any problem but could be very helpful_
+_Automatic style fixing, it doesn't solve all problems but could be very helpful_
 
 ```
 npm run lint -- --fix
