@@ -1,10 +1,10 @@
 const {expect} = require('chai');
 
-const resolver = require('../../../../slots/extensions/resolvers/humanized');
+const resolver = require('../../../../slots/extensions/resolvers/shortoptions');
 
 describe('extensions', () => {
   describe('resolvers', () => {
-    describe('humanized', () => {
+    describe('short options list', () => {
       it('should humanize suggestions', () => {
         const suggestions = [
           1970,
