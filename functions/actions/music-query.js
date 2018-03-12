@@ -429,11 +429,9 @@ function generatePrompt ({app, slotScheme}) {
       return resolveSlots(app, Object.assign({}, context, {suggestions}), template);
     })
     .then(resolvedValues => {
-      const speech = mustache.render(template, Object.assign({}, context, resolvedValues, {
-        suggestions: {
-          values: suggestions,
-        },
-      }));
+      const speech = mustache.render(template,
+        Object.assign({}, context, resolvedValues, {suggestions})
+      );
 
       return {speech, suggestions};
     });
