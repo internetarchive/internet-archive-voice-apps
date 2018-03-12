@@ -45,19 +45,19 @@ describe('actions', () => {
   describe('middleware', () => {
     describe('resolveSlots', () => {
       let creatorHandler;
-      let yearintervalHandler;
+      let yearsintervalHandler;
       let revert;
 
       beforeEach(() => {
         creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-        yearintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
+        yearsintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
         revert = action.__set__('getRequiredExtensionHandlers', () => [{
           handler: creatorHandler,
           name: 'creator',
           extType: 'resolvers',
         }, {
-          handler: yearintervalHandler,
-          name: 'yearinterval',
+          handler: yearsintervalHandler,
+          name: 'yearsinterval',
           extType: 'resolvers',
         }]);
       });
@@ -73,7 +73,7 @@ describe('actions', () => {
           },
         });
         const context = {};
-        const template = 'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearinterval.suggestions}}. Do you have a particular year in mind?';
+        const template = 'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearsinterval.suggestions}}. Do you have a particular year in mind?';
         return action.resolveSlots(app, context, template)
           .then(res => {
             expect(res).to.be.deep.equal({
@@ -81,7 +81,7 @@ describe('actions', () => {
                 creator: {
                   title: 'Grateful Dead',
                 },
-                yearinterval: {
+                yearsinterval: {
                   suggestions: 'between 1970 and 2000',
                 },
               },
