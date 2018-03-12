@@ -352,6 +352,7 @@ function resolveSlots (app, template) {
 }
 
 /**
+ * Middleware
  * Fetch suggestions for slots
  *
  * @param app
@@ -359,6 +360,8 @@ function resolveSlots (app, template) {
  * @returns {Promise}
  */
 function fetchSuggestions (args) {
+  // TODO: migrate to the `...rest` style
+  // once Google Firebase migrates to modern Nodej.s
   const {app, promptScheme} = args;
   let suggestions = promptScheme.suggestions;
 
