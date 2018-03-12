@@ -358,32 +358,34 @@ function resolveSlots (app, template) {
  * @param promptScheme
  * @returns {Promise}
  */
-function fetchSuggestions ({app, promptScheme}) {
+function fetchSuggestions (args) {
+  const {app, promptScheme} = args;
   let suggestions = promptScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);
-    return Promise.resolve(suggestions);
+    return Promise.resolve(Object.assign({}, args, {suggestions}));
   }
 
   const provider = getSuggestionProviderForSlots(promptScheme.requirements);
   if (!provider) {
     warning(`don't have any suggestions for: ${promptScheme.requirements}. Maybe we should add them.`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   return provider(query.getSlots(app))
     .then(res => {
-      const suggestions = res.items;
+      let suggestions;
       if (promptScheme.suggestionTemplate) {
-        return suggestions.map(
+        suggestions = res.items.map(
           item => mustache.render(promptScheme.suggestionTemplate, item)
         );
       } else {
-        return suggestions.map(
+        suggestions = res.items.map(
           item => _.values(item).join(' ')
         );
       }
+      return Object.assign({}, args, {suggestions});
     });
 }
 
@@ -424,7 +426,7 @@ function generatePrompt ({app, slotScheme}) {
     resolveSlots(app, template),
   ])
     .then(res => {
-      let [suggestions, resolvedSlots] = res;
+      let [{suggestions}, resolvedSlots] = res;
       const speech = mustache.render(template, Object.assign({}, context, resolvedSlots, {
         suggestions: {
           humanized: humanize.list.toFriendlyString(
