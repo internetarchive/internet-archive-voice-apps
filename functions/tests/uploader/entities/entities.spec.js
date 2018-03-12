@@ -29,7 +29,7 @@ describe('uploader', () => {
           for (let i = 0; i < 30001; i++) {
             arrEntity.push(`Entity` + i);
           }
-          entities.postEntitiesToDF(`testing-collection`, arrEntity, 0)
+          return entities.postEntitiesToDF(`testing-collection`, arrEntity, 0)
             .catch((err) => {
               expect(err).be.an.instanceOf(Error);
             });
@@ -39,8 +39,6 @@ describe('uploader', () => {
           return entities.postEntitiesToDF(`testing-collection`, ['bimmy', 'jack'], 0)
             .then(items => {
               expect(items).to.have.property('status').to.have.property('code');
-
-              // done();
             });
         });
       });
@@ -59,13 +57,11 @@ describe('uploader', () => {
         });
 
         it('should fetch entity information from DF', () => {
-          // this.timeout(10000);
           return entities.fetchEntitiesFromDF('testing-collection')
             .then(items => {
               for (let i = 0; i < items.length; i++) {
                 expect(items[i]).to.be.a('string');
               }
-              // done();
             });
         });
       });
