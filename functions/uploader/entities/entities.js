@@ -32,7 +32,12 @@ function postEntitiesToDF (entityname, entities, first) {
   }
   if (first >= entities.length) {
     debug(`posted Entity to DF Successfully.`);
-    return;
+    return Promise.resolve({
+      'status': {
+        'code': 200,
+        'errorType': 'success'
+      }
+    });
   }
   for (let i = first; i < last; i++) {
     data.push({'synonyms': [entities[i]], 'value': entities[i]});
@@ -45,14 +50,15 @@ function postEntitiesToDF (entityname, entities, first) {
   ), {method: `POST`, body: JSON.stringify(data), headers: basicHeaderRequest})
     .then(res => res.json())
     .then(data => {
+      debug(util.inspect(data, false, null));
       if (data.status.code !== 200) {
         error(`Error : ` + data.status.errorDetails);
-        return;
+        return Promise.reject(data);
       }
       debug(util.inspect(data, false, null));
       debug(`posted Entity to DF Successfully.`);
       first = last;
-      postEntitiesToDF(entityname, entities, first);
+      return postEntitiesToDF(entityname, entities, first);
     })
     .catch(e => {
       error(`Get error in posting entity to DF, error: ${JSON.stringify(e)}`);

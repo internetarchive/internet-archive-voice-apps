@@ -50,7 +50,7 @@ function fetchEntitiesFromIA (id, limit) {
     .then(res => res.json())
     .then(data => {
       debug(`fetched Entity from IA successfully.`);
-      return getUniqueCreatorsFromIA(data.response.docs);
+      return Promise.resolve(getUniqueCreatorsFromIA(data.response.docs));
     }).catch(e => {
       error(`Get error in fetching entity from IA, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);

@@ -5,7 +5,7 @@ const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
 
 function uploadCollection () {
   debug(`uploadCollection...`);
-  fetchNewEntitiesFromIAAndPostToDF(config.constants.collection.ENTITY, config.constants.collection.ID, config.constants.collection.LIMIT);
+  fetchNewEntitiesFromIAAndPostToDF(config.uploader.collection.ENTITY, config.uploader.collection.ID, config.uploader.collection.LIMIT);
 }
 
 module.exports = {

@@ -1,6 +1,11 @@
 const {expect} = require('chai');
+const fetchMock = require('fetch-mock');
+const rewire = require('rewire');
 
-const iaRequest = require('../../../uploader/entities/ia-request');
+const iaRequest = rewire('../../../uploader/entities/ia-request');
+
+const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
+const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -9,40 +14,70 @@ describe('uploader', () => {
         it('should be defined', () => {
           expect(iaRequest.getUniqueCreatorsFromIA).to.be.ok;
         });
+
         it('should return unique array for collection', () => {
           var original = [{'creator': 'Grateful Dead'}, {'creator': 'Grateful Dead'}, {'creator': 'Disco Biscuits'}, {'creator': 'Phil Lesh (and Friends)'}];
           var expected = [`Grateful Dead`, `Disco Biscuits`, `Phil Lesh and Friends`];
           expect(iaRequest.getUniqueCreatorsFromIA(original)).to.be.eql(expected);
         });
+
         it('should return unique array for genres', () => {
           var original = [{'creator': ['Jackson', 'Bauer']}, {'creator': ['Connie\'s Inn Orchestra', 'Jackson']}, {'creator': ['Paul Ric...sticker', 'Rice Brothers\' Gang']}];
           var expected = [`Jackson`, `Bauer`, `Connie's Inn Orchestra`, `Paul Ric...sticker`, `Rice Brothers' Gang`];
           expect(iaRequest.getUniqueCreatorsFromIA(original)).to.be.eql(expected);
         });
       });
+
       describe('fetchEntitiesFromIA', () => {
         it('should be defined', () => {
           expect(iaRequest.fetchEntitiesFromIA).to.be.ok;
         });
-        it('should fetch information from IA', function (done) {
-          this.timeout(3000);
-          iaRequest.fetchEntitiesFromIA(`etree`, `10`)
-            .then(items => {
-              for (let i = 0; i < items.length; i++) {
-                expect(items[i]).to.be.a('string');
-              }
-              done();
-            })
-            .catch((err) => {
-              expect(err).be.an.instanceOf(Error);
-              done();
-            });
+
+        describe('forCollection', () => {
+          beforeEach(() => {
+            iaRequest.__set__(
+              'fetch',
+              fetchMock
+                .sandbox()
+                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)&fl[]=creator&sort[]=downloads+desc&rows=10&page=0&output=json', getCollectionFromIA)
+            );
+          });
+
+          it('should fetch information from IA', () => {
+            iaRequest.fetchEntitiesFromIA(`etree`, `10`)
+              .then(items => {
+                for (let i = 0; i < items.length; i++) {
+                  expect(items[i]).to.be.a('string');
+                }
+              });
+          });
+        });
+
+        describe('forGenres', () => {
+          beforeEach(() => {
+            iaRequest.__set__(
+              'fetch',
+              fetchMock
+                .sandbox()
+                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(georgeblood)&fl[]=creator&sort[]=downloads+desc&rows=10&page=0&output=json', getGenresFromIA)
+            );
+          });
+
+          it('should fetch genres from IA', () => {
+            iaRequest.fetchEntitiesFromIA(`georgeblood`, `10`)
+              .then(items => {
+                for (let i = 0; i < items.length; i++) {
+                  expect(items[i]).to.be.a('string');
+                }
+              });
+          });
         });
       });
-      describe('fetchNewEntitiesFromIAAndPostToDF', () => {
-        it('should be defined', () => {
-          expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
-        });
+    });
+
+    describe('fetchNewEntitiesFromIAAndPostToDF', () => {
+      it('should be defined', () => {
+        expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
       });
     });
   });

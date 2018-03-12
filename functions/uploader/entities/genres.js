@@ -5,7 +5,7 @@ const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
 
 function uploadGenres () {
   debug(`uploadGenres...`);
-  fetchNewEntitiesFromIAAndPostToDF(config.constants.genres.ENTITY, config.constants.genres.ID, config.constants.genres.LIMIT);
+  fetchNewEntitiesFromIAAndPostToDF(config.uploader.genres.ENTITY, config.uploader.genres.ID, config.uploader.genres.LIMIT);
 }
 
 module.exports = {
