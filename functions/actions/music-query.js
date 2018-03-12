@@ -341,9 +341,9 @@ function resolveSlots (app, context, template) {
         .reduce((acc, extension) => {
           debug(`we get result extension.result: ${extension.result} to bake for ${extension.name}`);
           return Object.assign({}, acc, {
-            ['__' + extension.extType]: {
+            ['__' + extension.extType]: Object.assign({}, acc['__' + extension.extType], {
               [extension.name]: extension.result,
-            },
+            }),
           });
         }, {});
     });
@@ -439,4 +439,5 @@ function generatePrompt ({app, slotScheme}) {
 
 module.exports = {
   handler,
+  resolveSlots,
 };

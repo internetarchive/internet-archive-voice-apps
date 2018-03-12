@@ -20,7 +20,10 @@ function handle (context) {
       order: 'year',
     }))
     .then(res => {
-      if (res.total === MAX_YEARS) {
+      if (res.total === 0) {
+        warning('it seems we defined very strict requirements for years and got nothing');
+      }
+      if (res.total >= MAX_YEARS) {
         warning('it seems we have asked years with the broad search scope. We should make it more precise to get a more relevant result.');
       }
 
