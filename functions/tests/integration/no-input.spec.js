@@ -1,8 +1,10 @@
 const {expect} = require('chai');
 const sinon = require('sinon');
+
 const strings = require('../../strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
-var index, configStub, adminInitStub, functions, admin;
+
+let index, configStub, adminInitStub, functions, admin;
 
 describe('integration', () => {
   beforeEach(() => {

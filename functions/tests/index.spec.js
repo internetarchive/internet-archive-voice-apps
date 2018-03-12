@@ -1,11 +1,11 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
-var index, configStub, adminInitStub, functions, admin;
 
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-
 const {wait} = require('./_utils/wait');
+
+let index, configStub, adminInitStub, functions, admin;
 
 describe('playMedia', () => {
   let res;
