@@ -29,6 +29,10 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
   if (!suggestions) {
     app.ask(speech);
   } else {
+    if (Array.isArray(suggestions)) {
+      suggestions = suggestions.map(s => s.toString());
+    }
+
     app.ask(app.buildRichResponse()
       .addSimpleResponse(speech)
       .addSuggestions(suggestions));
