@@ -89,6 +89,46 @@ describe('actions', () => {
           });
       });
     });
+
+    describe('fetchSuggestions', () => {
+      it('should fetch and set list of number', () => {
+        const app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        const promptScheme = {
+          requirements: ['year'],
+        };
+
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: [
+            1970,
+            1980,
+            1990,
+            2000,
+            2010,
+          ],
+        }));
+        const getSuggestionProviderForSlots = sinon.stub().returns(provider);
+        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
+        return action.fetchSuggestions({app, promptScheme})
+          .then((res) => {
+            expect(res).to.be.deep.equal({
+              app,
+              promptScheme,
+              suggestions: [
+                1970,
+                1980,
+                1990,
+                2000,
+                2010,
+              ],
+            });
+          });
+      });
+    });
   });
 
   describe('music query', () => {

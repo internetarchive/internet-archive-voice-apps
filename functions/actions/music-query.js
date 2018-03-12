@@ -383,7 +383,13 @@ function fetchSuggestions (args) {
         );
       } else {
         suggestions = res.items.map(
-          item => _.values(item).join(' ')
+          item => {
+            if (typeof item === 'object') {
+              return _.values(item).join(' ');
+            } else {
+              return item;
+            }
+          }
         );
       }
       return Object.assign({}, args, {suggestions});
@@ -439,5 +445,6 @@ function generatePrompt ({app, slotScheme}) {
 
 module.exports = {
   handler,
+  fetchSuggestions,
   resolveSlots,
 };
