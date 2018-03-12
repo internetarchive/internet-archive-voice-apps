@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const mustache = require('mustache');
 
 const config = require('../config');
+const delayedPromise = require('../utils/delay');
 
 const {buildQueryCondition} = require('./advanced-search');
 
@@ -11,12 +12,22 @@ const {buildQueryCondition} = require('./advanced-search');
  * Fetch details about Album
  *
  * @param id {string} id of album
+ * @param {number} [retry]
+ * @param {number} [delay] delay between requests
  * @returns {Promise}
  */
-function fetchAlbumDetails (id) {
+function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
   return fetch(
     mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
+    .catch((error) => {
+      if (retry > 0) {
+        return delayedPromise(delay)
+          .then(() => fetchAlbumDetails(id, {retry: retry - 1}));
+      } else {
+        return Promise.reject(error);
+      }
+    })
     .then(res => res.json())
     .then(json => {
       return {
@@ -26,7 +37,8 @@ function fetchAlbumDetails (id) {
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files
-          .filter(f => f.format === 'VBR MP3' && f.creator)
+        // usually songs don't have 'creator' field as well
+          .filter(f => f.format === 'VBR MP3' && f.title)
           .map(f => ({
             filename: f.name,
             title: f.title,
@@ -41,12 +53,12 @@ function fetchAlbumDetails (id) {
  * @param {string} id - identifier of creator
  * @param {number} limit
  * @param {number} page
- * @param {string} sort - by default we fetch the most popular
+ * @param {string} order - by default we fetch the most popular
  */
 function fetchAlbums (id, {
   limit = 3,
   page = 0,
-  sort = 'downloads+desc',
+  order = 'downloads+desc',
 } = {}) {
   debug(`fetch albums of ${id}`);
   return fetch(
@@ -56,7 +68,7 @@ function fetchAlbums (id, {
         id,
         limit,
         page,
-        sort,
+        order,
         fields: 'identifier,coverage,title,year',
       }
     )
@@ -72,6 +84,7 @@ function fetchAlbums (id, {
           title: a.title,
           year: parseInt(a.year),
         })),
+        total: json.response.numFound,
       };
     })
     .catch(e => {
@@ -91,7 +104,7 @@ function fetchAlbums (id, {
  *
  * @param {number} query.limit
  * @param {number} query.page
- * @param {string} query.sort
+ * @param {string} query.order
  *
  * @return {Promise}
  */
@@ -99,9 +112,11 @@ function fetchAlbumsByQuery (query) {
   const {
     limit = 3,
     page = 0,
-    sort = 'downloads+desc'
+    order = 'downloads+desc'
   } = query;
 
+  debug('limit', limit);
+  debug(query);
   // create search query
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
@@ -116,7 +131,7 @@ function fetchAlbumsByQuery (query) {
         condition,
         limit,
         page,
-        sort,
+        order,
         fields,
       }
     )
@@ -130,6 +145,7 @@ function fetchAlbumsByQuery (query) {
         title: a.title,
         year: parseInt(a.year),
       })),
+      total: json.response.numFound,
     }))
     .catch(e => {
       error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);

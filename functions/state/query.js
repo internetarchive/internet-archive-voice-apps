@@ -34,15 +34,11 @@
  *
  */
 
-const {getData, setData} = require('./helpers').group('query');
+const {group, SubGroup} = require('./helpers');
 
-// const slotNames = [
-//   'collection',
-//   'subject',
-//   'band',
-//   'album',
-//   'order',
-// ];
+const queryGroup = group('query');
+const skippedGroup = new SubGroup('skipped', queryGroup, []);
+const valuesGroup = new SubGroup('values', queryGroup, {});
 
 /**
  * Slot name is filled
@@ -52,7 +48,7 @@ const {getData, setData} = require('./helpers').group('query');
  * @returns {boolean}
  */
 function hasSlot (app, name) {
-  return name in getData(app);
+  return name in valuesGroup.getData(app) || skippedGroup.getData(app).indexOf(name) >= 0;
 }
 
 /**
@@ -74,7 +70,7 @@ function hasSlots (app, names) {
  * @returns {*}
  */
 function getSlot (app, name) {
-  return getData(app)[name];
+  return valuesGroup.getData(app)[name];
 }
 
 /**
@@ -84,7 +80,12 @@ function getSlot (app, name) {
  * @returns {*}
  */
 function getSlots (app) {
-  return getData(app);
+  const values = Object.assign({}, valuesGroup.getData(app));
+  const skipped = skippedGroup.getData(app);
+  for (let slotName of skipped) {
+    delete values[slotName];
+  }
+  return values;
 }
 
 /**
@@ -95,9 +96,24 @@ function getSlots (app) {
  * @param value
  */
 function setSlot (app, name, value) {
-  setData(app, Object.assign({}, getData(app), {
+  valuesGroup.setData(app, Object.assign({}, valuesGroup.getData(app), {
     [name]: value,
   }));
+}
+
+/**
+ * Set Slot to skipped
+ *
+ * @param app
+ * @param {String} name
+ */
+function skipSlot (app, name) {
+  let skipped = skippedGroup.getData(app);
+  if (skipped.indexOf(name) < 0) {
+    skipped = skipped.concat(name);
+  }
+
+  skippedGroup.setData(app, skipped);
 }
 
 module.exports = {
@@ -106,4 +122,5 @@ module.exports = {
   getSlot,
   getSlots,
   setSlot,
+  skipSlot,
 };

@@ -1,6 +1,7 @@
 const debug = require('debug')('ia:actions:music-query:debug');
 const warning = require('debug')('ia:actions:music-query:warning');
 const _ = require('lodash');
+const math = require('mathjs');
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
@@ -15,8 +16,8 @@ const {
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
-const querySlots = require('../state/query');
-const queryDialogScheme = require('../strings').intents.musicQuery;
+const query = require('../state/query');
+const availableSchemes = require('../strings').intents.musicQuery;
 
 /**
  * Handle music query action
@@ -35,43 +36,179 @@ function handler (app) {
   debug('Start music query handler');
 
   const answer = [];
-  const newValues = fillSlots(app);
 
-  const complete = querySlots.hasSlots(app, queryDialogScheme.slots);
-  if (complete) {
-    debug('we got all needed slots');
-    const feeder = feeders.getByName(queryDialogScheme.fulfillment);
-    return feeder
-      .build(app, querySlots, playlist)
-      .then(() => {
-        if (feeder.isEmpty(app, querySlots, playlist)) {
-          // TODO: feeder can't find anything by music query
-          // isn't covered case should be implemented
-          dialog.ask(
-            `We haven't find anything by your request would you like something else?`
-          );
-        } else {
-          dialog.playSong(app, feeder.getCurrentItem(app, querySlots, playlist));
-        }
-      });
+  let slotScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  checkSlotScheme(slotScheme);
+  let newValues = fillSlots(app, slotScheme);
+  applyDefaultSlots(app, slotScheme.defaults);
+
+  // new values could change actual slot scheme
+  const newScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  if (slotScheme !== newScheme) {
+    slotScheme = newScheme;
+    // update slots for new scheme
+    checkSlotScheme(slotScheme);
+    newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+    applyDefaultSlots(app, slotScheme.defaults);
   }
 
-  return generateAcknowledge(app, newValues)
+  processPreset(app, slotScheme);
+
+  const complete = query.hasSlots(app, slotScheme.slots);
+  if (complete) {
+    debug('we got all needed slots');
+    const feeder = feeders.getByName(slotScheme.fulfillment);
+    if (!feeder) {
+      // TODO: we should softly fallback here
+      warning(`we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`);
+      return Promise.resolve();
+    } else {
+      playlist.setFeeder(app, slotScheme.fulfillment);
+      return feeder
+        .build({app, query, playlist})
+        .then(() => {
+          if (feeder.isEmpty({app, query, playlist})) {
+            // TODO: feeder can't find anything by music query
+            // isn't covered case should be implemented
+            dialog.ask(
+              `We haven't find anything by your request would you like something else?`
+            );
+          } else {
+            dialog.playSong(app, feeder.getCurrentItem({app, query, playlist}));
+          }
+        });
+    }
+  }
+
+  return generateAcknowledge(app, slotScheme, newValues)
     .then(res => {
       answer.push(res);
-      return generatePrompt(app);
+      return generatePrompt(app, slotScheme);
     })
     .then(res => {
       answer.push(res);
 
       const groupedAnswers = groupAnswers(answer);
-      if (groupedAnswers.speech.length > 0) {
+      if (groupedAnswers.speech && groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
           speech: groupedAnswers.speech.join(' '),
           suggestions: groupedAnswers.suggestions,
         });
+      } else {
+        // TODO: we don't have anything to say should warn about it
       }
     });
+}
+
+/**
+ *
+ * @param slotScheme
+ */
+function checkSlotScheme (slotScheme) {
+  if (!slotScheme) {
+    throw new Error('There are no valid slot scheme. Need at least default');
+  }
+
+  if (slotScheme && slotScheme.name) {
+    debug(`we are going with "${slotScheme.name}" slot scheme`);
+  }
+}
+
+/**
+ * Apply default slots from slotsScheme
+ *
+ * @param app
+ * @param defaults
+ */
+function applyDefaultSlots (app, defaults) {
+  if (!defaults) {
+    return;
+  }
+
+  const appliedDefaults = Object.keys(defaults)
+    .filter(defaultSlotName => !query.hasSlot(app, defaultSlotName))
+    .map(defaultSlotName => {
+      const value = defaults[defaultSlotName];
+      if (value.skip) {
+        query.skipSlot(app, defaultSlotName);
+      } else {
+        query.setSlot(
+          app,
+          defaultSlotName,
+          defaults[defaultSlotName]
+        );
+      }
+
+      return defaultSlotName;
+    });
+
+  debug('We have used defaults:', appliedDefaults);
+}
+
+/**
+ * Get valid slot scheme by to meet conditions
+ *
+ * @param availableSchemes
+ * @param slotsState
+ * @returns {*}
+ */
+function getActualSlotScheme (availableSchemes, slotsState) {
+  if (!Array.isArray(availableSchemes)) {
+    return availableSchemes;
+  }
+
+  return availableSchemes.find((scheme, idx) => {
+    if (!scheme.conditions) {
+      // DEFAULT
+      debug('we get default slot scheme');
+
+      // if scheme doesn't have conditions it is default scheme
+      // usually it is at the end of list
+
+      if (idx < availableSchemes.length - 1) {
+        // if we have schemes after the default one
+        // we should warn about it
+        // because we won't never reach schemes after default one
+        warning('we have schemes after the default one', scheme.name || '');
+      }
+      return true;
+    }
+
+    // all conditionals should be valid
+    try {
+      return scheme.conditions
+        .every(condition => math.eval(condition, slotsState));
+    } catch (error) {
+      debug(`Get error from Math.js:`, error && error.message);
+      return false;
+    }
+  });
+}
+
+/**
+ *
+ */
+function processPreset (app, slotScheme) {
+  const name = app.getArgument('preset');
+  if (!name) {
+    debug(`it wasn't preset`);
+    return;
+  }
+
+  debug(`we got preset "${name}" in "${slotScheme.name}"`);
+
+  if (!slotScheme.presets || !(name in slotScheme.presets)) {
+    warning(`but we don't have it in presets of ${slotScheme.name}`);
+    return;
+  }
+
+  const preset = slotScheme.presets[name];
+  if (!('defaults' in preset)) {
+    warning(`but it doesn't have defaults`);
+    return;
+  }
+
+  applyDefaultSlots(app, preset.defaults);
 }
 
 /**
@@ -107,12 +244,12 @@ function groupAnswers (answer) {
  * @param app
  * @returns {{}}
  */
-function fillSlots (app) {
-  return queryDialogScheme.slots
+function fillSlots (app, slotScheme) {
+  return slotScheme.slots
     .reduce((newValues, slotName) => {
       const value = app.getArgument(slotName);
       if (value) {
-        querySlots.setSlot(app, slotName, value);
+        query.setSlot(app, slotName, value);
         newValues[slotName] = value;
       }
       return newValues;
@@ -126,8 +263,8 @@ function fillSlots (app) {
  * @param newValues
  * @returns {*}
  */
-function generateAcknowledge (app, newValues) {
-  debug('we had slots:', Object.keys(querySlots.getSlots(app)));
+function generateAcknowledge (app, slotScheme, newValues) {
+  debug('we had slots:', Object.keys(query.getSlots(app)));
 
   const newNames = Object.keys(newValues);
   // we get new values
@@ -138,7 +275,7 @@ function generateAcknowledge (app, newValues) {
 
   debug('and get new slots:', newValues);
 
-  const acknowledgeRequirements = extractRequrements(queryDialogScheme.acknowledges);
+  const acknowledgeRequirements = extractRequrements(slotScheme.acknowledges);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
@@ -146,14 +283,14 @@ function generateAcknowledge (app, newValues) {
     newNames
   );
 
-  if (validAcknowledges.length === 0) {
+  if (validAcknowledges && validAcknowledges.length === 0) {
     validAcknowledges = getMatchedTemplates(
       acknowledgeRequirements,
       newNames
     );
   }
 
-  if (validAcknowledges.length === 0) {
+  if (!validAcknowledges || validAcknowledges.length === 0) {
     warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
     return Promise.resolve(null);
   }
@@ -161,7 +298,7 @@ function generateAcknowledge (app, newValues) {
   debug('we have few valid acknowledges', validAcknowledges);
 
   const template = _.sample(validAcknowledges);
-  const context = querySlots.getSlots(app);
+  const context = query.getSlots(app);
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
@@ -235,7 +372,7 @@ function fetchSuggestions (app, promptScheme) {
     return Promise.resolve(null);
   }
 
-  return provider(querySlots.getSlots(app))
+  return provider(query.getSlots(app))
     .then(res => {
       const suggestions = res.items.slice(0, 3);
       if (promptScheme.suggestionTemplate) {
@@ -256,10 +393,10 @@ function fetchSuggestions (app, promptScheme) {
  * @param app
  * @returns {*}
  */
-function generatePrompt (app) {
+function generatePrompt (app, slotScheme) {
   const missedSlots =
-    queryDialogScheme.slots
-      .filter(slotName => !querySlots.hasSlot(app, slotName));
+    slotScheme.slots
+      .filter(slotName => !query.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
     debug(`we don't have any missed slots`);
@@ -268,7 +405,7 @@ function generatePrompt (app) {
 
   debug('we missed slots:', missedSlots);
   const promptScheme = getPromptsForSlots(
-    queryDialogScheme.prompts,
+    slotScheme.prompts,
     missedSlots
   );
 

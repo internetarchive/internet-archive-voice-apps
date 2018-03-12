@@ -1,0 +1,15 @@
+{
+  "name": "in one go artist playback",
+  "slots": [
+    "creators",
+    "origin"
+  ],
+  "defaults": {
+    "order": "random",
+    "collectionId": [
+      "etree",
+      "georgeblood"
+    ]
+  },
+  "fulfillment": "albums-async"
+}

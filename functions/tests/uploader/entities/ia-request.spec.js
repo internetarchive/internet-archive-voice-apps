@@ -1,6 +1,7 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
 const rewire = require('rewire');
+const util = require('util');
 
 const iaRequest = rewire('../../../uploader/entities/ia-request');
 
@@ -46,6 +47,7 @@ describe('uploader', () => {
           it('should fetch collection from IA', () => {
             iaRequest.fetchEntitiesFromIA(`etree`, `10`)
               .then(items => {
+                console.log(util.inspect(items, false, null));
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
