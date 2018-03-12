@@ -238,7 +238,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime between 1970 to 1995. Do you have a particular year in mind?',
+          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearinterval.suggestions}}. Do you have a particular year in mind?',
         ],
       }],
 

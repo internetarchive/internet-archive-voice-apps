@@ -42,6 +42,55 @@ describe('actions', () => {
     action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
   });
 
+  describe('middleware', () => {
+    describe('resolveSlots', () => {
+      let creatorHandler;
+      let yearintervalHandler;
+      let revert;
+
+      beforeEach(() => {
+        creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+        yearintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
+        revert = action.__set__('getRequiredExtensionHandlers', () => [{
+          handler: creatorHandler,
+          name: 'creator',
+          extType: 'resolvers',
+        }, {
+          handler: yearintervalHandler,
+          name: 'yearinterval',
+          extType: 'resolvers',
+        }]);
+      });
+
+      afterEach(() => {
+        revert();
+      });
+
+      it('should works with more than one resolvers', () => {
+        const app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        const context = {};
+        const template = 'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearinterval.suggestions}}. Do you have a particular year in mind?';
+        return action.resolveSlots(app, context, template)
+          .then(res => {
+            expect(res).to.be.deep.equal({
+              __resolvers: {
+                creator: {
+                  title: 'Grateful Dead',
+                },
+                yearinterval: {
+                  suggestions: 'between 1970 and 2000',
+                },
+              },
+            });
+          });
+      });
+    });
+  });
+
   describe('music query', () => {
     beforeEach(() => {
       action.__set__('availableSchemes', slotSchemeWithMultipleCases);
