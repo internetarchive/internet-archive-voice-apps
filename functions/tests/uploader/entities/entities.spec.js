@@ -1,6 +1,5 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
-
 const rewire = require('rewire');
 
 const entities = rewire('../../../uploader/entities/entities');

@@ -43,7 +43,7 @@ describe('uploader', () => {
             );
           });
 
-          it('should fetch information from IA', () => {
+          it('should fetch collection from IA', () => {
             iaRequest.fetchEntitiesFromIA(`etree`, `10`)
               .then(items => {
                 for (let i = 0; i < items.length; i++) {
