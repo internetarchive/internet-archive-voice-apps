@@ -10,7 +10,7 @@ DEBUG_COLORS=yes DEBUG=ia:* npm start
 
 ## How to make contributions?
 
-:mag: get [one issue](https://github.com/internetarchive/internet-archive-google-action/issues/)
+:mag: get [one good first issue](https://github.com/internetarchive/internet-archive-google-action/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 
 _create git branch `feature/<name-of-feature>`, [more](http://nvie.com/posts/a-successful-git-branching-model/)_
 
