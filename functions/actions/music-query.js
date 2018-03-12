@@ -374,7 +374,7 @@ function fetchSuggestions ({app, promptScheme}) {
 
   return provider(query.getSlots(app))
     .then(res => {
-      const suggestions = res.items.slice(0, 3);
+      const suggestions = res.items;
       if (promptScheme.suggestionTemplate) {
         return suggestions.map(
           item => mustache.render(promptScheme.suggestionTemplate, item)
@@ -424,15 +424,16 @@ function generatePrompt ({app, slotScheme}) {
     resolveSlots(app, template),
   ])
     .then(res => {
-      const [suggestions, resolvedSlots] = res;
+      let [suggestions, resolvedSlots] = res;
       const speech = mustache.render(template, Object.assign({}, context, resolvedSlots, {
         suggestions: {
-          humanized: humanize.list.toFriendlyString(suggestions, {ends: ' or '}),
+          humanized: humanize.list.toFriendlyString(
+            suggestions.slice(0, 3), {ends: ' or '}),
           values: suggestions,
         },
       }));
 
-      return {speech, suggestions};
+      return {speech, suggestions: suggestions.slice(0, 3)};
     });
 }
 
