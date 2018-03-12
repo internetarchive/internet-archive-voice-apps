@@ -1,5 +1,7 @@
-const {debug, warning} = require('../../utils/logger')('ia:suggestions:years');
+const _ = require('lodash');
+
 const albumsProvider = require('../../provider/albums');
+const {debug, warning} = require('../../utils/logger')('ia:suggestions:years');
 
 const MAX_YEARS = 1000;
 
@@ -18,11 +20,13 @@ function handle (context) {
       order: 'year',
     }))
     .then(res => {
-      debug(res);
-      if(res.total === MAX_YEARS) {
+      if (res.total === MAX_YEARS) {
         warning('it seems we have asked years with the broad search scope. We should make it more precise to get a more relevant result.');
       }
-      return res;
+
+      return Object.assign({}, res, {
+        items: _.uniq(res.items.map(i => i.year))
+      });
     });
 }
 

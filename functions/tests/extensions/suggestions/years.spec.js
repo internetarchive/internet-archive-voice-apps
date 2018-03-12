@@ -15,9 +15,23 @@ describe('suggestions', () => {
           items: [{
             year: 1970,
           }, {
+            year: 1970,
+          }, {
+            year: 1970,
+          }, {
+            year: 1999,
+          }, {
+            year: 1999,
+          }, {
             year: 1999,
           }, {
             year: 2000,
+          }, {
+            year: 2000,
+          }, {
+            year: 2000,
+          }, {
+            year: 2017,
           }, {
             year: 2017,
           }],
@@ -41,15 +55,12 @@ describe('suggestions', () => {
       return suggestions
         .handle(slots)
         .then(res => {
-          expect(res).to.have.property('items').with.deep.members([{
-            year: 1970,
-          }, {
-            year: 1999,
-          }, {
-            year: 2000,
-          }, {
-            year: 2017,
-          }]);
+          expect(res).to.have.property('items').with.deep.members([
+            1970,
+            1999,
+            2000,
+            2017,
+          ]);
         });
     });
   });
