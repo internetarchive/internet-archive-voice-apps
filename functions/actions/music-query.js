@@ -91,7 +91,7 @@ function handler (app) {
       if (groupedAnswers.speech && groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
           speech: groupedAnswers.speech.join(' '),
-          suggestions: groupedAnswers.suggestions,
+          suggestions: groupedAnswers.suggestions.slice(0, 3),
         });
       } else {
         // TODO: we don't have anything to say should warn about it
@@ -438,7 +438,7 @@ function generatePrompt ({app, slotScheme}) {
         },
       }));
 
-      return {speech, suggestions: suggestions.slice(0, 3)};
+      return {speech, suggestions};
     });
 }
 
