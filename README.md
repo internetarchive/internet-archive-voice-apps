@@ -11,6 +11,8 @@ DEBUG=ia:* npm start
 ## How to make contributions?
 
 :mag: get [one good first issue](https://github.com/internetarchive/internet-archive-google-action/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+assign yourself (if you have assess) or write comment that you'd like to work on this issue.
+That's help to prevent work overlapping.
 
 _create git branch `feature/<name-of-feature>`, [more](http://nvie.com/posts/a-successful-git-branching-model/)_
 
