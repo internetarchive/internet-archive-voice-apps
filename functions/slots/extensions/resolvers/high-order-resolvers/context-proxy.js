@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const {debug, error, warning} = require('../../../../utils/logger')('ia:resolver:hor:context-proxy');
 
 module.exports = (processing) => {
@@ -15,12 +17,13 @@ module.exports = (processing) => {
     // becaus all the result resolver turns Promise.
     return Promise.resolve(new Proxy({}, {
       get: function (object, name) {
-        if (name in ['toString', 'valueOf']) {
+        if (_.includes(['toString', 'valueOf'], name)) {
           return () => `<Proxy of [context]>`;
         }
 
-        if ((name in ['inspect', 'then']) || (typeof name === 'symbol')) {
-          debug(`we don't have "${String(name)}" in context`);
+        if (_.includes(['inspect', 'then'], name) || (typeof name === 'symbol')) {
+          // those message usually is not important
+          // because are fired on Promise resolving and logging
           return undefined;
         }
 
