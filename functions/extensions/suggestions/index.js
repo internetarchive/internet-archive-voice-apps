@@ -7,6 +7,7 @@ const _ = require('lodash');
 const providers = _([
   require('./coverage-year'),
   require('./creators'),
+  require('./years'),
 
   // TODO: should implement suggestions feeders
   // {slots: ['coverage'], handler: () => Promise.resolve({items: []});},
