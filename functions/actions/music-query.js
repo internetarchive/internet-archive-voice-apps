@@ -1,5 +1,3 @@
-const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
-
 const _ = require('lodash');
 const math = require('mathjs');
 const mustache = require('mustache');
@@ -18,6 +16,7 @@ const {
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
+const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
 /**
  * Handle music query action

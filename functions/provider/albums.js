@@ -59,6 +59,7 @@ function fetchAlbums (id, {
   limit = 3,
   page = 0,
   order = 'downloads+desc',
+  fields = 'identifier,coverage,title,year',
 } = {}) {
   debug(`fetch albums of ${id}`);
   return fetch(
@@ -69,7 +70,7 @@ function fetchAlbums (id, {
         limit,
         page,
         order,
-        fields: 'identifier,coverage,title,year',
+        fields,
       }
     )
   )
@@ -110,6 +111,7 @@ function fetchAlbums (id, {
  */
 function fetchAlbumsByQuery (query) {
   const {
+    fields = 'identifier,coverage,title,year',
     limit = 3,
     page = 0,
     order = 'downloads+desc'
@@ -121,7 +123,6 @@ function fetchAlbumsByQuery (query) {
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
 
-  const fields = 'identifier,coverage,title,year';
   debug(`Fetch albums by ${JSON.stringify(query)}`);
 
   return fetch(
@@ -138,13 +139,9 @@ function fetchAlbumsByQuery (query) {
   )
     .then(res => res.json())
     .then(json => ({
-      items: json.response.docs.map(a => ({
-        identifier: a.identifier,
-        coverage: a.coverage,
-        subject: a.subject,
-        title: a.title,
+      items: json.response.docs.map(a => (Object.assign({}, a, {
         year: parseInt(a.year),
-      })),
+      }))),
       total: json.response.numFound,
     }))
     .catch(e => {
