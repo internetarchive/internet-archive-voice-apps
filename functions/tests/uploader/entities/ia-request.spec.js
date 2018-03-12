@@ -1,5 +1,6 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
+fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 const util = require('util');
 
@@ -40,7 +41,7 @@ describe('uploader', () => {
               'fetch',
               fetchMock
                 .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)&fl[]=creator&sort[]=downloads+desc&rows=10&page=0&output=json', getCollectionFromIA)
+                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)', getCollectionFromIA)
             );
           });
 
@@ -51,9 +52,6 @@ describe('uploader', () => {
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
-              })
-              .catch((err) => {
-                expect(err).be.an.instanceOf(Error);
               });
           });
         });
@@ -64,7 +62,7 @@ describe('uploader', () => {
               'fetch',
               fetchMock
                 .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(georgeblood)&fl[]=creator&sort[]=downloads+desc&rows=10&page=0&output=json', getGenresFromIA)
+                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(georgeblood)', getGenresFromIA)
             );
           });
 
@@ -74,9 +72,6 @@ describe('uploader', () => {
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
-              })
-              .catch((err) => {
-                expect(err).be.an.instanceOf(Error);
               });
           });
         });
