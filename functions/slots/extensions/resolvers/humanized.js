@@ -1,5 +1,5 @@
-const humanize = require('../../../humanize/list');
-const {debug, warning} = require('../../../utils/logger')('ia:resolver:humanized');
+const humanize = require('../../../humanize');
+const {debug, error, warning} = require('../../../utils/logger')('ia:resolver:humanized');
 
 /**
  * Resolve
@@ -9,15 +9,31 @@ const {debug, warning} = require('../../../utils/logger')('ia:resolver:humanized
  */
 function handler (context) {
   debug('start handling');
-  return new Proxy({}, {
+  return Promise.resolve(new Proxy({}, {
     get: function (object, name) {
+      if (name === 'then') {
+        warning('it is not promise');
+        return undefined;
+      }
+
+      if (name in ['toString', 'valueOf']) {
+        return () => `<Proxy of [context]>`;
+      }
+
       if (!(name in context)) {
         warning(`we don't have "${String(name)}" in context`);
-        return null;
+        return undefined;
       }
-      return humanize.toFriendlyString(context[name]);
+
+      const value = context[name];
+      if (!Array.isArray(value)) {
+        error('is not implemented yet!');
+        return undefined;
+      }
+
+      return humanize.list.toFriendlyString(value.slice(0, 3), {ends: ' or '});
     }
-  });
+  }));
 }
 
 module.exports = {

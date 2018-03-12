@@ -11,9 +11,14 @@ describe('extensions', () => {
           1980,
           1990,
         ];
-        expect(resolver.handler({
-          suggestions
-        }).suggestions).to.be.equal('1970, 1980 and 1990');
+
+        return resolver
+          .handler({
+            suggestions
+          })
+          .then(res => {
+            expect(res.suggestions).to.be.equal('1970, 1980 or 1990');
+          });
       });
     });
   });

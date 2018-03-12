@@ -5,7 +5,6 @@ const mustache = require('mustache');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
-const humanize = require('../humanize');
 const {
   extractRequrements,
   getMatchedTemplates,
@@ -302,7 +301,7 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
-  return resolveSlots(app, template)
+  return resolveSlots(app, query.getSlots(app), template)
     .then(resolvedSlots => ({
       speech: mustache.render(
         template,
@@ -320,9 +319,8 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
  * @param template
  * @returns {Promise.<TResult>}
  */
-function resolveSlots (app, template) {
+function resolveSlots (app, context, template) {
   debug(`resolve slots for "${template}"`);
-  const context = query.getSlots(app);
   const extensions = getRequiredExtensionHandlers(template);
   debug('we get extensions:', extensions);
   return Promise
@@ -424,16 +422,15 @@ function generatePrompt ({app, slotScheme}) {
   const template = _.sample(promptScheme.prompts);
 
   debug('we randomly choice prompt:', template);
-  return Promise.all([
-    fetchSuggestions({app, promptScheme}),
-    resolveSlots(app, template),
-  ])
-    .then(res => {
-      let [{suggestions}, resolvedSlots] = res;
-      const speech = mustache.render(template, Object.assign({}, context, resolvedSlots, {
+  let suggestions;
+  return fetchSuggestions({app, promptScheme})
+    .then((res) => {
+      suggestions = res.suggestions;
+      return resolveSlots(app, Object.assign({}, context, {suggestions}), template);
+    })
+    .then(resolvedValues => {
+      const speech = mustache.render(template, Object.assign({}, context, resolvedValues, {
         suggestions: {
-          humanized: humanize.list.toFriendlyString(
-            suggestions.slice(0, 3), {ends: ' or '}),
           values: suggestions,
         },
       }));
