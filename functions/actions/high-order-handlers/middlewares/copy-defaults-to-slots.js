@@ -1,4 +1,5 @@
 const debug = require('debug')('ia:actions:middleware:copy-defaults-to-slots:debug');
+const entries = require('../../../utils/polyfill/entries');
 
 /**
  * Middleware
@@ -18,7 +19,7 @@ module.exports = () =>
     debug('apply copy defaults to slots middleware');
     if (slotScheme.defaults) {
       debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
-      newValues = Object.entries(slotScheme.defaults)
+      newValues = entries(slotScheme.defaults)
         .reduce((newValues, [slotName, value]) => {
           if (value && !query.hasSlot(app, slotName)) {
             query.setSlot(app, slotName, value);

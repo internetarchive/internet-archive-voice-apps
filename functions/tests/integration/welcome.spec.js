@@ -4,8 +4,10 @@
 
 const {expect} = require('chai');
 const sinon = require('sinon');
-var index, configStub, adminInitStub, functions, admin;
+
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
+
+let index, configStub, adminInitStub, functions, admin;
 
 describe('integration', () => {
   beforeEach(() => {
