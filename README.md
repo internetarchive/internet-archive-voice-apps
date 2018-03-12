@@ -5,7 +5,7 @@
 Run server local with colorful logs
 
 ```
-DEBUG_COLORS=yes DEBUG=ia:* npm start
+DEBUG=ia:* npm start
 ```
 
 ## How to make contributions?
