@@ -148,9 +148,9 @@ module.exports = {
          * Fixed set of suggestions
          */
         suggestions: [
-          'Jazz',
-          'Instrumental',
-          'Dance',
+          '<emphasis level="moderate">Jazz</emphasis>',
+          '<emphasis level="moderate">Instrumental</emphasis>',
+          '<emphasis level="moderate">Dance</emphasis>',
         ],
       }],
 
@@ -219,8 +219,8 @@ module.exports = {
          * Fixed set of suggestions
          */
         suggestions: [
-          '78s',
-          'Live Concerts',
+          '<emphasis level="moderate">78s</emphasis>',
+          '<emphasis level="moderate">Live Concerts</emphasis>',
         ],
       }, {
         /**
@@ -303,8 +303,8 @@ module.exports = {
       acknowledges: [
         'Welcome to music at the Internet Archive.'
       ],
-      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
-      suggestions: ['78s', 'Live Concerts']
+      speech: 'Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?',
+      suggestions: ['<emphasis level="moderate">78s</emphasis>', '<emphasis level="moderate">Live Concerts</emphasis>']
     },
   },
 

@@ -20,16 +20,16 @@ describe('actions', () => {
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
       expect(dialog.ask.args[0][1]).to.have.property('speech')
-        .to.equal('Welcome to music at the Internet Archive. Would you like to listen to music from our collections of 78s or Live Concerts?');
+        .to.equal('Welcome to music at the Internet Archive. Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
-        .with.members(['78s', 'Live Concerts']);
+        .with.members(['<emphasis level="moderate">78s</emphasis>', '<emphasis level="moderate">Live Concerts</emphasis>']);
     });
 
     it('should reprompt with speech', () => {
       let app = mockApp();
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
-        .to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
+        .to.include('Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?');
     });
   });
 });
