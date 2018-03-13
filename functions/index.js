@@ -39,14 +39,7 @@ const dashbot = require('dashbot')(
     printErrors: false,
   }).google;
 
-const debugCreator = require('debug');
-
-// by default it will be just blank log messages
-debugCreator.log = console.info.bind(console);
-const debug = debugCreator('ia:index:debug');
-
-const warning = debugCreator('ia:index:warning');
-warning.log = console.warn.bind(console);
+const {debug, warning} = require('./src/utils/logger')('ia:index');
 
 const https = require('https');
 const http = require('http');
