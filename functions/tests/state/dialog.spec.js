@@ -1,5 +1,6 @@
 const {expect} = require('chai');
-const {getLastPhrase, getLastReprompt, savePhrase} = require('../../state/dialog');
+
+const {getLastPhrase, getLastReprompt, savePhrase} = require('../../src/state/dialog');
 
 describe('state', () => {
   let app;
