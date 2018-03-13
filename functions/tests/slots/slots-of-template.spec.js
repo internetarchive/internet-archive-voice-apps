@@ -34,7 +34,7 @@ describe('slots', () => {
         .to.have.members(['creator']);
     });
 
-    it('should fetch requirements from resolvers', () => {
+    it('should fetch const requirements from resolvers', () => {
       const templates = [
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
       ];
@@ -43,6 +43,17 @@ describe('slots', () => {
       expect(res).to.have.length(templates.length);
       expect(res[0]).to.have.property('requirements')
         .to.have.members(['creatorId']);
+    });
+
+    it('should fetch callback requirements from resolvers', () => {
+      const templates = [
+        `You've selected {{__resolvers.alias.collectionId}} collection.`,
+      ];
+
+      const res = templateSlots.extractRequrements(templates);
+      expect(res).to.have.length(templates.length);
+      expect(res[0]).to.have.property('requirements')
+        .to.have.members(['collectionId']);
     });
   });
 

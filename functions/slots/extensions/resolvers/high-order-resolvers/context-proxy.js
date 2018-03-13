@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {debug, error, warning} = require('../../../../utils/logger')('ia:resolver:hor:context-proxy');
+const {debug, warning} = require('../../../../utils/logger')('ia:resolver:hor:context-proxy');
 
 module.exports = (processing) => {
   /**
@@ -32,16 +32,13 @@ module.exports = (processing) => {
           return undefined;
         }
 
-        const value = context[name];
-        if (!Array.isArray(value)) {
-          error('is not implemented yet!');
-          return undefined;
-        }
-
-        return processing(value);
+        return processing({name, value: context[name]});
       }
     }));
   }
 
-  return handler;
+  return {
+    handler,
+    requirements: (name) => name.split('.')[0],
+  };
 };
