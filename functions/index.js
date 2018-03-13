@@ -3,21 +3,8 @@
 // but should be fixed soon
 
 'use strict';
-// Bimlendra
 
-// FIXME: this version of actions-on-google has bug:
-//
-// it overwrites process.env.DEBUG
-//
-// file  node_modules/actions-on-google/utils/transform.js
-//
-// // Enable actions-on-google debug logging
-// process.env.DEBUG = 'actions-on-google:*';
-//
-const storeDEBUG = process.env.DEBUG;
 const DialogflowApp = require('actions-on-google').DialogflowApp;
-process.env.DEBUG = storeDEBUG;
-
 const _ = require('lodash');
 
 // it seems google firebase function doesn't give access to env variables
