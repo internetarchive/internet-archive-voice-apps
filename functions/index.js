@@ -72,8 +72,6 @@ const dialog = require('./dialog');
 const {storeAction} = require('./state/actions');
 const strings = require('./strings');
 
-// let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
-
 let ARCHIVE_HOST = 'web.archive.org';
 let imageURL = 'https://archive.org/services/img/';
 let podcastAPIURL = '/advancedsearch.php?q=collection:';
