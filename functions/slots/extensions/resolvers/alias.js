@@ -3,20 +3,16 @@ const {debug, warning} = require('../../../utils/logger')('ia:resolver:years-int
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
-module.exports = {
-  handler: contextProxy(({name, value}) => {
-    debug(aliases);
-    if (!(name in aliases)) {
-      warning(`we don't have aliases for "${name}".`);
-      return undefined;
-    }
+module.exports = contextProxy(({name, value}) => {
+  debug(aliases);
+  if (!(name in aliases)) {
+    warning(`we don't have aliases for "${name}".`);
+    return undefined;
+  }
 
-    if (!(value in aliases[name])) {
-      warning(`we don't have alias for "${value}" in "${name}".`);
-    }
+  if (!(value in aliases[name])) {
+    warning(`we don't have alias for "${value}" in "${name}".`);
+  }
 
-    return aliases[name][value];
-  }),
-
-  requirements: (name) => name.split('.')[0],
-};
+  return aliases[name][value];
+});
