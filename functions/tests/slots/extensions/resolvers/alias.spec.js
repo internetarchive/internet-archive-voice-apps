@@ -11,7 +11,7 @@ describe('extensions', () => {
             collectionId: 'etree'
           })
           .then(res => {
-            expect(res.collectionId).to.be.equal('live concerts');
+            expect(res.collectionId).to.be.equal('Live Concerts');
           });
       });
     });
