@@ -17,4 +17,6 @@ module.exports = {
 
     return aliases[name][value];
   }),
+
+  requirements: (name) => name.split('.')[0],
 };

@@ -40,7 +40,14 @@ function extractRequrements (templates) {
             const splitName = item.split('.');
             const extType = extensions.getExtensionTypeFromValue(splitName[0]);
             const extension = extensions.getExtensionTypeSet(extType)(splitName[1]);
-            return acc.concat(extension ? extension.requirements : item);
+            if (!extension) {
+              return acc.concat(item);
+            }
+            let requirements = extension.requirements;
+            if (typeof requirements === 'function') {
+              requirements = requirements(splitName.slice(2).join('.'));
+            }
+            return acc.concat(requirements);
           }, []
         )
         // some slots could be described in temples like slotName.field
