@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const templateSlots = rewire('../../slots/slots-of-template');
+const templateSlots = rewire('../../src/slots/slots-of-template');
 
 describe('slots', () => {
   describe('extractRequrements', () => {

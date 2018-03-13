@@ -1,9 +1,9 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
+const creators = rewire('../../../src/extensions/suggestions/creators');
 
-const creators = rewire('../../../extensions/suggestions/creators');
+const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('suggestions', () => {
   describe('creators', () => {
