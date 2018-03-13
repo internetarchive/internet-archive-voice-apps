@@ -1,8 +1,8 @@
-const debug = require('debug')('ia:feeder:default:debug');
 const mustache = require('mustache');
 
 const config = require('../../config');
 const songsProvider = require('../../provider/songs');
+const {debug} = require('../../utils/logger')('ia:feeder:default');
 const rebortEscape = require('../../utils/reborn-escape');
 
 class DefaultFeeder {

@@ -1,8 +1,8 @@
-const debug = require('debug')('ia:dialog:audio:debug');
 const mustache = require('mustache');
 
 const config = require('../config');
 const strings = require('../strings').dialog.playSong;
+const {debug} = require('../utils/logger')('ia:dialog:audio');
 
 /**
  * play song to the user

@@ -1,9 +1,8 @@
-const debug = require('debug')('ia:provider:creators:debug');
-const error = require('debug')('ia:provider:creators:error');
-const fetch = require('node-fetch');
 const mustache = require('mustache');
+const fetch = require('node-fetch');
 
 const config = require('../config');
+const {debug, error} = require('../utils/logger')('ia:provider:creators');
 
 const {buildQueryCondition} = require('./advanced-search');
 

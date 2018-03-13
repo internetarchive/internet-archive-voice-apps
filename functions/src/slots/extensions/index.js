@@ -1,5 +1,4 @@
-const debug = require('debug')('ia:slots:extensions:debug');
-const warning = require('debug')('ia:slots:extensions:warning');
+const {debug, warning} = require('../../utils/logger')('ia:slots:extensions');
 
 const resolvers = require('./resolvers');
 

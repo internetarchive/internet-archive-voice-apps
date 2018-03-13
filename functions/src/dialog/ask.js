@@ -1,5 +1,5 @@
-const debug = require('debug')('ia:dialog:ask:debug');
 const {savePhrase} = require('../state/dialog');
+const {debug} = require('../utils/logger')('ia:dialog:ask');
 
 /**
  * ask user with suggestions

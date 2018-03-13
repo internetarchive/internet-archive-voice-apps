@@ -1,5 +1,4 @@
-const debug = require('debug')('ia:actions:in-one-go:debug');
-const warning = require('debug')('ia:actions:in-one-go:warning');
+const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
