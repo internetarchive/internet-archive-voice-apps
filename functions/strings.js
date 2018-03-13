@@ -16,8 +16,8 @@ module.exports = {
    */
   aliases: {
     collectionId: {
-      etree: 'live concerts',
-      georgeblood: '78rpm',
+      etree: 'Live Concerts',
+      georgeblood: '78s',
     },
   },
 
