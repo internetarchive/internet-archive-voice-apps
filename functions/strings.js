@@ -10,6 +10,17 @@ module.exports = {
     'Thanks, '
   ],
 
+  /**
+   * settings for aliases resolver
+   * we could match value of any context parameter to some value
+   */
+  aliases: {
+    collectionId: {
+      etree: 'live concerts',
+      georgeblood: '78rpm',
+    },
+  },
+
   dialog: {
     playSong: {
       description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
@@ -100,7 +111,7 @@ module.exports = {
        */
       acknowledges: [
         'Ok! Lets go with {{__resolvers.creator.title}} performer!',
-        `You've selected {{__resolvers.collection.title}} collection.`,
+        `You've selected {{__resolvers.alias.collectionId}} collection.`,
       ],
 
       prompts: [{
@@ -171,7 +182,7 @@ module.exports = {
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{__resolvers.creator.title}} band!',
-        `You've selected {{__resolvers.collection.title}} collection.`,
+        `You've selected {{__resolvers.alias.collectionId}} collection.`,
       ],
 
       /**
