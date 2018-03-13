@@ -1,5 +1,7 @@
 const humanize = require('../../../humanize');
 
+const {error} = require('../../../utils/logger')('ia:resolver:years-interval');
+
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
 module.exports = {
@@ -9,7 +11,12 @@ module.exports = {
    * @param context
    * @returns {Promise}
    */
-  handler: contextProxy((value) => {
+  handler: contextProxy(({value}) => {
+    if (!Array.isArray(value)) {
+      error('is not implemented yet!');
+      return undefined;
+    }
+
     if (value.length > 3) {
       return `between ${Math.min.apply(null, value)} and ${Math.max.apply(null, value)}`;
     } else {
