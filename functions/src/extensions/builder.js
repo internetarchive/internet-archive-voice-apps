@@ -1,7 +1,6 @@
-const debug = require('debug')('ia:extensions:debug');
-const warning = require('debug')('ia:extensions:warning');
-
 const path = require('path');
+
+const {debug, warning} = require('../utils/logger')('ia:extensions:builder');
 
 /**
  * Builder for pluggable extension

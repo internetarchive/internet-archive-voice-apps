@@ -1,10 +1,9 @@
-const debug = require('debug')('ia:provider:albums:debug');
-const error = require('debug')('ia:provider:albums:error');
-const fetch = require('node-fetch');
 const mustache = require('mustache');
+const fetch = require('node-fetch');
 
 const config = require('../config');
 const delayedPromise = require('../utils/delay');
+const {debug, error} = require('../utils/logger')('ia:provider:albums');
 
 const {buildQueryCondition} = require('./advanced-search');
 

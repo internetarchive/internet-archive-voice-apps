@@ -6,10 +6,10 @@
  *
  */
 
-const debug = require('debug')('ia:templateSlots:debug');
-const warning = require('debug')('ia:templateSlots:warning');
 const _ = require('lodash');
 const mustache = require('mustache');
+
+const {debug, warning} = require('../utils/logger')('ia:slots');
 
 const extensions = require('./extensions');
 

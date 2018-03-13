@@ -12,13 +12,11 @@
  *
  */
 
-const debug = require('debug')('ia:feeder:albums:debug');
-const warning = require('debug')('ia:feeder:albums:warning');
-const error = require('debug')('ia:feeder:albums:error');
 const _ = require('lodash');
 
 const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
+const {debug, warning, error} = require('../../utils/logger')('ia:feeder:albums-async');
 const stripFileName = require('../../utils/strip-filename');
 
 const orderStrategies = require('../orders');

@@ -1,4 +1,4 @@
-const debug = require('debug')('ia:dialog:ask:debug');
+const {debug} = require('../utils/logger')('ia:dialog:tell');
 
 /**
  * tell to user without waiting for feedback

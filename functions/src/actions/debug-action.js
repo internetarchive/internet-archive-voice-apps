@@ -1,6 +1,5 @@
-const debug = require('debug')('ia:actions:debug-action:debug');
-
 const dialog = require('../dialog');
+const {debug} = require('../utils/logger')('ia:actions:debug-action');
 
 /**
  * it is special handler for debug-action

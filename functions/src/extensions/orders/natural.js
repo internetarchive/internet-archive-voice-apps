@@ -1,4 +1,4 @@
-const debug = require('debug')('ia:order:natural:debug');
+const {debug} = require('../../utils/logger')('ia:order:natural');
 
 class NaturalOrderStrategy {
   /**

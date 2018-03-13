@@ -1,9 +1,8 @@
-const debug = require('debug')('ia:search:collection:debug');
-const error = require('debug')('ia:search:collection:error');
 const fetch = require('node-fetch');
 const mustache = require('mustache');
 
 const config = require('../config');
+const {debug, error} = require('../utils/logger')('ia:search:collection');
 
 /*
  Could be interesting Fields:
