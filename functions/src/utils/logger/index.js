@@ -3,6 +3,14 @@ const _ = require('lodash');
 patchDebugScopeEnvVariable();
 const loggerBuilder = require('debug');
 
+const logEnvVariables = require('./log-env-variables');
+
+logEnvVariables();
+
+// it seems google firebase function doesn't give access to env variables
+// https://firebase.google.com/docs/functions/config-env
+// so we use its native firebase.config() instead
+
 /**
  * Patch DEBUG environment variable (process.env.DEBUG)
  * before 'debug' module is requiring.
@@ -10,24 +18,12 @@ const loggerBuilder = require('debug');
  */
 function patchDebugScopeEnvVariable () {
   let functionsConfig;
-  let runOnFunctionFireBaseServer = false;
   try {
     functionsConfig = functions.config();
-    runOnFunctionFireBaseServer = true;
     process.env.DEBUG = _.at(
       functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
   } catch (e) {
     functionsConfig = {debugger: {scope: null}};
-  }
-
-  if (runOnFunctionFireBaseServer) {
-    // we shouldn't use console
-    // but it is trade-off because we can't be sure
-    // that process.env will be patched form functions.config correctly
-    console.info(`initial process.env:
-                ${JSON.stringify(process.env)}`);
-    console.info(`initial functions.config():
-                ${JSON.stringify(functionsConfig)}`);
   }
 }
 
