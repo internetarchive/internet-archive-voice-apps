@@ -3,8 +3,10 @@
  */
 
 const {expect} = require('chai');
-const index = require('../..');
+
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
+
+const index = require('../..');
 
 describe('integration', () => {
   describe('welcome', () => {

@@ -53,11 +53,11 @@ const http = require('http');
 const replaceall = require('replaceall');
 const util = require('util');
 
-const {defaultActions} = require('./actions');
-const actions = require('./actions/names');
-const dialog = require('./dialog');
-const {storeAction} = require('./state/actions');
-const strings = require('./strings');
+const {defaultActions} = require('./src/actions');
+const actions = require('./src/actions/names');
+const dialog = require('./src/dialog');
+const {storeAction} = require('./src/state/actions');
+const strings = require('./src/strings');
 
 // let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
 

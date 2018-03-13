@@ -2,9 +2,9 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const action = rewire('../../actions/music-query');
-const {getSlot, getSlots, hasSlot} = require('../../state/query');
-const playlist = require('../../state/playlist');
+const action = rewire('../../src/actions/music-query');
+const {getSlot, getSlots, hasSlot} = require('../../src/state/query');
+const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');

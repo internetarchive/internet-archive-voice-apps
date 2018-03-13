@@ -1,7 +1,9 @@
 const {expect} = require('chai');
 const sinon = require('sinon');
 const rewire = require('rewire');
-const ask = rewire('../../dialog/ask');
+
+const ask = rewire('../../src/dialog/ask');
+
 const mockApp = require('../_utils/mocking/app');
 
 describe('dialog', () => {

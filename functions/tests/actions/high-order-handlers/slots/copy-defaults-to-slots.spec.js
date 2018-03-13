@@ -1,9 +1,9 @@
 const {expect} = require('chai');
 
-const query = require('../../../../state/query');
+const middleware = require('../../../../src/actions/high-order-handlers/middlewares/copy-defaults-to-slots');
+const query = require('../../../../src/state/query');
 
 const mockApp = require('../../../_utils/mocking/app');
-const middleware = require('../../../../actions/high-order-handlers/middlewares/copy-defaults-to-slots');
 
 describe('actions', () => {
   describe('middleware', () => {
