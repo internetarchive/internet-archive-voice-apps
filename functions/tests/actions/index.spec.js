@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const {defaultActions} = require('../../actions');
+const {defaultActions} = require('../../src/actions');
 
 describe('actions', () => {
   describe('defaultActions', () => {

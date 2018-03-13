@@ -4,9 +4,11 @@
 
 const {expect} = require('chai');
 const mustache = require('mustache');
-const index = require('../..');
-const strings = require('../../strings');
+
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
+
+const index = require('../..');
+const strings = require('../../src/strings');
 
 describe('integration', () => {
   describe('input-unknown', () => {
