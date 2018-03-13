@@ -6,40 +6,12 @@
 
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const _ = require('lodash');
-
-// it seems google firebase function doesn't give access to env variables
-// https://firebase.google.com/docs/functions/config-env
-// so we use its native firebase.config() instead
-
 const functions = require('firebase-functions');
-let functionsConfig;
-let runOnFunctionFireBaseServer = false;
-try {
-  functionsConfig = functions.config();
-  runOnFunctionFireBaseServer = true;
-  process.env.DEBUG = _.at(
-    functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
-} catch (e) {
-  functionsConfig = {debugger: {scope: null}};
-}
-
-if (runOnFunctionFireBaseServer) {
-  // we shouldn't use console
-  // but it is trade-off because we can't be sure
-  // that process.env will be patched form functions.config correctly
-  console.info(`initial process.env: 
-                ${JSON.stringify(process.env)}`);
-  console.info(`initial functions.config(): 
-                ${JSON.stringify(functionsConfig)}`);
-}
-
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')(
   '54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg', {
     printErrors: false,
   }).google;
-
-const {debug, warning} = require('./src/utils/logger')('ia:index');
 
 const https = require('https');
 const http = require('http');
@@ -51,8 +23,7 @@ const actions = require('./src/actions/names');
 const dialog = require('./src/dialog');
 const {storeAction} = require('./src/state/actions');
 const strings = require('./src/strings');
-
-// let logless = bst.Logless.middleware("54bcfb2a-a12b-4c6a-8729-a4ad71c06975");
+const {debug, warning} = require('./src/utils/logger')('ia:index');
 
 let ARCHIVE_HOST = 'web.archive.org';
 let imageURL = 'https://archive.org/services/img/';
