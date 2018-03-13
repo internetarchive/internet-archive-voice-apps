@@ -115,7 +115,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          'What genre of music would you like to listen to? Please select a topic like {{suggestions.humanized}}?',
+          'What genre of music would you like to listen to? Please select a topic like {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -186,7 +186,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Would you like to listen to music from our collections of {{suggestions.humanized}}?',
+          'Would you like to listen to music from our collections of {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -205,7 +205,7 @@ module.exports = {
         ],
 
         prompts: [
-          'What artist would you like to listen to? For example, {{suggestions.humanized}}?',
+          'What artist would you like to listen to? For example, {{__resolvers.short-options.suggestions}}?',
         ],
 
         /**
@@ -222,13 +222,24 @@ module.exports = {
         ],
 
         prompts: [
-          'Do you have a specific city and year in mind, like {{suggestions.values.0}}, or would you like me to play something randomly?',
+          'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
         ],
 
         /**
          * Template for creating suggestions
          */
         suggestionTemplate: '{{coverage}} {{year}}',
+      }, {
+        /**
+         * prompt for single slot
+         */
+        requirements: [
+          'year',
+        ],
+
+        prompts: [
+          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
+        ],
       }],
 
       /**
