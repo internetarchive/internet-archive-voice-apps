@@ -1,8 +1,6 @@
-const debug = require('debug')('ia:actions:middleware:playback-fulfillment:debug');
-const warning = require('debug')('ia:actions:middleware:playback-fulfillment:warning');
-
 const dialog = require('../../../dialog');
 const feeders = require('../../../extensions/feeders');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware:playback-fulfillment');
 
 /**
  * Middleware

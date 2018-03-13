@@ -1,4 +1,4 @@
-const debug = require('debug')('ia:actions:middleware:copy-arguments-to-slots:debug');
+const {debug} = require('../../../utils/logger')('ia:actions:middleware:copy-arguments-to-slots');
 
 /**
  * Middleware

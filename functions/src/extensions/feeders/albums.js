@@ -13,8 +13,7 @@
  * - not efficient for big playlist and doesn't work for unlimited one
  */
 
-const debug = require('debug')('ia:feeder:albums:debug');
-const warning = require('debug')('ia:feeder:albums:warning');
+const {debug, warning} = require('../../utils/logger')('ia:feeder:albums');
 
 const albumsProvider = require('../../provider/albums');
 

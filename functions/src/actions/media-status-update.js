@@ -1,5 +1,4 @@
-const debug = require('debug')('ia:actions:media-status-update:debug');
-const warning = require('debug')('ia:actions:media-status-update:warn');
+const {debug, warning} = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
