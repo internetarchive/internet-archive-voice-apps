@@ -6,5 +6,6 @@ functions/node_modules
 # dev env
 
 functions/firebase-debug.log
-npm-debug.log
 functions/.runtimeconfig.json
+npm-debug.log
+
