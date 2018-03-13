@@ -141,16 +141,16 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          'What genre of music would you like to listen to? Please select a topic like {{__resolvers.short-options.suggestions}}?',
+          'What genre of music would you like to listen to? Please select a topic like <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
         ],
 
         /**
          * Fixed set of suggestions
          */
         suggestions: [
-          '<emphasis level="moderate">Jazz</emphasis>',
-          '<emphasis level="moderate">Instrumental</emphasis>',
-          '<emphasis level="moderate">Dance</emphasis>',
+          'Jazz',
+          'Instrumental',
+          'Dance',
         ],
       }],
 
@@ -212,15 +212,15 @@ module.exports = {
         ],
 
         prompts: [
-          'Would you like to listen to music from our collections of {{__resolvers.short-options.suggestions}}?',
+          'Would you like to listen to music from our collections of <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
         ],
 
         /**
          * Fixed set of suggestions
          */
         suggestions: [
-          '<emphasis level="moderate">78s</emphasis>',
-          '<emphasis level="moderate">Live Concerts</emphasis>',
+          '78s',
+          'Live Concerts',
         ],
       }, {
         /**
@@ -231,7 +231,7 @@ module.exports = {
         ],
 
         prompts: [
-          'What artist would you like to listen to? For example, {{__resolvers.short-options.suggestions}}?',
+          'What artist would you like to listen to? For example, <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
         ],
 
         /**
@@ -248,7 +248,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
+          'Do you have a specific city and year in mind, like <emphasis level="moderate">{{suggestions.0}}</emphasis>, or would you like me to play something randomly?',
         ],
 
         /**
@@ -264,7 +264,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{creator}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
+          'Ok, {{creator}} has played in {{coverage}} sometime <emphasis level="moderate">{{__resolvers.years-interval.suggestions}}</emphasis>. Do you have a particular year in mind?',
         ],
       }],
 
