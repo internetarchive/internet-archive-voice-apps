@@ -105,9 +105,11 @@ function getMatchedTemplates (templateRequirements, slots) {
 function getMatchedTemplatesExactly (templateRequirements, slots) {
   const numOfSlots = slots.length;
   return templateRequirements && templateRequirements
-    .filter(
-      ({requirements}) => _.intersection(requirements, slots).length === numOfSlots
-    )
+    .filter(({requirements}) => {
+      const intersection = _.intersection(requirements, slots);
+      return intersection.length === requirements.length &&
+        intersection.length === numOfSlots;
+    })
     .map(({template}) => template);
 }
 
@@ -124,7 +126,7 @@ function getPromptsForSlots (prompts, slots) {
   return prompts
     .filter(p => _.includes(p.requirements, criticalSlot))
     .map(p => ({
-      priority: _.intersection(p.requirements, slots).length / maximumIntersection,
+      priority: _.intersection(p.requirements, slots).length / (p.requirements.length + maximumIntersection),
       p,
     }))
     .sort((a, b) => b.priority - a.priority)

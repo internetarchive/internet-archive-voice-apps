@@ -5,12 +5,14 @@
 Run server local with colorful logs
 
 ```
-DEBUG_COLORS=yes DEBUG=ia:* npm start
+DEBUG=ia:* npm start
 ```
 
 ## How to make contributions?
 
-:mag: get [one issue](https://github.com/internetarchive/internet-archive-google-action/issues/)
+:mag: get [one good first issue](https://github.com/internetarchive/internet-archive-google-action/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+assign yourself (if you have assess) or write comment that you'd like to work on this issue.
+That's help to prevent work overlapping.
 
 _create git branch `feature/<name-of-feature>`, [more](http://nvie.com/posts/a-successful-git-branching-model/)_
 
@@ -31,7 +33,7 @@ npm test
 
 :star2: We follow [standard javascript code style](https://standardjs.com/).
 
-_Automatic style fixing, it doesn't solve any problem but could be very helpful_
+_Automatic style fixing, it doesn't solve all problems but could be very helpful_
 
 ```
 npm run lint -- --fix
