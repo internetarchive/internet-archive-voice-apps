@@ -1,4 +1,4 @@
-const debug = require('debug')('ia:actions:middleware:copy-defaults-to-slots:debug');
+const {debug} = require('../../../utils/logger')('ia:actions:middleware:copy-defaults-to-slots');
 const entries = require('../../../utils/polyfill/entries');
 
 /**

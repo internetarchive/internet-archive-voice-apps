@@ -1,4 +1,4 @@
-const debug = require('debug')('ia:state:debug');
+const {debug} = require('../utils/logger')('ia:state');
 
 /**
  * Use to build three hierarchy of properties
