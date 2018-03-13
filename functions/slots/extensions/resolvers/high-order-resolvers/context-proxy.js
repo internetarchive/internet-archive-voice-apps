@@ -37,5 +37,8 @@ module.exports = (processing) => {
     }));
   }
 
-  return handler;
+  return {
+    handler,
+    requirements: (name) => name.split('.')[0],
+  };
 };
