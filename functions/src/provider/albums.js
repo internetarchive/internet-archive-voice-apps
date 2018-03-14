@@ -47,14 +47,16 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
 }
 
 /**
- * Fetch some albums of artist/creator
+ * Fetch some albums of artist/creator by its collection id
+ * not all artists have dedicated collection
+ * so we use fetchAlbumsByQuery instead
  *
  * @param {string} id - identifier of creator
  * @param {number} limit
  * @param {number} page
  * @param {string} order - by default we fetch the most popular
  */
-function fetchAlbums (id, {
+function fetchAlbumsByCreatorId (id, {
   limit = 3,
   page = 0,
   order = 'downloads+desc',
@@ -94,12 +96,12 @@ function fetchAlbums (id, {
 }
 
 /**
- * Fetch some albums of artist/creator
+ * Fetch some albums by query
  *
  * @param {Object} query
  * @param {string} query.collectionId
  * @param {string} query.coverage
- * @param {string} query.creatorId
+ * @param {string} query.creator
  * @param {number} query.year
  *
  * @param {number} query.limit
@@ -152,6 +154,6 @@ function fetchAlbumsByQuery (query) {
 
 module.exports = {
   fetchAlbumDetails,
-  fetchAlbums,
+  fetchAlbumsByCreatorId,
   fetchAlbumsByQuery,
 };
