@@ -8,12 +8,13 @@ describe('provider', () => {
       it('should build query string', () => {
         const condition = advancedSearch.buildQueryCondition({
           coverage: 'london',
+          creator: 'the band',
           creatorId: 'theband',
           collectionId: '80s',
           year: '2020',
         });
         expect(condition).to.be.equal(
-          'coverage:(london) AND collection:(theband) AND collection:(80s) AND year:(2020)'
+          'coverage:(london) AND creator:(the band) AND collection:(theband) AND collection:(80s) AND year:(2020)'
         );
       });
 
