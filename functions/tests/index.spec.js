@@ -10,12 +10,15 @@ let index, configStub, adminInitStub, functions, admin;
 describe('playMedia', () => {
   let res;
 
-  beforeEach(() => {
+  before(() => {
     admin = require('firebase-admin');
     adminInitStub = sinon.stub(admin, 'initializeApp');
     functions = require('firebase-functions');
     configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
     index = rewire('..');
+  });
+
+  beforeEach(() => {
     res = new MockResponse();
   });
 
@@ -46,7 +49,7 @@ describe('playMedia', () => {
         expect(warning).to.be.calledOnce;
       });
   });
-  afterEach(() => {
+  after(() => {
     // Restoring our stubs to the original methods.
     configStub.restore();
     adminInitStub.restore();

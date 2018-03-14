@@ -10,7 +10,7 @@ const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 let index, configStub, adminInitStub, functions, admin;
 
 describe('integration', () => {
-  beforeEach(() => {
+  before(() => {
     admin = require('firebase-admin');
     adminInitStub = sinon.stub(admin, 'initializeApp');
     functions = require('firebase-functions');
@@ -39,7 +39,7 @@ describe('integration', () => {
       expect(res.suggestions()).to.include.members(['east', 'west']);
     });
   });
-  afterEach(() => {
+  after(() => {
     // Restoring our stubs to the original methods.
     configStub.restore();
     adminInitStub.restore();
