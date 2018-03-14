@@ -1,14 +1,14 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const playlist = require('../../../../state/playlist');
-const query = require('../../../../state/query');
+const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/playback-fulfillment');
+const playlist = require('../../../../src/state/playlist');
+const query = require('../../../../src/state/query');
 
 const mockApp = require('../../../_utils/mocking/app');
 const mockDialog = require('../../../_utils/mocking/dialog');
-const mockAlbumFeeder = require('../../../_utils/mocking/feeders/albums');
 const mockFeeders = require('../../../_utils/mocking/feeders');
-const middleware = rewire('../../../../actions/high-order-handlers/middlewares/playback-fulfillment');
+const mockAlbumFeeder = require('../../../_utils/mocking/feeders/albums');
 
 describe('actions', () => {
   describe('middlewares', () => {

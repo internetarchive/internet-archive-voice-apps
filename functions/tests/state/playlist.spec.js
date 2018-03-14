@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const playlist = require('../../state/playlist');
+const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 

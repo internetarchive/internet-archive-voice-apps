@@ -6,58 +6,24 @@
 
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const _ = require('lodash');
-
-// it seems google firebase function doesn't give access to env variables
-// https://firebase.google.com/docs/functions/config-env
-// so we use its native firebase.config() instead
-
 const functions = require('firebase-functions');
-let functionsConfig;
-let runOnFunctionFireBaseServer = false;
-try {
-  functionsConfig = functions.config();
-  runOnFunctionFireBaseServer = true;
-  process.env.DEBUG = _.at(
-    functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
-} catch (e) {
-  functionsConfig = {debugger: {scope: null}};
-}
-
-if (runOnFunctionFireBaseServer) {
-  // we shouldn't use console
-  // but it is trade-off because we can't be sure
-  // that process.env will be patched form functions.config correctly
-  console.info(`initial process.env: 
-                ${JSON.stringify(process.env)}`);
-  console.info(`initial functions.config(): 
-                ${JSON.stringify(functionsConfig)}`);
-}
-
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')(
   functionsConfig.dashbot.key, {
     printErrors: false,
   }).google;
 
-const debugCreator = require('debug');
-
-// by default it will be just blank log messages
-debugCreator.log = console.info.bind(console);
-const debug = debugCreator('ia:index:debug');
-
-const warning = debugCreator('ia:index:warning');
-warning.log = console.warn.bind(console);
-
 const https = require('https');
 const http = require('http');
 const replaceall = require('replaceall');
 const util = require('util');
 
-const {defaultActions} = require('./actions');
-const actions = require('./actions/names');
-const dialog = require('./dialog');
-const {storeAction} = require('./state/actions');
-const strings = require('./strings');
+const {defaultActions} = require('./src/actions');
+const actions = require('./src/actions/names');
+const dialog = require('./src/dialog');
+const {storeAction} = require('./src/state/actions');
+const strings = require('./src/strings');
+const {debug, warning} = require('./src/utils/logger')('ia:index');
 
 let ARCHIVE_HOST = 'web.archive.org';
 let imageURL = 'https://archive.org/services/img/';
