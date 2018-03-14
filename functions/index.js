@@ -1927,7 +1927,7 @@ function ask (app, speechOutput, suggestions) {
     currentSuggestions = suggestions;
   }
   app.ask(app.buildRichResponse()
-    .addSimpleResponse(speechOutput)
+    .addSimpleResponse('<speak>' + speechOutput + '</speak>')
     .addSuggestions(suggestions));
 }
 

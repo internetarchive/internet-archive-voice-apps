@@ -34,7 +34,7 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     }
 
     app.ask(app.buildRichResponse()
-      .addSimpleResponse(speech)
+      .addSimpleResponse('<speak>' + speech + '</speak>')
       .addSuggestions(suggestions));
   }
 };
