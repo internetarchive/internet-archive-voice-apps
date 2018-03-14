@@ -1,5 +1,6 @@
 const {expect} = require('chai');
-const {list} = require('../../humanize');
+
+const {list} = require('../../src/humanize');
 
 describe('humanize', () => {
   describe('list', () => {

@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const songsProvider = require('../../provider/songs');
+const songsProvider = require('../../src/provider/songs');
 
 describe('search', () => {
   describe('audio', () => {

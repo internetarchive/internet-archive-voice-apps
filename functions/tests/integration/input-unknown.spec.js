@@ -6,7 +6,7 @@ const {expect} = require('chai');
 const mustache = require('mustache');
 const sinon = require('sinon');
 
-const strings = require('../../strings');
+const strings = require('../../src/strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
 let index, configStub, adminInitStub, functions, admin;
