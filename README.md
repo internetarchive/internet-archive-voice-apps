@@ -5,6 +5,10 @@
 Run server local with colorful logs
 
 ```
+Install firebase globally
+Then run the follwing commands:
+firebase init
+firebase use --add (and choose your own firebase project)
 DEBUG_COLORS=yes DEBUG=ia:* npm start
 ```
 
@@ -41,5 +45,5 @@ npm run lint -- --fix
 and link the addressed issue.
 
 _Also it could be good practice to create your Pull Request earlier,
-but add `WIP: ` at the beginning of its name! This way other developers
+but add `WIP:` at the beginning of its name! This way other developers
 could see what are you working right now._
