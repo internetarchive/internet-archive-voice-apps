@@ -9,7 +9,7 @@ const _ = require('lodash');
 const functions = require('firebase-functions');
 const bst = require('bespoken-tools');
 const dashbot = require('dashbot')(
-  '54mlQ1bEx6WFGlU4A27yHZubsQXvMwYPAqHtxJYg', {
+  functions.config().dashbot.key, {
     printErrors: false,
   }).google;
 
@@ -92,7 +92,7 @@ debug(`We can handle actions: ${actionNames}`);
  *
  * @type {HttpsFunction}
  */
-exports.playMedia = functions.https.onRequest(bst.Logless.capture('54bcfb2a-a12b-4c6a-8729-a4ad71c06975', function (req, res) {
+exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
   const app = new DialogflowApp({request: req, response: res});
 
   logSessionStart(app);
