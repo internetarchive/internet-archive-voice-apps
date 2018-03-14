@@ -21,7 +21,7 @@ describe('collection', () => {
     });
 
     it('should fetch items of collection', () => {
-      return albumsProvider.fetchAlbums('OfARevolution', {limit: 3})
+      return albumsProvider.fetchAlbumsByCreatorId('OfARevolution', {limit: 3})
         .then(albums => {
           const items = albums.items;
           expect(items[0]).to.have.property('identifier', 'oar00-09-27');
