@@ -83,4 +83,9 @@ describe('integration', () => {
       expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
     });
   });
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
+  });
 });
