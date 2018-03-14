@@ -1,8 +1,8 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const action = rewire('../../actions/media-status-update');
-const playlist = require('../../state/playlist');
+const action = rewire('../../src/actions/media-status-update');
+const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');

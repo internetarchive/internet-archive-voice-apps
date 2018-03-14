@@ -1,5 +1,6 @@
 const {expect} = require('chai');
-const advancedSearch = require('../../provider/advanced-search');
+
+const advancedSearch = require('../../src/provider/advanced-search');
 
 describe('provider', () => {
   describe('advanced search', () => {

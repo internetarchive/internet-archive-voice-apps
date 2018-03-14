@@ -5,5 +5,7 @@ functions/node_modules
 
 # dev env
 
+firebase-debug.log
 functions/firebase-debug.log
 npm-debug.log
+

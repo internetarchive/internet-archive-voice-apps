@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const query = require('../../state/query');
+const query = require('../../src/state/query');
 
 const mockApp = require('../_utils/mocking/app');
 
