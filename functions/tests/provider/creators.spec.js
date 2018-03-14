@@ -3,7 +3,7 @@ const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const creators = rewire('../../provider/creators');
+const creators = rewire('../../src/provider/creators');
 
 const popularAlbums = require('./fixtures/popular-of-etree.json');
 

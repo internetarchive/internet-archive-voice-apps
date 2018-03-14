@@ -2,9 +2,9 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const action = rewire('../../actions/music-query');
-const {getSlot, getSlots, hasSlot} = require('../../state/query');
-const playlist = require('../../state/playlist');
+const action = rewire('../../src/actions/music-query');
+const {getSlot, getSlots, hasSlot} = require('../../src/state/query');
+const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -40,6 +40,95 @@ describe('actions', () => {
     }));
     getSuggestionProviderForSlots = sinon.stub().returns(provider);
     action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+  });
+
+  describe('middleware', () => {
+    describe('resolveSlots', () => {
+      let creatorHandler;
+      let yearsintervalHandler;
+      let revert;
+
+      beforeEach(() => {
+        creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+        yearsintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
+        revert = action.__set__('getRequiredExtensionHandlers', () => [{
+          handler: creatorHandler,
+          name: 'creator',
+          extType: 'resolvers',
+        }, {
+          handler: yearsintervalHandler,
+          name: 'yearsinterval',
+          extType: 'resolvers',
+        }]);
+      });
+
+      afterEach(() => {
+        revert();
+      });
+
+      it('should works with more than one resolvers', () => {
+        const app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        const context = {};
+        const template = 'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearsinterval.suggestions}}. Do you have a particular year in mind?';
+        return action.resolveSlots(app, context, template)
+          .then(res => {
+            expect(res).to.be.deep.equal({
+              __resolvers: {
+                creator: {
+                  title: 'Grateful Dead',
+                },
+                yearsinterval: {
+                  suggestions: 'between 1970 and 2000',
+                },
+              },
+            });
+          });
+      });
+    });
+
+    describe('fetchSuggestions', () => {
+      it('should fetch and set list of number', () => {
+        const app = mockApp({
+          argument: {
+            // category: 'plate',
+          },
+        });
+        const promptScheme = {
+          requirements: ['year'],
+        };
+
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: [
+            1970,
+            1980,
+            1990,
+            2000,
+            2010,
+          ],
+        }));
+        const getSuggestionProviderForSlots = sinon.stub().returns(provider);
+        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
+        return action.fetchSuggestions({app, promptScheme})
+          .then((res) => {
+            expect(res).to.be.deep.equal({
+              app,
+              promptScheme,
+              suggestions: [
+                1970,
+                1980,
+                1990,
+                2000,
+                2010,
+              ],
+            });
+          });
+      });
+    });
   });
 
   describe('music query', () => {
@@ -127,30 +216,41 @@ describe('actions', () => {
             });
         });
 
-        it('should substitute resolved slots', () => {
-          app = mockApp({
-            argument: {
-              creatorId: 'bandId',
-            },
+        describe('resolving', () => {
+          let handler;
+          let revert;
+
+          beforeEach(() => {
+            handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+            revert = action.__set__('getRequiredExtensionHandlers', () => [{
+              handler,
+              name: 'creator',
+              extType: 'resolvers',
+            }]);
           });
 
-          const handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+          afterEach(() => {
+            revert();
+          });
 
-          action.__set__('getRequiredExtensionHandlers', () => [{
-            handler,
-            name: 'creator',
-            extType: 'resolvers',
-          }]);
-
-          return action.handler(app)
-            .then(() => {
-              expect(handler.args[0][0])
-                .to.have.property('creatorId', 'bandId');
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include('Ok! Lets go with Grateful Dead band!');
+          it('should substitute resolved slots', () => {
+            app = mockApp({
+              argument: {
+                creatorId: 'bandId',
+              },
             });
+
+            return action.handler(app)
+              .then(() => {
+                expect(handler.args[0][0])
+                  .to.have.property('creatorId', 'bandId');
+                expect(dialog.ask).to.have.been.calledOnce;
+                expect(dialog.ask.args[0][1])
+                  .to.have.property('speech')
+                  .to.include('Ok! Lets go with Grateful Dead band!');
+              })
+              .then(revert);
+          });
         });
 
         it('should prompt to the next slot with a question', () => {
@@ -196,6 +296,8 @@ describe('actions', () => {
       describe('fulfillment', () => {
         let albumsFeeder;
         let feeders;
+        let handler;
+        let revert;
 
         beforeEach(() => {
           albumsFeeder = mockAlbumsFeeder();
@@ -203,6 +305,16 @@ describe('actions', () => {
             getByName: sinon.stub().returns(albumsFeeder),
           };
           action.__set__('feeders', feeders);
+          handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+          revert = action.__set__('getRequiredExtensionHandlers', () => [{
+            handler,
+            name: 'creator',
+            extType: 'resolvers',
+          }]);
+        });
+
+        afterEach(() => {
+          revert();
         });
 
         it(`shouldn't activate when we don't have enough filled slots`, () => {
@@ -390,32 +502,50 @@ describe('actions', () => {
             });
         });
 
-        it('should use one suggestion to generate prompt speech', () => {
-          provider = sinon.stub().returns(Promise.resolve({
-            items: [
-              {coverage: 'Washington, DC', year: 1973},
-              {coverage: 'Madison, WI', year: 2000},
-              {coverage: 'Worcester, MA', year: 2001},
-            ],
-          }));
-          getSuggestionProviderForSlots = sinon.stub().returns(provider);
-          action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+        describe('suggestion', () => {
+          let handler;
+          let revert;
 
-          app = mockApp({
-            argument: {
-              collection: 'live',
-              creatorId: 'the band',
-            },
+          beforeEach(() => {
+            handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
+            revert = action.__set__('getRequiredExtensionHandlers', () => [{
+              handler,
+              name: 'creator',
+              extType: 'resolvers',
+            }]);
           });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include(
-                  'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
-                );
+
+          afterEach(() => {
+            revert();
+          });
+
+          it('should use one suggestion to generate prompt speech', () => {
+            provider = sinon.stub().returns(Promise.resolve({
+              items: [
+                {coverage: 'Washington, DC', year: 1973},
+                {coverage: 'Madison, WI', year: 2000},
+                {coverage: 'Worcester, MA', year: 2001},
+              ],
+            }));
+            getSuggestionProviderForSlots = sinon.stub().returns(provider);
+            action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
+
+            app = mockApp({
+              argument: {
+                collection: 'live',
+                creatorId: 'the band',
+              },
             });
+            return action.handler(app)
+              .then(() => {
+                expect(dialog.ask).to.have.been.calledOnce;
+                expect(dialog.ask.args[0][1])
+                  .to.have.property('speech')
+                  .to.include(
+                    'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+                  );
+              });
+          });
         });
       });
     });

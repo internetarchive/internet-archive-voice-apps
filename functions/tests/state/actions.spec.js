@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../state/actions');
+const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../src/state/actions');
 
 const mockApp = require('../_utils/mocking/app');
 
