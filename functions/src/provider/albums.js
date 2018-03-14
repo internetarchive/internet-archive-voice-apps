@@ -109,14 +109,21 @@ function fetchAlbums (id, {
  * @return {Promise}
  */
 function fetchAlbumsByQuery (query) {
-  const {
-    fields = 'identifier,coverage,title,year',
-    limit = 3,
-    page = 0,
-    order = 'downloads+desc'
-  } = query;
+  query = Object.assign({}, {
+    fields: 'identifier,coverage,title,year',
+    // we require `coverage` field here to filter items
+    // with this field only.
+    // Luckily for us only albums/converts/plates have it
+    // so it should work until we will find better solution here
+    //
+    // without this key we could get for example,
+    // creator's collection.
+    coverage: '*',
+    limit: 3,
+    page: 0,
+    order: 'downloads+desc',
+  }, query);
 
-  debug('limit', limit);
   debug(query);
   // create search query
   const condition = buildQueryCondition(query);
@@ -127,13 +134,7 @@ function fetchAlbumsByQuery (query) {
   return fetch(
     mustache.render(
       config.endpoints.QUERY_COLLECTIONS_URL,
-      {
-        condition,
-        limit,
-        page,
-        order,
-        fields,
-      }
+      Object.assign({}, query, {condition})
     )
   )
     .then(res => res.json())
