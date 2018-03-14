@@ -49,6 +49,7 @@ describe('playMedia', () => {
         expect(warning).to.be.calledOnce;
       });
   });
+
   after(() => {
     // Restoring our stubs to the original methods.
     configStub.restore();

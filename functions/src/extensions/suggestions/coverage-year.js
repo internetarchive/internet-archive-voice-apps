@@ -8,10 +8,10 @@ const albumsProvider = require('../../provider/albums');
  */
 function handle (slots) {
   return albumsProvider
-    .fetchAlbums(
-      slots.creatorId, {
+    .fetchAlbumsByQuery(
+      Object.assign({}, slots, {
         order: 'downloads+desc',
-      }
+      })
     );
 }
 
