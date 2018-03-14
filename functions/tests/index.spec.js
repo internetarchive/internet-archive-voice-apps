@@ -3,12 +3,20 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-const index = rewire('..');
-
 const {wait} = require('./_utils/wait');
+
+let index, configStub, adminInitStub, functions, admin;
 
 describe('playMedia', () => {
   let res;
+
+  before(() => {
+    admin = require('firebase-admin');
+    adminInitStub = sinon.stub(admin, 'initializeApp');
+    functions = require('firebase-functions');
+    configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
+    index = rewire('..');
+  });
 
   beforeEach(() => {
     res = new MockResponse();
@@ -40,5 +48,10 @@ describe('playMedia', () => {
         expect(warning.getCall(0).args[0]).to.includes(action);
         expect(warning).to.be.calledOnce;
       });
+  });
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
   });
 });
