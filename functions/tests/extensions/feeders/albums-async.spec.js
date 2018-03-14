@@ -2,13 +2,13 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const feeder = rewire('../../../extensions/feeders/albums-async');
-const playlist = require('../../../state/playlist');
-const query = require('../../../state/query');
+const feeder = rewire('../../../src/extensions/feeders/albums-async');
+const playlist = require('../../../src/state/playlist');
+const query = require('../../../src/state/query');
 
 const mockApp = require('../../_utils/mocking/app');
-const mockOrderStrategy = require('../../_utils/mocking/orders/orderStategy');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
+const mockOrderStrategy = require('../../_utils/mocking/orders/orderStategy');
 
 describe('feeders', () => {
   describe('albums async', () => {

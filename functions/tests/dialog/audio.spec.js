@@ -1,8 +1,10 @@
 const {expect} = require('chai');
-const {playSong} = require('../../dialog/audio');
-const mockApp = require('../_utils/mocking/app');
 const mustache = require('mustache');
-const strings = require('../../strings').dialog.playSong;
+
+const {playSong} = require('../../src/dialog/audio');
+const strings = require('../../src/strings').dialog.playSong;
+
+const mockApp = require('../_utils/mocking/app');
 
 describe('dialog', () => {
   let app;
