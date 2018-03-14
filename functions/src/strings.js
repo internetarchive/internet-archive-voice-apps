@@ -110,7 +110,7 @@ module.exports = {
        * to check our undestanding
        */
       acknowledges: [
-        'Ok! Lets go with {{__resolvers.creator.title}} performer!',
+        'Ok! Lets go with {{creator}} performer!',
         `You've selected {{__resolvers.alias.collectionId}} collection.`,
       ],
 
@@ -152,7 +152,7 @@ module.exports = {
        */
       slots: [
         'collectionId',
-        'creatorId',
+        'creator',
         'coverage',
         'year',
       ],
@@ -165,7 +165,7 @@ module.exports = {
         random: {
           defaults: {
             collectionId: {skip: true},
-            creatorId: {skip: true},
+            creator: {skip: true},
             coverage: {skip: true},
             year: {skip: true},
             order: 'random',
@@ -181,7 +181,7 @@ module.exports = {
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
-        'Ok! Lets go with {{__resolvers.creator.title}} band!',
+        'Ok! Lets go with {{creator}} band!',
         `You've selected {{__resolvers.alias.collectionId}} collection.`,
       ],
 
@@ -212,7 +212,7 @@ module.exports = {
          * prompt for single slot
          */
         requirements: [
-          'creatorId'
+          'creator'
         ],
 
         prompts: [
@@ -249,7 +249,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
+          'Ok, {{creator}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
       }],
 

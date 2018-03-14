@@ -13,6 +13,6 @@ function handle (slots) {
 }
 
 module.exports = {
-  slots: ['creatorId'],
+  slots: ['creator'],
   handle,
 };

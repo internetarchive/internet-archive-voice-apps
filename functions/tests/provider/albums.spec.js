@@ -102,7 +102,7 @@ describe('collection', () => {
             'GET'
           )).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            'collection:(collection-1)' +
+            'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
@@ -123,7 +123,7 @@ describe('collection', () => {
             'GET'
           )).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            '(collection:(collection-1) OR collection:(collection-2))' +
+            'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
