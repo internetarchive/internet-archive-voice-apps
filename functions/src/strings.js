@@ -45,7 +45,7 @@ module.exports = {
       slots: [
         'collectionId',
         'coverage',
-        'creatorId',
+        'creator',
         'order',
         'subject',
         'year',

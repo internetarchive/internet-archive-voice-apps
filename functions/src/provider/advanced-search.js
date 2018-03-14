@@ -6,6 +6,7 @@ const nameToParameter = {
   coverage: 'coverage',
   creatorId: 'collection',
   collectionId: 'collection',
+  creator: 'creator',
   subject: 'subject',
   year: 'year',
   // TODO: add other parameters
