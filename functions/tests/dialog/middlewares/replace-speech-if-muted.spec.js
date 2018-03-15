@@ -23,7 +23,7 @@ describe('dialog', () => {
       it(`should left the same options if speech is not muted`, () => {
         playback.setMuteSpeechBeforePlayback(app, false);
         expect(middleware(app, Object.assign({}, options)))
-          .to.be.deep.equal(options)
+          .to.be.deep.equal(options);
       });
 
       it(`should replace speech if it's muted with template`, () => {
