@@ -8,6 +8,24 @@ Run server local with colorful logs
 DEBUG=ia:* npm start
 ```
 
+### Connect webhook to Dialog Flow
+
+To expose server to google assistant use [ngrok](https://ngrok.com/)
+its free plan should be enough.
+
+To expose 5000 port:
+```
+ngrok http 5000
+```
+you should find url `https://<id>.ngrok.io/`.
+
+After that you should use this url in your Dialog Flow draft copy
+of our App:
+```
+https://<id>.ngrok.io/internet-archive/us-central1/playMedia
+```
+_you would get id from after
+
 ## How to make contributions?
 
 :mag: get [one good first issue](https://github.com/internetarchive/internet-archive-google-action/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
