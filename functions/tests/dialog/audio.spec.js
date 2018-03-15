@@ -52,34 +52,29 @@ describe('dialog', () => {
       expect(app.addSuggestions).to.be.calledWith(audio.suggestions);
     });
 
-    describe('custom speech', () => {
-      it('should mute songs description speech and replace it with song', () => {
-        const url = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
+    it('should mute songs description speech and replace it with template (for example sound)', () => {
+      const soundURL = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
 
-        playSong(app, Object.assign({}, audio, {
-          speech: {
-            mute: true,
-            audio: {
-              url,
-            },
-          },
-        }));
+      playSong(app, Object.assign({}, audio, {
+        speech: `
+          <media soundLevel="-10db">
+            <audio src="${soundURL}">
+              <desc>{{description}}</desc>
+            </audio>
+          </media>
+        `,
+      }));
 
-        expect(app.addSimpleResponse).to.be.calledOnce;
-        expect(app.addSimpleResponse.args[0][0])
-          .to.include('<audio')
-          .to.include(url)
-          .to.include(
-            mustache.render(mustache.render(
-              strings.description,
-              audio
-            ))
-          );
-      });
+      const description = mustache.render(mustache.render(
+        strings.description,
+        audio
+      ));
 
-      it('should use default speech setting when mute is true', () => {
-
-      });
+      expect(app.addSimpleResponse).to.be.calledOnce;
+      expect(app.addSimpleResponse.args[0][0])
+        .to.include('<media soundLevel="-10db">')
+        .to.include(soundURL)
+        .to.include(description);
     });
   });
 });

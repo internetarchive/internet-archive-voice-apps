@@ -5,24 +5,6 @@ const strings = require('../strings').dialog.playSong;
 const {debug} = require('../utils/logger')('ia:dialog:audio');
 
 /**
- * Construct <audio/> SSML tag from passed arguments
- *
- * @private
- * @param description
- * @param url
- * @returns {string}
- */
-function ssmlAudio ({description, url}) {
-  return `
-    <media soundLevel="-40db">
-      <audio src="${url}">
-        <desc>${description}</desc>
-      </audio>
-    </media>
-  `;
-}
-
-/**
  * Play song to the user
  *
  * @param app
@@ -42,11 +24,10 @@ function playSong (app, options) {
   let response = app.buildRichResponse();
   const {speech} = options;
 
-  if (speech && speech.mute) {
-    const {audio} = speech;
+  if (speech) {
     response = response.addSimpleResponse(`
       <speak>
-       ${ssmlAudio(Object.assign({}, audio, {description}))}
+        ${mustache.render(speech, Object.assign({}, options, {description}))}
       </speak>`
     );
   } else {
