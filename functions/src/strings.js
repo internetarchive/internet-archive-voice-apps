@@ -32,11 +32,12 @@ module.exports = {
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
       speech: `
-        <media soundLevel="-10db">
-          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg">
-            <desc>{{description}}</desc>
-          </audio>
-        </media>
+        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+               clipBegin="4.5s"
+               clipEnd="5.5s"
+               soundLevel="10db">
+          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+        </audio>
       `,
       title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
       suggestionLink: 'on Archive.org',
