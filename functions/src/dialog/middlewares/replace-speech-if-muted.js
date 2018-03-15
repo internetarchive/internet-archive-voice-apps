@@ -15,4 +15,4 @@ function replaceSpeechIfMutedMiddleware (app, options) {
   return options;
 }
 
-module.exports = replaceSpeechIfMutedMiddleware;
+module.exports = () => replaceSpeechIfMutedMiddleware;

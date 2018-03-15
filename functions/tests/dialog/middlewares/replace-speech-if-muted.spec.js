@@ -22,13 +22,13 @@ describe('dialog', () => {
 
       it(`should left the same options if speech is not muted`, () => {
         playback.setMuteSpeechBeforePlayback(app, false);
-        expect(middleware(app, Object.assign({}, options)))
+        expect(middleware()(app, Object.assign({}, options)))
           .to.be.deep.equal(options);
       });
 
       it(`should replace speech if it's muted with template`, () => {
         playback.setMuteSpeechBeforePlayback(app, true);
-        expect(middleware(app, Object.assign({}, options)))
+        expect(middleware()(app, Object.assign({}, options)))
           .to.have.property('speech', strings.speech);
       });
     });

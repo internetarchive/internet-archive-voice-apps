@@ -21,6 +21,7 @@ const util = require('util');
 const {defaultActions} = require('./src/actions');
 const actions = require('./src/actions/names');
 const dialog = require('./src/dialog');
+const setup = require('./src/setup');
 const {storeAction} = require('./src/state/actions');
 const strings = require('./src/strings');
 const {debug, warning} = require('./src/utils/logger')('ia:index');
@@ -86,6 +87,8 @@ debug(`Node.js Version: ${process.version}`);
 debug('-----------------------------------------');
 
 debug(`We can handle actions: ${actionNames}`);
+
+setup();
 
 /**
  * Action Endpoint
