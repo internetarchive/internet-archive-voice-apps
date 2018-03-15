@@ -57,5 +57,60 @@ describe('dialog', () => {
       expect(app.addSuggestionLink).to.be.calledOnce;
       expect(app.addSuggestions).to.be.calledWith(suggestions);
     });
+
+    it('should mute songs description speach and replace it with song', () => {
+      const audioURL = 'https://archive.org/download/gd73-06-10d1t01.mp3';
+      const coverage = 'Washington, DC';
+      const imageURL = 'https://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg';
+      const suggestions = ['rewind', 'next'];
+      const title = 'Morning Dew';
+      const track = 1;
+      const year = 1973;
+      const url = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
+
+      playSong(app, {
+        audioURL,
+        coverage,
+        imageURL,
+        suggestions,
+        title,
+        track,
+        year,
+        speech: {
+          mute: true,
+          audio: {
+            url,
+          },
+        }
+      });
+
+      expect(app.ask).to.be.calledOnce;
+      expect(app.buildMediaResponse).to.be.calledOnce;
+      expect(app.buildMediaObject).to.be.calledOnce;
+      expect(app.buildRichResponse).to.be.calledOnce;
+      expect(app.addMediaObjects).to.be.calledOnce;
+      expect(app.setDescription).to.be.calledWith(
+        mustache.render(mustache.render(
+          strings.description,
+          {audioURL, coverage, imageURL, suggestions, title, track, year}
+        ))
+      );
+      expect(app.setImage).to.be.calledWith(
+        imageURL,
+        app.Media.ImageType.LARGE
+      );
+      expect(app.addSimpleResponse).to.be.calledOnce;
+      expect(app.addSimpleResponse.args[0][0])
+        .to.include('<audio')
+        .to.include(url)
+        .to.include(
+          mustache.render(mustache.render(
+            strings.description,
+            {audioURL, coverage, imageURL, suggestions, title, track, year}
+          ))
+        );
+      expect(app.addSuggestionLink).to.be.calledOnce;
+      expect(app.addSuggestions).to.be.calledWith(suggestions);
+    });
   });
 });
