@@ -24,6 +24,21 @@ module.exports = {
   dialog: {
     playSong: {
       description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      // We should "say" something or play a sound between songs
+      // official response:
+      // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
+      //
+      // we can choose any sound from here
+      // https://developers.google.com/actions/tools/sound-library/
+      // [!] but we should use it for Google actions only
+      speech: `
+        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+               clipBegin="4.5s"
+               clipEnd="5.5s"
+               soundLevel="10db">
+          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+        </audio>
+      `,
       title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
       suggestionLink: 'on Archive.org',
     }
@@ -266,6 +281,15 @@ module.exports = {
     }, {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
+
+    titleOption: {
+      false: {
+        speech: `Ok, we will mute song's title`,
+      },
+      true: {
+        speech: `Excellent! I'll be saying title to each song`,
+      },
+    },
 
     unknown: [{
       speech: "I'm not sure what you said. Can you repeat that?",
