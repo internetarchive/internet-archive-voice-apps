@@ -36,9 +36,10 @@ module.exports = {
    * Construct getter and setter for sub-group of user's data
    *
    * @param name {string} - name of module
+   * @param defaults {Object} - default state of group
    * @returns {{getData: (function(*)), setData: (function(*, *): *)}}
    */
-  group: (name) => ({
+  group: (name, defaults = {}) => ({
     /**
      * Get group of user's data
      *
@@ -52,7 +53,7 @@ module.exports = {
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
-      return app.data[name] || {};
+      return app.data[name] || defaults;
     },
 
     /**
