@@ -284,10 +284,10 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: 'Ok, we will mute title before each song',
+        speech: `Ok, we will mute song's title`,
       },
       true: {
-        speech: 'Ok, we will speech title before each song',
+        speech: `Excellent! I'll be saying title to each song`,
       },
     },
 
