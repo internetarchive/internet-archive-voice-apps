@@ -1,5 +1,6 @@
 const dialog = require('../../../dialog');
 const feeders = require('../../../extensions/feeders');
+const playback = require('../../../state/playback');
 const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware:playback-fulfillment');
 
 /**
@@ -33,7 +34,14 @@ module.exports = () => ({app, playlist, query, slotScheme}) => {
             `We haven't find anything by your request would you like something else?`
           );
         } else {
-          dialog.playSong(app, feeder.getCurrentItem({app, query, playlist}));
+          dialog.playSong(app,
+            dialog.processOptions(
+              feeder.getCurrentItem({app, query, playlist}),
+              {
+                muteSpeech: playback.isMuteSpeechBeforePlayback(app),
+              }
+            )
+          );
         }
       });
   }
