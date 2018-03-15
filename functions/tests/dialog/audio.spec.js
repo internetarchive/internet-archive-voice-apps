@@ -8,11 +8,11 @@ const mockApp = require('../_utils/mocking/app');
 
 describe('dialog', () => {
   let app;
-  let audio;
+  let options;
 
   beforeEach(() => {
     app = mockApp();
-    audio = {
+    options = {
       audioURL: 'https://archive.org/download/gd73-06-10d1t01.mp3',
       coverage: 'Washington, DC',
       imageURL: 'https://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg',
@@ -26,7 +26,7 @@ describe('dialog', () => {
 
   describe('playSong', () => {
     it('should share audio response with user', () => {
-      playSong(app, audio);
+      playSong(app, options);
 
       expect(app.ask).to.be.calledOnce;
       expect(app.buildMediaResponse).to.be.calledOnce;
@@ -35,27 +35,27 @@ describe('dialog', () => {
       expect(app.addMediaObjects).to.be.calledOnce;
       expect(app.setDescription).to.be.calledWith(
         mustache.render(mustache.render(
-          strings.description, audio
+          strings.description, options
         ))
       );
       expect(app.setImage).to.be.calledWith(
-        audio.imageURL,
+        options.imageURL,
         app.Media.ImageType.LARGE
       );
       expect(app.addSimpleResponse).to.be.calledWith(
         mustache.render(mustache.render(
           strings.description,
-          audio
+          options
         ))
       );
       expect(app.addSuggestionLink).to.be.calledOnce;
-      expect(app.addSuggestions).to.be.calledWith(audio.suggestions);
+      expect(app.addSuggestions).to.be.calledWith(options.suggestions);
     });
 
     it('should mute songs description speech and replace it with template (for example sound)', () => {
       const soundURL = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
 
-      playSong(app, Object.assign({}, audio, {
+      playSong(app, Object.assign({}, options, {
         speech: `
           <media soundLevel="-10db">
             <audio src="${soundURL}">
@@ -67,7 +67,7 @@ describe('dialog', () => {
 
       const description = mustache.render(mustache.render(
         strings.description,
-        audio
+        options
       ));
 
       expect(app.addSimpleResponse).to.be.calledOnce;
