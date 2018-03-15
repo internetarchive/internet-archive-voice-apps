@@ -11,7 +11,7 @@ describe('suggestions', () => {
 
     beforeEach(() => {
       albumProvider = mockAlbumProvider({
-        fetchAlbumsResolve: {
+        fetchAlbumsByQueryResolve: {
           items: [{
             coverage: 'NY',
             year: 2017,
