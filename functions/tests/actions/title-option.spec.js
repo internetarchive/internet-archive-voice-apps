@@ -19,16 +19,16 @@ describe('actions', () => {
   describe('title option handler', () => {
     it('should store title option', () => {
       let app = mockApp({
-        arguments: {
+        argument: {
           value: 'false',
         },
       });
 
-      playback.setMuteSpeechBeforePlayback(app, true);
-      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(true);
+      playback.setMuteSpeechBeforePlayback(app, false);
+      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(false);
       action.handler(app);
       expect(dialog.ask).to.be.called;
-      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(false);
+      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(true);
     });
   });
 });

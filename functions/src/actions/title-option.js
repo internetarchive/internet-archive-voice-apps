@@ -4,7 +4,8 @@ const strings = require('../strings').intents.titleOption;
 
 function handler (app) {
   const value = app.getArgument('value');
-  playback.setMuteSpeechBeforePlayback(app, value === 'true');
+  console.log('value', value);
+  playback.setMuteSpeechBeforePlayback(app, value === 'false');
   dialog.ask(app, strings[value]);
 }
 
