@@ -282,6 +282,15 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    titleOption: {
+      false: {
+        speech: 'Ok, we will mute title before each song',
+      },
+      true: {
+        speech: 'Ok, we will speech title before each song',
+      },
+    },
+
     unknown: [{
       speech: "I'm not sure what you said. Can you repeat that?",
     }, {
