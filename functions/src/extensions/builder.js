@@ -24,7 +24,7 @@ class Extensions {
       .filter(filename => path.basename(filename) !== 'index.js')
       .map(filename => require(filename))
       // skip files without exports
-      .filter(ext => Object.keys(ext).length > 0)
+      .filter(ext => typeof ext === 'function' || Object.keys(ext).length > 0);
   }
 
   /**
@@ -56,7 +56,7 @@ class Extensions {
    */
   find (handler) {
     return this.all()
-        .find(e => handler(e)) || null;
+      .find(e => handler(e)) || null;
   }
 }
 
