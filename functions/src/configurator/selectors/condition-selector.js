@@ -17,4 +17,5 @@ function process (options, context) {
 
 module.exports = {
   process,
+  support: (options) => options.every(o => o.condition),
 };

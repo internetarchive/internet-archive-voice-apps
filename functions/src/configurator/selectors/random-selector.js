@@ -13,4 +13,5 @@ function process (options, context) {
 
 module.exports = {
   process,
+  support: () => true,
 };

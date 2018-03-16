@@ -17,5 +17,15 @@ describe('extensions', () => {
         expect(extensions.getByName('not-existing')).to.be.null;
       });
     });
+
+    describe('find', () => {
+      it('should find the first extension which return true on handler', () => {
+        expect(extensions.find((ex) => ex.name === 'apple')).to.be.equal(require('./fixtures/apple'));
+      });
+
+      it(`shouldn't hit the index`, () => {
+        expect(extensions.find((ex) => ex.name === 'index')).to.be.null;
+      });
+    });
   });
 });
