@@ -2,8 +2,8 @@ const {expect} = require('chai');
 
 const selector = require('../../src/configurator/random-selector');
 
-describe('parser', () => {
-  describe('random options', () => {
+describe('configurator', () => {
+  describe('random selector', () => {
     it('should choose one options for the set of available', () => {
       const options = [
         'So twice five miles of fertile ground',
