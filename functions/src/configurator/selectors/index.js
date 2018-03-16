@@ -21,6 +21,9 @@ const find = (options, context) => {
 };
 
 const process = (options, context) => {
+  if (!Array.isArray(options)) {
+    return options;
+  }
   const extension = find(options, context);
   return extension && extension.process(options, context);
 };
