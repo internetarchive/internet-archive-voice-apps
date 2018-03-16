@@ -141,7 +141,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          '<emphasis level="low">What genre of music would you like to listen to? Please select a topic like <emphasis level="moderate">{{__resolvers.short-options.suggestions}}?</emphasis></emphasis>',
+          '<emphasis level="low">What genre of music would you like to listen to? Please select a topic like <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis></emphasis>',
         ],
 
         /**
@@ -231,7 +231,7 @@ module.exports = {
         ],
 
         prompts: [
-          '<emphasis level="low">What artist would you like to listen to? For example, <emphasis level="moderate">{{__resolvers.short-options.suggestions}}?</emphasis></emphasis>',
+          '<emphasis level="low">What artist would you like to listen to? For example, <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis></emphasis>',
         ],
 
         /**
@@ -303,7 +303,7 @@ module.exports = {
       acknowledges: [
         '<emphasis level="low">Welcome to music at the Internet Archive.</emphasis>'
       ],
-      speech: '<emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts?</emphasis></emphasis>',
+      speech: '<emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis></emphasis>',
       suggestions: ['78s', 'Live Concerts']
     },
   },
