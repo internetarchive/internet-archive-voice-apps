@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const selector = require('../../src/configurator/condition-selector');
+const selector = require('../../../src/configurator/selectors/condition-selector');
 
 describe('configurator', () => {
   describe('random selector', () => {
