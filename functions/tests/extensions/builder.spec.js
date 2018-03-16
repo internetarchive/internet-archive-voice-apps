@@ -3,6 +3,9 @@ const path = require('path');
 
 const builder = require('../../src/extensions/builder');
 
+const apple = require('./fixtures/apple');
+const banana = require('./fixtures/banana');
+
 describe('extensions', () => {
   describe('builder', () => {
     let extensions;
@@ -25,6 +28,14 @@ describe('extensions', () => {
 
       it(`shouldn't hit the index`, () => {
         expect(extensions.find((ex) => ex.name === 'index')).to.be.null;
+      });
+    });
+
+    describe('all', () => {
+      it('should return list of all extensions', () => {
+        const items = extensions.all();
+        expect(items).to.be.length(2)
+          .to.have.members([apple, banana]);
       });
     });
   });

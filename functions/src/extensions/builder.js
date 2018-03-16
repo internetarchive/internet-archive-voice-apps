@@ -16,6 +16,18 @@ class Extensions {
   }
 
   /**
+   * All extensions
+   */
+  all () {
+    return glob
+      .sync(path.join(this.root, '*.js'))
+      .filter(filename => path.basename(filename) !== 'index.js')
+      .map(filename => require(filename))
+      // skip files without exports
+      .filter(ext => Object.keys(ext).length > 0)
+  }
+
+  /**
    * Get extension by its name
    *
    * @param name
@@ -43,11 +55,8 @@ class Extensions {
    * @return {*}
    */
   find (handler) {
-    return glob
-      .sync(path.join(this.root, '*.js'))
-      .filter(filename => path.basename(filename) !== 'index.js')
-      .map(filename => require(filename))
-      .find(e => handler(e)) || null;
+    return this.all()
+        .find(e => handler(e)) || null;
   }
 }
 
