@@ -8,7 +8,7 @@ describe('feeders', () => {
       it('should include collections except fav', () => {
         const album = {
           id: '78_the-continental-you-kiss-while-youre-dancing_larry-adler-harbach-kern_gbia0034616',
-          collection: ['georgeblood', '78rpm_kusf', '78rpm', 'audio_music'],
+          collections: ['georgeblood', '78rpm_kusf', '78rpm', 'audio_music'],
           creator: ['Kern', 'Harbach', 'Conrad', 'Magidson', 'Larry Adler'],
           year: NaN,
           coverage: 'USA',
@@ -25,8 +25,8 @@ describe('feeders', () => {
         const feeder = new DefaultFeeder();
         const songs = feeder.processAlbumSongs(album);
         expect(songs).to.have.length(2);
-        expect(songs[0]).to.have.property('collection', album.collection);
-        expect(songs[1]).to.have.property('collection', album.collection);
+        expect(songs[0]).to.have.property('collections', album.collections);
+        expect(songs[1]).to.have.property('collections', album.collections);
       });
     });
   });

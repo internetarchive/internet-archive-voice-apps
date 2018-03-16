@@ -14,7 +14,7 @@ describe('dialog', () => {
     app = mockApp();
     options = {
       audioURL: 'https://archive.org/download/gd73-06-10d1t01.mp3',
-      collection: ['etree'],
+      collections: ['etree'],
       coverage: 'Washington, DC',
       creator: 'Grateful Dead',
       imageURL: 'https://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg',

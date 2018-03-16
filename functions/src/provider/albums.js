@@ -32,7 +32,7 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
     .then(json => {
       return {
         id,
-        collection: _.uniq(json.metadata
+        collections: _.uniq(json.metadata
           .collection
           .filter(c => !c.startsWith('fav-'))),
         creator: json.metadata.creator,

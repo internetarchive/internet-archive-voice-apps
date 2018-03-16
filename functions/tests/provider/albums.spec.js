@@ -44,7 +44,7 @@ describe('collection', () => {
 
       return albumsProvider.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
         .then(album => {
-          expect(album).to.have.property('collection').to.have.members([
+          expect(album).to.have.property('collections').to.have.members([
             'GratefulDead',
             'etree',
             'stream_only',
@@ -80,7 +80,7 @@ describe('collection', () => {
             .to.have.property('songs')
             .to.have.length(2);
 
-          expect(album).to.have.property('collection').to.have.members([
+          expect(album).to.have.property('collections').to.have.members([
             'georgeblood',
             '78rpm_kusf',
             '78rpm',

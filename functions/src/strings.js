@@ -26,7 +26,7 @@ module.exports = {
       /**
        * choose this one if song is from collection 'etree'
        */
-      condition: 'includes(collection, "etree")',
+      condition: 'includes(collections, "etree")',
 
       description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
@@ -44,10 +44,10 @@ module.exports = {
           <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
-      title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
+      title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
     }, {
-      description: 'Playing track - {{title}} of {{creator[0]}} {{year}}',
+      description: 'Playing track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -63,7 +63,7 @@ module.exports = {
           <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
-      title: '{{title}} by {{creator[0]}} {{year}}',
+      title: '{{title}} by {{creator}} {{year}}',
       suggestionLink: 'on Archive.org',
     }],
   },
