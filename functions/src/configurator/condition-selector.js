@@ -12,7 +12,7 @@ function process (options, context) {
     throw new Error('context argument should be defined');
   }
   return options
-    .filter(({condition}) => math.eval(condition, context))[0];
+    .find(({condition}) => math.eval(condition, context));
 }
 
 module.exports = {
