@@ -22,7 +22,7 @@ describe('actions', () => {
       expect(dialog.ask.args[0][1]).to.have.property('speech')
         .to.equal('Welcome to music at the Internet Archive. Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
-        .with.members(['<emphasis level="moderate">78s</emphasis>', '<emphasis level="moderate">Live Concerts</emphasis>']);
+        .with.members(['78s', 'Live Concerts']);
     });
 
     it('should reprompt with speech', () => {
