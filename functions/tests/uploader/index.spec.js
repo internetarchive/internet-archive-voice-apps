@@ -14,7 +14,6 @@ describe('uploader', () => {
       });
       it('should reject for unknown command', () => {
         const condition = index.execute(`anything`, `anything`);
-        //  postEntitiesToDF(entityname, dif, 0);
         expect(condition).to.have.string(`That was not a valid command`);
       });
     });
