@@ -10,7 +10,7 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:condition-s
  * @param context {Object}
  * @returns {string}
  */
-function process (options, context) {
+function find (options, context) {
   if (!context || typeof context !== 'object') {
     throw new Error('context argument should be defined');
   }
@@ -46,6 +46,6 @@ function process (options, context) {
 }
 
 module.exports = {
-  process,
+  find,
   support: (options) => options.some(o => o.condition),
 };

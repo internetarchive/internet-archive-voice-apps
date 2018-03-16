@@ -28,21 +28,19 @@ const find = (options, context) => {
   return extensions.find(e => !e.support);
 };
 
-/**
- * Use option from available set according to context
- *
- * @param options {Array|Object}
- * @param context {Object}
- * @returns {*}
- */
-const process = (options, context) => {
-  if (!Array.isArray(options)) {
-    return options;
-  }
-  const extension = find(options, context);
-  return extension && extension.process(options, context);
-};
-
 module.exports = Object.assign({}, extensions, {
-  process,
+  /**
+   * Use option from available set according to context
+   *
+   * @param options {Array|Object}
+   * @param context {Object}
+   * @returns {*}
+   */
+  find: (options, context) => {
+    if (!Array.isArray(options)) {
+      return options;
+    }
+    const extension = find(options, context);
+    return extension && extension.find(options, context);
+  },
 });

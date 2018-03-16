@@ -16,13 +16,13 @@ describe('configurator', () => {
 
     describe('index', () => {
       it('should choose random selector and process result on it', () => {
-        expect(selectors.process(options)).to.be.oneOf(options);
+        expect(selectors.find(options)).to.be.oneOf(options);
       });
     });
 
     describe('random selector', () => {
       it('should choose one options for the set of available', () => {
-        expect(selector.process(options)).to.be.oneOf(options);
+        expect(selector.find(options)).to.be.oneOf(options);
       });
     });
   });

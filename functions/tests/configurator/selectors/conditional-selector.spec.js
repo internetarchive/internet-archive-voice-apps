@@ -44,11 +44,11 @@ describe('configurator', () => {
 
     describe('index', () => {
       it('should choose random selector and process result on it', () => {
-        expect(selectors.process(options, context)).to.be.deep.equal(options[1]);
+        expect(selectors.find(options, context)).to.be.deep.equal(options[1]);
       });
 
       it('should choose random selector for options with default option', () => {
-        expect(selectors.process(optionsWithDefault, {
+        expect(selectors.find(optionsWithDefault, {
           value: 100,
         })).to.be.deep.equal(optionsWithDefault[3]);
       });
@@ -56,11 +56,11 @@ describe('configurator', () => {
 
     describe('conditional selector', () => {
       it('should choose one options for the set of available', () => {
-        expect(selector.process(options, context)).to.be.deep.equal(options[1]);
+        expect(selector.find(options, context)).to.be.deep.equal(options[1]);
       });
 
       it('should choose default option if the result is not valid', () => {
-        expect(selector.process(optionsWithDefault, {
+        expect(selector.find(optionsWithDefault, {
           value: 100,
         })).to.be.deep.equal(optionsWithDefault[3]);
       });

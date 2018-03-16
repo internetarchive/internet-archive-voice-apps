@@ -35,13 +35,13 @@ function handler (app) {
 
   const answer = [];
 
-  let slotScheme = selectors.process(availableSchemes, query.getSlots(app));
+  let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
-  const newScheme = selectors.process(availableSchemes, query.getSlots(app));
+  const newScheme = selectors.find(availableSchemes, query.getSlots(app));
   if (slotScheme !== newScheme) {
     slotScheme = newScheme;
     // update slots for new scheme

@@ -6,7 +6,7 @@ describe('configurator', () => {
   describe('selectors', () => {
     describe('index', () => {
       it(`should return passed value if it isn't array`, () => {
-        expect(selectors.process('brave new world')).to.be.equal('brave new world');
+        expect(selectors.find('brave new world')).to.be.equal('brave new world');
       });
     });
   });

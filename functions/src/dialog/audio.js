@@ -1,7 +1,8 @@
 const mustache = require('mustache');
 
 const config = require('../config');
-const strings = require('../strings').dialog.playSong;
+const selectors = require('../configurator/selectors');
+const availableStrings = require('../strings').dialog.playSong;
 const {debug} = require('../utils/logger')('ia:dialog:audio');
 
 /**
@@ -20,6 +21,7 @@ const {debug} = require('../utils/logger')('ia:dialog:audio');
  */
 function playSong (app, options) {
   debug(`Play song: ${JSON.stringify(options)}`);
+  const strings = selectors.find(availableStrings, options);
   const description = mustache.render(strings.description, options);
   let response = app.buildRichResponse();
   const {speech} = options;
@@ -64,6 +66,7 @@ function playSong (app, options) {
  * @returns {Object}
  */
 function processOptions (options, {muteSpeech}) {
+  const strings = selectors.find(availableStrings, options);
   return Object.assign({}, options,
     {speech: muteSpeech && strings.speech}
   );

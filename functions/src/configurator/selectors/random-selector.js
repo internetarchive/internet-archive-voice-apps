@@ -7,10 +7,10 @@ const _ = require('lodash');
  * @param context
  * @returns {*}
  */
-function process (options, context) {
+function find (options, context) {
   return _.sample(options);
 }
 
 module.exports = {
-  process,
+  find,
 };
