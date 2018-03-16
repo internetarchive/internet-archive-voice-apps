@@ -31,6 +31,7 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
     .then(json => {
       return {
         id,
+        collection: json.metadata.collection.filter(c => !c.startsWith('fav-')),
         creator: json.metadata.creator,
         year: parseInt(json.metadata.year),
         coverage: json.metadata.coverage,
