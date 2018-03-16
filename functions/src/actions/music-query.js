@@ -35,13 +35,13 @@ function handler (app) {
 
   const answer = [];
 
-  let slotScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  let slotScheme = selectors.process(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
-  const newScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  const newScheme = selectors.process(availableSchemes, query.getSlots(app));
   if (slotScheme !== newScheme) {
     slotScheme = newScheme;
     // update slots for new scheme
@@ -141,21 +141,6 @@ function applyDefaultSlots (app, defaults) {
     });
 
   debug('We have used defaults:', appliedDefaults);
-}
-
-/**
- * Get valid slot scheme by to meet conditions
- *
- * @param availableSchemes
- * @param slotsState
- * @returns {*}
- */
-function getActualSlotScheme (availableSchemes, slotsState) {
-  if (!Array.isArray(availableSchemes)) {
-    return availableSchemes;
-  }
-
-  return selectors.process(availableSchemes, slotsState);
 }
 
 /**
