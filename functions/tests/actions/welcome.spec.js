@@ -20,7 +20,7 @@ describe('actions', () => {
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
       expect(dialog.ask.args[0][1]).to.have.property('speech')
-        .to.equal('Welcome to music at the Internet Archive. Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?');
+        .to.equal('<emphasis level="low">Welcome to music at the Internet Archive.</emphasis> <emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts?</emphasis></emphasis>');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
         .with.members(['78s', 'Live Concerts']);
     });
@@ -29,7 +29,7 @@ describe('actions', () => {
       let app = mockApp();
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
-        .to.include('Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?');
+        .to.include('<emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts?</emphasis></emphasis>');
     });
   });
 });

@@ -141,7 +141,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          'What genre of music would you like to listen to? Please select a topic like <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
+          '<emphasis level="low">What genre of music would you like to listen to? Please select a topic like <emphasis level="moderate">{{__resolvers.short-options.suggestions}}?</emphasis></emphasis>',
         ],
 
         /**
@@ -212,7 +212,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Would you like to listen to music from our collections of <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
+          '<emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">{{__resolvers.short-options.suggestions}}?</emphasis></emphasis>',
         ],
 
         /**
@@ -231,7 +231,7 @@ module.exports = {
         ],
 
         prompts: [
-          'What artist would you like to listen to? For example, <emphasis level="moderate">{{__resolvers.short-options.suggestions}}</emphasis>?',
+          '<emphasis level="low">What artist would you like to listen to? For example, <emphasis level="moderate">{{__resolvers.short-options.suggestions}}?</emphasis></emphasis>',
         ],
 
         /**
@@ -248,7 +248,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Do you have a specific city and year in mind, like <emphasis level="moderate">{{suggestions.0}}</emphasis>, or would you like me to play something randomly?',
+          '<emphasis level="low">Do you have a specific city and year in mind, like <emphasis level="moderate">{{suggestions.0}}</emphasis>, or would you like me to play something randomly?</emphasis>',
         ],
 
         /**
@@ -264,7 +264,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{creator}} has played in {{coverage}} sometime <emphasis level="moderate">{{__resolvers.years-interval.suggestions}}</emphasis>. Do you have a particular year in mind?',
+          '<emphasis level="low">Ok, {{creator}} has played in {{coverage}} sometime <emphasis level="moderate">{{__resolvers.years-interval.suggestions}}</emphasis>. Do you have a particular year in mind?</emphasis>',
         ],
       }],
 
@@ -301,9 +301,9 @@ module.exports = {
 
     welcome: {
       acknowledges: [
-        'Welcome to music at the Internet Archive.'
+        '<emphasis level="low">Welcome to music at the Internet Archive.</emphasis>'
       ],
-      speech: 'Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?',
+      speech: '<emphasis level="low">Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts?</emphasis></emphasis>',
       suggestions: ['78s', 'Live Concerts']
     },
   },
