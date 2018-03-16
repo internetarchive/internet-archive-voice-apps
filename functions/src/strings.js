@@ -304,7 +304,7 @@ module.exports = {
         'Welcome to music at the Internet Archive.'
       ],
       speech: 'Would you like to listen to music from our collections of <emphasis level="moderate">78s</emphasis> or <emphasis level="moderate">Live Concerts</emphasis>?',
-      suggestions: ['<emphasis level="moderate">78s</emphasis>', '<emphasis level="moderate">Live Concerts</emphasis>']
+      suggestions: ['78s', 'Live Concerts']
     },
   },
 
