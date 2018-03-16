@@ -16,6 +16,9 @@ describe('mathjs', () => {
     it('should be true when collection includes value', () => {
       expect(math.eval('includes([1,2], 1)')).to.be.true;
       expect(math.eval('includes(["a","b"], "a")')).to.be.true;
+      expect(math.eval('includes(options, "a")', {
+        options: ['a', 'b'],
+      })).to.be.true;
     });
 
     it('should be false when collection includes value', () => {

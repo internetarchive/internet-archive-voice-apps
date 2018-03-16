@@ -1,5 +1,7 @@
 const _ = require('lodash');
 
+const {debug} = require('../../utils/logger')('ia:selectors:random-selector');
+
 /**
  * Choose one option
  *
@@ -8,6 +10,7 @@ const _ = require('lodash');
  * @returns {*}
  */
 function find (options, context) {
+  debug('Select option randomly');
   return _.sample(options);
 }
 

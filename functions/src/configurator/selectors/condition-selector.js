@@ -11,6 +11,8 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:condition-s
  * @returns {string}
  */
 function find (options, context) {
+  debug('Select option by condition');
+
   if (!context || typeof context !== 'object') {
     throw new Error('context argument should be defined');
   }

@@ -22,8 +22,13 @@ module.exports = {
   },
 
   dialog: {
-    playSong: {
-      description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+    playSong: [{
+      /**
+       * choose this one if song is from collection 'etree'
+       */
+      condition: 'includes(collection, "etree")',
+
+      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -41,7 +46,26 @@ module.exports = {
       `,
       title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
       suggestionLink: 'on Archive.org',
-    }
+    }, {
+      description: 'Playing track - {{title}} of {{creator[0]}} {{year}}',
+      // We should "say" something or play a sound between songs
+      // official response:
+      // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
+      //
+      // we can choose any sound from here
+      // https://developers.google.com/actions/tools/sound-library/
+      // [!] but we should use it for Google actions only
+      speech: `
+        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+               clipBegin="4.5s"
+               clipEnd="5.5s"
+               soundLevel="10db">
+          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+        </audio>
+      `,
+      title: '{{title}} by {{creator[0]}} {{year}}',
+      suggestionLink: 'on Archive.org',
+    }],
   },
 
   /**
