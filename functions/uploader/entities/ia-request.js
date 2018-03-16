@@ -7,6 +7,12 @@ const mustache = require('mustache');
 const config = require('../../config');
 const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
 
+/**
+ * get unique & filtered entities for DialogFlow
+ *
+ * @param docs {array}
+ * @returns entities {array}
+ */
 function getUniqueCreatorsFromIA (docs) {
   var creators = [];
   var strCreator = ``;
@@ -31,6 +37,13 @@ function getUniqueCreatorsFromIA (docs) {
   return _.uniq(creators);
 }
 
+/**
+ * get entities from InternetArchive
+ *
+ * @param id {string}
+ * @param limit {int}
+ * @returns entities {array}
+ */
 function fetchEntitiesFromIA (id, limit) {
   var page = 0;
   var sort = 'downloads+desc';
@@ -57,6 +70,14 @@ function fetchEntitiesFromIA (id, limit) {
     });
 }
 
+/**
+ * get unique & filtered entities from InternetArchive & post to DialogFlow
+ *
+ * @param entityname {string}
+ * @param id {string}
+ * @param limit {int}
+ * @returns {promise}
+ */
 function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
   return Promise.all([
     fetchEntitiesFromIA(id, limit),

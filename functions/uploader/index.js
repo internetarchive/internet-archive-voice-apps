@@ -22,6 +22,11 @@ const all = {
 
 handle(process.argv);
 
+/**
+ * handle command line input from process.argv
+ *
+ * @param argv {array}
+ */
 function handle (argv) {
   debug(argv);
   if (argv.length < 3 || argv[2] === ALL) {
@@ -32,6 +37,13 @@ function handle (argv) {
     execute(argv[2], argv[3]);
   }
 }
+
+/**
+ * execute uploader based on command line input
+ *
+ * @param level1 {string}
+ * @param level2 {string}
+ */
 
 function execute (level1, level2) {
   if (level1 === ALL) {

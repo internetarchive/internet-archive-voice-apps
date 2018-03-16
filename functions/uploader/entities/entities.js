@@ -10,12 +10,20 @@ const MAX_ENTITY = 30000;
 const MAX_REQUEST = 1000;
 
 const basicHeaderRequest = {
-  'content-type': 'application/json; charset=UTF-8',
-  'authorization': 'BEARER DIALOG_FLOW_DEV_TOKEN'
+  `content-type`: `application/json; charset=UTF-8`,
+  `authorization`: `BEARER ${process.env.AUTHORIZATION}`
 };
 
 // Maximum 1,000 records per request
 // Maximum 30,000 records per entity
+/**
+ * Post entities to DialogFlow
+ *
+ * @param entityname {string}
+ * @param entities {array}
+ * @param first {int} suppose to be 0
+ * @returns {Promise}
+ */
 function postEntitiesToDF (entityname, entities, first) {
   debug(`first : ` + first);
   debug(`Entities Length : ` + entities.length);
@@ -66,6 +74,12 @@ function postEntitiesToDF (entityname, entities, first) {
     });
 }
 
+/**
+ * Get entities from DialogFlow
+ *
+ * @param entityname {string}
+ * @returns entities {array}
+ */
 function fetchEntitiesFromDF (entityname) {
   debug(`fetching entity data from DF...`);
   return fetch(mustache.render(
@@ -90,36 +104,8 @@ function fetchEntitiesFromDF (entityname) {
       return Promise.reject(e);
     });
 }
-function deleteAllEntitiesFromDF (entityname) {
-  return Promise.all([
-    fetchEntitiesFromDF(entityname),
-  ])
-    .then(entities => {
-      var spliceCreators = entities.splice(0, 1);
-      deleteEntitiesFromDF(spliceCreators);
-    });
-}
-function deleteEntitiesFromDF (entities, entityname) {
-  return fetch(mustache.render(
-    config.dfendpoints.DF_ENTITY_DELETE_URL,
-    {
-      entityname,
-    }
-  ), {method: `DELETE`, body: JSON.stringify(entities), headers: basicHeaderRequest})
-    .then(res => res.json())
-    .then(data => {
-      debug(util.inspect(data, false, null));
-      debug(`Deleted Entity to dialogflow Successfully.`);
-    })
-    .catch(e => {
-      error(`Get error in deleting entity in DF, error: ${JSON.stringify(e)}`);
-      return Promise.reject(e);
-    });
-}
 
 module.exports = {
   postEntitiesToDF,
   fetchEntitiesFromDF,
-  deleteAllEntitiesFromDF,
-  deleteEntitiesFromDF,
 };

@@ -48,7 +48,6 @@ describe('uploader', () => {
           it('should fetch collection from IA', () => {
             iaRequest.fetchEntitiesFromIA(`etree`, `10`)
               .then(items => {
-                console.log(util.inspect(items, false, null));
                 for (let i = 0; i < items.length; i++) {
                   expect(items[i]).to.be.a('string');
                 }
