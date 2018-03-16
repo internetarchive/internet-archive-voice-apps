@@ -90,9 +90,7 @@ module.exports = {
     musicQuery: [{
       name: 'george blood collection',
 
-      conditions: [
-        'collectionId == "georgeblood"'
-      ],
+      condition: 'collectionId == "georgeblood"',
 
       slots: [
         'collectionId',

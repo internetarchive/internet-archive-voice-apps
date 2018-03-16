@@ -1,7 +1,7 @@
 const _ = require('lodash');
-const math = require('mathjs');
 const mustache = require('mustache');
 
+const selectors = require('../configurator/selectors');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
@@ -155,32 +155,7 @@ function getActualSlotScheme (availableSchemes, slotsState) {
     return availableSchemes;
   }
 
-  return availableSchemes.find((scheme, idx) => {
-    if (!scheme.conditions) {
-      // DEFAULT
-      debug('we get default slot scheme');
-
-      // if scheme doesn't have conditions it is default scheme
-      // usually it is at the end of list
-
-      if (idx < availableSchemes.length - 1) {
-        // if we have schemes after the default one
-        // we should warn about it
-        // because we won't never reach schemes after default one
-        warning('we have schemes after the default one', scheme.name || '');
-      }
-      return true;
-    }
-
-    // all conditionals should be valid
-    try {
-      return scheme.conditions
-        .every(condition => math.eval(condition, slotsState));
-    } catch (error) {
-      debug(`Get error from Math.js:`, error && error.message);
-      return false;
-    }
-  });
+  return selectors.process(availableSchemes, slotsState);
 }
 
 /**

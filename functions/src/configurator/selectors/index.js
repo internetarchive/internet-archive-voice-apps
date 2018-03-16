@@ -18,7 +18,7 @@ const find = (options, context) => {
 
   // default selector doesn't have support
   return extensions.find(e => !e.support);
-}
+};
 
 const process = (options, context) => {
   const extension = find(options, context);
