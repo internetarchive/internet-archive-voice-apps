@@ -10,8 +10,15 @@ const builder = require('../../extensions/builder');
 
 const extensions = builder.build({root: __dirname});
 
-const find = (options, context) =>
-  extensions.find(e => e.support(options, context));
+const find = (options, context) => {
+  const ext = extensions.find(e => e.support && e.support(options, context));
+  if (ext) {
+    return ext;
+  }
+
+  // default selector doesn't have support
+  return extensions.find(e => !e.support);
+}
 
 const process = (options, context) => {
   const extension = find(options, context);
