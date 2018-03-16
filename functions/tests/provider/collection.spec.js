@@ -3,7 +3,7 @@ const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const collection = rewire('../../provider/collection');
+const collection = rewire('../../src/provider/collection');
 
 const seventyEight = require('./fixtures/georgeblood.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');

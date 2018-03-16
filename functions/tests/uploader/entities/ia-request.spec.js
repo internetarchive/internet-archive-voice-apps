@@ -2,7 +2,6 @@ const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
-const util = require('util');
 
 const iaRequest = rewire('../../../uploader/entities/ia-request');
 

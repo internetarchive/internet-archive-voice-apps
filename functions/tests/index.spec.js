@@ -1,11 +1,15 @@
 const {expect} = require('chai');
+const admin = require('firebase-admin');
+const functions = require('firebase-functions');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-const index = rewire('..');
-
 const {wait} = require('./_utils/wait');
+
+let adminInitStub = sinon.stub(admin, 'initializeApp');
+let configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
+let index = rewire('..');
 
 describe('playMedia', () => {
   let res;
@@ -40,5 +44,11 @@ describe('playMedia', () => {
         expect(warning.getCall(0).args[0]).to.includes(action);
         expect(warning).to.be.calledOnce;
       });
+  });
+
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
   });
 });

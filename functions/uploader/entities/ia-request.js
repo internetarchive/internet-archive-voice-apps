@@ -4,7 +4,7 @@ const error = require(`debug`)(`ia:uploader:entities:error`);
 const fetch = require(`node-fetch`);
 const mustache = require('mustache');
 
-const config = require('../../config');
+const config = require('../../src/config');
 const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
 
 /**

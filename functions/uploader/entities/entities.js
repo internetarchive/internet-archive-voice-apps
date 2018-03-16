@@ -10,8 +10,8 @@ const MAX_ENTITY = 30000;
 const MAX_REQUEST = 1000;
 
 const basicHeaderRequest = {
-  `content-type`: `application/json; charset=UTF-8`,
-  `authorization`: `BEARER ${process.env.AUTHORIZATION}`
+  'content-type': `application/json; charset=UTF-8`,
+  'authorization': `BEARER ${process.env.AUTHORIZATION}`
 };
 
 // Maximum 1,000 records per request

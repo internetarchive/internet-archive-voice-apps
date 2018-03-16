@@ -3,7 +3,7 @@ const fetchMock = require('fetch-mock');
 fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const albumsProvider = rewire('../../provider/albums');
+const albumsProvider = rewire('../../src/provider/albums');
 
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
@@ -21,7 +21,7 @@ describe('collection', () => {
     });
 
     it('should fetch items of collection', () => {
-      return albumsProvider.fetchAlbums('OfARevolution', {limit: 3})
+      return albumsProvider.fetchAlbumsByCreatorId('OfARevolution', {limit: 3})
         .then(albums => {
           const items = albums.items;
           expect(items[0]).to.have.property('identifier', 'oar00-09-27');
@@ -102,7 +102,7 @@ describe('collection', () => {
             'GET'
           )).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            'collection:(collection-1)' +
+            'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
@@ -123,7 +123,7 @@ describe('collection', () => {
             'GET'
           )).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            '(collection:(collection-1) OR collection:(collection-2))' +
+            'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +

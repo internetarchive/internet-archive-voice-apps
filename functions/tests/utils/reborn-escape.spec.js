@@ -1,5 +1,6 @@
 const {expect} = require('chai');
-const rebortEscape = require('../../utils/reborn-escape');
+
+const rebortEscape = require('../../src/utils/reborn-escape');
 
 describe('utils', () => {
   describe('reborn-escape', () => {

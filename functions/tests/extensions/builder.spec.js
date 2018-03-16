@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const path = require('path');
 
-const builder = require('../../extensions/builder');
+const builder = require('../../src/extensions/builder');
 
 describe('extensions', () => {
   describe('builder', () => {
