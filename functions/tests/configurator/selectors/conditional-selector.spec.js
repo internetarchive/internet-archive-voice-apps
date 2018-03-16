@@ -46,6 +46,12 @@ describe('configurator', () => {
       it('should choose random selector and process result on it', () => {
         expect(selectors.process(options, context)).to.be.deep.equal(options[1]);
       });
+
+      it('should choose random selector for options with default option', () => {
+        expect(selectors.process(optionsWithDefault, {
+          value: 100,
+        })).to.be.deep.equal(optionsWithDefault[3]);
+      });
     });
 
     describe('conditional selector', () => {
