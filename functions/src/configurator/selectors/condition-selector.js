@@ -24,7 +24,7 @@ function find (options, context) {
         try {
           return math.eval(condition, context);
         } catch (error) {
-          warning(`Get error from Math.js:`, error && error.message);
+          debug(`Get error from Math.js:`, error && error.message);
           return false;
         }
       }
