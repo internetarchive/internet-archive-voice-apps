@@ -148,7 +148,7 @@ module.exports = {
        */
       acknowledges: [
         'Ok! Lets go with {{creator}} performer!',
-        `You've selected {{__resolvers.alias.collectionId}} collection.`,
+        `You've selected {{__resolvers.alias.collectionId}}.`,
       ],
 
       prompts: [{
