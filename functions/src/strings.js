@@ -219,7 +219,7 @@ module.exports = {
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{creator}} band!',
-        `You've selected {{__resolvers.alias.collectionId}} collection.`,
+        `You've selected {{__resolvers.alias.collectionId}}.`,
       ],
 
       /**
