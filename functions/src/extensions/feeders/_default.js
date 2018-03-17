@@ -70,7 +70,9 @@ class DefaultFeeder {
       .map((song, idx) => Object.assign({}, song, {
         audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(
           album.id, rebortEscape(song.filename)),
+        collections: album.collections,
         coverage: album.coverage,
+        creator: album.creator,
         imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
         // TODO : add recommendations
         suggestions: ['Next'],

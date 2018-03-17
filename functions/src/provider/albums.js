@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const mustache = require('mustache');
 const fetch = require('node-fetch');
 
@@ -31,6 +32,9 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
     .then(json => {
       return {
         id,
+        collections: _.uniq(json.metadata
+          .collection
+          .filter(c => !c.startsWith('fav-'))),
         creator: json.metadata.creator,
         year: parseInt(json.metadata.year),
         coverage: json.metadata.coverage,
