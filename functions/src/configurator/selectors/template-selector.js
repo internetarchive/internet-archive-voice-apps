@@ -11,7 +11,7 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:template-se
  * @returns {Promise.<null>}
  */
 function find (options, context) {
-  debug('Select option as template');
+  debug('sgelect option as template');
 
   const prioritySlots = context.prioritySlots;
   debug('the priority slots are:', prioritySlots);
@@ -80,6 +80,7 @@ function getMatchedTemplatesExactly (templateRequirements, slots) {
 
 module.exports = {
   find,
+
   /**
    * we support options which has slots to fill in
    * @param options
