@@ -15,15 +15,15 @@ describe('configurator', () => {
     describe('index', () => {
       xit('should choose template selector and process result on it', () => {
         expect(selectors.find(options, {
-          keys: ['coverage', 'year'],
+          prioritySlots: ['coverage', 'year'],
         })).to.be.equal(options[1]);
       });
     });
 
     describe('template selector', () => {
-      xit('should choose matched by keys', () => {
+      it('should choose matched by keys', () => {
         expect(selector.find(options, {
-          keys: ['coverage', 'year'],
+          prioritySlots: ['coverage', 'year'],
         })).to.be.equal(options[1]);
       });
     });
