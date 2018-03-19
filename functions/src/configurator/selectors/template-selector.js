@@ -32,7 +32,7 @@ function find (options, context) {
 
     if (!validAcknowledges || validAcknowledges.length === 0) {
       warning(`there is no valid templates for ${prioritySlots}. Maybe we should write few?`);
-      return Promise.resolve(null);
+      return null;
     }
 
     debug('we have partly matched template', validAcknowledges);

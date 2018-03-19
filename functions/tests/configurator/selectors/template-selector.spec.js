@@ -48,6 +48,12 @@ describe('configurator', () => {
             prioritySlots: ['coverage', 'year'],
           })).to.be.equal(options[1]);
         });
+
+        it(`should return null in case when we don't have `, () => {
+          expect(selector.find(options, {
+            prioritySlots: ['collection'],
+          })).to.be.null;
+        });
       });
 
       describe('getMatchedTemplates', () => {
