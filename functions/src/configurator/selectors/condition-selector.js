@@ -11,7 +11,7 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:condition-s
  * @returns {string}
  */
 function find (options, context) {
-  debug('Select option by condition');
+  debug('select option by condition');
 
   if (!context || typeof context !== 'object') {
     throw new Error('context argument should be defined');
@@ -24,7 +24,7 @@ function find (options, context) {
         try {
           return math.eval(condition, context);
         } catch (error) {
-          warning(`Get error from Math.js:`, error && error.message);
+          debug(`Get error from Math.js:`, error && error.message);
           return false;
         }
       }

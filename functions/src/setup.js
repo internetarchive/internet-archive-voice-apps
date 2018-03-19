@@ -7,7 +7,9 @@ const replaceSpeechIfMuted = require('./dialog/middlewares/replace-speech-if-mut
 const mathjsExtensions = require('./mathjs');
 
 module.exports = () => {
-  const pipeline = new Pipeline().use(replaceSpeechIfMuted());
+  const pipeline = new Pipeline()
+    .use(replaceSpeechIfMuted(require('./strings').dialog.playSong));
+
   dialog.use(pipeline);
 
   mathjsExtensions.patch();

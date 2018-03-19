@@ -6,9 +6,6 @@ const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const {
-  extractRequrements,
-  getMatchedTemplates,
-  getMatchedTemplatesExactly,
   getPromptsForSlots,
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
@@ -233,31 +230,16 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   debug('and get new slots:', newValues);
 
-  const acknowledgeRequirements = extractRequrements(slotScheme.acknowledges);
+  const template = selectors.find(slotScheme.acknowledges, {
+    prioritySlots: newNames,
+  });
 
-  // find the list of acknowledges which match recieved slots
-  let validAcknowledges = getMatchedTemplatesExactly(
-    acknowledgeRequirements,
-    newNames
-  );
-
-  if (!validAcknowledges || validAcknowledges.length === 0) {
-    validAcknowledges = getMatchedTemplates(
-      acknowledgeRequirements,
-      newNames
-    );
-
-    if (!validAcknowledges || validAcknowledges.length === 0) {
-      warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
-      return Promise.resolve(null);
-    }
-
-    debug('we have partly matched acknowledges', validAcknowledges);
-  } else {
-    debug('we have exactly matched acknowledges', validAcknowledges);
+  if (!template) {
+    debug(`we haven't found right acknowledge maybe we should create few for "${newNames}"`);
+    return Promise.resolve(null);
   }
 
-  const template = _.sample(validAcknowledges);
+  debug('we got matched acknowledge', template);
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
