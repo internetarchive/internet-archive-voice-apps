@@ -1,8 +1,6 @@
 const _ = require('lodash');
 
-const {
-  extractRequrements,
-} = require('../parsers/extract-requirements');
+const extractor = require('../parsers/extract-requirements');
 const {debug, warning} = require('../../utils/logger')('ia:selectors:template-selector');
 
 /**
@@ -18,7 +16,7 @@ function find (options, context) {
   const prioritySlots = context.prioritySlots;
   debug('the priority slots are:', prioritySlots);
 
-  const acknowledgeRequirements = extractRequrements(options);
+  const acknowledgeRequirements = extractor.extractRequrements(options);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
@@ -82,7 +80,11 @@ function getMatchedTemplatesExactly (templateRequirements, slots) {
 
 module.exports = {
   find,
-  support: (options) => false,
+  /**
+   * we support options which has slots to fill in
+   * @param options
+   */
+  support: (options) => options.some(o => extractor.getListOfRequiredSlots(o).length > 0),
 
   // we extract those function for test purpose in the first place
   getMatchedTemplates,

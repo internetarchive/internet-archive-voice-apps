@@ -14,7 +14,7 @@ describe('configurator', () => {
     ];
 
     describe('index', () => {
-      xit('should choose template selector and process result on it', () => {
+      it('should choose template selector and process result on it', () => {
         expect(selectors.find(options, {
           prioritySlots: ['coverage', 'year'],
         })).to.be.equal(options[1]);
@@ -22,10 +22,32 @@ describe('configurator', () => {
     });
 
     describe('template selector', () => {
-      it('should choose matched by keys', () => {
-        expect(selector.find(options, {
-          prioritySlots: ['coverage', 'year'],
-        })).to.be.equal(options[1]);
+      describe('support', () => {
+        it('should support template looking options', () => {
+          expect(selector.support(options, {
+            prioritySlots: ['coverage', 'year'],
+          })).to.be.true;
+        });
+
+        it(`should skipped options which doesn't look like template`, () => {
+          expect(selector.support([
+            'But oh! that deep romantic chasm which slanted',
+            'Down the green hill athwart a cedarn cover!',
+            'A savage place! as holy and enchanted',
+            'As e’er beneath a waning moon was haunted',
+            'By woman wailing for her demon-lover!',
+          ], {
+            prioritySlots: ['coverage', 'year'],
+          })).to.be.false;
+        });
+      });
+
+      describe('find', () => {
+        it('should choose matched by keys', () => {
+          expect(selector.find(options, {
+            prioritySlots: ['coverage', 'year'],
+          })).to.be.equal(options[1]);
+        });
       });
 
       describe('getMatchedTemplates', () => {

@@ -47,7 +47,7 @@ function extractRequrements (templates) {
 }
 
 /**
- * Get list of slots which need for this template
+ * Get list of slots which are needed for this template
  *
  * @param {string} template
  * @returns {Array}
