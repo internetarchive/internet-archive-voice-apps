@@ -2,9 +2,7 @@ const _ = require('lodash');
 
 const {
   extractRequrements,
-  getMatchedTemplates,
-  getMatchedTemplatesExactly,
-} = require('../../slots/slots-of-template');
+} = require('../parsers/extract-requirements');
 const {debug, warning} = require('../../utils/logger')('ia:selectors:template-selector');
 
 /**
@@ -49,7 +47,44 @@ function find (options, context) {
   return _.sample(validAcknowledges);
 }
 
+/**
+ * Get list of templates which match slots
+ *
+ * @param {Array} templateRequirements
+ * @param {Object} slots
+ * @returns {Array
+ */
+function getMatchedTemplates (templateRequirements, slots) {
+  return templateRequirements && templateRequirements
+    .filter(
+      ({requirements}) => requirements.every(r => _.includes(slots, r))
+    )
+    .map(({template}) => template);
+}
+
+/**
+ * Get list of templates which match slots exactly
+ *
+ * @param {Array} templates
+ * @param {Object} slots
+ * @returns {Array
+ */
+function getMatchedTemplatesExactly (templateRequirements, slots) {
+  const numOfSlots = slots.length;
+  return templateRequirements && templateRequirements
+    .filter(({requirements}) => {
+      const intersection = _.intersection(requirements, slots);
+      return intersection.length === requirements.length &&
+        intersection.length === numOfSlots;
+    })
+    .map(({template}) => template);
+}
+
 module.exports = {
   find,
   support: (options) => false,
+
+  // we extract those function for test purpose in the first place
+  getMatchedTemplates,
+  getMatchedTemplatesExactly,
 };
