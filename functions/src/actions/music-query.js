@@ -250,10 +250,10 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
   return Promise
     .resolve({slots, speech: template})
     .then(fulfilResolvers())
-    .then(({slots}) => {
+    .then(({slots, speech}) => {
       return {
         speech: mustache.render(
-          template,
+          speech,
           Object.assign({}, newValues, slots)
         ),
       };

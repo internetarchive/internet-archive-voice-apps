@@ -203,35 +203,51 @@ describe('actions', () => {
         let fulfilResolvers;
         let fulfilResolversHandler;
 
-        beforeEach(() => {
-          fulfilResolversHandler = sinon.stub().returns({
-            slots: {creator: {title: 'Grateful Dead'}}
-          });
-          fulfilResolvers = () => fulfilResolversHandler;
-          revert = action.__set__('fulfilResolvers', fulfilResolvers);
-        });
-
-        afterEach(() => {
-          revert();
-        });
-
-        it('should acknowledge are received values', () => {
-          app = mockApp({
-            argument: {
-              coverage: 'Kharkiv',
-              year: 2017,
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include('Kharkiv 2017 - great choice!');
+        describe('speech', () => {
+          beforeEach(() => {
+            fulfilResolversHandler = sinon.stub().returns({
+              slots: {creator: {title: 'Grateful Dead'}},
+              speech: '{{coverage}} {{year}} - great choice!',
             });
+            fulfilResolvers = () => fulfilResolversHandler;
+            revert = action.__set__('fulfilResolvers', fulfilResolvers);
+          });
+
+          afterEach(() => {
+            revert();
+          });
+
+          it('should acknowledge are received values', () => {
+            app = mockApp({
+              argument: {
+                coverage: 'Kharkiv',
+                year: 2017,
+              },
+            });
+            return action.handler(app)
+              .then(() => {
+                expect(dialog.ask).to.have.been.calledOnce;
+                expect(dialog.ask.args[0][1])
+                  .to.have.property('speech')
+                  .to.include('Kharkiv 2017 - great choice!');
+              });
+          });
         });
 
         describe('resolving', () => {
+          beforeEach(() => {
+            fulfilResolversHandler = sinon.stub().returns({
+              slots: {creator: {title: 'Grateful Dead'}},
+              speech: 'Ok! Lets go with {{creator.title}} band!',
+            });
+            fulfilResolvers = () => fulfilResolversHandler;
+            revert = action.__set__('fulfilResolvers', fulfilResolvers);
+          });
+
+          afterEach(() => {
+            revert();
+          });
+
           it('should substitute resolved slots', () => {
             app = mockApp({
               argument: {
@@ -302,7 +318,8 @@ describe('actions', () => {
 
         beforeEach(() => {
           fulfilResolversHandler = sinon.stub().returns({
-            slots: {creator: {title: 'Grateful Dead'}}
+            slots: {creator: {title: 'Grateful Dead'}},
+            speech: 'Ok! Lets go with {{creator.title}} band!',
           });
           fulfilResolvers = () => fulfilResolversHandler;
           revert = action.__set__('fulfilResolvers', fulfilResolvers);
@@ -509,7 +526,8 @@ describe('actions', () => {
 
           beforeEach(() => {
             fulfilResolversHandler = sinon.stub().returns({
-              slots: {creator: {title: 'Grateful Dead'}}
+              slots: {creator: {title: 'Grateful Dead'}},
+              speech: 'Ok! Lets go with {{creator.title}} band!',
             });
             fulfilResolvers = () => fulfilResolversHandler;
             revert = action.__set__('fulfilResolvers', fulfilResolvers);
