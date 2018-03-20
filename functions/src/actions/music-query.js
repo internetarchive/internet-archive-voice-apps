@@ -81,27 +81,13 @@ function handler (app) {
 
   return generateAcknowledge({app, slots, slotScheme, newValues})
     .then(fulfilResolvers())
-    .then((args) => {
-      const {slots, speech} = args;
-      if (!speech) {
-        return args;
-      } else {
-        return Object.assign({}, args, {
-          speech: mustache.render(speech, slots),
-        });
-      }
-    })
+    .then(renderSpeech())
     .then(res => {
       answer.push(res);
       return generatePrompt({app, slotScheme});
     })
     .then(fulfilResolvers())
-    .then(({slots, speech, suggestions}) => {
-      return speech && {
-        speech: mustache.render(speech, slots),
-        suggestions,
-      };
-    })
+    .then(renderSpeech())
     .then(res => {
       answer.push(res);
 
@@ -116,6 +102,20 @@ function handler (app) {
       }
     });
 }
+
+/**
+ * Render speech and substitute slots
+ */
+const renderSpeech = () => (args) => {
+  const {slots, speech} = args;
+  if (!speech) {
+    return args;
+  } else {
+    return Object.assign({}, args, {
+      speech: mustache.render(speech, slots),
+    });
+  }
+};
 
 /**
  *

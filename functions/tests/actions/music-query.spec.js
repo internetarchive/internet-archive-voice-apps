@@ -166,6 +166,7 @@ describe('actions', () => {
                 year: 2017,
               },
               speech: '{{coverage}} {{year}} - great choice!',
+              suggestions: [],
             });
             fulfilResolvers = () => fulfilResolversHandler;
             revert = action.__set__('fulfilResolvers', fulfilResolvers);
@@ -197,6 +198,7 @@ describe('actions', () => {
             fulfilResolversHandler = sinon.stub().returns({
               slots: {creator: {title: 'Grateful Dead'}},
               speech: 'Ok! Lets go with {{creator.title}} band!',
+              suggestions: [],
             });
             fulfilResolvers = () => fulfilResolversHandler;
             revert = action.__set__('fulfilResolvers', fulfilResolvers);
@@ -280,6 +282,7 @@ describe('actions', () => {
           fulfilResolversHandler = sinon.stub().returns({
             slots: {creator: {title: 'Grateful Dead'}},
             speech: 'Ok! Lets go with {{creator.title}} band!',
+            suggestions: [],
           });
           fulfilResolvers = () => fulfilResolversHandler;
           revert = action.__set__('fulfilResolvers', fulfilResolvers);
