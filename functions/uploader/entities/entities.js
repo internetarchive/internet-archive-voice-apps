@@ -14,10 +14,11 @@ const basicHeaderRequest = {
   'authorization': `BEARER ${process.env.DIALOG_FLOW_DEV_TOKEN}`
 };
 
-// Maximum 1,000 records per request
-// Maximum 30,000 records per entity
 /**
  * Post entities to DialogFlow
+ *
+ * Maximum 1,000 records per request
+ * Maximum 30,000 records per entity
  *
  * @param entityname {string}
  * @param entities {array}
