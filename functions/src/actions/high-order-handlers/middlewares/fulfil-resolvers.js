@@ -10,19 +10,17 @@ const {debug} = require('../../../utils/logger')('ia:actions:middleware:fulfil-r
  */
 module.exports = () =>
   /**
-   * @param app
+   * @param slots
    * @param speech
-   * @param query
    * @returns {Promise}
    */
   args => {
-    const {app, speech, query} = args;
+    const {slots = {}, speech} = args;
 
     // TODO: should we be limitted by speech only?
     const template = speech;
 
     debug(`resolve slots for "${template}"`);
-    const slots = query.getSlots(app);
     const filledSlots = Object.keys(slots);
     const resolversToProcess = templateResolvers.getTemplateResolvers(template, filledSlots);
 

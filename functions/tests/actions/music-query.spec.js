@@ -242,8 +242,7 @@ describe('actions', () => {
             return action.handler(app)
               .then(() => {
                 expect(fulfilResolversHandler).to.have.been.calledWith({
-                  app,
-                  query,
+                  slots: query.getSlots(app),
                   speech: 'Ok! Lets go with {{creator.title}} band!',
                 });
                 expect(dialog.ask).to.have.been.calledOnce;

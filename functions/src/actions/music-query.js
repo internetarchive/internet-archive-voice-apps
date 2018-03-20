@@ -246,8 +246,9 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
+  const slots = query.getSlots(app);
   return Promise
-    .resolve({app, query, speech: template})
+    .resolve({slots, speech: template})
     .then(fulfilResolvers())
     .then(({slots}) => {
       return {
