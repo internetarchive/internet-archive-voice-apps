@@ -3,7 +3,7 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../src/actions/music-query');
-const {getSlot, getSlots, hasSlot} = require('../../src/state/query');
+const query = require('../../src/state/query');
 const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
@@ -175,7 +175,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(getSlot(app, 'album')).to.be.equal('album1');
+            expect(query.getSlot(app, 'album')).to.be.equal('album1');
           });
       });
 
@@ -188,7 +188,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(getSlot(app, 'plate')).to.be.equal('plate1');
+            expect(query.getSlot(app, 'plate')).to.be.equal('plate1');
           });
       });
     });
@@ -199,6 +199,22 @@ describe('actions', () => {
       });
 
       describe('acknowledge', () => {
+        let revert;
+        let fulfilResolvers;
+        let fulfilResolversHandler;
+
+        beforeEach(() => {
+          fulfilResolversHandler = sinon.stub().returns({
+            slots: {creator: {title: 'Grateful Dead'}}
+          });
+          fulfilResolvers = () => fulfilResolversHandler;
+          revert = action.__set__('fulfilResolvers', fulfilResolvers);
+        });
+
+        afterEach(() => {
+          revert();
+        });
+
         it('should acknowledge are received values', () => {
           app = mockApp({
             argument: {
@@ -216,24 +232,6 @@ describe('actions', () => {
         });
 
         describe('resolving', () => {
-          let handler;
-          let revert;
-          let templateResolvers;
-
-          beforeEach(() => {
-            handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-            templateResolvers = mockTemplateResolvers([{
-              handler,
-              name: 'creator',
-              extType: 'resolvers',
-            }]);
-            revert = action.__set__('templateResolvers', templateResolvers);
-          });
-
-          afterEach(() => {
-            revert();
-          });
-
           it('should substitute resolved slots', () => {
             app = mockApp({
               argument: {
@@ -243,14 +241,16 @@ describe('actions', () => {
 
             return action.handler(app)
               .then(() => {
-                expect(handler.args[0][0])
-                  .to.have.property('creatorId', 'bandId');
+                expect(fulfilResolversHandler).to.have.been.calledWith({
+                  app,
+                  query,
+                  speech: 'Ok! Lets go with {{creator.title}} band!',
+                });
                 expect(dialog.ask).to.have.been.calledOnce;
                 expect(dialog.ask.args[0][1])
                   .to.have.property('speech')
                   .to.include('Ok! Lets go with Grateful Dead band!');
-              })
-              .then(revert);
+              });
           });
         });
 
@@ -277,7 +277,7 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'order')).to.be.equal('random');
+              expect(query.getSlot(app, 'order')).to.be.equal('random');
             });
         });
 
@@ -289,7 +289,7 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'order')).to.be.equal('the-best');
+              expect(query.getSlot(app, 'order')).to.be.equal('the-best');
             });
         });
       });
@@ -297,23 +297,21 @@ describe('actions', () => {
       describe('fulfillment', () => {
         let albumsFeeder;
         let feeders;
-        let handler;
+        let fulfilResolvers;
+        let fulfilResolversHandler;
         let revert;
-        let templateResolvers;
 
         beforeEach(() => {
+          fulfilResolversHandler = sinon.stub().returns({
+            slots: {creator: {title: 'Grateful Dead'}}
+          });
+          fulfilResolvers = () => fulfilResolversHandler;
+          revert = action.__set__('fulfilResolvers', fulfilResolvers);
           albumsFeeder = mockAlbumsFeeder();
           feeders = {
             getByName: sinon.stub().returns(albumsFeeder),
           };
           action.__set__('feeders', feeders);
-          handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-          templateResolvers = mockTemplateResolvers([{
-            handler,
-            name: 'creator',
-            extType: 'resolvers',
-          }]);
-          revert = action.__set__('templateResolvers', templateResolvers);
         });
 
         afterEach(() => {
@@ -377,9 +375,9 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'creatorId')).to.be.equal('one-band');
-              expect(getSlot(app, 'coverage')).to.be.equal('NY');
-              expect(getSlot(app, 'year')).to.be.equal(1999);
+              expect(query.getSlot(app, 'creatorId')).to.be.equal('one-band');
+              expect(query.getSlot(app, 'coverage')).to.be.equal('NY');
+              expect(query.getSlot(app, 'year')).to.be.equal(1999);
             });
         });
 
@@ -391,10 +389,10 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'creatorId')).to.be.equal('one-band');
-              expect(getSlot(app, 'year')).to.be.equal(1999);
-              expect(hasSlot(app, 'coverage')).to.be.true;
-              expect(getSlots(app)).to.be.deep.equal({
+              expect(query.getSlot(app, 'creatorId')).to.be.equal('one-band');
+              expect(query.getSlot(app, 'year')).to.be.equal(1999);
+              expect(query.hasSlot(app, 'coverage')).to.be.true;
+              expect(query.getSlots(app)).to.be.deep.equal({
                 creatorId: 'one-band',
                 order: 'random',
                 year: 1999,
@@ -433,10 +431,10 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'collection')).to.be.equal('live');
-              expect(getSlot(app, 'creatorId')).to.be.undefined;
-              expect(getSlot(app, 'coverage')).to.be.undefined;
-              expect(getSlot(app, 'year')).to.be.undefined;
+              expect(query.getSlot(app, 'collection')).to.be.equal('live');
+              expect(query.getSlot(app, 'creatorId')).to.be.undefined;
+              expect(query.getSlot(app, 'coverage')).to.be.undefined;
+              expect(query.getSlot(app, 'year')).to.be.undefined;
             });
         });
 
@@ -449,10 +447,10 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(getSlot(app, 'collection')).to.be.undefined;
-              expect(getSlot(app, 'creatorId')).to.be.undefined;
-              expect(getSlot(app, 'coverage')).to.be.equal('Kharkiv');
-              expect(getSlot(app, 'year')).to.be.equal(2017);
+              expect(query.getSlot(app, 'collection')).to.be.undefined;
+              expect(query.getSlot(app, 'creatorId')).to.be.undefined;
+              expect(query.getSlot(app, 'coverage')).to.be.equal('Kharkiv');
+              expect(query.getSlot(app, 'year')).to.be.equal(2017);
             });
         });
       });
@@ -506,18 +504,16 @@ describe('actions', () => {
         });
 
         describe('suggestion', () => {
-          let handler;
+          let fulfilResolvers;
+          let fulfilResolversHandler;
           let revert;
-          let templateResolvers;
 
           beforeEach(() => {
-            handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-            templateResolvers = mockTemplateResolvers([{
-              handler,
-              name: 'creator',
-              extType: 'resolvers',
-            }]);
-            revert = action.__set__('templateResolvers', templateResolvers);
+            fulfilResolversHandler = sinon.stub().returns({
+              slots: {creator: {title: 'Grateful Dead'}}
+            });
+            fulfilResolvers = () => fulfilResolversHandler;
+            revert = action.__set__('fulfilResolvers', fulfilResolvers);
           });
 
           afterEach(() => {

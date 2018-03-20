@@ -15,6 +15,8 @@ const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
 const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
+const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
+
 /**
  * Handle music query action
  * - fill slots of music query
@@ -244,13 +246,17 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data
-  return resolveSlots(app, query.getSlots(app), template)
-    .then(resolvedSlots => ({
-      speech: mustache.render(
-        template,
-        Object.assign({}, newValues, resolvedSlots)
-      )
-    }));
+  return Promise
+    .resolve({app, query, speech: template})
+    .then(fulfilResolvers())
+    .then(({slots}) => {
+      return {
+        speech: mustache.render(
+          template,
+          Object.assign({}, newValues, slots)
+        ),
+      };
+    });
 }
 
 /**
