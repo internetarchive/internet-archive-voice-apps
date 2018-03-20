@@ -5,6 +5,10 @@ const {debug} = require('../../../utils/logger')('ia:actions:middleware:fulfil-r
 
 /**
  * Middleware
+ *
+ * mustachejs doesn't support promises on-fly
+ * so we should solve all of them before mustach processing
+ *
  * - solve all resolvers in speech attribute
  * - and substitute result
  */

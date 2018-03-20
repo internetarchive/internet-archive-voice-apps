@@ -77,9 +77,28 @@ function handler (app) {
   }
 
   return generateAcknowledge({app, slotScheme, newValues})
+    .then(fulfilResolvers())
+    .then(({slots, speech}) => {
+      return speech && {
+        speech: mustache.render(
+          speech,
+          Object.assign({}, newValues, slots)
+        ),
+      };
+    })
     .then(res => {
       answer.push(res);
       return generatePrompt({app, slotScheme});
+    })
+    .then(fulfilResolvers())
+    .then(({slots, speech, suggestions}) => {
+      return speech && {
+        speech: mustache.render(
+          speech,
+          Object.assign({}, slots)
+        ),
+        suggestions,
+      };
     })
     .then(res => {
       answer.push(res);
@@ -219,14 +238,15 @@ function fillSlots (app, slotScheme) {
  * @param newValues
  * @returns {*}
  */
-function generateAcknowledge ({app, slotScheme, newValues}) {
+function generateAcknowledge (args) {
+  const {app, slotScheme, newValues} = args;
   debug('we had slots:', Object.keys(query.getSlots(app)));
 
   const newNames = Object.keys(newValues);
   // we get new values
   if (newNames.length === 0) {
     debug(`we don't get any new values`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('and get new slots:', newValues);
@@ -237,25 +257,12 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   if (!template) {
     debug(`we haven't found right acknowledge maybe we should create few for "${newNames}"`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('we got matched acknowledge', template);
 
-  // mustachejs doesn't support promises on-fly
-  // so we should solve all them before and fetch needed data
-  const slots = query.getSlots(app);
-  return Promise
-    .resolve({slots, speech: template})
-    .then(fulfilResolvers())
-    .then(({slots, speech}) => {
-      return {
-        speech: mustache.render(
-          speech,
-          Object.assign({}, newValues, slots)
-        ),
-      };
-    });
+  return Promise.resolve({slots: query.getSlots(app), speech: template});
 }
 
 /**
@@ -312,14 +319,14 @@ function fetchSuggestions (args) {
  * @param slotScheme
  * @returns {*}
  */
-function generatePrompt ({app, slotScheme}) {
-  const missedSlots =
-    slotScheme.slots
-      .filter(slotName => !query.hasSlot(app, slotName));
+function generatePrompt (args) {
+  const {app, slotScheme} = args;
+  const missedSlots = slotScheme.slots
+    .filter(slotName => !query.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
     debug(`we don't have any missed slots`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('we missed slots:', missedSlots);
@@ -330,33 +337,21 @@ function generatePrompt ({app, slotScheme}) {
 
   if (!promptScheme) {
     warning(`we don't have any matched prompts`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   const template = _.sample(promptScheme.prompts);
-
   debug('we randomly choice prompt:', template);
+
   return fetchSuggestions({app, promptScheme})
     .then((res) => {
       const suggestions = res.suggestions;
       const slots = Object.assign({}, query.getSlots(app), {suggestions});
       return Promise.resolve({slots, speech: template, suggestions});
-    })
-    .then(fulfilResolvers())
-    .then(({slots, speech, suggestions}) => {
-      console.log(slots);
-      return {
-        speech: mustache.render(
-          speech,
-          Object.assign({}, slots)
-        ),
-        suggestions,
-      };
     });
 }
 
 module.exports = {
   handler,
   fetchSuggestions,
-  // resolveSlots,
 };
