@@ -1,9 +1,7 @@
 const _ = require('lodash');
 const mustache = require('mustache');
-const util = require('util');
 
 const selectors = require('../configurator/selectors');
-const templateResolvers = require('../configurator/parsers/template-resolvers');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
@@ -261,43 +259,6 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 }
 
 /**
- * Resolve all template slots which refers to extensions
- *
- * some slots could be resolved in more friendly look
- * for example we could convert creatorId to {title: <band-name>}
- *
- * @param template
- * @returns {Promise.<TResult>}
- */
-function resolveSlots (app, context, template) {
-  debug(`resolve slots for "${template}"`);
-  const filledSlots = Object.keys(context);
-  const resolversToProcess = templateResolvers.getTemplateResolvers(template, filledSlots);
-  debug('we get resolvers to process:', resolversToProcess);
-  return Promise
-    .all(
-      resolversToProcess
-        .map(({handler}) => handler(context))
-    )
-    .then(solutions => {
-      debug('solutions:', solutions);
-      return solutions
-      // zip/merge to collections
-        .map((res, index) => {
-          const resolver = resolversToProcess[index];
-          return Object.assign({}, resolver, {result: res});
-        })
-        // pack result in the way:
-        .reduce((acc, resolver) => {
-          debug(`we get result resolver.result: ${util.inspect(resolver.result)} to bake for "${resolver.name}"`);
-          return Object.assign({}, acc, {
-            [resolver.name]: resolver.result,
-          });
-        }, {});
-    });
-}
-
-/**
  * Middleware
  * Fetch suggestions for slots
  *
@@ -372,27 +333,30 @@ function generatePrompt ({app, slotScheme}) {
     return Promise.resolve(null);
   }
 
-  const context = query.getSlots(app);
   const template = _.sample(promptScheme.prompts);
 
   debug('we randomly choice prompt:', template);
-  let suggestions;
   return fetchSuggestions({app, promptScheme})
     .then((res) => {
-      suggestions = res.suggestions;
-      return resolveSlots(app, Object.assign({}, context, {suggestions}), template);
+      const suggestions = res.suggestions;
+      const slots = Object.assign({}, query.getSlots(app), {suggestions});
+      return Promise.resolve({slots, speech: template, suggestions});
     })
-    .then(resolvedValues => {
-      const speech = mustache.render(template,
-        Object.assign({}, context, resolvedValues, {suggestions})
-      );
-
-      return {speech, suggestions};
+    .then(fulfilResolvers())
+    .then(({slots, speech, suggestions}) => {
+      console.log(slots);
+      return {
+        speech: mustache.render(
+          speech,
+          Object.assign({}, slots)
+        ),
+        suggestions,
+      };
     });
 }
 
 module.exports = {
   handler,
   fetchSuggestions,
-  resolveSlots,
+  // resolveSlots,
 };

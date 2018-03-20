@@ -9,7 +9,6 @@ const playlist = require('../../src/state/playlist');
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
-const mockTemplateResolvers = require('../_utils/mocking/template-resolver');
 
 const slotSchemeWithMultipleCases = require('./fixtures/slots-scheme-with-multiple-cases');
 const slotSchemeWithOneCase = require('./fixtures/slots-scheme-with-one-case');
@@ -44,51 +43,6 @@ describe('actions', () => {
   });
 
   describe('middleware', () => {
-    describe('resolveSlots', () => {
-      let creatorHandler;
-      let revert;
-      let templateResolvers;
-      let yearsintervalHandler;
-
-      beforeEach(() => {
-        creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-        yearsintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
-        templateResolvers = mockTemplateResolvers([{
-          handler: creatorHandler,
-          name: 'creator',
-        }, {
-          handler: yearsintervalHandler,
-          name: 'yearsinterval',
-        }]);
-        revert = action.__set__('templateResolvers', templateResolvers);
-      });
-
-      afterEach(() => {
-        revert();
-      });
-
-      it('should works with more than one resolvers', () => {
-        const app = mockApp({
-          argument: {
-            // category: 'plate',
-          },
-        });
-        const context = {};
-        const template = 'Ok, {{creator.title}} has played in {{coverage}} sometime {{yearsinterval.suggestions}}. Do you have a particular year in mind?';
-        return action.resolveSlots(app, context, template)
-          .then(res => {
-            expect(res).to.be.deep.equal({
-              creator: {
-                title: 'Grateful Dead',
-              },
-              yearsinterval: {
-                suggestions: 'between 1970 and 2000',
-              },
-            });
-          });
-      });
-    });
-
     describe('fetchSuggestions', () => {
       it('should fetch and set list of number', () => {
         const app = mockApp({
@@ -523,11 +477,18 @@ describe('actions', () => {
           let fulfilResolvers;
           let fulfilResolversHandler;
           let revert;
+          const suggestions = [
+            {coverage: 'Washington, DC', year: 1973},
+            {coverage: 'Madison, WI', year: 2000},
+            {coverage: 'Worcester, MA', year: 2001},
+          ];
 
           beforeEach(() => {
             fulfilResolversHandler = sinon.stub().returns({
-              slots: {creator: {title: 'Grateful Dead'}},
-              speech: 'Ok! Lets go with {{creator.title}} band!',
+              slots: {creator: {title: 'Grateful Dead'}, suggestions: suggestions.map(i => `${i.coverage} ${i.year}`)},
+              // speech: 'Ok! Lets go with {{creator.title}} band!',
+              speech: 'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
+              suggestions,
             });
             fulfilResolvers = () => fulfilResolversHandler;
             revert = action.__set__('fulfilResolvers', fulfilResolvers);
@@ -539,11 +500,7 @@ describe('actions', () => {
 
           it('should use one suggestion to generate prompt speech', () => {
             provider = sinon.stub().returns(Promise.resolve({
-              items: [
-                {coverage: 'Washington, DC', year: 1973},
-                {coverage: 'Madison, WI', year: 2000},
-                {coverage: 'Worcester, MA', year: 2001},
-              ],
+              items: suggestions,
             }));
             getSuggestionProviderForSlots = sinon.stub().returns(provider);
             action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
