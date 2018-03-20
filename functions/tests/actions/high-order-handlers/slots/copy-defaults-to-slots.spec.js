@@ -6,7 +6,7 @@ const query = require('../../../../src/state/query');
 const mockApp = require('../../../_utils/mocking/app');
 
 describe('actions', () => {
-  describe('middleware', () => {
+  describe('middlewares', () => {
     describe('copy defaults to slots', () => {
       it('should populate defaults to slots', () => {
         const app = mockApp();

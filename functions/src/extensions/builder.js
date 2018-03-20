@@ -28,6 +28,25 @@ class Extensions {
   }
 
   /**
+   * Get extension by its name (without logging)
+   *
+   * @param name
+   * @returns {*}
+   * @private
+   */
+  _getByName (name) {
+    const location = path.join(this.root, name + '.js');
+    try {
+      return require(location);
+    } catch (error) {
+      if (error && error.code !== 'MODULE_NOT_FOUND') {
+        throw error;
+      }
+      return null;
+    }
+  }
+
+  /**
    * Get extension by its name
    *
    * @param name
@@ -36,16 +55,21 @@ class Extensions {
   getByName (name) {
     debug('try to get extension:', name);
     // TODO: maybe we should use require.resolve here?
-    const location = path.join(this.root, name + '.js');
-    try {
-      return require(location);
-    } catch (error) {
+    const extension = this._getByName(name);
+    if (!extension) {
       warning(`can't find module:`, name);
-      if (error && error.code !== 'MODULE_NOT_FOUND') {
-        throw error;
-      }
-      return null;
     }
+    return extension;
+  }
+
+  /**
+   * Do we have extension by name
+   *
+   * @param name {string}
+   * @returns {boolean}
+   */
+  has (name) {
+    return !!this._getByName(name);
   }
 
   /**

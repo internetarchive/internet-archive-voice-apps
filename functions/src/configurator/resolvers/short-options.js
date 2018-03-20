@@ -1,6 +1,6 @@
-const humanize = require('../../../humanize');
+const humanize = require('../../humanize');
 
-const {error} = require('../../../utils/logger')('ia:resolver:short-options');
+const {error} = require('../../utils/logger')('ia:resolver:short-options');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 

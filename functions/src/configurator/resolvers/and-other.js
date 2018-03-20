@@ -1,4 +1,4 @@
-const {error} = require('../../../utils/logger')('ia:resolver:and-other');
+const {error} = require('../../utils/logger')('ia:resolver:and-other');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 

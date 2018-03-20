@@ -5,7 +5,7 @@ const extractor = require('../../../src/configurator/parsers/extract-requirement
 describe('configurator', () => {
   describe('parsers', () => {
     describe('extractRequrements', () => {
-      it('should extract plain slot requrements', () => {
+      it('should extract plain slot requrements which are passed explicitly', () => {
         const templates = [
           'Album {{coverage}} {{year}}!',
           '{{coverage}} - good place!',
@@ -14,7 +14,7 @@ describe('configurator', () => {
           'I love {{collection}} collection too',
         ];
 
-        const res = extractor.extractRequrements(templates);
+        const res = extractor.extractRequrements(templates, ['coverage', 'year']);
         expect(res).to.have.length(templates.length);
         expect(res[0]).to.have.property('requirements')
           .to.have.members(['coverage', 'year']);
@@ -22,12 +22,23 @@ describe('configurator', () => {
           .to.have.members(['collection']);
       });
 
+      it(`should consider slot as requrements if we don't resolver with the same name`, () => {
+        const templates = [
+          'Hello {{very-rare-slot-name}}!',
+        ];
+
+        const res = extractor.extractRequrements(templates);
+        expect(res).to.have.length(templates.length);
+        expect(res[0]).to.have.property('requirements')
+          .to.have.members(['very-rare-slot-name']);
+      });
+
       it('should respect dot notation', () => {
         const templates = [
           'Ok! Lets go with {{creator.title}} band!',
         ];
 
-        const res = extractor.extractRequrements(templates);
+        const res = extractor.extractRequrements(templates, ['creator']);
         expect(res).to.have.length(templates.length);
         expect(res[0]).to.have.property('requirements')
           .to.have.members(['creator']);
@@ -35,7 +46,7 @@ describe('configurator', () => {
 
       it('should fetch const requirements from resolvers', () => {
         const templates = [
-          'Ok! Lets go with {{__resolvers.creator.title}} band!',
+          'Ok! Lets go with {{creator.title}} band!',
         ];
 
         const res = extractor.extractRequrements(templates);
@@ -46,7 +57,7 @@ describe('configurator', () => {
 
       it('should fetch callback requirements from resolvers', () => {
         const templates = [
-          `You've selected {{__resolvers.alias.collectionId}} collection.`,
+          `You've selected {{alias.collectionId}} collection.`,
         ];
 
         const res = extractor.extractRequrements(templates);

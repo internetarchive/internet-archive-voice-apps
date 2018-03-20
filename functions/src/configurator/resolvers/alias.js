@@ -1,5 +1,5 @@
-const aliases = require('../../../strings').aliases;
-const {debug, warning} = require('../../../utils/logger')('ia:resolver:years-interval');
+const aliases = require('../../strings').aliases;
+const {debug, warning} = require('../../utils/logger')('ia:resolver:years-interval');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 

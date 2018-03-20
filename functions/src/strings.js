@@ -148,7 +148,7 @@ module.exports = {
        */
       acknowledges: [
         'Ok! Lets go with {{creator}} performer!',
-        `You've selected {{__resolvers.alias.collectionId}}.`,
+        `You've selected {{alias.collectionId}}.`,
       ],
 
       prompts: [{
@@ -163,7 +163,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         prompts: [
-          'What genre of music would you like to listen to? Please select a topic like {{__resolvers.short-options.suggestions}}?',
+          'What genre of music would you like to listen to? Please select a topic like {{short-options.suggestions}}?',
         ],
 
         /**
@@ -219,7 +219,7 @@ module.exports = {
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
         'Ok! Lets go with {{creator}}!',
-        `You've selected {{__resolvers.alias.collectionId}}.`,
+        `You've selected {{alias.collectionId}}.`,
       ],
 
       /**
@@ -234,7 +234,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Would you like to listen to music from our collections of {{__resolvers.short-options.suggestions}}?',
+          'Would you like to listen to music from our collections of {{short-options.suggestions}}?',
         ],
 
         /**
@@ -253,7 +253,7 @@ module.exports = {
         ],
 
         prompts: [
-          'What artist would you like to listen to? For example, {{__resolvers.short-options.suggestions}}?',
+          'What artist would you like to listen to? For example, {{short-options.suggestions}}?',
         ],
 
         /**
@@ -286,7 +286,7 @@ module.exports = {
         ],
 
         prompts: [
-          'Ok, {{creator}} has played in {{coverage}} sometime {{__resolvers.years-interval.suggestions}}. Do you have a particular year in mind?',
+          'Ok, {{creator}} has played in {{coverage}} sometime {{years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
       }],
 

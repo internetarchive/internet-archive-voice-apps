@@ -1,34 +1,9 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
-const sinon = require('sinon');
 
 const templateSlots = rewire('../../src/slots/slots-of-template');
 
 describe('slots', () => {
-  describe('getListOfRequiredExtensions', () => {
-    it('should return list of extension type and name', () => {
-      const template =
-        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}} at {{time}}';
-      expect(
-        templateSlots.getListOfRequiredExtensions(template)
-      ).to.have.been.deep.equal([
-        {extType: 'resolvers', name: 'creator'},
-        {extType: 'resolvers', name: 'location'},
-      ]);
-    });
-  });
-
-  describe('getListOfRequiredSlots', () => {
-    it('should return list of names of needed slots', () => {
-      expect(
-        templateSlots.getListOfRequiredSlots('{{coverage}} {{year}} - great choice!')
-      ).to.have.members([
-        'coverage',
-        'year',
-      ]);
-    });
-  });
-
   describe('getPromptsForSlots', () => {
     it('should return prompts with maximum true positive', () => {
       const prompts = [{
@@ -116,34 +91,6 @@ describe('slots', () => {
       expect(res.prompts).to.includes(
         'Which year?'
       );
-    });
-  });
-
-  describe('getRequiredExtensionHandlers', () => {
-    it('should return packed list of providers', () => {
-      const handler1 = () => {
-      };
-      const handler2 = () => {
-      };
-      const getExtender = sinon.stub();
-      getExtender.onCall(0).returns({handler: handler1});
-      getExtender.onCall(1).returns({handler: handler2});
-      templateSlots.__set__('extensions', {
-        getExtensionTypeSet: sinon.stub().returns(getExtender),
-        getExtensionTypeFromValue: sinon.stub().returns('resolvers')
-      });
-
-      expect(templateSlots.getRequiredExtensionHandlers(
-        '{{__resolvers.creator.title}} performed in {{__resolvers.location.title}}'
-      )).to.have.been.deep.equal([{
-        handler: handler1,
-        name: 'creator',
-        extType: 'resolvers',
-      }, {
-        handler: handler2,
-        name: 'location',
-        extType: 'resolvers',
-      }]);
     });
   });
 });

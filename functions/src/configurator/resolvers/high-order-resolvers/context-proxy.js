@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {debug, warning} = require('../../../../utils/logger')('ia:resolver:hor:context-proxy');
+const {debug, warning} = require('../../../utils/logger')('ia:resolver:hor:context-proxy');
 
 module.exports = (processing) => {
   /**

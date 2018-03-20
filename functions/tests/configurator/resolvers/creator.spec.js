@@ -1,9 +1,9 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const creator = rewire('../../../../src/slots/extensions/resolvers/creator');
+const creator = rewire('../../../src/configurator/resolvers/creator');
 
-const mockSearchCollection = require('../../../_utils/mocking/provider/collection');
+const mockSearchCollection = require('../../_utils/mocking/provider/collection');
 
 describe('slots', () => {
   let collection;

@@ -7,12 +7,13 @@ const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const {
   getPromptsForSlots,
-  getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
 const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
+
+const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 
 /**
  * Handle music query action
@@ -75,11 +76,18 @@ function handler (app) {
     }
   }
 
-  return generateAcknowledge({app, slotScheme, newValues})
+  const slots = query.getSlots(app);
+  debug('we had slots:', Object.keys(slots));
+
+  return generateAcknowledge({app, slots, slotScheme, newValues})
+    .then(fulfilResolvers())
+    .then(renderSpeech())
     .then(res => {
       answer.push(res);
       return generatePrompt({app, slotScheme});
     })
+    .then(fulfilResolvers())
+    .then(renderSpeech())
     .then(res => {
       answer.push(res);
 
@@ -87,13 +95,27 @@ function handler (app) {
       if (groupedAnswers.speech && groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
           speech: groupedAnswers.speech.join(' '),
-          suggestions: groupedAnswers.suggestions.slice(0, 3),
+          suggestions: groupedAnswers.suggestions.filter(s => s).slice(0, 3),
         });
       } else {
         // TODO: we don't have anything to say should warn about it
       }
     });
 }
+
+/**
+ * Render speech and substitute slots
+ */
+const renderSpeech = () => (args) => {
+  const {slots, speech} = args;
+  if (!speech) {
+    return args;
+  } else {
+    return Object.assign({}, args, {
+      speech: mustache.render(speech, slots),
+    });
+  }
+};
 
 /**
  *
@@ -218,14 +240,14 @@ function fillSlots (app, slotScheme) {
  * @param newValues
  * @returns {*}
  */
-function generateAcknowledge ({app, slotScheme, newValues}) {
-  debug('we had slots:', Object.keys(query.getSlots(app)));
-
+function generateAcknowledge (args) {
+  const {slotScheme, newValues} = args;
   const newNames = Object.keys(newValues);
+
   // we get new values
   if (newNames.length === 0) {
     debug(`we don't get any new values`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('and get new slots:', newValues);
@@ -236,59 +258,12 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   if (!template) {
     debug(`we haven't found right acknowledge maybe we should create few for "${newNames}"`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('we got matched acknowledge', template);
 
-  // mustachejs doesn't support promises on-fly
-  // so we should solve all them before and fetch needed data
-  return resolveSlots(app, query.getSlots(app), template)
-    .then(resolvedSlots => ({
-      speech: mustache.render(
-        template,
-        Object.assign({}, newValues, resolvedSlots)
-      )
-    }));
-}
-
-/**
- * Resolve all template slots which refers to extensions
- *
- * some slots could be resolved in more friendly look
- * for example we could convert creatorId to {title: <band-name>}
- *
- * @param template
- * @returns {Promise.<TResult>}
- */
-function resolveSlots (app, context, template) {
-  debug(`resolve slots for "${template}"`);
-  const extensions = getRequiredExtensionHandlers(template);
-  debug('we get extensions:', extensions);
-  return Promise
-    .all(
-      extensions
-        .map(({handler}) => handler(context))
-    )
-    .then(solutions => {
-      debug('solutions:', solutions);
-      return solutions
-      // zip/merge to collections
-        .map((res, index) => {
-          const extension = extensions[index];
-          return Object.assign({}, extension, {result: res});
-        })
-        // pack result in the way:
-        // [__<extension_type>].[<extension_name>] = result
-        .reduce((acc, extension) => {
-          debug(`we get result extension.result: ${extension.result} to bake for ${extension.name}`);
-          return Object.assign({}, acc, {
-            ['__' + extension.extType]: Object.assign({}, acc['__' + extension.extType], {
-              [extension.name]: extension.result,
-            }),
-          });
-        }, {});
-    });
+  return Promise.resolve(Object.assign({}, args, {speech: template}));
 }
 
 /**
@@ -345,14 +320,14 @@ function fetchSuggestions (args) {
  * @param slotScheme
  * @returns {*}
  */
-function generatePrompt ({app, slotScheme}) {
-  const missedSlots =
-    slotScheme.slots
-      .filter(slotName => !query.hasSlot(app, slotName));
+function generatePrompt (args) {
+  const {app, slotScheme} = args;
+  const missedSlots = slotScheme.slots
+    .filter(slotName => !query.hasSlot(app, slotName));
 
   if (missedSlots.length === 0) {
     debug(`we don't have any missed slots`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
   debug('we missed slots:', missedSlots);
@@ -363,30 +338,21 @@ function generatePrompt ({app, slotScheme}) {
 
   if (!promptScheme) {
     warning(`we don't have any matched prompts`);
-    return Promise.resolve(null);
+    return Promise.resolve(args);
   }
 
-  const context = query.getSlots(app);
   const template = _.sample(promptScheme.prompts);
-
   debug('we randomly choice prompt:', template);
-  let suggestions;
+
   return fetchSuggestions({app, promptScheme})
     .then((res) => {
-      suggestions = res.suggestions;
-      return resolveSlots(app, Object.assign({}, context, {suggestions}), template);
-    })
-    .then(resolvedValues => {
-      const speech = mustache.render(template,
-        Object.assign({}, context, resolvedValues, {suggestions})
-      );
-
-      return {speech, suggestions};
+      const suggestions = res.suggestions;
+      const slots = Object.assign({}, query.getSlots(app), {suggestions});
+      return Promise.resolve({slots, speech: template, suggestions});
     });
 }
 
 module.exports = {
   handler,
   fetchSuggestions,
-  resolveSlots,
 };

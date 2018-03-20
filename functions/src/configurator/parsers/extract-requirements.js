@@ -1,6 +1,7 @@
+const _ = require('lodash');
 const mustache = require('mustache');
 
-const extensions = require('../../slots/extensions');
+const resolvers = require('../resolvers');
 
 /**
  * For each template extract required slots
@@ -11,16 +12,18 @@ const extensions = require('../../slots/extensions');
  * - hierarchy:
  * Ok! Lets go with {{creator.title}} band!` => ['creator']
  *
- * - with extensible resovlers:
- * 'Ok! Lets go with {{__resolvers.creator.title}} band!' =>
+ * - with extensible resolvers:
+ * 'Ok! Lets go with {{creator.title}} band!' =>
  * ['creatorId']
  *
  * each resolver has list of requirements for example for 'creator':
  * ['creatorId']
  *
  * @param templates
+ * @param fields {Array} - list fields which we have
+ * @returns {*}
  */
-function extractRequrements (templates) {
+function extractRequrements (templates, fields) {
   return templates && templates
     .map(template => ({
       template,
@@ -28,14 +31,14 @@ function extractRequrements (templates) {
         .reduce(
           (acc, item) => {
             const splitName = item.split('.');
-            const extType = extensions.getExtensionTypeFromValue(splitName[0]);
-            const extension = extensions.getExtensionTypeSet(extType)(splitName[1]);
-            if (!extension) {
+            const firstName = splitName[0];
+            if (_.includes(fields, firstName) || !resolvers.has(firstName)) {
               return acc.concat(item);
             }
-            let requirements = extension.requirements;
+            const resolver = resolvers.getByName(firstName);
+            let requirements = resolver.requirements;
             if (typeof requirements === 'function') {
-              requirements = requirements(splitName.slice(2).join('.'));
+              requirements = requirements(splitName.slice(1).join('.'));
             }
             return acc.concat(requirements);
           }, []
