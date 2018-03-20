@@ -26,7 +26,7 @@ describe('dialog', () => {
 
       expect(app.ask).to.be.calledOnce;
       expect(app.buildRichResponse).to.be.calledOnce;
-      expect(app.addSimpleResponse).to.be.calledWith(speech);
+      expect(app.addSimpleResponse).to.be.calledWith('<speak>' + speech + '</speak>');
       expect(app.addSuggestions).to.be.calledWith(suggestions);
       expect(savePhrase).to.be.calledOnce;
     });

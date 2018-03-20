@@ -19,5 +19,5 @@ module.exports = function tell (app, {speech}) {
   }
 
   app.tell(app.buildRichResponse()
-    .addSimpleResponse(speech));
+    .addSimpleResponse('<speak>' + speech + '</speak>'));
 };
