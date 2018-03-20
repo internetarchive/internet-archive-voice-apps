@@ -129,7 +129,7 @@ describe('configurator', () => {
           ];
 
           expect(
-            selector.getMatchedTemplatesExactly(extractor.extractRequrements(templates), slots)
+            selector.getMatchedTemplatesExactly(extractor.extractRequrements(templates, slots), slots)
           ).to.have.members([
             'Ok! Lets go with {{creator.title}} band!',
           ]);

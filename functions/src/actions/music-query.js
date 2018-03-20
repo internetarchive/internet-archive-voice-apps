@@ -1,13 +1,14 @@
 const _ = require('lodash');
 const mustache = require('mustache');
+const util = require('util');
 
 const selectors = require('../configurator/selectors');
+const templateResolvers = require('../configurator/parsers/template-resolvers');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const {
   getPromptsForSlots,
-  getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
@@ -263,11 +264,12 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
  */
 function resolveSlots (app, context, template) {
   debug(`resolve slots for "${template}"`);
-  const extensions = getRequiredExtensionHandlers(template);
-  debug('we get extensions:', extensions);
+  const filledSlots = Object.keys(context);
+  const resolversToProcess = templateResolvers.getTemplateResolvers(template, filledSlots);
+  debug('we get resolvers to process:', resolversToProcess);
   return Promise
     .all(
-      extensions
+      resolversToProcess
         .map(({handler}) => handler(context))
     )
     .then(solutions => {
@@ -275,17 +277,14 @@ function resolveSlots (app, context, template) {
       return solutions
       // zip/merge to collections
         .map((res, index) => {
-          const extension = extensions[index];
-          return Object.assign({}, extension, {result: res});
+          const resolver = resolversToProcess[index];
+          return Object.assign({}, resolver, {result: res});
         })
         // pack result in the way:
-        // [__<extension_type>].[<extension_name>] = result
-        .reduce((acc, extension) => {
-          debug(`we get result extension.result: ${extension.result} to bake for ${extension.name}`);
+        .reduce((acc, resolver) => {
+          debug(`we get result resolver.result: ${util.inspect(resolver.result)} to bake for "${resolver.name}"`);
           return Object.assign({}, acc, {
-            ['__' + extension.extType]: Object.assign({}, acc['__' + extension.extType], {
-              [extension.name]: extension.result,
-            }),
+            [resolver.name]: resolver.result,
           });
         }, {});
     });

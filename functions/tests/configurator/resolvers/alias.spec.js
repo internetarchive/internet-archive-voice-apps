@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const resolver = require('../../../../src/slots/extensions/resolvers/alias');
+const resolver = require('../../../src/configurator/resolvers/alias');
 
 describe('extensions', () => {
   describe('resolvers', () => {

@@ -9,6 +9,7 @@ const playlist = require('../../src/state/playlist');
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
+const mockTemplateResolvers = require('../_utils/mocking/template-resolver');
 
 const slotSchemeWithMultipleCases = require('./fixtures/slots-scheme-with-multiple-cases');
 const slotSchemeWithOneCase = require('./fixtures/slots-scheme-with-one-case');
@@ -45,21 +46,21 @@ describe('actions', () => {
   describe('middleware', () => {
     describe('resolveSlots', () => {
       let creatorHandler;
-      let yearsintervalHandler;
       let revert;
+      let templateResolvers;
+      let yearsintervalHandler;
 
       beforeEach(() => {
         creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
         yearsintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
-        revert = action.__set__('getRequiredExtensionHandlers', () => [{
+        templateResolvers = mockTemplateResolvers([{
           handler: creatorHandler,
           name: 'creator',
-          extType: 'resolvers',
         }, {
           handler: yearsintervalHandler,
           name: 'yearsinterval',
-          extType: 'resolvers',
         }]);
+        revert = action.__set__('templateResolvers', templateResolvers);
       });
 
       afterEach(() => {
@@ -73,17 +74,15 @@ describe('actions', () => {
           },
         });
         const context = {};
-        const template = 'Ok, {{__resolvers.creator.title}} has played in {{coverage}} sometime {{__resolvers.yearsinterval.suggestions}}. Do you have a particular year in mind?';
+        const template = 'Ok, {{creator.title}} has played in {{coverage}} sometime {{yearsinterval.suggestions}}. Do you have a particular year in mind?';
         return action.resolveSlots(app, context, template)
           .then(res => {
             expect(res).to.be.deep.equal({
-              __resolvers: {
-                creator: {
-                  title: 'Grateful Dead',
-                },
-                yearsinterval: {
-                  suggestions: 'between 1970 and 2000',
-                },
+              creator: {
+                title: 'Grateful Dead',
+              },
+              yearsinterval: {
+                suggestions: 'between 1970 and 2000',
               },
             });
           });
@@ -219,14 +218,16 @@ describe('actions', () => {
         describe('resolving', () => {
           let handler;
           let revert;
+          let templateResolvers;
 
           beforeEach(() => {
             handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-            revert = action.__set__('getRequiredExtensionHandlers', () => [{
+            templateResolvers = mockTemplateResolvers([{
               handler,
               name: 'creator',
               extType: 'resolvers',
             }]);
+            revert = action.__set__('templateResolvers', templateResolvers);
           });
 
           afterEach(() => {
@@ -298,6 +299,7 @@ describe('actions', () => {
         let feeders;
         let handler;
         let revert;
+        let templateResolvers;
 
         beforeEach(() => {
           albumsFeeder = mockAlbumsFeeder();
@@ -306,11 +308,12 @@ describe('actions', () => {
           };
           action.__set__('feeders', feeders);
           handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-          revert = action.__set__('getRequiredExtensionHandlers', () => [{
+          templateResolvers = mockTemplateResolvers([{
             handler,
             name: 'creator',
             extType: 'resolvers',
           }]);
+          revert = action.__set__('templateResolvers', templateResolvers);
         });
 
         afterEach(() => {
@@ -505,14 +508,16 @@ describe('actions', () => {
         describe('suggestion', () => {
           let handler;
           let revert;
+          let templateResolvers;
 
           beforeEach(() => {
             handler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-            revert = action.__set__('getRequiredExtensionHandlers', () => [{
+            templateResolvers = mockTemplateResolvers([{
               handler,
               name: 'creator',
               extType: 'resolvers',
             }]);
+            revert = action.__set__('templateResolvers', templateResolvers);
           });
 
           afterEach(() => {
