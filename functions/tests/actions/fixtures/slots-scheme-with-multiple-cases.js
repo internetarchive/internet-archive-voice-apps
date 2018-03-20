@@ -6,9 +6,7 @@ module.exports = [{
     'category',
   ],
 
-  conditions: [
-    'category == "plates"'
-  ],
+  condition: 'category == "plates"',
 
   prompts: [{
     requirements: [

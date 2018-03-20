@@ -22,8 +22,13 @@ module.exports = {
   },
 
   dialog: {
-    playSong: {
-      description: 'Playing track - {{title}}{{#coverage}}, {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+    playSong: [{
+      /**
+       * choose this one if song is from collection 'etree'
+       */
+      condition: 'includes(collections, "etree")',
+
+      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -39,9 +44,28 @@ module.exports = {
           <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
-      title: 'Playing track{{#track}} number - {{track}}{{/track}}{{^track}}{{title}}{{/track}}',
+      title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
-    }
+    }, {
+      description: 'Playing track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
+      // We should "say" something or play a sound between songs
+      // official response:
+      // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
+      //
+      // we can choose any sound from here
+      // https://developers.google.com/actions/tools/sound-library/
+      // [!] but we should use it for Google actions only
+      speech: `
+        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+               clipBegin="4.5s"
+               clipEnd="5.5s"
+               soundLevel="10db">
+          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+        </audio>
+      `,
+      title: '{{title}} by {{creator}} {{year}}',
+      suggestionLink: 'on Archive.org',
+    }],
   },
 
   /**
@@ -90,9 +114,7 @@ module.exports = {
     musicQuery: [{
       name: 'george blood collection',
 
-      conditions: [
-        'collectionId == "georgeblood"'
-      ],
+      condition: 'collectionId == "georgeblood"',
 
       slots: [
         'collectionId',
@@ -126,7 +148,7 @@ module.exports = {
        */
       acknowledges: [
         'Ok! Lets go with {{creator}} performer!',
-        `You've selected {{__resolvers.alias.collectionId}} collection.`,
+        `You've selected {{__resolvers.alias.collectionId}}.`,
       ],
 
       prompts: [{
@@ -196,8 +218,8 @@ module.exports = {
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was excellent year!',
-        'Ok! Lets go with {{creator}} band!',
-        `You've selected {{__resolvers.alias.collectionId}} collection.`,
+        'Ok! Lets go with {{creator}}!',
+        `You've selected {{__resolvers.alias.collectionId}}.`,
       ],
 
       /**

@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const mustache = require('mustache');
 
 const {playSong} = require('../../src/dialog/audio');
-const strings = require('../../src/strings').dialog.playSong;
+const allowedStrings = require('../../src/strings').dialog.playSong;
 
 const mockApp = require('../_utils/mocking/app');
 
@@ -14,7 +14,9 @@ describe('dialog', () => {
     app = mockApp();
     options = {
       audioURL: 'https://archive.org/download/gd73-06-10d1t01.mp3',
+      collections: ['etree'],
       coverage: 'Washington, DC',
+      creator: 'Grateful Dead',
       imageURL: 'https://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg',
       suggestions: ['rewind', 'next'],
       title: 'Morning Dew',
@@ -26,6 +28,7 @@ describe('dialog', () => {
 
   describe('playSong', () => {
     it('should share audio response with user', () => {
+      const strings = allowedStrings[0];
       playSong(app, options);
 
       expect(app.ask).to.be.calledOnce;
@@ -54,6 +57,7 @@ describe('dialog', () => {
 
     it('should mute songs description speech and replace it with template (for example sound)', () => {
       const soundURL = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
+      const strings = allowedStrings[0];
 
       playSong(app, Object.assign({}, options, {
         speech: `

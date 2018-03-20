@@ -1,14 +1,11 @@
 const _ = require('lodash');
-const math = require('mathjs');
 const mustache = require('mustache');
 
+const selectors = require('../configurator/selectors');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
 const {
-  extractRequrements,
-  getMatchedTemplates,
-  getMatchedTemplatesExactly,
   getPromptsForSlots,
   getRequiredExtensionHandlers,
 } = require('../slots/slots-of-template');
@@ -35,13 +32,13 @@ function handler (app) {
 
   const answer = [];
 
-  let slotScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = fillSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
-  const newScheme = getActualSlotScheme(availableSchemes, query.getSlots(app));
+  const newScheme = selectors.find(availableSchemes, query.getSlots(app));
   if (slotScheme !== newScheme) {
     slotScheme = newScheme;
     // update slots for new scheme
@@ -144,46 +141,6 @@ function applyDefaultSlots (app, defaults) {
 }
 
 /**
- * Get valid slot scheme by to meet conditions
- *
- * @param availableSchemes
- * @param slotsState
- * @returns {*}
- */
-function getActualSlotScheme (availableSchemes, slotsState) {
-  if (!Array.isArray(availableSchemes)) {
-    return availableSchemes;
-  }
-
-  return availableSchemes.find((scheme, idx) => {
-    if (!scheme.conditions) {
-      // DEFAULT
-      debug('we get default slot scheme');
-
-      // if scheme doesn't have conditions it is default scheme
-      // usually it is at the end of list
-
-      if (idx < availableSchemes.length - 1) {
-        // if we have schemes after the default one
-        // we should warn about it
-        // because we won't never reach schemes after default one
-        warning('we have schemes after the default one', scheme.name || '');
-      }
-      return true;
-    }
-
-    // all conditionals should be valid
-    try {
-      return scheme.conditions
-        .every(condition => math.eval(condition, slotsState));
-    } catch (error) {
-      debug(`Get error from Math.js:`, error && error.message);
-      return false;
-    }
-  });
-}
-
-/**
  *
  */
 function processPreset (app, slotScheme) {
@@ -273,31 +230,16 @@ function generateAcknowledge ({app, slotScheme, newValues}) {
 
   debug('and get new slots:', newValues);
 
-  const acknowledgeRequirements = extractRequrements(slotScheme.acknowledges);
+  const template = selectors.find(slotScheme.acknowledges, {
+    prioritySlots: newNames,
+  });
 
-  // find the list of acknowledges which match recieved slots
-  let validAcknowledges = getMatchedTemplatesExactly(
-    acknowledgeRequirements,
-    newNames
-  );
-
-  if (!validAcknowledges || validAcknowledges.length === 0) {
-    validAcknowledges = getMatchedTemplates(
-      acknowledgeRequirements,
-      newNames
-    );
-
-    if (!validAcknowledges || validAcknowledges.length === 0) {
-      warning(`there is no valid acknowledges for ${newNames}. Maybe we should write few?`);
-      return Promise.resolve(null);
-    }
-
-    debug('we have partly matched acknowledges', validAcknowledges);
-  } else {
-    debug('we have exactly matched acknowledges', validAcknowledges);
+  if (!template) {
+    debug(`we haven't found right acknowledge maybe we should create few for "${newNames}"`);
+    return Promise.resolve(null);
   }
 
-  const template = _.sample(validAcknowledges);
+  debug('we got matched acknowledge', template);
 
   // mustachejs doesn't support promises on-fly
   // so we should solve all them before and fetch needed data

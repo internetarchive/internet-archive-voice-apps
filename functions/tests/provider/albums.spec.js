@@ -44,6 +44,11 @@ describe('collection', () => {
 
       return albumsProvider.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
         .then(album => {
+          expect(album).to.have.property('collections').to.have.members([
+            'GratefulDead',
+            'etree',
+            'stream_only',
+          ]);
           expect(album).to.have.property('creator', 'Grateful Dead');
           expect(album).to.have.property('year', 1973);
           expect(album).to.have.property('coverage', 'Washington, DC');
@@ -75,6 +80,12 @@ describe('collection', () => {
             .to.have.property('songs')
             .to.have.length(2);
 
+          expect(album).to.have.property('collections').to.have.members([
+            'georgeblood',
+            '78rpm_kusf',
+            '78rpm',
+            'audio_music',
+          ]);
           expect(album.songs[0]).to.have.property('title', `(When Your Heart's On Fire) Smoke Gets in Your Eyes`);
           expect(album.songs[1]).to.have.property('title', `The Continental (You Kiss While You're Dancing)`);
         });

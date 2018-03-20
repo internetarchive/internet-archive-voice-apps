@@ -137,7 +137,7 @@ describe('actions', () => {
     });
 
     describe('multiple slot schemes', () => {
-      it('should get slot scheme without conditions', () => {
+      it('should get slot scheme without condition', () => {
         app = mockApp({
           argument: {
             // category: 'plate',
@@ -152,7 +152,7 @@ describe('actions', () => {
           });
       });
 
-      it('should get 1st which matches conditions', () => {
+      it('should get 1st which matches condition', () => {
         app = mockApp({
           argument: {
             category: 'plates',
