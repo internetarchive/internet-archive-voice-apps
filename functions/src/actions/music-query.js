@@ -76,15 +76,20 @@ function handler (app) {
     }
   }
 
-  return generateAcknowledge({app, slotScheme, newValues})
+  const slots = query.getSlots(app);
+  debug('we had slots:', Object.keys(slots));
+
+  return generateAcknowledge({app, slots, slotScheme, newValues})
     .then(fulfilResolvers())
-    .then(({slots, speech}) => {
-      return speech && {
-        speech: mustache.render(
-          speech,
-          Object.assign({}, newValues, slots)
-        ),
-      };
+    .then((args) => {
+      const {slots, speech} = args;
+      if (!speech) {
+        return args;
+      } else {
+        return Object.assign({}, args, {
+          speech: mustache.render(speech, slots),
+        });
+      }
     })
     .then(res => {
       answer.push(res);
@@ -93,10 +98,7 @@ function handler (app) {
     .then(fulfilResolvers())
     .then(({slots, speech, suggestions}) => {
       return speech && {
-        speech: mustache.render(
-          speech,
-          Object.assign({}, slots)
-        ),
+        speech: mustache.render(speech, slots),
         suggestions,
       };
     })
@@ -107,7 +109,7 @@ function handler (app) {
       if (groupedAnswers.speech && groupedAnswers.speech.length > 0) {
         dialog.ask(app, {
           speech: groupedAnswers.speech.join(' '),
-          suggestions: groupedAnswers.suggestions.slice(0, 3),
+          suggestions: groupedAnswers.suggestions.filter(s => s).slice(0, 3),
         });
       } else {
         // TODO: we don't have anything to say should warn about it
@@ -239,10 +241,9 @@ function fillSlots (app, slotScheme) {
  * @returns {*}
  */
 function generateAcknowledge (args) {
-  const {app, slotScheme, newValues} = args;
-  debug('we had slots:', Object.keys(query.getSlots(app)));
-
+  const {slotScheme, newValues} = args;
   const newNames = Object.keys(newValues);
+
   // we get new values
   if (newNames.length === 0) {
     debug(`we don't get any new values`);
@@ -262,7 +263,7 @@ function generateAcknowledge (args) {
 
   debug('we got matched acknowledge', template);
 
-  return Promise.resolve({slots: query.getSlots(app), speech: template});
+  return Promise.resolve(Object.assign({}, args, {speech: template}));
 }
 
 /**

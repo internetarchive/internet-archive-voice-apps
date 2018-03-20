@@ -160,7 +160,11 @@ describe('actions', () => {
         describe('speech', () => {
           beforeEach(() => {
             fulfilResolversHandler = sinon.stub().returns({
-              slots: {creator: {title: 'Grateful Dead'}},
+              slots: {
+                creator: {title: 'Grateful Dead'},
+                coverage: 'Kharkiv',
+                year: 2017,
+              },
               speech: '{{coverage}} {{year}} - great choice!',
             });
             fulfilResolvers = () => fulfilResolversHandler;
@@ -211,10 +215,12 @@ describe('actions', () => {
 
             return action.handler(app)
               .then(() => {
-                expect(fulfilResolversHandler).to.have.been.calledWith({
-                  slots: query.getSlots(app),
-                  speech: 'Ok! Lets go with {{creator.title}} band!',
-                });
+                expect(fulfilResolversHandler).to.have.been.called;
+                expect(fulfilResolversHandler.args[0][0])
+                  .to.have.property('slots')
+                  .deep.equal(query.getSlots(app));
+                expect(fulfilResolversHandler.args[0][0])
+                  .to.have.property('speech', 'Ok! Lets go with {{creator.title}} band!');
                 expect(dialog.ask).to.have.been.calledOnce;
                 expect(dialog.ask.args[0][1])
                   .to.have.property('speech')
