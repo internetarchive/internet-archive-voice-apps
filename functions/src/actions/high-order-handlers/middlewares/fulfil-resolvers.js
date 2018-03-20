@@ -46,7 +46,11 @@ module.exports = () =>
             });
           }, {});
       })
-      .then(slots => {
-        return Promise.resolve(Object.assign({}, args, {slots}));
+      .then(newSlots => {
+        return Promise.resolve(
+          Object.assign({}, args, {
+            slots: Object.assign({}, slots, newSlots),
+          })
+        );
       });
   };
