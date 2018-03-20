@@ -107,6 +107,6 @@ function fetchEntitiesFromDF (entityname) {
 }
 
 module.exports = {
-  postEntitiesToDF,
   fetchEntitiesFromDF,
+  postEntitiesToDF,
 };
