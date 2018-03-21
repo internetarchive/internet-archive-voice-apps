@@ -159,12 +159,21 @@ describe('actions', () => {
 
         describe('speech', () => {
           beforeEach(() => {
+            app = mockApp({
+              argument: {
+                coverage: 'Kharkiv',
+                year: 2017,
+              },
+            });
+
             fulfilResolversHandler = sinon.stub().returns({
+              app,
               slots: {
                 creator: {title: 'Grateful Dead'},
                 coverage: 'Kharkiv',
                 year: 2017,
               },
+              slotScheme: slotSchemeWithMultipleCases[0],
               speech: '{{coverage}} {{year}} - great choice!',
               suggestions: [],
             });
@@ -177,12 +186,6 @@ describe('actions', () => {
           });
 
           it('should acknowledge are received values', () => {
-            app = mockApp({
-              argument: {
-                coverage: 'Kharkiv',
-                year: 2017,
-              },
-            });
             return action.handler(app)
               .then(() => {
                 expect(dialog.ask).to.have.been.calledOnce;
@@ -195,8 +198,15 @@ describe('actions', () => {
 
         describe('resolving', () => {
           beforeEach(() => {
+            app = mockApp({
+              argument: {
+                creatorId: 'bandId',
+              },
+            });
             fulfilResolversHandler = sinon.stub().returns({
+              app,
               slots: {creator: {title: 'Grateful Dead'}},
+              slotScheme: slotSchemeWithMultipleCases[0],
               speech: 'Ok! Lets go with {{creator.title}} band!',
               suggestions: [],
             });
@@ -209,12 +219,6 @@ describe('actions', () => {
           });
 
           it('should substitute resolved slots', () => {
-            app = mockApp({
-              argument: {
-                creatorId: 'bandId',
-              },
-            });
-
             return action.handler(app)
               .then(() => {
                 expect(fulfilResolversHandler).to.have.been.called;
@@ -279,8 +283,19 @@ describe('actions', () => {
         let revert;
 
         beforeEach(() => {
+          app = mockApp({
+            argument: {
+              collection: 'live',
+              creatorId: 'the-band',
+              // missed slots:
+              // coverage: 'ny',
+              // year: 2018,
+            },
+          });
           fulfilResolversHandler = sinon.stub().returns({
+            app,
             slots: {creator: {title: 'Grateful Dead'}},
+            slotScheme: slotSchemeWithMultipleCases[0],
             speech: 'Ok! Lets go with {{creator.title}} band!',
             suggestions: [],
           });
@@ -298,15 +313,6 @@ describe('actions', () => {
         });
 
         it(`shouldn't activate when we don't have enough filled slots`, () => {
-          app = mockApp({
-            argument: {
-              collection: 'live',
-              creatorId: 'the-band',
-              // missed slots:
-              // coverage: 'ny',
-              // year: 2018,
-            },
-          });
           return action.handler(app)
             .then(() => {
               expect(feeders.getByName).to.have.not.been.called;
@@ -493,8 +499,16 @@ describe('actions', () => {
           ];
 
           beforeEach(() => {
+            app = mockApp({
+              argument: {
+                collection: 'live',
+                creatorId: 'the band',
+              },
+            });
             fulfilResolversHandler = sinon.stub().returns({
+              app,
               slots: {creator: {title: 'Grateful Dead'}, suggestions: suggestions.map(i => `${i.coverage} ${i.year}`)},
+              slotScheme: slotSchemeWithMultipleCases[0],
               // speech: 'Ok! Lets go with {{creator.title}} band!',
               speech: 'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
               suggestions,
@@ -513,13 +527,6 @@ describe('actions', () => {
             }));
             getSuggestionProviderForSlots = sinon.stub().returns(provider);
             action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
-
-            app = mockApp({
-              argument: {
-                collection: 'live',
-                creatorId: 'the band',
-              },
-            });
             return action.handler(app)
               .then(() => {
                 expect(dialog.ask).to.have.been.calledOnce;

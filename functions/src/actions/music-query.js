@@ -85,7 +85,7 @@ function handler (app) {
     .then(renderSpeech())
     .then(res => {
       answer.push(res);
-      return generatePrompt({app, slotScheme});
+      return generatePrompt(res);
     })
     .then(fulfilResolvers())
     .then(renderSpeech())
@@ -335,7 +335,9 @@ function generatePrompt (args) {
     .then((res) => {
       const suggestions = res.suggestions;
       const slots = Object.assign({}, query.getSlots(app), {suggestions});
-      return Promise.resolve({slots, speech: template, suggestions});
+      return Promise.resolve(
+        Object.assign({}, args, {slots, speech: template, suggestions})
+      );
     });
 }
 
