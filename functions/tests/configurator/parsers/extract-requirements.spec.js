@@ -76,6 +76,18 @@ describe('configurator', () => {
           'year',
         ]);
       });
+
+      it('should parse empty array', () => {
+        expect(
+          extractor.getListOfRequiredSlots([
+            '{{coverage}} is good place!',
+            '{{year}} is good year!',
+          ])
+        ).to.have.members([
+          'coverage',
+          'year',
+        ]);
+      });
     });
   });
 });

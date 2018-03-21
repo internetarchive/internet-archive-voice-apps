@@ -80,7 +80,7 @@ function handler (app) {
   const slots = query.getSlots(app);
   debug('we had slots:', Object.keys(slots));
 
-  return generateAcknowledge({app, slots, slotScheme, newValues})
+  return generateAcknowledge({app, slots, slotScheme, speech: [], newValues})
     .then(fulfilResolvers())
     .then(renderSpeech())
     .then(res => {
