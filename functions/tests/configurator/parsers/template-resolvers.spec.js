@@ -63,6 +63,11 @@ describe('configurator', () => {
             name: 'time',
           }]);
         });
+
+        it('should parse empty array', () => {
+          expect(templateResolvers.getTemplateResolvers([], []))
+            .to.have.been.empty;
+        });
       });
     });
   });

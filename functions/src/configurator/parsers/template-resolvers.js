@@ -17,12 +17,16 @@ const METHOD_NAME = 'handler';
  * - resolver handler - function which gets context and return Promise
  * - resolver name
  *
- * @param template {String} - target template
+ * @param template {Array|String} - target template
  * @param haveSlots {Array<strings>} - list of filled slots
  * @returns {Array<Promise>}
  */
 function getTemplateResolvers (template, haveSlots = []) {
   debug(`search for resolvers for "${template}" with filled "${haveSlots}"`);
+  if (!template || template.length === 0) {
+    return [];
+  }
+
   return getTopLevelSlots(template)
     .filter(name => haveSlots.indexOf(name) < 0)
     .map(name => {
