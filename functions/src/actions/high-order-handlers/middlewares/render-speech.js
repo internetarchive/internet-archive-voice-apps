@@ -1,5 +1,5 @@
 const mustache = require('mustache');
-const {debug} = require('../../../utils/logger')('ia:actions:render-speech');
+const {debug} = require('../../../utils/logger')('ia:actions:hoh:render-speech');
 
 /**
  * Construct mustache render
@@ -10,7 +10,7 @@ const render = (slots) => (speech) => mustache.render(speech, slots);
 /**
  * Render speech by substituting slots
  * @param slots
- * @param speech
+ * @param speech {Array|String}
  * @returns {Promise}
  */
 module.exports = () => (args) => {

@@ -226,7 +226,8 @@ describe('actions', () => {
                   .to.have.property('slots')
                   .deep.equal(query.getSlots(app));
                 expect(fulfilResolversHandler.args[0][0])
-                  .to.have.property('speech', 'Ok! Lets go with {{creator.title}} band!');
+                  .to.have.property('speech')
+                  .with.members(['Ok! Lets go with {{creator.title}} band!']);
                 expect(dialog.ask).to.have.been.calledOnce;
                 expect(dialog.ask.args[0][1])
                   .to.have.property('speech')

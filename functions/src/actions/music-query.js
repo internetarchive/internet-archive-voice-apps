@@ -250,7 +250,7 @@ function generateAcknowledge (args) {
 
   debug('we got matched acknowledge', template);
 
-  return Promise.resolve(Object.assign({}, args, {speech: template}));
+  return Promise.resolve(Object.assign({}, args, {speech: [template]}));
 }
 
 /**
@@ -308,7 +308,7 @@ function fetchSuggestions (args) {
  * @returns {*}
  */
 function generatePrompt (args) {
-  const {app, slotScheme} = args;
+  const {app, slotScheme, speech} = args;
   const missedSlots = slotScheme.slots
     .filter(slotName => !query.hasSlot(app, slotName));
 
@@ -336,7 +336,7 @@ function generatePrompt (args) {
       const suggestions = res.suggestions;
       const slots = Object.assign({}, query.getSlots(app), {suggestions});
       return Promise.resolve(
-        Object.assign({}, args, {slots, speech: template, suggestions})
+        Object.assign({}, args, {slots, speech: speech.concat(template), suggestions})
       );
     });
 }
