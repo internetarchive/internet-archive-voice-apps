@@ -14,6 +14,7 @@ const availableSchemes = require('../strings').intents.musicQuery;
 const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
+const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 
 /**
  * Handle music query action
@@ -102,20 +103,6 @@ function handler (app) {
       }
     });
 }
-
-/**
- * Render speech and substitute slots
- */
-const renderSpeech = () => (args) => {
-  const {slots, speech} = args;
-  if (!speech) {
-    return args;
-  } else {
-    return Object.assign({}, args, {
-      speech: mustache.render(speech, slots),
-    });
-  }
-};
 
 /**
  *
