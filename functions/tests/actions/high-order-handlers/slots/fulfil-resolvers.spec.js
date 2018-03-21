@@ -12,6 +12,11 @@ describe('actions', () => {
       let creatorHandler;
       let revert;
       const speech = 'Ok, {{creator.title}} has played in {{coverage}} sometime {{yearsinterval.suggestions}}. Do you have a particular year in mind?';
+      const speeches = [
+        'Between {{yearsinterval.suggestions}}.',
+        'Ok! Lets go with {{creator.title}} performer!',
+        `You've selected {{alias.collectionId}}.`,
+      ];
       let templateResolvers;
       let yearsintervalHandler;
 
@@ -33,7 +38,7 @@ describe('actions', () => {
         revert();
       });
 
-      it('should works with more than one resolvers', () => {
+      it('should fulfil more than one resolvers', () => {
         return Promise.resolve({speech})
           .then(middleware())
           .then(({slots}) => {
@@ -65,6 +70,21 @@ describe('actions', () => {
             );
             expect(slots).to.be.deep.equal({
               collectionId: '12345',
+              creator: {
+                title: 'Grateful Dead',
+              },
+              yearsinterval: {
+                suggestions: 'between 1970 and 2000',
+              },
+            });
+          });
+      });
+
+      it('should fulfil array of speeches', () => {
+        return Promise.resolve({speech: speeches})
+          .then(middleware())
+          .then(({slots}) => {
+            expect(slots).to.be.deep.equal({
               creator: {
                 title: 'Grateful Dead',
               },
