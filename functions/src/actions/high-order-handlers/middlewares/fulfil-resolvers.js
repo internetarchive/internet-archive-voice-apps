@@ -22,11 +22,9 @@ module.exports = () =>
     const {slots = {}, speech} = args;
 
     // TODO: should we be limitted by speech only?
-    const template = speech;
-
-    debug(`resolve slots for "${template}"`);
+    debug(`resolve slots for "${speech}"`);
     const filledSlots = Object.keys(slots);
-    const resolversToProcess = templateResolvers.getTemplateResolvers(template, filledSlots);
+    const resolversToProcess = templateResolvers.getTemplateResolvers(speech, filledSlots);
 
     debug('we get resolvers to process:', resolversToProcess);
     return Promise
