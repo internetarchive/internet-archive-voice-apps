@@ -1,0 +1,30 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 17,
+    "params": {
+      "query": "collection:(etree )",
+      "qin": "collection:(etree)",
+      "fields": "creator",
+      "wt": "json",
+      "sort": "downloads desc",
+      "rows": "3",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 195485,
+    "start": 0,
+    "docs": [
+      {
+        "creator": "Grateful Dead"
+      },
+      {
+        "creator": "Phil Lesh and Friends"
+      },
+      {
+        "creator": "Disco Biscuits"
+      }
+    ]
+  }
+}
