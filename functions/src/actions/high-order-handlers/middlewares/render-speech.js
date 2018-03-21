@@ -18,7 +18,7 @@ module.exports = () => (args) => {
   const {slots, speech} = args;
   if (!speech || speech.length === 0) {
     debug(`don't have speech here`);
-    return args;
+    return Promise.resolve(args);
   } else {
     if (Array.isArray(speech)) {
       return Promise.resolve(Object.assign({}, args, {

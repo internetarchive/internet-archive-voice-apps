@@ -43,7 +43,14 @@ describe('actions', () => {
       });
 
       it(`should do nothing when we don't have speeches`, () => {
-
+        return middleware()({
+          slots
+        })
+          .then(res => {
+            expect(res).to.be.deep.equal({
+              slots,
+            });
+          });
       });
     });
   });
