@@ -16,7 +16,7 @@ describe('actions', () => {
     });
 
     describe('dialog ask', () => {
-      it('should ...', () => {
+      it('should ask user with suggestions', () => {
         const app = mockApp();
         const speech = ['One', 'Two', 'Tree'];
         const suggestions = ['Red', 'Green', 'Blue'];

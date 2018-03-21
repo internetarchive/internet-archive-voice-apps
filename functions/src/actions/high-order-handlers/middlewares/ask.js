@@ -1,6 +1,17 @@
 const {debug} = require('../../../utils/logger')('ia:actions:hoh:ask');
 const dialog = require('../../../dialog');
 
+/**
+ * Middleware
+ *
+ * send ask response back to the user
+ *
+ * @param app
+ * @param speech
+ * @param suggestions
+ *
+ * @return {Promise}
+ */
 module.exports = () => (context) => {
   debug('start');
 
