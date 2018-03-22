@@ -7,20 +7,15 @@ const {wait} = require('./_utils/wait');
 
 let index, configStub, adminInitStub, functions, admin;
 
-describe('playMedia', () => {
+describe('playMedia', function () {
   let res;
-
+  this.timeout(3000);
   before(() => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        admin = require('firebase-admin');
-        adminInitStub = sinon.stub(admin, 'initializeApp');
-        functions = require('firebase-functions');
-        configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
-        index = rewire('..');
-        resolve();
-      }, 200);
-    });
+    admin = require('firebase-admin');
+    adminInitStub = sinon.stub(admin, 'initializeApp');
+    functions = require('firebase-functions');
+    configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
+    index = rewire('..');
   });
 
   beforeEach(() => {
