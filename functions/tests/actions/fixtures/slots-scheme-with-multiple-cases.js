@@ -9,11 +9,11 @@ module.exports = [{
   condition: 'category == "plates"',
 
   prompts: [{
-    requirements: [
+    confirm: [
       'plate'
     ],
 
-    prompts: [
+    speech: [
       'Which plate?',
     ],
   }]
@@ -26,11 +26,11 @@ module.exports = [{
   ],
 
   prompts: [{
-    requirements: [
+    confirm: [
       'album'
     ],
 
-    prompts: [
+    speech: [
       'Which album?',
     ],
   }],

@@ -14,8 +14,8 @@ module.exports = () =>
 // sadly Google Firebase doesn't support modern Node.js
 //   ({app, newValues = {}, query, slotScheme, ...res}) => {
   args => {
+    debug('start');
     let {app, newValues = {}, query, slotScheme} = args;
-    debug('apply copy arguments to slots middleware');
     debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {

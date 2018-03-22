@@ -1,10 +1,10 @@
 const {expect} = require('chai');
+const _ = require('lodash');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../src/actions/music-query');
 const query = require('../../src/state/query');
-const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -18,6 +18,8 @@ describe('actions', () => {
   let dialog;
   let getSuggestionProviderForSlots;
   let provider;
+  let queryMiddlewares;
+  let playbackMiddlewares;
 
   beforeEach(() => {
     app = mockApp({
@@ -29,6 +31,30 @@ describe('actions', () => {
     });
     dialog = mockDialog();
     action.__set__('dialog', dialog);
+
+    function mockMiddlewares (names) {
+      return names.map(name => ({
+        name,
+        stub: sinon.stub().returns(Promise.resolve()),
+      }))
+        .reduce((acc, {name, stub}) => {
+          action.__set__(name, () => stub);
+          return Object.assign({}, acc, {[name]: stub});
+        }, {});
+    }
+
+    queryMiddlewares = mockMiddlewares([
+      'acknowledge',
+      'prompt',
+      'suggestions',
+      'fulfilResolvers',
+      'renderSpeech',
+      'ask',
+    ]);
+
+    playbackMiddlewares = mockMiddlewares([
+      'playbackFulfillment'
+    ]);
 
     provider = sinon.stub().returns(Promise.resolve({
       items: [
@@ -42,51 +68,25 @@ describe('actions', () => {
     action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
   });
 
-  describe('middleware', () => {
-    describe('fetchSuggestions', () => {
-      it('should fetch and set list of number', () => {
-        const app = mockApp({
+  describe('music query', () => {
+    beforeEach(() => {
+      action.__set__('availableSchemes', slotSchemeWithMultipleCases);
+    });
+
+    describe('pipeline', () => {
+      it('should call middlewares one-by-one', () => {
+        app = mockApp({
           argument: {
             // category: 'plate',
           },
         });
-        const promptScheme = {
-          requirements: ['year'],
-        };
-
-        const provider = sinon.stub().returns(Promise.resolve({
-          items: [
-            1970,
-            1980,
-            1990,
-            2000,
-            2010,
-          ],
-        }));
-        const getSuggestionProviderForSlots = sinon.stub().returns(provider);
-        action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
-
-        return action.fetchSuggestions({app, promptScheme})
-          .then((res) => {
-            expect(res).to.be.deep.equal({
-              app,
-              promptScheme,
-              suggestions: [
-                1970,
-                1980,
-                1990,
-                2000,
-                2010,
-              ],
+        return action.handler(app)
+          .then(() => {
+            _.each(queryMiddlewares, (middleware, name) => {
+              expect(middleware).to.be.called;
             });
           });
       });
-    });
-  });
-
-  describe('music query', () => {
-    beforeEach(() => {
-      action.__set__('availableSchemes', slotSchemeWithMultipleCases);
     });
 
     describe('multiple slot schemes', () => {
@@ -98,10 +98,9 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(dialog.ask).to.have.been.calledOnce;
-            expect(dialog.ask.args[0][1])
-              .to.have.property('speech')
-              .to.include('Which album?');
+            expect(queryMiddlewares.acknowledge).to.be.called;
+            expect(queryMiddlewares.acknowledge.args[0][0])
+              .to.have.property('slotScheme', slotSchemeWithMultipleCases[1]);
           });
       });
 
@@ -113,10 +112,9 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(dialog.ask).to.have.been.calledOnce;
-            expect(dialog.ask.args[0][1])
-              .to.have.property('speech')
-              .to.include('Which plate?');
+            expect(queryMiddlewares.acknowledge).to.be.called;
+            expect(queryMiddlewares.acknowledge.args[0][0])
+              .to.have.property('slotScheme', slotSchemeWithMultipleCases[0]);
           });
       });
 
@@ -152,101 +150,6 @@ describe('actions', () => {
         action.__set__('availableSchemes', slotSchemeWithOneCase);
       });
 
-      describe('acknowledge', () => {
-        let revert;
-        let fulfilResolvers;
-        let fulfilResolversHandler;
-
-        describe('speech', () => {
-          beforeEach(() => {
-            fulfilResolversHandler = sinon.stub().returns({
-              slots: {
-                creator: {title: 'Grateful Dead'},
-                coverage: 'Kharkiv',
-                year: 2017,
-              },
-              speech: '{{coverage}} {{year}} - great choice!',
-              suggestions: [],
-            });
-            fulfilResolvers = () => fulfilResolversHandler;
-            revert = action.__set__('fulfilResolvers', fulfilResolvers);
-          });
-
-          afterEach(() => {
-            revert();
-          });
-
-          it('should acknowledge are received values', () => {
-            app = mockApp({
-              argument: {
-                coverage: 'Kharkiv',
-                year: 2017,
-              },
-            });
-            return action.handler(app)
-              .then(() => {
-                expect(dialog.ask).to.have.been.calledOnce;
-                expect(dialog.ask.args[0][1])
-                  .to.have.property('speech')
-                  .to.include('Kharkiv 2017 - great choice!');
-              });
-          });
-        });
-
-        describe('resolving', () => {
-          beforeEach(() => {
-            fulfilResolversHandler = sinon.stub().returns({
-              slots: {creator: {title: 'Grateful Dead'}},
-              speech: 'Ok! Lets go with {{creator.title}} band!',
-              suggestions: [],
-            });
-            fulfilResolvers = () => fulfilResolversHandler;
-            revert = action.__set__('fulfilResolvers', fulfilResolvers);
-          });
-
-          afterEach(() => {
-            revert();
-          });
-
-          it('should substitute resolved slots', () => {
-            app = mockApp({
-              argument: {
-                creatorId: 'bandId',
-              },
-            });
-
-            return action.handler(app)
-              .then(() => {
-                expect(fulfilResolversHandler).to.have.been.called;
-                expect(fulfilResolversHandler.args[0][0])
-                  .to.have.property('slots')
-                  .deep.equal(query.getSlots(app));
-                expect(fulfilResolversHandler.args[0][0])
-                  .to.have.property('speech', 'Ok! Lets go with {{creator.title}} band!');
-                expect(dialog.ask).to.have.been.calledOnce;
-                expect(dialog.ask.args[0][1])
-                  .to.have.property('speech')
-                  .to.include('Ok! Lets go with Grateful Dead band!');
-              });
-          });
-        });
-
-        it('should prompt to the next slot with a question', () => {
-          app = mockApp({
-            argument: {
-              collection: 'live',
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include('What artist would you like to listen to, e.g. barcelona, london or lviv?');
-            });
-        });
-      });
-
       describe('defaults', () => {
         it(`should automatically populate to user state if we don't have it yet there`, () => {
           app = mockApp({
@@ -279,8 +182,19 @@ describe('actions', () => {
         let revert;
 
         beforeEach(() => {
+          app = mockApp({
+            argument: {
+              collection: 'live',
+              creatorId: 'the-band',
+              // missed slots:
+              // coverage: 'ny',
+              // year: 2018,
+            },
+          });
           fulfilResolversHandler = sinon.stub().returns({
+            app,
             slots: {creator: {title: 'Grateful Dead'}},
+            slotScheme: slotSchemeWithMultipleCases[0],
             speech: 'Ok! Lets go with {{creator.title}} band!',
             suggestions: [],
           });
@@ -298,15 +212,6 @@ describe('actions', () => {
         });
 
         it(`shouldn't activate when we don't have enough filled slots`, () => {
-          app = mockApp({
-            argument: {
-              collection: 'live',
-              creatorId: 'the-band',
-              // missed slots:
-              // coverage: 'ny',
-              // year: 2018,
-            },
-          });
           return action.handler(app)
             .then(() => {
               expect(feeders.getByName).to.have.not.been.called;
@@ -324,23 +229,7 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(feeders.getByName).to.have.been.calledWith('albums');
-              expect(playlist.getFeeder(app)).to.be.equal('albums');
-              expect(albumsFeeder.build).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
-              expect(albumsFeeder.isEmpty).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
-              expect(albumsFeeder.getCurrentItem).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
+              expect(playbackMiddlewares.playbackFulfillment).to.have.been.called;
             });
         });
       });
@@ -431,105 +320,6 @@ describe('actions', () => {
               expect(query.getSlot(app, 'coverage')).to.be.equal('Kharkiv');
               expect(query.getSlot(app, 'year')).to.be.equal(2017);
             });
-        });
-      });
-
-      describe('suggestions', () => {
-        it('should return list of statis suggestions', () => {
-          app = mockApp({
-            argument: {},
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('suggestions')
-                .to.have.members(['78s', 'Live Concerts']);
-            });
-        });
-
-        it('should generate suggestions on fly', () => {
-          app = mockApp({
-            argument: {
-              collection: 'live',
-              year: 2018,
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(provider.args[0][0]).to.have.property('collection', 'live');
-              expect(provider.args[0][0]).to.have.property('year', 2018);
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('suggestions')
-              // fetch bands for the collection
-                .to.have.members(['barcelona', 'london', 'lviv']);
-            });
-        });
-
-        it('should use suggestion to generate prompt speech', () => {
-          app = mockApp({
-            argument: {},
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(dialog.ask).to.have.been.calledOnce;
-              expect(dialog.ask.args[0][1])
-                .to.have.property('speech')
-                .to.include(
-                  'Would you like to listen to music from our collections of 78s or Live Concerts?'
-                );
-            });
-        });
-
-        describe('suggestion', () => {
-          let fulfilResolvers;
-          let fulfilResolversHandler;
-          let revert;
-          const suggestions = [
-            {coverage: 'Washington, DC', year: 1973},
-            {coverage: 'Madison, WI', year: 2000},
-            {coverage: 'Worcester, MA', year: 2001},
-          ];
-
-          beforeEach(() => {
-            fulfilResolversHandler = sinon.stub().returns({
-              slots: {creator: {title: 'Grateful Dead'}, suggestions: suggestions.map(i => `${i.coverage} ${i.year}`)},
-              // speech: 'Ok! Lets go with {{creator.title}} band!',
-              speech: 'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
-              suggestions,
-            });
-            fulfilResolvers = () => fulfilResolversHandler;
-            revert = action.__set__('fulfilResolvers', fulfilResolvers);
-          });
-
-          afterEach(() => {
-            revert();
-          });
-
-          it('should use one suggestion to generate prompt speech', () => {
-            provider = sinon.stub().returns(Promise.resolve({
-              items: suggestions,
-            }));
-            getSuggestionProviderForSlots = sinon.stub().returns(provider);
-            action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
-
-            app = mockApp({
-              argument: {
-                collection: 'live',
-                creatorId: 'the band',
-              },
-            });
-            return action.handler(app)
-              .then(() => {
-                expect(dialog.ask).to.have.been.calledOnce;
-                expect(dialog.ask.args[0][1])
-                  .to.have.property('speech')
-                  .to.include(
-                    'Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
-                  );
-              });
-          });
         });
       });
     });

@@ -15,7 +15,7 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware
  * @returns {Promise}
  */
 module.exports = () => ({app, playlist, query, slotScheme}) => {
-  debug('apply playback fulfillment middleware');
+  debug('start');
   const feeder = feeders.getByName(slotScheme.fulfillment);
   if (!feeder) {
     // TODO: we should softly fallback here
@@ -30,7 +30,7 @@ module.exports = () => ({app, playlist, query, slotScheme}) => {
         if (feeder.isEmpty({app, query, playlist})) {
           // TODO: feeder can't find anything by music query
           // isn't covered case should be implemented
-          dialog.ask(
+          dialog.ask(app,
             `We haven't find anything by your request would you like something else?`
           );
         } else {

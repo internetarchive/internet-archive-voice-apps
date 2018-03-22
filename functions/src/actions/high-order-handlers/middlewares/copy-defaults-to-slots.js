@@ -15,8 +15,8 @@ module.exports = () =>
   // use this one, once firebase would support modern node.js
   //   ({app, newValues = {}, query, slotScheme, ...res}) => {
   args => {
+    debug('start');
     let {app, newValues = {}, query, slotScheme} = args;
-    debug('apply copy defaults to slots middleware');
     if (slotScheme.defaults) {
       debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
       newValues = entries(slotScheme.defaults)
