@@ -13,7 +13,7 @@ module.exports = [{
       'plate'
     ],
 
-    prompts: [
+    speech: [
       'Which plate?',
     ],
   }]
@@ -30,7 +30,7 @@ module.exports = [{
       'album'
     ],
 
-    prompts: [
+    speech: [
       'Which album?',
     ],
   }],

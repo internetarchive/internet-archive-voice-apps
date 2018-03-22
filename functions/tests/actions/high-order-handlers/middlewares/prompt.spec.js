@@ -12,7 +12,7 @@ describe('actions', () => {
 
         const slotScheme = {
           prompts: [{
-            prompts: ['What is the albumn?'],
+            speech: ['What is the albumn?'],
             requirements: ['albumn'],
           }],
 
@@ -38,7 +38,7 @@ describe('actions', () => {
 
         const slotScheme = {
           prompts: [{
-            prompts: ['What is the artist?'],
+            speech: ['What is the artist?'],
             requirements: ['artist'],
           }],
 

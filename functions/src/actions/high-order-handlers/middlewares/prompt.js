@@ -36,7 +36,7 @@ module.exports = () => (args) => {
     return Promise.resolve(args);
   }
 
-  const template = _.sample(promptScheme.prompts);
+  const template = _.sample(promptScheme.speech);
   debug('we randomly choice prompt:', template);
 
   return Promise.resolve(Object.assign({}, args, {
