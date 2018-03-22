@@ -11,11 +11,16 @@ describe('playMedia', () => {
   let res;
 
   before(() => {
-    admin = require('firebase-admin');
-    adminInitStub = sinon.stub(admin, 'initializeApp');
-    functions = require('firebase-functions');
-    configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
-    index = rewire('..');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        admin = require('firebase-admin');
+        adminInitStub = sinon.stub(admin, 'initializeApp');
+        functions = require('firebase-functions');
+        configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
+        index = rewire('..');
+        resolve();
+      }, 200);
+    });
   });
 
   beforeEach(() => {
