@@ -12,7 +12,7 @@ describe('actions', () => {
   describe('middlewares', () => {
     let selectors;
 
-    describe('substitute acknowledge', () => {
+    describe('acknowledge', () => {
       it('should find right acknowledge when we have new values', () => {
         const template = 'Hello World!';
         selectors = mockSelectors({

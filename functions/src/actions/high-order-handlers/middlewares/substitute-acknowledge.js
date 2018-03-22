@@ -1,5 +1,5 @@
 const selectors = require('../../../configurator/selectors');
-const {debug} = require('../../../utils/logger')('ia:actions:hoh:put-acknowledge');
+const {debug} = require('../../../utils/logger')('ia:actions:hoh:substitute-acknowledge');
 
 /**
  * Midleware
