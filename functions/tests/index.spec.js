@@ -7,10 +7,11 @@ const {wait} = require('./_utils/wait');
 
 let index, configStub, adminInitStub, functions, admin;
 
-describe('playMedia', function () {
+describe('playMedia', () => {
   let res;
-  this.timeout(3000);
-  before(() => {
+
+  before(function () {
+    this.timeout(3000);
     admin = require('firebase-admin');
     adminInitStub = sinon.stub(admin, 'initializeApp');
     functions = require('firebase-functions');
