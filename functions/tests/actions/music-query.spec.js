@@ -50,7 +50,8 @@ describe('actions', () => {
             // category: 'plate',
           },
         });
-        const promptScheme = {
+
+        const suggestionsScheme = {
           requirements: ['year'],
         };
 
@@ -66,11 +67,11 @@ describe('actions', () => {
         const getSuggestionProviderForSlots = sinon.stub().returns(provider);
         action.__set__('getSuggestionProviderForSlots', getSuggestionProviderForSlots);
 
-        return action.fetchSuggestions({app, promptScheme})
+        return action.fetchSuggestions({app, suggestionsScheme})
           .then((res) => {
             expect(res).to.be.deep.equal({
               app,
-              promptScheme,
+              suggestionsScheme,
               slots: {
                 suggestions: [
                   1970,

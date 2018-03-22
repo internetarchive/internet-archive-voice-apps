@@ -265,8 +265,8 @@ function generateAcknowledge (args) {
 function fetchSuggestions (args) {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
-  const {app, promptScheme, slots} = args;
-  let suggestions = promptScheme.suggestions;
+  const {app, suggestionsScheme, slots} = args;
+  let suggestions = suggestionsScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);
@@ -275,18 +275,18 @@ function fetchSuggestions (args) {
     );
   }
 
-  const provider = getSuggestionProviderForSlots(promptScheme.requirements);
+  const provider = getSuggestionProviderForSlots(suggestionsScheme.requirements);
   if (!provider) {
-    warning(`don't have any suggestions for: ${promptScheme.requirements}. Maybe we should add them.`);
+    warning(`don't have any suggestions for: ${suggestionsScheme.requirements}. Maybe we should add them.`);
     return Promise.resolve(args);
   }
 
   return provider(query.getSlots(app))
     .then(res => {
       let suggestions;
-      if (promptScheme.suggestionTemplate) {
+      if (suggestionsScheme.suggestionTemplate) {
         suggestions = res.items.map(
-          item => mustache.render(promptScheme.suggestionTemplate, item)
+          item => mustache.render(suggestionsScheme.suggestionTemplate, item)
         );
       } else {
         suggestions = res.items.map(
@@ -336,7 +336,7 @@ function generatePrompt (args) {
   const template = _.sample(promptScheme.prompts);
   debug('we randomly choice prompt:', template);
 
-  return Object.assign({}, args, {promptScheme, speech: speech.concat(template)});
+  return Object.assign({}, args, {suggestionsScheme: promptScheme, speech: speech.concat(template)});
 }
 
 module.exports = {
