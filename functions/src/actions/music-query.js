@@ -5,9 +5,6 @@ const selectors = require('../configurator/selectors');
 const dialog = require('../dialog');
 const feeders = require('../extensions/feeders');
 const {getSuggestionProviderForSlots} = require('../extensions/suggestions');
-const {
-  getPromptsForSlots,
-} = require('../slots/slots-of-template');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -15,6 +12,7 @@ const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
+const prompt = require('./high-order-handlers/middlewares/prompt');
 
 /**
  * Handle music query action
@@ -83,10 +81,7 @@ function handler (app) {
   return generateAcknowledge({app, slots, slotScheme, speech: [], newValues})
     .then(fulfilResolvers())
     .then(renderSpeech())
-    .then(res => {
-      answer.push(res);
-      return generatePrompt(res);
-    })
+    .then(prompt())
     .then(args => fetchSuggestions(args))
     .then(fulfilResolvers())
     .then(renderSpeech())
@@ -259,7 +254,8 @@ function generateAcknowledge (args) {
  * Fetch suggestions for slots
  *
  * @param app
- * @param promptScheme
+ * @param slots
+ * @param suggestionsScheme
  * @returns {Promise}
  */
 function fetchSuggestions (args) {
@@ -303,40 +299,6 @@ function fetchSuggestions (args) {
         {}, args, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
       );
     });
-}
-
-/**
- * Generate prompt for missed slots
- *
- * @param app
- * @param slotScheme
- * @returns {*}
- */
-function generatePrompt (args) {
-  const {app, slotScheme, speech} = args;
-  const missedSlots = slotScheme.slots
-    .filter(slotName => !query.hasSlot(app, slotName));
-
-  if (missedSlots.length === 0) {
-    debug(`we don't have any missed slots`);
-    return Promise.resolve(args);
-  }
-
-  debug('we missed slots:', missedSlots);
-  const promptScheme = getPromptsForSlots(
-    slotScheme.prompts,
-    missedSlots
-  );
-
-  if (!promptScheme) {
-    warning(`we don't have any matched prompts`);
-    return Promise.resolve(args);
-  }
-
-  const template = _.sample(promptScheme.prompts);
-  debug('we randomly choice prompt:', template);
-
-  return Object.assign({}, args, {suggestionsScheme: promptScheme, speech: speech.concat(template)});
 }
 
 module.exports = {
