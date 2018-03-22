@@ -1,4 +1,4 @@
-const {debug} = require('../../../utils/logger')('ia:actions:hoh:ask');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:ask');
 const dialog = require('../../../dialog');
 
 /**
@@ -23,7 +23,7 @@ module.exports = () => (context) => {
       suggestions: suggestions.filter(s => s).slice(0, 3),
     });
   } else {
-    // TODO: we don't have anything to say should warn about it
+    warning(`hm... we don't have anything to say.`);
   }
 
   return Promise.resolve(context);
