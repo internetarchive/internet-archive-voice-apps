@@ -71,6 +71,15 @@ describe('actions', () => {
             expect(res).to.be.deep.equal({
               app,
               promptScheme,
+              slots: {
+                suggestions: [
+                  1970,
+                  1980,
+                  1990,
+                  2000,
+                  2010,
+                ],
+              },
               suggestions: [
                 1970,
                 1980,
@@ -508,7 +517,10 @@ describe('actions', () => {
             });
             fulfilResolversHandler = sinon.stub().returns({
               app,
-              slots: {creator: {title: 'Grateful Dead'}, suggestions: suggestions.map(i => `${i.coverage} ${i.year}`)},
+              slots: {
+                creator: {title: 'Grateful Dead'},
+                suggestions: suggestions.map(i => `${i.coverage} ${i.year}`)
+              },
               slotScheme: slotSchemeWithMultipleCases[0],
               // speech: 'Ok! Lets go with {{creator.title}} band!',
               speech: 'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',

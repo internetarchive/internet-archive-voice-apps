@@ -87,6 +87,7 @@ function handler (app) {
       answer.push(res);
       return generatePrompt(res);
     })
+    .then(args => fetchSuggestions(args))
     .then(fulfilResolvers())
     .then(renderSpeech())
     .then(res => {
@@ -263,13 +264,15 @@ function generateAcknowledge (args) {
  */
 function fetchSuggestions (args) {
   // TODO: migrate to the `...rest` style
-  // once Google Firebase migrates to modern Nodej.s
-  const {app, promptScheme} = args;
+  // once Google Firebase migrates to modern Node.js
+  const {app, promptScheme, slots} = args;
   let suggestions = promptScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);
-    return Promise.resolve(Object.assign({}, args, {suggestions}));
+    return Promise.resolve(
+      Object.assign({}, args, {slots: Object.assign({}, slots, {suggestions})}, {suggestions})
+    );
   }
 
   const provider = getSuggestionProviderForSlots(promptScheme.requirements);
@@ -296,7 +299,9 @@ function fetchSuggestions (args) {
           }
         );
       }
-      return Object.assign({}, args, {suggestions});
+      return Object.assign(
+        {}, args, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
+      );
     });
 }
 
@@ -331,14 +336,7 @@ function generatePrompt (args) {
   const template = _.sample(promptScheme.prompts);
   debug('we randomly choice prompt:', template);
 
-  return fetchSuggestions({app, promptScheme})
-    .then((res) => {
-      const suggestions = res.suggestions;
-      const slots = Object.assign({}, query.getSlots(app), {suggestions});
-      return Promise.resolve(
-        Object.assign({}, args, {slots, speech: speech.concat(template), suggestions})
-      );
-    });
+  return Object.assign({}, args, {promptScheme, speech: speech.concat(template)});
 }
 
 module.exports = {
