@@ -40,8 +40,8 @@ function getUniqueCreatorsFromIA (docs) {
 /**
  * get entities from InternetArchive
  *
- * @param id {string}
- * @param limit {int}
+ * @param id {string} etree/georgeblood
+ * @param limit {int} number of records need to be fetch from IA
  * @returns entities {array}
  */
 function fetchEntitiesFromIA (id, limit) {
@@ -73,9 +73,9 @@ function fetchEntitiesFromIA (id, limit) {
 /**
  * get unique & filtered entities from InternetArchive & post to DialogFlow
  *
- * @param entityname {string}
- * @param id {string}
- * @param limit {int}
+ * @param entityname {string} name of entity in dialogflow
+ * @param id {string} etree/georgeblood
+ * @param limit {int} number of records need to be fetch from IA
  * @returns {promise}
  */
 function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
@@ -86,7 +86,10 @@ function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
     .then(values => {
       const [creatorsFromIA, creatorsFromDF] = values;
       var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      postEntitiesToDF(entityname, dif, 0);
+      return postEntitiesToDF(entityname, dif, 0);
+    })
+    .then(data => {
+      return Promise.resolve(data);
     });
 }
 

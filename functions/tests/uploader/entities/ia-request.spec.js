@@ -7,6 +7,8 @@ const iaRequest = rewire('../../../uploader/entities/ia-request');
 
 const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
 const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
+const getEntitiesFromDF = require('./fixtures/get-entities-from-df.json');
+const successFromDF = require('./fixtures/success-from-df.json');
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -79,6 +81,38 @@ describe('uploader', () => {
     describe('fetchNewEntitiesFromIAAndPostToDF', () => {
       it('should be defined', () => {
         expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
+      });
+
+      describe('forCollection', () => {
+        beforeEach(() => {
+          iaRequest.__set__(
+            'fetch',
+            fetchMock
+              .sandbox()
+              .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)', getCollectionFromIA)
+          );
+          iaRequest.__set__(
+            'fetchEntitiesFromDF',
+            fetchMock
+              .sandbox()
+              .get('begin:https://api.dialogflow.com/v1/entities/testing-collection?v=20150910', getEntitiesFromDF)
+          );
+          iaRequest.__set__(
+            'postEntitiesToDF',
+            fetchMock
+              .sandbox()
+              .post('begin:https://api.dialogflow.com/v1/entities/testing-collection/entries?v=20150910', {'body': successFromDF})
+          );
+        });
+
+        it('should fetch collection from IA', () => {
+          iaRequest.fetchNewEntitiesFromIAAndPostToDF(`testing-collection`, `etree`, `10`)
+            .then(items => {
+            })
+            .then(data => {
+              expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
+            });
+        });
       });
     });
   });

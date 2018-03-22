@@ -98,7 +98,7 @@ function fetchEntitiesFromDF (entityname) {
       }
       debug(util.inspect(entities, false, null));
       debug(`fetched Entity from DF successfully.`);
-      return entities;
+      return Promise.resolve(entities);
     })
     .catch(e => {
       error(`Get error in fetching entity from DF, error: ${JSON.stringify(e)}`);
