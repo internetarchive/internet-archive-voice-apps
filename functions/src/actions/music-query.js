@@ -224,7 +224,8 @@ function fillSlots (app, slotScheme) {
  * @returns {*}
  */
 function generateAcknowledge (args) {
-  const {slotScheme, newValues} = args;
+  debug('generate acknowledge');
+  const {slots, slotScheme, newValues} = args;
   const newNames = Object.keys(newValues);
 
   // we get new values
@@ -234,9 +235,10 @@ function generateAcknowledge (args) {
   }
 
   debug('and get new slots:', newValues);
-
+  debug('available acknowledges', slotScheme.acknowledges);
   const template = selectors.find(slotScheme.acknowledges, {
     prioritySlots: newNames,
+    slots,
   });
 
   if (!template) {

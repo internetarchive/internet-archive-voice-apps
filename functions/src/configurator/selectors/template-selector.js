@@ -11,12 +11,15 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:template-se
  * @returns {Promise.<null>}
  */
 function find (options, context) {
-  debug('sgelect option as template');
+  debug('select option as template');
 
-  const prioritySlots = context.prioritySlots;
+  const {prioritySlots, slots = {}} = context;
   debug('the priority slots are:', prioritySlots);
+  debug('the slots are:', slots);
 
-  const acknowledgeRequirements = extractor.extractRequrements(options);
+  const acknowledgeRequirements = extractor.extractRequrements(
+    options, Object.keys(slots)
+  );
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
