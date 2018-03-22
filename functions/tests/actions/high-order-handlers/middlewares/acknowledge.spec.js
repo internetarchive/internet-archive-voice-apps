@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/substitute-acknowledge');
+const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/acknowledge');
 
 const mockSelectors = ({findResult = null} = {}) => ({
   find: sinon.stub().returns(findResult),
@@ -20,6 +20,10 @@ describe('actions', () => {
         });
         middleware.__set__('selectors', selectors);
 
+        const slots = {
+          name: 'value',
+        };
+
         const slotScheme = {
           acknowledges: [],
         };
@@ -27,11 +31,11 @@ describe('actions', () => {
           name: 'value',
         };
 
-        return middleware()({slotScheme, newValues})
+        return middleware()({slots, slotScheme, newValues})
           .then(({speech}) => {
             expect(selectors.find).to.been.calledWith(
               slotScheme.acknowledges,
-              {prioritySlots: ['name']}
+              {prioritySlots: ['name'], slots}
             );
             expect(speech).to.have.members([
               template,

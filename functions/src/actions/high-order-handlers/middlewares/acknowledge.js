@@ -9,7 +9,8 @@ const {debug} = require('../../../utils/logger')('ia:actions:hoh:substitute-ackn
  * @returns {Promise}
  */
 module.exports = () => (args) => {
-  const {slotScheme, newValues} = args;
+  debug('start');
+  const {slots, slotScheme, newValues} = args;
   const newNames = Object.keys(newValues);
 
   // we get new values
@@ -22,6 +23,7 @@ module.exports = () => (args) => {
 
   const template = selectors.find(slotScheme.acknowledges, {
     prioritySlots: newNames,
+    slots,
   });
 
   if (!template) {
