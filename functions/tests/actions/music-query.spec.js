@@ -5,7 +5,6 @@ const sinon = require('sinon');
 
 const action = rewire('../../src/actions/music-query');
 const query = require('../../src/state/query');
-const playlist = require('../../src/state/playlist');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -19,7 +18,8 @@ describe('actions', () => {
   let dialog;
   let getSuggestionProviderForSlots;
   let provider;
-  let middlewares;
+  let queryMiddlewares;
+  let playbackMiddlewares;
 
   beforeEach(() => {
     app = mockApp({
@@ -32,22 +32,29 @@ describe('actions', () => {
     dialog = mockDialog();
     action.__set__('dialog', dialog);
 
-    middlewares = [
+    function mockMiddlewares (names) {
+      return names.map(name => ({
+        name,
+        stub: sinon.stub().returns(Promise.resolve()),
+      }))
+        .reduce((acc, {name, stub}) => {
+          action.__set__(name, () => stub);
+          return Object.assign({}, acc, {[name]: stub});
+        }, {});
+    }
+
+    queryMiddlewares = mockMiddlewares([
       'acknowledge',
       'prompt',
       'suggestions',
       'fulfilResolvers',
       'renderSpeech',
       'ask',
-    ]
-      .map(name => ({
-        name,
-        stub: sinon.stub().returns(Promise.resolve()),
-      }))
-      .reduce((acc, {name, stub}) => {
-        action.__set__(name, () => stub);
-        return Object.assign({}, acc, {[name]: stub});
-      }, {});
+    ]);
+
+    playbackMiddlewares = mockMiddlewares([
+      'playbackFulfillment'
+    ]);
 
     provider = sinon.stub().returns(Promise.resolve({
       items: [
@@ -75,7 +82,7 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            _.each(middlewares, (middleware, name) => {
+            _.each(queryMiddlewares, (middleware, name) => {
               expect(middleware).to.be.called;
             });
           });
@@ -91,8 +98,8 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(middlewares.acknowledge).to.be.called;
-            expect(middlewares.acknowledge.args[0][0])
+            expect(queryMiddlewares.acknowledge).to.be.called;
+            expect(queryMiddlewares.acknowledge.args[0][0])
               .to.have.property('slotScheme', slotSchemeWithMultipleCases[1]);
           });
       });
@@ -105,8 +112,8 @@ describe('actions', () => {
         });
         return action.handler(app)
           .then(() => {
-            expect(middlewares.acknowledge).to.be.called;
-            expect(middlewares.acknowledge.args[0][0])
+            expect(queryMiddlewares.acknowledge).to.be.called;
+            expect(queryMiddlewares.acknowledge.args[0][0])
               .to.have.property('slotScheme', slotSchemeWithMultipleCases[0]);
           });
       });
@@ -222,23 +229,7 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(feeders.getByName).to.have.been.calledWith('albums');
-              expect(playlist.getFeeder(app)).to.be.equal('albums');
-              expect(albumsFeeder.build).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
-              expect(albumsFeeder.isEmpty).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
-              expect(albumsFeeder.getCurrentItem).to.have.been.calledWith({
-                app,
-                playlist: action.__get__('playlist'),
-                query: action.__get__('query'),
-              });
+              expect(playbackMiddlewares.playbackFulfillment).to.have.been.called;
             });
         });
       });

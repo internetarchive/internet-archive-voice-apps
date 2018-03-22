@@ -1,6 +1,4 @@
 const selectors = require('../configurator/selectors');
-const dialog = require('../dialog');
-const feeders = require('../extensions/feeders');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -11,6 +9,7 @@ const ask = require('./high-order-handlers/middlewares/ask');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 const suggestions = require('./high-order-handlers/middlewares/suggestions');
+const playbackFulfillment = require('./high-order-handlers/middlewares/playback-fulfillment');
 const prompt = require('./high-order-handlers/middlewares/prompt');
 
 /**
@@ -48,34 +47,16 @@ function handler (app) {
 
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
-    debug('we got all needed slots');
-    const feeder = feeders.getByName(slotScheme.fulfillment);
-    if (!feeder) {
-      // TODO: we should softly fallback here
-      warning(`we need feeder "${slotScheme.fulfillment}" for fulfillment slot dialog`);
-      return Promise.resolve();
-    } else {
-      playlist.setFeeder(app, slotScheme.fulfillment);
-      return feeder
-        .build({app, query, playlist})
-        .then(() => {
-          if (feeder.isEmpty({app, query, playlist})) {
-            // TODO: feeder can't find anything by music query
-            // isn't covered case should be implemented
-            dialog.ask(
-              app,
-              `We haven't find anything by your request would you like something else?`
-            );
-          } else {
-            dialog.playSong(app, feeder.getCurrentItem({app, query, playlist}));
-          }
-        });
-    }
+    debug('pipeline playback');
+    return Promise
+      .resolve({app, slotScheme, playlist, query})
+      .then(playbackFulfillment());
   }
+
+  debug('pipeline query');
 
   const slots = query.getSlots(app);
   debug('we had slots:', Object.keys(slots));
-
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
     .then(prompt())
     .then(suggestions())
