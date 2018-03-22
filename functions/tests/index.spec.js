@@ -1,18 +1,23 @@
 const {expect} = require('chai');
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
 const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
 const {wait} = require('./_utils/wait');
 
-let adminInitStub = sinon.stub(admin, 'initializeApp');
-let configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
-let index = rewire('..');
+let index, configStub, adminInitStub, functions, admin;
 
 describe('playMedia', () => {
   let res;
+
+  before(function () {
+    this.timeout(3000);
+    admin = require('firebase-admin');
+    adminInitStub = sinon.stub(admin, 'initializeApp');
+    functions = require('firebase-functions');
+    configStub = sinon.stub(functions, 'config').returns(require(`./.runtimeconfig.json`));
+    index = rewire('..');
+  });
 
   beforeEach(() => {
     res = new MockResponse();

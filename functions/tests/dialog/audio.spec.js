@@ -1,7 +1,8 @@
 const {expect} = require('chai');
 const mustache = require('mustache');
+const rewire = require('rewire');
 
-const {playSong} = require('../../src/dialog/audio');
+const audio = rewire('../../src/dialog/audio');
 const allowedStrings = require('../../src/strings').dialog.playSong;
 
 const mockApp = require('../_utils/mocking/app');
@@ -24,12 +25,26 @@ describe('dialog', () => {
       year: 1973,
       url: 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg',
     };
+
+    audio.__set__('availableStrings', {
+      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      speech: `
+        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+               clipBegin="4.5s"
+               clipEnd="5.5s"
+               soundLevel="10db">
+          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+        </audio>
+      `,
+      title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
+      suggestionLink: 'on Archive.org',
+    });
   });
 
   describe('playSong', () => {
     it('should share audio response with user', () => {
       const strings = allowedStrings[0];
-      playSong(app, options);
+      audio.playSong(app, options);
 
       expect(app.ask).to.be.calledOnce;
       expect(app.buildMediaResponse).to.be.calledOnce;
@@ -59,7 +74,7 @@ describe('dialog', () => {
       const soundURL = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
       const strings = allowedStrings[0];
 
-      playSong(app, Object.assign({}, options, {
+      audio.playSong(app, Object.assign({}, options, {
         speech: `
           <media soundLevel="-10db">
             <audio src="${soundURL}">
