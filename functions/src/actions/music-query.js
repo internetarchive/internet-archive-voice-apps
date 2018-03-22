@@ -63,6 +63,7 @@ function handler (app) {
             // TODO: feeder can't find anything by music query
             // isn't covered case should be implemented
             dialog.ask(
+              app,
               `We haven't find anything by your request would you like something else?`
             );
           } else {
