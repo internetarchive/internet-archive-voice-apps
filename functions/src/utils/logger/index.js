@@ -35,8 +35,8 @@ function patchDebugScopeEnvVariable () {
  */
 module.exports = (name) => {
   const debug = loggerBuilder(`${name}:debug`);
-  if (console.debug) {
-    debug.log = console.debug.bind(console);
+  if (console.info) {
+    debug.log = console.info.bind(console);
   }
   const error = loggerBuilder(`${name}:error`);
   if (console.error) {
