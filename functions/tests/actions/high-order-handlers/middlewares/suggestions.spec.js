@@ -35,7 +35,7 @@ describe('actions', () => {
         });
 
         const suggestionsScheme = {
-          requirements: ['years'],
+          confirm: ['years'],
         };
 
         return middleware()({

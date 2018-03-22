@@ -155,7 +155,7 @@ module.exports = {
         /**
          * prompt for single slot
          */
-        requirements: [
+        confirm: [
           'subject'
         ],
 
@@ -229,7 +229,7 @@ module.exports = {
         /**
          * prompt for a single slot
          */
-        requirements: [
+        confirm: [
           'collectionId'
         ],
 
@@ -248,7 +248,7 @@ module.exports = {
         /**
          * prompt for single slot
          */
-        requirements: [
+        confirm: [
           'creator'
         ],
 
@@ -264,7 +264,7 @@ module.exports = {
         /**
          * we can prompt to give 2 slots in the same time
          */
-        requirements: [
+        confirm: [
           'coverage',
           'year',
         ],
@@ -281,7 +281,7 @@ module.exports = {
         /**
          * prompt for single slot
          */
-        requirements: [
+        confirm: [
           'year',
         ],
 

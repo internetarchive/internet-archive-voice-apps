@@ -9,7 +9,7 @@ module.exports = [{
   condition: 'category == "plates"',
 
   prompts: [{
-    requirements: [
+    confirm: [
       'plate'
     ],
 
@@ -26,7 +26,7 @@ module.exports = [{
   ],
 
   prompts: [{
-    requirements: [
+    confirm: [
       'album'
     ],
 

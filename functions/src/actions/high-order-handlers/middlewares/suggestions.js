@@ -26,9 +26,9 @@ module.exports = () => (args) => {
     );
   }
 
-  const provider = suggestionExtensions.getSuggestionProviderForSlots(suggestionsScheme.requirements);
+  const provider = suggestionExtensions.getSuggestionProviderForSlots(suggestionsScheme.confirm);
   if (!provider) {
-    warning(`don't have any suggestions for: ${suggestionsScheme.requirements}. Maybe we should add them.`);
+    warning(`don't have any suggestions for: ${suggestionsScheme.confirm}. Maybe we should add them.`);
     return Promise.resolve(args);
   }
 

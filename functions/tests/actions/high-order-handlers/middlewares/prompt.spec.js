@@ -12,8 +12,8 @@ describe('actions', () => {
 
         const slotScheme = {
           prompts: [{
+            confirm: ['albumn'],
             speech: ['What is the albumn?'],
-            requirements: ['albumn'],
           }],
 
           slots: [
@@ -38,8 +38,8 @@ describe('actions', () => {
 
         const slotScheme = {
           prompts: [{
+            confirm: ['artist'],
             speech: ['What is the artist?'],
-            requirements: ['artist'],
           }],
 
           slots: [

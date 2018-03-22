@@ -7,32 +7,32 @@ describe('slots', () => {
   describe('getPromptsForSlots', () => {
     it('should return prompts with maximum true positive', () => {
       const prompts = [{
-        requirements: [
+        confirm: [
           'collection'
         ],
-        prompts: [
+        speech: [
           'Would you like to listen to music from our collections of 78s or Live Concerts?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'creator'
         ],
-        prompts: [
+        speech: [
           'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'coverage',
         ],
-        prompts: [
+        speech: [
           'Which location?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'coverage',
           'year',
         ],
-        prompts: [
+        speech: [
           'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
         ],
       }];
@@ -41,46 +41,46 @@ describe('slots', () => {
         'year',
       ];
       const res = templateSlots.getPromptsForSlots(prompts, slots);
-      expect(res.prompts).to.includes(
+      expect(res.speech).to.includes(
         'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?'
       );
     });
 
     it('should return prompts with minimum false positive', () => {
       const prompts = [{
-        requirements: [
+        confirm: [
           'collection'
         ],
-        prompts: [
+        speech: [
           'Would you like to listen to music from our collections of 78s or Live Concerts?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'creator'
         ],
-        prompts: [
+        speech: [
           'What artist would you like to listen to, e.g. the Grateful Dead, the Ditty Bops, or the cowboy junkies?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'coverage',
         ],
-        prompts: [
+        speech: [
           'Which location?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'coverage',
           'year',
         ],
-        prompts: [
+        speech: [
           'Do you have a specific city and year in mind, like Washington 1973, or would you like me to play something randomly?',
         ],
       }, {
-        requirements: [
+        confirm: [
           'year',
         ],
-        prompts: [
+        speech: [
           'Which year?',
         ],
       }];
@@ -88,7 +88,7 @@ describe('slots', () => {
         'year',
       ];
       const res = templateSlots.getPromptsForSlots(prompts, slots);
-      expect(res.prompts).to.includes(
+      expect(res.speech).to.includes(
         'Which year?'
       );
     });
