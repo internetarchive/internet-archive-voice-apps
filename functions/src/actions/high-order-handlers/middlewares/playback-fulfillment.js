@@ -15,7 +15,7 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware
  * @returns {Promise}
  */
 module.exports = () => ({app, playlist, query, slotScheme}) => {
-  debug('apply playback fulfillment middleware');
+  debug('start');
   const feeder = feeders.getByName(slotScheme.fulfillment);
   if (!feeder) {
     // TODO: we should softly fallback here

@@ -15,6 +15,7 @@ const selectors = require('../../../slots/slots-of-template');
  * @returns {Promise}
  */
 module.exports = () => (args) => {
+  debug('start');
   const {slots, slotScheme, speech = []} = args;
   const missedSlots = slotScheme.slots
     .filter(slotName => !(slotName in slots));
