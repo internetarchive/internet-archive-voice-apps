@@ -45,6 +45,8 @@ function build ({playlist, strings, query}) {
       .then(copyDefaultsToSlots())
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
+      // expose slots
+      .then(context => Object.assign({}, context, {slots: query.getSlots()}))
       .then((context) => {
         debug('got playlist');
         return parepareSongData()(context)
