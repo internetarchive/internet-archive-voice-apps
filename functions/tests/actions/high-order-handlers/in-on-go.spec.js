@@ -10,6 +10,7 @@ const mockApp = require('../../_utils/mocking/app');
 const mockFeeders = require('../../_utils/mocking/feeders');
 const mockAlbumFeeder = require('../../_utils/mocking/feeders/albums');
 const mockDialog = require('../../_utils/mocking/dialog');
+const mockMiddlewares = require('../../_utils/mocking/middlewares');
 
 const strings = require('./fixtures/in-on-go.json');
 
@@ -32,11 +33,13 @@ describe('actions', () => {
         let app;
         let dialog;
         let feeders;
+        let middlewares;
 
         beforeEach(() => {
           albumFeeder = mockAlbumFeeder({
             getCurrentItemReturns: {},
           });
+          app = mockApp();
           feeders = mockFeeders({
             getByNameReturn: albumFeeder,
           });
@@ -45,55 +48,23 @@ describe('actions', () => {
           playbackFulfillment.__set__('feeders', feeders);
           builder.__set__('playbackFulfillment', playbackFulfillment);
           action = builder.build({strings, playlist, query});
+
+          middlewares = mockMiddlewares([
+            'copyArgumentToSlots',
+            'copyDefaultsToSlots',
+            'feederFromSlotScheme',
+            'fulfilResolvers',
+            'parepareSongData',
+            'playlistFromFeeder',
+            'playSong',
+            'renderSpeech',
+          ]);
+
+          builder.__set__(middlewares);
         });
 
-        it('should populate to slots passed arguments', () => {
-          app = mockApp({
-            argument: {
-              creators: 'the-band',
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(query.getSlots(app)).to.have.property(
-                'creators', 'the-band'
-              );
-            });
-        });
-
-        it('should pupulate defaults', () => {
-          app = mockApp({
-            argument: {
-              creators: 'the-band',
-            },
-          });
-          return action.handler(app)
-            .then(() => {
-              expect(query.getSlots(app)).to.be.deep.equal({
-                collectionId: [
-                  'etree',
-                  'georgeblood',
-                ],
-                creators: 'the-band',
-                order: 'random',
-              });
-            });
-        });
-
-        it('should run fulfillment', () => {
-          app = mockApp({
-            argument: {
-              creators: 'the-band',
-            },
-          });
-          return action
-            .handler(app)
-            .then(() => {
-              expect(feeders.getByName).to.have.been.calledWith('albums-async');
-              expect(albumFeeder.isEmpty).to.have.been.calledOnce;
-              expect(albumFeeder.getCurrentItem).to.have.been.calledOnce;
-              expect(dialog.playSong).to.have.been.calledOnce;
-            });
+        it('should return promise', () => {
+          expect(action.handler(app)).to.have.property('then');
         });
       });
     });

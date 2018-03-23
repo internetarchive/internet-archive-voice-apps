@@ -23,7 +23,7 @@ module.exports = () => (args) => {
     args,
     {slots: Object.assign({}, slots, songData)},
     {
-      speech: speech.concat(mute ? strings.speech : description),
+      speech: [].concat(speech, mute ? strings.speech : description),
       description,
     }));
 };
