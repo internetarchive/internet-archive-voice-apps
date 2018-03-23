@@ -10,6 +10,7 @@ describe('actions', () => {
   describe('middlewares', () => {
     let app;
     let dialog;
+    const speech = ['Hello World!'];
 
     beforeEach(() => {
       app = mockApp();
@@ -19,11 +20,10 @@ describe('actions', () => {
 
     describe('play song', () => {
       it('should return Promise', () => {
-        expect(middleware()({app})).to.have.property('then');
+        expect(middleware()({app, speech})).to.have.property('then');
       });
 
       it('should play song', () => {
-        const speech = 'Hello World!';
         const description = 'The Best Song';
         const slots = {
           id: '123456',
@@ -34,7 +34,7 @@ describe('actions', () => {
             expect(dialog.playSong.args[0][0]).to.be.equal(app);
             expect(dialog.playSong.args[0][1]).to.be.deep.equal({
               description,
-              speech,
+              speech: speech[0],
               id: '123456',
             });
           });

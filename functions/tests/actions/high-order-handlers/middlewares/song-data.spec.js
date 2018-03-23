@@ -13,6 +13,7 @@ describe('actions', () => {
     let feeder;
     let selectors;
     let strings = {
+      speech: 'speech',
       description: 'description',
     };
 
@@ -36,10 +37,26 @@ describe('actions', () => {
         return middleware()({app, feeder, slots})
           .then(context => {
             expect(context).to.have.property('description', strings.description);
+            expect(context).to.have.property('speech')
+              .with.members([strings.speech]);
             expect(context).to.have.property('slots')
               .which.deep.equal({
                 id: slots.id,
               });
+          });
+      });
+
+      it('should concat new speech with new one', () => {
+        const slots = {
+          id: '123456',
+        };
+        const firstSpeech = 'Hello World';
+        return middleware()({app, feeder, slots, speech: [firstSpeech]})
+          .then(context => {
+            expect(context).to.have.property('speech').with.members([
+              firstSpeech,
+              strings.speech,
+            ]);
           });
       });
     });

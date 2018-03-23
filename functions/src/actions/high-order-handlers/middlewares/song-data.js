@@ -10,7 +10,7 @@ const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-da
  */
 module.exports = () => (args) => {
   debug('start');
-  const {app, feeder, slots = {}} = args;
+  const {app, feeder, slots = {}, speech = []} = args;
   const songData = feeder.getCurrentItem(args);
   const mute = playback.isMuteSpeechBeforePlayback(app);
   const strings = selectors.find(availableStrings, songData);
@@ -23,7 +23,7 @@ module.exports = () => (args) => {
     args,
     {slots: Object.assign({}, slots, songData)},
     {
-      speech: mute ? strings.speech : description,
+      speech: speech.concat(mute ? strings.speech : description),
       description,
     }));
 };

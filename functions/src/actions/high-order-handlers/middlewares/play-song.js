@@ -10,7 +10,10 @@ module.exports = () => (context) => {
   debug('start');
   const {app} = context;
   dialog.playSong(app, Object.assign(
-    {}, context.slots, {speech: context.speech, description: context.description}
+    {}, context.slots, {
+      speech: context.speech.join(' '),
+      description: context.description,
+    }
   ));
   return Promise.resolve();
 };
