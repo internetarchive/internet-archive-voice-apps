@@ -29,6 +29,16 @@ function handler (app) {
  * @param app
  */
 function handleFinished (app) {
+  // Proposal:
+  //
+  // return feederFromPlaylist({app, playlist})
+  //   .then(nextSong())
+  //   .then(args => {
+  //     return playSong(args);
+  //   })
+  //   .catch(args => {
+  //     return dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
+  //   });
   debug(`handle media action`);
   const feederName = playlist.getFeeder(app);
   debug(`playlist is based on "${feederName}" feeder`);
