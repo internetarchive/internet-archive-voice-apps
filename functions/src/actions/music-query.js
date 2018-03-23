@@ -1,4 +1,5 @@
 const selectors = require('../configurator/selectors');
+const dialog = require('../dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -9,13 +10,17 @@ const ask = require('./high-order-handlers/middlewares/ask');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 const suggestions = require('./high-order-handlers/middlewares/suggestions');
-const playbackFulfillment = require('./high-order-handlers/middlewares/playback-fulfillment');
 const prompt = require('./high-order-handlers/middlewares/prompt');
+
+const feederFromSlotScheme = require('./high-order-handlers/middlewares/feeder-from-slots-scheme');
+const parepareSongData = require('./high-order-handlers/middlewares/song-data');
+const playlistFromFeeder = require('./high-order-handlers/middlewares/playlist-from-feeder');
+const playSong = require('./high-order-handlers/middlewares/play-song');
 
 /**
  * Handle music query action
  * - fill slots of music query
- * - call fulfilment feeder
+ * - call fulfillment feeder
  *
  * TODO:
  * 1) it seems we could use express.js/koa middleware architecture here
@@ -48,25 +53,25 @@ function handler (app) {
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    // Proposal:
-    //
-    // return feederFromSlotScheme({app, slotScheme, playlist, query})
-    //   .then(playlistFromFeeder())
-    //   .then((args) => {
-    //     // we got playlist
-    //     debug('We got playlist')
-    //     return parepareSongData(args)
-    //       .then(playSong());
-    //   }, (args) => {
-    //     debug(`we don't have playlist (or it is empty)`)
-    //     debug(`TODO: propose user something else`);
-    //     dialog.ask(app,
-    //       `We haven't find anything by your request would you like something else?`
-    //     );
-    //   });
-    return Promise
-      .resolve({app, slotScheme, playlist, query})
-      .then(playbackFulfillment());
+    return feederFromSlotScheme()({app, slotScheme, playlist, query})
+      .then(playlistFromFeeder())
+      .then((context) => {
+        debug('got playlist');
+        return parepareSongData()(context)
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          .then(playSong());
+      })
+      .catch((args) => {
+        debug(`we don't have playlist (or it is empty)`);
+        debug(`TODO: propose user something else`);
+        debug(args);
+        debug(Object.keys(args));
+        dialog.ask(app, {
+          speech: `We haven't find anything by your request.
+                   Would you like something else?`,
+        });
+      });
   }
 
   debug('pipeline query');
@@ -80,73 +85,6 @@ function handler (app) {
     .then(renderSpeech())
     .then(ask());
 }
-
-// Proposal:
-//
-// // create playlist
-//
-// // fulfilment (maybe it should't be middleware for the moment
-// const feederFromSlotScheme = () => ({slotScheme}) => {
-//   const feederName = slotScheme.fulfilment;
-//   const feeder = feeders.getByName(feederName);
-//   return Object.assign({}, args, {feeder, feederName});
-// };
-//
-// const playlistFromFeeder = () => () => {
-//   playlist.setFeeder(app, slotScheme.fulfillment);
-//   return feeder
-//     .build({app, query, playlist})
-//     .then(() => {
-//       if (feeder.isEmpty({app, query, playlist})) {
-//         return Promise.reject();
-//       }
-//       return Object.assign({}, args, {feeder, feederName});
-//     })
-// };
-//
-// const parepareSongData = () => () => {
-//   dialog.processOptions(
-//     feeder.getCurrentItem({app, query, playlist}),
-//     {
-//       muteSpeech: playback.isMuteSpeechBeforePlayback(app),
-//     }
-//   )
-//   // comes from playlist:
-//   // - imageURL
-//   // - audioURL
-//   // - suggestions
-//   //
-//   // TODO: generate from:
-//   // require('../strings').dialog.playSong
-//   // - description
-//   // - speech
-// }
-//
-// // middleware for mute speech before song
-//
-// const playSong = () => (args) => {
-//   const {app} = args;
-//   // dialog.playSong should return Promise
-//   return dialog.playSong(app, args);
-// };
-//
-// // playnext
-//
-// const feederFromPlaylist = () => ({app, playlist}) => {
-//   const feederName = playlist.getFeeder(app);
-//   const feeder = feeders.getByName(feederName);
-//   return Object.assign({}, args, {feeder, feederName});
-// };
-//
-// const nextSong = () => (args) => {
-//   const {feeder} = args;
-//   if (!feeder.hasNext({app, query, playlist})) {
-//     // Don't have next song
-//     return Promise.reject();
-//   }
-//
-//   return feeder.next({app, query, playlist})
-// }
 
 /**
  *

@@ -1,5 +1,5 @@
 const mustache = require('mustache');
-const {debug} = require('../../../utils/logger')('ia:actions:hoh:render-speech');
+const {debug} = require('../../../utils/logger')('ia:actions:middlewares:render-speech');
 
 /**
  * Construct mustache render
