@@ -6,10 +6,11 @@ const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-da
  * speeach and description are used
  * to give additional description of song
  */
-module.exports = () => (args) => {
+module.exports = () => (context) => {
   debug('start');
-  const {app} = args;
-  return dialog.playSong(app, Object.assign(
-    {}, args.slots, {speech: args.speech, descripion: args.description}
+  const {app} = context;
+  dialog.playSong(app, Object.assign(
+    {}, context.slots, {speech: context.speech, description: context.description}
   ));
+  return Promise.resolve();
 };
