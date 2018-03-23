@@ -7,8 +7,8 @@ const {MiddlewareError} = require('./error');
  */
 module.exports = () => (context) => {
   debug('start');
-  const {app, feeder, playlist, slotScheme} = context;
-  playlist.setFeeder(app, slotScheme.fulfillment);
+  const {app, feeder, feederName, playlist} = context;
+  playlist.setFeeder(app, feederName);
   return feeder
     .build(context)
     .then(() => {
