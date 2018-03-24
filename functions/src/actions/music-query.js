@@ -1,5 +1,4 @@
 const selectors = require('../configurator/selectors');
-const dialog = require('../dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -57,7 +56,7 @@ function handler (app) {
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    return feederFromSlotScheme()({app, slots, slotScheme, playlist, query})
+    return feederFromSlotScheme()({app, newValues, playlist, slots, slotScheme, query})
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
@@ -67,15 +66,21 @@ function handler (app) {
           .then(renderSpeech())
           .then(playSong());
       })
-      .catch((args) => {
+      .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
         debug(`TODO: propose user something else`);
-        debug(args);
-        debug(Object.keys(args));
-        dialog.ask(app, {
-          speech: `We haven't find anything by your request.
-                   Would you like something else?`,
-        });
+        debug(context);
+        debug(Object.keys(context));
+        const brokenSlots = context.newValues;
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+        }))
+          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          .then(ask());
       });
   }
 

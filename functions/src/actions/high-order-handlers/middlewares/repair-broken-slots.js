@@ -1,6 +1,5 @@
 const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:substitute-prompt');
 
-// TODO: should be changed to configurator/selectors
 const promptSelector = require('../../../slots/slots-of-template');
 const selectors = require('../../../configurator/selectors');
 
@@ -26,8 +25,6 @@ module.exports = () => (context) => {
   }
 
   debug('promptScheme.repair.speech', promptScheme.repair.speech);
-  // TODO: should tune selectors here
-  // maybe we don't have right one
   let template = selectors.find(
     promptScheme.repair.speech,
     context
