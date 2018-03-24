@@ -110,7 +110,7 @@ module.exports = {
         speech: [
           `We've got {{total}} albums of {{subject}} here. So let's listen them.`,
           `We've got {{total}} albums of {{creator}} here. So let's start listen them.`,
-          `It's {{subject}} songs.`,
+          `We've found {{total}} albums of {{subject}} music. Let's listen to`,
           `Let's play {{subject}} music.`,
           `Let's play music of {{creator}}.`,
           `Let's play music from {{coverage}}.`,
