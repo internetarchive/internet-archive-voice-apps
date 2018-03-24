@@ -28,7 +28,7 @@ module.exports = {
        */
       condition: 'includes(collections, "etree")',
 
-      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      description: 'Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -41,13 +41,13 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
     }, {
-      description: 'Playing track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
+      description: 'Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -60,7 +60,7 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}} {{year}}',
