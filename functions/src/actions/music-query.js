@@ -50,14 +50,18 @@ function handler (app) {
 
   processPreset(app, slotScheme);
 
+  const slots = query.getSlots(app);
+  debug('we had slots:', Object.keys(slots));
+
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    return feederFromSlotScheme()({app, slotScheme, playlist, query})
+    return feederFromSlotScheme()({app, slots, slotScheme, playlist, query})
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
-        return parepareSongData()(context)
+        return acknowledge({speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots'})(context)
+          .then(parepareSongData())
           .then(fulfilResolvers())
           .then(renderSpeech())
           .then(playSong());
@@ -75,9 +79,6 @@ function handler (app) {
   }
 
   debug('pipeline query');
-
-  const slots = query.getSlots(app);
-  debug('we had slots:', Object.keys(slots));
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
     .then(prompt())
     .then(suggestions())

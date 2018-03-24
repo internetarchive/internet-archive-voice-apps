@@ -108,10 +108,11 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
+          `It's {{subject}} songs`,
           `Let's play {{subject}} music`,
           `Let's play music of {{creator}}`,
           `Let's play music from {{coverage}}`,
-          `Let's dive to {{year}}`,
+          `Let's dive into {{year}}`,
         ],
       },
     },
@@ -188,7 +189,17 @@ module.exports = {
        * feeder which we should call once we get all slots
        * (we could have a lot of songs here - because we filter by genre)
        */
-      fulfillment: 'albums-async',
+      // fulfillment: 'albums-async',
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          `This is {{subject}} plates`,
+          `Let's play {{subject}} music`,
+          `Let's play music of {{creator}}`,
+          `Let's play music from {{coverage}}`,
+          `Let's dive into {{year}}`,
+        ],
+      },
     }, {
       name: 'DEFAULT music search query',
 
@@ -301,7 +312,18 @@ module.exports = {
       /**
        * feeder which we should call once we get all slots
        */
-      fulfillment: 'albums',
+      // fulfillment: 'albums',
+      fulfillment: {
+        feeder: 'albums',
+        speech: [
+          `Let's play concert {{coverage}} {{year}} of {{creator}}`,
+          `Let's play {{creator}} concerts`,
+          `Let's play concerts of {{creator}}`,
+          `Let's play {{subject}} concerts`,
+          `Let's play concerts from {{coverage}}`,
+          `Let's dive into {{year}}`,
+        ],
+      },
     }],
 
     noInput: [{

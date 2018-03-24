@@ -46,7 +46,7 @@ function build ({playlist, strings, query}) {
       .then(copyDefaultsToSlots())
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
-      .then(acknowledge({path: ['fulfillment', 'speech']}))
+      .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
       // expose slots
       .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
       .then((context) => {
