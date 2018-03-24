@@ -66,6 +66,7 @@ class AsyncAlbums extends DefaultFeeder {
             },
           }),
         });
+        return {total: totalNumOfAlbums};
       });
   }
 

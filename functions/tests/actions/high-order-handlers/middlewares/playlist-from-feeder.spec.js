@@ -14,7 +14,9 @@ describe('actions', () => {
 
     beforeEach(() => {
       app = mockApp();
-      feeder = mockAlbums();
+      feeder = mockAlbums({
+        buildResolve: {total: 12345},
+      });
     });
 
     describe('playlist from feeder', () => {
@@ -24,11 +26,13 @@ describe('actions', () => {
 
       it('should play song', () => {
         const feederName = 'Albums';
-        return middleware()({app, feeder, feederName, playlist})
+        return middleware()({app, feeder, feederName, playlist, slots: {}})
           .then(context => {
             expect(playlist.getFeeder(app)).to.be.equal(feederName);
             expect(feeder.build).to.be.called;
             expect(feeder.isEmpty).to.be.called;
+            expect(context).to.have.property('slots')
+              .which.have.property('total', 12345);
           });
       });
     });

@@ -7,17 +7,17 @@ const {MiddlewareError} = require('./error');
  */
 module.exports = () => (context) => {
   debug('start');
-  const {app, feeder, feederName, playlist} = context;
+  const {app, feeder, feederName, playlist, slots} = context;
   playlist.setFeeder(app, feederName);
   return feeder
     .build(context)
-    .then(() => {
+    .then(res => {
       if (feeder.isEmpty(context)) {
         // TODO: should give feedback about problem
         debug('empty playlist');
         return Promise.reject(new MiddlewareError(context, {emptyPlaylist: true}));
       }
-      return context;
+      return Object.assign({}, context, {slots: Object.assign({}, slots, {total: res.total})});
     })
     .catch((error) => {
       info('fail on creating playlist', error);
