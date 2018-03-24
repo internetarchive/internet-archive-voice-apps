@@ -8,11 +8,12 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware
  * Middleware
  * Fetch suggestions for slots
  *
+ * @param exclude {Array} - exclude slots
  * @param slots
  * @param suggestionsScheme
  * @returns {Promise}
  */
-module.exports = () => (args) => {
+module.exports = ({exclude = []} = {}) => (args) => {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
   debug('start');
@@ -32,7 +33,7 @@ module.exports = () => (args) => {
     return Promise.resolve(args);
   }
 
-  return provider(slots)
+  return provider(_.omit(slots, exclude))
     .then(res => {
       let suggestions;
       if (suggestionsScheme.suggestionTemplate) {

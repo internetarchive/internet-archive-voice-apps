@@ -9,6 +9,7 @@ const acknowledge = require('./high-order-handlers/middlewares/acknowledge');
 const ask = require('./high-order-handlers/middlewares/ask');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
+const repairBrokenSlots = require('./high-order-handlers/middlewares/repair-broken-slots');
 const suggestions = require('./high-order-handlers/middlewares/suggestions');
 const prompt = require('./high-order-handlers/middlewares/prompt');
 
@@ -82,6 +83,25 @@ function handler (app) {
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
     .then(prompt())
     .then(suggestions())
+    .then(context => {
+      if (context && context.suggestions.length === 0) {
+        // suggestions here are available range
+        // when it is 0 we should later last input
+        // TODO: when is is 1 we could choose this one option without asking
+
+        // 1. find last prompt
+        // 2. get repair phrase from the last prompt
+        // 3. render repair phrase
+        const brokenSlots = context.newValues;
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+        }))
+          .then(suggestions({exclude: Object.keys(brokenSlots)}));
+      }
+      return context;
+    })
     .then(fulfilResolvers())
     .then(renderSpeech())
     .then(ask());

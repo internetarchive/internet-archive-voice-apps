@@ -339,9 +339,10 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have {{creator}} concert for {{year}}. What about {{suggestions.0}}?`,
-            `We don't have any concerts of {{year}}. But we have {{suggestions.0}}.`,
-            `We don't have that concert. Maybe you would like {{suggestions.0}}?`,
+            `We don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
+            `We don't have {{creator}} concert for {{year}}. Try {{years-interval.suggestions}}.`,
+            `We don't have any concerts of {{year}}. Try {{years-interval.suggestions}}.`,
+            `We don't have that concert. Try {{years-interval.suggestions}}.`,
           ],
         },
       }],
