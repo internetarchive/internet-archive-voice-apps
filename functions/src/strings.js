@@ -108,11 +108,11 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `It's {{subject}} songs`,
-          `Let's play {{subject}} music`,
-          `Let's play music of {{creator}}`,
-          `Let's play music from {{coverage}}`,
-          `Let's dive into {{year}}`,
+          `It's {{subject}} songs.`,
+          `Let's play {{subject}} music.`,
+          `Let's play music of {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
         ],
       },
     },
@@ -193,11 +193,11 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `This is {{subject}} plates`,
-          `Let's play {{subject}} music`,
-          `Let's play music of {{creator}}`,
-          `Let's play music from {{coverage}}`,
-          `Let's dive into {{year}}`,
+          `This is {{subject}} plates.`,
+          `Let's play {{subject}} music.`,
+          `Let's play music of {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
         ],
       },
     }, {
@@ -316,12 +316,12 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `Let's play concert {{coverage}} {{year}} of {{creator}}`,
-          `Let's play {{creator}} concerts`,
-          `Let's play concerts of {{creator}}`,
-          `Let's play {{subject}} concerts`,
-          `Let's play concerts from {{coverage}}`,
-          `Let's dive into {{year}}`,
+          `Let's play concert {{coverage}} {{year}} of {{creator}}.`,
+          `Let's play {{creator}} concerts.`,
+          `Let's play concerts of {{creator}}.`,
+          `Let's play {{subject}} concerts.`,
+          `Let's play concerts from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
         ],
       },
     }],
@@ -336,10 +336,10 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Ok, muting song titles`,
+        speech: `Ok, muting song titles.`,
       },
       true: {
-        speech: `Excellent! I'll be saying title to each song`,
+        speech: `Excellent! I'll be saying title to each song.`,
       },
     },
 
