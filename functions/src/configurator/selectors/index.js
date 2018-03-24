@@ -7,7 +7,6 @@
  */
 
 const builder = require('../../extensions/builder');
-
 const extensions = builder.build({root: __dirname});
 
 /**

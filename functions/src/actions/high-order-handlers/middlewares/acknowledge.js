@@ -1,14 +1,19 @@
+const _ = require('lodash');
+
 const selectors = require('../../../configurator/selectors');
-const {debug} = require('../../../utils/logger')('ia:actions:hoh:substitute-acknowledge');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:acknowledge');
 
 /**
  * Midleware
  *
- * @param app
+ * substitute speech which is better match slots
+ * and especially new values.
+ *
+ * We can customize source of speeches
  *
  * @returns {Promise}
  */
-module.exports = () => (args) => {
+module.exports = ({path = ['acknowledges']} = {}) => (args) => {
   debug('start');
   const {slots, slotScheme, newValues} = args;
   const newNames = Object.keys(newValues);
@@ -21,7 +26,13 @@ module.exports = () => (args) => {
 
   debug('and get new slots:', newValues);
 
-  const template = selectors.find(slotScheme.acknowledges, {
+  const availableTemplates = _.get(slotScheme, path);
+  if (!availableTemplates) {
+    warning(`we can't find available templates in "${path}"`);
+    return Promise.resolve(args);
+  }
+
+  const template = selectors.find(availableTemplates, {
     prioritySlots: newNames,
     slots,
   });

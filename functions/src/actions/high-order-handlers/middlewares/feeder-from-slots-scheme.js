@@ -8,7 +8,13 @@ module.exports = () => (context) => {
   debug('start');
   const {slotScheme} = context;
   // both typing are correct
-  const feederName = slotScheme.fulfilment || slotScheme.fulfillment;
+  const fulfilment = slotScheme.fulfilment || slotScheme.fulfillment;
+  let feederName;
+  if (typeof fulfilment === 'object' && 'feeder' in fulfilment) {
+    feederName = fulfilment.feeder;
+  } else {
+    feederName = fulfilment;
+  }
   debug('feeder name:', feederName);
   const feeder = feeders.getByName(feederName);
   if (!feeder) {

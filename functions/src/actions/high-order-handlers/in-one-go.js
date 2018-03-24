@@ -1,6 +1,7 @@
 const dialog = require('../../dialog');
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
+const acknowledge = require('./middlewares/acknowledge');
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
 const feederFromSlotScheme = require('./middlewares/feeder-from-slots-scheme');
@@ -45,8 +46,9 @@ function build ({playlist, strings, query}) {
       .then(copyDefaultsToSlots())
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
+      .then(acknowledge({path: ['fulfillment', 'speech']}))
       // expose slots
-      .then(context => Object.assign({}, context, {slots: query.getSlots()}))
+      .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
       .then((context) => {
         debug('got playlist');
         return parepareSongData()(context)

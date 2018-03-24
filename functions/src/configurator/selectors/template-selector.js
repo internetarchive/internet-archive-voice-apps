@@ -17,9 +17,14 @@ function find (options, context) {
   debug('the priority slots are:', prioritySlots);
   debug('the slots are:', slots);
 
+  const slotNames = Object.keys(slots);
+
   const acknowledgeRequirements = extractor.extractRequrements(
-    options, Object.keys(slots)
+    options, slotNames
   );
+
+  debug('acknowledgeRequirement:');
+  debug(acknowledgeRequirements);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(

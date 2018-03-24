@@ -24,7 +24,7 @@ describe('actions', () => {
       middleware.__set__('feeders', feeders);
     });
 
-    describe('feeder from slots scheme', () => {
+    describe('feeder from playlist', () => {
       it('should return Promise', () => {
         expect(middleware()({app, slotScheme})).to.have.property('then');
       });

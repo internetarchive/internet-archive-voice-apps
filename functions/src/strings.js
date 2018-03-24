@@ -105,7 +105,15 @@ module.exports = {
       /**
        * and ask fulfillment for a feeder
        */
-      fulfillment: 'albums-async',
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          `Let's play {{subject}} music`,
+          `Let's play music of {{creator}}`,
+          `Let's play music from {{coverage}}`,
+          `Let's dive to {{year}}`,
+        ],
+      },
     },
 
     /**
