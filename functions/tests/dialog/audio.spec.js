@@ -27,7 +27,7 @@ describe('dialog', () => {
     };
 
     audio.__set__('availableStrings', {
-      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      description: 'Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       speech: `
         <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                clipBegin="4.5s"

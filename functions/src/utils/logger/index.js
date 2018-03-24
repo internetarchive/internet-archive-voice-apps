@@ -42,6 +42,10 @@ module.exports = (name) => {
   if (console.error) {
     error.log = console.error.bind(console);
   }
+  const info = loggerBuilder(`${name}:info`);
+  if (console.info) {
+    info.log = console.info.bind(console);
+  }
   const warning = loggerBuilder(`${name}:warning`);
   if (console.warn) {
     warning.log = console.warn.bind(console);
@@ -50,6 +54,7 @@ module.exports = (name) => {
   return {
     debug,
     error,
+    info,
     warning,
   };
 };

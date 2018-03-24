@@ -8,9 +8,10 @@ const sinon = require('sinon');
  */
 module.exports = function ({
   getCurrentItemReturns = null,
+  buildResolve = null,
 } = {}) {
   return {
-    build: sinon.stub().returns(Promise.resolve()),
+    build: sinon.stub().returns(Promise.resolve(buildResolve)),
     getCurrentItem: sinon.stub().returns(getCurrentItemReturns),
     hasNext: sinon.stub().returns(true),
     next: sinon.stub().returns(Promise.resolve()),

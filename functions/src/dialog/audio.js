@@ -1,4 +1,5 @@
 const mustache = require('mustache');
+const util = require('util');
 
 const config = require('../config');
 const selectors = require('../configurator/selectors');
@@ -20,9 +21,9 @@ const {debug} = require('../utils/logger')('ia:dialog:audio');
  * @param {number} options.year
  */
 function playSong (app, options) {
-  debug(`Play song: ${JSON.stringify(options)}`);
+  debug(`Play song: ${util.inspect(options)}`);
   const strings = selectors.find(availableStrings, options);
-  const description = mustache.render(strings.description, options);
+  const description = options.description || mustache.render(strings.description, options);
   let response = app.buildRichResponse();
   const {speech} = options;
 

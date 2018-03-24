@@ -28,7 +28,7 @@ module.exports = {
        */
       condition: 'includes(collections, "etree")',
 
-      description: 'Playing track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      description: 'Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -41,13 +41,13 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
     }, {
-      description: 'Playing track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
+      description: 'Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -60,7 +60,7 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}} {{year}}',
@@ -105,7 +105,18 @@ module.exports = {
       /**
        * and ask fulfillment for a feeder
        */
-      fulfillment: 'albums-async',
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          `We've got {{total}} albums of {{subject}} here. So let's listen them.`,
+          `We've got {{total}} albums of {{creator}} here. So let's start listen them.`,
+          `We've found {{total}} albums of {{subject}} music. Let's listen to`,
+          `Let's play {{subject}} music.`,
+          `Let's play music of {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
+        ],
+      },
     },
 
     /**
@@ -180,7 +191,18 @@ module.exports = {
        * feeder which we should call once we get all slots
        * (we could have a lot of songs here - because we filter by genre)
        */
-      fulfillment: 'albums-async',
+      // fulfillment: 'albums-async',
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          `We've got {{total}} plates of {{subject}} here. So let's listen them.`,
+          `This is {{subject}} plates.`,
+          `Let's play {{subject}} music.`,
+          `Let's play music of {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
+        ],
+      },
     }, {
       name: 'DEFAULT music search query',
 
@@ -293,7 +315,18 @@ module.exports = {
       /**
        * feeder which we should call once we get all slots
        */
-      fulfillment: 'albums',
+      // fulfillment: 'albums',
+      fulfillment: {
+        feeder: 'albums',
+        speech: [
+          `Let's play concert {{coverage}} {{year}} of {{creator}}.`,
+          `Let's play {{creator}} concerts.`,
+          `Let's play concerts of {{creator}}.`,
+          `Let's play {{subject}} concerts.`,
+          `Let's play concerts from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
+        ],
+      },
     }],
 
     noInput: [{
@@ -306,10 +339,10 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Ok, muting song titles`,
+        speech: `Ok, muting song titles.`,
       },
       true: {
-        speech: `Excellent! I'll be saying title to each song`,
+        speech: `Excellent! I'll be saying title to each song.`,
       },
     },
 

@@ -3,29 +3,30 @@ const rewire = require('rewire');
 
 const action = rewire('../../src/actions/media-status-update');
 const playlist = require('../../src/state/playlist');
+const query = require('../../src/state/query');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
-const mockFeeders = require('../_utils/mocking/feeders');
-const mockFeeder = require('../_utils/mocking/feeders/albums');
+const mockMiddlewares = require('../_utils/mocking/middlewares');
 
 describe('actions', () => {
   let app;
   let dialog;
+  let middlewares;
 
   beforeEach(() => {
     app = mockApp();
     dialog = mockDialog();
     action.__set__('dialog', dialog);
-    playlist.setFeeder(app, 'test-feeder');
-    const feeder = mockFeeder({
-      getCurrentItemReturns: {
-        track: 2,
-        title: 'song 2'
-      },
-    });
-    const feeders = mockFeeders({getByNameReturn: feeder});
-    action.__set__('feeders', feeders);
+    middlewares = mockMiddlewares([
+      'feederFromPlaylist',
+      'fulfilResolvers',
+      'nextSong',
+      'playSong',
+      'parepareSongData',
+      'renderSpeech',
+    ]);
+    action.__set__(middlewares);
   });
 
   describe('media status update', () => {
@@ -33,9 +34,10 @@ describe('actions', () => {
       app.MEDIA_STATUS.extension.status = app.Media.Status.FINISHED;
       return action.handler(app)
         .then(() => {
-          expect(dialog.playSong).to.be.calledWith(app, {
-            track: 2,
-            title: 'song 2'
+          expect(middlewares.feederFromPlaylist.middleware).to.be.calledWith({
+            app,
+            query,
+            playlist,
           });
         });
     });

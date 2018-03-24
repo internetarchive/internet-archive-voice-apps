@@ -9,6 +9,7 @@ const query = require('../../src/state/query');
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
+const mockMiddlewares = require('../_utils/mocking/middlewares');
 
 const slotSchemeWithMultipleCases = require('./fixtures/slots-scheme-with-multiple-cases');
 const slotSchemeWithOneCase = require('./fixtures/slots-scheme-with-one-case');
@@ -32,17 +33,6 @@ describe('actions', () => {
     dialog = mockDialog();
     action.__set__('dialog', dialog);
 
-    function mockMiddlewares (names) {
-      return names.map(name => ({
-        name,
-        stub: sinon.stub().returns(Promise.resolve()),
-      }))
-        .reduce((acc, {name, stub}) => {
-          action.__set__(name, () => stub);
-          return Object.assign({}, acc, {[name]: stub});
-        }, {});
-    }
-
     queryMiddlewares = mockMiddlewares([
       'acknowledge',
       'prompt',
@@ -51,10 +41,15 @@ describe('actions', () => {
       'renderSpeech',
       'ask',
     ]);
+    action.__set__(queryMiddlewares);
 
     playbackMiddlewares = mockMiddlewares([
-      'playbackFulfillment'
+      'feederFromSlotScheme',
+      'parepareSongData',
+      'playlistFromFeeder',
+      'playSong',
     ]);
+    action.__set__(playbackMiddlewares);
 
     provider = sinon.stub().returns(Promise.resolve({
       items: [
@@ -99,7 +94,7 @@ describe('actions', () => {
         return action.handler(app)
           .then(() => {
             expect(queryMiddlewares.acknowledge).to.be.called;
-            expect(queryMiddlewares.acknowledge.args[0][0])
+            expect(queryMiddlewares.acknowledge.middleware.args[0][0])
               .to.have.property('slotScheme', slotSchemeWithMultipleCases[1]);
           });
       });
@@ -113,7 +108,7 @@ describe('actions', () => {
         return action.handler(app)
           .then(() => {
             expect(queryMiddlewares.acknowledge).to.be.called;
-            expect(queryMiddlewares.acknowledge.args[0][0])
+            expect(queryMiddlewares.acknowledge.middleware.args[0][0])
               .to.have.property('slotScheme', slotSchemeWithMultipleCases[0]);
           });
       });
@@ -229,7 +224,7 @@ describe('actions', () => {
           });
           return action.handler(app)
             .then(() => {
-              expect(playbackMiddlewares.playbackFulfillment).to.have.been.called;
+              expect(playbackMiddlewares.feederFromSlotScheme.middleware).to.have.been.called;
             });
         });
       });

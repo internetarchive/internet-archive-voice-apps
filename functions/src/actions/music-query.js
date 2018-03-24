@@ -1,4 +1,5 @@
 const selectors = require('../configurator/selectors');
+const dialog = require('../dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -9,13 +10,17 @@ const ask = require('./high-order-handlers/middlewares/ask');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 const suggestions = require('./high-order-handlers/middlewares/suggestions');
-const playbackFulfillment = require('./high-order-handlers/middlewares/playback-fulfillment');
 const prompt = require('./high-order-handlers/middlewares/prompt');
+
+const feederFromSlotScheme = require('./high-order-handlers/middlewares/feeder-from-slots-scheme');
+const parepareSongData = require('./high-order-handlers/middlewares/song-data');
+const playlistFromFeeder = require('./high-order-handlers/middlewares/playlist-from-feeder');
+const playSong = require('./high-order-handlers/middlewares/play-song');
 
 /**
  * Handle music query action
  * - fill slots of music query
- * - call fulfilment feeder
+ * - call fulfillment feeder
  *
  * TODO:
  * 1) it seems we could use express.js/koa middleware architecture here
@@ -45,18 +50,35 @@ function handler (app) {
 
   processPreset(app, slotScheme);
 
+  const slots = query.getSlots(app);
+  debug('we had slots:', Object.keys(slots));
+
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    return Promise
-      .resolve({app, slotScheme, playlist, query})
-      .then(playbackFulfillment());
+    return feederFromSlotScheme()({app, slots, slotScheme, playlist, query})
+      .then(playlistFromFeeder())
+      .then((context) => {
+        debug('got playlist');
+        return acknowledge({speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots'})(context)
+          .then(parepareSongData())
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          .then(playSong());
+      })
+      .catch((args) => {
+        debug(`we don't have playlist (or it is empty)`);
+        debug(`TODO: propose user something else`);
+        debug(args);
+        debug(Object.keys(args));
+        dialog.ask(app, {
+          speech: `We haven't find anything by your request.
+                   Would you like something else?`,
+        });
+      });
   }
 
   debug('pipeline query');
-
-  const slots = query.getSlots(app);
-  debug('we had slots:', Object.keys(slots));
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
     .then(prompt())
     .then(suggestions())

@@ -1,9 +1,15 @@
 const {debug, warning} = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
-const feeders = require('../extensions/feeders');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
+
+const feederFromPlaylist = require('./high-order-handlers/middlewares/feeder-from-playlist');
+const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
+const nextSong = require('./high-order-handlers/middlewares/next-song');
+const playSong = require('./high-order-handlers/middlewares/play-song');
+const parepareSongData = require('./high-order-handlers/middlewares/song-data');
+const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 
 /**
  * handle 'media status update' action
@@ -11,6 +17,7 @@ const query = require('../state/query');
  * @param app
  */
 function handler (app) {
+  debug('start');
   const status = app.getArgument('MEDIA_STATUS').extension.status;
 
   if (status === app.Media.Status.FINISHED) {
@@ -24,35 +31,25 @@ function handler (app) {
 }
 
 /**
- * handle app.Media.Status.FINISHED media status
+ * Handle app.Media.Status.FINISHED media status
  *
  * @param app
  */
 function handleFinished (app) {
-  debug(`handle media action`);
-  const feederName = playlist.getFeeder(app);
-  debug(`playlist is based on "${feederName}" feeder`);
-
-  let feeder = feeders.getByName(feederName);
-  if (!feeder || !feederName) {
-    warning('we got detached playlist chunk');
-    dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
-    return Promise.resolve();
-  }
-
-  if (feeder.hasNext({app, query, playlist})) {
-    debug('move to the next song');
-    return feeder
-      .next({app, query, playlist})
-      .then(() => {
-        debug('ok, we get new song and now could play it');
-        dialog.playSong(app, feeder.getCurrentItem({app, playlist}));
-      });
-  } else {
-    // TODO: react when we reach the end of playlist
-    dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
-    return Promise.resolve();
-  }
+  debug('handle finished');
+  return feederFromPlaylist()({app, query, playlist})
+    .then(nextSong())
+    .then(context => {
+      debug('we got new song and now could play it');
+      return parepareSongData()(context)
+        .then(fulfilResolvers())
+        .then(renderSpeech())
+        .then(playSong());
+    })
+    .catch(context => {
+      debug('It could be an error:', context);
+      return dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
+    });
 }
 
 module.exports = {

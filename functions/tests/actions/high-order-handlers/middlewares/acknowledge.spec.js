@@ -1,12 +1,9 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
-const sinon = require('sinon');
 
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/acknowledge');
 
-const mockSelectors = ({findResult = null} = {}) => ({
-  find: sinon.stub().returns(findResult),
-});
+const mockSelectors = require('../../../_utils/mocking/selectors');
 
 describe('actions', () => {
   describe('middlewares', () => {

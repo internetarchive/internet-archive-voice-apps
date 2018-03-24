@@ -1,37 +1,49 @@
+const _ = require('lodash');
+
 const selectors = require('../../../configurator/selectors');
-const {debug} = require('../../../utils/logger')('ia:actions:hoh:substitute-acknowledge');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:acknowledge');
 
 /**
  * Midleware
  *
- * @param app
+ * substitute speech which is better match slots
+ * and especially new values.
+ *
+ * We can customize source of speeches
  *
  * @returns {Promise}
  */
-module.exports = () => (args) => {
+module.exports = ({prioritySlots = 'newValues', speeches = 'slotScheme.acknowledges'} = {}) => (context) => {
   debug('start');
-  const {slots, slotScheme, newValues} = args;
-  const newNames = Object.keys(newValues);
+  const {slots} = context;
+  const newValues = _.get(context, prioritySlots) || {};
+  const prioritySlotNames = Object.keys(newValues);
 
   // we get new values
-  if (newNames.length === 0) {
-    debug(`we don't get any new values`);
-    return Promise.resolve(args);
+  if (prioritySlotNames.length === 0) {
+    debug(`we don't have any priority slots`);
+    return Promise.resolve(context);
   }
 
-  debug('and get new slots:', newValues);
+  debug('priority slots:', newValues);
 
-  const template = selectors.find(slotScheme.acknowledges, {
-    prioritySlots: newNames,
+  const availableTemplates = _.get(context, speeches);
+  if (!availableTemplates) {
+    warning(`we can't find available templates in "${speeches}"`);
+    return Promise.resolve(context);
+  }
+
+  const template = selectors.find(availableTemplates, {
+    prioritySlots: prioritySlotNames,
     slots,
   });
 
   if (!template) {
-    debug(`we haven't found right acknowledge maybe we should create few for "${newNames}"`);
-    return Promise.resolve(args);
+    debug(`we haven't found right acknowledge maybe we should create few for "${prioritySlotNames}"`);
+    return Promise.resolve(context);
   }
 
   debug('we got matched acknowledge', template);
 
-  return Promise.resolve(Object.assign({}, args, {speech: [template]}));
+  return Promise.resolve(Object.assign({}, context, {speech: [template]}));
 };
