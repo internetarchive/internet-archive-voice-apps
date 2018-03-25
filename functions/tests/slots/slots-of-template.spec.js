@@ -92,5 +92,13 @@ describe('slots', () => {
         'Which year?'
       );
     });
+
+    it('should return null when we choose from null array', () => {
+      const slots = [
+        'year',
+      ];
+      expect(templateSlots.getPromptsForSlots(null, slots))
+        .to.be.null;
+    });
   });
 });

@@ -20,7 +20,7 @@ module.exports = () => (context) => {
   if (speech && speech.length > 0) {
     dialog.ask(app, {
       speech: speech.join(' '),
-      suggestions: suggestions.filter(s => s).slice(0, 3),
+      suggestions: suggestions && suggestions.filter(s => s).slice(0, 3),
     });
   } else {
     warning(`hm... we don't have anything to say.`);

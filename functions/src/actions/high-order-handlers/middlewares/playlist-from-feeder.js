@@ -18,11 +18,8 @@ module.exports = () => (context) => {
         return Promise.reject(new MiddlewareError(context, {emptyPlaylist: true}));
       }
       return Object.assign({}, context, {slots: Object.assign({}, slots, {total: res.total})});
-    })
-    .catch((error) => {
+    }, error => {
       info('fail on creating playlist', error);
-      return Promise.reject(
-        Object.assign({}, context, {error})
-      );
+      return Promise.reject(new MiddlewareError(context, error));
     });
 };

@@ -18,10 +18,10 @@ describe('feeders', () => {
     function mockNewAlbum (album) {
       albumsProvider = Object.assign({}, albumsProvider, mockAlbumsProvider({
         fetchAlbumsByQueryResolve: {
-          items: [{
+          items: album ? [{
             identifier: album,
-          }],
-          total: 3,
+          }] : [],
+          total: album ? 3 : 0,
         },
 
         fetchAlbumDetailsResolve: album,
@@ -276,6 +276,19 @@ describe('feeders', () => {
           playlist,
           query
         }));
+    });
+
+    it('should build feeder with 0 songs for empty response', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'natural');
+      mockNewAlbum(null);
+
+      return feeder
+        .build({app, query, playlist})
+        .then(res => {
+          expect(res).to.have.property('total', 0);
+          expect(playlist.isEmpty(app)).to.be.true;
+        });
     });
   });
 });

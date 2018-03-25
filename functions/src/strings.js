@@ -115,6 +115,20 @@ module.exports = {
           `Let's play music of {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
+          `We've got {{total}} albums from {{year}}. Let's dive into it.`,
+        ],
+      },
+
+      /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+      repair: {
+        speech: [
+          `We don’t have anything for {{year}}. Try for example {{suggestions.0}}.`,
+          `We don't have {{creator}} albums for {{year}}. Try for example {{suggestions.0}}.`,
+          `We don't have any albums of {{year}}. Try for example {{suggestions.0}}`,
+          `We don't have that music. Try for example {{suggestions.0}}`,
         ],
       },
     },
@@ -282,6 +296,16 @@ module.exports = {
          * Template for creating suggestions
          */
         suggestionTemplate: 'the {{creator}}',
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `We don't have concerts of {{creator}}. Maybe you would like to listent {{short-options.suggestions}}?`,
+          ],
+        },
       }, {
         /**
          * we can prompt to give 2 slots in the same time
@@ -299,6 +323,18 @@ module.exports = {
          * Template for creating suggestions
          */
         suggestionTemplate: '{{coverage}} {{year}}',
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `We don't have {{creator}} concert for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
+            `We don't have any concerts of {{year}} in {{coverage}}. But we have {{suggestions.0}}.`,
+            `We don't have that concert. Maybe you would like {{suggestions.0}}?`,
+          ],
+        },
       }, {
         /**
          * prompt for single slot
@@ -310,6 +346,19 @@ module.exports = {
         speech: [
           'Ok, {{creator}} has played in {{coverage}} sometime {{years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `We don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
+            `We don't have {{creator}} concert for {{year}}. Try {{years-interval.suggestions}}.`,
+            `We don't have any concerts of {{year}}. Try {{years-interval.suggestions}}.`,
+            `We don't have that concert. Try {{years-interval.suggestions}}.`,
+          ],
+        },
       }],
 
       /**
