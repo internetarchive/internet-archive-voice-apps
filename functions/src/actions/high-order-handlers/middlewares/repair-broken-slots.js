@@ -25,16 +25,18 @@ module.exports = () => (context) => {
     repairScheme = slotScheme;
   }
 
-  debug('promptScheme.repair.speech', repairScheme.repair.speech);
+  const repair = repairScheme.repair || slotScheme.repair;
+
+  debug('promptScheme.repair.speech', repair.speech);
   let template = selectors.find(
-    repairScheme.repair.speech,
+    repair.speech,
     context
   );
 
   debug('we choice repair phrase:', template);
   if (!template) {
     warning(`can't find repair phrase, should use default`);
-    template = repairScheme.repair.speech[0];
+    template = repair.speech[0];
   }
 
   return Promise.resolve(Object.assign({}, context, {
