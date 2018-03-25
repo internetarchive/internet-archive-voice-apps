@@ -123,6 +123,28 @@ describe('actions', () => {
             );
           });
       });
+
+      it(`should skip middleware if we don't have repair phrases here`, () => {
+        const slots = {
+          name: 'value',
+        };
+        const slotScheme = {
+        };
+        const brokenSlots = {
+          name: 'value',
+        };
+        let promptScheme = {
+        };
+        promptSelector = {
+          getPromptsForSlots: sinon.stub().returns(promptScheme),
+        };
+        middleware.__set__('promptSelector', promptSelector);
+
+        return middleware()({brokenSlots, slots, slotScheme})
+          .then(() => {
+            expect(selectors.find).to.not.been.called;
+          });
+      });
     });
   });
 });

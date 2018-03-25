@@ -27,6 +27,11 @@ module.exports = () => (context) => {
 
   const repair = repairScheme.repair || slotScheme.repair;
 
+  if (!repair) {
+    warning(`we don't have any repair phrase in this slot scheme`, slotScheme);
+    return Promise.resolve(context);
+  }
+
   debug('promptScheme.repair.speech', repair.speech);
   let template = selectors.find(
     repair.speech,
