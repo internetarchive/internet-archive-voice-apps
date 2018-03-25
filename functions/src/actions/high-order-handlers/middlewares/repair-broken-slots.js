@@ -3,6 +3,17 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:repair
 const promptSelector = require('../../../slots/slots-of-template');
 const selectors = require('../../../configurator/selectors');
 
+/**
+ * Middleware
+ *
+ * we got broken slots so should find right repair phrase
+ *
+ * @param brokenSlots
+ * @param slotCheme
+ * @param speech
+ *
+ * @returns {Promise}
+ */
 module.exports = () => (context) => {
   debug('start');
   const {brokenSlots, slotScheme, speech = []} = context;

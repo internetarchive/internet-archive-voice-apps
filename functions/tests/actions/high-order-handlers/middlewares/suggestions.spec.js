@@ -77,6 +77,27 @@ describe('actions', () => {
             });
           });
       });
+
+      it(`should skip middleware when we don't have suggestions scheme`, () => {
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: suggestions,
+        }));
+
+        middleware.__set__('suggestionExtensions', {
+          getSuggestionProviderForSlots: sinon.stub().returns(provider),
+        });
+
+        return middleware()({
+          slots: {
+            artist: 'the band',
+            albumn: 'concert',
+            year: 2000,
+          },
+        })
+          .then(() => {
+            expect(provider).to.not.be.called;
+          });
+      });
     });
   });
 });
