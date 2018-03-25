@@ -67,6 +67,33 @@ describe('actions', () => {
             expect(args).to.not.have.property('speech');
           });
       });
+
+      it(`should get default repair phrases when we don't have prompts`, () => {
+        const slots = {
+          name: 'value',
+        };
+        const slotScheme = {
+          repair: {
+            speech: `We don't have this value`,
+          }
+        };
+        const brokenSlots = {
+          name: 'value',
+        };
+        promptSelector = {
+          getPromptsForSlots: sinon.stub().returns(null),
+        };
+        middleware.__set__('promptSelector', promptSelector);
+
+        return middleware()({brokenSlots, slots, slotScheme})
+          .then(({speech}) => {
+            expect(selectors.find).to.been.called;
+            expect(selectors.find.args[0][0]).to.be.equal(slotScheme.repair.speech);
+            expect(selectors.find.args[0][1]).to.be.deep.equal(
+              {brokenSlots, slots, slotScheme}
+            );
+          });
+      });
     });
   });
 });

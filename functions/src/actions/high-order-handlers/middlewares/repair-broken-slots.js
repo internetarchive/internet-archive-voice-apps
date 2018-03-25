@@ -14,30 +14,31 @@ module.exports = () => (context) => {
   }
 
   debug('we missed slots:', brokenSlotsNames);
-  const promptScheme = promptSelector.getPromptsForSlots(
+  let repairScheme = promptSelector.getPromptsForSlots(
     slotScheme.prompts,
     brokenSlotsNames
   );
 
-  if (!promptScheme) {
-    warning(`we don't have any matched prompts for:`, brokenSlotsNames, 'in:', slotScheme.prompts);
-    return Promise.resolve(context);
+  if (!repairScheme) {
+    debug(`we don't have any matched prompts for:`, brokenSlotsNames, 'in:', slotScheme.prompts, 'so we use default one');
+    // return Promise.resolve(context);
+    repairScheme = slotScheme;
   }
 
-  debug('promptScheme.repair.speech', promptScheme.repair.speech);
+  debug('promptScheme.repair.speech', repairScheme.repair.speech);
   let template = selectors.find(
-    promptScheme.repair.speech,
+    repairScheme.repair.speech,
     context
   );
 
   debug('we choice repair phrase:', template);
   if (!template) {
     warning(`can't find repair phrase, should use default`);
-    template = promptScheme.repair.speech[0];
+    template = repairScheme.repair.speech[0];
   }
 
   return Promise.resolve(Object.assign({}, context, {
-    suggestionsScheme: promptScheme,
+    suggestionsScheme: repairScheme,
     speech: speech.concat(template)
   }));
 };
