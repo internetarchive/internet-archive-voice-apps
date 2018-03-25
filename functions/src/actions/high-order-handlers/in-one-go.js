@@ -51,13 +51,10 @@ function build ({playlist, strings, query}) {
       .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
       // expose slots
       .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
-      .then((context) => {
-        debug('got playlist');
-        return parepareSongData()(context)
-          .then(fulfilResolvers())
-          .then(renderSpeech())
-          .then(playSong());
-      })
+      .then(parepareSongData())
+      .then(fulfilResolvers())
+      .then(renderSpeech())
+      .then(playSong())
       .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
         debug(context);
