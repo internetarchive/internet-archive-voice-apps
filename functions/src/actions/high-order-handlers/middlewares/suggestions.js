@@ -32,10 +32,15 @@ module.exports = ({exclude = []} = {}) => (context) => {
     );
   }
 
-  const provider = suggestionExtensions.getSuggestionProviderForSlots(suggestionsScheme.confirm);
+  const slotNames = suggestionsScheme.confirm || suggestionsScheme.slots;
+  let provider = suggestionExtensions.getSuggestionProviderForSlots(slotNames);
   if (!provider) {
-    warning(`don't have any suggestions for: ${suggestionsScheme.confirm}. Maybe we should add them.`);
-    return Promise.resolve(context);
+    provider = suggestionExtensions.getSuggestionProviderForSubSetOfSlots(slotNames);
+    if (!provider) {
+      warning(`don't have any suggestions for: ${slotNames}. Maybe we should add them.`);
+      return Promise.resolve(context);
+    }
+    debug('we found partly matched suggestion provider');
   }
 
   return provider(_.omit(slots, exclude))

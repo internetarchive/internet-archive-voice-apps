@@ -68,7 +68,7 @@ function handler (app) {
       })
       .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
-        const brokenSlots = context.newValues;
+        const brokenSlots = context.newValues || {};
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before

@@ -118,6 +118,19 @@ module.exports = {
           `We've got {{total}} albums from {{year}}. Let's dive into it.`,
         ],
       },
+
+      /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+      repair: {
+        speech: [
+          `We don’t have anything for {{year}}. Try for example {{suggestions.0}}.`,
+          `We don't have {{creator}} albums for {{year}}. Try for example {{suggestions.0}}.`,
+          `We don't have any albums of {{year}}. Try for example {{suggestions.0}}`,
+          `We don't have that music. Try for example {{suggestions.0}}`,
+        ],
+      },
     },
 
     /**

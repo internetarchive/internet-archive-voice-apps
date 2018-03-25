@@ -46,11 +46,11 @@ function build ({playlist, strings, query}) {
     // pipeline of action handling
     return copyArgumentToSlots()({app, slotScheme, playlist, query})
       .then(copyDefaultsToSlots())
+      // expose slots
+      .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
       .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
-      // expose slots
-      .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
       .then(parepareSongData())
       .then(fulfilResolvers())
       .then(renderSpeech())
@@ -61,12 +61,23 @@ function build ({playlist, strings, query}) {
         debug('error', error);
         const context = error.context;
         const brokenSlots = context.newValues;
+
+        // we shouldn't exclude collections and creators
+        // because without them we would have too broad scope
+        const exclude = Object.keys(brokenSlots)
+          // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
+          .filter(name => ['collectionId'].indexOf(name) < 0);
+
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
           speech: [],
+          suggestions: [],
+          slots: Object.assign({}, context.slots, {
+            suggestions: [],
+          }),
         }))
-          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(suggestions({exclude}))
           .then(fulfilResolvers())
           .then(renderSpeech())
           // TODO: should clean broken slots from queue state
