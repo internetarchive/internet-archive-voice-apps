@@ -233,6 +233,8 @@ function responseHandler (app) {
   if (app.getIntent() === actions.discovery) {
     searchForSeventyEights = false;
     Discovery(app);
+  } else if (app.getIntent() === actions.cancel) {
+    sayGoodBye(app);
   } else if (app.getIntent() === actions.playAudio.noOptions) {
     currentSearchPage = 0;
     totalTrackNumber = -1;
@@ -1159,6 +1161,10 @@ function getOneGoPlayAudio (app, counter, thisOBJ, offsetInMilliseconds, callbac
       askWithReprompt(app, speechOutput, repromptText, suggestions);
     }
   }
+}
+
+function sayGoodBye (app) {
+  app.tell(`Goodbye`);
 }
 
 function parseJsonBody (body) {

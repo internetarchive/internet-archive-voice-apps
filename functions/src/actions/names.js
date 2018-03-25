@@ -5,6 +5,7 @@ module.exports = {
   textInput: 'input.text',
   mediaStateInput: 'media_status_update',
   discovery: 'Discovery',
+  cancel: 'Cancel',
   searchCollection: 'SearchCollection',
   playAudio: {
     noOptions: 'PlayAudio',
