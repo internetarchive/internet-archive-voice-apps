@@ -55,9 +55,11 @@ function build ({playlist, strings, query}) {
       .then(fulfilResolvers())
       .then(renderSpeech())
       .then(playSong())
-      .catch((context) => {
+      .catch((error) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug(context);
+        debug('keys:', Object.keys(error));
+        debug('error', error);
+        const context = error.context;
         const brokenSlots = context.newValues;
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,

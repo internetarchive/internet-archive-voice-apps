@@ -1,4 +1,4 @@
-const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:substitute-prompt');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:repair-broken-slots');
 
 const promptSelector = require('../../../slots/slots-of-template');
 const selectors = require('../../../configurator/selectors');

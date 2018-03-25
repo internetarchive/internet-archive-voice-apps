@@ -14,6 +14,9 @@ const _ = require('lodash');
  * @param {Array} slots
  */
 function getPromptsForSlots (prompts, slots) {
+  if (!prompts) {
+    return null;
+  }
   const criticalSlot = slots[0];
   const maximumIntersection = slots.length;
   return prompts
