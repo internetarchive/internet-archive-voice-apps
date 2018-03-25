@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "internet-archive",
-    "check": "testia-67000"
+    "default": "internet-archive"
   }
 }
