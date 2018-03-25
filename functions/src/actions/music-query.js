@@ -68,9 +68,6 @@ function handler (app) {
       })
       .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug(`TODO: propose user something else`);
-        debug(context);
-        debug(Object.keys(context));
         const brokenSlots = context.newValues;
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,
@@ -80,6 +77,7 @@ function handler (app) {
           .then(suggestions({exclude: Object.keys(brokenSlots)}))
           .then(fulfilResolvers())
           .then(renderSpeech())
+          // TODO: should clean broken slots from queue state
           .then(ask());
       });
   }

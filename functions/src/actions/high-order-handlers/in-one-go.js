@@ -1,7 +1,7 @@
-const dialog = require('../../dialog');
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const acknowledge = require('./middlewares/acknowledge');
+const ask = require('./middlewares/ask');
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
 const feederFromSlotScheme = require('./middlewares/feeder-from-slots-scheme');
@@ -10,6 +10,8 @@ const parepareSongData = require('./middlewares/song-data');
 const playlistFromFeeder = require('./middlewares/playlist-from-feeder');
 const playSong = require('./middlewares/play-song');
 const renderSpeech = require('./middlewares/render-speech');
+const repairBrokenSlots = require('./middlewares/repair-broken-slots');
+const suggestions = require('./middlewares/suggestions');
 
 /**
  * High-order handler
@@ -56,15 +58,20 @@ function build ({playlist, strings, query}) {
           .then(renderSpeech())
           .then(playSong());
       })
-      .catch((args) => {
+      .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug(`TODO: propose user something else`);
-        debug(args);
-        debug(Object.keys(args));
-        dialog.ask(app, {
-          speech: `We haven't find anything by your request.
-                   Would you like something else?`,
-        });
+        debug(context);
+        const brokenSlots = context.newValues;
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+        }))
+          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          // TODO: should clean broken slots from queue state
+          .then(ask());
       });
   }
 

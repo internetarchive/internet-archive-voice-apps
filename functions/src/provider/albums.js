@@ -36,7 +36,7 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
           .collection
           .filter(c => !c.startsWith('fav-'))),
         creator: json.metadata.creator,
-        year: parseInt(json.metadata.year),
+        year: parseInt(json.metadata.year) || (new Date(json.metadata.date)).getFullYear(),
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files

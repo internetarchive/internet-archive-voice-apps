@@ -115,6 +115,7 @@ module.exports = {
           `Let's play music of {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
+          `We've got {{total}} albums from {{year}}. Let's dive into it.`,
         ],
       },
     },
