@@ -115,7 +115,7 @@ module.exports = {
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
-          `We've got {{total}} albums from {{year}}. Let's dive into it.`,
+          `I have {{total}} albums from {{year}}. Let's dive into it.`,
         ],
       },
 
@@ -125,10 +125,10 @@ module.exports = {
          */
       repair: {
         speech: [
-          `We don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `We don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
-          `We don't have any albums of {{year}}. Try {{suggestions.0}}, for example.`,
-          `We don't have that music. Try {{suggestions.0}}, for example.`,
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any albums of {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
         ],
       },
     },
@@ -330,9 +330,9 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
-            `We don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
-            `We don't have that concert. Maybe you would like {{suggestions.0}}?`,
+            `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
+            `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
+            `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
           ],
         },
       }, {
@@ -353,10 +353,10 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
-            `We don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
-            `We don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
-            `We don't have that concert. Try {{years-interval.suggestions}}.`,
+            `I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
+            `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have that concert. Try {{years-interval.suggestions}}.`,
           ],
         },
       }],
