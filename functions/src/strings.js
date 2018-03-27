@@ -108,14 +108,14 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `We've got {{total}} albums of {{subject}} here. So let's listen them.`,
-          `We've got {{total}} albums of {{creator}} here. So let's start listen them.`,
-          `We've found {{total}} albums of {{subject}} music. Let's listen to`,
+          `I've got {{total}} {{subject}} albums. Let's listen them.`,
+          `I've got {{total}} albums from {{creator}} here. Let's start listening to them.`,
+          `I found {{total}} {{subject}} albums. Let's listen to them.`,
           `Let's play {{subject}} music.`,
-          `Let's play music of {{creator}}.`,
+          `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
-          `We've got {{total}} albums from {{year}}. Let's dive into it.`,
+          `I have {{total}} albums from {{year}}. Let's dive into it.`,
         ],
       },
 
@@ -125,10 +125,10 @@ module.exports = {
          */
       repair: {
         speech: [
-          `We don’t have anything for {{year}}. Try for example {{suggestions.0}}.`,
-          `We don't have {{creator}} albums for {{year}}. Try for example {{suggestions.0}}.`,
-          `We don't have any albums of {{year}}. Try for example {{suggestions.0}}`,
-          `We don't have that music. Try for example {{suggestions.0}}`,
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any albums of {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
         ],
       },
     },
@@ -209,10 +209,10 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `We've got {{total}} plates of {{subject}} here. So let's listen them.`,
-          `This is {{subject}} plates.`,
-          `Let's play {{subject}} music.`,
-          `Let's play music of {{creator}}.`,
+          `I've got {{total}} {{subject}} albums. Let's listen them.`,
+          `Here are some {{subject}} albums.`,
+          `Let's play some {{subject}} music.`,
+          `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
         ],
@@ -330,9 +330,9 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have {{creator}} concert for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
-            `We don't have any concerts of {{year}} in {{coverage}}. But we have {{suggestions.0}}.`,
-            `We don't have that concert. Maybe you would like {{suggestions.0}}?`,
+            `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
+            `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
+            `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
           ],
         },
       }, {
@@ -353,10 +353,10 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
-            `We don't have {{creator}} concert for {{year}}. Try {{years-interval.suggestions}}.`,
-            `We don't have any concerts of {{year}}. Try {{years-interval.suggestions}}.`,
-            `We don't have that concert. Try {{years-interval.suggestions}}.`,
+            `I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
+            `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have that concert. Try {{years-interval.suggestions}}.`,
           ],
         },
       }],
@@ -368,9 +368,9 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `Let's play concert {{coverage}} {{year}} of {{creator}}.`,
+          `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
-          `Let's play concerts of {{creator}}.`,
+          `Let's play concerts from {{creator}}.`,
           `Let's play {{subject}} concerts.`,
           `Let's play concerts from {{coverage}}.`,
           `Let's dive into {{year}}.`,
