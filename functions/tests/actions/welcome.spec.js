@@ -33,11 +33,13 @@ describe('actions', () => {
         .to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
     });
 
-    xit('should reset query slots', () => {
+    it('should reset query slots', () => {
       let app = mockApp();
+      query.setSlot(app, 'collection', 'etree');
       query.setSlot(app, 'creator', 'The Grateful Dead');
       welcome.handler(app);
       expect(query.hasSlot(app, 'creator')).to.be.false;
+      expect(query.hasSlot(app, 'collection')).to.be.false;
     });
   });
 });

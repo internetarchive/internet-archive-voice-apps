@@ -108,9 +108,8 @@ function resetSlot (app, name) {
  * reset all slot
  *
  * @param app
- * @param {String} name
  */
-function resetSlots (app, name) {
+function resetSlots (app) {
   skippedGroup.setData(app, []);
   valuesGroup.setData(app, {});
 }
