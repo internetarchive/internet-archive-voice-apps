@@ -34,6 +34,8 @@
  *
  */
 
+const _ = require('lodash');
+
 const {group, SubGroup} = require('./helpers');
 
 const queryGroup = group('query');
@@ -89,6 +91,30 @@ function getSlots (app) {
 }
 
 /**
+ * reset slot
+ *
+ * @param app
+ * @param {String} name
+ */
+function resetSlot (app, name) {
+  const slots = Object.assign({}, valuesGroup.getData(app));
+  delete slots[name];
+  valuesGroup.setData(app, slots);
+  const skipped = skippedGroup.getData(app);
+  skippedGroup.setData(app, _.pull(skipped, name));
+}
+
+/**
+ * reset all slot
+ *
+ * @param app
+ */
+function resetSlots (app) {
+  skippedGroup.setData(app, []);
+  valuesGroup.setData(app, {});
+}
+
+/**
  * Update slot name
  *
  * @param app
@@ -121,6 +147,8 @@ module.exports = {
   hasSlots,
   getSlot,
   getSlots,
+  resetSlot,
+  resetSlots,
   setSlot,
   skipSlot,
 };
