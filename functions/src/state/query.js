@@ -89,6 +89,18 @@ function getSlots (app) {
 }
 
 /**
+ * reset slot
+ *
+ * @param app
+ * @param {String} name
+ */
+function resetSlot (app, name) {
+  const slots = Object.assign({}, valuesGroup.getData(app));
+  delete slots[name];
+  valuesGroup.setData(app, slots);
+}
+
+/**
  * Update slot name
  *
  * @param app
@@ -121,6 +133,7 @@ module.exports = {
   hasSlots,
   getSlot,
   getSlots,
+  resetSlot,
   setSlot,
   skipSlot,
 };
