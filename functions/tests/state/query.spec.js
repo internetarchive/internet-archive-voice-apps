@@ -24,6 +24,16 @@ describe('state', () => {
         query.resetSlot(app, 'name');
         expect(query.hasSlot(app, 'name')).to.be.false;
       });
+
+      it('should reset all defined slots', () => {
+        query.setSlot(app, 'name1', 'hello world here!');
+        query.setSlot(app, 'name2', 'hello world there!');
+        query.skipSlot(app, 'name3')
+        query.resetSlots(app);
+        expect(query.hasSlot(app, 'name1')).to.be.false;
+        expect(query.hasSlot(app, 'name2')).to.be.false;
+        expect(query.hasSlot(app, 'name3')).to.be.false;
+      });
     });
 
     describe('hasSlot', () => {

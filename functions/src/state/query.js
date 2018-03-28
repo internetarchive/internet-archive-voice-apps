@@ -101,6 +101,17 @@ function resetSlot (app, name) {
 }
 
 /**
+ * reset all slot
+ *
+ * @param app
+ * @param {String} name
+ */
+function resetSlots (app, name) {
+  skippedGroup.setData(app, []);
+  valuesGroup.setData(app, {});
+}
+
+/**
  * Update slot name
  *
  * @param app
@@ -134,6 +145,7 @@ module.exports = {
   getSlot,
   getSlots,
   resetSlot,
+  resetSlots,
   setSlot,
   skipSlot,
 };
