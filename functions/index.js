@@ -18,19 +18,12 @@ const setup = require('./src/setup');
 const {storeAction} = require('./src/state/actions');
 const strings = require('./src/strings');
 const {debug, warning} = require('./src/utils/logger')('ia:index');
+const logAppStart = require('./src/utils/logger/log-app-start');
 const logRequest = require('./src/utils/logger/log-request');
 
 const actionsMap = defaultActions();
-const actionNames = Array.from(actionsMap.keys())
-  .map(name => `"${name}"`)
-  .join(', ');
 
-debug('[Start]');
-debug('-----------------------------------------');
-debug(`Node.js Version: ${process.version}`);
-debug('-----------------------------------------');
-
-debug(`We can handle actions: ${actionNames}`);
+logAppStart(actionsMap);
 
 setup();
 
