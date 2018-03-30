@@ -99,8 +99,7 @@ setup();
 exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
   const app = new DialogflowApp({request: req, response: res});
 
-  logSessionStart(app);
-  logRequest(req);
+  logRequest(app, req);
 
   storeAction(app, app.getIntent());
 
@@ -120,28 +119,6 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.conf
 
   dashbot.configHandler(app);
 }));
-
-/**
- * log information about started session
- *
- * @param app
- */
-function logSessionStart (app) {
-  debug('\n\n');
-  debug(`start handling action: ${app.getIntent()}`);
-  const user = app.getUser();
-  if (user) {
-    debug(`user id: ${app.getUser().userId}`);
-    debug(`user name: ${app.getUser().userName}`);
-    debug(`last seen: ${app.getUser().lastSeen}`);
-  } else {
-    debug('<unknown user>');
-  }
-  debug(`surface capabilities: ${app.getSurfaceCapabilities()}`);
-  debug(`user's session data: ${JSON.stringify(app.data)}`);
-  debug(`user's persistent data: ${JSON.stringify(app.userStorage)}`);
-  debug('\n\n');
-}
 
 /**
  * @deprecated seens version 2.0
