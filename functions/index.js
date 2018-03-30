@@ -1,7 +1,3 @@
-/* eslint no-unused-vars: "warn" */
-// disabled temporary because we have so much unused variables
-// but should be fixed soon
-
 'use strict';
 
 const DialogflowApp = require('actions-on-google').DialogflowApp;
