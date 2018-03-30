@@ -222,14 +222,6 @@ function repeatInput (app) {
  * @param app
  */
 function responseHandler (app) {
-  // let requestType = (this.event.request !== undefined) ? this.event.request.type : null;
-
-  logger('previousSpeechoutput : ' + previousSpeechoutput);
-  logger('previousSuggestions : ' + previousSuggestions);
-  logger('currentSpeechoutput : ' + currentSpeechoutput);
-  logger('currentSuggestions : ' + currentSuggestions);
-  logger('responseHandler : ' + app.getIntent());
-
   if (app.getIntent() === actions.discovery) {
     searchForSeventyEights = false;
     Discovery(app);
