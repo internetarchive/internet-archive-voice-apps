@@ -25,6 +25,7 @@ const setup = require('./src/setup');
 const {storeAction} = require('./src/state/actions');
 const strings = require('./src/strings');
 const {debug, warning} = require('./src/utils/logger')('ia:index');
+const logRequest = require('./src/utils/logger/log-request');
 
 let ARCHIVE_HOST = 'web.archive.org';
 let imageURL = 'https://archive.org/services/img/';
@@ -119,11 +120,6 @@ exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.conf
 
   dashbot.configHandler(app);
 }));
-
-function logRequest (req) {
-  debug(`request body: ${JSON.stringify(req.body)}`);
-  debug(`request headers: ${JSON.stringify(req.headers)}`);
-}
 
 /**
  * log information about started session
