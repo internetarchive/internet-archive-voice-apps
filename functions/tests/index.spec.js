@@ -7,7 +7,7 @@ const {wait} = require('./_utils/wait');
 
 let index, configStub, adminInitStub, functions, admin;
 
-describe('playMedia', () => {
+describe('assistant', () => {
   let res;
 
   before(function () {
@@ -24,11 +24,11 @@ describe('playMedia', () => {
   });
 
   it('should be defined', () => {
-    expect(index.playMedia).to.be.ok;
+    expect(index.assistant).to.be.ok;
   });
 
   it('should store last used action', () => {
-    index.playMedia(buildIntentRequest({
+    index.assistant(buildIntentRequest({
       action: 'welcome',
       lastSeen: null,
     }), res);
@@ -39,7 +39,7 @@ describe('playMedia', () => {
     const action = 'on-definitely-uncovered-action';
     let warning = sinon.spy();
     index.__set__('warning', warning);
-    index.playMedia(buildIntentRequest({
+    index.assistant(buildIntentRequest({
       action,
       lastSeen: null,
     }), res);

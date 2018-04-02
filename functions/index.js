@@ -24,11 +24,11 @@ logAppStart(actionsMap);
 setup();
 
 /**
- * Action Endpoint
+ * Action of Google Endpoint
  *
  * @type {HttpsFunction}
  */
-exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
+exports.assistant = functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
   const app = new DialogflowApp({request: req, response: res});
 
   logRequest(app, req);
