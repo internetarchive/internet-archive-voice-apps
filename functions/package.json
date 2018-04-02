@@ -11,8 +11,8 @@
   "scripts": {
     "lint": "eslint ./",
     "mocha": "mocha --opts ./tests/mocha.opts",
-    "start": "firebase serve --only functions:playMedia",
-    "deploy": "firebase deploy --only functions:playMedia",
+    "start": "firebase serve --only functions:assistant",
+    "deploy": "firebase deploy --only functions:assistant",
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {

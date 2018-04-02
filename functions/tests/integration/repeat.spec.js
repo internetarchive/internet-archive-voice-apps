@@ -32,7 +32,7 @@ describe('integration', () => {
           },
         },
       });
-      index.playMedia(req, res);
+      index.assistant(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
       expect(res.speech()).to.contain('Where to go?');
