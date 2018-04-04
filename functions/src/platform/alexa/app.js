@@ -1,15 +1,16 @@
 const persistance = require('./persistence');
-const askBuilder = require('./response/ask');
+const response = require('./response');
 
+/**
+ * Facade of Alexa App
+ */
 class App {
   constructor (alexa) {
     this.alexa = alexa;
 
+    // define interfaces
     this.persist = persistance(alexa);
-
-    this.response = {
-      ask: askBuilder(alexa),
-    };
+    this.response = response(alexa);
   }
 
   /**
