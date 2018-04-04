@@ -18,15 +18,6 @@ const playlistFromFeeder = require('./high-order-handlers/middlewares/playlist-f
 const playSong = require('./high-order-handlers/middlewares/play-song');
 
 /**
- * A Fix for mathjs@4.0.0
- * Ref: https://github.com/josdejong/mathjs/issues/1051#issuecomment-369930811
- *
- */
-math.import({
-  equal: function (a, b) { return a === b; }
-}, {override: true});
-
-/**
  * Handle music query action
  * - fill slots of music query
  * - call fulfillment feeder
