@@ -4,6 +4,7 @@ const kebabToCamel = require('../../../utils/kebab-to-camel');
 
 /**
  * Map actions to alexa handlers
+ * - alexa intenets should be camel styled and Object type
  *
  * @param actions {Map}
  * @returns {Object}
@@ -15,9 +16,9 @@ module.exports = (actions) => {
 
   return Array
     .from(actions.keys())
-    .reduce((acc, name) => {
-      return Object.assign({}, acc, {
-        [kebabToCamel(name)]: () => actions.get(name)(new App(this)),
-      });
-    }, {});
+    .reduce((acc, name) => Object.assign({}, acc, {
+      [kebabToCamel(name)]: function () {
+        actions.get(name)(new App(this));
+      },
+    }), {});
 };
