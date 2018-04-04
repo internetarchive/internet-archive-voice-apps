@@ -1,3 +1,5 @@
+const {App} = require('../app');
+
 const kebabToCamel = require('../../../utils/kebab-to-camel');
 
 /**
@@ -15,7 +17,7 @@ module.exports = (actions) => {
     .from(actions.keys())
     .reduce((acc, name) => {
       return Object.assign({}, acc, {
-        [kebabToCamel(name)]: actions.get(name),
+        [kebabToCamel(name)]: () => actions.get(name)(new App(this)),
       });
     }, {});
 };
