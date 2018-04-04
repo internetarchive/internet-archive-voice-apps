@@ -12,5 +12,4 @@ module.exports = (alexa) =>
    */
   ({speech, suggestions}) => {
     alexa.response.speak(speech);
-    alexa.emit(':responseReady');
   };

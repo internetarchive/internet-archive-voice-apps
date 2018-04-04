@@ -7,6 +7,14 @@ const {App} = require('../../../../src/platform/alexa/app');
 describe('platform', () => {
   describe('alexa', () => {
     describe('handlers builder', () => {
+      let alexa;
+
+      beforeEach(() => {
+        alexa = {
+          emit: sinon.spy(),
+        };
+      });
+
       it('should return empty object for empty input', () => {
         const res = builder();
         expect(res).to.be.ok;
@@ -25,7 +33,6 @@ describe('platform', () => {
       });
 
       it('should pass alexa app as 1st argument to intent handler', () => {
-        const alexa = {};
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
 
@@ -38,6 +45,20 @@ describe('platform', () => {
         wrappedNoInputHandler.call(alexa);
         expect(noInputHandler).to.have.been.called;
         expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
+      });
+
+      it(`should call this.emit(':responseReady') after handler`, () => {
+        const noInputHandler = sinon.spy();
+        const welcomeHandler = sinon.spy();
+
+        const res = builder(new Map([
+          ['no-input', noInputHandler],
+          ['welcome', welcomeHandler],
+        ]));
+
+        const wrappedNoInputHandler = res['NoInput'];
+        wrappedNoInputHandler.call(alexa);
+        expect(alexa.emit).to.have.been.calledWith(':responseReady');
       });
     });
   });

@@ -19,6 +19,7 @@ module.exports = (actions) => {
     .reduce((acc, name) => Object.assign({}, acc, {
       [kebabToCamel(name)]: function () {
         actions.get(name)(new App(this));
+        this.emit(':responseReady');
       },
     }), {});
 };
