@@ -6,6 +6,15 @@ class App {
       ask: require('./response/ask')(alexa),
     };
   }
+
+  /**
+   * is first skill used time
+   *
+   * @returns {boolean}
+   */
+  isFirstTry () {
+    return true;
+  }
 }
 
 module.exports = {
