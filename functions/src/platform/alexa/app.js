@@ -1,9 +1,14 @@
+const persistance = require('./persistence');
+const askBuilder = require('./response/ask');
+
 class App {
   constructor (alexa) {
     this.alexa = alexa;
 
+    this.persist = persistance(alexa);
+
     this.response = {
-      ask: require('./response/ask')(alexa),
+      ask: askBuilder(alexa),
     };
   }
 

@@ -3,6 +3,7 @@ const sinon = require('sinon');
 
 const builder = require('../../../../src/platform/alexa/handler/handlers-builder');
 const {App} = require('../../../../src/platform/alexa/app');
+const mockAlexa = require('../../../_utils/mocking/platforms/alexa');
 
 describe('platform', () => {
   describe('alexa', () => {
@@ -10,9 +11,7 @@ describe('platform', () => {
       let alexa;
 
       beforeEach(() => {
-        alexa = {
-          emit: sinon.spy(),
-        };
+        alexa = mockAlexa();
       });
 
       it('should return empty object for empty input', () => {
