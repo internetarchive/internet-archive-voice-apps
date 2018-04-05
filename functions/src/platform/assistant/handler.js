@@ -2,6 +2,7 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
 const bst = require('bespoken-tools');
 const dashbotBuilder = require('dashbot');
+const Raven = require('raven');
 
 const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
@@ -14,6 +15,13 @@ module.exports = (actionsMap) => {
     functions.config().dashbot.key, {
       printErrors: false,
     }).google;
+
+  if (functions.config().sentry) {
+    debug('install sentry (raven)');
+    Raven.config(
+      functions.config().sentry.url
+    ).install();
+  }
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
     const app = new DialogflowApp({request: req, response: res});
