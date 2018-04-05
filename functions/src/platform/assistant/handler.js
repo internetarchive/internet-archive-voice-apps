@@ -27,6 +27,9 @@ module.exports = (actionsMap) => {
       functions.config().sentry.url, {
         captureUnhandledRejections: true,
         release: packageJSON.version,
+        tags: {
+          platform: which(),
+        }
       }
     ).install();
     useRaven = true;
@@ -55,7 +58,6 @@ module.exports = (actionsMap) => {
         // action context
         Raven.captureBreadcrumb({
           capabilities: app.getSurfaceCapabilities(),
-          platform: which(),
           sessionData: app.data,
         });
       });
