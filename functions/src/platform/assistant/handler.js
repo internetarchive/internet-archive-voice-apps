@@ -33,12 +33,22 @@ module.exports = (actionsMap) => {
     storeAction(app, app.getIntent());
 
     if (useRaven) {
-      // set user's context to Sentry
       Raven.context(() => {
+        if (!app) {
+          return;
+        }
+
+        // set user's context to Sentry
         Raven.setContext({
           user: {
             id: app.getUser() && app.getUser().userId,
           }
+        });
+
+        // action context
+        Raven.captureBreadcrumb({
+          capabilities: app.getSurfaceCapabilities(),
+          sessionData: app.data,
         });
       });
     }
