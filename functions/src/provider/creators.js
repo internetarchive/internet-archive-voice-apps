@@ -38,8 +38,8 @@ function fetchCreatorsBy (query) {
         }
       )
     )
-    .then(json => ({
-      items: json.data.response.docs.map(item => Object.assign({}, item, {
+    .then(res => ({
+      items: res.data.response.docs.map(item => Object.assign({}, item, {
         // year: parseInt(item.year),
       })),
     }))
