@@ -10,6 +10,8 @@ const strings = require('./../../strings');
 const {debug, warning} = require('./../../utils/logger')('ia:index');
 const logRequest = require('./../../utils/logger/log-request');
 
+const which = require('../which');
+
 module.exports = (actionsMap) => {
   const dashbot = dashbotBuilder(
     functions.config().dashbot.key, {
@@ -48,6 +50,7 @@ module.exports = (actionsMap) => {
         // action context
         Raven.captureBreadcrumb({
           capabilities: app.getSurfaceCapabilities(),
+          platform: which(),
           sessionData: app.data,
         });
       });
