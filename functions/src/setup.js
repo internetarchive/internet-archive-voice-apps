@@ -16,7 +16,12 @@ module.exports = () => {
     debug(`${config.method.toUpperCase()} ${config.url}`);
     return config;
   }, (error) => {
-    warning(`fail request ${error.config.method.toUpperCase()} ${error.config.url}`, error);
+    const config = error.config;
+    if (config) {
+      warning(`fail request ${config.method.toUpperCase()} ${config.url}`, error);
+    } else {
+      warning(`fail`, error);
+    }
     return Promise.reject(error);
   });
 };
