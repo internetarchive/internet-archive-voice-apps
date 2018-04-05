@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/play-song');
 
-const mockApp = require('../../../_utils/mocking/app');
+const mockApp = require('../../../_utils/mocking/platforms/assistant');
 const mockDialog = require('../../../_utils/mocking/dialog');
 
 describe('actions', () => {

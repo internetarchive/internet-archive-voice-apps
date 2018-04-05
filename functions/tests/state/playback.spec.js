@@ -2,7 +2,7 @@ const {expect} = require('chai');
 
 const playback = require('../../src/state/playback');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 
 describe('state', () => {
   let app;

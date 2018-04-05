@@ -4,7 +4,7 @@ const rewire = require('rewire');
 
 const ask = rewire('../../src/dialog/ask');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 
 describe('dialog', () => {
   let savePhrase;
