@@ -2,6 +2,7 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
 const bst = require('bespoken-tools');
 const dashbotBuilder = require('dashbot');
+const Raven = require('raven');
 
 const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
@@ -15,12 +16,42 @@ module.exports = (actionsMap) => {
       printErrors: false,
     }).google;
 
+  let useRaven = false;
+  if (functions.config().sentry) {
+    debug('install sentry (raven)');
+    Raven.config(
+      functions.config().sentry.url
+    ).install();
+    useRaven = true;
+  }
+
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
     const app = new DialogflowApp({request: req, response: res});
 
     logRequest(app, req);
 
     storeAction(app, app.getIntent());
+
+    if (useRaven) {
+      Raven.context(() => {
+        if (!app) {
+          return;
+        }
+
+        // set user's context to Sentry
+        Raven.setContext({
+          user: {
+            id: app.getUser() && app.getUser().userId,
+          }
+        });
+
+        // action context
+        Raven.captureBreadcrumb({
+          capabilities: app.getSurfaceCapabilities(),
+          sessionData: app.data,
+        });
+      });
+    }
 
     // it seems pre-flight request from google assistant,
     // we shouldn't handle it by actions
