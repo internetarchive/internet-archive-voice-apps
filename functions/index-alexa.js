@@ -1,7 +1,7 @@
 'use strict';
 
 const {defaultActions} = require('./src/actions');
-const assistantHandler = require('./src/platform/assistant/handler');
+const alexaHandler = require('./src/platform/alexa/handler');
 const setup = require('./src/setup');
 const logAppStart = require('./src/utils/logger/log-app-start');
 
@@ -12,8 +12,8 @@ logAppStart(actionsMap);
 setup();
 
 /**
- * Action of Google Endpoint
+ * Alexa Lambda Endpoint
  *
  * @type {HttpsFunction}
  */
-exports.assistant = assistantHandler(actionsMap);
+exports.handler = alexaHandler(actionsMap);

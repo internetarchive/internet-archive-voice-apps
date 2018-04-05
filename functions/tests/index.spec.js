@@ -2,13 +2,8 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const {buildIntentRequest, MockResponse} = require('./_utils/mocking');
-const {wait} = require('./_utils/wait');
-
-let index, configStub, adminInitStub, functions, admin;
-
 describe('assistant', () => {
-  let res;
+  let index, configStub, adminInitStub, functions, admin;
 
   before(function () {
     this.timeout(3000);
@@ -19,36 +14,8 @@ describe('assistant', () => {
     index = rewire('..');
   });
 
-  beforeEach(() => {
-    res = new MockResponse();
-  });
-
   it('should be defined', () => {
     expect(index.assistant).to.be.ok;
-  });
-
-  it('should store last used action', () => {
-    index.assistant(buildIntentRequest({
-      action: 'welcome',
-      lastSeen: null,
-    }), res);
-    expect(res.data()).to.have.property('actions').to.have.property('action', 'welcome');
-  });
-
-  it('should warn in case of missed action', () => {
-    const action = 'on-definitely-uncovered-action';
-    let warning = sinon.spy();
-    index.__set__('warning', warning);
-    index.assistant(buildIntentRequest({
-      action,
-      lastSeen: null,
-    }), res);
-
-    return wait()
-      .then(() => {
-        expect(warning.getCall(0).args[0]).to.includes(action);
-        expect(warning).to.be.calledOnce;
-      });
   });
 
   after(() => {

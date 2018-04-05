@@ -17,6 +17,7 @@ describe('integration', () => {
     configStub = sinon.stub(functions, 'config').returns(require(`../.runtimeconfig.json`));
     index = require('../..');
   });
+
   describe('welcome', () => {
     it('should handle for a new user', () => {
       const res = new MockResponse();
@@ -36,6 +37,7 @@ describe('integration', () => {
       expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
   });
+
   after(() => {
     // Restoring our stubs to the original methods.
     configStub.restore();
