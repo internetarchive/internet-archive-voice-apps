@@ -4,11 +4,15 @@ const bst = require('bespoken-tools');
 const dashbotBuilder = require('dashbot');
 const Raven = require('raven');
 
+const packageJSON = require('../../../package.json');
+
 const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
 const strings = require('./../../strings');
 const {debug, warning} = require('./../../utils/logger')('ia:index');
 const logRequest = require('./../../utils/logger/log-request');
+
+const which = require('../which');
 
 module.exports = (actionsMap) => {
   const dashbot = dashbotBuilder(
@@ -20,7 +24,13 @@ module.exports = (actionsMap) => {
   if (functions.config().sentry) {
     debug('install sentry (raven)');
     Raven.config(
-      functions.config().sentry.url
+      functions.config().sentry.url, {
+        captureUnhandledRejections: true,
+        release: packageJSON.version,
+        tags: {
+          platform: which(),
+        }
+      }
     ).install();
     useRaven = true;
   }
