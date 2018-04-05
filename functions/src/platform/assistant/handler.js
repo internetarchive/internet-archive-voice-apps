@@ -25,7 +25,8 @@ module.exports = (actionsMap) => {
     debug('install sentry (raven)');
     Raven.config(
       functions.config().sentry.url, {
-        captureUnhandledRejections: true
+        captureUnhandledRejections: true,
+        release: packageJSON.version,
       }
     ).install();
     useRaven = true;
@@ -56,7 +57,6 @@ module.exports = (actionsMap) => {
           capabilities: app.getSurfaceCapabilities(),
           platform: which(),
           sessionData: app.data,
-          version: packageJSON.version,
         });
       });
     }
