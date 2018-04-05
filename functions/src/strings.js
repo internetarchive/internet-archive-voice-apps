@@ -41,7 +41,7 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
@@ -60,7 +60,7 @@ module.exports = {
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
-          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
+          <desc>Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}</desc>
         </audio>
       `,
       title: '{{title}} by {{creator}} {{year}}',
