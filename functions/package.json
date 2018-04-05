@@ -34,6 +34,7 @@
     "supports-color": "^5.3.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.14.1",
     "chai": "^4.1.2",
     "eslint": "^4.18.2",
     "eslint-config-semistandard": "^12.0.1",
