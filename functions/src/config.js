@@ -31,6 +31,10 @@ module.exports = {
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 
+  request: {
+    userAgent: '{name} / {version} {platform}',
+  },
+
   feeders: {
     'albums-async': {
       chunk: {

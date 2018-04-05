@@ -1,6 +1,6 @@
 {
-  "name": "playMedia",
-  "description": "Google Actions of Internet Archite",
+  "name": "audio-interface-of-internet-archive",
+  "description": "Audio Interface of Internet Archive",
   "version": "2.1.0",
   "private": true,
   "author": "Internet Archive",
@@ -18,6 +18,7 @@
   "dependencies": {
     "actions-on-google": "^1.10.0",
     "alexa-sdk": "^1.0.25",
+    "axios": "^0.18.0",
     "bespoken-tools": "^1.2.8",
     "dashbot": "^9.4.6",
     "debug": "^3.1.0",
@@ -33,6 +34,7 @@
     "supports-color": "^5.3.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.14.1",
     "chai": "^4.1.2",
     "eslint": "^4.18.2",
     "eslint-config-semistandard": "^12.0.1",

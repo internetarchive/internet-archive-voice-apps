@@ -1,6 +1,6 @@
+const axios = require('axios');
 const _ = require('lodash');
 const mustache = require('mustache');
-const fetch = require('node-fetch');
 
 const config = require('../config');
 const delayedPromise = require('../utils/delay');
@@ -17,7 +17,7 @@ const {buildQueryCondition} = require('./advanced-search');
  * @returns {Promise}
  */
 function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
-  return fetch(
+  return axios.get(
     mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
     .catch((error) => {
@@ -28,8 +28,8 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
         return Promise.reject(error);
       }
     })
-    .then(res => res.json())
-    .then(json => {
+    .then(res => {
+      const json = res.data;
       return {
         id,
         collections: _.uniq(json.metadata
@@ -67,7 +67,7 @@ function fetchAlbumsByCreatorId (id, {
   fields = 'identifier,coverage,title,year',
 } = {}) {
   debug(`fetch albums of ${id}`);
-  return fetch(
+  return axios.get(
     mustache.render(
       config.endpoints.COLLECTION_ITEMS_URL,
       {
@@ -79,8 +79,8 @@ function fetchAlbumsByCreatorId (id, {
       }
     )
   )
-    .then(res => res.json())
-    .then(json => {
+    .then(res => {
+      const json = res.data;
       debug(`fetch ${json.response.docs.length} albums`);
       return {
         items: json.response.docs.map(a => ({
@@ -137,18 +137,17 @@ function fetchAlbumsByQuery (query) {
 
   debug(`Fetch albums by ${JSON.stringify(query)}`);
 
-  return fetch(
+  return axios.get(
     mustache.render(
       config.endpoints.QUERY_COLLECTIONS_URL,
       Object.assign({}, query, {condition})
     )
   )
-    .then(res => res.json())
-    .then(json => ({
-      items: json.response.docs.map(a => (Object.assign({}, a, {
+    .then(res => ({
+      items: res.data.response.docs.map(a => (Object.assign({}, a, {
         year: parseInt(a.year),
       }))),
-      total: json.response.numFound,
+      total: res.data.response.numFound,
     }))
     .catch(e => {
       error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);

@@ -1,6 +1,5 @@
+const MockAdapter = require('axios-mock-adapter');
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
-fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
 const creators = rewire('../../src/provider/creators');
@@ -10,12 +9,8 @@ const popularAlbums = require('./fixtures/popular-of-etree.json');
 describe('providers', () => {
   describe('creators', () => {
     beforeEach(() => {
-      creators.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/advancedsearch.php', popularAlbums)
-      );
+      const mock = new MockAdapter(creators.__get__('axios'));
+      mock.onGet().reply(200, popularAlbums);
     });
 
     describe('fetchCreators', () => {

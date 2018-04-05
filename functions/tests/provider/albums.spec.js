@@ -1,6 +1,5 @@
+const MockAdapter = require('axios-mock-adapter');
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
-fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
 const albumsProvider = rewire('../../src/provider/albums');
@@ -12,12 +11,8 @@ const smokeGetsInYourEyesPlate = require('./fixtures/smoke-gets-in-your-eyes-pla
 describe('collection', () => {
   describe('fetchAlbums', () => {
     beforeEach(() => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, ofARevolution);
     });
 
     it('should fetch items of collection', () => {
@@ -35,12 +30,8 @@ describe('collection', () => {
 
   describe('fetchAlbumDetails', () => {
     it('should return list of songs by album id', () => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/metadata/', gratefulAlbum)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, gratefulAlbum);
 
       return albumsProvider.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
         .then(album => {
@@ -65,12 +56,8 @@ describe('collection', () => {
     });
 
     it('should return list of songs for plate', () => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/metadata/', smokeGetsInYourEyesPlate)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, smokeGetsInYourEyesPlate);
 
       // plates have many of songs duplications
       // but luckly they don't have title field, we will use it
@@ -93,12 +80,16 @@ describe('collection', () => {
   });
 
   describe('fetchAlbumsByQuery', () => {
-    let f;
+    let urls;
+
     beforeEach(() => {
-      f = fetchMock
-        .sandbox()
-        .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution);
-      albumsProvider.__set__('fetch', f);
+      urls = [];
+
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply((config) => {
+        urls.push(config.url);
+        return [200, ofARevolution];
+      });
     });
 
     it('should fetch single collection', () => {
@@ -108,10 +99,7 @@ describe('collection', () => {
         })
         .then((res) => {
           expect(res).to.be.ok;
-          expect(f.lastUrl(
-            'begin:https://web.archive.org/advancedsearch.php?q=',
-            'GET'
-          )).to.be.equal(
+          expect(urls[0]).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
@@ -129,10 +117,7 @@ describe('collection', () => {
           collectionId: ['collection-1', 'collection-2'],
         })
         .then((res) => {
-          expect(f.lastUrl(
-            'begin:https://web.archive.org/advancedsearch.php?q=',
-            'GET'
-          )).to.be.equal(
+          expect(urls[0]).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
