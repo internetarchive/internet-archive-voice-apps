@@ -3,6 +3,6 @@ const persistance = require('./session');
 /**
  * Return persistance interface
  *
- * @param alexa
+ * @param assistant app
  */
-module.exports = (alexa) => persistance(alexa);
+module.exports = (app) => persistance(app);

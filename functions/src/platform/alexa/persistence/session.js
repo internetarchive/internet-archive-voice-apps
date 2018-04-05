@@ -3,7 +3,7 @@ const _ = require('lodash');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
 
 /**
- * Device level persistance
+ * Session level persistance
  *
  * @param alexa
  */

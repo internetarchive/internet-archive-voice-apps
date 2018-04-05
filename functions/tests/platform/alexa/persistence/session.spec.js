@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 
 const mockAlexa = require('../../../_utils/mocking/platforms/alexa');
-const persistance = require('../../../../src/platform/alexa/persistence/device-level');
+const persistance = require('../../../../src/platform/alexa/persistence/session');
 
 describe('platform', () => {
   describe('alexa', () => {
