@@ -1,6 +1,6 @@
 {
-  "name": "playMedia",
-  "description": "Google Actions of Internet Archite",
+  "name": "audio-interface-of-internet-archive",
+  "description": "Audio Interface of Internet Archive",
   "version": "2.1.0",
   "private": true,
   "author": "Internet Archive",
