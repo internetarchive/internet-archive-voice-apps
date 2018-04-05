@@ -5,5 +5,5 @@ const math = require('mathjs');
  *
  */
 math.import({
-	equal: function (a, b) { return a === b; }
+  equal: function (a, b) { return a === b; }
 }, {override: true});
