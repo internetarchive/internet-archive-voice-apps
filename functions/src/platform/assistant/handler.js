@@ -20,7 +20,6 @@ module.exports = (actionsMap) => {
       printErrors: false,
     }).google;
 
-  let useRaven = false;
   if (functions.config().sentry) {
     debug('install sentry (raven)');
     Raven.config(
@@ -32,37 +31,35 @@ module.exports = (actionsMap) => {
         }
       }
     ).install();
-    useRaven = true;
   }
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
+    // TODO: can use wrapper instead
+    // Raven.context(() => {
     try {
       const app = new DialogflowApp({request: req, response: res});
+
+      // set user's context to Sentry
+      Raven.setContext({
+        user: {
+          id: app.getUser() && app.getUser().userId,
+        }
+      });
+
+      // action context
+      Raven.captureBreadcrumb({
+        category: 'handle',
+        message: 'Handling of request',
+        level: 'info',
+        data: {
+          capabilities: app.getSurfaceCapabilities(),
+          sessionData: app.data,
+        },
+      });
 
       logRequest(app, req);
 
       storeAction(app, app.getIntent());
-
-      if (useRaven) {
-        Raven.context(() => {
-          if (!app) {
-            return;
-          }
-
-          // set user's context to Sentry
-          Raven.setContext({
-            user: {
-              id: app.getUser() && app.getUser().userId,
-            }
-          });
-
-          // action context
-          Raven.captureBreadcrumb({
-            capabilities: app.getSurfaceCapabilities(),
-            sessionData: app.data,
-          });
-        });
-      }
 
       // it seems pre-flight request from google assistant,
       // we shouldn't handle it by actions
@@ -70,7 +67,6 @@ module.exports = (actionsMap) => {
         debug('we get empty body. so we ignore request');
         app.ask('Internet Archive is here!');
         throw new Error('TEST: Internet Archive is here!');
-        return;
       }
 
       if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
@@ -78,7 +74,8 @@ module.exports = (actionsMap) => {
           .catch(err => {
             warning(`We missed action: "${app.getIntent()}".
                    And got an error:`, err);
-            return Promise.reject(err);
+
+            Raven.captureException(err);
           });
       } else {
         dialog.tell(app, strings.errors.device.mediaResponse);
