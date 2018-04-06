@@ -2,6 +2,8 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
 const bst = require('bespoken-tools');
 const dashbotBuilder = require('dashbot');
+// FIXME: temporal solution details below
+const domain = require('domain'); // eslint-disable-line
 const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
@@ -20,40 +22,59 @@ module.exports = (actionsMap) => {
       printErrors: false,
     }).google;
 
-  if (functions.config().sentry) {
-    debug('install sentry (raven)');
-    Raven.config(
-      functions.config().sentry.url, {
-        captureUnhandledRejections: true,
-        release: packageJSON.version,
-        tags: {
-          platform: which(),
-        }
-      }
-    ).install();
-  }
-
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
+    let raven;
+
     try {
+      // FIXME:
+      //
+      // @hyzhak:
+      //
+      // for some reason inside of google functions
+      // (I can't reproduce this issue in local envirompoent npm start)
+      // domain.active is defined
+      // but it will become undefined once we got rejection
+      // what breaks Sentry because we loose context
+      //
+      // I haven't found yet who and why use domain
+      // maybe we don't need it at all
+      // so temporal fix is just disable it
+      domain.active = null;
+
       const app = new DialogflowApp({request: req, response: res});
+      if (functions.config().sentry) {
+        raven = app.raven = Raven.Client();
+        app.raven.config(
+          functions.config().sentry.url, {
+            sendTimeout: 10,
+            captureUnhandledRejections: true,
+            release: packageJSON.version,
+            tags: {
+              platform: which(),
+            }
+          }
+        ).install();
+      }
 
-      // set user's context to Sentry
-      Raven.setContext({
-        user: {
-          id: app.getUser() && app.getUser().userId,
-        }
-      });
+      if (app.raven) {
+        // set user's context to Sentry
+        app.raven.setContext({
+          user: {
+            id: app.getUser() && app.getUser().userId,
+          }
+        });
 
-      // action context
-      Raven.captureBreadcrumb({
-        category: 'handle',
-        message: 'Handling of request',
-        level: 'info',
-        data: {
-          capabilities: app.getSurfaceCapabilities(),
-          sessionData: app.data,
-        },
-      });
+        // action context
+        app.raven.captureBreadcrumb({
+          category: 'handle',
+          message: 'Handling of request',
+          level: 'info',
+          data: {
+            capabilities: app.getSurfaceCapabilities(),
+            sessionData: app.data,
+          },
+        });
+      }
 
       logRequest(app, req);
 
@@ -73,7 +94,9 @@ module.exports = (actionsMap) => {
             warning(`We missed action: "${app.getIntent()}".
                    And got an error:`, err);
 
-            Raven.captureException(err);
+            if (app.raven) {
+              app.raven.captureException(err);
+            }
           });
       } else {
         dialog.tell(app, strings.errors.device.mediaResponse);
@@ -81,7 +104,9 @@ module.exports = (actionsMap) => {
 
       dashbot.configHandler(app);
     } catch (e) {
-      Raven.captureException(e);
+      if (raven) {
+        raven.captureException(e);
+      }
     }
   }));
 };
