@@ -20,7 +20,6 @@ module.exports = (actionsMap) => {
       printErrors: false,
     }).google;
 
-  let useRaven = false;
   if (functions.config().sentry) {
     debug('install sentry (raven)');
     Raven.config(
@@ -32,55 +31,57 @@ module.exports = (actionsMap) => {
         }
       }
     ).install();
-    useRaven = true;
   }
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
-    const app = new DialogflowApp({request: req, response: res});
+    try {
+      const app = new DialogflowApp({request: req, response: res});
 
-    logRequest(app, req);
-
-    storeAction(app, app.getIntent());
-
-    if (useRaven) {
-      Raven.context(() => {
-        if (!app) {
-          return;
+      // set user's context to Sentry
+      Raven.setContext({
+        user: {
+          id: app.getUser() && app.getUser().userId,
         }
+      });
 
-        // set user's context to Sentry
-        Raven.setContext({
-          user: {
-            id: app.getUser() && app.getUser().userId,
-          }
-        });
-
-        // action context
-        Raven.captureBreadcrumb({
+      // action context
+      Raven.captureBreadcrumb({
+        category: 'handle',
+        message: 'Handling of request',
+        level: 'info',
+        data: {
           capabilities: app.getSurfaceCapabilities(),
           sessionData: app.data,
-        });
+        },
       });
-    }
 
-    // it seems pre-flight request from google assistant,
-    // we shouldn't handle it by actions
-    if (!req.body || !app.getIntent()) {
-      debug('we get empty body. so we ignore request');
-      app.ask('Internet Archive is here!');
-      return;
-    }
+      logRequest(app, req);
 
-    if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
-      app.handleRequestAsync(actionsMap)
-        .catch(err => {
-          warning(`We missed action: "${app.getIntent()}".
-                 And got an error:`, err);
-        });
-    } else {
-      dialog.tell(app, strings.errors.device.mediaResponse);
-    }
+      storeAction(app, app.getIntent());
 
-    dashbot.configHandler(app);
+      // it seems pre-flight request from google assistant,
+      // we shouldn't handle it by actions
+      if (!req.body || !app.getIntent()) {
+        debug('we get empty body. so we ignore request');
+        app.ask('Internet Archive is here!');
+        throw new Error('TEST: Internet Archive is here!');
+      }
+
+      if (app.hasSurfaceCapability(app.SurfaceCapabilities.MEDIA_RESPONSE_AUDIO)) {
+        app.handleRequestAsync(actionsMap)
+          .catch(err => {
+            warning(`We missed action: "${app.getIntent()}".
+                   And got an error:`, err);
+
+            Raven.captureException(err);
+          });
+      } else {
+        dialog.tell(app, strings.errors.device.mediaResponse);
+      }
+
+      dashbot.configHandler(app);
+    } catch (e) {
+      Raven.captureException(e);
+    }
   }));
 };
