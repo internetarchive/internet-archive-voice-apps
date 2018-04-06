@@ -34,8 +34,6 @@ module.exports = (actionsMap) => {
   }
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
-    // TODO: can use wrapper instead
-    // Raven.context(() => {
     try {
       const app = new DialogflowApp({request: req, response: res});
 
