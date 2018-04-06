@@ -33,17 +33,17 @@ module.exports = (actionsMap) => {
       // for some reason inside of google functions
       // (I can't reproduce this issue in local envirompoent npm start)
       // domain.active is defined
-      // but it will by undefined once we got rejection
-      // what breaks Sentry. Because we loose context
+      // but it will become undefined once we got rejection
+      // what breaks Sentry because we loose context
       //
-      // I haven't found yet who and why used domain
+      // I haven't found yet who and why use domain
       // maybe we don't need it at all
       // so temporal fix is just disable it
       domain.active = null;
 
       const app = new DialogflowApp({request: req, response: res});
-      raven = app.raven = Raven.Client();
       if (functions.config().sentry) {
+        raven = app.raven = Raven.Client();
         app.raven.config(
           functions.config().sentry.url, {
             sendTimeout: 10,
@@ -56,23 +56,25 @@ module.exports = (actionsMap) => {
         ).install();
       }
 
-      // set user's context to Sentry
-      app.raven.setContext({
-        user: {
-          id: app.getUser() && app.getUser().userId,
-        }
-      });
+      if (app.raven) {
+        // set user's context to Sentry
+        app.raven.setContext({
+          user: {
+            id: app.getUser() && app.getUser().userId,
+          }
+        });
 
-      // action context
-      app.raven.captureBreadcrumb({
-        category: 'handle',
-        message: 'Handling of request',
-        level: 'info',
-        data: {
-          capabilities: app.getSurfaceCapabilities(),
-          sessionData: app.data,
-        },
-      });
+        // action context
+        app.raven.captureBreadcrumb({
+          category: 'handle',
+          message: 'Handling of request',
+          level: 'info',
+          data: {
+            capabilities: app.getSurfaceCapabilities(),
+            sessionData: app.data,
+          },
+        });
+      }
 
       logRequest(app, req);
 
@@ -92,7 +94,9 @@ module.exports = (actionsMap) => {
             warning(`We missed action: "${app.getIntent()}".
                    And got an error:`, err);
 
-            app.raven.captureException(err);
+            if (app.raven) {
+              app.raven.captureException(err);
+            }
           });
       } else {
         dialog.tell(app, strings.errors.device.mediaResponse);
