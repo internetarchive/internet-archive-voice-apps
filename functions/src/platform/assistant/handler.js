@@ -24,6 +24,7 @@ module.exports = (actionsMap) => {
     debug('install sentry (raven)');
     Raven.config(
       functions.config().sentry.url, {
+        sendTimeout: 10,
         captureUnhandledRejections: true,
         release: packageJSON.version,
         tags: {
