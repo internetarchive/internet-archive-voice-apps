@@ -32,7 +32,7 @@ module.exports = {
   },
 
   request: {
-    userAgent: '{{name}} / {{version}} {{platform}}',
+    userAgent: '{{name}} ({{platform}}) / {{version}}',
   },
 
   feeders: {
