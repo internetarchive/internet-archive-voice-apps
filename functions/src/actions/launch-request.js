@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-// const dialog = require('../dialog');
+const dialog = require('../dialog');
 const query = require('../state/query');
 const welcomeStrings = require('../strings').intents.welcome;
 
@@ -22,10 +22,7 @@ function handler (app) {
 
   query.resetSlots(app);
 
-  // TODO:
-  // dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
-
-  app.response.ask(Object.assign({}, welcomeStrings, {speech, reprompt}));
+  dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
 }
 
 module.exports = {

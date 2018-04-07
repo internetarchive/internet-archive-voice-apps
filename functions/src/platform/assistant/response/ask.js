@@ -5,7 +5,7 @@ module.exports = (app) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  (speech, suggestions) => {
+  ({speech, suggestions}) => {
     if (!suggestions) {
       app.ask(speech);
     } else {
