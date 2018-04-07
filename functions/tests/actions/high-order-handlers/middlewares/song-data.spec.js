@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/song-data');
 
-const mockApp = require('../../../_utils/mocking/app');
+const mockApp = require('../../../_utils/mocking/platforms/assistant');
 const mockFeeder = require('../../../_utils/mocking/feeders/albums');
 const mockSelectors = require('../../../_utils/mocking/selectors');
 

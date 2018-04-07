@@ -9,6 +9,7 @@ const sinon = require('sinon');
 module.exports = function mockApp ({
   argument = null,
   lastSeen = Date.now(),
+  isFirstTry = false,
 } = {}) {
   const app = {};
   app.ask = sinon.stub().returns(app);
@@ -31,6 +32,7 @@ module.exports = function mockApp ({
   app.buildMediaResponse = sinon.stub().returns(app);
   app.buildRichResponse = sinon.stub().returns(app);
   app.getLastSeen = sinon.stub().returns(lastSeen);
+  app.isFirstTry = sinon.stub().returns(isFirstTry);
   app.setImage = sinon.stub().returns(app);
   app.setDescription = sinon.stub().returns(app);
   return app;

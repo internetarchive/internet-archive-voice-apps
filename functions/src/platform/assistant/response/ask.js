@@ -5,12 +5,12 @@ module.exports = (app) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  (speech, suggestions) => {
+  ({speech, suggestions}) => {
     if (!suggestions) {
-      app.ask(speech);
+      app.ask(`<speak>${speech}</speak>`);
     } else {
       app.ask(app.buildRichResponse()
-        .addSimpleResponse(speech)
+        .addSimpleResponse(`<speak>${speech}</speak>`)
         .addSuggestions(suggestions));
     }
   };

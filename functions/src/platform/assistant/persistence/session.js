@@ -20,6 +20,10 @@ module.exports = (app) => {
      * @returns {{}}
      */
     getData: (name) => {
+      if (!app.data) {
+        throw new Error('"data" field is missed in app. We can not get user\'s data');
+      }
+
       return app.data[name];
     },
 
@@ -31,6 +35,11 @@ module.exports = (app) => {
      */
     setData: (name, value) => {
       debug(`set attribute ${name} to ${JSON.stringify(value)}`);
+
+      if (!app.data) {
+        throw new Error('"data" field is missed in app. We can not get user\'s data');
+      }
+
       app.data[name] = value;
     },
   };

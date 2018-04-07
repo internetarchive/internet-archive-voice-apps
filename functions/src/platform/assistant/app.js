@@ -2,15 +2,15 @@ const persistance = require('./persistence');
 const response = require('./response');
 
 /**
- * Facade of Alexa App
+ * Facade of Actions of Google App
  */
 class App {
-  constructor (alexa) {
-    this.ctx = alexa;
+  constructor (ctx) {
+    this.ctx = ctx;
 
     // define interfaces
-    this.persist = persistance(alexa);
-    this.response = response(alexa);
+    this.persist = persistance(ctx);
+    this.response = response(ctx);
   }
 
   /**
@@ -19,7 +19,7 @@ class App {
    * @returns {boolean}
    */
   isFirstTry () {
-    return true;
+    return this.ctx.getLastSeen();
   }
 }
 

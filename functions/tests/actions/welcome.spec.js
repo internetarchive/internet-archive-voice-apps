@@ -4,7 +4,7 @@ const rewire = require('rewire');
 const welcome = rewire('../../src/actions/welcome');
 const query = require('../../src/state/query');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 const mockDialog = require('../_utils/mocking/dialog');
 
 describe('actions', () => {

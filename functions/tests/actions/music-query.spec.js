@@ -6,7 +6,7 @@ const sinon = require('sinon');
 const action = rewire('../../src/actions/music-query');
 const query = require('../../src/state/query');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
 const mockMiddlewares = require('../_utils/mocking/middlewares');

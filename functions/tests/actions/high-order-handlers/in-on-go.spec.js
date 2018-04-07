@@ -6,7 +6,7 @@ const playbackFulfillment = rewire('../../../src/actions/high-order-handlers/mid
 const playlist = require('../../../src/state/playlist');
 const query = require('../../../src/state/query');
 
-const mockApp = require('../../_utils/mocking/app');
+const mockApp = require('../../_utils/mocking/platforms/assistant');
 const mockFeeders = require('../../_utils/mocking/feeders');
 const mockAlbumFeeder = require('../../_utils/mocking/feeders/albums');
 const mockDialog = require('../../_utils/mocking/dialog');
