@@ -7,10 +7,10 @@ module.exports = (app) =>
    */
   ({speech, suggestions}) => {
     if (!suggestions) {
-      app.ask(speech);
+      app.ask(`<speak>${speech}</speak>`);
     } else {
       app.ask(app.buildRichResponse()
-        .addSimpleResponse(speech)
+        .addSimpleResponse(`<speak>${speech}</speak>`)
         .addSuggestions(suggestions));
     }
   };
