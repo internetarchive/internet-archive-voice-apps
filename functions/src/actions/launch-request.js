@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 // const dialog = require('../dialog');
-// const query = require('../state/query');
+const query = require('../state/query');
 const welcomeStrings = require('../strings').intents.welcome;
 
 /**
@@ -20,8 +20,9 @@ function handler (app) {
     speech = _.sample(welcomeStrings.acknowledges) + ' ' + welcomeStrings.speech;
   }
 
+  query.resetSlots(app);
+
   // TODO:
-  // query.resetSlots(app);
   // dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
 
   app.response.ask(Object.assign({}, welcomeStrings, {speech, reprompt}));

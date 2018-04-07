@@ -50,6 +50,12 @@ module.exports = {
       if (typeof app === 'string') {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
+
+      if (app.persist) {
+        return app.persist.getData(name) || defaults;
+      }
+
+      // @deprecated
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
@@ -67,6 +73,12 @@ module.exports = {
       if (typeof app === 'string') {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
+
+      if (app.persist) {
+        return app.persist.setData(name, value);
+      }
+
+      // @deprecated
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
