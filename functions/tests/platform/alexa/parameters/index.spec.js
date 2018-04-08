@@ -12,6 +12,7 @@ describe('platform', () => {
       platform = mockPlatform({
         slots: {
           CITY: {value: 'NY'},
+          COLLECTION_ID: {value: 'etree'},
           BAND: {value: 'Grateful Dead'},
         }
       });
@@ -27,6 +28,7 @@ describe('platform', () => {
       it.skip('should be caps agnostic', () => {
         const params = paramsBuilder(platform);
         expect(params.getParam('city')).to.be.equal('NY');
+        expect(params.getParam('collectionId')).to.be.equal('etree');
         expect(params.getParam('year')).to.be.undefined;
       });
     });
