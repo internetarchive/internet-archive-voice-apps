@@ -1,5 +1,7 @@
 const _ = require('lodash');
 
+const camelCaseToScreamingSnake = require('../../../utils/camel-case-to-screaming-snake');
+
 /**
  * Create params layer
  *
@@ -13,5 +15,7 @@ module.exports = (ctx) => ({
    * @param name {String}
    * @returns {String}
    */
-  getParam: (name) => _.get(ctx.event.request.intent.slots, [name, 'value']),
+  getParam: (name) => _.get(ctx.event.request.intent.slots,
+    [camelCaseToScreamingSnake(name), 'value']
+  ),
 });

@@ -19,13 +19,7 @@ describe('platform', () => {
     });
 
     describe('parameters', () => {
-      it('should return parameter by name', () => {
-        const params = paramsBuilder(platform);
-        expect(params.getParam('CITY')).to.be.equal('NY');
-        expect(params.getParam('YEAR')).to.be.undefined;
-      });
-
-      it.skip('should be caps agnostic', () => {
+      it('should be caps agnostic', () => {
         const params = paramsBuilder(platform);
         expect(params.getParam('city')).to.be.equal('NY');
         expect(params.getParam('collectionId')).to.be.equal('etree');
