@@ -1,13 +1,17 @@
+const _ = require('lodash');
+
 /**
  * Create params layer
+ *
  * @param ctx
  * @returns {{getParam}}
  */
 module.exports = (ctx) => ({
   /**
-   * get intent param by name
+   * Get intent param by name
+   *
    * @param name {String}
    * @returns {String}
    */
-  getParam: (name) => ctx.getArgument(name),
+  getParam: (name) => _.get(ctx.event.request.intent.slots, [name, 'value']),
 });
