@@ -33,14 +33,14 @@ describe('platform', () => {
     describe('parameters', () => {
       it('should be caps agnostic', () => {
         const params = paramsBuilder(platform);
-        expect(params.getParam('city')).to.be.equal('NY');
-        expect(params.getParam('collectionId')).to.be.equal('etree');
-        expect(params.getParam('year')).to.be.undefined;
+        expect(params.getByName('city')).to.be.equal('NY');
+        expect(params.getByName('collectionId')).to.be.equal('etree');
+        expect(params.getByName('year')).to.be.undefined;
       });
 
       it('should fetch id defined', () => {
         const params = paramsBuilder(platform);
-        expect(params.getParam('switch')).to.be.equal('true');
+        expect(params.getByName('switch')).to.be.equal('true');
       });
     });
   });

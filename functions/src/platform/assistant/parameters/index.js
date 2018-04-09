@@ -9,5 +9,5 @@ module.exports = (ctx) => ({
    * @param name {String}
    * @returns {String}
    */
-  getParam: (name) => ctx.getArgument(name),
+  getByName: (name) => ctx.getArgument(name),
 });

@@ -20,8 +20,8 @@ describe('platform', () => {
     describe('parameters', () => {
       it('should return parameter by name', () => {
         const params = paramsBuilder(assistant);
-        expect(params.getParam('city')).to.be.equal('NY');
-        expect(params.getParam('year')).to.be.undefined;
+        expect(params.getByName('city')).to.be.equal('NY');
+        expect(params.getByName('year')).to.be.undefined;
       });
     });
   });
