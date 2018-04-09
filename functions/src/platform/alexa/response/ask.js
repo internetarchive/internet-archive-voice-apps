@@ -11,5 +11,5 @@ module.exports = (alexa) =>
    * @param suggestions {Array}
    */
   ({speech, suggestions}) => {
-    alexa.response.speak(speech);
+    alexa.response.speak(speech).listen(speech);
   };

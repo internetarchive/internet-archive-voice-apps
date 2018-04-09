@@ -1,5 +1,6 @@
 const Alexa = require('alexa-sdk');
-const {debug, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
+
+const {debug, info, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const handlersBuilder = require('./handlers-builder');
 
@@ -8,6 +9,8 @@ module.exports = (actions) => {
   debug(`We can handle intents: ${Object.keys(handlers).map(name => `"${name}"`).join(', ')}`);
   return (event, context, callback) => {
     const alexa = Alexa.handler(event, context, callback);
+
+    info('start handling action:', event.request.type);
 
     // TODO: get from process.env
     // alexa.appId

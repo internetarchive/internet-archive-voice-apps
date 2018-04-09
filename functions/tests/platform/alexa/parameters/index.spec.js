@@ -14,6 +14,18 @@ describe('platform', () => {
           CITY: {value: 'NY'},
           COLLECTION_ID: {value: 'etree'},
           BAND: {value: 'Grateful Dead'},
+          SWITCH: {
+            name: 'VALUE',
+            value: 'on',
+            resolutions: {
+              resolutionsPerAuthority: [{
+                authority: 'amzn1.er-qwerty.BOOLEAN',
+                status: {code: 'ER_SUCCESS_MATCH'},
+                values: [{value: {name: 'true', id: 'true'}}]
+              }]
+            },
+            confirmationStatus: 'NONE'
+          }
         }
       });
     });
@@ -24,6 +36,11 @@ describe('platform', () => {
         expect(params.getParam('city')).to.be.equal('NY');
         expect(params.getParam('collectionId')).to.be.equal('etree');
         expect(params.getParam('year')).to.be.undefined;
+      });
+
+      it('should fetch id defined', () => {
+        const params = paramsBuilder(platform);
+        expect(params.getParam('switch')).to.be.equal('true');
       });
     });
   });

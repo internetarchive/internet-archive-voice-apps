@@ -15,7 +15,9 @@ module.exports = (ctx) => ({
    * @param name {String}
    * @returns {String}
    */
-  getParam: (name) => _.get(ctx.event.request.intent.slots,
-    [camelCaseToScreamingSnake(name), 'value']
-  ),
+  getParam: (name) => {
+    const slot = ctx.event.request.intent.slots[camelCaseToScreamingSnake(name)] || {};
+    const id = _.get(slot, ['resolutions', 'resolutionsPerAuthority', 0, 'values', 0, 'value', 'id']);
+    return id || slot.value;
+  }
 });
