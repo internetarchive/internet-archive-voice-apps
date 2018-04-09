@@ -60,7 +60,8 @@ function build ({playlist, strings, query}) {
         debug('keys:', Object.keys(error));
         debug('error', error);
         const context = error.context;
-        const brokenSlots = context.newValues;
+        const brokenSlots = context ? context.newValues : {};
+        const slots = context ? context.slots : {};
 
         // we shouldn't exclude collections and creators
         // because without them we would have too broad scope
@@ -73,7 +74,7 @@ function build ({playlist, strings, query}) {
           // drop any acknowledges before
           speech: [],
           suggestions: [],
-          slots: Object.assign({}, context.slots, {
+          slots: Object.assign({}, slots, {
             suggestions: [],
           }),
         }))
