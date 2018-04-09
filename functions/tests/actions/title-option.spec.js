@@ -3,10 +3,8 @@ const rewire = require('rewire');
 
 const action = rewire('../../src/actions/title-option');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
-
-const playback = require('../../src/state/playback');
 
 describe('actions', () => {
   let dialog;
@@ -19,16 +17,16 @@ describe('actions', () => {
   describe('title option handler', () => {
     it('should store title option', () => {
       let app = mockApp({
-        argument: {
+        getByName: {
           value: 'false',
-        },
+        }
       });
 
-      playback.setMuteSpeechBeforePlayback(app, false);
-      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(false);
       action.handler(app);
       expect(dialog.ask).to.be.called;
-      expect(playback.isMuteSpeechBeforePlayback(app)).to.be.equal(true);
+      expect(app.persist.setData).to.have.been.calledWith(
+        'playback', {muteSpeech: true}
+      );
     });
   });
 });
