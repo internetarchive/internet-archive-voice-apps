@@ -1,10 +1,9 @@
 const mustache = require('mustache');
 
 const dialog = require('../dialog');
+const packageJSON = require('../../package.json');
 const versionStrings = require('../strings').intents.version;
 const {getLastReprompt, getLastSuggestions} = require('../state/dialog');
-
-let versionPackage = require('../package.json');
 
 /**
  * handle version intent
@@ -12,9 +11,9 @@ let versionPackage = require('../package.json');
  * @param app
  */
 function handler (app) {
-  let reprompt = getLastReprompt;
-  let speech = mustache.render(versionStrings.speech, {version: versionPackage.version});
-  let suggestions = getLastSuggestions;
+  let reprompt = getLastReprompt(app);
+  let speech = mustache.render(versionStrings.speech, packageJSON);
+  let suggestions = getLastSuggestions(app);
 
   dialog.ask(app, {speech, reprompt, suggestions});
 }

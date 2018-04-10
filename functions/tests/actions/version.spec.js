@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const version = rewire('../../actions/version');
+const version = rewire('../../src/actions/version');
 
 const mockApp = require('../_utils/mocking/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -11,7 +11,7 @@ describe('actions', () => {
   beforeEach(() => {
     dialog = mockDialog();
     version.__set__('dialog', dialog);
-    version.__set__('versionPackage.version', '1.2.3');
+    version.__set__('packageJSON.version', '1.2.3');
   });
 
   describe('version', () => {
