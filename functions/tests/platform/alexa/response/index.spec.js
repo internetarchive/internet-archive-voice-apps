@@ -18,6 +18,17 @@ describe('platform', () => {
           .calledWith('hello world!');
       });
 
+      it('should hint suggestions', () => {
+        ask(alexa)({
+          speech: 'hello world!',
+          suggestions: ['world one', 'world two'],
+        });
+
+        expect(alexa.response.hint).to.have.been.calledTwice;
+        expect(alexa.response.hint.args[0][0]).to.be.equal('world one');
+        expect(alexa.response.hint.args[1][0]).to.be.equal('world two');
+      });
+
       it('should unpack array of speeaches', () => {
         ask(alexa)({
           speech: [
@@ -53,6 +64,21 @@ describe('platform', () => {
             },
           ],
         });
+
+        expect(alexa.response.speak).to.have.been
+          .calledWith(
+            'Great choice!\n' +
+            `Let's play song Title`
+          );
+
+        expect(alexa.response.audioPlayerPlay).to.have.been
+          .calledWith(
+            'REPLACE_ALL',
+            'https://archive.org/download/song.mp3',
+            'https://archive.org/download/song.mp3',
+            null,
+            0
+          );
 
         // expect(assistant.buildRichResponse).to.have.been.called;
         // expect(assistant.addSimpleResponse).to.have.been.calledTwice;
