@@ -86,6 +86,9 @@ describe('platform', () => {
             null,
             0
           );
+
+        expect(alexa.response.hint).to.have.been.calledOnce;
+        expect(alexa.response.hint.args[0][0]).to.be.equal('next song');
       });
     });
   });

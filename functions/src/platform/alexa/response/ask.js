@@ -18,7 +18,9 @@ module.exports = (alexa) =>
     alexa.response.speak(speech).listen(speech);
 
     if (suggestions) {
-      suggestions.forEach(s => alexa.response.hint(s));
+      suggestions
+        .filter(s => typeof s === 'string')
+        .forEach(s => alexa.response.hint(s));
     }
 
     if (media) {
@@ -34,6 +36,5 @@ module.exports = (alexa) =>
           0
         );
       });
-
     }
   };
