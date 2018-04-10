@@ -5,12 +5,24 @@ module.exports = (app) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({speech, suggestions}) => {
-    if (!suggestions) {
+  ({media, speech, suggestions}) => {
+    if (!suggestions && !media && !Array.isArray(speech)) {
       app.ask(`<speak>${speech}</speak>`);
     } else {
-      app.ask(app.buildRichResponse()
-        .addSimpleResponse(`<speak>${speech}</speak>`)
-        .addSuggestions(suggestions));
+      const response = app.buildRichResponse();
+
+      if (!Array.isArray(speech)) {
+        speech = [speech];
+      }
+
+      speech.forEach(
+        s => response.addSimpleResponse(`<speak>${s}</speak>`)
+      );
+
+      if (suggestions) {
+        response.addSuggestions(suggestions);
+      }
+
+      app.ask(response);
     }
   };
