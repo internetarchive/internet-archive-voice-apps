@@ -1,13 +1,23 @@
 const {expect} = require('chai');
-const index = require('../..');
-const strings = require('../../strings');
+const sinon = require('sinon');
+
+const strings = require('../../src/strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
+let index, configStub, adminInitStub, functions, admin;
+
 describe('integration', () => {
+  before(() => {
+    admin = require('firebase-admin');
+    adminInitStub = sinon.stub(admin, 'initializeApp');
+    functions = require('firebase-functions');
+    configStub = sinon.stub(functions, 'config').returns(require(`../.runtimeconfig.json`));
+    index = require('../..');
+  });
   describe('no-input', () => {
     it('should 1st time', () => {
       const res = new MockResponse();
-      index.playMedia(buildIntentRequest({
+      index.assistant(buildIntentRequest({
         action: 'no-input',
       }), res);
       expect(res.statusCode).to.be.equal(200);
@@ -31,7 +41,7 @@ describe('integration', () => {
           },
         },
       });
-      index.playMedia(req, res);
+      index.assistant(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
       expect(res.speech()).to.contain(
@@ -50,7 +60,7 @@ describe('integration', () => {
           },
         },
       });
-      index.playMedia(req, res);
+      index.assistant(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.false;
       expect(res.speech()).to.contain(strings.intents.noInput[2].speech);
@@ -67,10 +77,15 @@ describe('integration', () => {
           },
         },
       });
-      index.playMedia(req, res);
+      index.assistant(req, res);
       expect(res.statusCode).to.be.equal(200);
       expect(res.userResponse()).to.be.true;
       expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
     });
+  });
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
   });
 });

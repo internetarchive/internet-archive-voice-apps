@@ -2799,7 +2799,10 @@
         "collection": [
             "GratefulDead",
             "etree",
-            "stream_only"
+            "etree",
+            "etree",
+            "stream_only",
+            "fav-crazydiamond"
         ],
         "coverage": "Washington, DC",
         "creator": "Grateful Dead",

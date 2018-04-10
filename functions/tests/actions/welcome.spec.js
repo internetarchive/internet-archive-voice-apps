@@ -1,9 +1,10 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const welcome = rewire('../../actions/welcome');
+const welcome = rewire('../../src/actions/welcome');
+const query = require('../../src/state/query');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 const mockDialog = require('../_utils/mocking/dialog');
 
 describe('actions', () => {
@@ -30,6 +31,15 @@ describe('actions', () => {
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
         .to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
+    });
+
+    it('should reset query slots', () => {
+      let app = mockApp();
+      query.setSlot(app, 'collection', 'etree');
+      query.setSlot(app, 'creator', 'The Grateful Dead');
+      welcome.handler(app);
+      expect(query.hasSlot(app, 'creator')).to.be.false;
+      expect(query.hasSlot(app, 'collection')).to.be.false;
     });
   });
 });

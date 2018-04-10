@@ -1,8 +1,10 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
-const mockApp = require('../_utils/mocking/app');
+
+const action = rewire('../../src/actions/repeat');
+
+const mockApp = require('../_utils/mocking/platforms/assistant');
 const mockDialog = require('../_utils/mocking/dialog');
-const action = rewire('../../actions/repeat');
 
 describe('actions', () => {
   let dialog;

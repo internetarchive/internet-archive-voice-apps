@@ -1,9 +1,8 @@
+const MockAdapter = require('axios-mock-adapter');
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
-fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const albumsProvider = rewire('../../provider/albums');
+const albumsProvider = rewire('../../src/provider/albums');
 
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
@@ -12,16 +11,12 @@ const smokeGetsInYourEyesPlate = require('./fixtures/smoke-gets-in-your-eyes-pla
 describe('collection', () => {
   describe('fetchAlbums', () => {
     beforeEach(() => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, ofARevolution);
     });
 
     it('should fetch items of collection', () => {
-      return albumsProvider.fetchAlbums('OfARevolution', {limit: 3})
+      return albumsProvider.fetchAlbumsByCreatorId('OfARevolution', {limit: 3})
         .then(albums => {
           const items = albums.items;
           expect(items[0]).to.have.property('identifier', 'oar00-09-27');
@@ -35,15 +30,16 @@ describe('collection', () => {
 
   describe('fetchAlbumDetails', () => {
     it('should return list of songs by album id', () => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/metadata/', gratefulAlbum)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, gratefulAlbum);
 
       return albumsProvider.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
         .then(album => {
+          expect(album).to.have.property('collections').to.have.members([
+            'GratefulDead',
+            'etree',
+            'stream_only',
+          ]);
           expect(album).to.have.property('creator', 'Grateful Dead');
           expect(album).to.have.property('year', 1973);
           expect(album).to.have.property('coverage', 'Washington, DC');
@@ -60,12 +56,8 @@ describe('collection', () => {
     });
 
     it('should return list of songs for plate', () => {
-      albumsProvider.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/metadata/', smokeGetsInYourEyesPlate)
-      );
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply(200, smokeGetsInYourEyesPlate);
 
       // plates have many of songs duplications
       // but luckly they don't have title field, we will use it
@@ -75,6 +67,12 @@ describe('collection', () => {
             .to.have.property('songs')
             .to.have.length(2);
 
+          expect(album).to.have.property('collections').to.have.members([
+            'georgeblood',
+            '78rpm_kusf',
+            '78rpm',
+            'audio_music',
+          ]);
           expect(album.songs[0]).to.have.property('title', `(When Your Heart's On Fire) Smoke Gets in Your Eyes`);
           expect(album.songs[1]).to.have.property('title', `The Continental (You Kiss While You're Dancing)`);
         });
@@ -82,12 +80,16 @@ describe('collection', () => {
   });
 
   describe('fetchAlbumsByQuery', () => {
-    let f;
+    let urls;
+
     beforeEach(() => {
-      f = fetchMock
-        .sandbox()
-        .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution);
-      albumsProvider.__set__('fetch', f);
+      urls = [];
+
+      const mock = new MockAdapter(albumsProvider.__get__('axios'));
+      mock.onGet().reply((config) => {
+        urls.push(config.url);
+        return [200, ofARevolution];
+      });
     });
 
     it('should fetch single collection', () => {
@@ -97,12 +99,9 @@ describe('collection', () => {
         })
         .then((res) => {
           expect(res).to.be.ok;
-          expect(f.lastUrl(
-            'begin:https://web.archive.org/advancedsearch.php?q=',
-            'GET'
-          )).to.be.equal(
+          expect(urls[0]).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            'collection:(collection-1)' +
+            'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
@@ -118,12 +117,9 @@ describe('collection', () => {
           collectionId: ['collection-1', 'collection-2'],
         })
         .then((res) => {
-          expect(f.lastUrl(
-            'begin:https://web.archive.org/advancedsearch.php?q=',
-            'GET'
-          )).to.be.equal(
+          expect(urls[0]).to.be.equal(
             'https://web.archive.org/advancedsearch.php?q=' +
-            '(collection:(collection-1) OR collection:(collection-2))' +
+            'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +

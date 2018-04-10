@@ -1,9 +1,11 @@
 # deps
 
-functions/node_modules
+node_modules
 
 
 # dev env
 
 functions/firebase-debug.log
 npm-debug.log
+.DS_Store
+

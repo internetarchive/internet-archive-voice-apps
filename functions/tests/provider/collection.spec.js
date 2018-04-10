@@ -1,9 +1,8 @@
+const MockAdapter = require('axios-mock-adapter');
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
-fetchMock.config.overwriteRoutes = true;
 const rewire = require('rewire');
 
-const collection = rewire('../../provider/collection');
+const collection = rewire('../../src/provider/collection');
 
 const seventyEight = require('./fixtures/georgeblood.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
@@ -11,12 +10,8 @@ const ofARevolution = require('./fixtures/of-a-revolution-items.json');
 describe('collection', () => {
   describe('fetchCollection', () => {
     beforeEach(() => {
-      collection.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/metadata/78rpm', seventyEight)
-      );
+      const mock = new MockAdapter(collection.__get__('axios'));
+      mock.onGet().reply(200, seventyEight);
     });
 
     it('should fetch information about collection', () => {
@@ -32,12 +27,8 @@ describe('collection', () => {
 
   describe('fetchItems', () => {
     beforeEach(() => {
-      collection.__set__(
-        'fetch',
-        fetchMock
-          .sandbox()
-          .get('begin:https://web.archive.org/advancedsearch.php?q=', ofARevolution)
-      );
+      const mock = new MockAdapter(collection.__get__('axios'));
+      mock.onGet().reply(200, ofARevolution);
     });
 
     it('should fetch items of collection', () => {

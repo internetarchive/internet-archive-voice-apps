@@ -1,11 +1,38 @@
 # Internet Archive Google Action [![Build Status](https://travis-ci.org/internetarchive/internet-archive-google-action.svg?branch=master)](https://travis-ci.org/internetarchive/internet-archive-google-action) [![Coverage Status](https://coveralls.io/repos/github/internetarchive/internet-archive-google-action/badge.svg?branch=master)](https://coveralls.io/github/internetarchive/internet-archive-google-action?branch=master)
 
-## Run Local
+## Run Local Server
 
 Run server local with colorful logs
 
-```
+```bash
+npm install -g firebase-tools
+firebase init
+firebase use --add (and choose your own firebase project)
 DEBUG=ia:* npm start
+```
+
+### Create Dev/Draft copy of Dialog Flow
+
+TODO: [issue #148](https://github.com/internetarchive/internet-archive-google-action/issues/148)
+
+### Connect webhook to Dialog Flow
+
+To expose server to google assistant use [ngrok](https://ngrok.com/)
+its free plan should be enough.
+
+To publish 5000 port use:
+
+```bash
+ngrok http 5000
+```
+
+you should find url `https://<id>.ngrok.io/`.
+
+After that you should use this url in your Dialog Flow draft copy
+of our App:
+
+```bash
+https://<id>.ngrok.io/internet-archive/us-central1/playMedia
 ```
 
 ## How to make contributions?
@@ -43,5 +70,5 @@ npm run lint -- --fix
 and link the addressed issue.
 
 _Also it could be good practice to create your Pull Request earlier,
-but add `WIP: ` at the beginning of its name! This way other developers
+but add `WIP:` at the beginning of its name! This way other developers
 could see what are you working right now._

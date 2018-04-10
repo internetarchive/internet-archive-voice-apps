@@ -46,20 +46,20 @@ module.exports = {
     '{{coverage}} - good place!',
     '{{coverage}} {{year}} - great choice!',
     '{{year}} - it was excellent year!',
-    'Ok! Lets go with {{__resolvers.creator.title}} band!',
-    `You've selected {{__resolvers.collection.title}}`,
+    'Ok! Lets go with {{creator.title}} band!',
+    `You've selected {{collection.title}}`,
   ],
 
   prompts: [{
     /**
      * prompt for a single slot
      */
-    requirements: [
+    confirm: [
       'collection'
     ],
 
-    prompts: [
-      'Would you like to listen to music from our collections of {{__resolvers.short-options.suggestions}}?',
+    speech: [
+      'Would you like to listen to music from our collections of {{short-options.suggestions}}?',
     ],
 
     /**
@@ -73,23 +73,23 @@ module.exports = {
     /**
      * prompt for a single slot
      */
-    requirements: [
+    confirm: [
       'creatorId'
     ],
 
-    prompts: [
-      'What artist would you like to listen to, e.g. {{__resolvers.short-options.suggestions}}?',
+    speech: [
+      'What artist would you like to listen to, e.g. {{short-options.suggestions}}?',
     ],
   }, {
     /**
      * prompt for a single slot
      */
-    requirements: [
+    confirm: [
       'coverage',
       'year',
     ],
 
-    prompts: [
+    speech: [
       'Do you have a specific city and year in mind, like {{suggestions.0}}, or would you like me to play something randomly?',
     ],
   }],
