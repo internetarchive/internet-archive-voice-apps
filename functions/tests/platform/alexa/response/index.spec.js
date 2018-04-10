@@ -18,15 +18,16 @@ describe('platform', () => {
           .calledWith('hello world!');
       });
 
-      it('should hint suggestions', () => {
+      // I received error, when tried to send more then one hint:
+      // The skill's response must not contain more than 1 Hint directive(s) for this request type.
+      it('should hint suggestions. And only one because of Alexa limitation', () => {
         ask(alexa)({
           speech: 'hello world!',
           suggestions: ['world one', 'world two'],
         });
 
-        expect(alexa.response.hint).to.have.been.calledTwice;
+        expect(alexa.response.hint).to.have.been.calledOnce;
         expect(alexa.response.hint.args[0][0]).to.be.equal('world one');
-        expect(alexa.response.hint.args[1][0]).to.be.equal('world two');
       });
 
       it('should unpack array of speeaches', () => {

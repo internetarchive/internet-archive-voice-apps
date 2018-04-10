@@ -18,9 +18,12 @@ module.exports = (alexa) =>
     alexa.response.speak(speech).listen(speech);
 
     if (suggestions) {
-      suggestions
-        .filter(s => typeof s === 'string')
-        .forEach(s => alexa.response.hint(s));
+      const textSuggestions = suggestions
+        .filter(s => typeof s === 'string');
+
+      if (textSuggestions.length > 0) {
+        alexa.response.hint(textSuggestions[0]);
+      }
     }
 
     if (media) {
