@@ -10,7 +10,7 @@ module.exports = (alexa) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({speech, suggestions}) => {
+  ({media, speech, suggestions}) => {
     if (!Array.isArray(speech)) {
       speech = [speech];
     }
@@ -20,6 +20,20 @@ module.exports = (alexa) =>
     if (suggestions) {
       suggestions.forEach(s => alexa.response.hint(s));
     }
-    //alexa.response.cardRenderer(cardTitle, cardContent, null);
-    //alexa.response.audioPlayerPlay(behavior, url, token, expectedPreviousToken, offsetInMilliseconds);
+
+    if (media) {
+      media.forEach(m => {
+        alexa.response.cardRenderer(m.name, m.description, m.imageURL);
+        alexa.response.audioPlayerPlay(
+          // behavior,
+          'REPLACE_ALL',
+          m.contentURL,
+          // This token cannot exceed 1024 characters
+          m.contentURL,
+          null,
+          0
+        );
+      });
+
+    }
   };

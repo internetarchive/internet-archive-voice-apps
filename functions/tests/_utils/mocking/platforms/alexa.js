@@ -21,6 +21,8 @@ module.exports = ({deviceId = 'one-device', slots = {}} = {}) => {
     },
     listen: sinon.spy(),
     response: {
+      audioPlayerPlay: sinon.stub().callsFake(() => alexa),
+      cardRenderer: sinon.stub().callsFake(() => alexa),
       speak: sinon.stub().callsFake(() => alexa),
       hint: sinon.stub().callsFake(() => alexa),
     }
