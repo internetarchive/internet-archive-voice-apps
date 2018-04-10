@@ -19,6 +19,10 @@ module.exports = ({deviceId = 'one-device', slots = {}} = {}) => {
         },
       },
     },
+    listen: sinon.spy(),
+  };
+  alexa.response = {
+    speak: sinon.stub().returns(alexa),
   };
   _.set(alexa, 'event.context.System.device.deviceId', deviceId);
   return alexa;
