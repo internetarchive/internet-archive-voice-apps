@@ -11,6 +11,22 @@ module.exports = (app) =>
     } else {
       const response = app.buildRichResponse();
 
+      let mediaObjects = [];
+      if (media) {
+        mediaObjects = media.map(m =>
+          app.buildMediaObject(m.name, m.contentURL)
+            .setDescription(m.description)
+            .setImage(m.imageURL)
+        );
+      }
+
+      if (mediaObjects) {
+        response.addMediaResponse(
+          app.buildMediaResponse()
+            .addMediaObjects(mediaObjects)
+        );
+      }
+
       if (!Array.isArray(speech)) {
         speech = [speech];
       }
@@ -20,7 +36,14 @@ module.exports = (app) =>
       );
 
       if (suggestions) {
-        response.addSuggestions(suggestions);
+        const simpleSuggestions = suggestions.filter(s => typeof s === 'string');
+        if (simpleSuggestions) {
+          response.addSuggestions(simpleSuggestions);
+        }
+        const suggestingsWithLink = suggestions.filter(s => s.url);
+        suggestingsWithLink.forEach(
+          s => response.addSuggestionLink(s.title, s.url)
+        );
       }
 
       app.ask(response);

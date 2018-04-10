@@ -50,7 +50,7 @@ describe('platform', () => {
           );
         });
 
-        it.skip('should start playing audio file from passed url', () => {
+        it('should start playing audio file from passed url', () => {
           ask(assistant)({
             speech: [
               'Great choice!',
@@ -59,8 +59,8 @@ describe('platform', () => {
             media: [{
               name: 'song title',
               description: 'some description',
-              mediaUrl: 'https://archive.org/download/song.mp3',
-              imageUrl: 'https://archive.org/download/image.jpg',
+              contentURL: 'https://archive.org/download/song.mp3',
+              imageURL: 'https://archive.org/download/image.jpg',
             }],
             suggestions: [
               'next song',
@@ -72,16 +72,16 @@ describe('platform', () => {
           });
 
           expect(assistant.buildRichResponse).to.have.been.called;
-          expect(assistant.addSimpleResponse).to.have.been.calledTwice();
-          expect(assistant.addSimpleResponse.args[0][0]).to.be.equal('Great choice!');
-          expect(assistant.addSimpleResponse.args[1][0]).to.be.equal(`Let's play song Title`);
+          expect(assistant.addSimpleResponse).to.have.been.calledTwice;
+          expect(assistant.addSimpleResponse.args[0][0]).to.be.equal('<speak>Great choice!</speak>');
+          expect(assistant.addSimpleResponse.args[1][0]).to.be.equal(`<speak>Let's play song Title</speak>`);
           expect(assistant.addMediaResponse).to.have.been.called;
           expect(assistant.buildMediaResponse).to.have.been.called;
           expect(assistant.addMediaObjects).to.have.been.called;
-          expect(assistant.buildMediaObject).to.have.been.calledWith('https://archive.org/download/song.mp3');
+          expect(assistant.buildMediaObject).to.have.been.calledWith('song title', 'https://archive.org/download/song.mp3');
           expect(assistant.setDescription).to.have.been.calledWith('some description');
           expect(assistant.setImage).to.have.been.calledWith('https://archive.org/download/image.jpg');
-          expect(assistant.addSuggestions).to.have.been.calledWith('next song');
+          expect(assistant.addSuggestions).to.have.been.calledWith(['next song']);
           expect(assistant.addSuggestionLink).to.have.been.calledWith(
             'on Archive.org',
             'https://archive.org/details/etree'
