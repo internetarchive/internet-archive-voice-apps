@@ -22,11 +22,20 @@ module.exports = () => (args) => {
   // with resolvers and render-speech
   const description = mustache.render(strings.description, slots);
 
+  if (mute) {
+    const wordless = selectors.find(strings.wordless, slots);
+    if (wordless && wordless.speech) {
+      speech = [].concat(speech, wordless.speech);
+    }
+  } else {
+    speech = [].concat(speech, description);
+  }
+
   return Promise.resolve(Object.assign({},
     args,
     {
       slots,
-      speech: [].concat(speech, mute ? strings.speech : description),
+      speech,
       description,
     }));
 };

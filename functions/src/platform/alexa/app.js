@@ -12,6 +12,7 @@ class App {
     // define interfaces
     this.params = params(ctx);
     this.persist = persistance(ctx);
+    this.platform = 'alexa';
     this.response = response(ctx);
   }
 

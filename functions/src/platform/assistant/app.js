@@ -10,6 +10,7 @@ class App {
 
     // define interfaces
     this.persist = persistance(ctx);
+    this.platform = 'assistant';
     this.response = response(ctx);
   }
 

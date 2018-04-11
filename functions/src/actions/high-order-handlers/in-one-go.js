@@ -1,4 +1,3 @@
-const whichPlatform = require('../../platform/which');
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const acknowledge = require('./middlewares/acknowledge');
@@ -53,7 +52,7 @@ function build ({playlist, strings, query}) {
       .then(ctx =>
         Object.assign({}, ctx, {
           slots: Object.assign(
-            {}, ctx.slogs, {platform: whichPlatform()}
+            {}, ctx.slots, {platform: app.platform || 'assistant'}
           )
         })
       )
