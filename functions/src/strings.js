@@ -403,6 +403,10 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    version: {
+      speech: 'Version is {{version}}.',
+    },
+
     welcome: {
       acknowledges: [
         'Welcome to music at the Internet Archive.'
