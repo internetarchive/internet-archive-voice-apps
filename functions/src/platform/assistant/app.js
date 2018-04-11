@@ -1,3 +1,4 @@
+const params = require('./parameters');
 const persistance = require('./persistence');
 const response = require('./response');
 
@@ -8,9 +9,11 @@ class App {
   constructor (ctx) {
     this.ctx = ctx;
 
-    // define interfaces
-    this.persist = persistance(ctx);
     this.platform = 'assistant';
+
+    // define interfaces
+    this.params = params(ctx);
+    this.persist = persistance(ctx);
     this.response = response(ctx);
   }
 
