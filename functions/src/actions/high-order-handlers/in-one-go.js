@@ -49,8 +49,14 @@ function build ({playlist, strings, query}) {
       .then(copyDefaultsToSlots())
       // expose slots
       .then(ctx => Object.assign({}, ctx, {slots: ctx.query.getSlots(ctx.app)}))
-      // expose platform
-      .then(ctx => Object.assign({}, ctx, {platform: whichPlatform()}))
+      // expose current platform to the slots
+      .then(ctx =>
+        Object.assign({}, ctx, {
+          slots: Object.assign(
+            {}, ctx.slogs, {platform: whichPlatform()}
+          )
+        })
+      )
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
       .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
