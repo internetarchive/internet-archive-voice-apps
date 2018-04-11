@@ -1,3 +1,4 @@
+const whichPlatform = require('../../platform/which');
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const acknowledge = require('./middlewares/acknowledge');
@@ -47,7 +48,9 @@ function build ({playlist, strings, query}) {
     return copyArgumentToSlots()({app, slotScheme, playlist, query})
       .then(copyDefaultsToSlots())
       // expose slots
-      .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
+      .then(ctx => Object.assign({}, ctx, {slots: ctx.query.getSlots(ctx.app)}))
+      // expose platform
+      .then(ctx => Object.assign({}, ctx, {platform: whichPlatform()}))
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
       .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
