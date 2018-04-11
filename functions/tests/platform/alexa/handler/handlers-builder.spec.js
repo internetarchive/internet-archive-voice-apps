@@ -56,8 +56,24 @@ describe('platform', () => {
         ]));
 
         const wrappedNoInputHandler = res['NoInput'];
-        wrappedNoInputHandler.call(alexa);
-        expect(alexa.emit).to.have.been.calledWith(':responseReady');
+        return wrappedNoInputHandler.call(alexa)
+          .then(() => {
+            expect(alexa.emit).to.have.been.calledWith(':responseReady');
+          });
+      });
+
+      it('should wait until promise of handler will be solve before emit responseReady', () => {
+        const welcomeHandler = sinon.stub().returns(Promise.resolve());
+        const res = builder(new Map([
+          ['welcome', welcomeHandler],
+        ]));
+
+        const wrappedWelcomeHandler = res['Welcome'];
+        const p = wrappedWelcomeHandler.call(alexa);
+        expect(alexa.emit).to.not.have.been.called;
+        return p.then(() => {
+          expect(alexa.emit).to.have.been.calledWith(':responseReady');
+        });
       });
     });
   });
