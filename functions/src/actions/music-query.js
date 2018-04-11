@@ -57,6 +57,14 @@ function handler (app) {
   if (complete) {
     debug('pipeline playback');
     return feederFromSlotScheme()({app, newValues, playlist, slots, slotScheme, query})
+      // expose current platform to the slots
+      .then(ctx =>
+        Object.assign({}, ctx, {
+          slots: Object.assign(
+            {}, ctx.slots, {platform: app.platform || 'assistant'}
+          )
+        })
+      )
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
