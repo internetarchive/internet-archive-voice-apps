@@ -91,21 +91,6 @@ function playSong (app, options) {
   });
 }
 
-/**
- * Process options before play audio
- *
- * @param options
- * @param muteSpeech {Boolean} - Mute speech before play audio
- * @returns {Object}
- */
-function processOptions (options, {muteSpeech}) {
-  const strings = selectors.find(availableStrings, options);
-  return Object.assign({}, options,
-    {speech: muteSpeech && strings.speech}
-  );
-}
-
 module.exports = {
   playSong,
-  processOptions,
 };
