@@ -8,18 +8,26 @@ const sinon = require('sinon');
  * @param slots
  * @returns {{attributes: {}, emit: *}}
  */
-module.exports = ({deviceId = 'one-device', slots = {}} = {}) => {
+module.exports = ({deviceId = 'one-device', error = null, reason = null, slots = {}} = {}) => {
   const alexa = {
     attributes: {},
+
     emit: sinon.spy(),
+
     event: {
       request: {
+        error,
+
         intent: {
           slots,
         },
+
+        reason,
       },
     },
+
     listen: sinon.spy(),
+
     response: {
       audioPlayerPlay: sinon.stub().callsFake(() => alexa),
       cardRenderer: sinon.stub().callsFake(() => alexa),

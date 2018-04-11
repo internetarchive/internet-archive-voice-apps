@@ -10,6 +10,10 @@ describe('platform', () => {
 
     beforeEach(() => {
       platform = mockPlatform({
+        error: {
+          message: 'An exception occurred while dispatching the request to the skill.',
+        },
+
         slots: {
           CITY: {value: 'NY'},
           COLLECTION_ID: {value: 'etree'},
@@ -26,7 +30,9 @@ describe('platform', () => {
             },
             confirmationStatus: 'NONE'
           }
-        }
+        },
+
+        reason: 'ERROR',
       });
     });
 
@@ -41,6 +47,17 @@ describe('platform', () => {
       it('should fetch id defined', () => {
         const params = paramsBuilder(platform);
         expect(params.getByName('switch')).to.be.equal('true');
+      });
+
+      it('should get reason of intent', () => {
+        const params = paramsBuilder(platform);
+        expect(params.getByName('reason')).to.be.equal('ERROR');
+      });
+
+      it('should get error of intent', () => {
+        const params = paramsBuilder(platform);
+        expect(params.getByName('error'))
+          .to.have.property('message', 'An exception occurred while dispatching the request to the skill.');
       });
     });
   });
