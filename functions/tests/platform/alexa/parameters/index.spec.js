@@ -59,6 +59,11 @@ describe('platform', () => {
         expect(params.getByName('error'))
           .to.have.property('message', 'An exception occurred while dispatching the request to the skill.');
       });
+
+      it(`should return undefined if we don't have slots`, () => {
+        const params = paramsBuilder(mockPlatform({slots: null}));
+        expect(params.getByName('id')).to.be.undefined;
+      });
     });
   });
 });

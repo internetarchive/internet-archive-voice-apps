@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const ask = require('../../../../src/platform/assistant/response/ask');
+const ask = require('../../../../src/platform/assistant/response');
 const assistantMock = require('../../../_utils/mocking/platforms/assistant');
 
 describe('platform', () => {

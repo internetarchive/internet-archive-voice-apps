@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 
 const alexaMock = require('../../../_utils/mocking/platforms/alexa');
-const ask = require('../../../../src/platform/alexa/response/ask');
+const ask = require('../../../../src/platform/alexa/response');
 
 describe('platform', () => {
   describe('assistant', () => {

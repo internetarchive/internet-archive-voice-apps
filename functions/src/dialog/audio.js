@@ -71,7 +71,7 @@ function playSong (app, options) {
     speech = description;
   }
 
-  app.response.ask({
+  app.response({
     speech,
 
     media: [{
