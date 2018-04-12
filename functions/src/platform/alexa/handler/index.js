@@ -24,7 +24,7 @@ module.exports = (actions) => {
 
     // TODO: get from process.env
     // alexa.appId
-    // alexa.dynamoDB
+    alexa.dynamoDBTableName = 'InternetArchiveSessions';
     alexa.registerHandlers(handlers);
 
     try {
