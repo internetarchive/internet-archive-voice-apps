@@ -4,7 +4,7 @@ const alexaMock = require('../../../_utils/mocking/platforms/alexa');
 const ask = require('../../../../src/platform/alexa/response');
 
 describe('platform', () => {
-  describe('assistant', () => {
+  describe('alexa', () => {
     describe('response', () => {
       let alexa;
 
@@ -43,6 +43,30 @@ describe('platform', () => {
             `Well, there ain't nobody safer than someone who doesn't care.\n` +
             `And it isn't even lonely when no one's ever there.`
           );
+      });
+
+      it('should stop listen when we start playing the audio', () => {
+        ask(alexa)({
+          speech: [
+            'Great choice!',
+            `Let's play song Title`,
+          ],
+          media: [{
+            name: 'song title',
+            description: 'some description',
+            contentURL: 'https://archive.org/download/song.mp3',
+            imageURL: 'https://archive.org/download/image.jpg',
+          }],
+          suggestions: [
+            'next song',
+            {
+              url: 'https://archive.org/details/etree',
+              title: 'on Archive.org'
+            },
+          ],
+        });
+
+        expect(alexa.response.listen).to.have.not.been.called;
       });
 
       it('should start playing audio file from passed url', () => {

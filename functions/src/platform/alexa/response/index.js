@@ -20,7 +20,7 @@ module.exports = (alexa) =>
     speech = speech.join('\n');
 
     debug('speak', speech);
-    alexa.response.speak(speech).listen(speech);
+    alexa.response.speak(speech);
 
     if (suggestions) {
       const textSuggestions = suggestions
@@ -48,5 +48,7 @@ module.exports = (alexa) =>
           0
         );
       });
+    } else {
+      alexa.response.listen(speech);
     }
   };

@@ -26,13 +26,12 @@ module.exports = ({deviceId = 'one-device', error = null, reason = null, slots =
       },
     },
 
-    listen: sinon.spy(),
-
     response: {
-      audioPlayerPlay: sinon.stub().callsFake(() => alexa),
-      cardRenderer: sinon.stub().callsFake(() => alexa),
-      speak: sinon.stub().callsFake(() => alexa),
-      hint: sinon.stub().callsFake(() => alexa),
+      audioPlayerPlay: sinon.stub().callsFake(() => alexa.response),
+      cardRenderer: sinon.stub().callsFake(() => alexa.response),
+      hint: sinon.stub().callsFake(() => alexa.response),
+      listen: sinon.spy(),
+      speak: sinon.stub().callsFake(() => alexa.response),
     }
   };
   _.set(alexa, 'event.context.System.device.deviceId', deviceId);
