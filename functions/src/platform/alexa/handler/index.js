@@ -10,7 +10,10 @@ module.exports = (actions) => {
   return (event, context, callback) => {
     const alexa = Alexa.handler(event, context, callback);
 
-    info('start handling action:', event.request.type);
+    info('request type:', event.request.type);
+    if (event.request.intent) {
+      info('request intent:', event.request.intent.name);
+    }
 
     // TODO: get from process.env
     // alexa.appId
