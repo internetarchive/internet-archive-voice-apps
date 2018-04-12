@@ -62,4 +62,5 @@ function handleFinished (app) {
 
 module.exports = {
   handler,
+  handleFinished,
 };
