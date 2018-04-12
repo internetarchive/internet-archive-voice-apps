@@ -13,6 +13,13 @@ module.exports = (actions) => {
     info('request type:', event.request.type);
     if (event.request.intent) {
       info('request intent:', event.request.intent.name);
+
+      // if intent starts with AMAZON we will cut this head
+      const parts = event.request.intent.name.split('.');
+      if (parts[0] === 'AMAZON') {
+        debug('cut AMAZON head from intent');
+        event.request.intent.name = parts.slice(1).join('.');
+      }
     }
 
     // TODO: get from process.env
