@@ -1,5 +1,5 @@
-const persistance = require('./persistence');
 const params = require('./parameters');
+const persistance = require('./persistence');
 const response = require('./response');
 
 /**
@@ -8,6 +8,8 @@ const response = require('./response');
 class App {
   constructor (ctx) {
     this.ctx = ctx;
+
+    this.platform = 'alexa';
 
     // define interfaces
     this.params = params(ctx);

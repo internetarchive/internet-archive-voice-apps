@@ -36,14 +36,17 @@ module.exports = {
       // we can choose any sound from here
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
-      speech: `
-        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
-               clipBegin="4.5s"
-               clipEnd="5.5s"
-               soundLevel="10db">
-          <desc>Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}</desc>
-        </audio>
-      `,
+      wordless: [{
+        condition: 'platform == "assistant"',
+        speech: `
+          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+                 clipBegin="4.5s"
+                 clipEnd="5.5s"
+                 soundLevel="10db">
+            <desc>Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}</desc>
+          </audio>
+        `,
+      }],
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
     }, {
@@ -55,14 +58,17 @@ module.exports = {
       // we can choose any sound from here
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
-      speech: `
-        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
-               clipBegin="4.5s"
-               clipEnd="5.5s"
-               soundLevel="10db">
-          <desc>Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}</desc>
-        </audio>
-      `,
+      wordless: [{
+        condition: 'platform == "assistant"',
+        speech: `
+          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+                 clipBegin="4.5s"
+                 clipEnd="5.5s"
+                 soundLevel="10db">
+            <desc>Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}</desc>
+          </audio>
+        `,
+      }],
       title: '{{title}} by {{creator}} {{year}}',
       suggestionLink: 'on Archive.org',
     }],
@@ -120,9 +126,9 @@ module.exports = {
       },
 
       /**
-         * When user missed the available range
-         * we should help them to find alternative.
-         */
+       * When user missed the available range
+       * we should help them to find alternative.
+       */
       repair: {
         speech: [
           `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,

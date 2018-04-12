@@ -47,7 +47,15 @@ function build ({playlist, strings, query}) {
     return copyArgumentToSlots()({app, slotScheme, playlist, query})
       .then(copyDefaultsToSlots())
       // expose slots
-      .then(context => Object.assign({}, context, {slots: context.query.getSlots(context.app)}))
+      .then(ctx => Object.assign({}, ctx, {slots: ctx.query.getSlots(ctx.app)}))
+      // expose current platform to the slots
+      .then(ctx =>
+        Object.assign({}, ctx, {
+          slots: Object.assign(
+            {}, ctx.slots, {platform: app.platform || 'assistant'}
+          )
+        })
+      )
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
       .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
@@ -60,7 +68,8 @@ function build ({playlist, strings, query}) {
         debug('keys:', Object.keys(error));
         debug('error', error);
         const context = error.context;
-        const brokenSlots = context.newValues;
+        const brokenSlots = context ? context.newValues : {};
+        const slots = context ? context.slots : {};
 
         // we shouldn't exclude collections and creators
         // because without them we would have too broad scope
@@ -73,7 +82,7 @@ function build ({playlist, strings, query}) {
           // drop any acknowledges before
           speech: [],
           suggestions: [],
-          slots: Object.assign({}, context.slots, {
+          slots: Object.assign({}, slots, {
             suggestions: [],
           }),
         }))

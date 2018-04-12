@@ -10,11 +10,21 @@ module.exports = (actions) => {
   return (event, context, callback) => {
     const alexa = Alexa.handler(event, context, callback);
 
-    info('start handling action:', event.request.type);
+    info('request type:', event.request.type);
+    if (event.request.intent) {
+      info('request intent:', event.request.intent.name);
+
+      // if intent starts with AMAZON we will cut this head
+      const parts = event.request.intent.name.split('.');
+      if (parts[0] === 'AMAZON') {
+        debug('cut AMAZON head from intent');
+        event.request.intent.name = parts.slice(1).join('.');
+      }
+    }
 
     // TODO: get from process.env
     // alexa.appId
-    // alexa.dynamoDB
+    alexa.dynamoDBTableName = 'InternetArchiveSessions';
     alexa.registerHandlers(handlers);
 
     try {

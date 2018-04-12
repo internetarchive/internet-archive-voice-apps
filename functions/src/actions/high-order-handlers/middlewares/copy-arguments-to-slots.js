@@ -19,7 +19,12 @@ module.exports = () =>
     debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {
-        const value = app.getArgument(slotName);
+        let value;
+        if (app.getArgument) {
+          value = app.getArgument(slotName);
+        } else {
+          value = app.params.getByName(slotName);
+        }
         if (value) {
           query.setSlot(app, slotName, value);
           newValues = Object.assign({}, newValues, {[slotName]: value});

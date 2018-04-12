@@ -46,5 +46,5 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     suggestions = suggestions.map(s => s.toString());
   }
 
-  app.response.ask({speech, reprompt, suggestions});
+  app.response({speech, reprompt, suggestions});
 };

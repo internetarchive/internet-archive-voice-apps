@@ -38,6 +38,14 @@ function handler (app) {
 function handleFinished (app) {
   debug('handle finished');
   return feederFromPlaylist()({app, query, playlist})
+    // expose current platform to the slots
+    .then(ctx =>
+      Object.assign({}, ctx, {
+        slots: Object.assign(
+          {}, ctx.slots, {platform: app.platform || 'assistant'}
+        )
+      })
+    )
     .then(nextSong())
     .then(context => {
       debug('we got new song and now could play it');
@@ -54,4 +62,5 @@ function handleFinished (app) {
 
 module.exports = {
   handler,
+  handleFinished,
 };

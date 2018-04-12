@@ -24,56 +24,73 @@ function playSong (app, options) {
   debug(`Play song: ${util.inspect(options)}`);
   const strings = selectors.find(availableStrings, options);
   const description = options.description || mustache.render(strings.description, options);
-  let response = app.buildRichResponse();
-  const {speech} = options;
 
-  if (speech) {
-    response = response.addSimpleResponse(`
-      <speak>
-        ${mustache.render(speech, Object.assign({}, options, {description}))}
-      </speak>`
-    );
-  } else {
-    response = response.addSimpleResponse(description);
+  if (!app.response) {
+    // @deprecated
+    let response = app.buildRichResponse();
+    let {speech} = options;
+
+    if (speech) {
+      response = response.addSimpleResponse(`
+        <speak>
+          ${mustache.render(speech, Object.assign({}, options, {description}))}
+        </speak>`
+      );
+    } else {
+      response = response.addSimpleResponse(description);
+    }
+
+    response = response
+      .addMediaResponse(app.buildMediaResponse()
+        .addMediaObjects([app.buildMediaObject(
+          mustache.render(strings.title, options),
+          options.audioURL
+        )
+          .setDescription(description)
+          .setImage(
+            options.imageURL || config.media.DEFAULT_SONG_IMAGE,
+            app.Media.ImageType.LARGE
+          )
+        ])
+      )
+      .addSuggestions(options.suggestions)
+      .addSuggestionLink(
+        mustache.render(strings.suggestionLink, options),
+        mustache.render(config.endpoints.ALBUM_DETAIL, options)
+      );
+
+    app.ask(response);
+    return;
   }
 
-  response = response
-    .addMediaResponse(app.buildMediaResponse()
-      .addMediaObjects([app.buildMediaObject(
-        mustache.render(strings.title, options),
-        options.audioURL
-      )
-        .setDescription(description)
-        .setImage(
-          options.imageURL || config.media.DEFAULT_SONG_IMAGE,
-          app.Media.ImageType.LARGE
-        )
-      ])
-    )
-    .addSuggestions(options.suggestions)
-    .addSuggestionLink(
-      mustache.render(strings.suggestionLink, options),
-      mustache.render(config.endpoints.ALBUM_DETAIL, options)
-    );
+  let {speech} = options;
 
-  app.ask(response);
-}
+  if (speech) {
+    speech = mustache.render(speech, Object.assign({}, options, {description}));
+  } else {
+    speech = description;
+  }
 
-/**
- * Process options before play audio
- *
- * @param options
- * @param muteSpeech {Boolean} - Mute speech before play audio
- * @returns {Object}
- */
-function processOptions (options, {muteSpeech}) {
-  const strings = selectors.find(availableStrings, options);
-  return Object.assign({}, options,
-    {speech: muteSpeech && strings.speech}
-  );
+  app.response({
+    speech,
+
+    media: [{
+      name: mustache.render(strings.title, options),
+      description,
+      contentURL: options.audioURL,
+      imageURL: options.imageURL || config.media.DEFAULT_SONG_IMAGE,
+    }],
+
+    suggestions: [
+      'next song',
+      {
+        url: mustache.render(config.endpoints.ALBUM_DETAIL, options),
+        title: mustache.render(strings.suggestionLink, options),
+      },
+    ],
+  });
 }
 
 module.exports = {
   playSong,
-  processOptions,
 };
