@@ -3,6 +3,7 @@ const {debug, warning} = require('../utils/logger')('ia:actions:media-status-upd
 const dialog = require('../dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
+const strings = require('../strings');
 
 const feederFromPlaylist = require('./high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
@@ -60,7 +61,7 @@ function handleFinished (app) {
     .then(playSong())
     .catch(context => {
       debug('It could be an error:', context);
-      return dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
+      return dialog.ask(app, strings.events.playlistIsEnded);
     });
 }
 

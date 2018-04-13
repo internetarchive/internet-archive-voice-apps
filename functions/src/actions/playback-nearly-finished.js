@@ -1,5 +1,6 @@
 const dialog = require('../dialog');
 const playlist = require('../state/playlist');
+const strings = require('../strings');
 const {debug} = require('../utils/logger')('ia:actions:playback-nearly-finished');
 
 const playSong = require('./high-order-handlers/middlewares/play-song');
@@ -15,7 +16,7 @@ function handler (app) {
     .then(playSong({mediaResponseOnly: true}))
     .catch(context => {
       debug('It could be an error:', context);
-      return dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
+      return dialog.ask(app, strings.events.playlistIsEnded);
     });
 }
 
