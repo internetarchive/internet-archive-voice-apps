@@ -35,16 +35,11 @@ function handler (app) {
           return dialog.ask(app, strings.intents.resume.fail);
         });
     }, () => {
-      dialog.ask(app, {
-        speech: [
-          strings.intents.resume.empty.speech,
-          dialogState.getLastReprompt(app),
-        ],
-
-        reprompt: strings.intents.resume.empty.reprompt || dialogState.getLastReprompt(app),
-
-        suggestions: [].concat(dialogState.getLastSuggestions(app)/*, strings.intents.resume.empty.suggestions */),
-      });
+      dialog.ask(app, dialog.merge({
+        speech: dialogState.getLastReprompt(app),
+        reprompt: dialogState.getLastReprompt(app),
+        suggestions: dialogState.getLastSuggestions(app),
+      }, strings.intents.resume.empty));
     });
 }
 
