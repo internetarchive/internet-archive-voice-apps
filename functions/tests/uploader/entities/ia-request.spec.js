@@ -10,7 +10,6 @@ const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
 const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
 const getEntitiesFromDF = require('./fixtures/get-entities-from-df.json');
 const successFromDF = require('./fixtures/success-from-df.json');
-const util = require(`util`);
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -98,7 +97,7 @@ describe('uploader', () => {
         afterEach(() => {
           fetchMock.restore();
         });
-        it.only('should fetch collection from IA', () => {
+        it('should fetch collection from IA', () => {
           iaRequest.fetchNewEntitiesFromIAAndPostToDF(`testing-collection`, `etree`, `creator`, `10`)
             .then(data => {
               expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
