@@ -32,7 +32,10 @@ function handler (app) {
         .then(playSong())
         .catch(context => {
           debug('It could be an error:', context);
-          return dialog.ask(app, strings.intents.resume.fail);
+          return dialog.ask(app, dialog.merge(
+            dialogState.getReprompt(app),
+            strings.intents.resume.fail
+          ));
         });
     }, () => {
       dialog.ask(app, dialog.merge(
