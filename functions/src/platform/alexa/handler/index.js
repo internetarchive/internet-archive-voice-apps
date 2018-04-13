@@ -1,4 +1,5 @@
 const Alexa = require('alexa-sdk');
+const AWS = require('aws-sdk');
 
 const {debug, info, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
@@ -24,6 +25,11 @@ module.exports = (actions) => {
 
     // TODO: get from process.env
     // alexa.appId
+    const region = process.env.AWS_REGION;
+    if (region) {
+      debug('set AWS region', region);
+      AWS.config.update({region});
+    }
     alexa.dynamoDBTableName = 'InternetArchiveSessions';
     alexa.registerHandlers(handlers);
 
