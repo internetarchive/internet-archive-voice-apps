@@ -33,14 +33,14 @@ function handler (app) {
         .catch(context => {
           debug('It could be an error:', context);
           return dialog.ask(app, dialog.merge(
-            dialogState.getReprompt(app),
-            strings.intents.resume.fail
+            strings.intents.resume.fail,
+            dialogState.getReprompt(app)
           ));
         });
     }, () => {
       dialog.ask(app, dialog.merge(
-        dialogState.getReprompt(app),
-        strings.intents.resume.empty
+        strings.intents.resume.empty,
+        dialogState.getReprompt(app)
       ));
     });
 }
