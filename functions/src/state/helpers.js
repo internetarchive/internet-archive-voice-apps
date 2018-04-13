@@ -70,7 +70,7 @@ module.exports = {
      */
     setData: (app, value) => {
       debug(`set user's state ${name} to ${JSON.stringify(value)}`);
-      if (typeof app === 'string') {
+      if (typeof app === 'string' || !app) {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 

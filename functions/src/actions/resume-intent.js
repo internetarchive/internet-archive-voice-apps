@@ -1,6 +1,8 @@
 const dialog = require('../dialog');
+const dialogState = require('../state/dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
+const strings = require('../strings');
 const {debug} = require('../utils/logger')('ia:actions:resume-intent');
 
 const feederFromPlaylist = require('./high-order-handlers/middlewares/feeder-from-playlist');
@@ -23,13 +25,26 @@ function handler (app) {
     query,
     slots: {platform: app.platform}
   })
-    .then(parepareSongData())
-    .then(fulfilResolvers())
-    .then(renderSpeech())
-    .then(playSong())
-    .catch(context => {
-      debug('It could be an error:', context);
-      return dialog.ask(app, {speech: `Please choose what do you want to play.`});
+    .then(() => {
+      return parepareSongData()
+        .then(fulfilResolvers())
+        .then(renderSpeech())
+        .then(playSong())
+        .catch(context => {
+          debug('It could be an error:', context);
+          return dialog.ask(app, strings.intents.resume.fail);
+        });
+    }, () => {
+      dialog.ask(app, {
+        speech: [
+          strings.intents.resume.empty.speech,
+          dialogState.getLastReprompt(app),
+        ],
+
+        reprompt: strings.intents.resume.empty.reprompt || dialogState.getLastReprompt(app),
+
+        suggestions: [].concat(dialogState.getLastSuggestions(app)/*, strings.intents.resume.empty.suggestions*/),
+      });
     });
 }
 

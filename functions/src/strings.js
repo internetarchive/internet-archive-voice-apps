@@ -392,6 +392,16 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    resume: {
+      fail: {
+        speech: 'Fail to resume. Please choose what do you want to play.',
+      },
+
+      empty: {
+        speech: 'Nothing to resume. Please choose what do you want to play.',
+      },
+    },
+
     titleOption: {
       false: {
         speech: `Ok, muting song titles.`,
