@@ -25,6 +25,18 @@ class App {
   isFirstTry () {
     return this.ctx.getLastSeen();
   }
+
+  /**
+   * Current track offset
+   *
+   * for the moment Action of Google doesn't support offset
+   * so it's always zero
+   *
+   * @returns {Number}
+   */
+  getOffset () {
+    return 0;
+  }
 }
 
 module.exports = {

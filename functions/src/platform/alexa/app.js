@@ -25,6 +25,15 @@ class App {
   isFirstTry () {
     return true;
   }
+
+  /**
+   * Current track offset
+   *
+   * @returns {Number}
+   */
+  getOffset () {
+    return this.ctx.event.request.offsetInMilliseconds;
+  }
 }
 
 module.exports = {
