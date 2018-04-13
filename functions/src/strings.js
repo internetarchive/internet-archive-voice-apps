@@ -394,11 +394,11 @@ module.exports = {
 
     resume: {
       fail: {
-        speech: 'Fail to resume. Please choose what do you want to play.',
+        speech: 'Fail to resume.',
       },
 
       empty: {
-        speech: 'Nothing to resume. Please choose what do you want to play.',
+        speech: 'Nothing to resume.',
       },
     },
 
