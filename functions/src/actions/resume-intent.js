@@ -43,7 +43,7 @@ function handler (app) {
 
         reprompt: strings.intents.resume.empty.reprompt || dialogState.getLastReprompt(app),
 
-        suggestions: [].concat(dialogState.getLastSuggestions(app)/*, strings.intents.resume.empty.suggestions*/),
+        suggestions: [].concat(dialogState.getLastSuggestions(app)/*, strings.intents.resume.empty.suggestions */),
       });
     });
 }
