@@ -48,10 +48,23 @@ function getLastSuggestions (app) {
   return _.get(getData(app), 'lastPhrase.suggestions');
 }
 
+/**
+ * get reprompt for speech
+ *
+ * @param app
+ * @returns {{reprompt: (undefined|string), speech: Array, suggestions: (undefined|string)}}
+ */
+const getReprompt = (app) => ({
+  reprompt: getLastReprompt(app),
+  speech: getLastReprompt(app),
+  suggestions: getLastSuggestions(app),
+});
+
 module.exports = {
   getLastPhrase,
   getLastReprompt,
   getLastSpeech,
   getLastSuggestions,
+  getReprompt,
   savePhrase,
 };

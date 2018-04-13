@@ -35,11 +35,10 @@ function handler (app) {
           return dialog.ask(app, strings.intents.resume.fail);
         });
     }, () => {
-      dialog.ask(app, dialog.merge({
-        speech: dialogState.getLastReprompt(app),
-        reprompt: dialogState.getLastReprompt(app),
-        suggestions: dialogState.getLastSuggestions(app),
-      }, strings.intents.resume.empty));
+      dialog.ask(app, dialog.merge(
+        dialogState.getReprompt(app),
+        strings.intents.resume.empty
+      ));
     });
 }
 
