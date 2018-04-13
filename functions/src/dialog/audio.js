@@ -65,11 +65,15 @@ function playSong (app, options) {
 
   let {speech} = options;
 
-  if (speech) {
+  if (typeof speech === 'string') {
     speech = mustache.render(speech, Object.assign({}, options, {description}));
   } else {
     speech = description;
   }
+
+  let previousTrack = Object.assign({},
+    options.previousTrack,
+    {contentURL: options.previousTrack && options.previousTrack.audioURL});
 
   app.response({
     speech,
@@ -79,7 +83,13 @@ function playSong (app, options) {
       description,
       contentURL: options.audioURL,
       imageURL: options.imageURL || config.media.DEFAULT_SONG_IMAGE,
+
+      // if previous track was define we try to stitch to it
+      // for the moment it only works for Alexa
+      previousTrack,
     }],
+
+    mediaResponseOnly: options.mediaResponseOnly,
 
     suggestions: [
       'next song',

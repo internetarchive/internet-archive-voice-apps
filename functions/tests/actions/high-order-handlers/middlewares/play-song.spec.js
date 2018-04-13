@@ -34,8 +34,9 @@ describe('actions', () => {
             expect(dialog.playSong.args[0][0]).to.be.equal(app);
             expect(dialog.playSong.args[0][1]).to.be.deep.equal({
               description,
-              speech: speech[0],
               id: '123456',
+              mediaResponseOnly: false,
+              speech: speech[0],
             });
           });
       });
