@@ -56,6 +56,7 @@ describe('platform', () => {
             description: 'some description',
             contentURL: 'https://archive.org/download/song.mp3',
             imageURL: 'https://archive.org/download/image.jpg',
+            offset: 0,
           }],
           suggestions: [
             'next song',
@@ -80,6 +81,7 @@ describe('platform', () => {
             description: 'some description',
             contentURL: 'https://archive.org/download/song.mp3',
             imageURL: 'https://archive.org/download/image.jpg',
+            offset: 0,
           }],
           suggestions: [
             'next song',
@@ -123,6 +125,7 @@ describe('platform', () => {
             description: 'some description',
             contentURL: 'https://archive.org/download/new-track.mp3',
             imageURL: 'https://archive.org/download/image.jpg',
+            offset: 12345,
             previousTrack: {
               contentURL: 'https://archive.org/download/old-track.mp3',
             },
@@ -135,7 +138,7 @@ describe('platform', () => {
             'https://archive.org/download/new-track.mp3',
             'https://archive.org/download/new-track.mp3',
             'https://archive.org/download/old-track.mp3',
-            0
+            12345
           );
       });
     });

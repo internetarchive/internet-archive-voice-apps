@@ -1,6 +1,7 @@
 const dialog = require('../dialog');
 const dialogState = require('../state/dialog');
 const playlist = require('../state/playlist');
+const playback = require('../state/playback');
 const query = require('../state/query');
 const strings = require('../strings');
 const {debug} = require('../utils/logger')('ia:actions:resume-intent');
@@ -25,11 +26,11 @@ function handler (app) {
     query,
     slots: {platform: app.platform}
   })
-    .then(() => {
-      return parepareSongData()
+    .then(ctx => {
+      return parepareSongData()(ctx)
         .then(fulfilResolvers())
         .then(renderSpeech())
-        .then(playSong())
+        .then(playSong({offset: playback.getOffset(app)}))
         .catch(context => {
           debug('It could be an error:', context);
           return dialog.ask(app, dialog.merge(

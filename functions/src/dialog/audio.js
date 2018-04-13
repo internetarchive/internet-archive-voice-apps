@@ -83,6 +83,7 @@ function playSong (app, options) {
       description,
       contentURL: options.audioURL,
       imageURL: options.imageURL || config.media.DEFAULT_SONG_IMAGE,
+      offset: options.offset,
 
       // if previous track was define we try to stitch to it
       // for the moment it only works for Alexa

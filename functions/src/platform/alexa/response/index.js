@@ -52,7 +52,8 @@ module.exports = (alexa) =>
           m.contentURL,
           // expectedPreviousToken
           previousToken,
-          0
+          // offsetInMilliseconds
+          m.offset
         );
       });
     } else {

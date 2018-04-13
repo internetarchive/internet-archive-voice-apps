@@ -8,12 +8,13 @@ const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-da
  *
  * @param mediaResponseOnly {boolean} we should return media response only
  */
-module.exports = ({mediaResponseOnly = false} = {}) => (context) => {
+module.exports = ({mediaResponseOnly = false, offset = 0} = {}) => (context) => {
   debug('start');
   const {app} = context;
   dialog.playSong(app, Object.assign(
     {}, context.slots, {
       mediaResponseOnly,
+      offset,
       speech: context.speech.join(' '),
       description: context.description,
     }
