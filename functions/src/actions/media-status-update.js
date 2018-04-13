@@ -30,6 +30,25 @@ function handler (app) {
   }
 }
 
+function prepareNextSong (ctx) {
+  return feederFromPlaylist()(Object.assign({}, ctx, {query, playlist}))
+  // expose current platform to the slots
+    .then(ctx =>
+      Object.assign({}, ctx, {
+        slots: Object.assign(
+          {}, ctx.slots, {platform: ctx.app.platform || 'assistant'}
+        )
+      })
+    )
+    .then(nextSong())
+    .then(context => {
+      debug('we got new song and now could play it');
+      return parepareSongData()(context);
+    })
+    .then(fulfilResolvers())
+    .then(renderSpeech());
+}
+
 /**
  * Handle app.Media.Status.FINISHED media status
  *
@@ -37,23 +56,8 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  return feederFromPlaylist()({app, query, playlist})
-    // expose current platform to the slots
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, {platform: app.platform || 'assistant'}
-        )
-      })
-    )
-    .then(nextSong())
-    .then(context => {
-      debug('we got new song and now could play it');
-      return parepareSongData()(context)
-        .then(fulfilResolvers())
-        .then(renderSpeech())
-        .then(playSong());
-    })
+  return prepareNextSong({app, query, playlist})
+    .then(playSong())
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, {speech: 'Playlist is ended. Do you want to listen something more?'});
@@ -63,4 +67,5 @@ function handleFinished (app) {
 module.exports = {
   handler,
   handleFinished,
+  prepareNextSong,
 };
