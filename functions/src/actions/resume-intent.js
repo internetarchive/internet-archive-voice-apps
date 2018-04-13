@@ -17,14 +17,12 @@ const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
  * @param app
  */
 function handler (app) {
-  return feederFromPlaylist()({app, playlist, query})
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, {platform: ctx.app.platform}
-        )
-      })
-    )
+  return feederFromPlaylist()({
+    app,
+    playlist,
+    query,
+    slots: {platform: app.platform}
+  })
     .then(parepareSongData())
     .then(fulfilResolvers())
     .then(renderSpeech())
