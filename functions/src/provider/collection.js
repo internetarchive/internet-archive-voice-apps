@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 const mustache = require('mustache');
 
 const config = require('../config');
@@ -21,11 +21,10 @@ const {debug, error} = require('../utils/logger')('ia:search:collection');
  */
 function fetchDetails (id) {
   debug(`fetch collection ${id}`);
-  return fetch(mustache.render(config.endpoints.COLLECTION_URL, {id}))
-    .then(res => res.json())
-    .then(data => {
+  return axios.get(mustache.render(config.endpoints.COLLECTION_URL, {id}))
+    .then(res => {
       return {
-        title: data.metadata.title,
+        title: res.data.metadata.title,
       };
     })
     .catch(e => {
@@ -42,11 +41,8 @@ function fetchDetails (id) {
  */
 function fetchItems (id) {
   debug(`fetch collection items ${id}`);
-  return fetch(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
-    .then(res => res.json())
-    .then(data => {
-      return data.response.docs;
-    })
+  return axios.get(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
+    .then(res => res.data.response.docs)
     .catch(e => {
       error(`Get error on fetching collection ${id} items, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);

@@ -17,10 +17,11 @@ describe('integration', () => {
     configStub = sinon.stub(functions, 'config').returns(require(`../.runtimeconfig.json`));
     index = require('../..');
   });
+
   describe('welcome', () => {
     it('should handle for a new user', () => {
       const res = new MockResponse();
-      index.playMedia(buildIntentRequest({
+      index.assistant(buildIntentRequest({
         action: 'welcome',
         lastSeen: null,
       }), res);
@@ -30,12 +31,13 @@ describe('integration', () => {
 
     it('should handle for return user', () => {
       const res = new MockResponse();
-      index.playMedia(buildIntentRequest({
+      index.assistant(buildIntentRequest({
         action: 'welcome',
       }), res);
       expect(res.speech()).to.contain('Welcome to music at the Internet Archive.');
     });
   });
+
   after(() => {
     // Restoring our stubs to the original methods.
     configStub.restore();

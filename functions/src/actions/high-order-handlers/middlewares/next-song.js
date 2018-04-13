@@ -1,5 +1,5 @@
 const {MiddlewareError} = require('./error');
-const {debug} = require('../../../utils/logger')('ia:actions:middlewares:playback-fulfillment');
+const {debug} = require('../../../utils/logger')('ia:actions:middlewares:next-song');
 
 /**
  * move to the next song

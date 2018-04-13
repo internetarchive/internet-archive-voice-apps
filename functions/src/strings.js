@@ -36,14 +36,17 @@ module.exports = {
       // we can choose any sound from here
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
-      speech: `
-        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
-               clipBegin="4.5s"
-               clipEnd="5.5s"
-               soundLevel="10db">
-          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
-        </audio>
-      `,
+      wordless: [{
+        condition: 'platform == "assistant"',
+        speech: `
+          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+                 clipBegin="4.5s"
+                 clipEnd="5.5s"
+                 soundLevel="10db">
+            <desc>Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}</desc>
+          </audio>
+        `,
+      }],
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
     }, {
@@ -55,14 +58,17 @@ module.exports = {
       // we can choose any sound from here
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
-      speech: `
-        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
-               clipBegin="4.5s"
-               clipEnd="5.5s"
-               soundLevel="10db">
-          <desc>Track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
-        </audio>
-      `,
+      wordless: [{
+        condition: 'platform == "assistant"',
+        speech: `
+          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+                 clipBegin="4.5s"
+                 clipEnd="5.5s"
+                 soundLevel="10db">
+            <desc>Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}</desc>
+          </audio>
+        `,
+      }],
       title: '{{title}} by {{creator}} {{year}}',
       suggestionLink: 'on Archive.org',
     }],
@@ -108,13 +114,27 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `We've got {{total}} albums of {{subject}} here. So let's listen them.`,
-          `We've got {{total}} albums of {{creator}} here. So let's start listen them.`,
-          `We've found {{total}} albums of {{subject}} music. Let's listen to`,
+          `I've got {{total}} {{subject}} albums. Let's listen to them.`,
+          `I've got {{total}} albums from {{creator}} here. Let's start listening to them.`,
+          `I found {{total}} {{subject}} albums. Let's listen to them.`,
           `Let's play {{subject}} music.`,
-          `Let's play music of {{creator}}.`,
+          `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
+          `I have {{total}} albums from {{year}}. Let's dive into it.`,
+        ],
+      },
+
+      /**
+       * When user missed the available range
+       * we should help them to find alternative.
+       */
+      repair: {
+        speech: [
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any albums of {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
         ],
       },
     },
@@ -195,10 +215,10 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `We've got {{total}} plates of {{subject}} here. So let's listen them.`,
-          `This is {{subject}} plates.`,
-          `Let's play {{subject}} music.`,
-          `Let's play music of {{creator}}.`,
+          `I've got {{total}} {{subject}} albums. Let's listen to them.`,
+          `Here are some {{subject}} albums.`,
+          `Let's play some {{subject}} music.`,
+          `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
         ],
@@ -282,6 +302,16 @@ module.exports = {
          * Template for creating suggestions
          */
         suggestionTemplate: 'the {{creator}}',
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `We don't have concerts of {{creator}}. Maybe you would like to listent {{short-options.suggestions}}?`,
+          ],
+        },
       }, {
         /**
          * we can prompt to give 2 slots in the same time
@@ -299,6 +329,18 @@ module.exports = {
          * Template for creating suggestions
          */
         suggestionTemplate: '{{coverage}} {{year}}',
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
+            `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
+            `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
+          ],
+        },
       }, {
         /**
          * prompt for single slot
@@ -310,6 +352,19 @@ module.exports = {
         speech: [
           'Ok, {{creator}} has played in {{coverage}} sometime {{years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
+
+        /**
+         * When user missed the available range
+         * we should help them to find alternative.
+         */
+        repair: {
+          speech: [
+            `I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
+            `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
+            `I don't have that concert. Try {{years-interval.suggestions}}.`,
+          ],
+        },
       }],
 
       /**
@@ -319,9 +374,9 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `Let's play concert {{coverage}} {{year}} of {{creator}}.`,
+          `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
-          `Let's play concerts of {{creator}}.`,
+          `Let's play concerts from {{creator}}.`,
           `Let's play {{subject}} concerts.`,
           `Let's play concerts from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -353,6 +408,10 @@ module.exports = {
     }, {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
+
+    version: {
+      speech: 'Version is {{version}}.',
+    },
 
     welcome: {
       acknowledges: [

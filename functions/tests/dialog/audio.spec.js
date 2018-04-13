@@ -5,7 +5,7 @@ const rewire = require('rewire');
 const audio = rewire('../../src/dialog/audio');
 const allowedStrings = require('../../src/strings').dialog.playSong;
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 
 describe('dialog', () => {
   let app;

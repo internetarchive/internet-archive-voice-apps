@@ -6,10 +6,9 @@ const middleware = rewire('../../../../src/actions/high-order-handlers/middlewar
 
 describe('actions', () => {
   describe('middlewares', () => {
+    const suggestions = [1970, 1980, 1990, 2000, 2010];
     describe('suggestions', () => {
       it('should substitute static suggestions', () => {
-        const suggestions = [1970, 1980, 1990, 2000, 2010];
-
         const suggestionsScheme = {
           suggestions,
         };
@@ -26,7 +25,6 @@ describe('actions', () => {
       });
 
       it('should fetch and substitute dynamic suggestions', () => {
-        const suggestions = [1970, 1980, 1990, 2000, 2010];
         const provider = sinon.stub().returns(Promise.resolve({
           items: suggestions,
         }));
@@ -48,6 +46,56 @@ describe('actions', () => {
               .which.has.members(suggestions);
             expect(res).to.have.property('suggestions')
               .which.has.members(suggestions);
+          });
+      });
+
+      it('should optionally exclude slots', () => {
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: suggestions,
+        }));
+
+        middleware.__set__('suggestionExtensions', {
+          getSuggestionProviderForSlots: sinon.stub().returns(provider),
+        });
+
+        const suggestionsScheme = {
+          confirm: ['years'],
+        };
+
+        return middleware({exclude: ['year']})({
+          slots: {
+            artist: 'the band',
+            albumn: 'concert',
+            year: 2000,
+          },
+          suggestionsScheme
+        })
+          .then(() => {
+            expect(provider).to.be.calledWith({
+              artist: 'the band',
+              albumn: 'concert',
+            });
+          });
+      });
+
+      it(`should skip middleware when we don't have suggestions scheme`, () => {
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: suggestions,
+        }));
+
+        middleware.__set__('suggestionExtensions', {
+          getSuggestionProviderForSlots: sinon.stub().returns(provider),
+        });
+
+        return middleware()({
+          slots: {
+            artist: 'the band',
+            albumn: 'concert',
+            year: 2000,
+          },
+        })
+          .then(() => {
+            expect(provider).to.not.be.called;
           });
       });
     });

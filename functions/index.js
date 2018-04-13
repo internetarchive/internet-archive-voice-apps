@@ -1,100 +1,22 @@
-/* eslint no-unused-vars: "warn" */
-// disabled temporary because we have so much unused variables
-// but should be fixed soon
-
 'use strict';
 
-const DialogflowApp = require('actions-on-google').DialogflowApp;
-const _ = require('lodash');
-const functions = require('firebase-functions');
-const bst = require('bespoken-tools');
-const dashbot = require('dashbot')(
-  functions.config().dashbot.key, {
-    printErrors: false,
-  }).google;
-
-const https = require('https');
-const http = require('http');
-const replaceall = require('replaceall');
-const util = require('util');
-
 const {defaultActions} = require('./src/actions');
-const actions = require('./src/actions/names');
-const dialog = require('./src/dialog');
+const assistantHandler = require('./src/platform/assistant/handler');
 const setup = require('./src/setup');
-const {storeAction} = require('./src/state/actions');
-const strings = require('./src/strings');
-const {debug, warning} = require('./src/utils/logger')('ia:index');
-
-let ARCHIVE_HOST = 'web.archive.org';
-let imageURL = 'https://archive.org/services/img/';
-let podcastAPIURL = '/advancedsearch.php?q=collection:';
-let podcastCityAPIURL = '/advancedsearch.php?q=collection:';
-let podcastAPIURLNEW = '/advancedsearch.php?q=';
-let SeventyEightsAPIURL = '/advancedsearch.php?q=collection:(georgeblood)+AND+subject:';
-let APIURLIdentifier = '/metadata/';
-let playlist = [];
-
-let currentSearchPage = 1;
-let currentTrackIdx = 0;
-let audioURL;
-let searchByYear = '';
-let invalidSearchPage = false;
-let searchByTitle = false;
-let playAudioByRandomYear = false;
-let playAudioByRandomCity = false;
-let playAudioByRandom = false;
-let searchByCity = '';
-let availableCity = 'Los Angeles';
-let availableYear = '1971';
-let strangeVariableUsed = true;
-let searchByCollectionValue = '';
-let collectionQuery = '';
-let searchByTrackTitle = '';
-let APIURL = '';
-let searchForSeventyEights = false;
-let oneGoPlayAudio = false;
-let oneGoCollectionRandomPlayAudio = false;
-let topicName = '';
-let totalTrackNumber = -1;
-let strangeVariableIdentifierCount = 0;
-
-let currentSpeechoutput = -1;
-let currentSuggestions = null;
-let currentRepromptText = null;
-
-let previousSpeechoutput = -1;
-let previousSuggestions = null;
-
-let availableYears = [];
-
-let defaultSuggestions = [
-  strings.suggestion.artist.gratefulDead,
-  strings.suggestion.artist.cowboyJunkies,
-  strings.suggestion.artist.dittyBops
-];
-
-let suggestions;
+const logAppStart = require('./src/utils/logger/log-app-start');
 
 const actionsMap = defaultActions();
-const actionNames = Array.from(actionsMap.keys())
-  .map(name => `"${name}"`)
-  .join(', ');
 
-debug('[Start]');
-debug('-----------------------------------------');
-debug(`Node.js Version: ${process.version}`);
-debug('-----------------------------------------');
-
-debug(`We can handle actions: ${actionNames}`);
+logAppStart(actionsMap);
 
 setup();
 
 /**
- * Action Endpoint
+ * Action of Google Endpoint
  *
  * @type {HttpsFunction}
  */
+<<<<<<< HEAD
 exports.playMedia = functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
   const app = new DialogflowApp({request: req, response: res});
 
@@ -2054,3 +1976,6 @@ function logKibana (callback) {
   });
   // To Log Request to Kibana
 }
+=======
+exports.assistant = assistantHandler(actionsMap);
+>>>>>>> d92344d1d22707716d7ee0374b140f5b4df62f6b

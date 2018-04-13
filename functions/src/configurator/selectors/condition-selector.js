@@ -1,4 +1,5 @@
 const math = require('mathjs');
+const util = require('util');
 
 const {debug, warning} = require('../../utils/logger')('ia:selectors:condition-selector');
 
@@ -43,7 +44,7 @@ function find (options, context) {
     return def;
   }
 
-  warning(`There is no valid options in ${options} with ${context}`);
+  warning(`There is no valid options in ${util.inspect(options)} with ${util.inspect(context)}`);
   return null;
 }
 

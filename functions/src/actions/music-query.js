@@ -1,5 +1,4 @@
 const selectors = require('../configurator/selectors');
-const dialog = require('../dialog');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -9,6 +8,7 @@ const acknowledge = require('./high-order-handlers/middlewares/acknowledge');
 const ask = require('./high-order-handlers/middlewares/ask');
 const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
+const repairBrokenSlots = require('./high-order-handlers/middlewares/repair-broken-slots');
 const suggestions = require('./high-order-handlers/middlewares/suggestions');
 const prompt = require('./high-order-handlers/middlewares/prompt');
 
@@ -56,7 +56,15 @@ function handler (app) {
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    return feederFromSlotScheme()({app, slots, slotScheme, playlist, query})
+    return feederFromSlotScheme()({app, newValues, playlist, slots, slotScheme, query})
+      // expose current platform to the slots
+      .then(ctx =>
+        Object.assign({}, ctx, {
+          slots: Object.assign(
+            {}, ctx.slots, {platform: app.platform || 'assistant'}
+          )
+        })
+      )
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
@@ -66,15 +74,19 @@ function handler (app) {
           .then(renderSpeech())
           .then(playSong());
       })
-      .catch((args) => {
+      .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug(`TODO: propose user something else`);
-        debug(args);
-        debug(Object.keys(args));
-        dialog.ask(app, {
-          speech: `We haven't find anything by your request.
-                   Would you like something else?`,
-        });
+        const brokenSlots = context.newValues || {};
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+        }))
+          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          // TODO: should clean broken slots from queue state
+          .then(ask());
       });
   }
 
@@ -82,6 +94,25 @@ function handler (app) {
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
     .then(prompt())
     .then(suggestions())
+    .then(context => {
+      if (context && context.suggestions.length === 0) {
+        // suggestions here are available range
+        // when it is 0 we should later last input
+        // TODO: when is is 1 we could choose this one option without asking
+
+        // 1. find last prompt
+        // 2. get repair phrase from the last prompt
+        // 3. render repair phrase
+        const brokenSlots = context.newValues;
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+        }))
+          .then(suggestions({exclude: Object.keys(brokenSlots)}));
+      }
+      return context;
+    })
     .then(fulfilResolvers())
     .then(renderSpeech())
     .then(ask());

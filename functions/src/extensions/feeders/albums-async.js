@@ -135,9 +135,8 @@ class AsyncAlbums extends DefaultFeeder {
         albums = albums.filter(album => album);
 
         if (!albums || albums.length === 0) {
-          debug('we get none albums');
-          // TODO: we don't get album
-          return;
+          debug('we got none albums');
+          return {songs: [], songsInFirstAlbum: 0, totalNumOfAlbums: 0};
         }
 
         const songsInFirstAlbum = albums[0].songs.length;

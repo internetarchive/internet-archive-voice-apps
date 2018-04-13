@@ -8,31 +8,42 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware
  * Middleware
  * Fetch suggestions for slots
  *
+ * @param exclude {Array} - exclude slots
  * @param slots
  * @param suggestionsScheme
  * @returns {Promise}
  */
-module.exports = () => (args) => {
+module.exports = ({exclude = []} = {}) => (context) => {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
   debug('start');
-  const {slots, suggestionsScheme} = args;
+  const {slots, suggestionsScheme} = context;
+  if (!suggestionsScheme) {
+    warning(`skip middleware becase we don't have any suggestion scheme here`);
+    return Promise.resolve(context);
+  }
+
   let suggestions = suggestionsScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);
     return Promise.resolve(
-      Object.assign({}, args, {slots: Object.assign({}, slots, {suggestions})}, {suggestions})
+      Object.assign({}, context, {slots: Object.assign({}, slots, {suggestions})}, {suggestions})
     );
   }
 
-  const provider = suggestionExtensions.getSuggestionProviderForSlots(suggestionsScheme.confirm);
+  const slotNames = suggestionsScheme.confirm || suggestionsScheme.slots;
+  let provider = suggestionExtensions.getSuggestionProviderForSlots(slotNames);
   if (!provider) {
-    warning(`don't have any suggestions for: ${suggestionsScheme.confirm}. Maybe we should add them.`);
-    return Promise.resolve(args);
+    provider = suggestionExtensions.getSuggestionProviderForSubSetOfSlots(slotNames);
+    if (!provider) {
+      warning(`don't have any suggestions for: ${slotNames}. Maybe we should add them.`);
+      return Promise.resolve(context);
+    }
+    debug('we found partly matched suggestion provider');
   }
 
-  return provider(slots)
+  return provider(_.omit(slots, exclude))
     .then(res => {
       let suggestions;
       if (suggestionsScheme.suggestionTemplate) {
@@ -51,7 +62,7 @@ module.exports = () => (args) => {
         );
       }
       return Object.assign(
-        {}, args, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
+        {}, context, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
       );
     });
 };
