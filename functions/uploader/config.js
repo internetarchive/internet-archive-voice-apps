@@ -7,11 +7,13 @@ module.exports = {
   uploader: {
     collection: {
       ID: 'etree',
+      FIELD: 'creator',
       LIMIT: 30000,
       ENTITY: 'testing-collection',
     },
     genres: {
       ID: 'georgeblood',
+      FIELD: 'subject',
       LIMIT: 30000,
       ENTITY: 'testing-genres',
     },

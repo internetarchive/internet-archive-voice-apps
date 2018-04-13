@@ -6,6 +6,7 @@ const mustache = require('mustache');
 
 const config = require('../../src/config');
 const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
+const util = require(`util`);
 
 /**
  * get unique & filtered entities for DialogFlow
@@ -13,11 +14,11 @@ const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
  * @param docs {array}
  * @returns entities {array}
  */
-function getUniqueCreatorsFromIA (docs) {
+function getUniqueCreatorsFromIA (docs, field) {
   var creators = [];
   var strCreator = ``;
   for (let i = 0; i < docs.length; i++) {
-    var creator = docs[i].creator;
+    var creator = docs[i][field];
     if (_.isArray(creator)) {
       for (let i = 0; i < creator.length; i++) {
         strCreator = creator[i];
@@ -44,7 +45,7 @@ function getUniqueCreatorsFromIA (docs) {
  * @param limit {int} number of records need to be fetch from IA
  * @returns entities {array}
  */
-function fetchEntitiesFromIA (id, limit) {
+function fetchEntitiesFromIA (id, field, limit) {
   var page = 0;
   var sort = 'downloads+desc';
   debug(`fetching entity data from IA...`);
@@ -55,15 +56,16 @@ function fetchEntitiesFromIA (id, limit) {
       limit,
       page,
       sort,
-      fields: 'creator',
+      fields: field,
     }
   );
   debug(url);
   return fetch(url)
     .then(res => res.json())
     .then(data => {
+      debug(util.inspect(data, false, null));
       debug(`fetched Entity from IA successfully.`);
-      return Promise.resolve(getUniqueCreatorsFromIA(data.response.docs));
+      return Promise.resolve(getUniqueCreatorsFromIA(data.response.docs, field));
     }).catch(e => {
       error(`Get error in fetching entity from IA, error: ${JSON.stringify(e)}`);
       return Promise.reject(e);
@@ -78,9 +80,9 @@ function fetchEntitiesFromIA (id, limit) {
  * @param limit {int} number of records need to be fetch from IA
  * @returns {promise}
  */
-function fetchNewEntitiesFromIAAndPostToDF (entityname, id, limit) {
+function fetchNewEntitiesFromIAAndPostToDF (entityname, id, field, limit) {
   return Promise.all([
-    fetchEntitiesFromIA(id, limit),
+    fetchEntitiesFromIA(id, field, limit),
     fetchEntitiesFromDF(entityname),
   ])
     .then(values => {
