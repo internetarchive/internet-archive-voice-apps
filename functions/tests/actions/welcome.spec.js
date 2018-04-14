@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 
 const welcome = rewire('../../src/actions/welcome');
+const playlist = require('../../src/state/playlist');
 const query = require('../../src/state/query');
 
 const mockApp = require('../_utils/mocking/platforms/assistant');
@@ -40,6 +41,13 @@ describe('actions', () => {
       welcome.handler(app);
       expect(query.hasSlot(app, 'creator')).to.be.false;
       expect(query.hasSlot(app, 'collection')).to.be.false;
+    });
+
+    it('should reset playlist', () => {
+      let app = mockApp();
+      playlist.create(app, ['item-1', 'item-2']);
+      welcome.handler(app);
+      expect(playlist.isEmpty(app)).to.be.true;
     });
   });
 });

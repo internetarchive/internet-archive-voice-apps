@@ -24,7 +24,28 @@ const setMuteSpeechBeforePlayback = (app, muteSpeech) =>
     muteSpeech,
   }));
 
+/**
+ * Get current played track offest
+ *
+ * @param app
+ */
+const getOffset = (app) => getData(app).offset || 0;
+
+/**
+ * Set current played track offset
+ *
+ * @param app
+ * @param offset
+ */
+const setOffset = (app, offset) =>
+  setData(app, Object.assign({}, getData(app), {
+    offset,
+  }));
+
 module.exports = {
   isMuteSpeechBeforePlayback,
   setMuteSpeechBeforePlayback,
+
+  getOffset,
+  setOffset,
 };

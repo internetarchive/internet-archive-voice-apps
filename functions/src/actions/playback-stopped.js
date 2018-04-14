@@ -1,8 +1,11 @@
 const {debug} = require('../utils/logger')('ia:actions:playback-stopped');
 
+const playback = require('../state/playback');
+
 function handler (app) {
-  // TODO: log
-  debug('token', app.params.getByName('token'));
+  const offset = app.getOffset();
+  debug('offset', offset);
+  playback.setOffset(app, offset);
 }
 
 /**
