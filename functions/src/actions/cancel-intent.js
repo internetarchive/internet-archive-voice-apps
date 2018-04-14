@@ -5,7 +5,7 @@ function handler (app) {
 }
 
 /**
- * handle Alexa Amazon.PauseIntent
+ * handle Alexa Amazon.CancelIntent
  * @type {{handler: handler}}
  */
 module.exports = {
