@@ -1,3 +1,5 @@
+const {debug} = require('../../utils/logger')('ia:platform:alexa:app');
+
 const params = require('./parameters');
 const persistance = require('./persistence');
 const response = require('./response');
@@ -33,6 +35,14 @@ class App {
    */
   getOffset () {
     return this.ctx.event.request.offsetInMilliseconds;
+  }
+
+  /**
+   * Stop track playback
+   */
+  stopPlayback () {
+    debug('stop playing music');
+    this.ctx.response.audioPlayerStop();
   }
 }
 

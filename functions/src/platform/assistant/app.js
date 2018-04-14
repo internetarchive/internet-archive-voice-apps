@@ -1,3 +1,5 @@
+const {debug} = require('../../utils/logger')('ia:platform:assistant:app');
+
 const params = require('./parameters');
 const persistance = require('./persistence');
 const response = require('./response');
@@ -36,6 +38,13 @@ class App {
    */
   getOffset () {
     return 0;
+  }
+
+  /**
+   * Stop track playback
+   */
+  stopPlayback () {
+    debug(`stop playback is not supported by google assistant`);
   }
 }
 
