@@ -167,7 +167,13 @@ function applyDefaultSlots (app, defaults) {
  *
  */
 function processPreset (app, slotScheme) {
-  const name = app.getArgument('preset');
+  let name;
+  if (app.getArgument) {
+    // @deprecated
+    name = app.getArgument('preset');
+  } else {
+    name = app.params.getByName('preset');
+  }
   if (!name) {
     debug(`it wasn't preset`);
     return;
@@ -199,7 +205,13 @@ function processPreset (app, slotScheme) {
 function fillSlots (app, slotScheme) {
   return slotScheme.slots
     .reduce((newValues, slotName) => {
-      const value = app.getArgument(slotName);
+      let value;
+      if (app.getArgument) {
+        // @deprecated
+        value = app.getArgument(slotName);
+      } else {
+        value = app.params.getByName(slotName);
+      }
       if (value) {
         query.setSlot(app, slotName, value);
         newValues[slotName] = value;

@@ -23,6 +23,7 @@ module.exports = () =>
       .reduce((newValues, slotName) => {
         let value;
         if (app.getArgument) {
+          // @deprecated
           value = app.getArgument(slotName);
         } else {
           value = app.params.getByName(slotName);
