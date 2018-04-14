@@ -166,7 +166,7 @@ class AsyncAlbums extends DefaultFeeder {
         return {songs, songsInFirstAlbum, totalNumOfAlbums};
       })
       .catch(err => {
-        error(`We got an error: ${JSON.stringify(err)}`);
+        error('We got an error:', err);
         return Promise.reject(err);
       });
   }

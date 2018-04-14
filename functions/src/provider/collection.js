@@ -28,7 +28,7 @@ function fetchDetails (id) {
       };
     })
     .catch(e => {
-      error(`Get error on fetching collection ${id}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching collection ${id}, error:`, e);
       return Promise.reject(e);
     });
 }
@@ -44,7 +44,7 @@ function fetchItems (id) {
   return axios.get(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
     .then(res => res.data.response.docs)
     .catch(e => {
-      error(`Get error on fetching collection ${id} items, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching collection ${id} items, error:`, e);
       return Promise.reject(e);
     });
 }

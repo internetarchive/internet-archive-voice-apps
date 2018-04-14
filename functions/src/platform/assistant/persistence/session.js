@@ -34,7 +34,7 @@ module.exports = (app) => {
      * @param value
      */
     setData: (name, value) => {
-      debug(`set attribute ${name} to ${JSON.stringify(value)}`);
+      debug(`set attribute ${name} to`, value);
 
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
