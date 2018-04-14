@@ -20,6 +20,7 @@ module.exports = () => {
   );
 
   // patch requests
+  axios.interceptors.request.handlers = [];
   axios.interceptors.request.use((config) => {
     config.headers['user-agent'] = userAgent;
     debug(`${config.method.toUpperCase()} ${config.url}`);

@@ -24,8 +24,6 @@ function fetchCreatorsBy (query) {
   debug(`condition ${condition}`);
 
   const fields = 'creator,identifier';
-  debug('fetch creators by', query);
-
   return axios
     .get(
       mustache.render(
