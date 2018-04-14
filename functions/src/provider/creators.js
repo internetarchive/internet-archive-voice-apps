@@ -1,5 +1,6 @@
 const axios = require('axios');
 const mustache = require('mustache');
+const util = require('util');
 
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:provider:creators');
@@ -42,7 +43,7 @@ function fetchCreatorsBy (query) {
       })),
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error:`, e);
+      error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
       return Promise.reject(e);
     });
 }
