@@ -44,7 +44,7 @@ function fetchCreatorsBy (query) {
       })),
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist by: ${query}, error:`, e);
       return Promise.reject(e);
     });
 }

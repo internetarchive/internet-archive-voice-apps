@@ -94,7 +94,7 @@ function fetchAlbumsByCreatorId (id, {
       };
     })
     .catch(e => {
-      error(`Get error on fetching albums of artist ${id}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist ${id}, error:`, e);
       return Promise.reject(e);
     });
 }
@@ -150,7 +150,7 @@ function fetchAlbumsByQuery (query) {
       total: res.data.response.numFound,
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist by: ${query}, error:`, e);
       return Promise.reject(e);
     });
 }
