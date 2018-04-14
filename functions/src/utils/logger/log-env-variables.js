@@ -7,11 +7,9 @@ const functions = require('firebase-functions');
  */
 module.exports = () => {
   if (process.env.X_GOOGLE_GCLOUD_PROJECT) {
-    console.info(`initial process.env:
-                ${JSON.stringify(process.env)}`);
+    console.info(`initial process.env:`, process.env);
     try {
-      console.info(`initial functions.config():
-                  ${JSON.stringify(functions.config())}`);
+      console.info(`initial functions.config()`, functions.config());
     } catch (err) {
       console.warning('failed to get functions.confg()', err);
     }

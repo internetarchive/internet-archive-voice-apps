@@ -24,7 +24,7 @@ function fetchCreatorsBy (query) {
   debug(`condition ${condition}`);
 
   const fields = 'creator,identifier';
-  debug(`fetch creators by ${JSON.stringify(query)}`);
+  debug('fetch creators by', query);
 
   return axios
     .get(

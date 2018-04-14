@@ -130,12 +130,11 @@ function fetchAlbumsByQuery (query) {
     order: 'downloads+desc',
   }, query);
 
-  debug(query);
   // create search query
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
 
-  debug(`Fetch albums by ${JSON.stringify(query)}`);
+  debug('Fetch albums by', query);
 
   return axios.get(
     mustache.render(

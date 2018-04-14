@@ -1,3 +1,5 @@
+const util = require('util');
+
 const {debug} = require('../../../utils/logger')('ia:actions:middleware:copy-defaults-to-slots');
 const entries = require('../../../utils/polyfill/entries');
 
@@ -27,7 +29,7 @@ module.exports = () =>
           }
           return newValues;
         }, newValues);
-      debug(`and copied ${JSON.stringify(newValues)} slot(s)`);
+      debug(`and copied ${util.inspect(newValues)} slot(s)`);
     }
 
     return Promise.resolve(
