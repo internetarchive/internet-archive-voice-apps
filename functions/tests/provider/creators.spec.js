@@ -35,6 +35,22 @@ describe('providers', () => {
             }]);
           });
       });
+
+      it(`should return empty list if we don't receive response with docs`, () => {
+        const mock = new MockAdapter(creators.__get__('axios'));
+        mock.onGet().reply(200, '<html><head></head><body></body></html>');
+
+        return creators
+          .fetchCreatorsBy({
+            coverage: 'london',
+            creatorId: 'theband',
+            collectionId: '80s',
+            year: '2020',
+          })
+          .then((res) => {
+            expect(res).to.have.property('items').to.be.empty;
+          });
+      });
     });
   });
 });

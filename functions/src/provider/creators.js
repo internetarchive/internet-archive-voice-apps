@@ -37,11 +37,18 @@ function fetchCreatorsBy (query) {
         }
       )
     )
-    .then(res => ({
-      items: res.data.response.docs.map(item => Object.assign({}, item, {
-        // year: parseInt(item.year),
-      })),
-    }))
+    .then(res => {
+      if (typeof res.data !== 'object' || !('response' in res.data)) {
+        return {
+          items: [],
+        };
+      }
+      return {
+        items: res.data.response.docs.map(item => Object.assign({}, item, {
+          // year: parseInt(item.year),
+        })),
+      };
+    })
     .catch(e => {
       error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
       return Promise.reject(e);
