@@ -11,7 +11,7 @@ const packageJSON = require('../../../package.json');
 const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
 const strings = require('./../../strings');
-const {debug, warning} = require('./../../utils/logger')('ia:index');
+const {debug, error, warning} = require('./../../utils/logger')('ia:index');
 const logRequest = require('./../../utils/logger/log-request');
 
 const which = require('../which');
@@ -104,6 +104,7 @@ module.exports = (actionsMap) => {
 
       dashbot.configHandler(app);
     } catch (e) {
+      error(e);
       if (raven) {
         raven.captureException(e);
       }

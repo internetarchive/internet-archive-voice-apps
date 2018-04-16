@@ -35,7 +35,7 @@ module.exports = (alexa) => {
      * @param value
      */
     setData: (name, value) => {
-      debug(`set attribute ${name} to ${JSON.stringify(value)}`);
+      debug(`set attribute ${name} to`, value);
       _.set(alexa.attributes, [deviceId, name], value);
     },
   };

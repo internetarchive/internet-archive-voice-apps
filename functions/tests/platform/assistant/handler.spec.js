@@ -45,8 +45,8 @@ describe('platform', () => {
 
         return wait()
           .then(() => {
-            expect(warning.getCall(0).args[0]).to.includes(action);
             expect(warning).to.be.calledOnce;
+            expect(warning.getCall(0).args[0]).to.includes(action);
           });
       });
     });

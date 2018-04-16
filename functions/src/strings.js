@@ -392,6 +392,16 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    resume: {
+      fail: {
+        speech: 'Fail to resume.',
+      },
+
+      empty: {
+        speech: 'Nothing to resume.',
+      },
+    },
+
     titleOption: {
       false: {
         speech: `Ok, muting song titles.`,
@@ -422,24 +432,10 @@ module.exports = {
     },
   },
 
-  prompts: {
-    select: {
-      artist: [
-        'What artist do you want to hear?',
-        'What artist would you like to listen to?',
-      ],
-      city: 'Please select a city',
-      collection: 'Please select a collection',
-      topic: [
-        'Please select a topic',
-        'Please select a topic - like Jazz, Alternative, or Dance',
-      ],
-      year: 'Please select a year',
-      yearAndCity: [
-        'Please select a city and year',
-        'Do you have a specific city and year in mind?',
-      ],
-    },
+  events: {
+    playlistIsEnded: {
+      speech: 'Playlist is ended. Do you want to listen something more?',
+    }
   },
 
   /**

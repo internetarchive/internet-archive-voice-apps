@@ -89,7 +89,7 @@ class SyncAlbum extends DefaultFeeder {
           return;
         }
 
-        debug(`We get album ${JSON.stringify(album)}`);
+        debug('We get album', album);
 
         const songs = this.processAlbumSongs(album);
 

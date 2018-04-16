@@ -28,14 +28,16 @@ describe('actions', () => {
         const slots = {
           id: '123456',
         };
-        return middleware()({app, description, speech, slots})
+        return middleware({offset: 1234})({app, description, speech, slots})
           .then(context => {
             expect(dialog.playSong).to.have.been.called;
             expect(dialog.playSong.args[0][0]).to.be.equal(app);
             expect(dialog.playSong.args[0][1]).to.be.deep.equal({
               description,
-              speech: speech[0],
               id: '123456',
+              mediaResponseOnly: false,
+              offset: 1234,
+              speech: speech[0],
             });
           });
       });

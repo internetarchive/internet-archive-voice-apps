@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const {getLastPhrase, getLastReprompt, savePhrase} = require('../../src/state/dialog');
+const {getLastPhrase, getLastReprompt, getReprompt, savePhrase} = require('../../src/state/dialog');
 
 describe('state', () => {
   let app;
@@ -29,6 +29,23 @@ describe('state', () => {
       it('should return reprompt', () => {
         savePhrase(app, {reprompt: 'Sorry! Repeat The number please!'});
         expect(getLastReprompt(app)).to.be.equal('Sorry! Repeat The number please!');
+      });
+    });
+
+    describe('getReprompt', () => {
+      it('should return reprompt object with speech, suggestions and upcoming reprompt speech', () => {
+        savePhrase(app, {
+          speech: 'What is your number?',
+          reprompt: 'Sorry! Repeat The number please!',
+          suggestions: ['1', '2', '3'],
+        });
+
+        expect(getReprompt(app))
+          .to.be.deep.equal({
+            speech: 'Sorry! Repeat The number please!',
+            reprompt: 'Sorry! Repeat The number please!',
+            suggestions: ['1', '2', '3'],
+          });
       });
     });
   });

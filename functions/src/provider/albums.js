@@ -94,7 +94,7 @@ function fetchAlbumsByCreatorId (id, {
       };
     })
     .catch(e => {
-      error(`Get error on fetching albums of artist ${id}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist ${id}, error:`, e);
       return Promise.reject(e);
     });
 }
@@ -130,12 +130,11 @@ function fetchAlbumsByQuery (query) {
     order: 'downloads+desc',
   }, query);
 
-  debug(query);
   // create search query
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
 
-  debug(`Fetch albums by ${JSON.stringify(query)}`);
+  debug('Fetch albums by', query);
 
   return axios.get(
     mustache.render(
@@ -150,7 +149,7 @@ function fetchAlbumsByQuery (query) {
       total: res.data.response.numFound,
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist by: ${query}, error:`, e);
       return Promise.reject(e);
     });
 }

@@ -56,6 +56,7 @@ describe('platform', () => {
             description: 'some description',
             contentURL: 'https://archive.org/download/song.mp3',
             imageURL: 'https://archive.org/download/image.jpg',
+            offset: 0,
           }],
           suggestions: [
             'next song',
@@ -80,6 +81,7 @@ describe('platform', () => {
             description: 'some description',
             contentURL: 'https://archive.org/download/song.mp3',
             imageURL: 'https://archive.org/download/image.jpg',
+            offset: 0,
           }],
           suggestions: [
             'next song',
@@ -114,6 +116,30 @@ describe('platform', () => {
 
         expect(alexa.response.hint).to.have.been.calledOnce;
         expect(alexa.response.hint.args[0][0]).to.be.equal('next song');
+      });
+
+      it('should pass token of previous track and enqueue to stream', () => {
+        ask(alexa)({
+          media: [{
+            name: 'song title',
+            description: 'some description',
+            contentURL: 'https://archive.org/download/new-track.mp3',
+            imageURL: 'https://archive.org/download/image.jpg',
+            offset: 12345,
+            previousTrack: {
+              contentURL: 'https://archive.org/download/old-track.mp3',
+            },
+          }],
+        });
+
+        expect(alexa.response.audioPlayerPlay).to.have.been
+          .calledWith(
+            'ENQUEUE',
+            'https://archive.org/download/new-track.mp3',
+            'https://archive.org/download/new-track.mp3',
+            'https://archive.org/download/old-track.mp3',
+            12345
+          );
       });
     });
   });
