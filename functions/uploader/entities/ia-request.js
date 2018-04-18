@@ -5,13 +5,14 @@ const fetch = require(`node-fetch`);
 const mustache = require('mustache');
 
 const config = require('../../src/config');
-const {postEntitiesToDF, fetchEntitiesFromDF} = require('./entities');
+const entities = require('./entities');
 const util = require(`util`);
 
 /**
  * get unique & filtered entities for DialogFlow
  *
  * @param docs {array}
+ * @param field {string} field need to be extracted creator/subjects
  * @returns entities {array}
  */
 function getUniqueCreatorsFromIA (docs, field) {
@@ -42,6 +43,7 @@ function getUniqueCreatorsFromIA (docs, field) {
  * get entities from InternetArchive
  *
  * @param id {string} etree/georgeblood
+ * @param field {string} field need to be extracted creator/subjects
  * @param limit {int} number of records need to be fetch from IA
  * @returns entities {array}
  */
@@ -77,21 +79,25 @@ function fetchEntitiesFromIA (id, field, limit) {
  *
  * @param entityname {string} name of entity in dialogflow
  * @param id {string} etree/georgeblood
+ * @param field {string} field need to be extracted creator/subjects
  * @param limit {int} number of records need to be fetch from IA
  * @returns {promise}
  */
 function fetchNewEntitiesFromIAAndPostToDF (entityname, id, field, limit) {
   return Promise.all([
     fetchEntitiesFromIA(id, field, limit),
-    fetchEntitiesFromDF(entityname),
+    entities.fetchEntitiesFromDF(entityname),
   ])
     .then(values => {
       const [creatorsFromIA, creatorsFromDF] = values;
       var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      return postEntitiesToDF(entityname, dif, 0);
+      return entities.postEntitiesToDF(entityname, dif, 0);
     })
     .then(data => {
       return Promise.resolve(data);
+    }).catch(e => {
+      error(`Get error in fetching new entity from IA and posting to DF, error: ${JSON.stringify(e)}`);
+      return Promise.reject(e);
     });
 }
 
@@ -99,4 +105,5 @@ module.exports = {
   getUniqueCreatorsFromIA,
   fetchEntitiesFromIA,
   fetchNewEntitiesFromIAAndPostToDF,
+  entities
 };

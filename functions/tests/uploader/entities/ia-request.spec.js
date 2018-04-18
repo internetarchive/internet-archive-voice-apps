@@ -1,15 +1,19 @@
 const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
+
 fetchMock.config.overwriteRoutes = true;
 fetchMock.config.repeat = true;
 const rewire = require('rewire');
+const sinon = require('sinon');
 
 const iaRequest = rewire('../../../uploader/entities/ia-request');
 
+var entities = require('../../../uploader/entities/entities');
 const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
 const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
-const getEntitiesFromDF = require('./fixtures/get-entities-from-df.json');
 const successFromDF = require('./fixtures/success-from-df.json');
+
+let fetchEntitiesFromDF, postEntitiesToDF;
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -85,22 +89,25 @@ describe('uploader', () => {
 
       describe('forCollection', () => {
         beforeEach(() => {
+          var expected = [`Grateful Dead`, `Disco Biscuits`, `Phil Lesh and Friends`];
+          fetchEntitiesFromDF = sinon.stub(entities, 'fetchEntitiesFromDF').returns(expected);
+          postEntitiesToDF = sinon.stub(entities, 'postEntitiesToDF').returns(successFromDF);
           iaRequest.__set__(
             'fetch',
             fetchMock
               .sandbox()
               .get('begin:https://web.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
-              .get('begin:https://api.dialogflow.com/v1/entities/testing-collection?v=20150910', getEntitiesFromDF)
-              .get('begin:https://api.dialogflow.com/v1/entities/testing-collection/entries?v=20150910', successFromDF)
           );
         });
         afterEach(() => {
           fetchMock.restore();
+          fetchEntitiesFromDF.restore();
+          postEntitiesToDF.restore();
         });
-        it('should fetch collection from IA', () => {
+        it('should fetch collection from IA and post to DF', () => {
           iaRequest.fetchNewEntitiesFromIAAndPostToDF(`testing-collection`, `etree`, `creator`, `10`)
             .then(data => {
-              expect(iaRequest.fetchNewEntitiesFromIAAndPostToDF).to.be.ok;
+              expect(data).to.be.eql(successFromDF);
             });
         });
       });

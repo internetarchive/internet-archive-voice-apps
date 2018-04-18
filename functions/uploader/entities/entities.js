@@ -60,9 +60,8 @@ function postEntitiesToDF (entityname, entities, first) {
     .then(res => res.json())
     .then(data => {
       debug(util.inspect(data, false, null));
-      if (data.status.code !== 200) {
-        error(`Error : ` + data.status.errorDetails);
-        return Promise.reject(data);
+      if (data.hasOwnProperty('error') && data.error.code !== 200) {
+        return Promise.reject(new Error(data));
       }
       debug(util.inspect(data, false, null));
       debug(`posted Entity to DF Successfully.`);
@@ -92,6 +91,9 @@ function fetchEntitiesFromDF (entityname) {
     .then(res => res.json())
     .then(data => {
       debug(util.inspect(data, false, null));
+      if (data.hasOwnProperty('error') && data.error.code !== 200) {
+        return Promise.reject(new Error(data));
+      }
       var entities = [];
       for (var i = 0, len = data.entries.length; i < len; i++) {
         entities.push(data.entries[i].value);
