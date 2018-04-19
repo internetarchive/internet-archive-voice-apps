@@ -50,7 +50,6 @@ function getSuggestionProviderForSubSetOfSlots (slots) {
   if (items.length === 0) {
     return null;
   }
-  console.log(items);
   return items[0].item.handle;
 }
 

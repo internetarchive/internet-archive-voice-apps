@@ -13,7 +13,6 @@ const groupParamToEnvVarName = require('./group-param-to-env-variable-name');
 module.exports = (platform) => (group, prop) => {
   switch (platform) {
     case 'assistant':
-      console.log(functions.config());
       return _.get(functions.config(), [group, prop]);
     default:
       return process.env[groupParamToEnvVarName(group, prop)];
