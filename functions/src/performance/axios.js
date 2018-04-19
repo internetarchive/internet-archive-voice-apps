@@ -6,6 +6,7 @@ const {debug} = require('../utils/logger')('ia:performance:axio');
  * Use profile axios performance
  */
 function use () {
+  debug('use');
   axios.interceptors.request.use((config) => {
     config.requestTimestamp = Date.now();
     return config;
