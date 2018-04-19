@@ -5,9 +5,9 @@ const {debug} = require('../utils/logger')('ia:performance:axio');
 const profiler = {};
 
 /**
- * use profile axios performance
+ * Use profile axios performance
  */
-function use() {
+function use () {
   axios.interceptors.request.use((config) => {
     profiler[config.url] = {
       start: Date.now(),
