@@ -1,0 +1,27 @@
+{
+  "id": "c4597230-ff20-46d8-8c33-9b1a8b4a527b",
+  "name": "testing-collection",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "Alliens",
+      "synonyms": [
+        "Alliens"
+      ]
+    },
+    {
+      "value": "Grateful Dead",
+      "synonyms": [
+        "Grateful Dead"
+      ]
+    },
+    {
+      "value": "Cowboy Junkies",
+      "synonyms": [
+        "Cowboy Junkies"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": false
+}
