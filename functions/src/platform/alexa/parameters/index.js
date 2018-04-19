@@ -22,7 +22,7 @@ module.exports = (ctx) => ({
     }
 
     const intent = ctx.event.request.intent || {};
-    const id = _.get(intent, ['slots', camelCaseToScreamingSnake(name), 'resolutions', 'resolutionsPerAuthority', 0, 'values', 0, 'value', 'id']);
+    const id = _.get(intent, ['slots', camelCaseToScreamingSnake(name), 'resolutions', 'resolutionsPerAuthority', 0, 'values', 0, 'value', 'name']);
     return id || _.get(intent, ['slots', camelCaseToScreamingSnake(name), 'value']);
   },
 });

@@ -19,7 +19,15 @@ const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
  */
 function handler (app) {
   debug('start');
-  const status = app.getArgument('MEDIA_STATUS').extension.status;
+  let mediaStatus;
+  if (app.getArgument) {
+    // @deprecated
+    mediaStatus = app.getArgument('MEDIA_STATUS');
+  } else {
+    mediaStatus = app.params.getByName('MEDIA_STATUS');
+  }
+
+  const status = mediaStatus.extension.status;
 
   if (status === app.Media.Status.FINISHED) {
     return handleFinished(app);

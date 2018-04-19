@@ -25,11 +25,16 @@ describe('platform', () => {
               resolutionsPerAuthority: [{
                 authority: 'amzn1.er-qwerty.BOOLEAN',
                 status: {code: 'ER_SUCCESS_MATCH'},
-                values: [{value: {name: 'true', id: 'true'}}]
-              }]
+                values: [{
+                  value: {
+                    name: 'true',
+                    id: '5e01b4d8903c7b71831c5fc9be3b1f69',
+                  },
+                }],
+              }],
             },
-            confirmationStatus: 'NONE'
-          }
+            confirmationStatus: 'NONE',
+          },
         },
 
         reason: 'ERROR',

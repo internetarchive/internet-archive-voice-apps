@@ -1,6 +1,7 @@
 const axios = require('axios');
 const _ = require('lodash');
 const mustache = require('mustache');
+const util = require('util');
 
 const config = require('../config');
 const delayedPromise = require('../utils/delay');
@@ -149,7 +150,7 @@ function fetchAlbumsByQuery (query) {
       total: res.data.response.numFound,
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error:`, e);
+      error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
       return Promise.reject(e);
     });
 }
