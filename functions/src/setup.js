@@ -9,7 +9,6 @@ const packageJSON = require('../package.json');
 const appConfig = require('./config');
 const env = require('./config/env');
 const mathjsExtensions = require('./mathjs');
-const whichPlatform = require('./platform/which');
 const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
 
 const axiosProfile = require('./performance/axios');
@@ -19,7 +18,7 @@ module.exports = ({platform}) => {
 
   const userAgent = mustache.render(
     appConfig.request.userAgent,
-    Object.assign({}, packageJSON, {platform: whichPlatform()})
+    Object.assign({}, packageJSON, {platform})
   );
 
   // patch requests
