@@ -18,6 +18,7 @@
   "dependencies": {
     "actions-on-google": "^1.10.0",
     "alexa-sdk": "^1.0.25",
+    "ask-sdk": "^2.0.0",
     "axios": "^0.18.0",
     "bespoken-tools": "^1.2.8",
     "dashbot": "^9.4.6",
