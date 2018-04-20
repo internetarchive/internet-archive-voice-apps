@@ -1,4 +1,5 @@
 const axios = require('axios');
+const hirestime = require('hirestime');
 
 const {debug} = require('../utils/logger')('ia:performance:axio');
 
@@ -8,14 +9,13 @@ const {debug} = require('../utils/logger')('ia:performance:axio');
 function use () {
   debug('use');
   axios.interceptors.request.use((config) => {
-    config.requestTimestamp = Date.now();
+    config.elapsed = hirestime();
     return config;
   });
 
   axios.interceptors.response.use((response) => {
     const config = response.config;
-    const delta = Date.now() - config.requestTimestamp;
-    debug(`${config.method} ${config.url}, time=${delta} msec`);
+    debug(`${config.method} ${config.url}, time=${config.elapsed()} msec`);
     return response;
   });
 }
