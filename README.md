@@ -35,6 +35,14 @@ of our App:
 https://<id>.ngrok.io/internet-archive/us-central1/playMedia
 ```
 
+## Setup Env
+
+### Options
+
+ - profile performance of requests
+   Env Variable: `PROFILE_REQUESTS=true` (`false` by default)
+   `firebase functions:config:set performance.requests=true`
+
 ## How to make contributions?
 
 :mag: get [one good first issue](https://github.com/internetarchive/internet-archive-google-action/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
