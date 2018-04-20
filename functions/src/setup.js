@@ -39,7 +39,7 @@ module.exports = ({platform}) => {
     return Promise.reject(error);
   });
 
-  if (env(platform)('performance', 'requests') === 'true') {
+  if (env(platform)('performance', 'requests')) {
     axiosProfile.use();
   }
 };
