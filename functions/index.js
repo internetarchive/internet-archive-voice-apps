@@ -9,7 +9,7 @@ const actionsMap = defaultActions();
 
 logAppStart(actionsMap);
 
-setup();
+setup({platform: 'assistant'});
 
 /**
  * Action of Google Endpoint

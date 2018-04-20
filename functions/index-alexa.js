@@ -9,7 +9,7 @@ const actionsMap = defaultActions();
 
 logAppStart(actionsMap);
 
-setup();
+setup({platform: 'alexa'});
 
 /**
  * Alexa Lambda Endpoint

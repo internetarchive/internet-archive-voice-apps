@@ -7,20 +7,24 @@ const mustache = require('mustache');
 const packageJSON = require('../package.json');
 
 const appConfig = require('./config');
+const env = require('./config/env');
 const mathjsExtensions = require('./mathjs');
-const whichPlatform = require('./platform/which');
 const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
 
-module.exports = () => {
+const axiosProfile = require('./performance/axios');
+
+module.exports = ({platform}) => {
   mathjsExtensions.patch();
 
   const userAgent = mustache.render(
     appConfig.request.userAgent,
-    Object.assign({}, packageJSON, {platform: whichPlatform()})
+    Object.assign({}, packageJSON, {platform})
   );
 
   // patch requests
   axios.interceptors.request.handlers = [];
+  axios.interceptors.response.handlers = [];
+
   axios.interceptors.request.use((config) => {
     config.headers['user-agent'] = userAgent;
     debug(`${config.method.toUpperCase()} ${config.url}`);
@@ -34,4 +38,8 @@ module.exports = () => {
     }
     return Promise.reject(error);
   });
+
+  if (env(platform)('performance', 'requests')) {
+    axiosProfile.use();
+  }
 };
