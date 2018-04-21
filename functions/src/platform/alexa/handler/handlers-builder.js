@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const {App} = require('../app');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
@@ -10,24 +12,30 @@ const kebabToCamel = require('../../../utils/kebab-to-camel');
  * @param actions {Map}
  * @returns {Object}
  */
-module.exports = (actions) => {
+module.exports = (actions, alexa) => {
   if (!actions) {
     return {};
   }
 
   return Array
-    .from(actions.keys())
-    .reduce((acc, name) => {
+    .from(actions.entries())
+    .map(([name, fn]) => {
       const intent = kebabToCamel(name);
-      return Object.assign({}, acc, {
-        [intent]: function () {
+      return {
+        canHandle: (handlerInput) => {
+          return _.get(handlerInput, 'requestEnvelope.request.intent.name') === intent;
+        },
+
+        handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
-          return Promise.resolve(actions.get(name)(new App(this)))
-            .then(() => {
+          return Promise.resolve(fn(new App(alexa, handlerInput)))
+            .then(res => {
               debug(`end handle intent "${intent}"`);
-              this.emit(':responseReady');
+
+              // TODO: shoule return Response
+              return res;
             });
         },
-      });
-    }, {});
+      };
+    });
 };

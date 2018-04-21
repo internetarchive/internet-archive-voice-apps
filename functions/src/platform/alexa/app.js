@@ -8,15 +8,16 @@ const response = require('./response');
  * Facade of Alexa App
  */
 class App {
-  constructor (ctx) {
+  constructor (ctx, handlerInput) {
     this.ctx = ctx;
+    this.handlerInput = handlerInput;
 
     this.platform = 'alexa';
 
     // define interfaces
-    this.params = params(ctx);
-    this.persist = persistance(ctx);
-    this.response = response(ctx);
+    this.params = params(ctx, handlerInput);
+    this.persist = persistance(ctx, handlerInput);
+    this.response = response(ctx, handlerInput);
   }
 
   /**
