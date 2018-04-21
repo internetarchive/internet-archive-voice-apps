@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const mockAlexa = require('../../../_utils/mocking/platforms/alexa');
+const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 const persistance = require('../../../../src/platform/alexa/persistence/session');
 
 describe('platform', () => {
@@ -8,18 +8,27 @@ describe('platform', () => {
     describe('persistance', () => {
       describe('device level', () => {
         it('should share state for one device', () => {
-          const device = mockAlexa({deviceId: 'device'});
-          persistance(device).setData('value', 'hello world');
-          expect(persistance(device).getData('value')).to.be.equal('hello world');
+          const handlerInput = mockHandlerInput({deviceId: 'device'});
+          persistance(handlerInput).setData('value', 'hello world');
+          expect(handlerInput.attributesManager.setSessionAttributes).to.be.called;
+          expect(handlerInput.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
+            value: 'hello world',
+          });
         });
 
         it('should share state for one device', () => {
-          const device1 = mockAlexa({deviceId: 'device1'});
-          const device2 = mockAlexa({deviceId: 'device2'});
-          persistance(device1).setData('value', '1');
-          persistance(device2).setData('value', '2');
-          expect(persistance(device1).getData('value'))
-            .to.not.be.equal(persistance(device2).getData('value'));
+          const handlerInput1 = mockHandlerInput({deviceId: 'device1'});
+          const handlerInput2 = mockHandlerInput({deviceId: 'device2'});
+
+          persistance(handlerInput1).setData('value', '1');
+          persistance(handlerInput2).setData('value', '2');
+
+          expect(handlerInput1.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
+            value: '1',
+          });
+          expect(handlerInput2.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
+            value: '2',
+          });
         });
       });
     });
