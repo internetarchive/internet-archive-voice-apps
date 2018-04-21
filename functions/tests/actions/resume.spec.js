@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const resumeIntent = rewire('../../src/actions/resume-intent');
+const resumeIntent = rewire('../../src/actions/resume');
 const strings = require('../../src/strings');
 
 const mockDialog = require('../_utils/mocking/dialog/ask');

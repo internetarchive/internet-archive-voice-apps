@@ -6,7 +6,7 @@ const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
-function stripAmazonIntent(name) {
+function stripAmazonIntent (name) {
   const res = stripAmazonIntentReg.exec(name);
   if (!res) {
     return name;
