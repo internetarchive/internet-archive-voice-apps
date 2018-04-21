@@ -82,6 +82,17 @@ describe('platform', () => {
         ).to.be.true;
       });
 
+      it('should catch AMAZON specific intents', () => {
+        const helpHandler = sinon.spy();
+        const res = builder(new Map([
+          ['help', helpHandler],
+        ]), alexa);
+
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent'))
+        ).to.be.true;
+      });
+
       it.skip(`should return Response after handler`, () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
