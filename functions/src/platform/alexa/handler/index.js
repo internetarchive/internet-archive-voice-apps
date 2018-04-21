@@ -1,9 +1,10 @@
 const Alexa = require('alexa-sdk');
 // const AWS = require('aws-sdk');
 
-const {debug, info} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const ErrorHandler = require('./error-handler');
+const LogInterceptor = require('./log-interceptor');
 const handlersBuilder = require('./handlers-builder');
 
 module.exports = (actions) => {
@@ -12,17 +13,13 @@ module.exports = (actions) => {
   debug(`We can handle intents: ${Object.keys(handlers).map(name => `"${name}"`).join(', ')}`);
 
   return (event, context) => {
-    info('request type:', event.request.type);
-    if (event.request.intent) {
-      info('request intent:', event.request.intent.name);
-    }
-
     if (!skill) {
       debug('lazy building');
 
       skill = Alexa.SkillBuilders.custom()
         .addRequestHandlers(...handlers)
         .addErrorHandlers(ErrorHandler)
+        .addRequestInterceptors(LogInterceptor)
         // TODO: get from process.env
         // .withSkillId()
         .create();
