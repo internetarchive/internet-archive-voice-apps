@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const sinon = require('sinon');
 
-module.exports = ({deviceId = 'one-device', error = null, reason = null, sessionAttributes = {}, slots = {}} = {}) => {
+module.exports = ({deviceId = 'one-device', error = null, reason = null, response = {}, sessionAttributes = {}, slots = {}} = {}) => {
   const handlerInput = {
     requestEnvelope: {
       request: {
@@ -44,7 +44,7 @@ module.exports = ({deviceId = 'one-device', error = null, reason = null, session
     addVideoAppLaunchDirective: sinon.stub().returns(handlerInput.responseBuilder),
     withShouldEndSession: sinon.stub().returns(handlerInput.responseBuilder),
     addDirective: sinon.stub().returns(handlerInput.responseBuilder),
-    getResponse: sinon.stub().returns({/* Response */}),
+    getResponse: sinon.stub().returns(response),
   };
 
   _.set(handlerInput, 'requestEnvelope.context.System.device.deviceId', deviceId);

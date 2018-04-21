@@ -10,9 +10,13 @@ describe('platform', () => {
   describe('alexa', () => {
     describe('handlers builder', () => {
       let handlerInput;
+      let response;
 
       beforeEach(() => {
-        handlerInput = mockHandlerInput();
+        response = {
+          speechOut: 'hello world!',
+        };
+        handlerInput = mockHandlerInput({response});
       });
 
       it('should return empty object for empty input', () => {
@@ -93,7 +97,7 @@ describe('platform', () => {
         ).to.be.true;
       });
 
-      it.skip(`should return Response after handler`, () => {
+      it(`should return Response after handler`, () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
 
@@ -102,10 +106,10 @@ describe('platform', () => {
           ['welcome', welcomeHandler],
         ]));
 
-        const wrappedNoInputHandler = res['NoInput'];
+        const wrappedNoInputHandler = res[0].handle;
         return wrappedNoInputHandler(handlerInput)
           .then((res) => {
-            // expect(alexa.emit).to.have.been.calledWith(':responseReady');
+            expect(res).to.be.equal(response);
           });
       });
     });

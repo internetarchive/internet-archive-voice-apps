@@ -49,11 +49,9 @@ module.exports = (actions) => {
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
           return Promise.resolve(fn(new App(handlerInput)))
-            .then(res => {
+            .then(() => {
               debug(`end handle intent "${intent}"`);
-
-              // TODO: should return Response
-              return res;
+              return handlerInput.responseBuilder.getResponse();
             });
         },
       };
