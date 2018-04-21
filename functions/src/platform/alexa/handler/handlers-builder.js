@@ -22,9 +22,9 @@ module.exports = (actions, alexa) => {
     .map(([name, fn]) => {
       const intent = kebabToCamel(name);
       return {
-        canHandle: (handlerInput) => {
-          return _.get(handlerInput, 'requestEnvelope.request.intent.name') === intent;
-        },
+        canHandle: (handlerInput) =>
+        _.get(handlerInput, 'requestEnvelope.request.intent.name') === intent ||
+        _.get(handlerInput, 'requestEnvelope.request.type') === intent,
 
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);

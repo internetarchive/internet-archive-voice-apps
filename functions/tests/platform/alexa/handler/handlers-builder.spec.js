@@ -71,6 +71,17 @@ describe('platform', () => {
         expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
       });
 
+      it('should catch request type', () => {
+        const launchRequestHandler = sinon.spy();
+        const res = builder(new Map([
+          ['launch-request', launchRequestHandler],
+        ]), alexa);
+
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'LaunchRequest'))
+        ).to.be.true;
+      });
+
       it.skip(`should return Response after handler`, () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
