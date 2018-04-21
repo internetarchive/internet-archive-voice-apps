@@ -1,4 +1,4 @@
-const Alexa = require('alexa-sdk');
+const Alexa = require('ask-sdk-core');
 // const AWS = require('aws-sdk');
 
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
