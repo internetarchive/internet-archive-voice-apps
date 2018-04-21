@@ -23,8 +23,8 @@ module.exports = (actions, alexa) => {
       const intent = kebabToCamel(name);
       return {
         canHandle: (handlerInput) =>
-        _.get(handlerInput, 'requestEnvelope.request.intent.name') === intent ||
-        _.get(handlerInput, 'requestEnvelope.request.type') === intent,
+          _.get(handlerInput, 'requestEnvelope.request.intent.name') === intent ||
+          _.get(handlerInput, 'requestEnvelope.request.type') === intent,
 
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
@@ -32,7 +32,7 @@ module.exports = (actions, alexa) => {
             .then(res => {
               debug(`end handle intent "${intent}"`);
 
-              // TODO: shoule return Response
+              // TODO: should return Response
               return res;
             });
         },
