@@ -22,9 +22,29 @@ module.exports = ({deviceId = 'one-device', error = null, reason = null, session
       setSessionAttributes: sinon.spy(),
     },
 
-    responseBuilder: {},
-
     serviceClientFactory: {},
+  };
+
+  handlerInput.responseBuilder = {
+    speak: sinon.stub().returns(handlerInput.responseBuilder),
+    reprompt: sinon.stub().returns(handlerInput.responseBuilder),
+    withSimpleCard: sinon.stub().returns(handlerInput.responseBuilder),
+    withStandardCard: sinon.stub().returns(handlerInput.responseBuilder),
+    withLinkAccountCard: sinon.stub().returns(handlerInput.responseBuilder),
+    withAskForPermissionsConsentCard: sinon.stub().returns(handlerInput.responseBuilder),
+    addDelegateDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addElicitSlotDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addConfirmSlotDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addConfirmIntentDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addAudioPlayerPlayDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addAudioPlayerStopDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addAudioPlayerClearQueueDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addRenderTemplateDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addHintDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    addVideoAppLaunchDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    withShouldEndSession: sinon.stub().returns(handlerInput.responseBuilder),
+    addDirective: sinon.stub().returns(handlerInput.responseBuilder),
+    getResponse: sinon.stub().returns({/* Response */}),
   };
 
   _.set(handlerInput, 'requestEnvelope.context.System.device.deviceId', deviceId);
