@@ -21,7 +21,7 @@ function stripAmazonIntent (name) {
  * @param actions {Map}
  * @returns {Object}
  */
-module.exports = (actions, alexa) => {
+module.exports = (actions) => {
   if (!actions) {
     return {};
   }
@@ -48,7 +48,7 @@ module.exports = (actions, alexa) => {
 
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
-          return Promise.resolve(fn(new App(alexa, handlerInput)))
+          return Promise.resolve(fn(new App(handlerInput)))
             .then(res => {
               debug(`end handle intent "${intent}"`);
 

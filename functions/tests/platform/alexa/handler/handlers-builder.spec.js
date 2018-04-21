@@ -4,15 +4,15 @@ const sinon = require('sinon');
 
 const builder = require('../../../../src/platform/alexa/handler/handlers-builder');
 const {App} = require('../../../../src/platform/alexa/app');
-const mockAlexa = require('../../../_utils/mocking/platforms/alexa');
+const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
 describe('platform', () => {
   describe('alexa', () => {
     describe('handlers builder', () => {
-      let alexa;
+      let handlerInput;
 
       beforeEach(() => {
-        alexa = mockAlexa();
+        handlerInput = mockHandlerInput();
       });
 
       it('should return empty object for empty input', () => {
@@ -25,7 +25,7 @@ describe('platform', () => {
         const res = builder(new Map([
           ['no-input', () => {}],
           ['welcome', () => {}],
-        ]), alexa);
+        ]));
 
         expect(res).to.be.ok;
         expect(res).to.be.an('array').with.length(2);
@@ -35,7 +35,7 @@ describe('platform', () => {
         const res = builder(new Map([
           ['no-input', () => {}],
           ['welcome', () => {}],
-        ]), alexa);
+        ]));
 
         expect(res[0]).to.have.property('canHandle');
         expect(res[0]).to.have.property('handle');
@@ -63,10 +63,10 @@ describe('platform', () => {
         const res = builder(new Map([
           ['no-input', noInputHandler],
           ['welcome', welcomeHandler],
-        ]), alexa);
+        ]));
 
         const wrappedNoInputHandler = res[0].handle;
-        wrappedNoInputHandler.call(alexa);
+        wrappedNoInputHandler(handlerInput);
         expect(noInputHandler).to.have.been.called;
         expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
       });
@@ -75,7 +75,7 @@ describe('platform', () => {
         const launchRequestHandler = sinon.spy();
         const res = builder(new Map([
           ['launch-request', launchRequestHandler],
-        ]), alexa);
+        ]));
 
         expect(
           res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'LaunchRequest'))
@@ -86,7 +86,7 @@ describe('platform', () => {
         const helpHandler = sinon.spy();
         const res = builder(new Map([
           ['help', helpHandler],
-        ]), alexa);
+        ]));
 
         expect(
           res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent'))
@@ -100,10 +100,10 @@ describe('platform', () => {
         const res = builder(new Map([
           ['no-input', noInputHandler],
           ['welcome', welcomeHandler],
-        ]), alexa);
+        ]));
 
         const wrappedNoInputHandler = res['NoInput'];
-        return wrappedNoInputHandler.call(alexa)
+        return wrappedNoInputHandler(handlerInput)
           .then((res) => {
             // expect(alexa.emit).to.have.been.calledWith(':responseReady');
           });
