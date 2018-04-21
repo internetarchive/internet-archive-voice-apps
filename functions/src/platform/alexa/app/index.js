@@ -1,8 +1,8 @@
-const {debug} = require('../../utils/logger')('ia:platform:alexa:app');
+const {debug} = require('../../../utils/logger')('ia:platform:alexa:app');
 
-const params = require('./parameters');
-const persistance = require('./persistence');
-const response = require('./response');
+const params = require('../parameters');
+const persistance = require('../persistence');
+const response = require('../response');
 
 /**
  * Facade of Alexa App

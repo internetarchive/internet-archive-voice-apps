@@ -1,8 +1,8 @@
-const {debug} = require('../../utils/logger')('ia:platform:assistant:app');
+const {debug} = require('../../../utils/logger')('ia:platform:assistant:app');
 
-const params = require('./parameters');
-const persistance = require('./persistence');
-const response = require('./response');
+const params = require('../parameters');
+const persistance = require('../persistence');
+const response = require('../response');
 
 /**
  * Facade of Actions of Google App
