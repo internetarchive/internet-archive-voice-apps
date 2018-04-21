@@ -1,8 +1,9 @@
 const Alexa = require('alexa-sdk');
-const AWS = require('aws-sdk');
+// const AWS = require('aws-sdk');
 
-const {debug, info, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug, info} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
+const ErrorHandler = require('./error-handler');
 const handlersBuilder = require('./handlers-builder');
 
 module.exports = (actions) => {
@@ -21,27 +22,23 @@ module.exports = (actions) => {
 
       skill = Alexa.SkillBuilders.custom()
         .addRequestHandlers(...handlers)
-        // .addErrorHandlers(ErrorHandler)
+        .addErrorHandlers(ErrorHandler)
         // TODO: get from process.env
         // .withSkillId()
         .create();
 
-      const region = process.env.AWS_REGION;
-      if (region) {
-        debug('set AWS region', region);
-        AWS.config.update({region});
-      }
-
       // TODO: we don't need it for session attributes
       // turn on once we will have persistant attributes
+
+      // const region = process.env.AWS_REGION;
+      // if (region) {
+      //   debug('set AWS region', region);
+      //   AWS.config.update({region});
+      // }
+
       // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }
 
-    try {
-      return skill.invoke(event, context);
-    } catch (err) {
-      error('Caught Error:', err);
-      // alexa.emit(':tell', 'Sorry, I\'m experiencing some technical difficulties at the moment. Please try again later.');
-    }
+    return skill.invoke(event, context);
   };
 };
