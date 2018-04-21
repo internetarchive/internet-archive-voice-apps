@@ -8,16 +8,20 @@ const response = require('./response');
  * Facade of Alexa App
  */
 class App {
-  constructor (ctx, handlerInput) {
-    this.ctx = ctx;
+  /**
+   * Create instance of Alexa App
+   *
+   * @param handlerInput
+   */
+  constructor (handlerInput) {
     this.handlerInput = handlerInput;
 
     this.platform = 'alexa';
 
     // define interfaces
-    this.params = params(ctx, handlerInput);
-    this.persist = persistance(ctx, handlerInput);
-    this.response = response(ctx, handlerInput);
+    this.params = params(handlerInput);
+    this.persist = persistance(handlerInput);
+    this.response = response(handlerInput);
   }
 
   /**
@@ -35,7 +39,7 @@ class App {
    * @returns {Number}
    */
   getOffset () {
-    return this.ctx.event.request.offsetInMilliseconds;
+    return this.handlerInput.request.offsetInMilliseconds;
   }
 
   /**
@@ -43,7 +47,7 @@ class App {
    */
   stopPlayback () {
     debug('stop playing music');
-    this.ctx.response.audioPlayerStop();
+    this.handlerInput.responseBuilder.addAudioPlayerStopDirective();
   }
 }
 
