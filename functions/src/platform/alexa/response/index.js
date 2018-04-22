@@ -1,11 +1,11 @@
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:response');
 
 /**
- * create alexa.ask wrapper
+ * Create alexa response builder wrapper
  *
- * @param alexa
+ * @param handlerInput
  */
-module.exports = (alexa) =>
+module.exports = (handlerInput) =>
   /**
    * Response with question
    *
@@ -26,7 +26,7 @@ module.exports = (alexa) =>
         debug('speachout is not allowed');
       } else {
         debug('speak', speech);
-        alexa.response.speak(speech);
+        handlerInput.responseBuilder.speak(speech);
       }
     } else {
       debug('there is nothing to speak');
@@ -40,25 +40,31 @@ module.exports = (alexa) =>
           debug(`card is not allowed`);
         } else {
           debug('render card', m.name, m.description);
-          alexa.response.cardRenderer(m.name, m.description, m.imageURL);
+          if (m.imageURL) {
+            handlerInput.responseBuilder.withStandardCard(m.name, m.description, m.imageURL);
+          } else {
+            handlerInput.responseBuilder.withSimpleCard(m.name, m.description);
+          }
         }
 
         debug('playback audio', m.contentURL);
-        alexa.response.audioPlayerPlay(
+        handlerInput.responseBuilder.addAudioPlayerPlayDirective(
           // behavior,
           previousToken ? 'ENQUEUE' : 'REPLACE_ALL',
           m.contentURL,
           // token (This token cannot exceed 1024 characters)
           m.contentURL,
-          // expectedPreviousToken
-          previousToken,
           // offsetInMilliseconds
-          m.offset
+          m.offset,
+          // expectedPreviousToken
+          previousToken
         );
       });
+      handlerInput.responseBuilder.withShouldEndSession(true);
     } else {
-      alexa.response.listen(speech);
+      handlerInput.responseBuilder.withShouldEndSession(false);
     }
+
     if (suggestions) {
       if (mediaResponseOnly) {
         debug(`we shouldn't give hints`);
@@ -68,7 +74,7 @@ module.exports = (alexa) =>
 
         if (textSuggestions.length > 0) {
           debug('hint', textSuggestions[0]);
-          alexa.response.hint(textSuggestions[0]);
+          handlerInput.responseBuilder.addHintDirective(textSuggestions[0]);
         }
       }
     }

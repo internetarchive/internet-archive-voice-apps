@@ -1,17 +1,22 @@
 const {expect} = require('chai');
+const _ = require('lodash');
 const sinon = require('sinon');
 
 const builder = require('../../../../src/platform/alexa/handler/handlers-builder');
 const {App} = require('../../../../src/platform/alexa/app');
-const mockAlexa = require('../../../_utils/mocking/platforms/alexa');
+const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
 describe('platform', () => {
   describe('alexa', () => {
     describe('handlers builder', () => {
-      let alexa;
+      let handlerInput;
+      let response;
 
       beforeEach(() => {
-        alexa = mockAlexa();
+        response = {
+          speechOut: 'hello world!',
+        };
+        handlerInput = mockHandlerInput({response});
       });
 
       it('should return empty object for empty input', () => {
@@ -20,15 +25,39 @@ describe('platform', () => {
         expect(res).to.be.empty;
       });
 
-      it('should capitalize handler names', () => {
+      it('should return array', () => {
         const res = builder(new Map([
           ['no-input', () => {}],
           ['welcome', () => {}],
         ]));
 
         expect(res).to.be.ok;
-        expect(res).to.have.property('NoInput');
-        expect(res).to.have.property('Welcome');
+        expect(res).to.be.an('array').with.length(2);
+      });
+
+      it('should capitalize expected intent name', () => {
+        const res = builder(new Map([
+          ['no-input', () => {}],
+          ['welcome', () => {}],
+        ]));
+
+        expect(res[0]).to.have.property('canHandle');
+        expect(res[0]).to.have.property('handle');
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'NoInput'))
+        ).to.be.true;
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'Welcome'))
+        ).to.be.false;
+
+        expect(res[1]).to.have.property('canHandle');
+        expect(res[1]).to.have.property('handle');
+        expect(
+          res[1].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'Welcome'))
+        ).to.be.true;
+        expect(
+          res[1].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'NoInput'))
+        ).to.be.false;
       });
 
       it('should pass alexa app as 1st argument to intent handler', () => {
@@ -40,13 +69,35 @@ describe('platform', () => {
           ['welcome', welcomeHandler],
         ]));
 
-        const wrappedNoInputHandler = res['NoInput'];
-        wrappedNoInputHandler.call(alexa);
+        const wrappedNoInputHandler = res[0].handle;
+        wrappedNoInputHandler(handlerInput);
         expect(noInputHandler).to.have.been.called;
         expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
       });
 
-      it(`should call this.emit(':responseReady') after handler`, () => {
+      it('should catch request type', () => {
+        const launchRequestHandler = sinon.spy();
+        const res = builder(new Map([
+          ['launch-request', launchRequestHandler],
+        ]));
+
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'LaunchRequest'))
+        ).to.be.true;
+      });
+
+      it('should catch AMAZON specific intents', () => {
+        const helpHandler = sinon.spy();
+        const res = builder(new Map([
+          ['help', helpHandler],
+        ]));
+
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent'))
+        ).to.be.true;
+      });
+
+      it(`should return Response after handler`, () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
 
@@ -55,25 +106,11 @@ describe('platform', () => {
           ['welcome', welcomeHandler],
         ]));
 
-        const wrappedNoInputHandler = res['NoInput'];
-        return wrappedNoInputHandler.call(alexa)
-          .then(() => {
-            expect(alexa.emit).to.have.been.calledWith(':responseReady');
+        const wrappedNoInputHandler = res[0].handle;
+        return wrappedNoInputHandler(handlerInput)
+          .then((res) => {
+            expect(res).to.be.equal(response);
           });
-      });
-
-      it('should wait until promise of handler will be solve before emit responseReady', () => {
-        const welcomeHandler = sinon.stub().returns(Promise.resolve());
-        const res = builder(new Map([
-          ['welcome', welcomeHandler],
-        ]));
-
-        const wrappedWelcomeHandler = res['Welcome'];
-        const p = wrappedWelcomeHandler.call(alexa);
-        expect(alexa.emit).to.not.have.been.called;
-        return p.then(() => {
-          expect(alexa.emit).to.have.been.calledWith(':responseReady');
-        });
       });
     });
   });

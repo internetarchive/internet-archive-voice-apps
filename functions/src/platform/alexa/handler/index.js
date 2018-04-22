@@ -1,43 +1,51 @@
-const Alexa = require('alexa-sdk');
-const AWS = require('aws-sdk');
+const Alexa = require('ask-sdk-core');
+// const AWS = require('aws-sdk');
 
-const {debug, info, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
+const ErrorHandler = require('./error-handler');
+const LogInterceptor = require('./log-interceptor');
 const handlersBuilder = require('./handlers-builder');
 
 module.exports = (actions) => {
   const handlers = handlersBuilder(actions);
-  debug(`We can handle intents: ${Object.keys(handlers).map(name => `"${name}"`).join(', ')}`);
-  return (event, context, callback) => {
-    const alexa = Alexa.handler(event, context, callback);
+  let skill;
+  debug(`We can handle intents: ${handlers.map(({intent}) => `"${intent}"`).join(', ')}`);
 
-    info('request type:', event.request.type);
-    if (event.request.intent) {
-      info('request intent:', event.request.intent.name);
+  return function (event, context, callback) {
+    if (!skill) {
+      debug('lazy building');
 
-      // if intent starts with AMAZON we will cut this head
-      const parts = event.request.intent.name.split('.');
-      if (parts[0] === 'AMAZON') {
-        debug('cut AMAZON head from intent');
-        event.request.intent.name = parts.slice(1).join('.');
-      }
+      skill = Alexa.SkillBuilders.custom()
+        .addRequestHandlers(...handlers)
+        .addErrorHandlers(ErrorHandler)
+        .addRequestInterceptors(LogInterceptor)
+        // TODO: get from process.env
+        // .withSkillId()
+        .create();
+
+      // TODO: we don't need it for session attributes
+      // turn on once we will have persistant attributes
+
+      // const region = process.env.AWS_REGION;
+      // if (region) {
+      //   debug('set AWS region', region);
+      //   AWS.config.update({region});
+      // }
+
+      // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }
 
-    // TODO: get from process.env
-    // alexa.appId
-    const region = process.env.AWS_REGION;
-    if (region) {
-      debug('set AWS region', region);
-      AWS.config.update({region});
+    // FIXME:
+    // temporal hack because bst doesn't suppor ASK SDK v2 yet
+    // https://github.com/bespoken/bst/issues/440
+    if (callback) {
+      skill.invoke(event, context).then(
+        res => callback(null, res),
+        err => callback(err)
+      );
+      return;
     }
-    alexa.dynamoDBTableName = 'InternetArchiveSessions';
-    alexa.registerHandlers(handlers);
-
-    try {
-      alexa.execute();
-    } catch (err) {
-      error('Caught Error:', err);
-      alexa.emit(':tell', 'Sorry, I\'m experiencing some technical difficulties at the moment. Please try again later.');
-    }
+    return skill.invoke(event, context);
   };
 };
