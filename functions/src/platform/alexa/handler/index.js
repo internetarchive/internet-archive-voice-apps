@@ -10,9 +10,9 @@ const handlersBuilder = require('./handlers-builder');
 module.exports = (actions) => {
   const handlers = handlersBuilder(actions);
   let skill;
-  debug(`We can handle intents: ${Object.keys(handlers).map(name => `"${name}"`).join(', ')}`);
+  debug(`We can handle intents: ${handlers.map(({intent}) => `"${intent}"`).join(', ')}`);
 
-  return (event, context) => {
+  return function (event, context, callback) {
     if (!skill) {
       debug('lazy building');
 
@@ -36,6 +36,16 @@ module.exports = (actions) => {
       // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }
 
+    // FIXME:
+    // temporal hack because bst doesn't suppor ASK SDK v2 yet
+    // https://github.com/bespoken/bst/issues/440
+    if (callback) {
+      skill.invoke(event, context).then(
+        res => callback(null, res),
+        err => callback(err)
+      );
+      return;
+    }
     return skill.invoke(event, context);
   };
 };

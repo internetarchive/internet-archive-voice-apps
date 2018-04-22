@@ -31,6 +31,8 @@ module.exports = (actions) => {
     .map(([name, fn]) => {
       const intent = kebabToCamel(name);
       return {
+        intent,
+
         canHandle: (handlerInput) => {
           let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
           if (intentName) {
