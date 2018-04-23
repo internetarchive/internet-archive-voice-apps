@@ -3,6 +3,7 @@ const sinon = require('sinon');
 
 const strings = require('../../src/strings');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
+const {wait} = require('../_utils/wait');
 
 let index, configStub, adminInitStub, functions, admin;
 
@@ -14,18 +15,30 @@ describe('integration', () => {
     configStub = sinon.stub(functions, 'config').returns(require(`../.runtimeconfig.json`));
     index = require('../..');
   });
+
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
+  });
+
   describe('no-input', () => {
-    it('should 1st time', () => {
+    it('should speechout 1st time', () => {
       const res = new MockResponse();
+
       index.assistant(buildIntentRequest({
         action: 'no-input',
       }), res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
+        });
     });
 
-    it('should 2nd time', () => {
+    it('should speechout 2nd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'no-input',
@@ -41,15 +54,20 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(
-        strings.intents.noInput[1].speech.replace('{{reprompt}}', 'Direction?')
-      );
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(
+            strings.intents.noInput[1].speech.replace('{{reprompt}}', 'Direction?')
+          );
+        });
     });
 
-    it('should 3rd time', () => {
+    it('should speechout 3rd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'no-input',
@@ -60,10 +78,15 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.false;
-      expect(res.speech()).to.contain(strings.intents.noInput[2].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.false;
+          expect(res.speech()).to.contain(strings.intents.noInput[2].speech);
+        });
     });
 
     it('should not fallback 3rd time if previous action was not no-input', () => {
@@ -77,15 +100,15 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
+        });
     });
-  });
-  after(() => {
-    // Restoring our stubs to the original methods.
-    configStub.restore();
-    adminInitStub.restore();
   });
 });

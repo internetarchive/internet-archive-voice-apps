@@ -31,7 +31,17 @@ function getBody ({action, data = {}, lastSeen = '2018-02-15T15:54:15Z'}) {
           'userId': 'ABwppHF87C7vRsEg2MsfxhYPar0beTkSw3KHiQEWc5OznoqwWNjh2Tko0Pp30Oow2Qak6BtTYs25J6HlSR03oQT70OVv'
         },
         'conversation': {'conversationId': '1518710115665', 'type': 'NEW'},
-        'availableSurfaces': [{'capabilities': [{'name': 'actions.capability.SCREEN_OUTPUT'}, {'name': 'actions.capability.AUDIO_OUTPUT'}]}]
+        'availableSurfaces': [{
+          'capabilities': [{
+            'name': 'actions.capability.SCREEN_OUTPUT'
+          }, {
+            'name': 'actions.capability.AUDIO_OUTPUT'
+          }, {
+            'name': 'actions.capability.MEDIA_RESPONSE_AUDIO'
+          }, {
+            'name': 'actions.capability.WEB_BROWSER'
+          }]
+        }]
       }
     },
     'id': '70c039ef-32e8-4a44-875c-81788cf5e1da',
@@ -74,7 +84,7 @@ function getBody ({action, data = {}, lastSeen = '2018-02-15T15:54:15Z'}) {
         'webhookUsed': 'true',
         'webhookForSlotFillingUsed': 'false',
         'nluResponseTime': 0,
-        'intentName': 'Welcome'
+        'intentName': action
       },
       'fulfillment': {'speech': '', 'messages': [{'type': 0, 'speech': ''}]},
       'score': 1
@@ -97,7 +107,7 @@ class MockRequest {
 
 class MockResponse {
   constructor () {
-    this.statusCode = 200;
+    this.statusCode = undefined;
     this.headers = {};
   }
 
@@ -132,7 +142,7 @@ class MockResponse {
    * just get plain speech text for matching with expectation
    */
   speech () {
-    return this.body.speech || this.body.data.google.richResponse.items.map(i => i.simpleResponse.ssml).join('\n');
+    return this.body.speech || this.body.data.google.richResponse.items.map(i => i.simpleResponse.textToSpeech).join('\n');
   }
 }
 

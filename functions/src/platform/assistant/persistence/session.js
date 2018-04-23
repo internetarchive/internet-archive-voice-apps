@@ -20,11 +20,11 @@ module.exports = (app) => {
      * @returns {{}}
      */
     getData: (name) => {
-      if (!app.data) {
+      if (!app.user.storage) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
 
-      return app.data[name];
+      return app.user.storage[name];
     },
 
     /**
@@ -36,11 +36,11 @@ module.exports = (app) => {
     setData: (name, value) => {
       debug(`set attribute ${name} to`, value);
 
-      if (!app.data) {
+      if (!app.user.storage) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
 
-      app.data[name] = value;
+      app.user.storage[name] = value;
     },
   };
 };

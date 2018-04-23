@@ -9,7 +9,7 @@ describe('playlist', () => {
 
   beforeEach(() => {
     app = mockApp();
-    app.data.playlist = {
+    app.user.storage.playlist = {
       current: 1,
       items: [
         {track: 1, title: 'song 1'},
@@ -49,7 +49,7 @@ describe('playlist', () => {
     describe('next', () => {
       it('should move pointer to the next song', () => {
         playlist.next(app);
-        expect(app.data.playlist).to.have.property('current', 2);
+        expect(app.user.storage.playlist).to.have.property('current', 2);
       });
     });
 
@@ -81,7 +81,7 @@ describe('playlist', () => {
       });
 
       it('should return false if we do not have next song', () => {
-        app.data.playlist.current = 2;
+        app.user.storage.playlist.current = 2;
         expect(playlist.hasNextSong(app)).to.be.false;
       });
     });

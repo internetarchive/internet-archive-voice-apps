@@ -13,7 +13,7 @@ describe('platform', () => {
           expect(persistance(device).getData('value')).to.be.equal('hello world');
         });
 
-        it('should share state for one device', () => {
+        it(`shouldn't share state for different devices`, () => {
           const device1 = mockAssistant({deviceId: 'device1'});
           const device2 = mockAssistant({deviceId: 'device2'});
           persistance(device1).setData('value', '1');

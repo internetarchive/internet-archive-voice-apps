@@ -13,7 +13,7 @@ module.exports = function mockApp ({
 } = {}) {
   const app = {};
   app.ask = sinon.stub().returns(app);
-  app.data = {};
+  _.set(app, 'user.storage', {});
   _.set(app, 'Media.ImageType.LARGE', 'Media.ImageType.LARGE');
   _.set(app, 'MEDIA_STATUS.extension.status', null);
   _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
@@ -32,6 +32,7 @@ module.exports = function mockApp ({
   app.buildMediaResponse = sinon.stub().returns(app);
   app.buildRichResponse = sinon.stub().returns(app);
   app.getLastSeen = sinon.stub().returns(lastSeen);
+  app.intent = sinon.spy();
   app.isFirstTry = sinon.stub().returns(isFirstTry);
   app.setImage = sinon.stub().returns(app);
   app.setDescription = sinon.stub().returns(app);

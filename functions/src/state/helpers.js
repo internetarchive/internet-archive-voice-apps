@@ -58,10 +58,11 @@ module.exports = {
       }
 
       // @deprecated
-      if (!app.data) {
+      debug('@deprecated we used depricated getData', app.user.storage);
+      if (!app.user.storage) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
-      return app.data[name] || defaults;
+      return app.user.storage[name] || defaults;
     },
 
     /**
@@ -81,10 +82,11 @@ module.exports = {
       }
 
       // @deprecated
-      if (!app.data) {
+      debug('@deprecated we use depricated setData', app.user.storage);
+      if (!app.user.storage) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
-      app.data[name] = value;
+      app.user.storage[name] = value;
     },
   }),
 

@@ -21,7 +21,7 @@ describe('actions', () => {
     builder.__set__('dialog', dialog);
     handler = builder.buildRapairHandler('no-input', strings);
     app = mockApp();
-    app.data.dialog = {
+    app.user.storage.dialog = {
       lastPhrase: {
         speech, reprompt, suggestions,
       },

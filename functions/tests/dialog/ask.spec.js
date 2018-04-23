@@ -8,10 +8,13 @@ const mockApp = require('../_utils/mocking/platforms/assistant');
 
 describe('dialog', () => {
   let savePhrase;
+  let Suggestions;
 
   beforeEach(() => {
     savePhrase = sinon.spy();
+    Suggestions = sinon.spy();
     ask.__set__('savePhrase', savePhrase);
+    ask.__set__('Suggestions', Suggestions);
   });
 
   describe('ask', () => {
@@ -25,9 +28,8 @@ describe('dialog', () => {
       ask(app, {speech, reprompt, suggestions});
 
       expect(app.ask).to.be.calledOnce;
-      expect(app.buildRichResponse).to.be.calledOnce;
-      expect(app.addSimpleResponse).to.be.calledWith(speech);
-      expect(app.addSuggestions).to.be.calledWith(suggestions);
+      expect(app.ask.args[0][1]).to.be.equal(speech);
+      expect(Suggestions).to.be.calledWith(suggestions);
       expect(savePhrase).to.be.calledOnce;
     });
   });

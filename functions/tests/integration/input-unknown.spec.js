@@ -7,6 +7,8 @@ const mustache = require('mustache');
 const sinon = require('sinon');
 
 const strings = require('../../src/strings');
+
+const {wait} = require('../_utils/wait');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 
 let index, configStub, adminInitStub, functions, admin;
@@ -19,18 +21,30 @@ describe('integration', () => {
     configStub = sinon.stub(functions, 'config').returns(require(`../.runtimeconfig.json`));
     index = require('../..');
   });
+
+  after(() => {
+    // Restoring our stubs to the original methods.
+    configStub.restore();
+    adminInitStub.restore();
+  });
+
   describe('input-unknown', () => {
-    it('should 1st time', () => {
+    it('should speechout 1st time', () => {
       const res = new MockResponse();
+
       index.assistant(buildIntentRequest({
         action: 'input-unknown',
       }), res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+        });
     });
 
-    it('should 2nd time', () => {
+    it('should speechout 2nd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'input-unknown',
@@ -46,18 +60,24 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(
-        mustache.render(
-          strings.intents.unknown[1].speech,
-          { reprompt: 'Direction?' }
-        )
-      );
+
+      return wait()
+        .then(() => {
+          console.log(JSON.stringify(res.body));
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(
+            mustache.render(
+              strings.intents.unknown[1].speech,
+              {reprompt: 'Direction?'}
+            )
+          );
+        });
     });
 
-    it('should 3rd time', () => {
+    it('should speechout 3rd time', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'input-unknown',
@@ -68,10 +88,15 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.false;
-      expect(res.speech()).to.contain(strings.intents.unknown[2].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.false;
+          expect(res.speech()).to.contain(strings.intents.unknown[2].speech);
+        });
     });
 
     it('should not fallback 3rd time if previous action was not no-input', () => {
@@ -85,15 +110,15 @@ describe('integration', () => {
           },
         },
       });
+
       index.assistant(req, res);
-      expect(res.statusCode).to.be.equal(200);
-      expect(res.userResponse()).to.be.true;
-      expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+
+      return wait()
+        .then(() => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.userResponse()).to.be.true;
+          expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+        });
     });
-  });
-  after(() => {
-    // Restoring our stubs to the original methods.
-    configStub.restore();
-    adminInitStub.restore();
   });
 });

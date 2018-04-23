@@ -3,27 +3,26 @@ const util = require('util');
 const {debug, info} = require('.')('ia:log-request');
 
 /**
- * Log Request
+ * Log Request Middleware
  *
- * @param app
- * @param req
+ * @param conv
  */
-module.exports = (app, req) => {
+module.exports = (conv) => {
   debug('\n\n');
-  debug(`request body:`, req.body);
-  debug(`request headers:`, req.headers);
+  debug(`request body:`, conv.request.body);
+  debug(`request headers:`, conv.request.headers);
   debug('\n\n');
-  info(`start handling action: ${app.getIntent()}`);
-  const user = app.getUser();
-  if (user) {
-    info(`user id: ${app.getUser().userId}`);
-    debug(`user name: ${util.inspect(app.getUser().userName)}`);
-    debug(`last seen: ${app.getUser().lastSeen}`);
+  info(`start handling action: ${conv.action}, intent: ${conv.intent}`);
+  if (conv.user) {
+    info(`user.id:`, conv.user.id);
+    info(`user.last:`, conv.user.last);
+    info(`user.name:`, util.inspect(conv.user.name));
   } else {
-    debug('<unknown user>');
+    info(`user: <unknown>`);
   }
-  debug(`surface capabilities: ${app.getSurfaceCapabilities()}`);
-  debug(`user's session data:`, app.data);
-  debug(`user's persistent data:`, app.userStorage);
+  debug(`surface capabilities:`, util.inspect(conv.available.surfaces.capabilities.surfaces.map(s => s.capabilities.list)));
+  debug(`user's session data:`, conv.user.storage);
+  // FIXME::
+  debug(`user's persistent data:`, conv.userStorage);
   debug('\n\n');
 };

@@ -2,19 +2,21 @@ const {expect} = require('chai');
 
 const {getLastPhrase, getLastReprompt, getReprompt, savePhrase} = require('../../src/state/dialog');
 
+const mockAssistant = require('../_utils/mocking/platforms/assistant');
+
 describe('state', () => {
   let app;
 
   beforeEach(() => {
-    app = {data: {}};
+    app = mockAssistant();
   });
 
   describe('dialog', () => {
     describe('savePhrase', () => {
       it('should store phrase and we could pick up it', () => {
-        app.data.somethingElse = 'hello world';
+        app.user.storage.somethingElse = 'hello world';
         savePhrase(app, 'Hi there!');
-        expect(app.data).to.have.property('somethingElse', 'hello world');
+        expect(app.user.storage).to.have.property('somethingElse', 'hello world');
         expect(getLastPhrase(app)).to.be.equal('Hi there!');
       });
     });

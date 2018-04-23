@@ -1,9 +1,9 @@
-const DialogflowApp = require('actions-on-google').DialogflowApp;
-const functions = require('firebase-functions');
+const {dialogflow} = require('actions-on-google');
 const bst = require('bespoken-tools');
-const dashbotBuilder = require('dashbot');
+const functions = require('firebase-functions');
+// const dashbotBuilder = require('dashbot');
 // FIXME: temporal solution details below
-const domain = require('domain'); // eslint-disable-line
+// const domain = require('domain'); // eslint-disable-line
 const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
@@ -11,15 +11,97 @@ const packageJSON = require('../../../package.json');
 const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
 const strings = require('./../../strings');
-const {debug, error, warning} = require('./../../utils/logger')('ia:index');
+const {error, warning} = require('./../../utils/logger')('ia:index');
 const logRequest = require('./../../utils/logger/log-request');
 
-module.exports = (actionsMap) => {
-  const dashbot = dashbotBuilder(
-    functions.config().dashbot.key, {
-      printErrors: false,
-    }).google;
+const buildHandlers = require('./handler/builder');
 
+module.exports = (actionsMap) => {
+  const app = dialogflow();
+
+  // dashbot doesn't support official v2 yet
+  // (https://github.com/actionably/dashbot/issues/23)
+  //
+  // const dashbot = dashbotBuilder(
+  //   functions.config().dashbot.key, {
+  //     printErrors: false,
+  //   }).google;
+
+  if (actionsMap) {
+    buildHandlers({actionsMap})
+      .forEach(
+        ({intent, handler}) => app.intent(intent, handler)
+      );
+  }
+
+  // Sentry middleware
+  if (functions.config().sentry) {
+    app.middleware((conv) => {
+      conv.raven = Raven.Client();
+      conv.raven.config(
+        functions.config().sentry.url, {
+          sendTimeout: 10,
+          captureUnhandledRejections: true,
+          release: packageJSON.version,
+          tags: {
+            platform: 'assistant',
+          }
+        }
+      ).install();
+
+      // set user's context to Sentry
+      app.raven.setContext({
+        user: conv.user,
+      });
+
+      // action context
+      app.raven.captureBreadcrumb({
+        category: 'handle',
+        message: 'Handling of request',
+        level: 'info',
+        data: {
+          capabilities: conv.available.surfaces.capabilities,
+          sessionData: conv.user.storage,
+        },
+      });
+    });
+  }
+
+  // log request
+  app.middleware(logRequest);
+
+  // compatability middleware
+  app.middleware((conv) => {
+    if (!conv.available.surfaces.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
+      dialog.tell(conv, strings.errors.device.mediaResponse);
+    }
+  });
+
+  app.middleware((conv) => {
+    storeAction(conv, conv.action);
+  });
+
+  app.fallback((conv) => {
+    // TODO: move to actions
+    // warning(`We missed action: "${app.getIntent()}".
+    warning(`We missed action: "${conv.action}".
+             Intent: "${conv.intent}"`);
+
+    conv.close(`Can you rephrase it?`);
+  });
+
+  app.catch((conv, err) => {
+    error('We got unhandled error', err);
+    if (app.raven) {
+      app.raven.captureException(err);
+    }
+
+    conv.close(`Can you rephrase it?`);
+  });
+
+  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
+
+  /*
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, function (req, res) {
     let raven;
 
@@ -40,6 +122,7 @@ module.exports = (actionsMap) => {
       domain.active = null;
 
       const app = new DialogflowApp({request: req, response: res});
+      // const app = new DialogflowApp({request: req, response: res});
       if (functions.config().sentry) {
         raven = app.raven = Raven.Client();
         app.raven.config(
@@ -108,4 +191,5 @@ module.exports = (actionsMap) => {
       }
     }
   }));
+  */
 };

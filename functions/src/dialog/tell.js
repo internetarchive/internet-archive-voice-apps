@@ -18,6 +18,5 @@ module.exports = function tell (app, {speech}) {
     throw new Error(`Argument 'speech' is not defined: ${speech}`);
   }
 
-  app.tell(app.buildRichResponse()
-    .addSimpleResponse(speech));
+  app.close(speech);
 };
