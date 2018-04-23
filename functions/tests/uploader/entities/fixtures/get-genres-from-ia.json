@@ -1,0 +1,53 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 36,
+    "params": {
+      "query": "collection:(georgeblood )",
+      "qin": "collection:(georgeblood)",
+      "fields": "creator",
+      "wt": "json",
+      "sort": "downloads desc",
+      "rows": "3",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 58512,
+    "start": 0,
+    "docs": [
+      {
+        "creator": [
+          "Chubby Jackson and his Orchestra",
+          "Jackson",
+          "Bauer"
+        ]
+      },
+      {
+        "creator": [
+          "Connie's Inn Orchestra",
+          "Armstrong",
+          "Oliver",
+          "Rex Stewart",
+          "Russell Smith",
+          "Bobby Stark",
+          "Jimmy Harrisson",
+          "Claude Jones",
+          "Coleman Hawkins",
+          "Russell Procope",
+          "Edgar Sampson",
+          "Fletcher Henderson",
+          "Clarence Haliday",
+          "John Kirby",
+          "Kaiser Marshall"
+        ]
+      },
+      {
+        "creator": [
+          "Paul Ric...sticker",
+          "Rice Brothers' Gang"
+        ]
+      }
+    ]
+  }
+}
