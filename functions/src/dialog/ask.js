@@ -10,7 +10,7 @@ const {debug} = require('../utils/logger')('ia:dialog:ask');
  * @param suggestions {array}
  */
 module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
-  debug('ask', speech, suggestions);
+  debug('ask', speech, reprompt, suggestions);
 
   if (typeof app === 'string') {
     throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
@@ -26,15 +26,25 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     suggestions,
   });
 
-  if (!suggestions) {
-    app.ask(speech);
-  } else {
-    if (Array.isArray(suggestions)) {
-      suggestions = suggestions.map(s => s.toString());
-    }
+  if (!app.response) {
+    // @depricated
+    if (!suggestions) {
+      app.ask(speech);
+    } else {
+      if (Array.isArray(suggestions)) {
+        suggestions = suggestions.map(s => s.toString());
+      }
 
-    app.ask(app.buildRichResponse()
-      .addSimpleResponse(speech)
-      .addSuggestions(suggestions));
+      app.ask(app.buildRichResponse()
+        .addSimpleResponse(speech)
+        .addSuggestions(suggestions));
+    }
+    return;
   }
+
+  if (Array.isArray(suggestions)) {
+    suggestions = suggestions.map(s => s.toString());
+  }
+
+  app.response({speech, reprompt, suggestions});
 };

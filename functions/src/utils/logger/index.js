@@ -35,12 +35,16 @@ function patchDebugScopeEnvVariable () {
  */
 module.exports = (name) => {
   const debug = loggerBuilder(`${name}:debug`);
-  if (console.debug) {
-    debug.log = console.debug.bind(console);
+  if (console.info) {
+    debug.log = console.info.bind(console);
   }
   const error = loggerBuilder(`${name}:error`);
   if (console.error) {
     error.log = console.error.bind(console);
+  }
+  const info = loggerBuilder(`${name}:info`);
+  if (console.info) {
+    info.log = console.info.bind(console);
   }
   const warning = loggerBuilder(`${name}:warning`);
   if (console.warn) {
@@ -50,6 +54,7 @@ module.exports = (name) => {
   return {
     debug,
     error,
+    info,
     warning,
   };
 };

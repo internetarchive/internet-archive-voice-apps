@@ -1,8 +1,17 @@
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
+const acknowledge = require('./middlewares/acknowledge');
+const ask = require('./middlewares/ask');
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
-const playbackFulfillment = require('./middlewares/playback-fulfillment');
+const feederFromSlotScheme = require('./middlewares/feeder-from-slots-scheme');
+const fulfilResolvers = require('./middlewares/fulfil-resolvers');
+const parepareSongData = require('./middlewares/song-data');
+const playlistFromFeeder = require('./middlewares/playlist-from-feeder');
+const playSong = require('./middlewares/play-song');
+const renderSpeech = require('./middlewares/render-speech');
+const repairBrokenSlots = require('./middlewares/repair-broken-slots');
+const suggestions = require('./middlewares/suggestions');
 
 /**
  * High-order handler
@@ -34,12 +43,55 @@ function build ({playlist, strings, query}) {
     debug(`start handler "${strings.name}"`);
     const slotScheme = strings;
 
-    // pipeline of actions handling
-    return Promise
-      .resolve({app, slotScheme, playlist, query})
-      .then(copyArgumentToSlots())
+    // pipeline of action handling
+    return copyArgumentToSlots()({app, slotScheme, playlist, query})
       .then(copyDefaultsToSlots())
-      .then(playbackFulfillment());
+      // expose slots
+      .then(ctx => Object.assign({}, ctx, {slots: ctx.query.getSlots(ctx.app)}))
+      // expose current platform to the slots
+      .then(ctx =>
+        Object.assign({}, ctx, {
+          slots: Object.assign(
+            {}, ctx.slots, {platform: app.platform || 'assistant'}
+          )
+        })
+      )
+      .then(feederFromSlotScheme())
+      .then(playlistFromFeeder())
+      .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
+      .then(parepareSongData())
+      .then(fulfilResolvers())
+      .then(renderSpeech())
+      .then(playSong())
+      .catch((error) => {
+        debug(`we don't have playlist (or it is empty)`);
+        debug('keys:', Object.keys(error));
+        debug('error', error);
+        const context = error.context;
+        const brokenSlots = context ? context.newValues : {};
+        const slots = context ? context.slots : {};
+
+        // we shouldn't exclude collections and creators
+        // because without them we would have too broad scope
+        const exclude = Object.keys(brokenSlots)
+          // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
+          .filter(name => ['collectionId'].indexOf(name) < 0);
+
+        return repairBrokenSlots()(Object.assign({}, context, {
+          brokenSlots,
+          // drop any acknowledges before
+          speech: [],
+          suggestions: [],
+          slots: Object.assign({}, slots, {
+            suggestions: [],
+          }),
+        }))
+          .then(suggestions({exclude}))
+          .then(fulfilResolvers())
+          .then(renderSpeech())
+          // TODO: should clean broken slots from queue state
+          .then(ask());
+      });
   }
 
   return {

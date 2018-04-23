@@ -1,6 +1,7 @@
+const axios = require('axios');
 const _ = require('lodash');
 const mustache = require('mustache');
-const fetch = require('node-fetch');
+const util = require('util');
 
 const config = require('../config');
 const delayedPromise = require('../utils/delay');
@@ -17,7 +18,7 @@ const {buildQueryCondition} = require('./advanced-search');
  * @returns {Promise}
  */
 function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
-  return fetch(
+  return axios.get(
     mustache.render(config.endpoints.COLLECTION_URL, {id})
   )
     .catch((error) => {
@@ -28,15 +29,15 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
         return Promise.reject(error);
       }
     })
-    .then(res => res.json())
-    .then(json => {
+    .then(res => {
+      const json = res.data;
       return {
         id,
         collections: _.uniq(json.metadata
           .collection
           .filter(c => !c.startsWith('fav-'))),
         creator: json.metadata.creator,
-        year: parseInt(json.metadata.year),
+        year: parseInt(json.metadata.year) || (new Date(json.metadata.date)).getFullYear(),
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files
@@ -67,7 +68,7 @@ function fetchAlbumsByCreatorId (id, {
   fields = 'identifier,coverage,title,year',
 } = {}) {
   debug(`fetch albums of ${id}`);
-  return fetch(
+  return axios.get(
     mustache.render(
       config.endpoints.COLLECTION_ITEMS_URL,
       {
@@ -79,8 +80,8 @@ function fetchAlbumsByCreatorId (id, {
       }
     )
   )
-    .then(res => res.json())
-    .then(json => {
+    .then(res => {
+      const json = res.data;
       debug(`fetch ${json.response.docs.length} albums`);
       return {
         items: json.response.docs.map(a => ({
@@ -94,7 +95,7 @@ function fetchAlbumsByCreatorId (id, {
       };
     })
     .catch(e => {
-      error(`Get error on fetching albums of artist ${id}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist ${id}, error:`, e);
       return Promise.reject(e);
     });
 }
@@ -130,28 +131,26 @@ function fetchAlbumsByQuery (query) {
     order: 'downloads+desc',
   }, query);
 
-  debug(query);
   // create search query
   const condition = buildQueryCondition(query);
   debug(`condition ${condition}`);
 
-  debug(`Fetch albums by ${JSON.stringify(query)}`);
+  debug('Fetch albums by', query);
 
-  return fetch(
+  return axios.get(
     mustache.render(
       config.endpoints.QUERY_COLLECTIONS_URL,
       Object.assign({}, query, {condition})
     )
   )
-    .then(res => res.json())
-    .then(json => ({
-      items: json.response.docs.map(a => (Object.assign({}, a, {
+    .then(res => ({
+      items: res.data.response.docs.map(a => (Object.assign({}, a, {
         year: parseInt(a.year),
       }))),
-      total: json.response.numFound,
+      total: res.data.response.numFound,
     }))
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${query}, error: ${JSON.stringify(e)}`);
+      error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
       return Promise.reject(e);
     });
 }

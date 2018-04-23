@@ -5,7 +5,7 @@ const albums = rewire('../../../src/extensions/feeders/albums');
 const playlist = require('../../../src/state/playlist');
 const query = require('../../../src/state/query');
 
-const mockApp = require('../../_utils/mocking/app');
+const mockApp = require('../../_utils/mocking/platforms/assistant');
 const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('feeders', () => {

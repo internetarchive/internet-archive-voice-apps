@@ -50,14 +50,17 @@ function extractRequrements (templates, fields) {
 }
 
 /**
- * Get list of slots which are needed for this template
+ * Get list of slots which are needed for this/those template(s)
  *
- * @param {string} template
+ * @param {Array|string} template
  * @returns {Array}
  */
 function getListOfRequiredSlots (template) {
-  return mustache
-    .parse(template)
+  return [].concat(template)
+    .reduce(
+      (acc, t) => acc.concat(mustache.parse(t)),
+      []
+    )
     .filter(token => token[0] === 'name')
     .map(token => token[1]);
 }

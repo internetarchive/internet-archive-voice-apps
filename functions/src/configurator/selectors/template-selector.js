@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const util = require('util');
 
 const extractor = require('../parsers/extract-requirements');
 const {debug, warning} = require('../../utils/logger')('ia:selectors:template-selector');
@@ -11,12 +12,25 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:template-se
  * @returns {Promise.<null>}
  */
 function find (options, context) {
-  debug('sgelect option as template');
+  debug('select option as template');
 
-  const prioritySlots = context.prioritySlots;
+  let {prioritySlots, slots = {}} = context;
   debug('the priority slots are:', prioritySlots);
+  debug('the slots are:', slots);
 
-  const acknowledgeRequirements = extractor.extractRequrements(options);
+  const slotNames = Object.keys(slots);
+
+  if (!prioritySlots) {
+    debug(`we don't have priority slots so we will use the main set of slots`);
+    prioritySlots = slotNames;
+  }
+
+  const acknowledgeRequirements = extractor.extractRequrements(
+    options, slotNames
+  );
+
+  debug('acknowledgeRequirement:');
+  debug(acknowledgeRequirements);
 
   // find the list of acknowledges which match recieved slots
   let validAcknowledges = getMatchedTemplatesExactly(
@@ -31,7 +45,7 @@ function find (options, context) {
     );
 
     if (!validAcknowledges || validAcknowledges.length === 0) {
-      warning(`there is no valid templates for ${prioritySlots}. Maybe we should write few?`);
+      warning(`there is no valid templates for ${util.inspect(prioritySlots)}. Maybe we should write few?`);
       return null;
     }
 

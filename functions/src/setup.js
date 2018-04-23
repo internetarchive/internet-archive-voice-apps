@@ -1,16 +1,45 @@
 /**
  * Setup application
  */
-const dialog = require('./dialog');
-const Pipeline = require('./dialog/middlewares/pipeline');
-const replaceSpeechIfMuted = require('./dialog/middlewares/replace-speech-if-muted');
+const axios = require('axios');
+const mustache = require('mustache');
+
+const packageJSON = require('../package.json');
+
+const appConfig = require('./config');
+const env = require('./config/env');
 const mathjsExtensions = require('./mathjs');
+const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
 
-module.exports = () => {
-  const pipeline = new Pipeline()
-    .use(replaceSpeechIfMuted(require('./strings').dialog.playSong));
+const axiosProfile = require('./performance/axios');
 
-  dialog.use(pipeline);
-
+module.exports = ({platform}) => {
   mathjsExtensions.patch();
+
+  const userAgent = mustache.render(
+    appConfig.request.userAgent,
+    Object.assign({}, packageJSON, {platform})
+  );
+
+  // patch requests
+  axios.interceptors.request.handlers = [];
+  axios.interceptors.response.handlers = [];
+
+  axios.interceptors.request.use((config) => {
+    config.headers['user-agent'] = userAgent;
+    debug(`${config.method.toUpperCase()} ${config.url}`);
+    return config;
+  }, (error) => {
+    const config = error.config;
+    if (config) {
+      warning(`fail request ${config.method.toUpperCase()} ${config.url}`, error);
+    } else {
+      warning(`fail`, error);
+    }
+    return Promise.reject(error);
+  });
+
+  if (env(platform)('performance', 'requests')) {
+    axiosProfile.use();
+  }
 };

@@ -2,7 +2,7 @@ const {expect} = require('chai');
 
 const {getLastAction, storeAction, getLastRepetitionCount, storeRepetitionCount} = require('../../src/state/actions');
 
-const mockApp = require('../_utils/mocking/app');
+const mockApp = require('../_utils/mocking/platforms/assistant');
 
 describe('state', () => {
   let app;

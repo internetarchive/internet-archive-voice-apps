@@ -1,3 +1,5 @@
+const util = require('util');
+
 const {debug} = require('../utils/logger')('ia:state');
 
 /**
@@ -50,6 +52,12 @@ module.exports = {
       if (typeof app === 'string') {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
+
+      if (app.persist) {
+        return app.persist.getData(name) || defaults;
+      }
+
+      // @deprecated
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
@@ -63,10 +71,16 @@ module.exports = {
      * @param {Object} value
      */
     setData: (app, value) => {
-      debug(`set user's state ${name} to ${JSON.stringify(value)}`);
-      if (typeof app === 'string') {
+      debug(`set user's state ${name} to ${util.inspect(value)}`);
+      if (typeof app === 'string' || !app) {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
+
+      if (app.persist) {
+        return app.persist.setData(name, value);
+      }
+
+      // @deprecated
       if (!app.data) {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }

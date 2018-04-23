@@ -33,6 +33,7 @@ class SyncAlbum extends DefaultFeeder {
     debug('lets build albums feeder');
     const slots = query.getSlots(app);
     debug('we have slots:', slots);
+    let total;
     return albumsProvider
       .fetchAlbumsByQuery(slots)
       .then(albums => {
@@ -43,6 +44,7 @@ class SyncAlbum extends DefaultFeeder {
         debug(`get ${albums.items.length} albums`);
         debug(albums.items);
         let albumId = null;
+        total = albums.items.length;
         switch (albums.items.length) {
           case 0:
             // TODO: there is no such album
@@ -87,7 +89,7 @@ class SyncAlbum extends DefaultFeeder {
           return;
         }
 
-        debug(`We get album ${JSON.stringify(album)}`);
+        debug('We get album', album);
 
         const songs = this.processAlbumSongs(album);
 
@@ -96,6 +98,8 @@ class SyncAlbum extends DefaultFeeder {
         // so maybe we can put it out of this function?
         debug(`let's create playlist for songs`);
         playlist.create(app, songs);
+
+        return {total};
       });
     // TODO:
     // .catch(err => {
