@@ -12,9 +12,9 @@ const dialog = require('./../../dialog');
 const {storeAction} = require('./../../state/actions');
 const strings = require('./../../strings');
 const {error, warning} = require('./../../utils/logger')('ia:index');
-const logRequest = require('./../../utils/logger/log-request');
 
 const buildHandlers = require('./handler/builder');
+const logRequest = require('./middlewares/log-request');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();

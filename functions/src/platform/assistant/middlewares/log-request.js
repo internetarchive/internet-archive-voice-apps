@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {debug, info} = require('.')('ia:log-request');
+const {debug, info} = require('../../../utils/logger')('ia:log-request');
 
 /**
  * Log Request Middleware
