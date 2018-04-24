@@ -4,17 +4,14 @@ const rewire = require('rewire');
 
 const ask = rewire('../../src/dialog/ask');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 
 describe('dialog', () => {
   let savePhrase;
-  let Suggestions;
 
   beforeEach(() => {
     savePhrase = sinon.spy();
-    Suggestions = sinon.spy();
     ask.__set__('savePhrase', savePhrase);
-    ask.__set__('Suggestions', Suggestions);
   });
 
   describe('ask', () => {
@@ -27,9 +24,8 @@ describe('dialog', () => {
 
       ask(app, {speech, reprompt, suggestions});
 
-      expect(app.ask).to.be.calledOnce;
-      expect(app.ask.args[0][1]).to.be.equal(speech);
-      expect(Suggestions).to.be.calledWith(suggestions);
+      expect(app.response).to.be.calledOnce;
+      expect(app.response.args[0][0]).to.be.deep.equal({reprompt, speech, suggestions});
       expect(savePhrase).to.be.calledOnce;
     });
   });

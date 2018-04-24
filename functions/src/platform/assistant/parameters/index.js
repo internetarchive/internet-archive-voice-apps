@@ -9,5 +9,5 @@ module.exports = (conv) => ({
    * @param name {String}
    * @returns {String}
    */
-  getByName: (name) => conv.parameters[name],
+  getByName: (name) => conv.parameters[name] || conv.arguments.get(name),
 });

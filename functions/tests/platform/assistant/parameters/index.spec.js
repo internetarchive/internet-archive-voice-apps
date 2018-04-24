@@ -10,10 +10,21 @@ describe('platform', () => {
 
     beforeEach(() => {
       assistant = mockAssistant({
-        argument: {
+        args: {
+          MEDIA_STATUS: 'FINISH',
+        },
+        parameters: {
           city: 'NY',
           band: 'Grateful Dead',
         }
+      });
+    });
+
+    describe('arguments', () => {
+      it('should return argument by name', () => {
+        const params = paramsBuilder(assistant);
+        expect(params.getByName('MEDIA_STATUS')).to.be.equal('FINISH');
+        expect(params.getByName('UNKNOWN')).to.be.undefined;
       });
     });
 

@@ -5,7 +5,7 @@ const rewire = require('rewire');
 const audio = rewire('../../src/dialog/audio');
 const allowedStrings = require('../../src/strings').dialog.playSong;
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 
 describe('dialog', () => {
   let app;
@@ -46,28 +46,36 @@ describe('dialog', () => {
       const strings = allowedStrings[0];
       audio.playSong(app, options);
 
-      expect(app.ask).to.be.calledOnce;
-      expect(app.buildMediaResponse).to.be.calledOnce;
-      expect(app.buildMediaObject).to.be.calledOnce;
-      expect(app.buildRichResponse).to.be.calledOnce;
-      expect(app.addMediaObjects).to.be.calledOnce;
-      expect(app.setDescription).to.be.calledWith(
-        mustache.render(mustache.render(
-          strings.description, options
-        ))
-      );
-      expect(app.setImage).to.be.calledWith(
-        options.imageURL,
-        app.Media.ImageType.LARGE
-      );
-      expect(app.addSimpleResponse).to.be.calledWith(
+      expect(app.response).to.be.called;
+
+      const res = app.response.args[0][0];
+      expect(res).to.have.property(
+        'speech',
         mustache.render(mustache.render(
           strings.description,
           options
         ))
       );
-      expect(app.addSuggestionLink).to.be.calledOnce;
-      expect(app.addSuggestions).to.be.calledWith(options.suggestions);
+      expect(res).to.have.property('media').to.have.lengthOf(1);
+      expect(res.media[0]).to.be.deep.equal({
+        description: mustache.render(mustache.render(
+          strings.description, options
+        )),
+        contentURL: options.audioURL,
+        imageURL: options.imageURL,
+        offset: undefined,
+        previousTrack: {
+          contentURL: undefined,
+        },
+        name: mustache.render(strings.title, options),
+      });
+      expect(res).to.have.property('mediaResponseOnly');
+      expect(res).to.have.property('suggestions').to.have.lengthOf(2);
+      expect(res.suggestions[0]).to.equal('next song');
+      expect(res.suggestions[1]).to.deep.equal({
+        url: 'https://archive.org/details/',
+        title: mustache.render(strings.suggestionLink, options),
+      });
     });
 
     it('should mute songs description speech and replace it with template (for example sound)', () => {
@@ -89,8 +97,8 @@ describe('dialog', () => {
         options
       ));
 
-      expect(app.addSimpleResponse).to.be.calledOnce;
-      expect(app.addSimpleResponse.args[0][0])
+      expect(app.response).to.be.called;
+      expect(app.response.args[0][0]).to.have.property('speech')
         .to.include('<media soundLevel="-10db">')
         .to.include(soundURL)
         .to.include(description);

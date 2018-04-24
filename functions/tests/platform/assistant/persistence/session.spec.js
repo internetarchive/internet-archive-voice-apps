@@ -1,6 +1,7 @@
 const {expect} = require('chai');
 
 const mockAssistant = require('../../../_utils/mocking/platforms/assistant');
+
 const persistance = require('../../../../src/platform/assistant/persistence/session');
 
 describe('platform', () => {

@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 const response = rewire('../../../../src/platform/assistant/response');
 
-const assistantMock = require('../../../_utils/mocking/platforms/assistant');
+const mockAssistant = require('../../../_utils/mocking/platforms/assistant');
 
 describe('platform', () => {
   describe('assistant', () => {
@@ -17,7 +17,7 @@ describe('platform', () => {
         let Suggestions;
 
         beforeEach(() => {
-          assistant = assistantMock();
+          assistant = mockAssistant();
           Image = sinon.stub().returnsArg(0);
           LinkOutSuggestion = sinon.stub().returnsArg(0);
           Suggestions = sinon.stub().returnsArg(0);
@@ -134,7 +134,7 @@ describe('platform', () => {
             name: 'Jazz in Paris',
             url: 'https://archive.org/download/song.mp3',
             description: 'A funky Jazz tune',
-            icon: new Image({
+            image: new Image({
               url: 'https://archive.org/download/image.jpg',
               alt: 'A funky Jazz tune',
             }),

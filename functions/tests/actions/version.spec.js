@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const version = rewire('../../src/actions/version');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
 describe('actions', () => {

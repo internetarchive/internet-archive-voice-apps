@@ -11,4 +11,6 @@ module.exports = ({getByName = {}, getData = {}, offset = 0} = {}) => ({
       getData[name] = value;
     }),
   },
+
+  response: sinon.spy(),
 });

@@ -3,7 +3,7 @@ const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/feeder-from-slots-scheme');
 
-const mockApp = require('../../../_utils/mocking/platforms/assistant');
+const mockApp = require('../../../_utils/mocking/platforms/app');
 const mockFeeders = require('../../../_utils/mocking/feeders');
 
 describe('actions', () => {

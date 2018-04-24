@@ -5,7 +5,7 @@ const builder = rewire('../../../src/actions/high-order-handlers/repair-handler-
 const {storeAction} = require('../../../src/state/actions');
 const strings = require('../../../src/strings').intents.noInput;
 
-const mockApp = require('../../_utils/mocking/platforms/assistant');
+const mockApp = require('../../_utils/mocking/platforms/app');
 const mockDialog = require('../../_utils/mocking/dialog');
 
 describe('actions', () => {
@@ -20,12 +20,15 @@ describe('actions', () => {
     dialog = mockDialog();
     builder.__set__('dialog', dialog);
     handler = builder.buildRapairHandler('no-input', strings);
-    app = mockApp();
-    app.user.storage.dialog = {
-      lastPhrase: {
-        speech, reprompt, suggestions,
-      },
-    };
+    app = mockApp({
+      getData: {
+        dialog: {
+          lastPhrase: {
+            speech, reprompt, suggestions,
+          },
+        }
+      }
+    });
   });
 
   describe('high-order handlers', () => {

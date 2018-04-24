@@ -37,7 +37,7 @@ module.exports = (app) =>
           name: m.name,
           url: m.contentURL,
           description: m.description,
-          icon: new Image({
+          image: new Image({
             url: m.imageURL,
             alt: m.description,
           }),
