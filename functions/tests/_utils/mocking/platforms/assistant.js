@@ -13,16 +13,19 @@ module.exports = function mockApp ({
 } = {}) {
   const app = {};
   app.ask = sinon.stub().returns(app);
+  app.close = sinon.stub().returns(app);
+
   _.set(app, 'user.storage', {});
   _.set(app, 'Media.ImageType.LARGE', 'Media.ImageType.LARGE');
   _.set(app, 'MEDIA_STATUS.extension.status', null);
   _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
 
   if (argument && typeof argument === 'object') {
-    app.getArgument = sinon.stub().callsFake(name => argument[name]);
+    app.parameters = argument;
   } else {
-    app.getArgument = sinon.stub().returns(argument || app.MEDIA_STATUS);
+    app.parameters = argument || app.MEDIA_STATUS;
   }
+
   app.addMediaObjects = sinon.stub().returns(app);
   app.addMediaResponse = sinon.stub().returns(app);
   app.addSimpleResponse = sinon.stub().returns(app);

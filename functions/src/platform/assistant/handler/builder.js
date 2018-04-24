@@ -1,3 +1,6 @@
+const {App} = require('../app');
+const {debug} = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
+
 /**
  * Build list of handlers
  *
@@ -5,4 +8,14 @@
  */
 module.exports = ({actionsMap}) =>
   Array.from(actionsMap.entries())
-    .map(([intent, handler]) => ({intent, handler}));
+    .map(([intent, handler]) => ({
+      intent,
+      handler: (conv) => {
+        debug(`begin handle intent "${intent}"`);
+        return Promise.resolve(handler(new App(conv)))
+          .then(res => {
+            debug(`end handle intent "${intent}"`);
+            return res;
+          });
+      }
+    }));

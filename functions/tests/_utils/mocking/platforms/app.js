@@ -7,6 +7,8 @@ module.exports = ({getByName = {}, getData = {}, offset = 0} = {}) => ({
 
   persist: {
     getData: sinon.stub().callsFake(name => getData[name]),
-    setData: sinon.spy(),
-  }
+    setData: sinon.stub().callsFake((name, value) => {
+      getData[name] = value;
+    }),
+  },
 });

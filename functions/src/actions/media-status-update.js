@@ -15,6 +15,14 @@ const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 /**
  * handle 'media status update' action
  *
+ * Actions of Google specific intent
+ *
+ * FIXME: Maybe we should handle this intent this way:
+ *
+ * https://developers.google.com/actions/assistant/responses
+ * > Your Assistant app should handle the actions.intent.MEDIA_STATUS
+ * > built-in intent to prompt user for follow-up.
+ *
  * @param app
  */
 function handler (app) {
@@ -27,9 +35,9 @@ function handler (app) {
     mediaStatus = app.params.getByName('MEDIA_STATUS');
   }
 
-  const status = mediaStatus.extension.status;
+  const status = mediaStatus.status;
 
-  if (status === app.Media.Status.FINISHED) {
+  if (status === 'FINISHED') {
     return handleFinished(app);
   } else {
     // log that we got unknown status
@@ -40,6 +48,7 @@ function handler (app) {
 }
 
 function prepareNextSong (ctx) {
+  debug('prepare next song');
   return feederFromPlaylist()(Object.assign({}, ctx, {query, playlist}))
   // expose current platform to the slots
     .then(ctx =>

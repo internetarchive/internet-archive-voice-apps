@@ -95,7 +95,7 @@ function handler (app) {
     .then(prompt())
     .then(suggestions())
     .then(context => {
-      if (context && context.suggestions.length === 0) {
+      if (context.suggestions && context.suggestions.length === 0) {
         // suggestions here are available range
         // when it is 0 we should later last input
         // TODO: when is is 1 we could choose this one option without asking

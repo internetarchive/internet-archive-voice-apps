@@ -1,13 +1,13 @@
 /**
  * Create params layer
- * @param ctx
+ * @param conv
  * @returns {{getParam}}
  */
-module.exports = (ctx) => ({
+module.exports = (conv) => ({
   /**
    * get intent param by name
    * @param name {String}
    * @returns {String}
    */
-  getByName: (name) => ctx.getArgument(name),
+  getByName: (name) => conv.parameters[name],
 });

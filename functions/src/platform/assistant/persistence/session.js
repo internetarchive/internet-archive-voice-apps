@@ -3,13 +3,13 @@ const {debug} = require('../../../utils/logger')('ia:platform:assistant:persista
 /**
  * Session level persistance
  *
- * @param app
+ * @param conv
  */
-module.exports = (app) => {
+module.exports = (conv) => {
   debug('create');
 
-  if (!app) {
-    throw new Error('parameter app should be defined');
+  if (!conv) {
+    throw new Error('parameter conv should be defined');
   }
 
   return {
@@ -20,11 +20,11 @@ module.exports = (app) => {
      * @returns {{}}
      */
     getData: (name) => {
-      if (!app.user.storage) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
+      if (!conv.user.storage) {
+        throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
-      return app.user.storage[name];
+      return conv.user.storage[name];
     },
 
     /**
@@ -36,11 +36,11 @@ module.exports = (app) => {
     setData: (name, value) => {
       debug(`set attribute ${name} to`, value);
 
-      if (!app.user.storage) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
+      if (!conv.user.storage) {
+        throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
-      app.user.storage[name] = value;
+      conv.user.storage[name] = value;
     },
   };
 };

@@ -1,51 +1,55 @@
+const {Image, LinkOutSuggestion, MediaObject, Suggestions} = require('actions-on-google');
+
+const {debug} = require('../../../utils/logger')('ia:platform.assistant.response');
+
 module.exports = (app) =>
   /**
    * Response with question
    *
    * @param speech {String}
    * @param suggestions {Array}
+   * @param close {Boolean} close connection (end session). By default is false.
    */
-  ({media, speech, suggestions}) => {
-    if (!suggestions && !media && !Array.isArray(speech)) {
-      app.ask(`<speak>${speech}</speak>`);
-    } else {
-      const response = app.buildRichResponse();
+  ({media, speech, suggestions, close = false}) => {
+    let responses;
 
-      let mediaObjects = [];
-      if (media) {
-        mediaObjects = media.map(m =>
-          app.buildMediaObject(m.name, m.contentURL)
-            .setDescription(m.description)
-            .setImage(m.imageURL)
-        );
+    responses = [].concat(speech)
+      .map(s => `<speak>${s}</speak>`);
+
+    if (suggestions) {
+      const simpleSuggestions = suggestions
+        .filter(s => typeof s === 'string');
+      if (simpleSuggestions) {
+        responses.push(new Suggestions(simpleSuggestions));
       }
 
-      if (mediaObjects) {
-        response.addMediaResponse(
-          app.buildMediaResponse()
-            .addMediaObjects(mediaObjects)
-        );
-      }
+      responses = responses.concat(suggestions
+        .filter(s => s.url)
+        .map(s => new LinkOutSuggestion({
+          name: s.title,
+          url: s.url,
+        })));
+    }
 
-      if (!Array.isArray(speech)) {
-        speech = [speech];
-      }
-
-      speech.forEach(
-        s => response.addSimpleResponse(`<speak>${s}</speak>`)
+    if (media) {
+      responses = responses.concat(
+        media.map(m => new MediaObject({
+          name: m.name,
+          url: m.contentURL,
+          description: m.description,
+          icon: new Image({
+            url: m.imageURL,
+            alt: m.description,
+          }),
+        }))
       );
+    }
 
-      if (suggestions) {
-        const simpleSuggestions = suggestions.filter(s => typeof s === 'string');
-        if (simpleSuggestions) {
-          response.addSuggestions(simpleSuggestions);
-        }
-        const suggestingsWithLink = suggestions.filter(s => s.url);
-        suggestingsWithLink.forEach(
-          s => response.addSuggestionLink(s.title, s.url)
-        );
-      }
-
-      app.ask(response);
+    if (close) {
+      debug('app.close');
+      responses.forEach(r => app.close(r));
+    } else {
+      debug('app.ask');
+      responses.forEach(r => app.ask(r));
     }
   };

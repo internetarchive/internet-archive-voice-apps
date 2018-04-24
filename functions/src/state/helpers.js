@@ -72,7 +72,7 @@ module.exports = {
      * @param {Object} value
      */
     setData: (app, value) => {
-      debug(`set user's state ${name} to ${util.inspect(value)}`);
+      debug(`set user's state "${name}" to "${util.inspect(value)}"`);
       if (typeof app === 'string' || !app) {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }

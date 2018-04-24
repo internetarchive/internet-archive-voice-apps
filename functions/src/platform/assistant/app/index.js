@@ -8,15 +8,15 @@ const response = require('../response');
  * Facade of Actions of Google App
  */
 class App {
-  constructor (ctx) {
-    this.ctx = ctx;
+  constructor (conv) {
+    this.conv = conv;
 
     this.platform = 'assistant';
 
     // define interfaces
-    this.params = params(ctx);
-    this.persist = persistance(ctx);
-    this.response = response(ctx);
+    this.params = params(conv);
+    this.persist = persistance(conv);
+    this.response = response(conv);
   }
 
   /**
@@ -25,7 +25,7 @@ class App {
    * @returns {boolean}
    */
   isFirstTry () {
-    return this.ctx.getLastSeen();
+    return !!this.conv.user.last;
   }
 
   /**
