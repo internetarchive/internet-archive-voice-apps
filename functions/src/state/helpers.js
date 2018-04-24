@@ -87,6 +87,8 @@ module.exports = {
         throw new Error('"data" field is missed in app. We can not get user\'s data');
       }
       app.user.storage[name] = value;
+
+      return true;
     },
   }),
 
