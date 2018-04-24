@@ -23,6 +23,12 @@ describe('platform', () => {
             .to.not.be.equal(persistance(device2).getData('value'));
         });
 
+        it('should return true when data was stored', () => {
+          const p = persistance(mockAssistant());
+          const res = p.setData('value', 'hello world');
+          expect(res).to.be.true;
+        });
+
         it('should revert changes when we exceed the limit of session data', () => {
           const p = persistance(mockAssistant());
           p.setData('value', 'hello world');

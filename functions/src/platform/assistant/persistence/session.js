@@ -30,8 +30,13 @@ module.exports = (conv) => {
     /**
      * Update data
      *
+     * It check whether we exceed the limits
+     * and revert malformed changes
+     *
      * @param name
      * @param value
+     *
+     * @returns {Boolean} Data was stored
      */
     setData: (name, value) => {
       debug(`set attribute ${name} to`, value);
