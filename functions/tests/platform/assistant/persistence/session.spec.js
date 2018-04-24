@@ -22,6 +22,14 @@ describe('platform', () => {
           expect(persistance(device1).getData('value'))
             .to.not.be.equal(persistance(device2).getData('value'));
         });
+
+        it('should revert changes when we exceed the limit of session data', () => {
+          const p = persistance(mockAssistant());
+          p.setData('value', 'hello world');
+          const res = p.setData('value', 'x'.repeat(10000));
+          expect(res).to.be.false;
+          expect(p.getData('value')).to.be.equal('hello world');
+        });
       });
     });
   });

@@ -1,4 +1,4 @@
-const {debug} = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
+const {debug, warning} = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
 
 /**
  * Session level persistance
@@ -40,7 +40,16 @@ module.exports = (conv) => {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
+      const oldValue = conv.user.storage[name];
       conv.user.storage[name] = value;
+      const size = JSON.stringify({ data: conv.user.storage }).length;
+      debug(`size of session data: ${size} bytes`);
+      if (size > 1e4) {
+        warning(`we exceed limitation of platform for user storage (size: ${size} bytes)`);
+        conv.user.storage[name] = oldValue;
+        return false;
+      }
+      return true;
     },
   };
 };
