@@ -91,7 +91,7 @@ module.exports = (actionsMap) => {
     warning(`We missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
-    conv.close(`Can you rephrase it?`);
+    conv.ask(`Can you rephrase it?`);
   });
 
   app.catch((conv, err) => {
@@ -100,7 +100,7 @@ module.exports = (actionsMap) => {
       conv.raven.captureException(err);
     }
 
-    conv.close(`Can you rephrase it?`);
+    conv.ask(`Can you rephrase it?`);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
