@@ -9,7 +9,7 @@ const Raven = require('raven');
 const packageJSON = require('../../../package.json');
 
 const {storeAction} = require('./../../state/actions');
-const {error, warning} = require('./../../utils/logger')('ia:index');
+const {debug, error, warning} = require('./../../utils/logger')('ia:index');
 
 const {App} = require('./app');
 const buildHandlers = require('./handler/builder');
@@ -17,6 +17,7 @@ const logRequest = require('./middlewares/log-request');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();
+  let handlers = [];
 
   // dashbot doesn't support official v2 yet
   // (https://github.com/actionably/dashbot/issues/23)
@@ -27,10 +28,10 @@ module.exports = (actionsMap) => {
   //   }).google;
 
   if (actionsMap) {
-    buildHandlers({actionsMap})
-      .forEach(
-        ({intent, handler}) => app.intent(intent, handler)
-      );
+    handlers = buildHandlers({actionsMap});
+    handlers.forEach(
+      ({intent, handler}) => app.intent(intent, handler)
+    );
   }
 
   app.middleware((conv) => {
@@ -86,12 +87,18 @@ module.exports = (actionsMap) => {
   });
 
   app.fallback((conv) => {
+    const matchedHandlers = handlers.filter(h => h.intent === conv.action);
+    if (matchedHandlers.length > 0) {
+      debug(`doesn't match intent name but matched manually by action name`);
+      return matchedHandlers[0].handler(conv);
+    }
+
     // TODO: move to actions
     // warning(`We missed action: "${app.getIntent()}".
-    warning(`We missed action: "${conv.action}".
+    warning(`we missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
-    conv.ask(`Can you rephrase it?`);
+    conv.ask(`can you rephrase it?`);
   });
 
   app.catch((conv, err) => {

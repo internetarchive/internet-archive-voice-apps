@@ -1,8 +1,12 @@
 const {Image, LinkOutSuggestion, MediaObject, Suggestions} = require('actions-on-google');
 
-const {debug} = require('../../../utils/logger')('ia:platform.assistant.response');
+const {debug, warning} = require('../../../utils/logger')('ia:platform.assistant.response');
 
-module.exports = (app) =>
+/**
+ *
+ * @param conv
+ */
+module.exports = (conv) =>
   /**
    * Response with question
    *
@@ -17,6 +21,7 @@ module.exports = (app) =>
       .map(s => `<speak>${s}</speak>`);
 
     if (suggestions) {
+      debug('has suggestions');
       const simpleSuggestions = suggestions
         .filter(s => typeof s === 'string');
       if (simpleSuggestions) {
@@ -32,6 +37,7 @@ module.exports = (app) =>
     }
 
     if (media) {
+      debug('has media');
       responses = responses.concat(
         media.map(m => new MediaObject({
           name: m.name,
@@ -45,11 +51,16 @@ module.exports = (app) =>
       );
     }
 
+    if (responses.length === 0) {
+      warning(`doesn't have any response`);
+      return;
+    }
+
     if (close) {
       debug('app.close');
-      responses.forEach(r => app.close(r));
+      responses.forEach(r => conv.close(r));
     } else {
       debug('app.ask');
-      responses.forEach(r => app.ask(r));
+      responses.forEach(r => conv.ask(r));
     }
   };
