@@ -1,5 +1,3 @@
-const {Suggestions} = require('actions-on-google');
-
 const {savePhrase} = require('../state/dialog');
 const {debug} = require('../utils/logger')('ia:dialog:ask');
 
@@ -28,29 +26,9 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     suggestions,
   });
 
-  if (app.ask) {
-    debug('depricated');
-    // @depricated
-    if (!suggestions) {
-      debug('app.ask without suggestions');
-      app.ask(speech);
-    } else {
-      if (Array.isArray(suggestions)) {
-        suggestions = suggestions.map(s => s.toString());
-      }
-
-      debug('app.ask with suggestions');
-      app.ask(new Suggestions(suggestions), speech);
-    }
-    debug('after app.ask');
-    return;
-  }
-
   if (Array.isArray(suggestions)) {
     suggestions = suggestions.map(s => s.toString());
   }
 
-  debug('before app.response');
   app.response({speech, reprompt, suggestions});
-  debug('after app.response');
 };

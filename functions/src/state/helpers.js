@@ -53,16 +53,7 @@ module.exports = {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 
-      if (app.persist) {
-        return app.persist.getData(name) || defaults;
-      }
-
-      // @deprecated
-      debug('@deprecated we used depricated getData', app.user.storage);
-      if (!app.user.storage) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
-      }
-      return app.user.storage[name] || defaults;
+      return app.persist.getData(name) || defaults;
     },
 
     /**
@@ -77,18 +68,7 @@ module.exports = {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 
-      if (app.persist) {
-        return app.persist.setData(name, value);
-      }
-
-      // @deprecated
-      debug('@deprecated we use depricated setData', app.user.storage);
-      if (!app.user.storage) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
-      }
-      app.user.storage[name] = value;
-
-      return true;
+      return app.persist.setData(name, value);
     },
   }),
 
