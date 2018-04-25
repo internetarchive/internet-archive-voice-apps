@@ -31,6 +31,29 @@ module.exports = {
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 
+  /**
+   * settings specific for supported platforms
+   */
+  platforms: {
+    alexa: {
+      /**
+       * substitute to endpoint
+       */
+      endpoint: {
+        platformSubDomain: 'askills-api',
+      },
+    },
+
+    assistant: {
+      /**
+       * substitute to endpoint
+       */
+      endpoint: {
+        platformSubDomain: 'gactions-api',
+      },
+    },
+  },
+
   request: {
     userAgent: '{{name}} ({{platform}}) / {{version}}',
   },
