@@ -5,4 +5,4 @@ const persistance = require('./session');
  *
  * @param assistant app
  */
-module.exports = (app) => persistance(app);
+module.exports = (conv) => persistance(conv);

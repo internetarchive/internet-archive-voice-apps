@@ -17,7 +17,7 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
-    "actions-on-google": "^1.10.0",
+    "actions-on-google": "^2.0.1",
     "alexa-sdk": "^1.0.25",
     "ask-sdk": "^2.0.0",
     "axios": "^0.18.0",

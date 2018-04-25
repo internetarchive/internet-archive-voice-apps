@@ -53,15 +53,7 @@ module.exports = {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 
-      if (app.persist) {
-        return app.persist.getData(name) || defaults;
-      }
-
-      // @deprecated
-      if (!app.data) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
-      }
-      return app.data[name] || defaults;
+      return app.persist.getData(name) || defaults;
     },
 
     /**
@@ -71,20 +63,12 @@ module.exports = {
      * @param {Object} value
      */
     setData: (app, value) => {
-      debug(`set user's state ${name} to ${util.inspect(value)}`);
+      debug(`set user's state "${name}" to "${util.inspect(value)}"`);
       if (typeof app === 'string' || !app) {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 
-      if (app.persist) {
-        return app.persist.setData(name, value);
-      }
-
-      // @deprecated
-      if (!app.data) {
-        throw new Error('"data" field is missed in app. We can not get user\'s data');
-      }
-      app.data[name] = value;
+      return app.persist.setData(name, value);
     },
   }),
 

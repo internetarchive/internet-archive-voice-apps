@@ -26,22 +26,6 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     suggestions,
   });
 
-  if (!app.response) {
-    // @depricated
-    if (!suggestions) {
-      app.ask(speech);
-    } else {
-      if (Array.isArray(suggestions)) {
-        suggestions = suggestions.map(s => s.toString());
-      }
-
-      app.ask(app.buildRichResponse()
-        .addSimpleResponse(speech)
-        .addSuggestions(suggestions));
-    }
-    return;
-  }
-
   if (Array.isArray(suggestions)) {
     suggestions = suggestions.map(s => s.toString());
   }

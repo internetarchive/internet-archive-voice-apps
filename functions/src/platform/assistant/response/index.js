@@ -1,51 +1,66 @@
-module.exports = (app) =>
+const {Image, LinkOutSuggestion, MediaObject, Suggestions} = require('actions-on-google');
+
+const {debug, warning} = require('../../../utils/logger')('ia:platform.assistant.response');
+
+/**
+ *
+ * @param conv
+ */
+module.exports = (conv) =>
   /**
    * Response with question
    *
    * @param speech {String}
    * @param suggestions {Array}
+   * @param close {Boolean} close connection (end session). By default is false.
    */
-  ({media, speech, suggestions}) => {
-    if (!suggestions && !media && !Array.isArray(speech)) {
-      app.ask(`<speak>${speech}</speak>`);
-    } else {
-      const response = app.buildRichResponse();
+  ({media, speech, suggestions, close = false}) => {
+    let responses;
 
-      let mediaObjects = [];
-      if (media) {
-        mediaObjects = media.map(m =>
-          app.buildMediaObject(m.name, m.contentURL)
-            .setDescription(m.description)
-            .setImage(m.imageURL)
-        );
+    responses = [].concat(speech)
+      .map(s => `<speak>${s}</speak>`);
+
+    if (suggestions) {
+      debug('has suggestions');
+      const simpleSuggestions = suggestions
+        .filter(s => typeof s === 'string');
+      if (simpleSuggestions) {
+        responses.push(new Suggestions(simpleSuggestions));
       }
 
-      if (mediaObjects) {
-        response.addMediaResponse(
-          app.buildMediaResponse()
-            .addMediaObjects(mediaObjects)
-        );
-      }
+      responses = responses.concat(suggestions
+        .filter(s => s.url)
+        .map(s => new LinkOutSuggestion({
+          name: s.title,
+          url: s.url,
+        })));
+    }
 
-      if (!Array.isArray(speech)) {
-        speech = [speech];
-      }
-
-      speech.forEach(
-        s => response.addSimpleResponse(`<speak>${s}</speak>`)
+    if (media) {
+      debug('has media');
+      responses = responses.concat(
+        media.map(m => new MediaObject({
+          name: m.name,
+          url: m.contentURL,
+          description: m.description,
+          image: new Image({
+            url: m.imageURL,
+            alt: m.description,
+          }),
+        }))
       );
+    }
 
-      if (suggestions) {
-        const simpleSuggestions = suggestions.filter(s => typeof s === 'string');
-        if (simpleSuggestions) {
-          response.addSuggestions(simpleSuggestions);
-        }
-        const suggestingsWithLink = suggestions.filter(s => s.url);
-        suggestingsWithLink.forEach(
-          s => response.addSuggestionLink(s.title, s.url)
-        );
-      }
+    if (responses.length === 0) {
+      warning(`doesn't have any response`);
+      return;
+    }
 
-      app.ask(response);
+    if (close) {
+      debug('app.close');
+      responses.forEach(r => conv.close(r));
+    } else {
+      debug('app.ask');
+      responses.forEach(r => conv.ask(r));
     }
   };

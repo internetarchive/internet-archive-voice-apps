@@ -4,7 +4,7 @@ const rewire = require('rewire');
 
 const ask = rewire('../../src/dialog/ask');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 
 describe('dialog', () => {
   let savePhrase;
@@ -24,10 +24,8 @@ describe('dialog', () => {
 
       ask(app, {speech, reprompt, suggestions});
 
-      expect(app.ask).to.be.calledOnce;
-      expect(app.buildRichResponse).to.be.calledOnce;
-      expect(app.addSimpleResponse).to.be.calledWith(speech);
-      expect(app.addSuggestions).to.be.calledWith(suggestions);
+      expect(app.response).to.be.calledOnce;
+      expect(app.response.args[0][0]).to.be.deep.equal({reprompt, speech, suggestions});
       expect(savePhrase).to.be.calledOnce;
     });
   });

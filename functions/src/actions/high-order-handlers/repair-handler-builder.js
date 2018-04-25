@@ -3,6 +3,7 @@ const mustache = require('mustache');
 const dialog = require('../../dialog');
 const {getLastAction, getLastRepetitionCount} = require('../../state/actions');
 const {getLastReprompt, getLastSuggestions} = require('../../state/dialog');
+const {debug} = require('../../utils/logger')('ia:actions:high-order-handlers:repair-handler-builder');
 
 module.exports = {
   /**
@@ -23,10 +24,16 @@ module.exports = {
 
       if (getLastAction(app) === actionName) {
         count = getLastRepetitionCount(app);
+        debug('repetition count', count);
+      } else {
+        debug('we got it 1st time');
       }
 
       const reprompt = getLastReprompt(app);
+      debug('reprompt', reprompt);
+
       const suggestions = getLastSuggestions(app);
+      debug('suggestions', suggestions);
 
       switch (count) {
         case 1:

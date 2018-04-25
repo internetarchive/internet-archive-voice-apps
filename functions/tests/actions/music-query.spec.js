@@ -6,7 +6,7 @@ const sinon = require('sinon');
 const action = rewire('../../src/actions/music-query');
 const query = require('../../src/state/query');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
 const mockMiddlewares = require('../_utils/mocking/middlewares');
@@ -24,7 +24,7 @@ describe('actions', () => {
 
   beforeEach(() => {
     app = mockApp({
-      argument: {
+      getByName: {
         collection: 'live',
         creatorId: 'the-band',
         coverage: 'ny',
@@ -71,7 +71,7 @@ describe('actions', () => {
     describe('pipeline', () => {
       it('should call middlewares one-by-one', () => {
         app = mockApp({
-          argument: {
+          getByName: {
             // category: 'plate',
           },
         });
@@ -87,7 +87,7 @@ describe('actions', () => {
     describe('multiple slot schemes', () => {
       it('should get slot scheme without condition', () => {
         app = mockApp({
-          argument: {
+          getByName: {
             // category: 'plate',
           },
         });
@@ -101,10 +101,11 @@ describe('actions', () => {
 
       it('should get 1st which matches condition', () => {
         app = mockApp({
-          argument: {
+          getByName: {
             category: 'plates',
           },
         });
+
         return action.handler(app)
           .then(() => {
             expect(queryMiddlewares.acknowledge).to.be.called;
@@ -115,7 +116,7 @@ describe('actions', () => {
 
       it('should recieve value for old slot', () => {
         app = mockApp({
-          argument: {
+          getByName: {
             category: 'plates',
             album: 'album1'
           },
@@ -128,7 +129,7 @@ describe('actions', () => {
 
       it('should recieve value for new slot', () => {
         app = mockApp({
-          argument: {
+          getByName: {
             category: 'plates',
             plate: 'plate1'
           },
@@ -148,7 +149,7 @@ describe('actions', () => {
       describe('defaults', () => {
         it(`should automatically populate to user state if we don't have it yet there`, () => {
           app = mockApp({
-            argument: {},
+            getByName: {},
           });
           return action.handler(app)
             .then(() => {
@@ -158,7 +159,7 @@ describe('actions', () => {
 
         it(`shouldn't populate to user state if we already have this slot`, () => {
           app = mockApp({
-            argument: {
+            getByName: {
               order: 'the-best',
             },
           });
@@ -178,7 +179,7 @@ describe('actions', () => {
 
         beforeEach(() => {
           app = mockApp({
-            argument: {
+            getByName: {
               collection: 'live',
               creatorId: 'the-band',
               // missed slots:
@@ -215,7 +216,7 @@ describe('actions', () => {
 
         it(`should activate when we have enough filled slots`, () => {
           app = mockApp({
-            argument: {
+            getByName: {
               collection: 'live',
               creatorId: 'the-band',
               coverage: 'ny',
@@ -232,7 +233,7 @@ describe('actions', () => {
       describe('presets', () => {
         it('should fill slots', () => {
           app = mockApp({
-            argument: {
+            getByName: {
               preset: 'your-favourite-album',
             },
           });
@@ -246,7 +247,7 @@ describe('actions', () => {
 
         it('should be able to skip some slots', () => {
           app = mockApp({
-            argument: {
+            getByName: {
               preset: 'your-favourite-albums',
             },
           });
@@ -269,7 +270,7 @@ describe('actions', () => {
         // it could be quite a complex issue
         xit('should acknowledge for chosen preset', () => {
           app = mockApp({
-            argument: {
+            getByName: {
               preset: 'your-favourite-album',
             },
           });
@@ -288,7 +289,7 @@ describe('actions', () => {
       describe('slot updater', () => {
         it('should fill single slot', () => {
           app = mockApp({
-            argument: {
+            getByName: {
               collection: 'live',
             },
           });
@@ -303,7 +304,7 @@ describe('actions', () => {
 
         it('should fill multiple slots', () => {
           app = mockApp({
-            argument: {
+            getByName: {
               coverage: 'Kharkiv',
               year: 2017,
             },

@@ -5,7 +5,7 @@ const builder = rewire('../../../src/actions/high-order-handlers/in-one-go');
 const playlist = require('../../../src/state/playlist');
 const query = require('../../../src/state/query');
 
-const mockApp = require('../../_utils/mocking/platforms/assistant');
+const mockApp = require('../../_utils/mocking/platforms/app');
 const mockMiddlewares = require('../../_utils/mocking/middlewares');
 
 const strings = require('./fixtures/in-on-go.json');

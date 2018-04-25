@@ -4,7 +4,7 @@ const rewire = require('rewire');
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/feeder-from-playlist');
 const playlist = require('../../../../src/state/playlist');
 
-const mockApp = require('../../../_utils/mocking/platforms/assistant');
+const mockApp = require('../../../_utils/mocking/platforms/app');
 const mockFeeders = require('../../../_utils/mocking/feeders');
 
 describe('actions', () => {

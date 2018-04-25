@@ -38,6 +38,7 @@ describe('platform', () => {
 
         const handler = handlerBuilder();
         const action = 'on-definitely-uncovered-action';
+
         handler(buildIntentRequest({
           action,
           lastSeen: null,

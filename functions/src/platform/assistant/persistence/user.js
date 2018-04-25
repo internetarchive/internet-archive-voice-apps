@@ -1,7 +1,7 @@
-const {debug} = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
+const {debug, warning} = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
 
 /**
- * Session level persistance
+ * User level persistance
  *
  * @param conv
  */
@@ -20,11 +20,11 @@ module.exports = (conv) => {
      * @returns {{}}
      */
     getData: (name) => {
-      if (!conv.data) {
+      if (!conv.user.storage) {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
-      return conv.data[name];
+      return conv.user.storage[name];
     },
 
     /**
@@ -41,14 +41,19 @@ module.exports = (conv) => {
     setData: (name, value) => {
       debug(`set attribute ${name} to`, value);
 
-      if (!conv.data) {
+      if (!conv.user.storage) {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
-      conv.user.storage = {};
-      conv.data[name] = value;
-      const size = JSON.stringify({ data: conv.data }).length;
-      debug(`size of session data: ${size} bytes`);
+      const oldValue = conv.user.storage[name];
+      conv.user.storage[name] = value;
+      const size = JSON.stringify({ data: conv.user.storage }).length;
+      debug(`size of user data: ${size} bytes`);
+      if (size > 1e4) {
+        warning(`we exceed limitation of platform for user storage (size: ${size} bytes)`);
+        conv.user.storage[name] = oldValue;
+        return false;
+      }
       return true;
     },
   };

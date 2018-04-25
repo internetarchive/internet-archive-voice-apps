@@ -7,7 +7,7 @@ const sinon = require('sinon');
  */
 module.exports = (names) => {
   return names.map(name => {
-    const middleware = sinon.stub().returns(Promise.resolve());
+    const middleware = sinon.stub().callsFake((args) => Promise.resolve(args));
     const middlewareBuilder = sinon.stub().returns(middleware);
     middlewareBuilder.middleware = middleware;
     return {

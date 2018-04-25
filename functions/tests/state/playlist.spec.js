@@ -2,21 +2,24 @@ const {expect} = require('chai');
 
 const playlist = require('../../src/state/playlist');
 
-const mockApp = require('../_utils/mocking/platforms/assistant');
+const mockApp = require('../_utils/mocking/platforms/app');
 
 describe('playlist', () => {
   let app;
 
   beforeEach(() => {
-    app = mockApp();
-    app.data.playlist = {
-      current: 1,
-      items: [
-        {track: 1, title: 'song 1'},
-        {track: 2, title: 'song 2'},
-        {track: 3, title: 'song 3'},
-      ],
-    };
+    app = mockApp({
+      getData: {
+        playlist: {
+          current: 1,
+          items: [
+            {track: 1, title: 'song 1'},
+            {track: 2, title: 'song 2'},
+            {track: 3, title: 'song 3'},
+          ],
+        },
+      },
+    });
   });
 
   describe('extra parameters', () => {
@@ -49,7 +52,7 @@ describe('playlist', () => {
     describe('next', () => {
       it('should move pointer to the next song', () => {
         playlist.next(app);
-        expect(app.data.playlist).to.have.property('current', 2);
+        expect(app.persist.getData('playlist')).to.have.property('current', 2);
       });
     });
 
@@ -81,7 +84,18 @@ describe('playlist', () => {
       });
 
       it('should return false if we do not have next song', () => {
-        app.data.playlist.current = 2;
+        app = mockApp({
+          getData: {
+            playlist: {
+              current: 2,
+              items: [
+                {track: 1, title: 'song 1'},
+                {track: 2, title: 'song 2'},
+                {track: 3, title: 'song 3'},
+              ],
+            },
+          },
+        });
         expect(playlist.hasNextSong(app)).to.be.false;
       });
     });
