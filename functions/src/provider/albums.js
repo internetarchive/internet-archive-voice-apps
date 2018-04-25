@@ -143,8 +143,9 @@ function fetchAlbumsByQuery (app, query) {
   debug('Fetch albums by', query);
 
   return axios.get(
-    mustache.render(
+    endpointProcessor.preprocess(
       config.endpoints.QUERY_COLLECTIONS_URL,
+      app,
       Object.assign({}, query, {condition})
     )
   )
