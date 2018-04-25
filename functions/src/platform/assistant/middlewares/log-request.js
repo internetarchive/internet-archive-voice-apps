@@ -9,8 +9,8 @@ const {debug, info} = require('../../../utils/logger')('ia:log-request');
  */
 module.exports = (conv) => {
   debug('\n\n');
-  debug(`request body:`, conv.request.body);
-  debug(`request headers:`, conv.request.headers);
+  debug(`request body: ${util.inspect(conv.request, {depth: null})}`);
+  debug(`request headers:`, conv.headers);
   debug('\n\n');
   info(`start handling action: ${conv.action}, intent: ${conv.intent}`);
   if (conv.user) {
@@ -21,8 +21,8 @@ module.exports = (conv) => {
     info(`user: <unknown>`);
   }
   debug(`surface capabilities:`, util.inspect(conv.available.surfaces.capabilities.surfaces.map(s => s.capabilities.list)));
-  debug(`user's session data:`, conv.user.storage);
+  debug(`user's session data:`, conv.data);
   // FIXME::
-  debug(`user's persistent data:`, conv.userStorage);
+  debug(`user's persistent data:`, conv.user.storage);
   debug('\n\n');
 };

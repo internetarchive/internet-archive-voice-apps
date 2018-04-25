@@ -48,6 +48,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'input-unknown',
+
         data: {
           dialog: {
             lastPhrase: {
@@ -81,6 +82,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'input-unknown',
+
         data: {
           actions: {
             action: 'input-unknown',
@@ -103,6 +105,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'input-unknown',
+
         data: {
           actions: {
             action: 'some.other.action',

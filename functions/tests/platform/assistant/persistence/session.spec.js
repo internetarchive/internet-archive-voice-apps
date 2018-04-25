@@ -29,7 +29,8 @@ describe('platform', () => {
           expect(res).to.be.true;
         });
 
-        it('should revert changes when we exceed the limit of session data', () => {
+        // it works for user's persistant layer
+        it.skip('should revert changes when we exceed the limit of session data', () => {
           const p = persistance(mockAssistant());
           p.setData('value', 'hello world');
           const res = p.setData('value', 'x'.repeat(10000));

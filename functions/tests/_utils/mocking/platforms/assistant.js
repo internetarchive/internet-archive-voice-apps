@@ -16,6 +16,7 @@ module.exports = function mockApp ({
   app.ask = sinon.stub().returns(app);
   app.close = sinon.stub().returns(app);
 
+  _.set(app, 'data', {});
   _.set(app, 'user.storage', {});
   _.set(app, 'Media.ImageType.LARGE', 'Media.ImageType.LARGE');
   _.set(app, 'MEDIA_STATUS.extension.status', null);
