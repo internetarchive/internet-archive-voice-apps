@@ -1,13 +1,34 @@
 # Change Log
 
+## [2.1.9](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.9) (2018-04-25)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.8...2.1.9)
+
+**Implemented enhancements:**
+
+- migrate to Alexa SDK v2 [\#231](https://github.com/internetarchive/internet-archive-google-action/issues/231)
+- add changelog [\#229](https://github.com/internetarchive/internet-archive-google-action/issues/229)
+- support media query dialogs for alexa [\#221](https://github.com/internetarchive/internet-archive-google-action/issues/221)
+- migrate to Dialog Flow v2 [\#180](https://github.com/internetarchive/internet-archive-google-action/issues/180)
+- expose version of the app to the logs on start [\#83](https://github.com/internetarchive/internet-archive-google-action/issues/83)
+- Script for uploading dialog flow [\#33](https://github.com/internetarchive/internet-archive-google-action/issues/33)
+- put all tokens to env variables [\#17](https://github.com/internetarchive/internet-archive-google-action/issues/17)
+
+**Merged pull requests:**
+
+- add script to bump version [\#240](https://github.com/internetarchive/internet-archive-google-action/pull/240) ([hyzhak](https://github.com/hyzhak))
+- Feature/migrate to dialog flow v2 [\#238](https://github.com/internetarchive/internet-archive-google-action/pull/238) ([hyzhak](https://github.com/hyzhak))
+- Feature/alexa sdk 2.0 [\#234](https://github.com/internetarchive/internet-archive-google-action/pull/234) ([hyzhak](https://github.com/hyzhak))
+- Fix spelling issue in README: s/assess/access [\#227](https://github.com/internetarchive/internet-archive-google-action/pull/227) ([machawk1](https://github.com/machawk1))
+- \[WIP\] \#33 script for uploading dialog flow entities [\#165](https://github.com/internetarchive/internet-archive-google-action/pull/165) ([bimlendra](https://github.com/bimlendra))
+
 ## [2.1.8](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.8) (2018-04-20)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.6...2.1.8)
 
 **Implemented enhancements:**
 
 - profile performance of requests [\#228](https://github.com/internetarchive/internet-archive-google-action/issues/228)
-- support Alexa.CancelIntent Request [\#219](https://github.com/internetarchive/internet-archive-google-action/issues/219) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
-- resume playback [\#211](https://github.com/internetarchive/internet-archive-google-action/issues/211) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- support Alexa.CancelIntent Request [\#219](https://github.com/internetarchive/internet-archive-google-action/issues/219)
+- resume playback [\#211](https://github.com/internetarchive/internet-archive-google-action/issues/211)
 - re-prompt user when they missed the available range  [\#90](https://github.com/internetarchive/internet-archive-google-action/issues/90)
 
 **Fixed bugs:**
