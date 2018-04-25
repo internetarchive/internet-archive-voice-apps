@@ -80,7 +80,7 @@ class SyncAlbum extends DefaultFeeder {
       })
       .then((albumId) => {
         debug('id of album:', albumId);
-        return albumId && albumsProvider.fetchAlbumDetails(albumId);
+        return albumId && albumsProvider.fetchAlbumDetails(app, albumId);
       })
       .then(album => {
         if (!album) {

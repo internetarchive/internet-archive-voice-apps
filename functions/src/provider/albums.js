@@ -8,18 +8,22 @@ const delayedPromise = require('../utils/delay');
 const {debug, error} = require('../utils/logger')('ia:provider:albums');
 
 const {buildQueryCondition} = require('./advanced-search');
+const endpointProcessor = require('./endpoint-processor');
 
 /**
  * Fetch details about Album
  *
+ * @param app
  * @param id {string} id of album
  * @param {number} [retry]
  * @param {number} [delay] delay between requests
  * @returns {Promise}
  */
-function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
+function fetchAlbumDetails (app, id, {retry = 0, delay = 1000} = {}) {
   return axios.get(
-    mustache.render(config.endpoints.COLLECTION_URL, {id})
+    endpointProcessor.preprocess(
+      config.endpoints.COLLECTION_URL, app, {id}
+    )
   )
     .catch((error) => {
       if (retry > 0) {
