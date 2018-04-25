@@ -8,6 +8,8 @@
 # - push all changes to repository
 #
 
+set -e
+
 checkit='\xE2\x9C\x85'
 echo -e "$checkit  bump new version of repository"
 
