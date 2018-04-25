@@ -35,7 +35,6 @@ describe('collection', () => {
 
     beforeEach(() => {
       app = mockApp();
-      app.platform = 'assistant';
     });
 
     it('should return list of songs by album id', () => {

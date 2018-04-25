@@ -6,15 +6,15 @@ const MAX_ITEMS = 20000;
 /**
  * Return list of coverage year pair
  *
- * @param context
+ * @param slots
  * @returns {Promise.<{items: Array}>}
  */
-function handle (context) {
+function handle ({slots}) {
   debug('start');
-  debug('context:', context);
+  debug('context:', slots);
   return albumsProvider
     .fetchAlbumsByQuery(
-      Object.assign({}, context, {
+      Object.assign({}, slots, {
         limit: MAX_ITEMS,
         fields: 'coverage,year',
         order: 'downloads+desc',

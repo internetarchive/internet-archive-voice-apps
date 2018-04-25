@@ -53,7 +53,7 @@ describe('suggestions', () => {
         creatorId: 'band',
       };
       return suggestions
-        .handle(slots)
+        .handle({slots})
         .then(res => {
           expect(res).to.have.property('items').with.deep.members([
             1970,

@@ -2,11 +2,19 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
+const mockApp = require('../../../_utils/mocking/platforms/app');
+
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/suggestions');
 
 describe('actions', () => {
   describe('middlewares', () => {
+    let app;
     const suggestions = [1970, 1980, 1990, 2000, 2010];
+
+    beforeEach(() => {
+      app = mockApp();
+    });
+
     describe('suggestions', () => {
       it('should substitute static suggestions', () => {
         const suggestionsScheme = {
@@ -63,6 +71,7 @@ describe('actions', () => {
         };
 
         return middleware({exclude: ['year']})({
+          app,
           slots: {
             artist: 'the band',
             albumn: 'concert',
@@ -72,8 +81,11 @@ describe('actions', () => {
         })
           .then(() => {
             expect(provider).to.be.calledWith({
-              artist: 'the band',
-              albumn: 'concert',
+              app,
+              slots: {
+                artist: 'the band',
+                albumn: 'concert',
+              },
             });
           });
       });
