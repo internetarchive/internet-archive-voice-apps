@@ -107,6 +107,7 @@ function fetchAlbumsByCreatorId (id, {
 /**
  * Fetch some albums by query
  *
+ * @param app
  * @param {Object} query
  * @param {string} query.collectionId
  * @param {string} query.coverage
@@ -119,7 +120,7 @@ function fetchAlbumsByCreatorId (id, {
  *
  * @return {Promise}
  */
-function fetchAlbumsByQuery (query) {
+function fetchAlbumsByQuery (app, query) {
   query = Object.assign({}, {
     fields: 'identifier,coverage,title,year',
     // we require `coverage` field here to filter items

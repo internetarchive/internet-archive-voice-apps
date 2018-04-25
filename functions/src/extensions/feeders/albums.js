@@ -35,7 +35,7 @@ class SyncAlbum extends DefaultFeeder {
     debug('we have slots:', slots);
     let total;
     return albumsProvider
-      .fetchAlbumsByQuery(slots)
+      .fetchAlbumsByQuery(app, slots)
       .then(albums => {
         if (albums === null) {
           warning(`we received none albums`);

@@ -99,6 +99,7 @@ class AsyncAlbums extends DefaultFeeder {
 
     return albumsProvider
       .fetchAlbumsByQuery(
+        app,
         Object.assign(
           {},
           slots,

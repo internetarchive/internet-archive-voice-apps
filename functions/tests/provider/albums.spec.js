@@ -11,6 +11,12 @@ const ofARevolution = require('./fixtures/of-a-revolution-items.json');
 const smokeGetsInYourEyesPlate = require('./fixtures/smoke-gets-in-your-eyes-plate.json');
 
 describe('collection', () => {
+  let app;
+
+  beforeEach(() => {
+    app = mockApp();
+  });
+
   describe('fetchAlbums', () => {
     beforeEach(() => {
       const mock = new MockAdapter(albumsProvider.__get__('axios'));
@@ -31,12 +37,6 @@ describe('collection', () => {
   });
 
   describe('fetchAlbumDetails', () => {
-    let app;
-
-    beforeEach(() => {
-      app = mockApp();
-    });
-
     it('should return list of songs by album id', () => {
       const mock = new MockAdapter(albumsProvider.__get__('axios'));
       mock.onGet().reply(200, gratefulAlbum);
@@ -102,7 +102,7 @@ describe('collection', () => {
 
     it('should fetch single collection', () => {
       return albumsProvider
-        .fetchAlbumsByQuery({
+        .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
         })
         .then((res) => {
@@ -121,7 +121,7 @@ describe('collection', () => {
 
     it('should fetch group of collections', () => {
       return albumsProvider
-        .fetchAlbumsByQuery({
+        .fetchAlbumsByQuery(app, {
           collectionId: ['collection-1', 'collection-2'],
         })
         .then((res) => {
