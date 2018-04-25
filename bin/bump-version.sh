@@ -33,11 +33,11 @@ echo -e "$checkit  update tag"
 git tag $PACKAGE_VERSION
 
 echo -e "$checkit  push commit"
-##git push
-##
+git push
+
 echo -e "$checkit  push tag"
-#git push --tags
-#
+git push --tags
+
 echo -e "$checkit  regenerate changeslog"
 git-generate-changelog
 
@@ -45,6 +45,6 @@ echo -e "$checkit  commit changelog"
 git commit -am ":scroll: changelog $PACKAGE_VERSION"
 
 echo -e "$checkit  push change log"
-##git push
-#
+git push
+
 echo -e "$checkit  well done!"
