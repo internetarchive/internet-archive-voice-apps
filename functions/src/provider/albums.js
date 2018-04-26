@@ -1,6 +1,5 @@
 const axios = require('axios');
 const _ = require('lodash');
-const mustache = require('mustache');
 const util = require('util');
 
 const config = require('../config');
@@ -60,12 +59,13 @@ function fetchAlbumDetails (app, id, {retry = 0, delay = 1000} = {}) {
  * not all artists have dedicated collection
  * so we use fetchAlbumsByQuery instead
  *
+ * @param app
  * @param {string} id - identifier of creator
  * @param {number} limit
  * @param {number} page
  * @param {string} order - by default we fetch the most popular
  */
-function fetchAlbumsByCreatorId (id, {
+function fetchAlbumsByCreatorId (app, id, {
   limit = 3,
   page = 0,
   order = 'downloads+desc',
@@ -73,8 +73,8 @@ function fetchAlbumsByCreatorId (id, {
 } = {}) {
   debug(`fetch albums of ${id}`);
   return axios.get(
-    mustache.render(
-      config.endpoints.COLLECTION_ITEMS_URL,
+    endpointProcessor.preprocess(
+      config.endpoints.COLLECTION_ITEMS_URL, app,
       {
         id,
         limit,
