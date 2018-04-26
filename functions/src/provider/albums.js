@@ -148,12 +148,22 @@ function fetchAlbumsByQuery (app, query) {
       Object.assign({}, query, {condition})
     )
   )
-    .then(res => ({
-      items: res.data.response.docs.map(a => (Object.assign({}, a, {
-        year: parseInt(a.year),
-      }))),
-      total: res.data.response.numFound,
-    }))
+    .then(res => {
+      if (!res.data.response) {
+        error('we got empty response!', res.data);
+        return {
+          items: [],
+          total: 0,
+        };
+      }
+
+      return {
+        items: res.data.response.docs.map(a => Object.assign({}, a, {
+          year: parseInt(a.year),
+        })),
+        total: res.data.response.numFound,
+      };
+    })
     .catch(e => {
       error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
       return Promise.reject(e);

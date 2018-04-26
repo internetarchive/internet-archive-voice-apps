@@ -109,9 +109,9 @@ describe('collection', () => {
           expect(res).to.be.ok;
           expect(urls[0]).to.be.equal(
             'https://gactions-api.archive.org/advancedsearch.php?q=' +
-            '_exists_:coverage AND collection:collection-1' +
-            '&fl[]=identifier,coverage,title,year' +
-            '&sort[]=downloads+desc' +
+            '_exists_:coverage%20AND%20collection:collection-1' +
+            '&fl%5B%5D=identifier,coverage,title,year' +
+            '&sort%5B%5D=downloads+desc' +
             '&rows=3' +
             '&output=json'
           );
@@ -128,9 +128,9 @@ describe('collection', () => {
           expect(res).to.be.ok;
           expect(urls[0]).to.be.equal(
             'https://gactions-api.archive.org/advancedsearch.php?q=' +
-            '_exists_:coverage AND collection:collection-1' +
-            '&fl[]=identifier,coverage,title,year' +
-            '&sort[]=downloads+desc' +
+            '_exists_:coverage%20AND%20collection:collection-1' +
+            '&fl%5B%5D=identifier,coverage,title,year' +
+            '&sort%5B%5D=downloads+desc' +
             '&rows=3' +
             '&page=1' +
             '&output=json'
@@ -146,9 +146,9 @@ describe('collection', () => {
         .then((res) => {
           expect(urls[0]).to.be.equal(
             'https://gactions-api.archive.org/advancedsearch.php?q=' +
-            '_exists_:coverage AND (collection:collection-1 OR collection:collection-2)' +
-            '&fl[]=identifier,coverage,title,year' +
-            '&sort[]=downloads+desc' +
+            '_exists_:coverage%20AND%20(collection:collection-1%20OR%20collection:collection-2)' +
+            '&fl%5B%5D=identifier,coverage,title,year' +
+            '&sort%5B%5D=downloads+desc' +
             '&rows=3' +
             '&output=json'
           );
