@@ -32,7 +32,11 @@ const paramToStr = (name, value) => {
   if (value === '*') {
     return `_exists_:${name}`;
   } else {
-    return `${name}:(${value})`;
+    if (typeof value === 'string' && value.includes(' ')) {
+      return `${name}:"${value}"`;
+    } else {
+      return `${name}:${value}`;
+    }
   }
 };
 
