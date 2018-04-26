@@ -6,10 +6,10 @@ module.exports = (processing) => {
   /**
    * Wrap to proxy context to preprocess each requested property
    *
-   * @param context
+   * @param slots
    * @returns {Promise}
    */
-  function handler (context) {
+  function handler ({slots}) {
     debug('start handling');
 
     // Actually we could use it without Promise
@@ -27,12 +27,12 @@ module.exports = (processing) => {
           return undefined;
         }
 
-        if (!(name in context)) {
+        if (!(name in slots)) {
           warning(`we don't have "${String(name)}" in context`);
           return undefined;
         }
 
-        return processing({name, value: context[name]});
+        return processing({name, value: slots[name]});
       }
     }));
   }

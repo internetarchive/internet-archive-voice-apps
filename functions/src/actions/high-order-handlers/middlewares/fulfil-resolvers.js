@@ -16,9 +16,9 @@ const {debug} = require('../../../utils/logger')('ia:actions:middleware:fulfil-r
  * @param speech
  * @returns {Promise}
  */
-module.exports = () => (args) => {
+module.exports = () => (ctx) => {
   debug('start');
-  const {slots = {}, speech} = args;
+  const {slots = {}, speech} = ctx;
 
   // TODO: should we be limitted by speech only?
   debug(`resolve slots for "${speech}"`);
@@ -29,7 +29,7 @@ module.exports = () => (args) => {
   return Promise
     .all(
       resolversToProcess
-        .map(({handler}) => handler(slots))
+        .map(({handler}) => handler(ctx))
     )
     .then(solutions => {
       debug('solutions:', solutions);
@@ -49,7 +49,7 @@ module.exports = () => (args) => {
     })
     .then(newSlots => {
       return Promise.resolve(
-        Object.assign({}, args, {
+        Object.assign({}, ctx, {
           slots: Object.assign({}, slots, newSlots),
         })
       );

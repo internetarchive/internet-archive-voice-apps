@@ -21,7 +21,7 @@ const endpointProcessor = require('./endpoint-processor');
  *
  * @param {string} id - identifier of collection
  */
-function fetchDetails (id) {
+function fetchDetails (app, id) {
   debug(`fetch collection ${id}`);
   return axios.get(mustache.render(config.endpoints.COLLECTION_URL, {id}))
     .then(res => {
