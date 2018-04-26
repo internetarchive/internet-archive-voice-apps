@@ -26,7 +26,7 @@ const isValidParameter = (value) => (value !== undefined) && (value !== null);
  * @private
  * @param name
  * @param value
- * @returs
+ * @returns {string}
  */
 const paramToStr = (name, value) => {
   if (value === '*') {
@@ -34,7 +34,7 @@ const paramToStr = (name, value) => {
   } else {
     return `${name}:(${value})`;
   }
-}
+};
 
 /**
  * Build query string by condition.
