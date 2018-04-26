@@ -2,12 +2,13 @@ const creator = require('../../provider/creators');
 
 /**
  *
+ * @param app
  * @param slots
  * @returns {Promise.<{items: Array}>}
  */
-function handle ({slots}) {
+function handle ({app, slots}) {
   return creator
-    .fetchCreatorsBy(Object.assign({}, slots, {
+    .fetchCreatorsBy(app, Object.assign({}, slots, {
       order: 'downloads+desc',
     }));
 }

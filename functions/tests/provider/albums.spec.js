@@ -108,7 +108,7 @@ describe('collection', () => {
         .then((res) => {
           expect(res).to.be.ok;
           expect(urls[0]).to.be.equal(
-            'https://web.archive.org/advancedsearch.php?q=' +
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
@@ -126,7 +126,7 @@ describe('collection', () => {
         })
         .then((res) => {
           expect(urls[0]).to.be.equal(
-            'https://web.archive.org/advancedsearch.php?q=' +
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +

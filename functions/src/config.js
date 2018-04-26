@@ -15,8 +15,8 @@ module.exports = {
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
-    COLLECTION_URL: 'https://web.archive.org/metadata/{{id}}',
-    QUERY_COLLECTIONS_URL: 'https://web.archive.org/advancedsearch.php' +
+    COLLECTION_URL: 'https://{{platformSubDomain}}.archive.org/metadata/{{id}}',
+    QUERY_COLLECTIONS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q={{condition}}' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
