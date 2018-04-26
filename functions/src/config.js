@@ -1,14 +1,14 @@
 module.exports = {
   endpoints: {
     ALBUM_DETAIL: 'https://archive.org/details/{{album.id}}',
-    ALBUMS_OF_CREATOR_URL: 'https://web.archive.org/advancedsearch.php' +
+    ALBUMS_OF_CREATOR_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
-    COLLECTION_ITEMS_URL: 'https://web.archive.org/advancedsearch.php' +
+    COLLECTION_ITEMS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{id}})' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +

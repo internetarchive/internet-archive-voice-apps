@@ -54,6 +54,7 @@ function fetchEntitiesFromIA (id, field, limit) {
   var url = mustache.render(
     config.endpoints.COLLECTION_ITEMS_URL,
     {
+      platformSubDomain: 'web',
       id,
       limit,
       page,
