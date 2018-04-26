@@ -19,6 +19,7 @@ const endpointProcessor = require('./endpoint-processor');
  * Fetch details about collection
  *
  * @param {string} id - identifier of collection
+ * @returns {Promise}
  */
 function fetchDetails (app, id) {
   debug(`fetch collection ${id}`);
