@@ -13,8 +13,9 @@ describe('provider', () => {
           collectionId: '80s',
           year: '2020',
         });
+
         expect(condition).to.be.equal(
-          'coverage:(london) AND creator:(the band) AND collection:(theband) AND collection:(80s) AND year:(2020)'
+          'coverage:london AND creator:"the band" AND collection:theband AND collection:80s AND year:2020'
         );
       });
 
@@ -22,10 +23,22 @@ describe('provider', () => {
         const condition = advancedSearch.buildQueryCondition({
           collectionId: ['etree', 'georgeblood'],
         });
+
         expect(condition).to.be.equal(
-          '(collection:(etree) OR collection:(georgeblood))'
+          '(collection:etree OR collection:georgeblood)'
         );
       });
+    });
+
+    it('should check existance of field', () => {
+      const condition = advancedSearch.buildQueryCondition({
+        coverage: '*',
+        creator: 'the band',
+      });
+
+      expect(condition).to.be.equal(
+        '_exists_:coverage AND creator:"the band"'
+      );
     });
   });
 });

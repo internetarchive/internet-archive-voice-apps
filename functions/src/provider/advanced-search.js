@@ -26,9 +26,19 @@ const isValidParameter = (value) => (value !== undefined) && (value !== null);
  * @private
  * @param name
  * @param value
- * @returs
+ * @returns {string}
  */
-const paramToStr = (name, value) => `${name}:(${value})`;
+const paramToStr = (name, value) => {
+  if (value === '*') {
+    return `_exists_:${name}`;
+  } else {
+    if (typeof value === 'string' && value.includes(' ')) {
+      return `${name}:"${value}"`;
+    } else {
+      return `${name}:${value}`;
+    }
+  }
+};
 
 /**
  * Build query string by condition.

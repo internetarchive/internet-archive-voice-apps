@@ -132,7 +132,6 @@ function fetchAlbumsByQuery (app, query) {
     // creator's collection.
     coverage: '*',
     limit: 3,
-    page: 0,
     order: 'downloads+desc',
   }, query);
 

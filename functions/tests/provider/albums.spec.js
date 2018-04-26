@@ -109,11 +109,30 @@ describe('collection', () => {
           expect(res).to.be.ok;
           expect(urls[0]).to.be.equal(
             'https://gactions-api.archive.org/advancedsearch.php?q=' +
-            'coverage:(*) AND collection:(collection-1)' +
+            '_exists_:coverage AND collection:collection-1' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
-            '&page=0' +
+            '&output=json'
+          );
+        });
+    });
+
+    it('should page when we pass it as parameter', () => {
+      return albumsProvider
+        .fetchAlbumsByQuery(app, {
+          collectionId: 'collection-1',
+          page: 1,
+        })
+        .then((res) => {
+          expect(res).to.be.ok;
+          expect(urls[0]).to.be.equal(
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
+            '_exists_:coverage AND collection:collection-1' +
+            '&fl[]=identifier,coverage,title,year' +
+            '&sort[]=downloads+desc' +
+            '&rows=3' +
+            '&page=1' +
             '&output=json'
           );
         });
@@ -127,11 +146,10 @@ describe('collection', () => {
         .then((res) => {
           expect(urls[0]).to.be.equal(
             'https://gactions-api.archive.org/advancedsearch.php?q=' +
-            'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
+            '_exists_:coverage AND (collection:collection-1 OR collection:collection-2)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
             '&rows=3' +
-            '&page=0' +
             '&output=json'
           );
         });

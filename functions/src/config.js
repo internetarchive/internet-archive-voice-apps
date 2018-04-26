@@ -21,7 +21,7 @@ module.exports = {
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
     '&rows={{limit}}' +
-    '&page={{page}}' +
+    '{{#page}}&page={{page}}{{/page}}' +
     '&output=json',
     SONG_URL: 'https://archive.org/download/{{albumId}}/{{filename}}',
   },
