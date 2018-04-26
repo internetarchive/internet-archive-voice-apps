@@ -1,5 +1,19 @@
 # Change Log
 
+## [2.1.10](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.10) (2018-04-26)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.9...2.1.10)
+
+**Implemented enhancements:**
+
+- use different IA API endpoints for different platforms [\#241](https://github.com/internetarchive/internet-archive-google-action/issues/241)
+- script to bump repository version [\#239](https://github.com/internetarchive/internet-archive-google-action/issues/239)
+- improve advancedsearch.php url template [\#224](https://github.com/internetarchive/internet-archive-google-action/issues/224)
+
+**Merged pull requests:**
+
+- Feature/make advancedsearch highly customizable [\#243](https://github.com/internetarchive/internet-archive-google-action/pull/243) ([hyzhak](https://github.com/hyzhak))
+- Feature/use different ia endpoints for different platoforms [\#242](https://github.com/internetarchive/internet-archive-google-action/pull/242) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.1.9](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.9) (2018-04-25)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.8...2.1.9)
 
