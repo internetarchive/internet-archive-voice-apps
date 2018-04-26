@@ -1,5 +1,4 @@
 const axios = require('axios');
-const mustache = require('mustache');
 
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:search:collection');
@@ -23,7 +22,9 @@ const endpointProcessor = require('./endpoint-processor');
  */
 function fetchDetails (app, id) {
   debug(`fetch collection ${id}`);
-  return axios.get(mustache.render(config.endpoints.COLLECTION_URL, {id}))
+  return axios.get(endpointProcessor.preprocess(
+    config.endpoints.COLLECTION_URL, app, {id}
+  ))
     .then(res => {
       return {
         title: res.data.metadata.title,
