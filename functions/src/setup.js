@@ -14,6 +14,9 @@ const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
 const axiosProfile = require('./performance/axios');
 
 module.exports = ({platform}) => {
+  // turn-off escaping in MustacheJS
+  mustache.escape = v => v;
+
   mathjsExtensions.patch();
 
   const userAgent = mustache.render(
