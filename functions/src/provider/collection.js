@@ -4,6 +4,8 @@ const mustache = require('mustache');
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:search:collection');
 
+const endpointProcessor = require('./endpoint-processor');
+
 /*
  Could be interesting Fields:
 
@@ -36,12 +38,15 @@ function fetchDetails (id) {
 /**
  * Fetch items of collection
  *
+ * @param app
  * @param {string} id - identifier of collection
  * @returns {Promise}
  */
-function fetchItems (id) {
+function fetchItems (app, id) {
   debug(`fetch collection items ${id}`);
-  return axios.get(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
+  return axios.get(endpointProcessor.preprocess(
+    config.endpoints.QUERY_COLLECTIONS_URL, app, {id}
+  ))
     .then(res => res.data.response.docs)
     .catch(e => {
       error(`Get error on fetching collection ${id} items, error:`, e);
