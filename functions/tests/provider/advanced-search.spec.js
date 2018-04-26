@@ -27,5 +27,16 @@ describe('provider', () => {
         );
       });
     });
+
+    it('should check existance of field', () => {
+      const condition = advancedSearch.buildQueryCondition({
+        coverage: '*',
+        creator: 'the band',
+      });
+
+      expect(condition).to.be.equal(
+        '_exists_:coverage AND creator:(the band)'
+      );
+    });
   });
 });
