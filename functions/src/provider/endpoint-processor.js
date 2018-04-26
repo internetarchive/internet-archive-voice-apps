@@ -16,10 +16,12 @@ function preprocess (template, app, opts) {
     config, ['platforms', app.platform, 'endpoint']
   );
 
-  return mustache.render(
+  let url = mustache.render(
     template,
     Object.assign({}, opts, platformOpts)
   );
+
+  return encodeURI(url);
 }
 
 module.exports = {
