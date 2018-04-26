@@ -1,6 +1,5 @@
 const axios = require('axios');
 const _ = require('lodash');
-const mustache = require('mustache');
 const util = require('util');
 
 const config = require('../config');
@@ -8,18 +7,22 @@ const delayedPromise = require('../utils/delay');
 const {debug, error} = require('../utils/logger')('ia:provider:albums');
 
 const {buildQueryCondition} = require('./advanced-search');
+const endpointProcessor = require('./endpoint-processor');
 
 /**
  * Fetch details about Album
  *
+ * @param app
  * @param id {string} id of album
  * @param {number} [retry]
  * @param {number} [delay] delay between requests
  * @returns {Promise}
  */
-function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
+function fetchAlbumDetails (app, id, {retry = 0, delay = 1000} = {}) {
   return axios.get(
-    mustache.render(config.endpoints.COLLECTION_URL, {id})
+    endpointProcessor.preprocess(
+      config.endpoints.COLLECTION_URL, app, {id}
+    )
   )
     .catch((error) => {
       if (retry > 0) {
@@ -56,12 +59,13 @@ function fetchAlbumDetails (id, {retry = 0, delay = 1000} = {}) {
  * not all artists have dedicated collection
  * so we use fetchAlbumsByQuery instead
  *
+ * @param app
  * @param {string} id - identifier of creator
  * @param {number} limit
  * @param {number} page
  * @param {string} order - by default we fetch the most popular
  */
-function fetchAlbumsByCreatorId (id, {
+function fetchAlbumsByCreatorId (app, id, {
   limit = 3,
   page = 0,
   order = 'downloads+desc',
@@ -69,8 +73,8 @@ function fetchAlbumsByCreatorId (id, {
 } = {}) {
   debug(`fetch albums of ${id}`);
   return axios.get(
-    mustache.render(
-      config.endpoints.COLLECTION_ITEMS_URL,
+    endpointProcessor.preprocess(
+      config.endpoints.COLLECTION_ITEMS_URL, app,
       {
         id,
         limit,
@@ -103,6 +107,7 @@ function fetchAlbumsByCreatorId (id, {
 /**
  * Fetch some albums by query
  *
+ * @param app
  * @param {Object} query
  * @param {string} query.collectionId
  * @param {string} query.coverage
@@ -115,7 +120,7 @@ function fetchAlbumsByCreatorId (id, {
  *
  * @return {Promise}
  */
-function fetchAlbumsByQuery (query) {
+function fetchAlbumsByQuery (app, query) {
   query = Object.assign({}, {
     fields: 'identifier,coverage,title,year',
     // we require `coverage` field here to filter items
@@ -138,8 +143,9 @@ function fetchAlbumsByQuery (query) {
   debug('Fetch albums by', query);
 
   return axios.get(
-    mustache.render(
+    endpointProcessor.preprocess(
       config.endpoints.QUERY_COLLECTIONS_URL,
+      app,
       Object.assign({}, query, {condition})
     )
   )

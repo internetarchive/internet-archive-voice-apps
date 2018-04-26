@@ -4,11 +4,19 @@ const rewire = require('rewire');
 
 const albumsProvider = rewire('../../src/provider/albums');
 
+const mockApp = require('../_utils/mocking/platforms/app');
+
 const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
 const smokeGetsInYourEyesPlate = require('./fixtures/smoke-gets-in-your-eyes-plate.json');
 
 describe('collection', () => {
+  let app;
+
+  beforeEach(() => {
+    app = mockApp();
+  });
+
   describe('fetchAlbums', () => {
     beforeEach(() => {
       const mock = new MockAdapter(albumsProvider.__get__('axios'));
@@ -33,7 +41,7 @@ describe('collection', () => {
       const mock = new MockAdapter(albumsProvider.__get__('axios'));
       mock.onGet().reply(200, gratefulAlbum);
 
-      return albumsProvider.fetchAlbumDetails('gd73-06-10.sbd.hollister.174.sbeok.shnf')
+      return albumsProvider.fetchAlbumDetails(app, 'gd73-06-10.sbd.hollister.174.sbeok.shnf')
         .then(album => {
           expect(album).to.have.property('collections').to.have.members([
             'GratefulDead',
@@ -61,7 +69,7 @@ describe('collection', () => {
 
       // plates have many of songs duplications
       // but luckly they don't have title field, we will use it
-      return albumsProvider.fetchAlbumDetails('78_the-continental-you-kiss-while-youre-dancing_larry-adler-harbach-kern_gbia0034616')
+      return albumsProvider.fetchAlbumDetails(app, '78_the-continental-you-kiss-while-youre-dancing_larry-adler-harbach-kern_gbia0034616')
         .then(album => {
           expect(album)
             .to.have.property('songs')
@@ -94,13 +102,13 @@ describe('collection', () => {
 
     it('should fetch single collection', () => {
       return albumsProvider
-        .fetchAlbumsByQuery({
+        .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
         })
         .then((res) => {
           expect(res).to.be.ok;
           expect(urls[0]).to.be.equal(
-            'https://web.archive.org/advancedsearch.php?q=' +
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND collection:(collection-1)' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +
@@ -113,12 +121,12 @@ describe('collection', () => {
 
     it('should fetch group of collections', () => {
       return albumsProvider
-        .fetchAlbumsByQuery({
+        .fetchAlbumsByQuery(app, {
           collectionId: ['collection-1', 'collection-2'],
         })
         .then((res) => {
           expect(urls[0]).to.be.equal(
-            'https://web.archive.org/advancedsearch.php?q=' +
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
             'coverage:(*) AND (collection:(collection-1) OR collection:(collection-2))' +
             '&fl[]=identifier,coverage,title,year' +
             '&sort[]=downloads+desc' +

@@ -7,9 +7,12 @@ const {debug} = require('../../../utils/logger')('ia:resolver:collection');
  * @param collectionId
  * @returns {Promise}
  */
-function handler ({collectionId} = {}) {
-  debug('start handling', collectionId);
-  return collection.fetchDetails(collectionId);
+function handler ({app, slots} = {}) {
+  if (!slots) {
+    return Promise.resolve();
+  }
+  debug('start handling', slots.collectionId);
+  return collection.fetchDetails(app, slots.collectionId);
 }
 
 module.exports = {

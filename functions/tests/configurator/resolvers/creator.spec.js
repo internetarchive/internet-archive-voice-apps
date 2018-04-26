@@ -1,14 +1,18 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
+const mockApp = require('../../_utils/mocking/platforms/app');
+
 const creator = rewire('../../../src/configurator/resolvers/creator');
 
 const mockSearchCollection = require('../../_utils/mocking/provider/collection');
 
 describe('slots', () => {
+  let app;
   let collection;
 
   beforeEach(() => {
+    app = mockApp();
     collection = mockSearchCollection({
       fetchDetailsResponse: {
         title: 'Cool Band',
@@ -30,10 +34,13 @@ describe('slots', () => {
           });
 
           it('should fetch metadata from IA and return object with title', () => {
-            creator.handler({
-              creatorId: 'cool-band',
+            return creator.handler({
+              app,
+              slots: {
+                creatorId: 'cool-band',
+              },
             }).then((res) => {
-              expect(collection.fetchDetails).to.be.calledWith('cool-band');
+              expect(collection.fetchDetails).to.be.calledWith(app, 'cool-band');
               expect(res).to.have.property('title').to.equal('Cool Band');
             });
           });

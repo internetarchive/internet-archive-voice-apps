@@ -14,7 +14,9 @@ describe('extensions', () => {
 
         return resolver
           .handler({
-            suggestions
+            slots: {
+              suggestions,
+            },
           })
           .then(res => {
             expect(res.suggestions).to.be.equal('1970, 1980 or 1990');
@@ -31,7 +33,9 @@ describe('extensions', () => {
 
         return resolver
           .handler({
-            suggestions
+            slots: {
+              suggestions,
+            },
           })
           .then(res => {
             expect(res.suggestions).to.be.equal('between 1970 and 2000');

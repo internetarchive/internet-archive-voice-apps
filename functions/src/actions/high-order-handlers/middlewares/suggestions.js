@@ -17,7 +17,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
   debug('start');
-  const {slots, suggestionsScheme} = context;
+  const {app, slots, suggestionsScheme} = context;
   if (!suggestionsScheme) {
     warning(`skip middleware becase we don't have any suggestion scheme here`);
     return Promise.resolve(context);
@@ -43,7 +43,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
     debug('we found partly matched suggestion provider');
   }
 
-  return provider(_.omit(slots, exclude))
+  return provider({app, slots: _.omit(slots, exclude)})
     .then(res => {
       let suggestions;
       if (suggestionsScheme.suggestionTemplate) {

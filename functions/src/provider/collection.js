@@ -1,8 +1,9 @@
 const axios = require('axios');
-const mustache = require('mustache');
 
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:search:collection');
+
+const endpointProcessor = require('./endpoint-processor');
 
 /*
  Could be interesting Fields:
@@ -18,10 +19,13 @@ const {debug, error} = require('../utils/logger')('ia:search:collection');
  * Fetch details about collection
  *
  * @param {string} id - identifier of collection
+ * @returns {Promise}
  */
-function fetchDetails (id) {
+function fetchDetails (app, id) {
   debug(`fetch collection ${id}`);
-  return axios.get(mustache.render(config.endpoints.COLLECTION_URL, {id}))
+  return axios.get(endpointProcessor.preprocess(
+    config.endpoints.COLLECTION_URL, app, {id}
+  ))
     .then(res => {
       return {
         title: res.data.metadata.title,
@@ -36,12 +40,15 @@ function fetchDetails (id) {
 /**
  * Fetch items of collection
  *
+ * @param app
  * @param {string} id - identifier of collection
  * @returns {Promise}
  */
-function fetchItems (id) {
+function fetchItems (app, id) {
   debug(`fetch collection items ${id}`);
-  return axios.get(mustache.render(config.endpoints.COLLECTION_ITEMS_URL, {id}))
+  return axios.get(endpointProcessor.preprocess(
+    config.endpoints.QUERY_COLLECTIONS_URL, app, {id}
+  ))
     .then(res => res.data.response.docs)
     .catch(e => {
       error(`Get error on fetching collection ${id} items, error:`, e);

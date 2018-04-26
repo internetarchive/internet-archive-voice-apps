@@ -99,6 +99,7 @@ class AsyncAlbums extends DefaultFeeder {
 
     return albumsProvider
       .fetchAlbumsByQuery(
+        app,
         Object.assign(
           {},
           slots,
@@ -119,7 +120,7 @@ class AsyncAlbums extends DefaultFeeder {
           albums.items
             .map(
               album => albumsProvider
-                .fetchAlbumDetails(album.identifier, {
+                .fetchAlbumDetails(app, album.identifier, {
                   retry: 3,
                   delay: 100,
                 })

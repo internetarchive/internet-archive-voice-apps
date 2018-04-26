@@ -12,7 +12,9 @@ describe('extensions', () => {
 
         return resolver
           .handler({
-            artists
+            slots: {
+              artists,
+            },
           })
           .then(res => {
             expect(res.artists).to.be.equal('Grateful Dead');
@@ -28,7 +30,9 @@ describe('extensions', () => {
 
         return resolver
           .handler({
-            artists
+            slots: {
+              artists,
+            },
           })
           .then(res => {
             expect(res.artists).to.be.equal('Claude Luter Et Ses Lorientais and other');

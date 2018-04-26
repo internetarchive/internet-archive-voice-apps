@@ -3,6 +3,11 @@ const {debug, warning} = require('../../utils/logger')('ia:resolver:years-interv
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
+/**
+ * Map values of slots to aliases
+ *
+ * @type {{handler, requirements}}
+ */
 module.exports = contextProxy(({name, value}) => {
   debug(aliases);
   if (!(name in aliases)) {

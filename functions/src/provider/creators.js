@@ -1,18 +1,19 @@
 const axios = require('axios');
-const mustache = require('mustache');
 const util = require('util');
 
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:provider:creators');
 
 const {buildQueryCondition} = require('./advanced-search');
+const endpointProcessor = require('./endpoint-processor');
 
 /**
  * Fetch popular creators by query condition
  *
+ * @param app
  * @param query
  */
-function fetchCreatorsBy (query) {
+function fetchCreatorsBy (app, query) {
   debug('fetch creators by:', query);
   const {
     limit = 3,
@@ -27,8 +28,8 @@ function fetchCreatorsBy (query) {
   const fields = 'creator,identifier';
   return axios
     .get(
-      mustache.render(
-        config.endpoints.QUERY_COLLECTIONS_URL, {
+      endpointProcessor.preprocess(
+        config.endpoints.QUERY_COLLECTIONS_URL, app, {
           condition,
           limit,
           page,

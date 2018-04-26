@@ -8,7 +8,9 @@ describe('extensions', () => {
       it('should match alias for collectionId', () => {
         return resolver
           .handler({
-            collectionId: 'etree'
+            slots: {
+              collectionId: 'etree',
+            },
           })
           .then(res => {
             expect(res.collectionId).to.be.equal('Live Concerts');

@@ -4,9 +4,16 @@ const rewire = require('rewire');
 
 const creators = rewire('../../src/provider/creators');
 
+const mockApp = require('../_utils/mocking/platforms/app');
 const popularAlbums = require('./fixtures/popular-of-etree.json');
 
 describe('providers', () => {
+  let app;
+
+  beforeEach(() => {
+    app = mockApp();
+  });
+
   describe('creators', () => {
     beforeEach(() => {
       const mock = new MockAdapter(creators.__get__('axios'));
@@ -16,7 +23,7 @@ describe('providers', () => {
     describe('fetchCreators', () => {
       it('should fetch popular creators', () => {
         return creators
-          .fetchCreatorsBy({
+          .fetchCreatorsBy(app, {
             coverage: 'london',
             creatorId: 'theband',
             collectionId: '80s',
@@ -41,7 +48,7 @@ describe('providers', () => {
         mock.onGet().reply(200, '<html><head></head><body></body></html>');
 
         return creators
-          .fetchCreatorsBy({
+          .fetchCreatorsBy(app, {
             coverage: 'london',
             creatorId: 'theband',
             collectionId: '80s',

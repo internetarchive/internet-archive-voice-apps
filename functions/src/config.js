@@ -1,22 +1,22 @@
 module.exports = {
   endpoints: {
     ALBUM_DETAIL: 'https://archive.org/details/{{album.id}}',
-    ALBUMS_OF_CREATOR_URL: 'https://web.archive.org/advancedsearch.php' +
+    ALBUMS_OF_CREATOR_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
-    COLLECTION_ITEMS_URL: 'https://web.archive.org/advancedsearch.php' +
+    COLLECTION_ITEMS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{id}})' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
     '&rows={{limit}}' +
     '&page={{page}}' +
     '&output=json',
-    COLLECTION_URL: 'https://web.archive.org/metadata/{{id}}',
-    QUERY_COLLECTIONS_URL: 'https://web.archive.org/advancedsearch.php' +
+    COLLECTION_URL: 'https://{{platformSubDomain}}.archive.org/metadata/{{id}}',
+    QUERY_COLLECTIONS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q={{condition}}' +
     '&fl[]={{fields}}' +
     '&sort[]={{order}}' +
@@ -29,6 +29,29 @@ module.exports = {
   media: {
     POSTER_OF_ALBUM: 'https://archive.org/services/img/{{id}}',
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
+  },
+
+  /**
+   * settings specific for supported platforms
+   */
+  platforms: {
+    alexa: {
+      /**
+       * substitute to endpoint
+       */
+      endpoint: {
+        platformSubDomain: 'askills-api',
+      },
+    },
+
+    assistant: {
+      /**
+       * substitute to endpoint
+       */
+      endpoint: {
+        platformSubDomain: 'gactions-api',
+      },
+    },
   },
 
   request: {

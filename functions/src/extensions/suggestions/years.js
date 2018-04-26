@@ -9,13 +9,14 @@ const MAX_ITEMS = 20000;
  * Fetch year suggestions for the artist
  * TODO: actually it should work for any query set
  *
- * @param context
+ * @param app
+ * @param slots
  * @returns {Promise.<{items: Array}>}
  */
-function handle (context) {
-  debug(`handle years suggestions for creator:${context.creatorId}`);
+function handle ({app, slots}) {
+  debug(`handle years suggestions for creator:${slots.creatorId}`);
   return albumsProvider
-    .fetchAlbumsByQuery(Object.assign({}, context, {
+    .fetchAlbumsByQuery(app, Object.assign({}, slots, {
       limit: MAX_ITEMS,
       fields: 'year',
       order: 'year',
