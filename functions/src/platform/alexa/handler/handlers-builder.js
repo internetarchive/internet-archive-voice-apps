@@ -8,10 +8,19 @@ const kebabToCamel = require('../../../utils/kebab-to-camel');
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
 function stripAmazonIntent (name) {
   const res = stripAmazonIntentReg.exec(name);
-  if (!res) {
-    return name;
+  if (res) {
+    return res[1];
   }
-  return res[1];
+  return name;
+}
+
+const stripRequestTypeReq = /^AudioPlayer\.(.*)$/;
+function stripRequestType (requestType) {
+  const req = stripRequestTypeReq.exec(requestType);
+  if (req) {
+    return req[1];
+  }
+  return requestType;
 }
 
 /**
@@ -39,13 +48,21 @@ module.exports = (actions) => {
             // if intent starts with AMAZON we will cut this head
             const newIntentName = stripAmazonIntent(intentName);
             if (intentName !== newIntentName) {
-              debug('cut AMAZON head from intent and tail Intent');
               intentName = newIntentName;
             }
             return intentName === intent;
           }
 
-          return _.get(handlerInput, 'requestEnvelope.request.type') === intent;
+          let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
+          if (requestType) {
+            const newRequestType = stripRequestType(requestType);
+            if (requestType !== newRequestType) {
+              requestType = newRequestType;
+            }
+            return requestType === intent;
+          }
+
+          return false;
         },
 
         handle: (handlerInput) => {

@@ -97,6 +97,17 @@ describe('platform', () => {
         ).to.be.true;
       });
 
+      it('should catch AudioPlayer specific type', () => {
+        const playbackStartedHandler = sinon.spy();
+        const res = builder(new Map([
+          ['playback-started', playbackStartedHandler],
+        ]));
+
+        expect(
+          res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'AudioPlayer.PlaybackStarted'))
+        ).to.be.true;
+      });
+
       it(`should return Response after handler`, () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
