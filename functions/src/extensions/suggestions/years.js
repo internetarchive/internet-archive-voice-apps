@@ -3,7 +3,7 @@ const _ = require('lodash');
 const albumsProvider = require('../../provider/albums');
 const {debug, warning} = require('../../utils/logger')('ia:suggestions:years');
 
-const MAX_ITEMS = 20000;
+const MAX_ITEMS = 16000;
 
 /**
  * Fetch year suggestions for the artist
@@ -15,9 +15,13 @@ const MAX_ITEMS = 20000;
  */
 function handle ({app, slots}) {
   debug(`handle years suggestions for creator:${slots.creatorId}`);
+  let limit = MAX_ITEMS;
+  if ('coverage' in slots && 'creator' in slots) {
+    limit = 150;
+  }
   return albumsProvider
     .fetchAlbumsByQuery(app, Object.assign({}, slots, {
-      limit: MAX_ITEMS,
+      limit,
       fields: 'year',
       order: 'year',
     }))
