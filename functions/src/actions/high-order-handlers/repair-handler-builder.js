@@ -58,7 +58,7 @@ module.exports = {
           );
           break;
         default:
-          dialog.tell(app, intentStrings[2]);
+          dialog.close(app, intentStrings[2]);
           break;
       }
     };

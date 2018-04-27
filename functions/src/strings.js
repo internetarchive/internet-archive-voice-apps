@@ -79,6 +79,13 @@ module.exports = {
    */
   intents: {
     /**
+     * Exit intent
+     */
+    exit: {
+      speech: `Alright, see you next time!`,
+    },
+
+    /**
      * In one go actions for playback music
      */
     inOneGoMusicPlayback: {

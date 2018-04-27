@@ -4,5 +4,5 @@ module.exports = {
   ask: require('./ask'),
   playSong: audio.playSong,
   merge: require('./merge'),
-  tell: require('./tell'),
+  close: require('./close'),
 };
