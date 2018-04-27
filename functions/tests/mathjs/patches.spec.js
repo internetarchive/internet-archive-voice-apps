@@ -26,4 +26,14 @@ describe('mathjs', () => {
       expect(math.eval('includes(["a","b"], "c")')).to.be.false;
     });
   });
+
+  describe('equal', () => {
+    it('should be true when strings are equal', () => {
+      expect(math.eval('equal("abc", "abc")')).to.be.true;
+    });
+
+    it('should be false when strings are not equal', () => {
+      expect(math.eval('equal("ab", "abc")')).to.be.false;
+    });
+  });
 });
