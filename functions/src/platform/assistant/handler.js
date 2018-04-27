@@ -41,8 +41,7 @@ module.exports = (actionsMap) => {
   // Sentry middleware
   if (functions.config().sentry) {
     app.middleware((conv) => {
-      conv.raven = Raven.Client();
-      conv.raven.config(
+      conv.raven = Raven.Client(
         functions.config().sentry.url, {
           sendTimeout: 10,
           captureUnhandledRejections: true,
@@ -51,7 +50,8 @@ module.exports = (actionsMap) => {
             platform: 'assistant',
           }
         }
-      ).install();
+      );
+      conv.raven.install();
 
       // set user's context to Sentry
       conv.raven.setContext({
