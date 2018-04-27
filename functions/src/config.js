@@ -19,7 +19,7 @@ module.exports = {
     QUERY_COLLECTIONS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q={{condition}}' +
     '&fl[]={{fields}}' +
-    '&sort[]={{order}}' +
+    '{{#order}}&sort[]={{order}}{{/order}}' +
     '&rows={{limit}}' +
     '{{#page}}&page={{page}}{{/page}}' +
     '&output=json',
