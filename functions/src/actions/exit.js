@@ -4,7 +4,7 @@ const strings = require('../strings').intents.exit;
 const selectors = require('../configurator/selectors');
 
 function handler (app) {
-  dialog.tell(app, selectors.find(strings, query.getSlots(app)));
+  dialog.close(app, selectors.find(strings, query.getSlots(app)));
 }
 
 module.exports = {

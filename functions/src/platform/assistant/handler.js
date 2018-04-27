@@ -78,7 +78,7 @@ module.exports = (actionsMap) => {
   // TODO:
   // app.middleware((conv) => {
   //   if (!conv.available.surfaces.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
-  //     dialog.tell(conv.app, strings.errors.device.mediaResponse);
+  //     dialog.close(conv.app, strings.errors.device.mediaResponse);
   //   }
   // });
 

@@ -65,7 +65,7 @@ describe('actions', () => {
         storeAction(app, 'no-input');
         storeAction(app, 'no-input');
         handler(app);
-        expect(dialog.tell).to.be.calledWith(
+        expect(dialog.close).to.be.calledWith(
           app,
           strings[2]
         );

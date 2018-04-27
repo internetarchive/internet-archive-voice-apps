@@ -20,7 +20,7 @@ describe('actions', () => {
 
     it('should tell goodbye and close session', () => {
       action.handler(app);
-      expect(dialog.tell).to.have.been.calledWith(app, strings);
+      expect(dialog.close).to.have.been.calledWith(app, strings);
     });
   });
 });
