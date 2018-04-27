@@ -67,7 +67,23 @@ module.exports = (actions) => {
 
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
-          return Promise.resolve(fn(new App(handlerInput)))
+          return handlerInput.attributesManager.getPersistentAttributes()
+            .catch((err) => {
+              debug('we got error on gettting persistetn attributes', err);
+              debug('so we drop them to default');
+              return {};
+            })
+            .then((persistentAttributes) => {
+              debug('got persistent attributes:', persistentAttributes);
+              return Promise.all([
+                persistentAttributes,
+                fn(new App(handlerInput, persistentAttributes)),
+              ]);
+            })
+            .then(([persistentAttributes, _]) => {
+              handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+              return handlerInput.attributesManager.savePersistentAttributes();
+            })
             .then(() => {
               debug(`end handle intent "${intent}"`);
               return handlerInput.responseBuilder.getResponse();

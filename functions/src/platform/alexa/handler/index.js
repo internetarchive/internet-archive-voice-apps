@@ -8,10 +8,10 @@ const ErrorHandler = require('./error-handler');
 const LogInterceptor = require('./log-interceptor');
 const handlersBuilder = require('./handlers-builder');
 
-
 module.exports = (actions) => {
   let dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
-    tableNam: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',
+    createTable: true,
+    tableName: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',
   });
   const handlers = handlersBuilder(actions);
   let skill;

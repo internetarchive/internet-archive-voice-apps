@@ -13,14 +13,14 @@ class App {
    *
    * @param handlerInput
    */
-  constructor (handlerInput) {
+  constructor (handlerInput, persistentAttributes) {
     this.handlerInput = handlerInput;
 
     this.platform = 'alexa';
 
     // define interfaces
     this.params = params(handlerInput);
-    this.persist = persistance(handlerInput);
+    this.persist = persistance(handlerInput, persistentAttributes);
     this.response = response(handlerInput);
   }
 
@@ -39,7 +39,7 @@ class App {
    * @returns {Number}
    */
   getOffset () {
-    return this.handlerInput.request.offsetInMilliseconds;
+    return this.handlerInput.requestEnvelope.request.offsetInMilliseconds;
   }
 
   /**
@@ -47,7 +47,9 @@ class App {
    */
   stopPlayback () {
     debug('stop playing music');
-    this.handlerInput.responseBuilder.addAudioPlayerStopDirective();
+    this.handlerInput.responseBuilder
+      .withShouldEndSession(true)
+      .addAudioPlayerStopDirective();
   }
 }
 

@@ -1,5 +1,5 @@
 function handler (app) {
-  app.spotPlayback();
+  app.stopPlayback();
 }
 
 /**

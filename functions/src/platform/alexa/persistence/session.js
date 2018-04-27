@@ -6,17 +6,23 @@ const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:
  * Session level persistance.
  * More details here https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs/wiki/Skill-Attributes#session-attributes
  *
+ * but because of limitations of Alexa session storage
+ * we use persistent attributes here
+ * https://github.com/internetarchive/internet-archive-google-action/issues/246
+ *
  * @param handlerInput
  */
-module.exports = (handlerInput) => {
+module.exports = (handlerInput, persistentAttributes) => {
   debug('create');
 
   if (!handlerInput) {
     throw new Error('parameter handlerInput should be defined');
   }
 
-  // const deviceId = handlerInput.requestEnvelope.context.System.device.deviceId;
-  // debug('deviceId:', deviceId);
+  const deviceId = handlerInput.requestEnvelope.context.System.device.deviceId;
+  debug('deviceId:', deviceId);
+
+  // TODO: we should clear attributes when we start session
 
   return {
     /**
@@ -26,8 +32,7 @@ module.exports = (handlerInput) => {
      * @returns {{}}
      */
     getData: (name) => {
-      // return _.get(handlerInput.attributesManager.getSessionAttributes(), [deviceId, name]);
-      return _.get(handlerInput.attributesManager.getSessionAttributes(), name);
+      return _.get(persistentAttributes, [deviceId, name]);
     },
 
     /**
@@ -38,13 +43,8 @@ module.exports = (handlerInput) => {
      */
     setData: (name, value) => {
       debug(`set attribute ${name} to`, value);
-      handlerInput.attributesManager.setSessionAttributes(
-        Object.assign(
-          {},
-          handlerInput.attributesManager.getSessionAttributes(),
-          {[name]: value}
-        )
-      );
+      _.set(persistentAttributes, [deviceId, name], value);
+      return true;
     },
   };
 };
