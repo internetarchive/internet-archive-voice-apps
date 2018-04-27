@@ -104,6 +104,7 @@ describe('collection', () => {
       return albumsProvider
         .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
+          order: 'downloads+desc',
         })
         .then((res) => {
           expect(res).to.be.ok;
@@ -123,6 +124,7 @@ describe('collection', () => {
         .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
           page: 1,
+          order: 'downloads+desc',
         })
         .then((res) => {
           expect(res).to.be.ok;
@@ -142,6 +144,7 @@ describe('collection', () => {
       return albumsProvider
         .fetchAlbumsByQuery(app, {
           collectionId: ['collection-1', 'collection-2'],
+          order: 'downloads+desc',
         })
         .then((res) => {
           expect(urls[0]).to.be.equal(
@@ -149,6 +152,22 @@ describe('collection', () => {
             '_exists_:coverage%20AND%20(collection:collection-1%20OR%20collection:collection-2)' +
             '&fl%5B%5D=identifier,coverage,title,year' +
             '&sort%5B%5D=downloads+desc' +
+            '&rows=3' +
+            '&output=json'
+          );
+        });
+    });
+
+    it(`should skip order when we haven't explicitly specified it`, () => {
+      return albumsProvider
+        .fetchAlbumsByQuery(app, {
+          collectionId: 'collection-1',
+        })
+        .then((res) => {
+          expect(urls[0]).to.be.equal(
+            'https://gactions-api.archive.org/advancedsearch.php?q=' +
+            '_exists_:coverage%20AND%20collection:collection-1' +
+            '&fl%5B%5D=identifier,coverage,title,year' +
             '&rows=3' +
             '&output=json'
           );
