@@ -1,5 +1,26 @@
 # Change Log
 
+## [2.1.11](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.11) (2018-04-27)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.10...2.1.11)
+
+**Implemented enhancements:**
+
+- exit intent [\#251](https://github.com/internetarchive/internet-archive-google-action/issues/251)
+- playback songs on alexa [\#197](https://github.com/internetarchive/internet-archive-google-action/issues/197)
+
+**Fixed bugs:**
+
+- broken IA requests with quotes [\#247](https://github.com/internetarchive/internet-archive-google-action/issues/247)
+- use persistent attributes for storing playback data [\#246](https://github.com/internetarchive/internet-archive-google-action/issues/246)
+- sequential playback is broken for Alexa SDK v2 [\#244](https://github.com/internetarchive/internet-archive-google-action/issues/244)
+
+**Merged pull requests:**
+
+- Feature/exit intent [\#252](https://github.com/internetarchive/internet-archive-google-action/pull/252) ([hyzhak](https://github.com/hyzhak))
+- Feature/use alexa persistent attributes [\#250](https://github.com/internetarchive/internet-archive-google-action/pull/250) ([hyzhak](https://github.com/hyzhak))
+- Hotfix/broken ia requests [\#248](https://github.com/internetarchive/internet-archive-google-action/pull/248) ([hyzhak](https://github.com/hyzhak))
+- strip AudioPlayer head from request type [\#245](https://github.com/internetarchive/internet-archive-google-action/pull/245) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.1.10](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.10) (2018-04-26)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.9...2.1.10)
 
