@@ -23,7 +23,6 @@ function handle ({app, slots}) {
     .fetchAlbumsByQuery(app, Object.assign({}, slots, {
       limit,
       fields: 'year',
-      order: 'year',
     }))
     .then(res => {
       if (res.total === 0) {
@@ -35,7 +34,7 @@ function handle ({app, slots}) {
       }
 
       return Object.assign({}, res, {
-        items: _.uniq(res.items.map(i => i.year))
+        items: _.uniq(res.items.map(i => i.year).sort())
       });
     });
 }
