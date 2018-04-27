@@ -1,8 +1,6 @@
 const albumsProvider = require('../../provider/albums');
 const {debug} = require('../../utils/logger')('ia:suggestions:years');
 
-const MAX_ITEMS = 20000;
-
 /**
  * Return list of coverage year pair
  *
@@ -17,7 +15,7 @@ function handle ({app, slots}) {
     .fetchAlbumsByQuery(
       app,
       Object.assign({}, slots, {
-        limit: MAX_ITEMS,
+        limit: 3,
         fields: 'coverage,year',
         order: 'downloads+desc',
       })
