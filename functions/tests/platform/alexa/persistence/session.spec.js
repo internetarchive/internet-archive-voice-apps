@@ -6,29 +6,35 @@ const persistance = require('../../../../src/platform/alexa/persistence/session'
 describe('platform', () => {
   describe('alexa', () => {
     describe('persistance', () => {
+      let persistentAttributes;
+
+      beforeEach(() => {
+        persistentAttributes = {};
+      });
+
       describe('device level', () => {
         it('should share state for one device', () => {
           const handlerInput = mockHandlerInput({deviceId: 'device'});
-          persistance(handlerInput).setData('value', 'hello world');
-          expect(handlerInput.attributesManager.setSessionAttributes).to.be.called;
-          expect(handlerInput.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
-            value: 'hello world',
-          });
+          persistance(handlerInput, persistentAttributes).setData('value', 'hello world');
+
+          expect(
+            persistance(handlerInput, persistentAttributes).getData('value')
+          ).to.be.equal('hello world');
         });
 
         it('should share state for one device', () => {
-          const handlerInput1 = mockHandlerInput({deviceId: 'device1'});
-          const handlerInput2 = mockHandlerInput({deviceId: 'device2'});
+          const handlerInput1 = mockHandlerInput({deviceId: 'device1'}, persistentAttributes);
+          const handlerInput2 = mockHandlerInput({deviceId: 'device2'}, persistentAttributes);
 
-          persistance(handlerInput1).setData('value', '1');
-          persistance(handlerInput2).setData('value', '2');
+          persistance(handlerInput1, persistentAttributes).setData('value', '1');
+          persistance(handlerInput2, persistentAttributes).setData('value', '2');
 
-          expect(handlerInput1.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
-            value: '1',
-          });
-          expect(handlerInput2.attributesManager.setSessionAttributes.args[0][0]).to.be.deep.equal({
-            value: '2',
-          });
+          expect(
+            persistance(handlerInput1, persistentAttributes).getData('value')
+          ).to.be.equal('1');
+          expect(
+            persistance(handlerInput2, persistentAttributes).getData('value')
+          ).to.be.equal('2');
         });
       });
     });

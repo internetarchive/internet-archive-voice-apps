@@ -70,9 +70,11 @@ describe('platform', () => {
         ]));
 
         const wrappedNoInputHandler = res[0].handle;
-        wrappedNoInputHandler(handlerInput);
-        expect(noInputHandler).to.have.been.called;
-        expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
+        return wrappedNoInputHandler(handlerInput)
+          .then(() => {
+            expect(noInputHandler).to.have.been.called;
+            expect(noInputHandler.args[0][0]).to.be.an.instanceof(App);
+          });
       });
 
       it('should catch request type', () => {

@@ -5,4 +5,4 @@ const persistance = require('./session');
  *
  * @param handlerInput
  */
-module.exports = (handlerInput) => persistance(handlerInput);
+module.exports = (handlerInput, persistentAttributes) => persistance(handlerInput, persistentAttributes);

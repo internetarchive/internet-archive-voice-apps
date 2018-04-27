@@ -1,7 +1,9 @@
 const _ = require('lodash');
 const sinon = require('sinon');
 
-module.exports = ({deviceId = 'one-device', error = null, reason = null, response = {}, sessionAttributes = {}, slots = {}} = {}) => {
+module.exports = ({
+  deviceId = 'one-device', error = null, reason = null, response = {}, sessionAttributes = {}, userAttributes = {}, slots = {}
+} = {}) => {
   const handlerInput = {
     requestEnvelope: {
       request: {
@@ -20,6 +22,9 @@ module.exports = ({deviceId = 'one-device', error = null, reason = null, respons
     attributesManager: {
       getSessionAttributes: sinon.stub().returns(sessionAttributes),
       setSessionAttributes: sinon.spy(),
+      getPersistentAttributes: sinon.stub().resolves(userAttributes),
+      setPersistentAttributes: sinon.spy(),
+      savePersistentAttributes: sinon.stub().resolves(),
     },
 
     serviceClientFactory: {},

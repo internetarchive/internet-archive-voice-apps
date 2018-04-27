@@ -1,4 +1,5 @@
-const Alexa = require('ask-sdk-core');
+const Alexa = require('ask-sdk');
+const {DynamoDbPersistenceAdapter} = require('ask-sdk-dynamodb-persistence-adapter');
 // const AWS = require('aws-sdk');
 
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
@@ -8,6 +9,10 @@ const LogInterceptor = require('./log-interceptor');
 const handlersBuilder = require('./handlers-builder');
 
 module.exports = (actions) => {
+  let dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
+    createTable: true,
+    tableName: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',
+  });
   const handlers = handlersBuilder(actions);
   let skill;
   debug(`We can handle intents: ${handlers.map(({intent}) => `"${intent}"`).join(', ')}`);
@@ -20,6 +25,7 @@ module.exports = (actions) => {
         .addRequestHandlers(...handlers)
         .addErrorHandlers(ErrorHandler)
         .addRequestInterceptors(LogInterceptor)
+        .withPersistenceAdapter(dynamoDbPersistenceAdapter)
         // TODO: get from process.env
         // .withSkillId()
         .create();
