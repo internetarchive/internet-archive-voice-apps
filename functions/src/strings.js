@@ -37,7 +37,7 @@ module.exports = {
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
       wordless: [{
-        condition: 'platform == "assistant"',
+        condition: 'equal(platform, "assistant")',
         speech: `
           <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                  clipBegin="4.5s"
@@ -59,7 +59,7 @@ module.exports = {
       // https://developers.google.com/actions/tools/sound-library/
       // [!] but we should use it for Google actions only
       wordless: [{
-        condition: 'platform == "assistant"',
+        condition: 'equal(platform, "assistant")',
         speech: `
           <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                  clipBegin="4.5s"
@@ -152,7 +152,7 @@ module.exports = {
     musicQuery: [{
       name: 'george blood collection',
 
-      condition: 'collectionId == "georgeblood"',
+      condition: 'equal(collectionId, "georgeblood")',
 
       slots: [
         'collectionId',

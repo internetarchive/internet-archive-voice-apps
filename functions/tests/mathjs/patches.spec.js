@@ -4,8 +4,6 @@ const mathjsExtensions = require('../../src/mathjs');
 let math = require('mathjs');
 
 describe('mathjs', () => {
-  // let math;
-
   beforeEach(() => {
     // TODO: for clear test we should have
     // mathjsExtensions.unpatch();
@@ -24,6 +22,16 @@ describe('mathjs', () => {
     it('should be false when collection includes value', () => {
       expect(math.eval('includes([1,2], 3)')).to.be.false;
       expect(math.eval('includes(["a","b"], "c")')).to.be.false;
+    });
+  });
+
+  describe('equal', () => {
+    it('should "abc" == "abc"', () => {
+      expect(math.eval('equal("abc", "abc")')).to.be.true;
+    });
+
+    it('should "abc" != "cba"', () => {
+      expect(math.eval('equal("abc", "cba")')).to.be.false;
     });
   });
 });
