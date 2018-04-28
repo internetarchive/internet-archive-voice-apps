@@ -1,5 +1,7 @@
 const math = require('mathjs');
 
+const {debug} = require('../utils/logger')('ia:mathjs:equal');
+
 /**
  * Support includes command:
  *
@@ -7,6 +9,7 @@ const math = require('mathjs');
  *
  */
 module.exports = () => {
+  debug('support');
   math.import({
     includes: (a, b) => {
       let array;

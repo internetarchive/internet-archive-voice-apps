@@ -29,7 +29,7 @@
     "glob": "^7.1.2",
     "hirestime": "^3.2.1",
     "lodash": "^4.17.10",
-    "mathjs": "^3.20.2",
+    "mathjs": "^4.1.2",
     "mustache": "^2.3.0",
     "node-fetch": "^2.1.2",
     "raven": "^2.6.0",
