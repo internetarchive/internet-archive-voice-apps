@@ -43,6 +43,13 @@ class App {
   }
 
   /**
+   * return error passed from Alexa with request
+   */
+  getRequestError () {
+    // TODO: ...
+  }
+
+  /**
    * Stop track playback
    */
   stopPlayback () {
