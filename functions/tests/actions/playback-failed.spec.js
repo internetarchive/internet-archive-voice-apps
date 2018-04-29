@@ -8,6 +8,7 @@ const playbackFailed = rewire('../../src/actions/playback-failed');
 describe('actions', () => {
   describe('playback failed', () => {
     let app;
+    let mediaStatusUpdateHandlerFinished;
     let warning;
 
     beforeEach(() => {
@@ -29,7 +30,12 @@ describe('actions', () => {
         offset: 12345,
       });
 
+      mediaStatusUpdateHandlerFinished = sinon.spy();
+
       warning = sinon.spy();
+      playbackFailed.__set__('mediaStatusUpdate', {
+        handleFinished: mediaStatusUpdateHandlerFinished,
+      });
       playbackFailed.__set__('warning', warning);
     });
 
@@ -50,7 +56,7 @@ describe('actions', () => {
 
     it('should play next song', () => {
       playbackFailed.handler(app);
-      // TODO: check
+      expect(mediaStatusUpdateHandlerFinished).to.have.been.calledWith(app);
     });
   });
 });
