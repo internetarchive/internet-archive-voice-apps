@@ -43,6 +43,13 @@ class App {
   }
 
   /**
+   * return error passed from Alexa with request
+   */
+  getRequestError () {
+    return this.handlerInput.requestEnvelope.request.error;
+  }
+
+  /**
    * Stop track playback
    */
   stopPlayback () {
