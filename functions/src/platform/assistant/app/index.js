@@ -41,6 +41,14 @@ class App {
   }
 
   /**
+   * return error passed from Assistant with request
+   * doesn't support for the moment
+   */
+  getRequestError () {
+    return null;
+  }
+
+  /**
    * Stop track playback
    */
   stopPlayback () {
