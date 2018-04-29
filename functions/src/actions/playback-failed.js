@@ -6,7 +6,7 @@ const {warning} = require('../utils/logger')('ia:actions:playback-failed');
  *
  * @param app
  */
-function handler(app) {
+function handler (app) {
   const e = app.getRequestError();
   const currentTrack = playlist.getCurrentSong(app);
 

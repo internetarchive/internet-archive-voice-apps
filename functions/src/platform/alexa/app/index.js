@@ -46,7 +46,7 @@ class App {
    * return error passed from Alexa with request
    */
   getRequestError () {
-    // TODO: ...
+    return this.handlerInput.requestEnvelope.request.error;
   }
 
   /**
