@@ -65,8 +65,8 @@ describe('platform', () => {
         const welcomeHandler = sinon.spy();
 
         const res = builder(new Map([
-          ['no-input', noInputHandler],
-          ['welcome', welcomeHandler],
+          ['no-input', {default: noInputHandler}],
+          ['welcome', {default: welcomeHandler}],
         ]));
 
         const wrappedNoInputHandler = res[0].handle;
@@ -115,8 +115,8 @@ describe('platform', () => {
         const welcomeHandler = sinon.spy();
 
         const res = builder(new Map([
-          ['no-input', noInputHandler],
-          ['welcome', welcomeHandler],
+          ['no-input', {default: noInputHandler}],
+          ['welcome', {default: welcomeHandler}],
         ]));
 
         const wrappedNoInputHandler = res[0].handle;

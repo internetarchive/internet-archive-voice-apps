@@ -1,6 +1,8 @@
 const _ = require('lodash');
 
+const constants = require('../constants');
 const dialog = require('../dialog');
+const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const welcomeStrings = require('../strings').intents.welcome;
@@ -28,6 +30,8 @@ function handler (app) {
   // we clean all that information
   playlist.create(app, []);
   query.resetSlots(app);
+
+  fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
 
   dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
 }
