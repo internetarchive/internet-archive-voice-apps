@@ -22,9 +22,9 @@ class Extensions {
     return glob
       .sync(path.join(this.root, '*.js'))
       .filter(filename => path.basename(filename) !== 'index.js')
-      .map(filename => require(filename))
+      .map(filename => ({filename, ext: require(filename)}))
       // skip files without exports
-      .filter(ext => typeof ext === 'function' || Object.keys(ext).length > 0);
+      .filter(({ext}) => typeof ext === 'function' || Object.keys(ext).length > 0);
   }
 
   /**
@@ -80,7 +80,8 @@ class Extensions {
    */
   find (handler) {
     return this.all()
-      .find(e => handler(e)) || null;
+        .map(({ext}) => ext)
+        .find(ext => handler(ext)) || null;
   }
 }
 

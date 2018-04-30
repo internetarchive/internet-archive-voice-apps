@@ -17,8 +17,13 @@ describe('extensions', () => {
     describe('all', () => {
       it('should return list of all extensions', () => {
         const items = extensions.all();
-        expect(items).to.be.length(2)
-          .to.have.members([apple, banana]);
+        expect(items).to.be.length(2);
+        expect(items[0]).to.have.property('ext', apple);
+        expect(items[0]).to.have.property('filename')
+          .which.includes('apple.js');
+        expect(items[1]).to.have.property('ext', banana);
+        expect(items[1]).to.have.property('filename')
+          .which.includes('banana.js');
       });
     });
 
