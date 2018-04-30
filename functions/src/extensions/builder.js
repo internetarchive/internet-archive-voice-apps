@@ -80,8 +80,8 @@ class Extensions {
    */
   find (handler) {
     return this.all()
-        .map(({ext}) => ext)
-        .find(ext => handler(ext)) || null;
+      .map(({ext}) => ext)
+      .find(ext => handler(ext)) || null;
   }
 }
 

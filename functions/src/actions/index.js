@@ -12,7 +12,7 @@
  *
  * For example:
  *
- * search.artist
+ * search-artist
  *
  *
  * Predefined actions in Dialog Flow:
