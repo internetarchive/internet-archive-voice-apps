@@ -12,7 +12,7 @@ const {getData, setData} = require('./helpers').group('fsm');
  * @param app
  * @param {object} handlers
  */
-const selectHandler = (app, handlers) => handlers[getState(app)];
+const selectHandler = (app, handlers) => handlers[getState(app)] || handlers.default;
 
 /**
  * Get state of FSM

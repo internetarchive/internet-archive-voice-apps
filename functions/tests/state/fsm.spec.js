@@ -34,6 +34,11 @@ describe('state', () => {
         fsm.setState(app, 'playback');
         expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback);
       });
+
+      it('should select default handler if there no any matched handlers', () => {
+        fsm.setState(app, 'unknown-state');
+        expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.default);
+      });
     });
   });
 });
