@@ -16,7 +16,7 @@ describe('actions', () => {
 
     it('should store offset', () => {
       expect(fsm.getState(app)).to.be.undefined;
-      playbackFinished.handler(app)
+      playbackFinished.handler(app);
       expect(fsm.getState(app)).to.be.equal(constants.fsm.states.PLAYBACK_IS_STOPED);
     });
   });

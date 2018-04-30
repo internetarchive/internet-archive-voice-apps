@@ -1,4 +1,6 @@
 const selectors = require('../configurator/selectors');
+const constants = require('../constants');
+const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
@@ -77,6 +79,9 @@ function handler (app) {
       .catch((context) => {
         debug(`we don't have playlist (or it is empty)`);
         const brokenSlots = context.newValues || {};
+
+        fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
+
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
@@ -89,6 +94,8 @@ function handler (app) {
           .then(ask());
       });
   }
+
+  fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
 
   debug('pipeline query');
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})
