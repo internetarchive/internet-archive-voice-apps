@@ -7,6 +7,6 @@ module.exports = {
    * @param filename {string}
    * @returns {string}
    */
-  actionNameByFileName: filename =>
-    [path.basename(filename, path.extname(filename))],
+  actionNameByFileName: (filename, root = path.resolve(__dirname, '..')) =>
+    path.relative(root, filename.replace(path.extname(filename), '')).split(path.sep)
 };

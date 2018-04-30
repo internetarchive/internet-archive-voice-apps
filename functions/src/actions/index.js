@@ -50,7 +50,7 @@ function withStates () {
   const res = extension
     .build({recursive: true, root: __dirname})
     .all()
-    .map(({filename, ext}) => ([actionNameByFileName(filename), ext.handler]))
+    .map(({filename, ext}) => ([actionNameByFileName(filename, __dirname), ext.handler]))
     .filter(action => action[1])
     .reduce((acc, [filename, handler]) => {
       console.log('filename', filename);
