@@ -11,7 +11,7 @@ module.exports = ({actionsMap}) =>
       intent,
       handler: (conv) => {
         debug(`begin handle intent "${intent}"`);
-        return Promise.resolve(handler(conv.app))
+        return Promise.resolve(handler.default(conv.app))
           .then(res => {
             debug(`end handle intent "${intent}"`);
             return res;
