@@ -1,5 +1,8 @@
 const dialog = require('../../../dialog');
+const fsm = require('../../../state/fsm');
 const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-data');
+
+const constants = require('../../../constants');
 
 /**
  * Play song which described in slots
@@ -11,6 +14,7 @@ const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-da
 module.exports = ({mediaResponseOnly = false, offset = 0} = {}) => (context) => {
   debug('start');
   const {app} = context;
+
   dialog.playSong(app, Object.assign(
     {}, context.slots, {
       mediaResponseOnly,
@@ -19,5 +23,7 @@ module.exports = ({mediaResponseOnly = false, offset = 0} = {}) => (context) => 
       description: context.description,
     }
   ));
+
+  fsm.setState(app, constants.fsm.states.PLAYBACK);
   return Promise.resolve();
 };
