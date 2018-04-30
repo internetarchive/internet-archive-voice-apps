@@ -1,13 +1,12 @@
-function handler (app) {
-  // TODO: should be context depended:
-  // if nothing is playing right now we should say bay-bay and close the app
-  app.stopPlayback();
-}
+const exist = require('./exit');
 
 /**
- * handle Alexa Amazon.CancelIntent
+ * Handle Alexa Amazon.CancelIntent
+ * Assistant doesn't touch this event
+ * cancel and exist are synonymous intents
+ *
  * @type {{handler: handler}}
  */
 module.exports = {
-  handler,
+  handler: exist.handler,
 };

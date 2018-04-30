@@ -23,7 +23,7 @@ const selectHandler = (app, handlers) => handlers[getState(app)] || handlers.def
 const getState = (app) => _.get(getData(app), 'state');
 
 /**
- * Set state of FSM
+ * Transition from current state to the new one (stateName)
  *
  * @param app
  * @param {string} stateName
