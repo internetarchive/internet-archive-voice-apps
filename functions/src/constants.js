@@ -5,6 +5,7 @@ module.exports = {
      */
     states: {
       PLAYBACK: 'playback',
+      PLAYBACK_IS_STOPED: 'playback-is-stoped',
     },
   },
 };
