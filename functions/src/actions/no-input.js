@@ -9,7 +9,7 @@ module.exports = {
    * @param app
    */
   handler: buildRapairHandler(
-    actionNameByFileName(__filename),
+    actionNameByFileName(__filename)[0],
     intentStrings
   ),
 };

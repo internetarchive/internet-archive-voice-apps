@@ -8,5 +8,5 @@ module.exports = {
    * @returns {string}
    */
   actionNameByFileName: filename =>
-    path.basename(filename, path.extname(filename)),
+    [path.basename(filename, path.extname(filename))],
 };
