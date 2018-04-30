@@ -24,19 +24,19 @@ describe('state', () => {
       });
 
       it('should set state of fsm', () => {
-        fsm.setState(app, 'playback');
+        fsm.transitionTo(app, 'playback');
         expect(fsm.getState(app)).to.be.equal('playback');
       });
     });
 
     describe('selectHandler', () => {
       it('should select matched handler', () => {
-        fsm.setState(app, 'playback');
+        fsm.transitionTo(app, 'playback');
         expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback);
       });
 
       it('should select default handler if there no any matched handlers', () => {
-        fsm.setState(app, 'unknown-state');
+        fsm.transitionTo(app, 'unknown-state');
         expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.default);
       });
     });

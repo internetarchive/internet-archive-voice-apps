@@ -80,7 +80,7 @@ function handler (app) {
         debug(`we don't have playlist (or it is empty)`);
         const brokenSlots = context.newValues || {};
 
-        fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
+        fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,
@@ -95,7 +95,7 @@ function handler (app) {
       });
   }
 
-  fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
+  fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
   debug('pipeline query');
   return acknowledge()({app, slots, slotScheme, speech: [], newValues})

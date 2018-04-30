@@ -80,7 +80,7 @@ function build ({playlist, strings, query}) {
           // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
           .filter(name => ['collectionId'].indexOf(name) < 0);
 
-        fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
+        fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,

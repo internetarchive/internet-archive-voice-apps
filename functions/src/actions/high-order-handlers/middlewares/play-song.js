@@ -24,6 +24,6 @@ module.exports = ({mediaResponseOnly = false, offset = 0} = {}) => (context) => 
     }
   ));
 
-  fsm.setState(app, constants.fsm.states.PLAYBACK);
+  fsm.transitionTo(app, constants.fsm.states.PLAYBACK);
   return Promise.resolve();
 };

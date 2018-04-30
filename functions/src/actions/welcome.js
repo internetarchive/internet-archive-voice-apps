@@ -31,7 +31,7 @@ function handler (app) {
   playlist.create(app, []);
   query.resetSlots(app);
 
-  fsm.setState(app, constants.fsm.states.SEARCH_MUSIC);
+  fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
   dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
 }

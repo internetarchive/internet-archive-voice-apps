@@ -28,12 +28,12 @@ const getState = (app) => _.get(getData(app), 'state');
  * @param app
  * @param {string} stateName
  */
-const setState = (app, stateName) => setData(app,
+const transitionTo = (app, stateName) => setData(app,
   Object.assign({}, getData(app), {state: stateName})
 );
 
 module.exports = {
-  selectHandler,
   getState,
-  setState,
+  selectHandler,
+  transitionTo,
 };
