@@ -1,6 +1,8 @@
 const {expect} = require('chai');
 const sinon = require('sinon');
 
+const mockApp = require('../../../_utils/mocking/platforms/app');
+
 const builder = require('../../../../src/platform/assistant/handler/builder');
 
 describe('platform', () => {
@@ -23,7 +25,7 @@ describe('platform', () => {
       let welcomeHandlers;
 
       beforeEach(() => {
-        app = {};
+        app = mockApp();
 
         helloHandlers = {
           default: sinon.spy(),
@@ -47,8 +49,44 @@ describe('platform', () => {
         expect(res[1]).to.have.property('intent', 'hello');
       });
 
-      it('should run default handler when state', () => {
+      it('should run default handler when state is undefined', () => {
         const res = builder({actionsMap});
+        return res[0].handler({
+          app,
+        })
+          .then(() => {
+            expect(welcomeHandlers.default).to.have.been.calledWith(app);
+          });
+      });
+
+      it('should run certain handler when state is defined and we have handler', () => {
+        const res = builder({actionsMap});
+        app = mockApp({
+          getData: {
+            fsm: {
+              state: 'playback',
+            },
+          },
+        });
+
+        return res[0].handler({
+          app,
+        })
+          .then(() => {
+            expect(welcomeHandlers.playback).to.have.been.calledWith(app);
+          });
+      });
+
+      it(`should run default handler when state is defined but we don't have handler`, () => {
+        const res = builder({actionsMap});
+        app = mockApp({
+          getData: {
+            fsm: {
+              state: 'unknown',
+            },
+          },
+        });
+
         return res[0].handler({
           app,
         })
