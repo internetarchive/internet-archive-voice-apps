@@ -41,7 +41,7 @@ describe('actions', () => {
       ]);
     });
 
-    it.skip('should extract fsm states', () => {
+    it('should extract fsm states', () => {
       const a = actions.withStates();
       expect(a.get('next')).to.have.property('default', defaultFixture.next.handler);
       expect(a.get('next')).to.have.property('playback', playbackFixture.next.handler);

@@ -52,12 +52,22 @@ function withStates () {
     .all()
     .map(({filename, ext}) => ([actionNameByFileName(filename, __dirname), ext.handler]))
     .filter(action => action[1])
-    .reduce((acc, [filename, handler]) => {
-      console.log('filename', filename);
-      acc[filename] = {default: handler};
+    .reduce((acc, [actionPath, handler]) => {
+      let newState;
+      if (actionPath.length === 1) {
+        newState = {default: handler};
+      } else if (actionPath.length === 2) {
+        newState = {[actionPath[0]]: handler};
+      } else {
+        throw new Error(`We got actions which settle out of root or its sub-directories. 
+                         What we can't interpret yet.`);
+      }
+
+      const actionName = actionPath[actionPath.length - 1];
+      acc[actionName] = Object.assign({}, acc[actionName], newState);
       return acc;
     }, {});
-    // .map(([filename, handler]) => ([filename, {default: handler}]));
+
   return new Map(Object.entries(res));
 }
 
