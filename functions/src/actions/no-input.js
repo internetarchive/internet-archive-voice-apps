@@ -1,5 +1,5 @@
 const intentStrings = require('../strings').intents.noInput;
-const {actionNameByFileName} = require('./helpers/handlers');
+const {actionNameByFileName} = require('./_helpers');
 const {buildRapairHandler} = require('./high-order-handlers/repair-handler-builder');
 
 module.exports = {

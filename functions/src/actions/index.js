@@ -24,7 +24,7 @@
 
 const extension = require('../extensions/builder');
 
-const {actionNameByFileName} = require('./helpers/handlers');
+const {actionNameByFileName} = require('./_helpers');
 
 /**
  * grab all actions and appropriate states

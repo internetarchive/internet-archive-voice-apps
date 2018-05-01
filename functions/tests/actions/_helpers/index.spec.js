@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const path = require('path');
 const rewire = require('rewire');
 
-const handlers = rewire('../../../src/actions/helpers/handlers');
+const handlers = rewire('../../../src/actions/_helpers');
 
 describe('actions', () => {
   describe('helpers', () => {
