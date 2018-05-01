@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const middleware = require('../../../../src/actions/high-order-handlers/middlewares/prompt');
+const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/prompt');
 
 describe('actions', () => {
   describe('middlewares', () => {

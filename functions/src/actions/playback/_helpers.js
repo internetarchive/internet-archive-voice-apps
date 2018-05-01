@@ -3,12 +3,12 @@ const _ = require('lodash');
 const playlist = require('../../state/playlist');
 const query = require('../../state/query');
 
-const feederFromPlaylist = require('../high-order-handlers/middlewares/feeder-from-playlist');
-const fulfilResolvers = require('../high-order-handlers/middlewares/fulfil-resolvers');
-const nextSong = require('../high-order-handlers/middlewares/next-song');
-const playSongMiddleware = require('../high-order-handlers/middlewares/play-song');
-const parepareSongData = require('../high-order-handlers/middlewares/song-data');
-const renderSpeech = require('../high-order-handlers/middlewares/render-speech');
+const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
+const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
+const nextSong = require('../_high-order-handlers/middlewares/next-song');
+const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
+const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
+const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
 
 /**
  * play one song

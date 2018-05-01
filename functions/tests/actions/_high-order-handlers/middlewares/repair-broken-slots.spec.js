@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/repair-broken-slots');
+const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/repair-broken-slots');
 
 const mockSelectors = require('../../../_utils/mocking/selectors');
 

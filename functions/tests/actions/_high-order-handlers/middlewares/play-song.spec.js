@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/play-song');
+const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/play-song');
 const constants = require('../../../../src/constants');
 const fsm = require('../../../../src/state/fsm');
 

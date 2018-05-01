@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/acknowledge');
+const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/acknowledge');
 
 const mockSelectors = require('../../../_utils/mocking/selectors');
 

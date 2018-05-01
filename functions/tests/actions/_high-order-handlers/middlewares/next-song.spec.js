@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const middleware = require('../../../../src/actions/high-order-handlers/middlewares/next-song');
+const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/next-song');
 
 const mockFeeder = require('../../../_utils/mocking/feeders/albums');
 

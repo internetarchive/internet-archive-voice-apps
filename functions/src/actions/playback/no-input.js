@@ -3,7 +3,7 @@ const dialogState = require('../../state/dialog');
 const strings = require('../../strings');
 const {debug} = require('../../utils/logger')('ia:actions:playback/no-input');
 
-const feederFromPlaylist = require('../high-order-handlers/middlewares/feeder-from-playlist');
+const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 
 const helpers = require('./_helpers');
 
