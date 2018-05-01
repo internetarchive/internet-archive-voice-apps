@@ -14,8 +14,7 @@ const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
 
 /**
  * handle ALEXA.ResumeIntent
- * TODO: but maybe it would be useful for Actions of Google
- * in case of new session for returned user
+ * and resume intent of Action of Google
  *
  * @param app
  */
