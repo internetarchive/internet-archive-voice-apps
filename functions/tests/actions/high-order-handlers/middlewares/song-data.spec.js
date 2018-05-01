@@ -41,8 +41,8 @@ describe('actions', () => {
               .with.members([strings.wordless[0].speech]);
             expect(context).to.have.property('slots')
               .which.deep.equal({
-              id: slots.id,
-            });
+                id: slots.id,
+              });
           });
       });
 
@@ -90,7 +90,7 @@ describe('actions', () => {
             year: 1947,
             someInnerObject: {
               quot: '"',
-              amp: "&",
+              amp: '&',
             },
           }
         });
@@ -109,7 +109,7 @@ describe('actions', () => {
               .to.be.deep.equal({
                 quot: '&quot;',
                 amp: '&amp;',
-              })
+              });
           });
       });
     });
