@@ -13,7 +13,8 @@ function handler (app) {
     value = app.params.getByName('value');
   }
   debug('got value:', value);
-  playback.setMuteSpeechBeforePlayback(app, value === 'false');
+  value = value === 'false';
+  playback.setMuteSpeechBeforePlayback(app, value);
   dialog.ask(app, strings[value]);
 }
 
