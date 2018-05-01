@@ -18,15 +18,6 @@ const searchFixture = {
 };
 
 describe('actions', () => {
-  describe('defaultActions', () => {
-    it('should grab all actions and map to file name', () => {
-      const a = actions.defaultActions();
-      expect(a).to.have.any.key([
-        'media-status-update', 'repeat', 'welcome',
-      ]);
-    });
-  });
-
   describe('withState', () => {
     beforeEach(() => {
       actions.__set__('__dirname', path.join(__dirname, 'fixtures', 'fsm-structure'));

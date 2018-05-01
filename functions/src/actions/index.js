@@ -22,24 +22,9 @@
  *
  */
 
-const glob = require('glob');
-const path = require('path');
-
 const extension = require('../extensions/builder');
 
 const {actionNameByFileName} = require('./helpers/handlers');
-
-/**
- * grab all default actions here and return map
- *
- * @returns {Map} map actions to handlers
- */
-function defaultActions () {
-  const res = glob.sync(path.join(__dirname, '*.js'))
-    .map(filename => ([actionNameByFileName(filename)[0], require(filename).handler]))
-    .filter(action => action[1]);
-  return new Map(res);
-}
 
 /**
  * grab all actions and appropriate states
@@ -72,6 +57,5 @@ function withStates () {
 }
 
 module.exports = {
-  defaultActions,
   withStates,
 };
