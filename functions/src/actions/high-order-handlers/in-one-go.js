@@ -1,5 +1,8 @@
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
+const constants = require('../../constants');
+const fsm = require('../../state/fsm');
+
 const acknowledge = require('./middlewares/acknowledge');
 const ask = require('./middlewares/ask');
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
@@ -76,6 +79,8 @@ function build ({playlist, strings, query}) {
         const exclude = Object.keys(brokenSlots)
           // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
           .filter(name => ['collectionId'].indexOf(name) < 0);
+
+        fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
         return repairBrokenSlots()(Object.assign({}, context, {
           brokenSlots,

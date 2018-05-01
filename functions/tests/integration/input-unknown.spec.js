@@ -66,7 +66,6 @@ describe('integration', () => {
 
       return wait()
         .then(() => {
-          console.log(JSON.stringify(res.body));
           expect(res.statusCode).to.be.equal(200);
           expect(res.userResponse()).to.be.true;
           expect(res.speech()).to.contain(

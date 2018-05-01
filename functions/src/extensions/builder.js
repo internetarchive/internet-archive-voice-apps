@@ -11,7 +11,13 @@ const {debug, warning} = require('../utils/logger')('ia:extensions:builder');
  */
 
 class Extensions {
-  constructor ({root} = {}) {
+  /**
+   *
+   * @param {boolean} recursive - get subdirectories
+   * @param {string} root - start from this directory
+   */
+  constructor ({recursive = false, root} = {}) {
+    this.recursive = recursive;
     this.root = root;
   }
 
@@ -19,12 +25,18 @@ class Extensions {
    * All extensions
    */
   all () {
+    let pattern;
+    if (this.recursive) {
+      pattern = path.join(this.root, '**', '*.js');
+    } else {
+      pattern = path.join(this.root, '*.js');
+    }
     return glob
-      .sync(path.join(this.root, '*.js'))
+      .sync(pattern)
       .filter(filename => path.basename(filename) !== 'index.js')
-      .map(filename => require(filename))
+      .map(filename => ({filename, ext: require(filename)}))
       // skip files without exports
-      .filter(ext => typeof ext === 'function' || Object.keys(ext).length > 0);
+      .filter(({ext}) => typeof ext === 'function' || Object.keys(ext).length > 0);
   }
 
   /**
@@ -80,7 +92,8 @@ class Extensions {
    */
   find (handler) {
     return this.all()
-      .find(e => handler(e)) || null;
+      .map(({ext}) => ext)
+      .find(ext => handler(ext)) || null;
   }
 }
 
@@ -95,4 +108,5 @@ function build (ops) {
 
 module.exports = {
   build,
+  Extensions,
 };

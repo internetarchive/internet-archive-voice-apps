@@ -3,6 +3,7 @@ const _ = require('lodash');
 const {App} = require('../app');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
+const fsm = require('../../../state/fsm');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
@@ -37,7 +38,7 @@ module.exports = (actions) => {
 
   return Array
     .from(actions.entries())
-    .map(([name, fn]) => {
+    .map(([name, handlers]) => {
       const intent = kebabToCamel(name);
       return {
         intent,
@@ -75,10 +76,9 @@ module.exports = (actions) => {
             })
             .then((persistentAttributes) => {
               debug('got persistent attributes:', persistentAttributes);
-              return Promise.all([
-                persistentAttributes,
-                fn(new App(handlerInput, persistentAttributes)),
-              ]);
+              const app = new App(handlerInput, persistentAttributes);
+              const handler = fsm.selectHandler(app, handlers);
+              return Promise.all([persistentAttributes, handler(app)]);
             })
             .then(([persistentAttributes, _]) => {
               handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);

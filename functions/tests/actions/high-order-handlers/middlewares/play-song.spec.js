@@ -2,6 +2,8 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/play-song');
+const constants = require('../../../../src/constants');
+const fsm = require('../../../../src/state/fsm');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
 const mockDialog = require('../../../_utils/mocking/dialog');
@@ -39,6 +41,19 @@ describe('actions', () => {
               offset: 1234,
               speech: speech[0],
             });
+          });
+      });
+
+      it('should set playback state', () => {
+        const description = 'The Best Song';
+        const slots = {
+          id: '123456',
+        };
+        const res = fsm.getState(app);
+        expect(res).to.be.undefined;
+        return middleware({})({app, description, speech, slots})
+          .then(context => {
+            expect(fsm.getState(app)).to.be.equal(constants.fsm.states.PLAYBACK);
           });
       });
     });

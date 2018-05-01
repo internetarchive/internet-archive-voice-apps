@@ -12,7 +12,7 @@
  *
  * For example:
  *
- * search.artist
+ * search-artist
  *
  *
  * Predefined actions in Dialog Flow:
@@ -24,6 +24,9 @@
 
 const glob = require('glob');
 const path = require('path');
+
+const extension = require('../extensions/builder');
+
 const {actionNameByFileName} = require('./helpers/handlers');
 
 /**
@@ -33,11 +36,42 @@ const {actionNameByFileName} = require('./helpers/handlers');
  */
 function defaultActions () {
   const res = glob.sync(path.join(__dirname, '*.js'))
-    .map(filename => ([actionNameByFileName(filename), require(filename).handler]))
+    .map(filename => ([actionNameByFileName(filename)[0], require(filename).handler]))
     .filter(action => action[1]);
   return new Map(res);
 }
 
+/**
+ * grab all actions and appropriate states
+ *
+ * @returns {Array}
+ */
+function withStates () {
+  const res = extension
+    .build({recursive: true, root: __dirname})
+    .all()
+    .map(({filename, ext}) => ([actionNameByFileName(filename, __dirname), ext.handler]))
+    .filter(action => action[1])
+    .reduce((acc, [actionPath, handler]) => {
+      let newState;
+      if (actionPath.length === 1) {
+        newState = {default: handler};
+      } else if (actionPath.length === 2) {
+        newState = {[actionPath[0]]: handler};
+      } else {
+        throw new Error(`We got actions which settle out of root or its sub-directories. 
+                         What we can't interpret yet.`);
+      }
+
+      const actionName = actionPath[actionPath.length - 1];
+      acc[actionName] = Object.assign({}, acc[actionName], newState);
+      return acc;
+    }, {});
+
+  return new Map(Object.entries(res));
+}
+
 module.exports = {
   defaultActions,
+  withStates,
 };

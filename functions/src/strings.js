@@ -85,6 +85,10 @@ module.exports = {
       speech: `Alright, see you next time!`,
     },
 
+    getFSMState: {
+      speech: 'State of FSM is {{state}}',
+    },
+
     /**
      * In one go actions for playback music
      */
@@ -398,6 +402,12 @@ module.exports = {
     }, {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
+
+    repeat: {
+      empty: {
+        speech: `I don't see anything here to repeat.`,
+      },
+    },
 
     resume: {
       fail: {
