@@ -4,9 +4,10 @@ const esapceHTML = require('./escape-html');
  * Escape all string data inside of structure
  *
  * @param data
+ * @param {array} skipFields - don't escape these fields
  * @returns {*}
  */
-module.exports = function escapeStucture (data) {
+module.exports = function escapeStucture (data, {skipFields = []} = {}) {
   if (!data) {
     return data;
   }
@@ -21,7 +22,7 @@ module.exports = function escapeStucture (data) {
 
   if (typeof data === 'object') {
     return Object.entries(data)
-      .map(([key, value]) => [key, escapeStucture(value)])
+      .map(([key, value]) => [key, skipFields.indexOf(key) < 0 ? escapeStucture(value) : value])
       .reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
