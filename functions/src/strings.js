@@ -85,6 +85,10 @@ module.exports = {
       speech: `Alright, see you next time!`,
     },
 
+    getFSMState: {
+      speech: 'State of FSM is {{state}}',
+    },
+
     /**
      * In one go actions for playback music
      */
