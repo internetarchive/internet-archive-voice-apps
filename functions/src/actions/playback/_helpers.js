@@ -23,9 +23,9 @@ const renderSpeech = require('../_high-order-handlers/middlewares/render-speech'
  * @param {boolean} next - play next song
  * @returns {Promise}
  */
-function playSong (opts) {
-  const {app, enqueue = false, next = false} = opts;
-  return feederFromPlaylist.middleware()({app, query, playlist})
+function playSong (ctx) {
+  const {enqueue = false, next = false} = ctx;
+  return feederFromPlaylist.middleware()(Object.assign({}, ctx, {query, playlist}))
     // expose current platform to the slots
     .then(ctx =>
       Object.assign({}, ctx, {
@@ -50,7 +50,7 @@ function playSong (opts) {
     .then(fulfilResolvers())
     .then(renderSpeech())
     // Alexa doesn't allow any response except of media response
-    .then(playSongMiddleware(opts));
+    .then(playSongMiddleware(ctx));
 }
 
 /**
@@ -59,19 +59,19 @@ function playSong (opts) {
  * @param app
  * @returns {Promise.<T>}
  */
-function resume ({app}) {
-  return playSong({app, next: false})
+function resume (ctx) {
+  return playSong(Object.assign({}, ctx, {next: false}))
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
-        dialog.ask(app, dialog.merge(
+        dialog.ask(ctx.app, dialog.merge(
           strings.intents.resume.empty,
-          dialogState.getReprompt(app)
+          dialogState.getReprompt(ctx.app)
         ));
       } else {
         debug('It could be an error:', err);
-        return dialog.ask(app, dialog.merge(
+        return dialog.ask(ctx.app, dialog.merge(
           strings.intents.resume.fail,
-          dialogState.getReprompt(app)
+          dialogState.getReprompt(ctx.app)
         ));
       }
     });

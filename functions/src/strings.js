@@ -447,6 +447,16 @@ module.exports = {
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
     },
+
+    playback: {
+      noInput: {
+        speech: `Sorry, I couldn't hear you. If you don't mind I will continue playback.`,
+      },
+
+      unknown: {
+        speech: `I'm not sure what you said. If you don't mind I will continue playback.`,
+      },
+    },
   },
 
   events: {
