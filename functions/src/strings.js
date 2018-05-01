@@ -399,6 +399,12 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    repeat: {
+      empty: {
+        speech: `I don't see anything here to repeat.`,
+      },
+    },
+
     resume: {
       fail: {
         speech: 'Fail to resume.',
