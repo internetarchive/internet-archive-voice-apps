@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/feeder-from-playlist');
+const feederFromPlaylist = rewire('../../../../src/actions/high-order-handlers/middlewares/feeder-from-playlist');
 const playlist = require('../../../../src/state/playlist');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
@@ -19,17 +19,17 @@ describe('actions', () => {
       feeders = mockFeeders({
         getByNameReturn: feeder,
       });
-      middleware.__set__('feeders', feeders);
+      feederFromPlaylist.__set__('feeders', feeders);
     });
 
     describe('feeder from playlist', () => {
       it('should return Promise', () => {
-        expect(middleware()({app, playlist})).to.have.property('then');
+        expect(feederFromPlaylist.middleware()({app, playlist})).to.have.property('then');
       });
 
       it('should put feeder in context', () => {
         playlist.setFeeder(app, feeder);
-        return middleware()({app, playlist})
+        return feederFromPlaylist.middleware()({app, playlist})
           .then(context => {
             expect(context).to.have.property('feeder', feeder);
           });
