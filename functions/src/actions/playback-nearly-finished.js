@@ -9,6 +9,7 @@ function handler (app) {
     app,
     mediaResponseOnly: true,
     next: true,
+    enqueue: true,
   })
     .catch(context => {
       debug('It could be an error:', context);

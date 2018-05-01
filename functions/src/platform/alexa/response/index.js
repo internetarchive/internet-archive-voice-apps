@@ -35,6 +35,7 @@ module.exports = (handlerInput) =>
     if (media) {
       media.forEach(m => {
         const previousToken = m.previousTrack ? m.previousTrack.contentURL : null;
+        debug('previous token', previousToken);
         if (mediaResponseOnly) {
           // https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html#playbacknearlyfinished
           debug(`card is not allowed`);

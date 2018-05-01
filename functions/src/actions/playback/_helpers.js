@@ -15,11 +15,12 @@ const renderSpeech = require('../high-order-handlers/middlewares/render-speech')
  *
  * @param app
  * @param {boolean} mediaResponseOnly - alexa doesn't allow any response except of media response
+ * @param {boolean} enqueue - add next song in the queue (we should pass previous track)
  * @param {boolean} next - play next song
  * @returns {Promise}
  */
 function playSong (opts) {
-  const {app, next = false} = opts;
+  const {app, enqueue = false, next = false} = opts;
   return feederFromPlaylist.middleware()({app, query, playlist})
     // expose current platform to the slots
     .then(ctx =>
@@ -32,9 +33,11 @@ function playSong (opts) {
     .then(ctx => {
       if (next) {
         // we need previous track token for Alexa playback
-        const previousTrack = playlist.getCurrentSong(ctx.app);
-        ctx = Object.assign({}, ctx);
-        _.set(ctx, ['slots', 'previousTrack'], previousTrack);
+        if (enqueue) {
+          const previousTrack = playlist.getCurrentSong(ctx.app);
+          ctx = Object.assign({}, ctx);
+          _.set(ctx, ['slots', 'previousTrack'], previousTrack);
+        }
         return nextSong()(ctx);
       }
       return ctx;
