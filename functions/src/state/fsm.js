@@ -4,6 +4,8 @@
 
 const _ = require('lodash');
 
+const {debug} = require('../utils/logger')('ia:state:fsm');
+
 const {getData, setData} = require('./helpers').group('fsm');
 
 /**
@@ -26,11 +28,20 @@ const getState = (app) => _.get(getData(app), 'state');
  * Transition from current state to the new one (stateName)
  *
  * @param app
- * @param {string} stateName
+ * @param {string} newState
  */
-const transitionTo = (app, stateName) => setData(app,
-  Object.assign({}, getData(app), {state: stateName})
-);
+const transitionTo = (app, newState) => {
+  const oldState = getState(app);
+  if (oldState === newState) {
+    return;
+  }
+
+  debug(`transit from "${oldState}" to "${newState}"`);
+
+  setData(app,
+    Object.assign({}, getData(app), {state: newState})
+  );
+};
 
 module.exports = {
   getState,
