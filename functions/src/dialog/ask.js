@@ -1,5 +1,6 @@
 const {savePhrase} = require('../state/dialog');
 const {debug} = require('../utils/logger')('ia:dialog:ask');
+const escapeHTML = require('../utils/escape-html');
 
 /**
  * ask user with suggestions
@@ -28,6 +29,12 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
 
   if (Array.isArray(suggestions)) {
     suggestions = suggestions.map(s => s.toString());
+  }
+
+  if (Array.isArray(speech)) {
+    speech = speech.map(s => escapeHTML(s));
+  } else {
+    speech = escapeHTML(speech);
   }
 
   app.response({speech, reprompt, suggestions});

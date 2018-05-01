@@ -7,6 +7,7 @@ const mustache = require('mustache');
 const sinon = require('sinon');
 
 const strings = require('../../src/strings');
+const escapeHTML = require('../../src/utils/escape-html');
 
 const {wait} = require('../_utils/wait');
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
@@ -40,7 +41,9 @@ describe('integration', () => {
         .then(() => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.userResponse()).to.be.true;
-          expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+          expect(res.speech()).to.contain(
+            escapeHTML(strings.intents.unknown[0].speech)
+          );
         });
     });
 
@@ -70,7 +73,7 @@ describe('integration', () => {
           expect(res.userResponse()).to.be.true;
           expect(res.speech()).to.contain(
             mustache.render(
-              strings.intents.unknown[1].speech,
+              escapeHTML(strings.intents.unknown[1].speech),
               {reprompt: 'Direction?'}
             )
           );
@@ -119,7 +122,9 @@ describe('integration', () => {
         .then(() => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.userResponse()).to.be.true;
-          expect(res.speech()).to.contain(strings.intents.unknown[0].speech);
+          expect(res.speech()).to.contain(
+            escapeHTML(strings.intents.unknown[0].speech)
+          );
         });
     });
   });
