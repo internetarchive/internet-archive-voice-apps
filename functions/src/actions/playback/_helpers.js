@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const playlist = require('../../state/playlist');
 const query = require('../../state/query');
 
@@ -12,10 +14,12 @@ const renderSpeech = require('../high-order-handlers/middlewares/render-speech')
  * play one song
  *
  * @param app
+ * @param {boolean} mediaResponseOnly - alexa doesn't allow any response except of media response
  * @param {boolean} next - play next song
  * @returns {Promise}
  */
-function playSong ({app, next = false}) {
+function playSong (opts) {
+  const {app, next = false} = opts;
   return feederFromPlaylist.middleware()({app, query, playlist})
     // expose current platform to the slots
     .then(ctx =>
@@ -25,11 +29,21 @@ function playSong ({app, next = false}) {
         )
       })
     )
-    .then(ctx => next ? nextSong()(ctx) : ctx)
+    .then(ctx => {
+      if (next) {
+        // we need previous track token for Alexa playback
+        const previousTrack = playlist.getCurrentSong(ctx.app);
+        ctx = Object.assign({}, ctx);
+        _.set(ctx, ['slots', 'previousTrack'], previousTrack);
+        return nextSong()(ctx);
+      }
+      return ctx;
+    })
     .then(parepareSongData())
     .then(fulfilResolvers())
     .then(renderSpeech())
-    .then(playSongMiddleware());
+    // Alexa doesn't allow any response except of media response
+    .then(playSongMiddleware(opts));
 }
 
 module.exports = {
