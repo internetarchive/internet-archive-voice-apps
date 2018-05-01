@@ -9,12 +9,13 @@ module.exports = (handlerInput) =>
   /**
    * Response with question
    *
+   * @param {boolean} close - close session
    * @param media {Array}
    * @param mediaResponseOnly {boolean}
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({media, mediaResponseOnly, speech, suggestions}) => {
+  ({close = false, media, mediaResponseOnly, speech, suggestions}) => {
     debug('start');
     if (!Array.isArray(speech)) {
       speech = [speech];
@@ -63,7 +64,7 @@ module.exports = (handlerInput) =>
       });
       handlerInput.responseBuilder.withShouldEndSession(true);
     } else {
-      handlerInput.responseBuilder.withShouldEndSession(false);
+      handlerInput.responseBuilder.withShouldEndSession(close);
     }
 
     if (suggestions) {
