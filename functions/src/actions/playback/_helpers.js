@@ -1,7 +1,11 @@
 const _ = require('lodash');
 
+const dialog = require('../../dialog');
+const dialogState = require('../../state/dialog');
 const playlist = require('../../state/playlist');
 const query = require('../../state/query');
+const strings = require('../../strings');
+const {debug} = require('../../utils/logger')('ia:actions:playback/_helpers');
 
 const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
@@ -49,6 +53,31 @@ function playSong (opts) {
     .then(playSongMiddleware(opts));
 }
 
+/**
+ * resume track playback
+ *
+ * @param app
+ * @returns {Promise.<T>}
+ */
+function resume ({app}) {
+  return playSong({app, next: false})
+    .catch(err => {
+      if (err instanceof feederFromPlaylist.EmptyFeederError) {
+        dialog.ask(app, dialog.merge(
+          strings.intents.resume.empty,
+          dialogState.getReprompt(app)
+        ));
+      } else {
+        debug('It could be an error:', err);
+        return dialog.ask(app, dialog.merge(
+          strings.intents.resume.fail,
+          dialogState.getReprompt(app)
+        ));
+      }
+    });
+}
+
 module.exports = {
   playSong,
+  resume,
 };
