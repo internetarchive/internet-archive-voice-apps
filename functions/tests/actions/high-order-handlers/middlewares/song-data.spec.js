@@ -41,8 +41,8 @@ describe('actions', () => {
               .with.members([strings.wordless[0].speech]);
             expect(context).to.have.property('slots')
               .which.deep.equal({
-                id: slots.id,
-              });
+              id: slots.id,
+            });
           });
       });
 
@@ -74,6 +74,42 @@ describe('actions', () => {
             expect(context).to.have.property('speech').with.members([
               firstSpeech,
             ]);
+          });
+      });
+
+      it('should escape song title', () => {
+        feeder = mockFeeder({
+          getCurrentItemReturns: {
+            title: '"Last Night Blues',
+            creator: [
+              'Joe Liggins & His Honeydrippers',
+              'Joe Liggins',
+              '"Little" Willie Jackson',
+            ],
+            track: 1,
+            year: 1947,
+            someInnerObject: {
+              quot: '"',
+              amp: "&",
+            },
+          }
+        });
+        return middleware()({app, feeder, slots: {}})
+          .then(ctx => {
+            expect(ctx.slots).to.have.property('title', '&quot;Last Night Blues');
+            expect(ctx.slots).to.have.property('creator')
+              .to.have.members([
+                'Joe Liggins &amp; His Honeydrippers',
+                'Joe Liggins',
+                '&quot;Little&quot; Willie Jackson',
+              ]);
+            expect(ctx.slots).to.have.property('track', 1);
+            expect(ctx.slots).to.have.property('year', 1947);
+            expect(ctx.slots).to.have.property('someInnerObject')
+              .to.be.deep.equal({
+                quot: '&quot;',
+                amp: '&amp;',
+              })
           });
       });
     });
