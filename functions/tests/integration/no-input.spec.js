@@ -2,7 +2,6 @@ const {expect} = require('chai');
 const sinon = require('sinon');
 
 const strings = require('../../src/strings');
-const escapeHTML = require('../../src/utils/escape-html');
 
 const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
 const {wait} = require('../_utils/wait');
@@ -36,9 +35,7 @@ describe('integration', () => {
         .then(() => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.userResponse()).to.be.true;
-          expect(res.speech()).to.contain(
-            escapeHTML(strings.intents.noInput[0].speech)
-          );
+          expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
         });
     });
 
@@ -111,9 +108,7 @@ describe('integration', () => {
         .then(() => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.userResponse()).to.be.true;
-          expect(res.speech()).to.contain(
-            escapeHTML(strings.intents.noInput[0].speech)
-          );
+          expect(res.speech()).to.contain(strings.intents.noInput[0].speech);
         });
     });
   });

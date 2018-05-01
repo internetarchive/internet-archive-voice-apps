@@ -32,24 +32,5 @@ describe('dialog', () => {
       expect(app.response.args[0][0]).to.be.deep.equal({reprompt, speech, suggestions});
       expect(savePhrase).to.be.calledOnce;
     });
-
-    it('should escape response', () => {
-      const speech = `
-      <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
-                       clipBegin="4.5s"
-                       clipEnd="5.5s"
-                       soundLevel="10db">
-          <desc>Track - "Last Night Blues of Joe Liggins & His Honeydrippers,Joe Liggins,"Little" Willie Jackson,James Jackson,Eddie Davis,"Peppy" Prince,Frank Palsey 1947</desc>
-      </audio>
-      `;
-      const suggestions = ['one', 'two'];
-      const reprompt = 'Hello!?';
-
-      ask(app, {speech, reprompt, suggestions});
-
-      expect(app.response.args[0][0])
-        .to.have.property('speech')
-        .to.not.include('"');
-    });
   });
 });
