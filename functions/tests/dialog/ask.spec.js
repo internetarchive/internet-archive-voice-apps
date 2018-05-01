@@ -15,9 +15,13 @@ describe('dialog', () => {
   });
 
   describe('ask', () => {
-    it('should construct response', () => {
-      const app = mockApp();
+    let app;
 
+    beforeEach(() => {
+      app = mockApp();
+    });
+
+    it('should construct response', () => {
       const speech = 'hello world!';
       const suggestions = ['one', 'two'];
       const reprompt = 'Hello!?';

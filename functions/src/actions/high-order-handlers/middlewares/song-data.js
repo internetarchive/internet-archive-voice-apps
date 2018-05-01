@@ -3,6 +3,7 @@ const mustache = require('mustache');
 const selectors = require('../../../configurator/selectors');
 const playback = require('../../../state/playback');
 const availableStrings = require('../../../strings').dialog.playSong;
+const esapceHTMLObject = require('../../../utils/escape-html-object');
 const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
 /**
@@ -14,7 +15,7 @@ module.exports = () => (args) => {
   const songData = feeder.getCurrentItem(args);
   const mute = playback.isMuteSpeechBeforePlayback(app);
 
-  slots = Object.assign({}, slots, songData);
+  slots = Object.assign({}, slots, esapceHTMLObject(songData));
 
   const strings = selectors.find(availableStrings, slots);
 
