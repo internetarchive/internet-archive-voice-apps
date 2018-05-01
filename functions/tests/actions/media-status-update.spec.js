@@ -1,9 +1,8 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
+const sinon = require('sinon');
 
 const action = rewire('../../src/actions/media-status-update');
-const playlist = require('../../src/state/playlist');
-const query = require('../../src/state/query');
 
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -12,6 +11,7 @@ const mockMiddlewares = require('../_utils/mocking/middlewares');
 describe('actions', () => {
   let app;
   let dialog;
+  let helpers;
   let middlewares;
 
   beforeEach(() => {
@@ -23,8 +23,13 @@ describe('actions', () => {
       },
     });
 
+    helpers = {
+      playSong: sinon.stub().resolves(),
+    };
+
     dialog = mockDialog();
     action.__set__('dialog', dialog);
+    action.__set__('helpers', helpers);
     middlewares = mockMiddlewares([
       'feederFromPlaylist',
       'fulfilResolvers',
@@ -42,11 +47,7 @@ describe('actions', () => {
       // app.MEDIA_STATUS.extension.status = app.Media.Status.FINISHED;
       return action.handler(app)
         .then(() => {
-          expect(middlewares.feederFromPlaylist.middleware).to.be.calledWith({
-            app,
-            query,
-            playlist,
-          });
+          expect(helpers.playSong).to.have.been.calledWith({app, next: true});
         });
     });
   });

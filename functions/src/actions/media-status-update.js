@@ -1,16 +1,9 @@
 const {debug, warning} = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
-const playlist = require('../state/playlist');
-const query = require('../state/query');
 const strings = require('../strings');
 
-const feederFromPlaylist = require('./high-order-handlers/middlewares/feeder-from-playlist');
-const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
-const nextSong = require('./high-order-handlers/middlewares/next-song');
-const playSong = require('./high-order-handlers/middlewares/play-song');
-const parepareSongData = require('./high-order-handlers/middlewares/song-data');
-const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
+const helpers = require('./playback/_helpers');
 
 /**
  * handle 'media status update' action
@@ -47,26 +40,6 @@ function handler (app) {
   }
 }
 
-function prepareNextSong (ctx) {
-  debug('prepare next song');
-  return feederFromPlaylist()(Object.assign({}, ctx, {query, playlist}))
-  // expose current platform to the slots
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, {platform: ctx.app.platform || 'assistant'}
-        )
-      })
-    )
-    .then(nextSong())
-    .then(context => {
-      debug('we got new song and now could play it');
-      return parepareSongData()(context);
-    })
-    .then(fulfilResolvers())
-    .then(renderSpeech());
-}
-
 /**
  * Handle app.Media.Status.FINISHED media status
  *
@@ -74,8 +47,7 @@ function prepareNextSong (ctx) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  return prepareNextSong({app, query, playlist})
-    .then(playSong())
+  return helpers.playSong({app, next: true})
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, strings.events.playlistIsEnded);
@@ -85,5 +57,4 @@ function handleFinished (app) {
 module.exports = {
   handler,
   handleFinished,
-  prepareNextSong,
 };
