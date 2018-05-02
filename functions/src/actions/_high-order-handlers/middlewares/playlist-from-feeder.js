@@ -1,5 +1,5 @@
 const {debug, info} = require('../../../utils/logger')('ia:actions:middlewares:playlist-from-feeder');
-const {MiddlewareError} = require('./error');
+const {MiddlewareError} = require('./errors');
 
 /**
  * Update playlist data from feeder

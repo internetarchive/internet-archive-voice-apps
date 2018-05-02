@@ -9,12 +9,13 @@ module.exports = (handlerInput) =>
   /**
    * Response with question
    *
+   * @param {boolean} close - close session
    * @param media {Array}
    * @param mediaResponseOnly {boolean}
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({media, mediaResponseOnly, speech, suggestions}) => {
+  ({close = false, media, mediaResponseOnly, speech, suggestions}) => {
     debug('start');
     if (!Array.isArray(speech)) {
       speech = [speech];
@@ -35,6 +36,7 @@ module.exports = (handlerInput) =>
     if (media) {
       media.forEach(m => {
         const previousToken = m.previousTrack ? m.previousTrack.contentURL : null;
+        debug('previous token', previousToken);
         if (mediaResponseOnly) {
           // https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html#playbacknearlyfinished
           debug(`card is not allowed`);
@@ -62,7 +64,7 @@ module.exports = (handlerInput) =>
       });
       handlerInput.responseBuilder.withShouldEndSession(true);
     } else {
-      handlerInput.responseBuilder.withShouldEndSession(false);
+      handlerInput.responseBuilder.withShouldEndSession(close);
     }
 
     if (suggestions) {

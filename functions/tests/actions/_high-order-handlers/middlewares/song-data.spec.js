@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/song-data');
+const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/song-data');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
 const mockFeeder = require('../../../_utils/mocking/feeders/albums');

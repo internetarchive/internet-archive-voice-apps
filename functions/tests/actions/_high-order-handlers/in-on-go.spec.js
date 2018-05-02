@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const builder = rewire('../../../src/actions/high-order-handlers/in-one-go');
+const builder = rewire('../../../src/actions/_high-order-handlers/in-one-go');
 const playlist = require('../../../src/state/playlist');
 const query = require('../../../src/state/query');
 

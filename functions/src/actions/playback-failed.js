@@ -1,7 +1,9 @@
+const dialog = require('../dialog');
 const playlist = require('../state/playlist');
-const {warning} = require('../utils/logger')('ia:actions:playback-failed');
+const strings = require('../strings');
+const {debug, warning} = require('../utils/logger')('ia:actions:playback-failed');
 
-const mediaStatusUpdate = require('./media-status-update');
+const helpers = require('./playback/_helpers');
 
 /**
  * handle playback failed request
@@ -14,7 +16,11 @@ function handler (app) {
 
   warning(`Fail to playback ${currentTrack.audioUrl} with ${e.type}: "${e.message}"`);
 
-  mediaStatusUpdate.handleFinished(app);
+  return helpers.playSong({app, next: true})
+    .catch(e => {
+      debug('It could be an error:', e);
+      return dialog.ask(app, strings.events.playlistIsEnded);
+    });
 }
 
 module.exports = {

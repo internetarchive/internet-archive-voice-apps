@@ -6,18 +6,18 @@ const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
 const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
-const acknowledge = require('./high-order-handlers/middlewares/acknowledge');
-const ask = require('./high-order-handlers/middlewares/ask');
-const fulfilResolvers = require('./high-order-handlers/middlewares/fulfil-resolvers');
-const renderSpeech = require('./high-order-handlers/middlewares/render-speech');
-const repairBrokenSlots = require('./high-order-handlers/middlewares/repair-broken-slots');
-const suggestions = require('./high-order-handlers/middlewares/suggestions');
-const prompt = require('./high-order-handlers/middlewares/prompt');
+const acknowledge = require('./_high-order-handlers/middlewares/acknowledge');
+const ask = require('./_high-order-handlers/middlewares/ask');
+const fulfilResolvers = require('./_high-order-handlers/middlewares/fulfil-resolvers');
+const renderSpeech = require('./_high-order-handlers/middlewares/render-speech');
+const repairBrokenSlots = require('./_high-order-handlers/middlewares/repair-broken-slots');
+const suggestions = require('./_high-order-handlers/middlewares/suggestions');
+const prompt = require('./_high-order-handlers/middlewares/prompt');
 
-const feederFromSlotScheme = require('./high-order-handlers/middlewares/feeder-from-slots-scheme');
-const parepareSongData = require('./high-order-handlers/middlewares/song-data');
-const playlistFromFeeder = require('./high-order-handlers/middlewares/playlist-from-feeder');
-const playSong = require('./high-order-handlers/middlewares/play-song');
+const feederFromSlotScheme = require('./_high-order-handlers/middlewares/feeder-from-slots-scheme');
+const parepareSongData = require('./_high-order-handlers/middlewares/song-data');
+const playlistFromFeeder = require('./_high-order-handlers/middlewares/playlist-from-feeder');
+const playSong = require('./_high-order-handlers/middlewares/play-song');
 
 /**
  * Handle music query action

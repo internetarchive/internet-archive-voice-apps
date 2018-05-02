@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
 
-const middleware = rewire('../../../../src/actions/high-order-handlers/middlewares/suggestions');
+const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/suggestions');
 
 describe('actions', () => {
   describe('middlewares', () => {

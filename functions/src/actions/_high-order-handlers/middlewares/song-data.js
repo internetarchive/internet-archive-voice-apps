@@ -15,7 +15,7 @@ module.exports = () => (args) => {
   const songData = feeder.getCurrentItem(args);
   const mute = playback.isMuteSpeechBeforePlayback(app);
 
-  slots = Object.assign({}, slots, esapceHTMLObject(songData));
+  slots = Object.assign({}, slots, esapceHTMLObject(songData, {skipFields: ['audioURL', 'imageURL']}));
 
   const strings = selectors.find(availableStrings, slots);
 

@@ -1,4 +1,4 @@
-const {MiddlewareError} = require('./error');
+const {MiddlewareError} = require('./errors');
 const {debug} = require('../../../utils/logger')('ia:actions:middlewares:next-song');
 
 /**

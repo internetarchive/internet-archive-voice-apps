@@ -421,10 +421,10 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Ok, muting song titles.`,
+        speech: `Excellent! I'll be saying title to each song.`,
       },
       true: {
-        speech: `Excellent! I'll be saying title to each song.`,
+        speech: `Ok, muting song titles.`,
       },
     },
 
@@ -446,6 +446,16 @@ module.exports = {
       ],
       speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
       suggestions: ['78s', 'Live Concerts']
+    },
+
+    playback: {
+      noInput: {
+        speech: `Sorry, I couldn't hear you. If you don't mind I will continue playback.`,
+      },
+
+      unknown: {
+        speech: `I'm not sure what you said. If you don't mind I will continue playback.`,
+      },
     },
   },
 

@@ -18,5 +18,5 @@ module.exports = function close (app, {speech}) {
     throw new Error(`Argument 'speech' is not defined: ${speech}`);
   }
 
-  app.response({close: true, speech: speech});
+  app.response({close: true, speech});
 };
