@@ -13,7 +13,7 @@ const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
 const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
 const successFromDF = require('./fixtures/success-from-df.json');
 
-let fetchEntitiesFromDF, postEntitiesToDF;
+let postEntitiesToDF;
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -89,8 +89,6 @@ describe('uploader', () => {
 
       describe('forCollection', () => {
         beforeEach(() => {
-          var expected = [`Grateful Dead`, `Disco Biscuits`, `Phil Lesh and Friends`];
-          fetchEntitiesFromDF = sinon.stub(entities, 'fetchEntitiesFromDF').returns(expected);
           postEntitiesToDF = sinon.stub(entities, 'postEntitiesToDF').returns(successFromDF);
           iaRequest.__set__(
             'fetch',
@@ -101,7 +99,6 @@ describe('uploader', () => {
         });
         afterEach(() => {
           fetchMock.restore();
-          fetchEntitiesFromDF.restore();
           postEntitiesToDF.restore();
         });
         it('should fetch collection from IA and post to DF', () => {

@@ -54,7 +54,6 @@ function fetchEntitiesFromIA (id, field, limit) {
   var url = mustache.render(
     config.endpoints.COLLECTION_ITEMS_URL,
     {
-      platformSubDomain: 'web',
       id,
       limit,
       page,
@@ -78,21 +77,16 @@ function fetchEntitiesFromIA (id, field, limit) {
 /**
  * get unique & filtered entities from InternetArchive & post to DialogFlow
  *
- * @param entityname {string} name of entity in dialogflow
+ * @param entityid {string} id of entity in dialogflow
  * @param id {string} etree/georgeblood
  * @param field {string} field need to be extracted creator/subjects
  * @param limit {int} number of records need to be fetch from IA
  * @returns {promise}
  */
-function fetchNewEntitiesFromIAAndPostToDF (entityname, id, field, limit) {
-  return Promise.all([
-    fetchEntitiesFromIA(id, field, limit),
-    entities.fetchEntitiesFromDF(entityname),
-  ])
-    .then(values => {
-      const [creatorsFromIA, creatorsFromDF] = values;
-      var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      return entities.postEntitiesToDF(entityname, dif, 0);
+function fetchNewEntitiesFromIAAndPostToDF (entityid, id, field, limit) {
+  return fetchEntitiesFromIA(id, field, limit)
+    .then(creatorsFromIA => {
+      return entities.postEntitiesToDF(entityid, creatorsFromIA, 0);
     })
     .then(data => {
       return Promise.resolve(data);

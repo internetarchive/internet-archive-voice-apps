@@ -3,29 +3,32 @@ const error = require(`debug`)(`ia:uploader:entities:error`);
 const fetch = require(`node-fetch`);
 const mustache = require('mustache');
 const util = require(`util`);
+const { exec } = require('child-process-promise');
 
 const config = require('../config');
 
 const MAX_ENTITY = 30000;
-const MAX_REQUEST = 1000;
+const MAX_REQUEST = 10000;
 
-const basicHeaderRequest = {
-  'content-type': `application/json; charset=UTF-8`,
-  'authorization': `BEARER ${process.env.DIALOG_FLOW_DEV_TOKEN}`
-};
+var entities_list = [];
+  for (let i = 0; i < 20000; i++) {
+    entities_list.push('creator'+i);
+  }
+
+postEntitiesToDF("87efd903-6cd1-4262-92af-b181f0a379ff", entities_list, 0);
 
 /**
  * Post entities to DialogFlow
  *
- * Maximum 1,000 records per request
+ * Maximum 10,000 records per request
  * Maximum 30,000 records per entity
  *
- * @param entityname {string}
+ * @param entityid {string} id of entity in dialogflow
  * @param entities {array}
  * @param first {int} suppose to be 0
  * @returns {Promise}
  */
-function postEntitiesToDF (entityname, entities, first) {
+function postEntitiesToDF (entityid, entities, first) {
   debug(`first : ` + first);
   debug(`Entities Length : ` + entities.length);
   debug(`posting Entity to DF...`);
@@ -51,22 +54,27 @@ function postEntitiesToDF (entityname, entities, first) {
   for (let i = first; i < last; i++) {
     data.push({'synonyms': [entities[i]], 'value': entities[i]});
   }
-  return fetch(mustache.render(
-    config.dfendpoints.DF_ENTITY_POST_URL,
-    {
-      entityname,
-    }
-  ), {method: `POST`, body: JSON.stringify(data), headers: basicHeaderRequest})
+  return getAccessToken()
+    .then(accesstoken => {
+      debug(util.inspect(JSON.stringify({'entities': data}), false, null));
+      return fetch(mustache.render(
+        config.dfendpoints.DF_ENTITY_POST_URL,
+        {
+          entityid,
+          accesstoken,
+        }
+      ), {method: `POST`, body: JSON.stringify({'entities': data})});
+    })
     .then(res => res.json())
     .then(data => {
-      debug(util.inspect(data, false, null));
+      debug(`Bimmy1 : ` + util.inspect(data, false, null));
       if (data.hasOwnProperty('error') && data.error.code !== 200) {
         return Promise.reject(new Error(data));
       }
       debug(util.inspect(data, false, null));
       debug(`posted Entity to DF Successfully.`);
       first = last;
-      return postEntitiesToDF(entityname, entities, first);
+      return postEntitiesToDF(entityid, entities, first);
     })
     .catch(e => {
       error(`Get error in posting entity to DF, error: ${JSON.stringify(e)}`);
@@ -74,41 +82,23 @@ function postEntitiesToDF (entityname, entities, first) {
     });
 }
 
-/**
- * Get entities from DialogFlow
- *
- * @param entityname {string}
- * @returns entities {array}
- */
-function fetchEntitiesFromDF (entityname) {
-  debug(`fetching entity data from DF...`);
-  return fetch(mustache.render(
-    config.dfendpoints.DF_ENTITY_GET_URL,
-    {
-      entityname,
-    }
-  ), {method: `GET`, headers: basicHeaderRequest})
-    .then(res => res.json())
-    .then(data => {
-      debug(util.inspect(data, false, null));
-      if (data.hasOwnProperty('error') && data.error.code !== 200) {
-        return Promise.reject(new Error(data));
-      }
-      var entities = [];
-      for (var i = 0, len = data.entries.length; i < len; i++) {
-        entities.push(data.entries[i].value);
-      }
-      debug(util.inspect(entities, false, null));
-      debug(`fetched Entity from DF successfully.`);
-      return Promise.resolve(entities);
-    })
-    .catch(e => {
-      error(`Get error in fetching entity from DF, error: ${JSON.stringify(e)}`);
-      return Promise.reject(e);
-    });
+async function getAccessToken () {
+const { stdout, stderr } = await exec('gcloud auth print-access-token');
+if (stdout) {
+  filteredstdout = stdout.replace(/\n$/, '');
+  debug(util.inspect(filteredstdout, false, null));  
+  return Promise.resolve(filteredstdout);
+}
+else if (stderr) {
+  error(stderr);
+  return Promise.reject(new Error('ERROR: '+stderr));
+}
+else {
+  error('Having trouble with GCloud execution');
+  return Promise.reject(new Error('ERROR: Having trouble with GCloud execution'));
+}
 }
 
 module.exports = {
-  fetchEntitiesFromDF,
   postEntitiesToDF,
 };
