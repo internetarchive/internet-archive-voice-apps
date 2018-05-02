@@ -1,18 +1,45 @@
 # Change Log
 
+## [2.1.12](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.12) (2018-05-02)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.11...2.1.12)
+
+**Implemented enhancements:**
+
+- resume playback when get unknown or no intent in context of playback fsm state [\#262](https://github.com/internetarchive/internet-archive-google-action/issues/262)
+- update deps [\#257](https://github.com/internetarchive/internet-archive-google-action/issues/257)
+- change number of requested rows and order of suggestions [\#255](https://github.com/internetarchive/internet-archive-google-action/issues/255)
+- handle Alexa PlaybackFailed Request [\#213](https://github.com/internetarchive/internet-archive-google-action/issues/213) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- migrate to Mathjs@4.0.0 [\#96](https://github.com/internetarchive/internet-archive-google-action/issues/96)
+- finite state machine [\#30](https://github.com/internetarchive/internet-archive-google-action/issues/30) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Fixed bugs:**
+
+- fail on rendering response with quotes and ampersand [\#263](https://github.com/internetarchive/internet-archive-google-action/issues/263)
+- raven warning about missed dsn [\#253](https://github.com/internetarchive/internet-archive-google-action/issues/253)
+
+**Merged pull requests:**
+
+- Feature/resume playback in context of playback fsm state [\#265](https://github.com/internetarchive/internet-archive-google-action/pull/265) ([hyzhak](https://github.com/hyzhak))
+- Hotfix/fail on rendering response with quotes and ampersand [\#264](https://github.com/internetarchive/internet-archive-google-action/pull/264) ([hyzhak](https://github.com/hyzhak))
+- Feature/finite state machine [\#261](https://github.com/internetarchive/internet-archive-google-action/pull/261) ([hyzhak](https://github.com/hyzhak))
+- Feature/handle alexa playback failed request [\#260](https://github.com/internetarchive/internet-archive-google-action/pull/260) ([hyzhak](https://github.com/hyzhak))
+- Feature/upgrade deps [\#258](https://github.com/internetarchive/internet-archive-google-action/pull/258) ([hyzhak](https://github.com/hyzhak))
+- Feature/change suggestions settings [\#256](https://github.com/internetarchive/internet-archive-google-action/pull/256) ([hyzhak](https://github.com/hyzhak))
+- use raven.client to config [\#254](https://github.com/internetarchive/internet-archive-google-action/pull/254) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.1.11](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.11) (2018-04-27)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.10...2.1.11)
 
 **Implemented enhancements:**
 
 - exit intent [\#251](https://github.com/internetarchive/internet-archive-google-action/issues/251)
-- playback songs on alexa [\#197](https://github.com/internetarchive/internet-archive-google-action/issues/197)
+- playback songs on alexa [\#197](https://github.com/internetarchive/internet-archive-google-action/issues/197) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 
 **Fixed bugs:**
 
 - broken IA requests with quotes [\#247](https://github.com/internetarchive/internet-archive-google-action/issues/247)
-- use persistent attributes for storing playback data [\#246](https://github.com/internetarchive/internet-archive-google-action/issues/246)
-- sequential playback is broken for Alexa SDK v2 [\#244](https://github.com/internetarchive/internet-archive-google-action/issues/244)
+- use persistent attributes for storing playback data [\#246](https://github.com/internetarchive/internet-archive-google-action/issues/246) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- sequential playback is broken for Alexa SDK v2 [\#244](https://github.com/internetarchive/internet-archive-google-action/issues/244) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 
 **Merged pull requests:**
 
@@ -40,9 +67,9 @@
 
 **Implemented enhancements:**
 
-- migrate to Alexa SDK v2 [\#231](https://github.com/internetarchive/internet-archive-google-action/issues/231)
+- migrate to Alexa SDK v2 [\#231](https://github.com/internetarchive/internet-archive-google-action/issues/231) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 - add changelog [\#229](https://github.com/internetarchive/internet-archive-google-action/issues/229)
-- support media query dialogs for alexa [\#221](https://github.com/internetarchive/internet-archive-google-action/issues/221)
+- support media query dialogs for alexa [\#221](https://github.com/internetarchive/internet-archive-google-action/issues/221) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 - migrate to Dialog Flow v2 [\#180](https://github.com/internetarchive/internet-archive-google-action/issues/180)
 - expose version of the app to the logs on start [\#83](https://github.com/internetarchive/internet-archive-google-action/issues/83)
 - Script for uploading dialog flow [\#33](https://github.com/internetarchive/internet-archive-google-action/issues/33)
@@ -62,8 +89,8 @@
 **Implemented enhancements:**
 
 - profile performance of requests [\#228](https://github.com/internetarchive/internet-archive-google-action/issues/228)
-- support Alexa.CancelIntent Request [\#219](https://github.com/internetarchive/internet-archive-google-action/issues/219)
-- resume playback [\#211](https://github.com/internetarchive/internet-archive-google-action/issues/211)
+- support Alexa.CancelIntent Request [\#219](https://github.com/internetarchive/internet-archive-google-action/issues/219) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- resume playback [\#211](https://github.com/internetarchive/internet-archive-google-action/issues/211) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 - re-prompt user when they missed the available range  [\#90](https://github.com/internetarchive/internet-archive-google-action/issues/90)
 
 **Fixed bugs:**
