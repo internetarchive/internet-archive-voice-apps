@@ -34,6 +34,13 @@ class App {
   }
 
   /**
+   * is it new speech session
+   */
+  isNewSession () {
+
+  }
+
+  /**
    * Current track offset
    *
    * @returns {Number}

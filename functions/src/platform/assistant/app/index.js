@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const {debug} = require('../../../utils/logger')('ia:platform:assistant:app');
 
 const params = require('../parameters');
@@ -26,6 +28,13 @@ class App {
    */
   isFirstTry () {
     return !!this.conv.user.last;
+  }
+
+  /**
+   * is it new speech session
+   */
+  isNewSession () {
+    return _.get(this, 'conv.conversation.type') === 'NEW';
   }
 
   /**
