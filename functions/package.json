@@ -32,6 +32,7 @@
     "mathjs": "^4.1.2",
     "mustache": "^2.3.0",
     "node-fetch": "^2.1.2",
+    "object.entries": "^1.0.4",
     "raven": "^2.6.0",
     "replaceall": "^0.1.6",
     "supports-color": "^5.4.0"

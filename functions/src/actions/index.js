@@ -22,6 +22,8 @@
  *
  */
 
+const entries = require('object.entries');
+
 const extension = require('../extensions/builder');
 
 const {actionNameByFileName} = require('./_helpers');
@@ -53,7 +55,7 @@ function withStates () {
       return acc;
     }, {});
 
-  return new Map(Object.entries(res));
+  return new Map(entries(res));
 }
 
 module.exports = {
