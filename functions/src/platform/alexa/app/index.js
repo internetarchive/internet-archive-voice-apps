@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:app');
 
 const params = require('../parameters');
@@ -37,7 +39,7 @@ class App {
    * is it new speech session
    */
   isNewSession () {
-
+    return _.get(this, 'handlerInput.session.new');
   }
 
   /**

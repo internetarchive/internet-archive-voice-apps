@@ -1,0 +1,17 @@
+{
+  "requestEnvelope": {
+    "context": {
+      "System": {
+        "device": {
+          "deviceId": "1234567890"
+        }
+      }
+    },
+    "request": {
+      "error": {
+        "message": "Player error occurred: java.lang.IllegalStateException",
+        "type": "MEDIA_ERROR_UNKNOWN"
+      }
+    }
+  }
+}
