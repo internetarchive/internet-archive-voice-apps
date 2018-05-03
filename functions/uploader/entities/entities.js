@@ -60,7 +60,7 @@ function postEntitiesToDF (entityid, entities, first) {
     })
     .then(res => res.json())
     .then(data => {
-      debug(`Bimmy1 : ` + util.inspect(data, false, null));
+      debug(util.inspect(data, false, null));
       if (data.hasOwnProperty('error') && data.error.code !== 200) {
         return Promise.reject(new Error(data));
       }
