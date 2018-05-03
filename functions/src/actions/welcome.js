@@ -3,8 +3,6 @@ const _ = require('lodash');
 const constants = require('../constants');
 const dialog = require('../dialog');
 const fsm = require('../state/fsm');
-const playlist = require('../state/playlist');
-const query = require('../state/query');
 const welcomeStrings = require('../strings').intents.welcome;
 
 /**
@@ -28,8 +26,7 @@ function handler (app) {
 
   // so "Resume" intent won't work after that
   // we clean all that information
-  playlist.create(app, []);
-  query.resetSlots(app);
+  app.persist.dropAll();
 
   fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 

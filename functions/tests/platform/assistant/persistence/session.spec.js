@@ -38,6 +38,21 @@ describe('platform', () => {
           expect(p.getData('value')).to.be.equal('hello world');
         });
       });
+
+      describe('drop all', () => {
+        it('should remove all session level attributes', () => {
+          const conv = mockAssistant();
+          persistance(conv).setData('artist', 'Grateful Dead');
+          persistance(conv).setData('year', '1979');
+          persistance(conv).setData('genre', 'rock');
+
+          persistance(conv).dropAll();
+
+          expect(persistance(conv).getData('artist')).to.be.undefined;
+          expect(persistance(conv).getData('year')).to.be.undefined;
+          expect(persistance(conv).getData('genre')).to.be.undefined;
+        });
+      });
     });
   });
 });

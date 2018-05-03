@@ -1,0 +1,58 @@
+{
+  "requestEnvelope": {
+    "version": "1.0",
+    "session": {
+      "new": true,
+      "sessionId": "amzn1.echo-api.session.123456",
+      "application": {
+        "applicationId": "amzn1.ask.skill.65432"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.1234565432"
+      }
+    },
+    "context": {
+      "AudioPlayer": {
+        "playerActivity": "IDLE"
+      },
+      "Display": {},
+      "System": {
+        "application": {
+          "applicationId": "amzn1.ask.skill.456789876"
+        },
+        "user": {
+          "userId": "amzn1.ask.account.4567898765"
+        },
+        "device": {
+          "deviceId": "amzn1.ask.device.5678765",
+          "supportedInterfaces": {
+            "AudioPlayer": {},
+            "Display": {
+              "templateVersion": "1.0",
+              "markupVersion": "1.0"
+            }
+          }
+        },
+        "apiEndpoint": "https://api.amazonalexa.com",
+        "apiAccessToken": "76587658765"
+      }
+    },
+    "request": {
+      "type": "IntentRequest",
+      "requestId": "amzn1.echo-api.request.1234567",
+      "timestamp": "2018-05-02T21:27:19Z",
+      "locale": "en-US",
+      "intent": {
+        "name": "InOneGoMusicPlayback",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "SUBJECT": {
+            "name": "SUBJECT",
+            "value": "jazz",
+            "confirmationStatus": "NONE"
+          }
+        }
+      }
+    }
+  }
+}

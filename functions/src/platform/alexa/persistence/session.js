@@ -19,12 +19,20 @@ module.exports = (handlerInput, persistentAttributes) => {
     throw new Error('parameter handlerInput should be defined');
   }
 
-  const deviceId = handlerInput.requestEnvelope.context.System.device.deviceId;
+  const deviceId = _.get(handlerInput, 'requestEnvelope.context.System.device.deviceId');
   debug('deviceId:', deviceId);
 
   // TODO: we should clear attributes when we start session
 
   return {
+    /**
+     * Drop all session data
+     */
+    dropAll: () => {
+      debug('drop all attributes');
+      _.set(persistentAttributes, [deviceId], {});
+    },
+
     /**
      * Get data
      *

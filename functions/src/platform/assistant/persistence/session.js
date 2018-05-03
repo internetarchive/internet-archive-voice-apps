@@ -14,6 +14,14 @@ module.exports = (conv) => {
 
   return {
     /**
+     * Drop all session data
+     */
+    dropAll: () => {
+      debug('drop all attributes');
+      conv.data = {};
+    },
+
+    /**
      * Get data
      *
      * @param name
