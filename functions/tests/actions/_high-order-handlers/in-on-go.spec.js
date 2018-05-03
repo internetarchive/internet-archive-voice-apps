@@ -49,6 +49,16 @@ describe('actions', () => {
         it('should return promise', () => {
           expect(action.handler(app)).to.have.property('then');
         });
+
+        it('should clean session attributes in case of new session', () => {
+          app = mockApp({
+            isNewSession: true,
+          });
+          return action.handler(app)
+            .then(() => {
+              expect(app.persist.dropAll).to.have.been.calledOnce;
+            });
+        });
       });
     });
   });

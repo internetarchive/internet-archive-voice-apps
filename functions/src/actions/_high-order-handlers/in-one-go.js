@@ -46,6 +46,13 @@ function build ({playlist, strings, query}) {
     debug(`start handler "${strings.name}"`);
     const slotScheme = strings;
 
+    if (app.isNewSession()) {
+      // this action is exposed outside as in-one-go-action
+      // so for Alexa we should clean its attributes
+      debug(`it is new session we should drop all sessions's attributes`);
+      app.persist.dropAll();
+    }
+
     // pipeline of action handling
     return copyArgumentToSlots()({app, slotScheme, playlist, query})
       .then(copyDefaultsToSlots())
