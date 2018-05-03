@@ -26,6 +26,14 @@ module.exports = (handlerInput, persistentAttributes) => {
 
   return {
     /**
+     * Drop all session data
+     */
+    dropAll: () => {
+      debug('drop all attributes');
+      _.set(persistentAttributes, [deviceId], {});
+    },
+
+    /**
      * Get data
      *
      * @param name
