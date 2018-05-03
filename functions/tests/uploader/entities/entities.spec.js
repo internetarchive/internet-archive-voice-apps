@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
 const rewire = require('rewire');
 
-var entities = rewire('../../../uploader/entities/entities');
+const entities = rewire('../../../uploader/entities/entities');
 const failFromDF = require('./fixtures/fail-from-df.json');
 const successFromDF = require('./fixtures/success-from-df.json');
 
