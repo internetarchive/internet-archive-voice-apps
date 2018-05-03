@@ -403,6 +403,10 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    order: {
+      speech: 'Sorry, can you repeat that? {{reprompt}}',
+    },
+
     repeat: {
       empty: {
         speech: `I don't see anything here to repeat.`,
