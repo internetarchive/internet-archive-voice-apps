@@ -1,56 +1,58 @@
 {
-  "version": "1.0",
-  "session": {
-    "new": false,
-    "sessionId": "amzn1.echo-api.session.123123",
-    "application": {
-      "applicationId": "amzn1.ask.skill.12312312"
-    },
-    "user": {
-      "userId": "amzn1.ask.account.234234"
-    }
-  },
-  "context": {
-    "AudioPlayer": {
-      "playerActivity": "IDLE"
-    },
-    "Display": {
-      "token": ""
-    },
-    "System": {
+  "requestEnvelope": {
+    "version": "1.0",
+    "session": {
+      "new": false,
+      "sessionId": "amzn1.echo-api.session.123123",
       "application": {
-        "applicationId": "amzn1.ask.skill.234234234"
+        "applicationId": "amzn1.ask.skill.12312312"
       },
       "user": {
-        "userId": "amzn1.ask.account.431"
+        "userId": "amzn1.ask.account.234234"
+      }
+    },
+    "context": {
+      "AudioPlayer": {
+        "playerActivity": "IDLE"
       },
-      "device": {
-        "deviceId": "amzn1.ask.device.123123",
-        "supportedInterfaces": {
-          "AudioPlayer": {},
-          "Display": {
-            "templateVersion": "1.0",
-            "markupVersion": "1.0"
+      "Display": {
+        "token": ""
+      },
+      "System": {
+        "application": {
+          "applicationId": "amzn1.ask.skill.234234234"
+        },
+        "user": {
+          "userId": "amzn1.ask.account.431"
+        },
+        "device": {
+          "deviceId": "amzn1.ask.device.123123",
+          "supportedInterfaces": {
+            "AudioPlayer": {},
+            "Display": {
+              "templateVersion": "1.0",
+              "markupVersion": "1.0"
+            }
           }
-        }
-      },
-      "apiEndpoint": "https://api.amazonalexa.com",
-      "apiAccessToken": "12312312313"
-    }
-  },
-  "request": {
-    "type": "IntentRequest",
-    "requestId": "amzn1.echo-api.request.123123",
-    "timestamp": "2018-05-02T21:29:41Z",
-    "locale": "en-US",
-    "intent": {
-      "name": "InOneGoMusicPlayback",
-      "confirmationStatus": "NONE",
-      "slots": {
-        "SUBJECT": {
-          "name": "SUBJECT",
-          "value": "jazz",
-          "confirmationStatus": "NONE"
+        },
+        "apiEndpoint": "https://api.amazonalexa.com",
+        "apiAccessToken": "12312312313"
+      }
+    },
+    "request": {
+      "type": "IntentRequest",
+      "requestId": "amzn1.echo-api.request.123123",
+      "timestamp": "2018-05-02T21:29:41Z",
+      "locale": "en-US",
+      "intent": {
+        "name": "InOneGoMusicPlayback",
+        "confirmationStatus": "NONE",
+        "slots": {
+          "SUBJECT": {
+            "name": "SUBJECT",
+            "value": "jazz",
+            "confirmationStatus": "NONE"
+          }
         }
       }
     }

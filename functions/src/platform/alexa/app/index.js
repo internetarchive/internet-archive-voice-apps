@@ -39,7 +39,7 @@ class App {
    * is it new speech session
    */
   isNewSession () {
-    return _.get(this, 'handlerInput.session.new');
+    return _.get(this, 'handlerInput.requestEnvelope.session.new');
   }
 
   /**
