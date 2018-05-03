@@ -35,20 +35,7 @@ const playSong = require('./_high-order-handlers/middlewares/play-song');
 function handler (app) {
   debug('Start music query handler');
 
-  let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
-  checkSlotScheme(slotScheme);
-  let newValues = fillSlots(app, slotScheme);
-  applyDefaultSlots(app, slotScheme.defaults);
-
-  // new values could change actual slot scheme
-  const newScheme = selectors.find(availableSchemes, query.getSlots(app));
-  if (slotScheme !== newScheme) {
-    slotScheme = newScheme;
-    // update slots for new scheme
-    checkSlotScheme(slotScheme);
-    newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
-    applyDefaultSlots(app, slotScheme.defaults);
-  }
+  const {slotScheme, newValues} = populateSlots(app);
 
   processPreset(app, slotScheme);
 
@@ -125,6 +112,24 @@ function handler (app) {
     .then(ask());
 }
 
+function populateSlots (app) {
+  let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
+  checkSlotScheme(slotScheme);
+  let newValues = fillSlots(app, slotScheme);
+  applyDefaultSlots(app, slotScheme.defaults);
+
+  // new values could change actual slot scheme
+  const newScheme = selectors.find(availableSchemes, query.getSlots(app));
+  if (slotScheme !== newScheme) {
+    slotScheme = newScheme;
+    // update slots for new scheme
+    checkSlotScheme(slotScheme);
+    newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+    applyDefaultSlots(app, slotScheme.defaults);
+  }
+  return {slotScheme, newValues};
+}
+
 /**
  *
  * @param slotScheme
@@ -173,13 +178,13 @@ function applyDefaultSlots (app, defaults) {
 /**
  *
  */
-function processPreset (app, slotScheme) {
+function processPreset (app, slotScheme, {presetParamName = 'preset'} = {}) {
   let name;
   if (app.getArgument) {
     // @deprecated
     name = app.getArgument('preset');
   } else {
-    name = app.params.getByName('preset');
+    name = app.params.getByName(presetParamName);
   }
   if (!name) {
     debug(`it wasn't preset`);
@@ -229,4 +234,6 @@ function fillSlots (app, slotScheme) {
 
 module.exports = {
   handler,
+  populateSlots,
+  processPreset,
 };
