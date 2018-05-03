@@ -2,11 +2,17 @@ const {expect} = require('chai');
 const fetchMock = require('fetch-mock');
 const rewire = require('rewire');
 
-const entities = rewire('../../../uploader/entities/entities');
+var entities = rewire('../../../uploader/entities/entities');
 const failFromDF = require('./fixtures/fail-from-df.json');
 const successFromDF = require('./fixtures/success-from-df.json');
 
 describe('uploader', () => {
+  beforeEach(() => {
+    entities.__set__('getAccessToken', function () {
+      return Promise.resolve('Something Else');
+    });
+  });
+
   describe('entities', () => {
     describe('entities', () => {
       describe('postEntitiesToDF', () => {

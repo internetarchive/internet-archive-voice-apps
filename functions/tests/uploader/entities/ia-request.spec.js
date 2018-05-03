@@ -47,7 +47,7 @@ describe('uploader', () => {
               'fetch',
               fetchMock
                 .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)', getCollectionFromIA)
+                .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
             );
           });
           it('should fetch collection from IA', () => {
@@ -66,7 +66,7 @@ describe('uploader', () => {
               'fetch',
               fetchMock
                 .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(georgeblood)', getGenresFromIA)
+                .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getGenresFromIA)
             );
           });
 
@@ -94,7 +94,7 @@ describe('uploader', () => {
             'fetch',
             fetchMock
               .sandbox()
-              .get('begin:https://web.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
+              .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
           );
         });
         afterEach(() => {

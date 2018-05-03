@@ -10,13 +10,6 @@ const config = require('../config');
 const MAX_ENTITY = 30000;
 const MAX_REQUEST = 10000;
 
-var entities_list = [];
-  for (let i = 0; i < 20000; i++) {
-    entities_list.push('creator'+i);
-  }
-
-postEntitiesToDF("87efd903-6cd1-4262-92af-b181f0a379ff", entities_list, 0);
-
 /**
  * Post entities to DialogFlow
  *
@@ -82,23 +75,27 @@ function postEntitiesToDF (entityid, entities, first) {
     });
 }
 
-async function getAccessToken () {
-const { stdout, stderr } = await exec('gcloud auth print-access-token');
-if (stdout) {
-  filteredstdout = stdout.replace(/\n$/, '');
-  debug(util.inspect(filteredstdout, false, null));  
-  return Promise.resolve(filteredstdout);
-}
-else if (stderr) {
-  error(stderr);
-  return Promise.reject(new Error('ERROR: '+stderr));
-}
-else {
-  error('Having trouble with GCloud execution');
-  return Promise.reject(new Error('ERROR: Having trouble with GCloud execution'));
-}
+function getAccessToken () {
+  debug('getting access token');
+  return exec('gcloud auth print-access-token')
+    .then(values => {
+      var stdout = values.stdout;
+      var stderr = values.stderr;
+      if (stdout) {
+        var filteredstdout = stdout.replace(/\n$/, '');
+        debug(util.inspect(filteredstdout, false, null));
+        return Promise.resolve(filteredstdout);
+      } else if (stderr) {
+        error(stderr);
+        return Promise.reject(new Error('ERROR: ' + stderr));
+      } else {
+        error('Having trouble with GCloud execution');
+        return Promise.reject(new Error('ERROR: Having trouble with GCloud execution'));
+      }
+    });
 }
 
 module.exports = {
   postEntitiesToDF,
+  getAccessToken,
 };

@@ -52,7 +52,7 @@ function fetchEntitiesFromIA (id, field, limit) {
   var sort = 'downloads+desc';
   debug(`fetching entity data from IA...`);
   var url = mustache.render(
-    config.endpoints.COLLECTION_ITEMS_URL,
+    config.endpoints.COLLECTION_ITEMS_URL, config.platforms.assistant.endpoint,
     {
       id,
       limit,
