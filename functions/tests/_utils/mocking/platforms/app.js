@@ -12,7 +12,9 @@ module.exports = ({getByName = {}, getData = {}, getRequestError = {}, isNewSess
   platform,
 
   persist: {
-    dropAll: sinon.spy(),
+    dropAll: sinon.stub().callsFake(() => {
+      getData = {};
+    }),
     getData: sinon.stub().callsFake(name => getData[name]),
     setData: sinon.stub().callsFake((name, value) => {
       getData[name] = value;
