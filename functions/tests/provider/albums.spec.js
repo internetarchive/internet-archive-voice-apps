@@ -10,11 +10,30 @@ const gratefulAlbum = require('./fixtures/grateful-dead-1973.json');
 const ofARevolution = require('./fixtures/of-a-revolution-items.json');
 const smokeGetsInYourEyesPlate = require('./fixtures/smoke-gets-in-your-eyes-plate.json');
 
-describe('collection', () => {
+describe('albums', () => {
   let app;
 
   beforeEach(() => {
     app = mockApp();
+  });
+
+  describe('extractYear', () => {
+    it('should it extract year and conver it to year number', () => {
+      expect(albumsProvider.extractYear({
+        year: '1999',
+      })).to.be.equal(1999);
+    });
+
+    it('should it extract date and conver it to year number', () => {
+      expect(albumsProvider.extractYear({
+        date: '1999/1/2',
+      })).to.be.equal(1999);
+    });
+
+    it('should return undefined, when we do not have year or date', () => {
+      expect(albumsProvider.extractYear({
+      })).to.be.undefined;
+    });
   });
 
   describe('fetchAlbums', () => {
