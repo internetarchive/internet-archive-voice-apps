@@ -26,6 +26,8 @@ function stripRequestType (requestType) {
 }
 
 /**
+ * @private
+ *
  * Fetch persistant attributes
  *
  * @param handlerInput
@@ -42,6 +44,8 @@ function fetchAttributes (handlerInput) {
 }
 
 /**
+ * @private
+ *
  * Store persistant attributes
  *
  * @param app
