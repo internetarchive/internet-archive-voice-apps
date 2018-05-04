@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const util = require('util');
 
 const {App} = require('../app');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
@@ -22,6 +23,35 @@ function stripRequestType (requestType) {
     return req[1];
   }
   return requestType;
+}
+
+/**
+ * Fetch persistant attributes
+ *
+ * @param handlerInput
+ * @returns {Promise}
+ */
+function fetchAttributes (handlerInput) {
+  debug('fetch attributes');
+  return handlerInput.attributesManager.getPersistentAttributes()
+    .catch((err) => {
+      debug('we got error on gettting persistetn attributes', err);
+      debug('so we drop them to default');
+      return {};
+    });
+}
+
+/**
+ * Store persistant attributes
+ *
+ * @param app
+ * @returns {Promise}
+ */
+function storeAttributes (app, handlerInput) {
+  const persistentAttributes = app.persist.getData();
+  debug('store attributes', util.inspect(persistentAttributes, {depth: null}));
+  handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+  return handlerInput.attributesManager.savePersistentAttributes();
 }
 
 /**
@@ -68,22 +98,15 @@ module.exports = (actions) => {
 
         handle: (handlerInput) => {
           debug(`begin handle intent "${intent}"`);
-          return handlerInput.attributesManager.getPersistentAttributes()
-            .catch((err) => {
-              debug('we got error on gettting persistetn attributes', err);
-              debug('so we drop them to default');
-              return {};
-            })
+          return fetchAttributes(handlerInput)
             .then((persistentAttributes) => {
-              debug('got persistent attributes:', persistentAttributes);
+              debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
               const app = new App(handlerInput, persistentAttributes);
               const handler = fsm.selectHandler(app, handlers);
-              return Promise.all([persistentAttributes, handler(app)]);
+              return Promise.all([app, handler(app)]);
             })
-            .then(([persistentAttributes, _]) => {
-              handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
-              return handlerInput.attributesManager.savePersistentAttributes();
-            })
+            // TODO: maybe we could store and response in the same time?
+            .then(([app, res]) => storeAttributes(app, handlerInput))
             .then(() => {
               debug(`end handle intent "${intent}"`);
               return handlerInput.responseBuilder.getResponse();
