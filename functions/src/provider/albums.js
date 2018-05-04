@@ -40,7 +40,7 @@ function fetchAlbumDetails (app, id, {retry = 0, delay = 1000} = {}) {
           .collection
           .filter(c => !c.startsWith('fav-'))),
         creator: json.metadata.creator,
-        year: parseInt(json.metadata.year) || (new Date(json.metadata.date)).getFullYear(),
+        year: extractYear(json.metadata),
         coverage: json.metadata.coverage,
         title: json.metadata.title,
         songs: json.files
@@ -93,7 +93,7 @@ function fetchAlbumsByCreatorId (app, id, {
           coverage: a.coverage,
           subject: a.subject,
           title: a.title,
-          year: parseInt(a.year),
+          year: extractYear(a),
         })),
         total: json.response.numFound,
       };
@@ -158,7 +158,7 @@ function fetchAlbumsByQuery (app, query) {
 
       return {
         items: res.data.response.docs.map(a => Object.assign({}, a, {
-          year: parseInt(a.year),
+          year: extractYear(a),
         })),
         total: res.data.response.numFound,
       };
@@ -169,7 +169,26 @@ function fetchAlbumsByQuery (app, query) {
     });
 }
 
+/**
+ * Extract year from metadata
+ *
+ * @param metadata
+ * @returns {Number|undefined}
+ */
+function extractYear (metadata) {
+  if (metadata.year) {
+    return parseInt(metadata.year);
+  }
+
+  if (metadata.date) {
+    return (new Date(metadata.date)).getFullYear();
+  }
+
+  return undefined;
+}
+
 module.exports = {
+  extractYear,
   fetchAlbumDetails,
   fetchAlbumsByCreatorId,
   fetchAlbumsByQuery,
