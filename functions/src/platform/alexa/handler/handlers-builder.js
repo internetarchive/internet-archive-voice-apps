@@ -2,6 +2,7 @@ const _ = require('lodash');
 const util = require('util');
 
 const {App} = require('../app');
+const jsonify = require('../../../utils/jsonify');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const fsm = require('../../../state/fsm');
@@ -54,7 +55,7 @@ function fetchAttributes (handlerInput) {
 function storeAttributes (app, handlerInput) {
   const persistentAttributes = app.persist.getData();
   debug('store attributes', util.inspect(persistentAttributes, {depth: null}));
-  handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+  handlerInput.attributesManager.setPersistentAttributes(jsonify(persistentAttributes));
   return handlerInput.attributesManager.savePersistentAttributes();
 }
 
