@@ -81,6 +81,10 @@ module.exports = (name) => {
        * Stop last started performance
        */
       stop: () => {
+        if (timerQueue.length === 0) {
+          warning(`there is no timer left`);
+          return;
+        }
         const {id, elapse} = timerQueue.pop();
         performance(`${elapse()}ms`, id);
       },

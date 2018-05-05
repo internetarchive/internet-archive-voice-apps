@@ -41,6 +41,13 @@ describe('utils', () => {
 
         expect(consoleMock.warn).to.be.called;
       });
+
+      it('shoudl warn if we try to stop timer without starting it', () => {
+        const {timer} = logger('ia:tests:utils');
+        timer.stop();
+
+        expect(consoleMock.warn).to.be.called;
+      });
     });
   });
 });
