@@ -27,19 +27,19 @@ function find (options, context) {
     throw new Error('context argument should be defined');
   }
 
-  timer.start('find option');
+  const stopFindOptionTimer = timer.start('find option');
   const option = options
     .filter(({condition}) => condition)
     .find(
       ({condition}) => {
-        timer.start('math.eval');
+        const stopMathEvalTimer = timer.start('math.eval');
         const res = safieMathEval(condition, context);
-        timer.stop();
+        stopMathEvalTimer();
         return res;
       }
     );
 
-  timer.stop();
+  stopFindOptionTimer();
 
   if (option) {
     debug(`we got valid option ${option.name}`);

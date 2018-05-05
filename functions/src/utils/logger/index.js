@@ -74,19 +74,18 @@ module.exports = (name) => {
           timerQueue.splice(timerIndex, 1);
           return;
         }
-        timerQueue.push({id, elapse: hirestime()});
-      },
 
-      /**
-       * Stop last started performance
-       */
-      stop: () => {
-        if (timerQueue.length === 0) {
-          warning(`there is no timer left`);
-          return;
-        }
-        const {id, elapse} = timerQueue.pop();
-        performance(`${elapse()}ms`, id);
+        const elapse = hirestime();
+        timerQueue.push({id, elapse});
+
+        /**
+         * Stop last started performance
+         */
+        return () => {
+          performance(`${elapse()} ms`, id);
+          const timerIndex = timerQueue.findIndex(i => i.id === id);
+          timerQueue.splice(timerIndex, 1);
+        };
       },
     },
     warning,

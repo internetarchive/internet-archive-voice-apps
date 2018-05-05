@@ -26,8 +26,8 @@ describe('utils', () => {
 
       it('should log timer', () => {
         const {timer} = logger('ia:tests:utils');
-        timer.start('hello world');
-        timer.stop();
+        const stop = timer.start('hello world');
+        stop();
 
         expect(consoleMock.info).to.be.called;
         expect(consoleMock.info.args[0][0]).to.include('ia:tests:utils:performance');
@@ -38,13 +38,6 @@ describe('utils', () => {
         const {timer} = logger('ia:tests:utils');
         timer.start('hello world');
         timer.start('hello world');
-
-        expect(consoleMock.warn).to.be.called;
-      });
-
-      it('shoudl warn if we try to stop timer without starting it', () => {
-        const {timer} = logger('ia:tests:utils');
-        timer.stop();
 
         expect(consoleMock.warn).to.be.called;
       });

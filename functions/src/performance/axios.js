@@ -8,12 +8,13 @@ const {debug, timer} = require('../utils/logger')('ia:performance:axio');
 function use () {
   debug('use');
   axios.interceptors.request.use((config) => {
-    timer.start(`${config.method.toUpperCase()} ${config.url}`);
+    config.stopRequestTimer = timer.start(`${config.method.toUpperCase()} ${config.url}`);
     return config;
   });
 
   axios.interceptors.response.use((response) => {
-    timer.stop();
+    const config = response.config;
+    config.stopRequestTimer();
     return response;
   });
 }
