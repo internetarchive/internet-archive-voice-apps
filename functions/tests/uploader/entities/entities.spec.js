@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
+const MockAdapter = require('axios-mock-adapter');
 const rewire = require('rewire');
 
 const entities = rewire('../../../uploader/entities/entities');
@@ -22,12 +22,8 @@ describe('uploader', () => {
 
         describe('For Success', () => {
           beforeEach(() => {
-            entities.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .post('begin:https://dialogflow.googleapis.com/v2/projects/internet-archive/agent/entityTypes', {'body': successFromDF})
-            );
+            const mock = new MockAdapter(entities.__get__('axios'));
+            mock.onPost().reply(200, {'body': successFromDF});
           });
 
           it('should reject array having length more than 30000', () => {
@@ -51,12 +47,8 @@ describe('uploader', () => {
 
         describe('For Failed', () => {
           beforeEach(() => {
-            entities.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .post('begin:https://dialogflow.googleapis.com/v2/projects/internet-archive/agent/entityTypes', {'body': failFromDF})
-            );
+            const mock = new MockAdapter(entities.__get__('axios'));
+            mock.onPost().reply(200, {'body': failFromDF});
           });
 
           it('should return error information from DF', () => {

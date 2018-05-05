@@ -1,6 +1,6 @@
+const axios = require('axios');
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const fetch = require(`node-fetch`);
 const mustache = require('mustache');
 const util = require(`util`);
 const { exec } = require('child-process-promise');
@@ -50,7 +50,7 @@ function postEntitiesToDF (entityid, entities, first) {
   return getAccessToken()
     .then(accesstoken => {
       debug(util.inspect(JSON.stringify({'entities': data}), false, null));
-      return fetch(mustache.render(
+      return axios(mustache.render(
         config.dfendpoints.DF_ENTITY_POST_URL,
         {
           entityid,
@@ -58,7 +58,7 @@ function postEntitiesToDF (entityid, entities, first) {
         }
       ), {method: `POST`, body: JSON.stringify({'entities': data})});
     })
-    .then(res => res.json())
+    .then(res => res.data)
     .then(data => {
       debug(util.inspect(data, false, null));
       if (data.hasOwnProperty('error') && data.error.code !== 200) {

@@ -1,8 +1,6 @@
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
+const MockAdapter = require('axios-mock-adapter');
 
-fetchMock.config.overwriteRoutes = true;
-fetchMock.config.repeat = true;
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -43,12 +41,8 @@ describe('uploader', () => {
 
         describe('forCollection', () => {
           beforeEach(() => {
-            iaRequest.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
-            );
+            const mock = new MockAdapter(iaRequest.__get__('axios'));
+            mock.onGet().reply(200, getCollectionFromIA);
           });
           it('should fetch collection from IA', () => {
             iaRequest.fetchEntitiesFromIA(`etree`, `creator`, `10`)
@@ -62,12 +56,8 @@ describe('uploader', () => {
 
         describe('forGenres', () => {
           beforeEach(() => {
-            iaRequest.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getGenresFromIA)
-            );
+            const mock = new MockAdapter(iaRequest.__get__('axios'));
+            mock.onGet().reply(200, getGenresFromIA);
           });
 
           it('should fetch genres from IA', () => {
@@ -90,15 +80,10 @@ describe('uploader', () => {
       describe('forCollection', () => {
         beforeEach(() => {
           postEntitiesToDF = sinon.stub(entities, 'postEntitiesToDF').returns(successFromDF);
-          iaRequest.__set__(
-            'fetch',
-            fetchMock
-              .sandbox()
-              .get('begin:https://gactions-api.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
-          );
+          const mock = new MockAdapter(iaRequest.__get__('axios'));
+          mock.onGet().reply(200, getCollectionFromIA);
         });
         afterEach(() => {
-          fetchMock.restore();
           postEntitiesToDF.restore();
         });
         it('should fetch collection from IA and post to DF', () => {

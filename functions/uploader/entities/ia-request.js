@@ -1,13 +1,14 @@
 const _ = require(`lodash`);
+const axios = require(`axios`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const fetch = require(`node-fetch`);
 const mustache = require('mustache');
 
 const config = require('../../src/config');
 const entities = require('./entities');
 const util = require(`util`);
 
+fetchEntitiesFromIA('etree', 'creator', 10);
 /**
  * get unique & filtered entities for DialogFlow
  *
@@ -52,8 +53,9 @@ function fetchEntitiesFromIA (id, field, limit) {
   var sort = 'downloads+desc';
   debug(`fetching entity data from IA...`);
   var url = mustache.render(
-    config.endpoints.COLLECTION_ITEMS_URL, config.platforms.assistant.endpoint,
+    config.endpoints.COLLECTION_ITEMS_URL,
     {
+      platformSubDomain: config.platforms.assistant.endpoint.platformSubDomain,
       id,
       limit,
       page,
@@ -61,9 +63,9 @@ function fetchEntitiesFromIA (id, field, limit) {
       fields: field,
     }
   );
-  debug(url);
-  return fetch(url)
-    .then(res => res.json())
+  console.log(url);
+  return axios(url)
+    .then(res => res.data)
     .then(data => {
       debug(util.inspect(data, false, null));
       debug(`fetched Entity from IA successfully.`);
