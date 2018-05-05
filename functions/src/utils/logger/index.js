@@ -68,6 +68,12 @@ module.exports = (name) => {
        * @param id
        */
       start: (id) => {
+        const timerIndex = timerQueue.findIndex(i => i.id === id);
+        if (timerIndex >= 0) {
+          warning(`we called timer.start(${id}) more then once without calling timer.stop()`);
+          timerQueue.splice(timerIndex, 1);
+          return;
+        }
         timerQueue.push({id, elapse: hirestime()});
       },
 

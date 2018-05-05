@@ -13,6 +13,7 @@ describe('utils', () => {
       beforeEach(() => {
         consoleMock = {
           info: sinon.spy(),
+          warn: sinon.spy(),
         };
         logger.__set__('console', consoleMock);
 
@@ -28,9 +29,17 @@ describe('utils', () => {
         timer.start('hello world');
         timer.stop();
 
-        expect(consoleMock.info).to.called;
+        expect(consoleMock.info).to.be.called;
         expect(consoleMock.info.args[0][0]).to.include('ia:tests:utils:performance');
         expect(consoleMock.info.args[0][1]).to.include('hello world');
+      });
+
+      it('should warn if we try to apply the same timer twice, without stoping previous', () => {
+        const {timer} = logger('ia:tests:utils');
+        timer.start('hello world');
+        timer.start('hello world');
+
+        expect(consoleMock.warn).to.be.called;
       });
     });
   });
