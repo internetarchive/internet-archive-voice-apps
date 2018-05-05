@@ -1,7 +1,16 @@
 const math = require('mathjs');
 const util = require('util');
 
-const {debug, warning} = require('../../utils/logger')('ia:selectors:condition-selector');
+const {debug, timer, warning} = require('../../utils/logger')('ia:selectors:condition-selector');
+
+function safieMathEval (condition, context) {
+  try {
+    return math.eval(condition, context);
+  } catch (error) {
+    debug(`Get error from Math.js:`, error && error.message);
+    return false;
+  }
+}
 
 /**
  * Choose one which satisfies context.
@@ -18,18 +27,19 @@ function find (options, context) {
     throw new Error('context argument should be defined');
   }
 
+  timer.start('find option');
   const option = options
     .filter(({condition}) => condition)
     .find(
       ({condition}) => {
-        try {
-          return math.eval(condition, context);
-        } catch (error) {
-          debug(`Get error from Math.js:`, error && error.message);
-          return false;
-        }
+        timer.start('math.eval');
+        const res = safieMathEval(condition, context);
+        timer.stop();
+        return res;
       }
     );
+
+  timer.stop();
 
   if (option) {
     debug(`we got valid option ${option.name}`);
