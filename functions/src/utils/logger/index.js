@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const _ = require('lodash');
 patchDebugScopeEnvVariable();
 const loggerBuilder = require('debug');
+const hirestime = require('hirestime');
 
 const logEnvVariables = require('./log-env-variables');
 
@@ -50,11 +51,34 @@ module.exports = (name) => {
   if (console.warn) {
     warning.log = console.warn.bind(console);
   }
+  const performance = loggerBuilder(`${name}:performance`);
+  if (console.info) {
+    performance.log = console.info.bind(console);
+  }
 
+  const timerQueue = [];
   return {
     debug,
     error,
     info,
+    timer: {
+      /**
+       * Start meature performance
+       *
+       * @param id
+       */
+      start: (id) => {
+        timerQueue.push({id, elapse: hirestime()});
+      },
+
+      /**
+       * Stop last started performance
+       */
+      stop: () => {
+        const {id, elapse} = timerQueue.pop();
+        performance(`${elapse()}ms`, id);
+      },
+    },
     warning,
   };
 };
