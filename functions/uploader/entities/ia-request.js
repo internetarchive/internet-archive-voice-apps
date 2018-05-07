@@ -63,7 +63,7 @@ function fetchEntitiesFromIA (id, field, limit) {
       fields: field,
     }
   );
-  console.log(url);
+  debug(url);
   return axios(url)
     .then(res => res.data)
     .then(data => {
