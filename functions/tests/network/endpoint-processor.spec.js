@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const rewire = require('rewire');
 
-const endpointProcessor = rewire('../../src/provider/endpoint-processor');
+const endpointProcessor = rewire('../../src/network/endpoint-processor');
 
 describe('provider', () => {
   describe('endpoint processor', () => {

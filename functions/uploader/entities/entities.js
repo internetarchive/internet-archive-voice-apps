@@ -1,11 +1,11 @@
 const axios = require('axios');
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const mustache = require('mustache');
 const util = require(`util`);
 const { exec } = require('child-process-promise');
 
 const config = require('../config');
+const endpointProcessor = require('../../src/network/endpoint-processor');
 
 const MAX_ENTITY = 30000;
 const MAX_REQUEST = 10000;
@@ -50,7 +50,7 @@ function postEntitiesToDF (entityid, entities, first) {
   return getAccessToken()
     .then(accesstoken => {
       debug(util.inspect(JSON.stringify({'entities': data}), false, null));
-      return axios(mustache.render(
+      return axios(endpointProcessor.preprocess(
         config.dfendpoints.DF_ENTITY_POST_URL,
         {
           entityid,

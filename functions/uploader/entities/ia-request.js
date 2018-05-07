@@ -2,9 +2,9 @@ const _ = require(`lodash`);
 const axios = require(`axios`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const mustache = require('mustache');
 
 const config = require('../../src/config');
+const endpointProcessor = require('../../src/network/endpoint-processor');
 const entities = require('./entities');
 const util = require(`util`);
 
@@ -52,10 +52,10 @@ function fetchEntitiesFromIA (id, field, limit) {
   var page = 0;
   var sort = 'downloads+desc';
   debug(`fetching entity data from IA...`);
-  var url = mustache.render(
+  var url = endpointProcessor.preprocess(
     config.endpoints.COLLECTION_ITEMS_URL,
+    config.platforms.assistant.endpoint,
     {
-      platformSubDomain: config.platforms.assistant.endpoint.platformSubDomain,
       id,
       limit,
       page,
