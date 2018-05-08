@@ -7,7 +7,8 @@ class DynamoDbPersistenceAdapterMock {
     return Promise.resolve(this.attributes);
   }
 
-  saveAttributes () {
+  saveAttributes (requestEnvelope, attributes) {
+    this.attributes = attributes;
     return Promise.resolve();
   }
 }

@@ -9,43 +9,47 @@ const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
 
 const popularAlbums = require('../../provider/fixtures/popular-of-etree.json');
+const coverageAndYears = require('../../fixtures/coverage-and-year.json');
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
-
-let tests = [];
-try {
-  tests = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
-} catch (e) {
-  console.log(e);
-}
 
 describe('integration', () => {
   let alexa;
   let sandbox;
   let axiosMock;
 
+  let scenarios = [];
+  try {
+    scenarios = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
+  } catch (e) {
+    console.log(e);
+  }
+
   describe('alexa', () => {
-    beforeEach(() => {
-      // mock requests to IA
-      axiosMock = new MockAdapter(axios);
-      axiosMock.onGet().reply(200, popularAlbums);
-
-      // mock attributes persistance
-      sandbox = sinon.createSandbox({});
-      sandbox.replace(dynamoDbPersistenceAdapter, 'DynamoDbPersistenceAdapter', DynamoDBMock);
-
-      alexa = VirtualAlexa.Builder()
-        .handler('./index-alexa.handler')
-        .interactionModelFile('../models/en-US.json')
-        .create();
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-      axiosMock.restore();
-    });
-
-    tests.forEach(({scenario, dialog = [], launch = ''}) => {
+    scenarios.forEach(({scenario, dialog = [], launch = ''}) => {
       describe(`dialog: "${scenario}"`, () => {
+        before(() => {
+          // mock requests to IA
+          axiosMock = new MockAdapter(axios);
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+          ).reply(200, coverageAndYears);
+          axiosMock.onGet().reply(200, popularAlbums);
+
+          // mock attributes persistance
+          sandbox = sinon.createSandbox({});
+          sandbox.replace(dynamoDbPersistenceAdapter, 'DynamoDbPersistenceAdapter', DynamoDBMock);
+
+          alexa = VirtualAlexa.Builder()
+            .handler('./index-alexa.handler')
+            .interactionModelFile('../models/en-US.json')
+            .create();
+        });
+
+        after(() => {
+          sandbox.restore();
+          axiosMock.restore();
+        });
+
         if (launch) {
           it(`should start with: "${launch}"`, () => {
             alexa
@@ -58,14 +62,14 @@ describe('integration', () => {
               .then((res) => {
                 expect(res.response.outputSpeech.ssml).to.exist;
                 expect(res.response.outputSpeech.ssml).to.include(launch);
-              })
+              });
           });
         }
 
         dialog.forEach(({user, assistant}) => {
           it(`should utter: "${user}" and get a response: "${assistant}"`, () => {
             return alexa
-              .utter('live collection')
+              .utter(user)
               .then(res => {
                 expect(res.response.outputSpeech.ssml).to.exist;
                 expect(res.response.outputSpeech.ssml).to.include(assistant);
