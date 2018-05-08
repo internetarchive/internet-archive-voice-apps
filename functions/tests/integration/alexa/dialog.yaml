@@ -1,3 +1,6 @@
+---
+- scenario: 'startup'
+  launch: 'Welcome to music at the Internet Archive. Would you like to listen to music from our collections of 78s or Live Concerts?'
 - scenario: 'select live collection'
   dialog:
   - user: 'live collection'

@@ -44,22 +44,24 @@ describe('integration', () => {
       axiosMock.restore();
     });
 
-    it('Should launch the skill and get a response', () =>
-      alexa
-        .filter((req) => {
-          req.context.System.device.supportedInterfaces.Display = {};
-          req.context.System.device.supportedInterfaces.VideoApp = {};
-          return req;
-        })
-        .launch()
-        .then((res) => {
-          expect(res.response.outputSpeech.ssml).to.exist;
-          expect(res.response.outputSpeech.ssml).to.include('Welcome to music at the Internet Archive. Would you like to listen to music from our collections of 78s or Live Concerts?');
-        })
-    );
+    tests.forEach(({scenario, dialog = [], launch = ''}) => {
+      describe(`dialog: "${scenario}"`, () => {
+        if (launch) {
+          it(`should start with: "${launch}"`, () => {
+            alexa
+              .filter((req) => {
+                req.context.System.device.supportedInterfaces.Display = {};
+                req.context.System.device.supportedInterfaces.VideoApp = {};
+                return req;
+              })
+              .launch()
+              .then((res) => {
+                expect(res.response.outputSpeech.ssml).to.exist;
+                expect(res.response.outputSpeech.ssml).to.include(launch);
+              })
+          });
+        }
 
-    tests.forEach(({scenario, dialog}) => {
-      describe(`scanario "${scenario}"`, () => {
         dialog.forEach(({user, assistant}) => {
           it(`should utter: "${user}" and get a response: "${assistant}"`, () => {
             return alexa
