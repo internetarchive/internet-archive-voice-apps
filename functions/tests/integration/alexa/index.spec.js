@@ -60,7 +60,7 @@ describe('integration', () => {
 
         if (launch) {
           it(`should start with: "${launch}"`, () => {
-            alexa
+            return alexa
               .filter((req) => {
                 req.context.System.device.supportedInterfaces.Display = {};
                 req.context.System.device.supportedInterfaces.VideoApp = {};
@@ -72,10 +72,20 @@ describe('integration', () => {
                 expect(res.response.outputSpeech.ssml).to.include(launch);
               });
           });
+        } else {
+          it('should launch skill', () => {
+            return alexa
+              .filter((req) => {
+                req.context.System.device.supportedInterfaces.Display = {};
+                req.context.System.device.supportedInterfaces.VideoApp = {};
+                return req;
+              })
+              .launch();
+          });
         }
 
         dialog.forEach(({user, assistant}) => {
-          it(`should utter: "${user}" and get a response: "${assistant}"`, () => {
+          it(`should utter: "${user}" and get a response: "${JSON.stringify(assistant)}"`, () => {
             return alexa
               .utter(user)
               .then(res => {

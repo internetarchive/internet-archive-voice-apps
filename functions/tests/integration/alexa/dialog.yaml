@@ -14,3 +14,13 @@
   - user: '1970 year'
     assistant:
       directive: 'AudioPlayer.Play'
+
+- scenario: 'play music by: live > artist > city year'
+  dialog:
+  - user: 'live collection'
+    assistant: 'You''ve selected Live Concerts. What artist would you like to listen to? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits?'
+  - user: 'Grateful Dead'
+    assistant: 'Ok! Lets go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+  - user: 'city Washington year 1970'
+    assistant:
+      directive: 'AudioPlayer.Play'
