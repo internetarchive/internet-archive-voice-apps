@@ -1,0 +1,4 @@
+- scenario: 'select live collection'
+  dialog:
+  - user: 'live collection'
+    assistant: 'You''ve selected Live Concerts. What artist would you like to listen to? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits?'
