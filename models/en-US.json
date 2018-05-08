@@ -122,10 +122,30 @@
                         {
                             "name": "SUBJECT",
                             "type": "AMAZON.Genre"
+                        },
+                        {
+                            "name": "CREATOR",
+                            "type": "COLLECTION_LIST"
+                        },
+                        {
+                            "name": "ORDER_BY",
+                            "type": "ORDER"
+                        },
+                        {
+                            "name": "COLLECTION",
+                            "type": "COLLECTIONS"
                         }
                     ],
                     "samples": [
-                        "play {SUBJECT} randomly",
+                        "play {ORDER_BY} of {SUBJECT}",
+                        "play {COLLECTION} {SUBJECT}",
+                        "play {CREATOR} music",
+                        "play {CREATOR} songs",
+                        "{ORDER_BY} play {SUBJECT}",
+                        "{ORDER_BY} play {CREATOR}",
+                        "play {CREATOR} {ORDER_BY}",
+                        "play {CREATOR}",
+                        "play {SUBJECT} {ORDER_BY}",
                         "play {SUBJECT}",
                         "play {SUBJECT} songs",
                         "play {SUBJECT} music"
@@ -156,6 +176,11 @@
                         }
                     ],
                     "samples": [
+                        "search {CREATOR}",
+                        "{COVERAGE} city",
+                        "collection {COLLECTION_ID}",
+                        "year {YEAR}",
+                        "{YEAR} year",
                         "{COLLECTION_ID} collection",
                         "{COVERAGE} {YEAR}",
                         "{YEAR}",

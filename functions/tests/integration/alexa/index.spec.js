@@ -10,6 +10,7 @@ const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
 
 const popularAlbums = require('../../provider/fixtures/popular-of-etree.json');
 const coverageAndYears = require('../../fixtures/coverage-and-year.json');
+const years = require('../../fixtures/years.json');
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
 describe('integration', () => {
@@ -33,6 +34,9 @@ describe('integration', () => {
           axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, coverageAndYears);
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=year&rows=150&output=json'
+          ).reply(200, years);
           axiosMock.onGet().reply(200, popularAlbums);
 
           // mock attributes persistance
