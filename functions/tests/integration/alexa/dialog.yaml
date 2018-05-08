@@ -32,3 +32,9 @@
   - user: 'jazz music'
     assistant:
       directive: 'AudioPlayer.Play'
+
+- scenario: 'play music by: play jazz'
+  dialog:
+  - user: 'play jazz'
+    assistant:
+      directive: 'AudioPlayer.Play'
