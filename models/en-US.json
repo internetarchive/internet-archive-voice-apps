@@ -176,6 +176,7 @@
                         }
                     ],
                     "samples": [
+                        "{SUBJECT} music",
                         "city {COVERAGE} year {YEAR}",
                         "search {CREATOR}",
                         "{COVERAGE} city",

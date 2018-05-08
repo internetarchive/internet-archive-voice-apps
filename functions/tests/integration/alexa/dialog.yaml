@@ -24,3 +24,11 @@
   - user: 'city Washington year 1970'
     assistant:
       directive: 'AudioPlayer.Play'
+
+- scenario: 'play music by: 78s > jazz'
+  dialog:
+  - user: 'seventy eighties'
+    assistant: 'You''ve selected 78s. What genre of music would you like to listen to? Please select a topic like Jazz, Instrumental or Dance?'
+  - user: 'jazz music'
+    assistant:
+      directive: 'AudioPlayer.Play'
