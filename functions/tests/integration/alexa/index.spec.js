@@ -8,9 +8,6 @@ const path = require('path');
 const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
 
-const popularAlbums = require('../../provider/fixtures/popular-of-etree.json');
-const coverageAndYears = require('../../fixtures/coverage-and-year.json');
-const years = require('../../fixtures/years.json');
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
 describe('integration', () => {
@@ -33,11 +30,18 @@ describe('integration', () => {
           axiosMock = new MockAdapter(axios);
           axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
-          ).reply(200, coverageAndYears);
+          ).reply(200, require('../../fixtures/coverage-and-year.json'));
           axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=year&rows=150&output=json'
-          ).reply(200, years);
-          axiosMock.onGet().reply(200, popularAlbums);
+          ).reply(200, require('../../fixtures/years.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
+          ).reply(200, require('../../fixtures/albums.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
+          ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
+          axiosMock.onGet(
+          ).reply(200, require('../../provider/fixtures/popular-of-etree.json'));
 
           // mock attributes persistance
           sandbox = sinon.createSandbox({});
@@ -76,7 +80,15 @@ describe('integration', () => {
               .utter(user)
               .then(res => {
                 expect(res.response.outputSpeech.ssml).to.exist;
-                expect(res.response.outputSpeech.ssml).to.include(assistant);
+                if (typeof assistant === 'string') {
+                  expect(res.response.outputSpeech.ssml).to.include(assistant);
+                } else if ('directive' in assistant) {
+                  expect(res.response).to.have.property('directives');
+                  expect(res.response.directives).to.be.an('array');
+                  expect(res.response.directives[0]).to.have.property('type', assistant.directive);
+                } else {
+                  throw new Error(`doesn't support response:`, assistant);
+                }
               });
           });
         });

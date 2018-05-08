@@ -1,7 +1,9 @@
 ---
+
 - scenario: 'startup'
   launch: 'Welcome to music at the Internet Archive. Would you like to listen to music from our collections of 78s or Live Concerts?'
-- scenario: 'select live collection'
+
+- scenario: 'play music by: live > artist > city > year'
   dialog:
   - user: 'live collection'
     assistant: 'You''ve selected Live Concerts. What artist would you like to listen to? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits?'
@@ -9,3 +11,6 @@
     assistant: 'Ok! Lets go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
   - user: 'Washington'
     assistant: 'washington - good place! Ok, Grateful Dead has played in washington sometime between 1970 and 1995. Do you have a particular year in mind?'
+  - user: '1970 year'
+    assistant:
+      directive: 'AudioPlayer.Play'
