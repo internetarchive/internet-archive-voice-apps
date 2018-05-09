@@ -7,7 +7,7 @@ const {debug} = require('../../../utils/logger')('ia:platform:assistant:persista
  */
 module.exports = (conv) => {
   debug('create');
-
+  debug(conv);
   if (!conv) {
     throw new Error('parameter conv should be defined');
   }

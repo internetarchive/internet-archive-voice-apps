@@ -1,0 +1,38 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 140,
+    "params": {
+      "query": "coverage:washington AND collection:etree AND creator:\"Grateful Dead\" AND year:1970",
+      "qin": "coverage:washington AND collection:etree AND creator:\"Grateful Dead\" AND year:1970",
+      "fields": "identifier,coverage,title,year",
+      "wt": "json",
+      "rows": "3",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 3,
+    "start": 0,
+    "docs": [
+      {
+        "coverage": "Washington, DC",
+        "identifier": "gd70-10-23.aud.wolfson.15080.sbefail.shnf",
+        "title": "Grateful Dead Live at McDonough Arena, Georgetown U. on 1970-10-23",
+        "year": "1970"
+      },
+      {
+        "coverage": "Washington, D.C.",
+        "identifier": "gd1970-10-23.aud-wolfson.sketchy-bontempo.12227.shnf",
+        "title": "Grateful Dead Live at McDonough Arena - Georgetown University on 1970-10-23",
+        "year": "1970"
+      },
+      {
+        "coverage": "Washington, DC",
+        "identifier": "gd1970-10-23.aud.wolfson.motb-0004.85071.flac16",
+        "title": "Grateful Dead Live at McDonough Arena - Georgetown University on 1970-10-23",
+        "year": "1970"
+      }
+    ]
+  }
+}

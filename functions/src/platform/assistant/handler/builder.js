@@ -1,6 +1,8 @@
-const {debug} = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
+const {App} = require('../app');
 
+const {storeAction} = require('../../../state/actions');
 const fsm = require('../../../state/fsm');
+const {debug} = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
 
 /**
  * Build list of handlers
@@ -13,8 +15,10 @@ module.exports = ({actionsMap}) =>
       intent,
       handler: (conv) => {
         debug(`begin handle intent "${intent}"`);
-        const handler = fsm.selectHandler(conv.app, handlers);
-        return Promise.resolve(handler(conv.app))
+        const app = conv.app || new App(conv);
+        const handler = fsm.selectHandler(app, handlers);
+        storeAction(app, conv.action);
+        return Promise.resolve(handler(app))
           .then(res => {
             debug(`end handle intent "${intent}"`);
             return res;
