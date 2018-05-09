@@ -8,10 +8,8 @@ const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
 
-const {storeAction} = require('./../../state/actions');
 const {debug, error, warning} = require('./../../utils/logger')('ia:index');
 
-const {App} = require('./app');
 const buildHandlers = require('./handler/builder');
 const logRequest = require('./middlewares/log-request');
 
@@ -33,10 +31,6 @@ module.exports = (actionsMap) => {
       ({intent, handler}) => app.intent(intent, handler)
     );
   }
-
-  app.middleware((conv) => {
-    conv.app = new App(conv);
-  });
 
   // Sentry middleware
   if (functions.config().sentry) {
@@ -81,10 +75,6 @@ module.exports = (actionsMap) => {
   //     dialog.close(conv.app, strings.errors.device.mediaResponse);
   //   }
   // });
-
-  app.middleware((conv) => {
-    storeAction(conv.app, conv.action);
-  });
 
   app.fallback((conv) => {
     const matchedHandlers = handlers.filter(h => h.intent === conv.action);
