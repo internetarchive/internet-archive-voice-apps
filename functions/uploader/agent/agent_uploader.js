@@ -1,21 +1,24 @@
-const axios = require('axios');
-const debug = require(`debug`)(`ia:uploader:agent:debug`);
-const error = require(`debug`)(`ia:uploader:agent:error`);
+const debug = require(`debug`)(`ia:uploader:agent:agent_uploader:debug`);
+const error = require(`debug`)(`ia:uploader:agent:agent_uploader:error`);
+const fetch = require(`node-fetch`);
 const util = require(`util`);
 const { exec } = require('child-process-promise');
-const {prepareAgentToFetchFromDF} = require('../utils/prepare_agent');
+const {prepareAgentToPostToDF} = require('../utils/prepare_agent');
 
-function fetchAgentFromDF () {
-  return getAccessToken()
-    .then(accesstoken => {
-      return axios('https://dialogflow.googleapis.com/v2/projects/music-a88c1/agent:export?access_token=' + accesstoken, {method: `POST`});
+postAgentToDF();
+
+function postAgentToDF () {
+  return Promise.all([getAccessToken(), prepareAgentToPostToDF('my_agent', './')])
+    .then(values => {
+      const [accesstoken, base64] = values;
+      return fetch('https://dialogflow.googleapis.com/v2/projects/music-a88c1/agent:import?access_token=' + accesstoken, {method: `POST`, body: JSON.stringify({'agentContent': base64})});
     })
-    .then(res => res.data)
+    .then(res => res.json())
     .then(data => {
-      return prepareAgentToFetchFromDF(data.response.agentContent, '../../agent/', 'agent.zip');
+      debug(util.inspect(data, false, null));
     })
     .catch(e => {
-      error(`Get error in posting entity to DF, error: ${JSON.stringify(e)}`);
+      error(`Get error in posting entity to DF, error: ${util.inspect(e, false, null)}`);
       return Promise.reject(e);
     });
 }
@@ -40,12 +43,6 @@ function getAccessToken () {
     });
 }
 
-// convert image to base64 encoded string
-// var base64str = base64_encode('kitten.jpg');
-// debug(base64str);
-// convert base64 string back to image
-// base64_decode(base64str, 'copy.jpg');
-
 module.exports = {
-  fetchAgentFromDF,
+  postAgentToDF,
 };
