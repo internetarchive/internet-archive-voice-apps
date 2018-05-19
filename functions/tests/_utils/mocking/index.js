@@ -1,3 +1,5 @@
+const sinon = require('sinon');
+
 const basicHeaderRequest = {
   'content-type': 'application/json; charset=UTF-8',
   'Google-Actions-API-Version': 2,
@@ -79,6 +81,10 @@ class MockResponse {
 
   userResponse () {
     return this.body.payload.google.expectUserResponse;
+  }
+
+  setHeader () {
+    return sinon.spy();
   }
 
   suggestions () {

@@ -1,0 +1,33 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 65,
+    "params": {
+      "query": "_exists_:coverage AND collection:etree AND creator:\"Grateful Dead\"",
+      "qin": "_exists_:coverage AND collection:etree AND creator:\"Grateful Dead\"",
+      "fields": "coverage,year",
+      "wt": "json",
+      "sort": "downloads desc",
+      "rows": "3",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 12589,
+    "start": 0,
+    "docs": [
+      {
+        "coverage": "Washington, DC",
+        "year": "1973"
+      },
+      {
+        "coverage": "Madison, WI",
+        "year": "1973"
+      },
+      {
+        "coverage": "Worcester, MA",
+        "year": "1987"
+      }
+    ]
+  }
+}
