@@ -137,7 +137,7 @@ describe('platform', () => {
         const item = res.find(e => e.canHandle());
         expect(item).to.be.not.undefined;
         expect(item).to.be.not.null;
-        return item.handler(input)
+        return item.handle(input)
           .then(() => {
             expect(playSongHandler).to.have.been.called;
           });

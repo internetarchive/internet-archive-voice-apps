@@ -61,10 +61,12 @@ function storeAttributes (app, handlerInput) {
 }
 
 function findHandlersByInput (actions, handlerInput) {
+  debug('findHandlersByInput');
   let name;
   let handlers;
 
   name = _.get(handlerInput, 'requestEnvelope.request.intent.name');
+  debug('intent name:', name);
   handlers = actions.get(camelToKebab(name));
 
   if (handlers) {
@@ -72,6 +74,7 @@ function findHandlersByInput (actions, handlerInput) {
   }
 
   name = stripAmazonIntent(name);
+  debug('name without heading amazon:', name);
   handlers = actions.get(camelToKebab(name));
 
   if (handlers) {
@@ -79,27 +82,31 @@ function findHandlersByInput (actions, handlerInput) {
   }
 
   let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
+  debug('request type', requestType);
   if (requestType) {
-    name = stripRequestType(requestType);
-    handlers = actions.get(camelToKebab(name));
+    requestType = stripRequestType(requestType);
+    debug('just type', requestType);
+    handlers = actions.get(camelToKebab(requestType));
     if (handlers) {
-      return {handlers, name};
+      return {handlers, name: requestType};
     }
   }
 
   const splitName = name.split('_');
 
   while (splitName.length > 1) {
-    console.log('splitName', splitName);
+    debug('splitted name', splitName);
     splitName.pop();
     name = splitName.join('_');
-    console.log('name', name);
-    console.log('camelToKebab(name)', camelToKebab(name));
+    debug('without tail', name);
+    debug('kebab', camelToKebab(name));
     handlers = actions.get(camelToKebab(name));
     if (handlers) {
       return {handlers, name};
     }
   }
+
+  debug(`haven't find any matched handlers`);
 
   return null;
 }
@@ -169,7 +176,7 @@ module.exports = (actions) => {
 
       canHandle: () => true,
 
-      handler: (handlerInput) => {
+      handle: (handlerInput) => {
         debug('catch all the rest');
 
         const res = findHandlersByInput(actions, handlerInput);
