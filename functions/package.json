@@ -13,6 +13,7 @@
     "uploader": "node ./uploader",
     "mocha": "mocha --opts ./tests/mocha.opts",
     "start": "firebase serve --only functions:assistant",
+    "start:alexa": "bst proxy lambda index-alexa",
     "deploy": "firebase deploy --only functions:assistant",
     "test": "npm run lint && npm run mocha"
   },
