@@ -1,21 +1,19 @@
-const axios = require('axios');
-const debug = require(`debug`)(`ia:uploader:agent:debug`);
-const error = require(`debug`)(`ia:uploader:agent:error`);
+const debug = require(`debug`)(`ia:uploader:utils:get-access-token:debug`);
+const error = require(`debug`)(`ia:uploader:utils:get-access-token:error`);
 const util = require(`util`);
 const { exec } = require('child-process-promise');
-const {prepareAgentToFetchFromDF} = require('../utils/prepare_agent');
 
-function fetchAgentFromDF () {
+function getBasicHeaderRequest () {
   return getAccessToken()
-    .then(accesstoken => {
-      return axios('https://dialogflow.googleapis.com/v2/projects/music-a88c1/agent:export?access_token=' + accesstoken, {method: `POST`});
-    })
-    .then(res => res.data)
-    .then(data => {
-      return prepareAgentToFetchFromDF(data.response.agentContent, '../../agent/', 'agent.zip');
+    .then(accessToken => {
+      const basicHeaderRequest = {
+        'content-type': `application/json; charset=UTF-8`,
+        'authorization': `BEARER ${accessToken}`
+      };
+      return Promise.resolve(basicHeaderRequest);
     })
     .catch(e => {
-      error(`Get error in posting entity to DF, error: ${JSON.stringify(e)}`);
+      error(`Get error in posting entity to DF, error: ${util.inspect(e, false, null)}`);
       return Promise.reject(e);
     });
 }
@@ -40,12 +38,7 @@ function getAccessToken () {
     });
 }
 
-// convert image to base64 encoded string
-// var base64str = base64_encode('kitten.jpg');
-// debug(base64str);
-// convert base64 string back to image
-// base64_decode(base64str, 'copy.jpg');
-
 module.exports = {
-  fetchAgentFromDF,
+  getBasicHeaderRequest,
+  getAccessToken,
 };

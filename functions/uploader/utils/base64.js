@@ -1,4 +1,4 @@
-const error = require(`debug`)(`ia:uploader:base64:error`);
+const error = require(`debug`)(`ia:uploader:utils:base64:error`);
 const fs = require('fs');
 
 // function to encode file data to base64 encoded string
