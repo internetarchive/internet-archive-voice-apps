@@ -60,6 +60,14 @@ function storeAttributes (app, handlerInput) {
   return handlerInput.attributesManager.savePersistentAttributes();
 }
 
+/**
+ * Find right handlers by user's request input object
+ *
+ * @param actions
+ * @param handlerInput
+ *
+ * @returns {handlers: *, name:String}|null
+ */
 function findHandlersByInput (actions, handlerInput) {
   debug('findHandlersByInput');
   let name;
@@ -171,6 +179,10 @@ module.exports = (actions) => {
         },
       };
     })
+    // it would catcha any intents
+    // TODO: 1) actually we could use this handler to handle all intents
+    // and replace handlers above
+    // 2) we should implement fallback in case when we haven't matched any intent
     .concat({
       intent: 'any',
 
