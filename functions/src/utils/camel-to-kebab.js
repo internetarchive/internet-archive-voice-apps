@@ -1,6 +1,12 @@
 const noneFirstUpperCaseRegex = /[A-Za-z]([A-Z])/g;
 const upperCaseWithUnderscoreAheadRegex = /[A-Za-z]_([A-Z])/g;
 
+/**
+ * Convert CamelStyle to kebab-style
+ *
+ * @param {string} value
+ * @returns {string}
+ */
 module.exports = (value) => {
   const camelRes = value.replace(
     noneFirstUpperCaseRegex,
