@@ -54,7 +54,7 @@ function fetchEntitiesFromIA (id, field, limit) {
   debug(`fetching entity data from IA...`);
   var url = endpointProcessor.preprocess(
     config.endpoints.COLLECTION_ITEMS_URL,
-    config.platforms.assistant.endpoint,
+    {'platform': 'assistant'},
     {
       id,
       limit,
