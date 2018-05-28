@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const util = require('util');
 
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
 
@@ -14,17 +15,27 @@ const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:
  */
 module.exports = (handlerInput, persistentAttributes) => {
   debug('create');
+  debug('persistentAttributes:', util.inspect(persistentAttributes, {depth: null}));
 
   if (!handlerInput) {
     throw new Error('parameter handlerInput should be defined');
   }
 
-  const deviceId = handlerInput.requestEnvelope.context.System.device.deviceId;
+  const deviceId = _.get(handlerInput, 'requestEnvelope.context.System.device.deviceId');
   debug('deviceId:', deviceId);
 
   // TODO: we should clear attributes when we start session
 
   return {
+    /**
+     * Drop all session data
+     */
+    dropAll: () => {
+      debug('drop all attributes');
+      _.set(persistentAttributes, [deviceId], {});
+      debug(persistentAttributes, util.inspect(persistentAttributes, {depth: null}));
+    },
+
     /**
      * Get data
      *
@@ -32,6 +43,9 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @returns {{}}
      */
     getData: (name) => {
+      if (!name) {
+        return persistentAttributes;
+      }
       return _.get(persistentAttributes, [deviceId, name]);
     },
 
@@ -42,7 +56,7 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param value
      */
     setData: (name, value) => {
-      debug(`set attribute ${name} to`, value);
+      debug(`set attribute ${name} to`, util.inspect(value, {depth: null}));
       _.set(persistentAttributes, [deviceId, name], value);
       return true;
     },

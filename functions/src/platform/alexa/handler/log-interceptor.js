@@ -1,3 +1,5 @@
+const util = require('util');
+
 const {debug, info} = require('../../../utils/logger')('ia:platform:alexa:log-interceptor');
 
 module.exports = (handlerInput) => {
@@ -6,5 +8,5 @@ module.exports = (handlerInput) => {
     info('request intent:', handlerInput.requestEnvelope.request.intent.name);
   }
 
-  debug('request:', handlerInput.requestEnvelope);
+  debug('request:', util.inspect(handlerInput.requestEnvelope, {depth: null}));
 };
