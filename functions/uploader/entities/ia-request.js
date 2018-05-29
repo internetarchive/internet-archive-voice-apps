@@ -8,7 +8,6 @@ const endpointProcessor = require('../../src/network/endpoint-processor');
 const entities = require('./entities');
 const util = require(`util`);
 
-fetchEntitiesFromIA('etree', 'creator', 10);
 /**
  * get unique & filtered entities for DialogFlow
  *
