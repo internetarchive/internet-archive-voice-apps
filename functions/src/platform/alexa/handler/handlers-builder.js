@@ -114,7 +114,7 @@ function findHandlersByInput (actions, handlerInput) {
     }
   }
 
-  debug(`haven't find any matched handlers`);
+  debug(`haven't found any matched handlers`);
 
   return null;
 }
