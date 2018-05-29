@@ -49,7 +49,7 @@ function postEntitiesToDF (entityid, entities, first) {
   }
   return getAccessToken()
     .then(accesstoken => {
-      debug(util.inspect({'entities': data}, false, null));
+      debug(util.inspect(accesstoken, false, null));
       return axios(endpointProcessor.preprocess(
         config.dfendpoints.DF_ENTITY_POST_URL,
         {
