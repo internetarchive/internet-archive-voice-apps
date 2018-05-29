@@ -75,6 +75,11 @@ function postEntitiesToDF (entityid, entities, first) {
     });
 }
 
+/**
+ * Get AccessToken from GCloud
+ *
+ * @returns {AccessToken}
+ */
 function getAccessToken () {
   debug('getting access token');
   return exec('gcloud auth print-access-token')
