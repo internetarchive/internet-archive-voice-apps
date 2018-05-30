@@ -76,7 +76,7 @@ function postEntitiesToDF (entityid, entities, first) {
 }
 
 /**
- * Get AccessToken from GCloud
+ * Get AccessToken from GCloud execution
  *
  * @returns {AccessToken}
  */
