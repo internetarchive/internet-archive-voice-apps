@@ -1,8 +1,6 @@
 const {expect} = require('chai');
-const fetchMock = require('fetch-mock');
+const MockAdapter = require('axios-mock-adapter');
 
-fetchMock.config.overwriteRoutes = true;
-fetchMock.config.repeat = true;
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -13,7 +11,7 @@ const getCollectionFromIA = require('./fixtures/get-collection-from-ia.json');
 const getGenresFromIA = require('./fixtures/get-genres-from-ia.json');
 const successFromDF = require('./fixtures/success-from-df.json');
 
-let fetchEntitiesFromDF, postEntitiesToDF;
+let postEntitiesToDF;
 
 describe('uploader', () => {
   describe('entities', () => {
@@ -43,12 +41,8 @@ describe('uploader', () => {
 
         describe('forCollection', () => {
           beforeEach(() => {
-            iaRequest.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(etree)', getCollectionFromIA)
-            );
+            const mock = new MockAdapter(iaRequest.__get__('axios'));
+            mock.onGet().reply(200, getCollectionFromIA);
           });
           it('should fetch collection from IA', () => {
             iaRequest.fetchEntitiesFromIA(`etree`, `creator`, `10`)
@@ -62,12 +56,8 @@ describe('uploader', () => {
 
         describe('forGenres', () => {
           beforeEach(() => {
-            iaRequest.__set__(
-              'fetch',
-              fetchMock
-                .sandbox()
-                .get('begin:https://web.archive.org/advancedsearch.php?q=collection:(georgeblood)', getGenresFromIA)
-            );
+            const mock = new MockAdapter(iaRequest.__get__('axios'));
+            mock.onGet().reply(200, getGenresFromIA);
           });
 
           it('should fetch genres from IA', () => {
@@ -89,19 +79,11 @@ describe('uploader', () => {
 
       describe('forCollection', () => {
         beforeEach(() => {
-          var expected = [`Grateful Dead`, `Disco Biscuits`, `Phil Lesh and Friends`];
-          fetchEntitiesFromDF = sinon.stub(entities, 'fetchEntitiesFromDF').returns(expected);
           postEntitiesToDF = sinon.stub(entities, 'postEntitiesToDF').returns(successFromDF);
-          iaRequest.__set__(
-            'fetch',
-            fetchMock
-              .sandbox()
-              .get('begin:https://web.archive.org/advancedsearch.php?q=collection:', getCollectionFromIA)
-          );
+          const mock = new MockAdapter(iaRequest.__get__('axios'));
+          mock.onGet().reply(200, getCollectionFromIA);
         });
         afterEach(() => {
-          fetchMock.restore();
-          fetchEntitiesFromDF.restore();
           postEntitiesToDF.restore();
         });
         it('should fetch collection from IA and post to DF', () => {

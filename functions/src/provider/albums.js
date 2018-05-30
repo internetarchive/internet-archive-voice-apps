@@ -7,7 +7,7 @@ const delayedPromise = require('../utils/delay');
 const {debug, error} = require('../utils/logger')('ia:provider:albums');
 
 const {buildQueryCondition} = require('./advanced-search');
-const endpointProcessor = require('./endpoint-processor');
+const endpointProcessor = require('../network/endpoint-processor');
 
 /**
  * Fetch details about Album
