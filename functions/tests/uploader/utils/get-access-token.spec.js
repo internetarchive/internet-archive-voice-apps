@@ -13,6 +13,7 @@ describe('uploader', () => {
         it('should be defined', () => {
           expect(accessToken.getAccessToken).to.be.ok;
         });
+
       });
     });
   });

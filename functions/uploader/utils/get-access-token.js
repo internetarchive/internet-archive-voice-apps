@@ -13,7 +13,7 @@ function getBasicHeaderRequest () {
       return Promise.resolve(basicHeaderRequest);
     })
     .catch(e => {
-      error(`Get error in posting entity to DF, error: ${util.inspect(e, false, null)}`);
+      error(`Get error in fetching basicHeaderRequest, error: ${util.inspect(e, false, null)}`);
       return Promise.reject(e);
     });
 }

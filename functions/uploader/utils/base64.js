@@ -6,12 +6,13 @@ function base64Encode (file) {
 // read binary data
   return new Promise(function (resolve, reject) {
     fs.readFile(file, function (err, bitmap) {
+      console.log(Buffer.from(bitmap).toString('base64'));
       if (err) return reject(err);
       else return resolve(Buffer.from(bitmap).toString('base64'));
     });
   })
     .catch(function (err) {
-      error(err);
+      console.log(err);
     });
 }
 
@@ -22,12 +23,15 @@ function base64Decode (base64str, file) {
   // write buffer to file
   return new Promise(function (resolve, reject) {
     fs.writeFile(file, bitmap, 'utf8', function (err) {
+      console.log(file);
+      console.log(bitmap);
+      console.log(err);
       if (err) return reject(err);
-      else return resolve(bitmap);
+      else return resolve('success');
     });
   })
     .catch(function (err) {
-      error(err);
+      console.log(err);
     });
 }
 

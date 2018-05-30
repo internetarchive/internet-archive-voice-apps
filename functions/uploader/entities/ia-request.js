@@ -1,10 +1,10 @@
 const _ = require(`lodash`);
+const axios = require(`axios`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
-const fetch = require(`node-fetch`);
-const mustache = require('mustache');
 
 const config = require('../../src/config');
+const endpointProcessor = require('../../src/network/endpoint-processor');
 const entities = require('./entities');
 const util = require(`util`);
 
@@ -51,10 +51,10 @@ function fetchEntitiesFromIA (id, field, limit) {
   var page = 0;
   var sort = 'downloads+desc';
   debug(`fetching entity data from IA...`);
-  var url = mustache.render(
+  var url = endpointProcessor.preprocess(
     config.endpoints.COLLECTION_ITEMS_URL,
+    {'platform': 'assistant'},
     {
-      platformSubDomain: 'web',
       id,
       limit,
       page,
@@ -63,8 +63,8 @@ function fetchEntitiesFromIA (id, field, limit) {
     }
   );
   debug(url);
-  return fetch(url)
-    .then(res => res.json())
+  return axios(url)
+    .then(res => res.data)
     .then(data => {
       debug(util.inspect(data, false, null));
       debug(`fetched Entity from IA successfully.`);
@@ -78,21 +78,16 @@ function fetchEntitiesFromIA (id, field, limit) {
 /**
  * get unique & filtered entities from InternetArchive & post to DialogFlow
  *
- * @param entityname {string} name of entity in dialogflow
+ * @param entityid {string} id of entity in dialogflow
  * @param id {string} etree/georgeblood
  * @param field {string} field need to be extracted creator/subjects
  * @param limit {int} number of records need to be fetch from IA
  * @returns {promise}
  */
-function fetchNewEntitiesFromIAAndPostToDF (entityname, id, field, limit) {
-  return Promise.all([
-    fetchEntitiesFromIA(id, field, limit),
-    entities.fetchEntitiesFromDF(entityname),
-  ])
-    .then(values => {
-      const [creatorsFromIA, creatorsFromDF] = values;
-      var dif = _.differenceWith(creatorsFromIA, creatorsFromDF, _.isEqual);
-      return entities.postEntitiesToDF(entityname, dif, 0);
+function fetchNewEntitiesFromIAAndPostToDF (entityid, id, field, limit) {
+  return fetchEntitiesFromIA(id, field, limit)
+    .then(creatorsFromIA => {
+      return entities.postEntitiesToDF(entityid, creatorsFromIA, 0);
     })
     .then(data => {
       return Promise.resolve(data);

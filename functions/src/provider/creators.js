@@ -5,7 +5,7 @@ const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:provider:creators');
 
 const {buildQueryCondition} = require('./advanced-search');
-const endpointProcessor = require('./endpoint-processor');
+const endpointProcessor = require('../network/endpoint-processor');
 
 /**
  * Fetch popular creators by query condition
