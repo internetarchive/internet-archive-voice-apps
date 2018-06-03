@@ -7,6 +7,7 @@ const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const fsm = require('../../../state/fsm');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
+const camelToKebab = require('../../../utils/camel-to-kebab');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
 function stripAmazonIntent (name) {
@@ -57,6 +58,65 @@ function storeAttributes (app, handlerInput) {
   debug('store attributes', util.inspect(persistentAttributes, {depth: null}));
   handlerInput.attributesManager.setPersistentAttributes(jsonify(persistentAttributes));
   return handlerInput.attributesManager.savePersistentAttributes();
+}
+
+/**
+ * Find right handlers by user's request input object
+ *
+ * @param actions
+ * @param handlerInput
+ *
+ * @returns {handlers: *, name:String}|null
+ */
+function findHandlersByInput (actions, handlerInput) {
+  debug('findHandlersByInput');
+  let name;
+  let handlers;
+
+  name = _.get(handlerInput, 'requestEnvelope.request.intent.name');
+  debug('intent name:', name);
+  handlers = actions.get(camelToKebab(name));
+
+  if (handlers) {
+    return {handlers, name};
+  }
+
+  name = stripAmazonIntent(name);
+  debug('name without heading amazon:', name);
+  handlers = actions.get(camelToKebab(name));
+
+  if (handlers) {
+    return {handlers, name};
+  }
+
+  let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
+  debug('request type', requestType);
+  if (requestType) {
+    requestType = stripRequestType(requestType);
+    debug('just type', requestType);
+    handlers = actions.get(camelToKebab(requestType));
+    if (handlers) {
+      return {handlers, name: requestType};
+    }
+  }
+
+  const splitName = name.split('_');
+
+  while (splitName.length > 1) {
+    debug('splitted name', splitName);
+    splitName.pop();
+    name = splitName.join('_');
+    debug('without tail', name);
+    debug('kebab', camelToKebab(name));
+    handlers = actions.get(camelToKebab(name));
+    if (handlers) {
+      return {handlers, name};
+    }
+  }
+
+  debug(`haven't found any matched handlers`);
+
+  return null;
 }
 
 /**
@@ -118,5 +178,41 @@ module.exports = (actions) => {
             });
         },
       };
+    })
+    // it would catcha any intents
+    // TODO: 1) actually we could use this handler to handle all intents
+    // and replace handlers above
+    // 2) we should implement fallback in case when we haven't matched any intent
+    .concat({
+      intent: 'any',
+
+      canHandle: () => true,
+
+      handle: (handlerInput) => {
+        debug('catch all the rest');
+
+        const res = findHandlersByInput(actions, handlerInput);
+        if (!res) {
+          debug(`we haven't found any valid handler`);
+          return Promise.resolve();
+        }
+
+        const {handlers, name} = res;
+
+        debug(`begin handle intent "${name}"`);
+        return fetchAttributes(handlerInput)
+          .then((persistentAttributes) => {
+            debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
+            const app = new App(handlerInput, persistentAttributes);
+            const handler = fsm.selectHandler(app, handlers);
+            return Promise.all([app, handler(app)]);
+          })
+          // TODO: maybe we could store and response in the same time?
+          .then(([app, res]) => storeAttributes(app, handlerInput))
+          .then(() => {
+            debug(`end handle intent "${name}"`);
+            return handlerInput.responseBuilder.getResponse();
+          });
+      },
     });
 };

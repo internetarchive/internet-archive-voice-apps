@@ -1,6 +1,6 @@
 const Alexa = require('ask-sdk');
 const {DynamoDbPersistenceAdapter} = require('ask-sdk-dynamodb-persistence-adapter');
-// const AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
 
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
@@ -33,11 +33,11 @@ module.exports = (actions) => {
       // TODO: we don't need it for session attributes
       // turn on once we will have persistant attributes
 
-      // const region = process.env.AWS_REGION;
-      // if (region) {
-      //   debug('set AWS region', region);
-      //   AWS.config.update({region});
-      // }
+      const region = process.env.AWS_REGION;
+      if (region) {
+        debug('set AWS region', region);
+        AWS.config.update({region});
+      }
 
       // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }

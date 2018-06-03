@@ -23,8 +23,9 @@ describe('integration', () => {
   }
 
   describe('alexa', () => {
-    scenarios.forEach(({scenario, dialog = [], launch = ''}) => {
-      describe(`dialog: "${scenario}"`, () => {
+    scenarios.forEach(({scenario, only = false, skip = false, dialog = [], launch = ''}) => {
+      let describeScenario = only ? describe.only : (skip ? describe.skip : describe);
+      describeScenario(`dialog: "${scenario}"`, () => {
         before(() => {
           // mock requests to IA
           axiosMock = new MockAdapter(axios);
