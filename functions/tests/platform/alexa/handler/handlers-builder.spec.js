@@ -32,7 +32,7 @@ describe('platform', () => {
         ]));
 
         expect(res).to.be.ok;
-        expect(res).to.be.an('array').with.length(2);
+        expect(res).to.be.an('array').with.length(3);
       });
 
       it('should capitalize expected intent name', () => {
@@ -123,6 +123,23 @@ describe('platform', () => {
         return wrappedNoInputHandler(handlerInput)
           .then((res) => {
             expect(res).to.be.equal(response);
+          });
+      });
+
+      it(`should drop intent underscore tail when can't find matched handler`, () => {
+        const playSongHandler = sinon.spy();
+
+        const res = builder(new Map([
+          ['play-songs', {default: playSongHandler}],
+        ]));
+
+        const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+        const item = res.find(e => e.canHandle());
+        expect(item).to.be.not.undefined;
+        expect(item).to.be.not.null;
+        return item.handle(input)
+          .then(() => {
+            expect(playSongHandler).to.have.been.called;
           });
       });
     });

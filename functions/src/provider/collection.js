@@ -3,7 +3,7 @@ const axios = require('axios');
 const config = require('../config');
 const {debug, error} = require('../utils/logger')('ia:search:collection');
 
-const endpointProcessor = require('./endpoint-processor');
+const endpointProcessor = require('../network/endpoint-processor');
 
 /*
  Could be interesting Fields:
