@@ -444,6 +444,9 @@ module.exports = {
       speech: 'Version is {{version}}.',
     },
 
+    wayback: {
+      speech: '{{url}} was first captured by the Internet Archive in {{earliestYear}} and most recently in {{latestYear}}. The archive has {{totalUniqueURLs}} unique url\'s for this website. {{url}} is ranked {{alexaWorldRank}} in the world in popularity and {{alexaUSRank}} in the United States.',
+    },
     welcome: {
       acknowledges: [
         'Welcome to music at the Internet Archive.'
