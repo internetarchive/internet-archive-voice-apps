@@ -1,7 +1,7 @@
 const request = require('request');
 const traverse = require('traverse');
 const xml2js = require('xml2js');
-const dialog = require('../dialog');
+// const dialog = require('../dialog');
 const mustache = require('mustache');
 const waybackStrings = require('../strings').intents.wayback;
 const {debug} = require('../utils/logger')('ia:actions:wayback-machine');
@@ -25,14 +25,14 @@ function handler (app) {
 
   // Create wayback object with properties to be filled in request
   var waybackObject = {
-  url: '',
-  earliestYear: 0,
-  latestYear: 0,
-  totalUniqueURLs: 0,
-  alexaWorldRank: 0,
-  alexaUSRank: 0,
-  speech: 'default speech'
-};
+    url: '',
+    earliestYear: 0,
+    latestYear: 0,
+    totalUniqueURLs: 0,
+    alexaWorldRank: 0,
+    alexaUSRank: 0,
+    speech: 'default speech'
+  };
 
   waybackObject.url = url;
   var archiveQueryURL = 'http://web.archive.org/__wb/search/metadata?q=' + url;
@@ -80,14 +80,14 @@ function handler (app) {
         waybackObject.alexaUSRank = convertedJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
 
         waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
-        //debug('speech:' + waybackObject.speech);
-        dialog.close(app, waybackObject);
+        // debug('speech:' + waybackObject.speech);
+        // dialog.close(app, waybackObject);
       }
     });
-  });
+  }); // End of request
+
+  // dialog.close(app, )
 } // End of handler
-
-
 function getRequest (url) {
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
