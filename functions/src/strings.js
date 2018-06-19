@@ -445,7 +445,7 @@ module.exports = {
     },
 
     wayback: {
-      speech: '{{url}} was first captured by the Internet Archive in {{earliestYear}} and most recently in {{latestYear}}. The archive has {{totalUniqueURLs}} unique url\'s for this website. <break></break>{{url}} is ranked <say-as interpret-as="ordinal">{{alexaWorldRank}}</say-as> in the world in popularity and <say-as interpret-as="ordinal">{{alexaUSRank}}</say-as> in the United States.',
+      speech: '{{url}} was first captured by the Internet Archive in {{earliestYear}} and most recently in {{latestYear}}. The archive has {{totalUniqueURLs}} unique url\'s for this website. <break></break>{{url}} is ranked <say-as interpret-as="ordinal">{{alexaWorldRank}}</say-as> in the world in popularity',
     },
     welcome: {
       acknowledges: [
