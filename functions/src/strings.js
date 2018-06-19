@@ -132,7 +132,7 @@ module.exports = {
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
-          `I have {{total}} albums from {{year}}. Let's dive into them.`,
+          `I have {{total}} albums from {{year}}. Let's dive into it.`,
         ],
       },
 
@@ -144,7 +144,7 @@ module.exports = {
         speech: [
           `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any albums of {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
         ],
       },
@@ -189,7 +189,7 @@ module.exports = {
        * to check our undestanding
        */
       acknowledges: [
-        'Ok! Lets go with the artist {{creator}}!',
+        'Ok! Lets go with {{creator}} performer!',
         `You've selected {{alias.collectionId}}.`,
       ],
 
@@ -205,7 +205,7 @@ module.exports = {
          * slots which we need for fulfillement
          */
         speech: [
-          'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
+          'What genre of music would you like to listen to? Please select a topic like {{short-options.suggestions}}?',
         ],
 
         /**
@@ -270,7 +270,7 @@ module.exports = {
       acknowledges: [
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
-        '{{year}} - it was an excellent year!',
+        '{{year}} - it was excellent year!',
         'Ok! Lets go with {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
@@ -320,7 +320,7 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?`,
+            `We don't have concerts of {{creator}}. Maybe you would like to listent {{short-options.suggestions}}?`,
           ],
         },
       }, {
@@ -361,7 +361,7 @@ module.exports = {
         ],
 
         speech: [
-          'Ok, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. Do you have a particular year in mind?',
+          'Ok, {{creator}} has played in {{coverage}} sometime {{years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
 
         /**
@@ -425,7 +425,7 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Excellent! I'll be saying the title to each song.`,
+        speech: `Excellent! I'll be saying title to each song.`,
       },
       true: {
         speech: `Ok, muting song titles.`,
@@ -444,9 +444,6 @@ module.exports = {
       speech: 'Version is {{version}}.',
     },
 
-    wayback: {
-      speech: '{{url}} was first captured by the Internet Archive in {{earliestYear}} and most recently in {{latestYear}}. The archive has {{totalUniqueURLs}} unique url\'s for this website. <break></break>{{url}} is ranked <say-as interpret-as="ordinal">{{alexaWorldRank}}</say-as> in the world in popularity',
-    },
     welcome: {
       acknowledges: [
         'Welcome to music at the Internet Archive.'
@@ -468,7 +465,7 @@ module.exports = {
 
   events: {
     playlistIsEnded: {
-      speech: 'Playlist has ended. Would you like to listen to something more?',
+      speech: 'Playlist is ended. Do you want to listen something more?',
     }
   },
 
