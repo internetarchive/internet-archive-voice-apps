@@ -31,6 +31,11 @@ module.exports = {
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 
+  wayback: {
+    ARCHIVE: 'http://web.archive.org/__wb/search/metadata?q={{url}}',
+    ALEXA: 'http://data.alexa.com/data?cli=10&url={{url}}',
+  },
+
   /**
    * settings specific for supported platforms
    */
