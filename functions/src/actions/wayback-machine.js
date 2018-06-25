@@ -1,10 +1,15 @@
-const request = require('request');
-const traverse = require('traverse');
-const xml2js = require('xml2js');
-const dialog = require('../dialog');
+// Third party imports
+const _ = require('lodash');
+const axios = require('axios');
 const mustache = require('mustache');
-const waybackStrings = require('../strings').intents.wayback;
+const xml2js = require('xml2js');
+
+// Local imports
+const config = require('../config');
 const {debug} = require('../utils/logger')('ia:actions:wayback-machine');
+const dialog = require('../dialog');
+const endpointProcessor = require('../network/endpoint-processor');
+const waybackStrings = require('../strings').intents.wayback;
 
 /**
  * Handle wayback query action
@@ -15,120 +20,106 @@ const {debug} = require('../utils/logger')('ia:actions:wayback-machine');
  * @param app
  */
 function handler (app) {
-  // Check parameter for Wayback qualifier
-  let wayback = app.params.getByName('wayback');
-  if (wayback.includes('wayback') === false) {
-    debug('wayback action called by mistake');
-  }
-
-  // Get url parameter
-  var url = app.params.getByName('url');
-
   // Create wayback object
-  var waybackObject = {
+  const waybackObject = {
     url: '',
     earliestYear: 0,
     latestYear: 0,
     totalUniqueURLs: 0,
     alexaWorldRank: 0,
     alexaUSRank: 0,
-    speech: 'default speech'
+    speech: waybackStrings.default,
   };
 
-  waybackObject.url = url;
-  var archiveQueryURL = 'http://web.archive.org/__wb/search/metadata?q=' + url;
-  var alexaQueryURL = 'http://data.alexa.com/data?cli=10&url=' + url;
+  // Check parameter for Wayback qualifier
+  let wayback = app.params.getByName('wayback');
+  if (!wayback.includes('wayback')) {
+    debug('wayback action called by mistake');
+    dialog.ask(app, waybackObject);
+  }
 
-  return Promise.all([getRequest(archiveQueryURL), getRequest(alexaQueryURL)])
+  // Get url parameter and make url queries
+  waybackObject.url = app.params.getByName('url');
+  const archiveQueryURL = endpointProcessor.preprocess(
+    config.wayback.ARCHIVE, app, waybackObject
+  );
+  const alexaQueryURL = endpointProcessor.preprocess(
+    config.wayback.ALEXA, app, waybackObject
+  );
+
+  return Promise.all([axios.get(archiveQueryURL), axios.get(alexaQueryURL)])
     .then(function (allData) {
       // All data available here in the order it was called.
 
       // Parse data from archive request
-      var archiveJSON = JSON.parse(allData[0]);
+      let archiveJSON = allData[0].data;
       archiveEngine(archiveJSON, waybackObject);
 
       // Parse data from alexa request
-      var alexaJSON;
-      var XMLparser = new xml2js.Parser();
-      XMLparser.parseString(allData[1], function (err, result) {
+      let alexaJSON;
+      let XMLparser = new xml2js.Parser();
+      XMLparser.parseString(allData[1].data, function (err, result) {
         if (err) {
-          debug('Uh-oh, the XML parser didn\'t work');
+          debug('The XML parser didn\'t work');
+          waybackObject.speech = waybackStrings.error;
+          dialog.ask(app, waybackObject);
         } else {
           alexaJSON = JSON.parse(JSON.stringify(result));
         }
       });
       alexaEngine(alexaJSON, waybackObject);
 
-      /*
-        debug('ARCHIVE');
-        debug('Date of first archive: ' + waybackObject.earliestYear);
-        debug('Date of last archive: ' + waybackObject.latestYear);
-        debug('Total Unique URLs: ' + waybackObject.totalUniqueURLs);
-        debug('ALEXA');
-        debug('Alexa World Rank: ' + waybackObject.alexaWorldRank);
-        debug('Alexa US Rank: ' + waybackObject.alexaUSRank);
-        */
-
       // Construct response dialog for action
       if (waybackObject.alexaUSRank !== 0) {
         waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
-        waybackObject.speech += ' and <say-as interpret-as="ordinal">' + waybackObject.alexaUSRank + '</say-as> in the United States';
+        waybackObject.speech += mustache.render(waybackStrings.additionalSpeech, waybackObject);
       } else {
         waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
         waybackObject.speech += '.';
       }
-      // debug('speech:' + waybackObject.speech);
 
       dialog.close(app, waybackObject);
     });
 } // End of handler
 
-function getRequest (url) {
-  return new Promise(function (resolve, reject) {
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        resolve(body);
-      } else {
-        reject(error);
-      }
-    });
-  });
-}
-
 function archiveEngine (archiveJSON, waybackObject) {
   // Create array of capture years and then find earliest year
   //  and most recent year.
-  var yearsArray = Object.keys(archiveJSON.captures);
+  let yearsArray = Object.keys(archiveJSON.captures);
   waybackObject.earliestYear = yearsArray[0];
   waybackObject.latestYear = yearsArray[yearsArray.length - 1];
 
-  // Traverse URL category to find baseline of URL count
-  traverse(archiveJSON.urls[waybackObject.earliestYear]).forEach(function (node) {
-    if (typeof node === 'number') {
-      waybackObject.totalUniqueURLs += node;
-    }
-  });
-  // debug('Beginning value for total unique urls: ' + totalUniqueURLs);
+  // Traverse URL category
+  const traverse = obj => {
+    _.forOwn(obj, (val, key) => {
+      if (_.isArray(val)) {
+        val.forEach(el => {
+          traverse(el);
+        });
+      } else if (_.isObject(val)) {
+        traverse(val);
+      } else {
+        waybackObject.totalUniqueURLs += val;
+      }
+    });
+  };
 
-  traverse(archiveJSON.new_urls).forEach(function (node) {
-    if (typeof node === 'number') {
-      waybackObject.totalUniqueURLs += node;
-    }
-  });
+  // Find baseline of URL count
+  traverse(archiveJSON.urls[waybackObject.earliestYear]);
+  // Find final count of unique urls
+  traverse(archiveJSON.new_urls);
 }
 
 function alexaEngine (alexaJSON, waybackObject) {
   waybackObject.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
-  var countryID = alexaJSON['ALEXA']['SD'];
-  debug('country id: ' + countryID);
-  if (countryID.includes('COUNTRY')) {
-    debug('country exists');
+  try {
     waybackObject.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
-  } else {
-    debug('country doesn\'t exist');
+  } catch (e) {
+    debug('Country not found');
+    debug(e);
   }
 }
 
 module.exports = {
-  handler
+  handler,
 };

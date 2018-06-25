@@ -446,6 +446,10 @@ module.exports = {
 
     wayback: {
       speech: '{{url}} was first captured by the Internet Archive in {{earliestYear}} and most recently in {{latestYear}}. The archive has {{totalUniqueURLs}} unique url\'s for this website. <break></break>{{url}} is ranked <say-as interpret-as="ordinal">{{alexaWorldRank}}</say-as> in the world in popularity',
+      additionalSpeech: ' and <say-as interpret-as="ordinal">{{alexaUSRank}}</say-as> in the United States.',
+      default: 'Would you like to use the wayback machine to hear the history of a website? Simply say Wayback Machine and the name of the website you\'d like to hear.',
+      error: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+      suggestions: ['wayback machine google.com', 'wayback machine archive.org']
     },
 
     welcome: {
