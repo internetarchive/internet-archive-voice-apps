@@ -270,7 +270,7 @@ module.exports = {
       acknowledges: [
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
-        '{{year}} - it was excellent year!',
+        '{{year}} - it was an excellent year!',
         'Ok! Lets go with {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
@@ -320,7 +320,7 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have concerts of {{creator}}. Maybe you would like to listent {{short-options.suggestions}}?`,
+            `We don't have any concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?`,
           ],
         },
       }, {
@@ -425,7 +425,7 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Excellent! I'll be saying title to each song.`,
+        speech: `Excellent! I'll be saying the title to each song.`,
       },
       true: {
         speech: `Ok, muting song titles.`,
@@ -473,7 +473,7 @@ module.exports = {
 
   events: {
     playlistIsEnded: {
-      speech: 'Playlist is ended. Do you want to listen something more?',
+      speech: 'Playlist has ended. Would you like to continue listening?',
     }
   },
 
