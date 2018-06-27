@@ -32,12 +32,20 @@ function handler (app) {
   };
 
   // Check parameter for Wayback qualifier
-  let wayback = app.params.getByName('wayback');
-  if (!wayback.includes('wayback')) {
+  // let wayback = app.params.getByName('wayback');
+  // if (!wayback.includes('wayback')) {
+  if (!app.params.getByName('wayback') && !app.params.getByName('url')) {
     debug('wayback action called by mistake');
     dialog.ask(app, waybackObject);
   }
-
+  debug('Wayback exists: ' + !app.params.getByName('wayback'));
+  debug('URL exists: ' + app.params.getByName('url') !== undefined);
+  /*
+  if (!app.params.getByName('wayback') && app.params.getByName('url')) {
+    debug('wayback action called by mistake');
+    dialog.ask(app, waybackObject);
+  }
+  */
   // Get url parameter and make url queries
   waybackObject.url = app.params.getByName('url');
   const archiveQueryURL = endpointProcessor.preprocess(
