@@ -189,7 +189,7 @@ module.exports = {
        * to check our undestanding
        */
       acknowledges: [
-        'Ok! Lets go with {{creator}} performer!',
+        'Ok! Lets go with the artist {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
 

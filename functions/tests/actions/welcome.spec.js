@@ -31,7 +31,7 @@ describe('actions', () => {
       let app = mockApp();
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
-        .to.include('Would you like to listen to music from our collections of 78s or Live Concerts?');
+        .to.include('You can listen to 78s or concerts; or ask me for an artist or genre. Which would you like to listen to?');
     });
 
     it('should reset query slots', () => {
