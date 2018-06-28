@@ -1,7 +1,7 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. Would you like to listen to music from our collections of 78s or Live Concerts?'
+  launch: 'Welcome to music at the Internet Archive. You can listen to 78s or concerts; or ask me for an artist or genre. Which would you like to listen to?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
@@ -28,7 +28,7 @@
 - scenario: 'play music by: 78s > jazz'
   dialog:
   - user: 'seventy eighties'
-    assistant: 'You''ve selected 78s. What genre of music would you like to listen to? Please select a topic like Jazz, Instrumental or Dance?'
+    assistant: 'You''ve selected 78s. What genre of music would you like to listen to? Please select a genre like Jazz, Instrumental or Dance?'
   - user: 'jazz music'
     assistant:
       directive: 'AudioPlayer.Play'

@@ -448,7 +448,7 @@ module.exports = {
       acknowledges: [
         'Welcome to music at the Internet Archive.'
       ],
-      speech: 'Would you like to listen to music from our collections of 78s or Live Concerts?',
+      speech: 'You can listen to 78s or concerts; or ask me for an artist or genre. Which would you like to listen to?',
       suggestions: ['78s', 'Live Concerts']
     },
 
