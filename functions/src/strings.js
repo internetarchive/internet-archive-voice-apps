@@ -465,7 +465,7 @@ module.exports = {
 
   events: {
     playlistIsEnded: {
-      speech: 'Playlist has ended. Would you like to listen to something more?',
+      speech: 'Playlist has ended. Would you like to continue listening?',
     }
   },
 
