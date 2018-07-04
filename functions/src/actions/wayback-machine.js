@@ -1,5 +1,4 @@
 // Third party imports
-const _ = require('lodash');
 const axios = require('axios');
 const mustache = require('mustache');
 const xml2js = require('xml2js');
@@ -9,6 +8,7 @@ const config = require('../config');
 const {debug} = require('../utils/logger')('ia:actions:wayback-machine');
 const dialog = require('../dialog');
 const endpointProcessor = require('../network/endpoint-processor');
+const traverse = require('../utils/traverse');
 const waybackStrings = require('../strings').intents.wayback;
 
 /**
@@ -31,21 +31,12 @@ function handler (app) {
     speech: waybackStrings.default,
   };
 
-  // Check parameter for Wayback qualifier
-  // let wayback = app.params.getByName('wayback');
-  // if (!wayback.includes('wayback')) {
+  // Check to see that both parameters have content
   if (!app.params.getByName('wayback') && !app.params.getByName('url')) {
     debug('wayback action called by mistake');
     dialog.ask(app, waybackObject);
   }
-  debug('Wayback exists: ' + !app.params.getByName('wayback'));
-  debug('URL exists: ' + app.params.getByName('url') !== undefined);
-  /*
-  if (!app.params.getByName('wayback') && app.params.getByName('url')) {
-    debug('wayback action called by mistake');
-    dialog.ask(app, waybackObject);
-  }
-  */
+
   // Get url parameter and make url queries
   waybackObject.url = app.params.getByName('url');
   const archiveQueryURL = endpointProcessor.preprocess(
@@ -66,15 +57,24 @@ function handler (app) {
       // Parse data from alexa request
       let alexaJSON;
       let XMLparser = new xml2js.Parser();
-      XMLparser.parseString(allData[1].data, function (err, result) {
-        if (err) {
-          debug('The XML parser didn\'t work');
-          waybackObject.speech = waybackStrings.error;
-          dialog.ask(app, waybackObject);
-        } else {
-          alexaJSON = JSON.parse(JSON.stringify(result));
-        }
+      let convertXML = new Promise((resolve, reject) => {
+        XMLparser.parseString(allData[1].data, function (err, result) {
+          if (err) {
+            debug('The XML parser didn\'t work');
+            waybackObject.speech = waybackStrings.error;
+            dialog.ask(app, waybackObject);
+          } else {
+            alexaJSON = JSON.parse(JSON.stringify(result));
+          }
+        });
       });
+      convertXML
+        .then(function (fulfilled) {
+          debug(fulfilled);
+        })
+        .catch(function (error) {
+          debug(error.message);
+        });
       alexaEngine(alexaJSON, waybackObject);
 
       // Construct response dialog for action
@@ -98,24 +98,13 @@ function archiveEngine (archiveJSON, waybackObject) {
   waybackObject.latestYear = yearsArray[yearsArray.length - 1];
 
   // Traverse URL category
-  const traverse = obj => {
-    _.forOwn(obj, (val, key) => {
-      if (_.isArray(val)) {
-        val.forEach(el => {
-          traverse(el);
-        });
-      } else if (_.isObject(val)) {
-        traverse(val);
-      } else {
-        waybackObject.totalUniqueURLs += val;
-      }
-    });
-  };
 
   // Find baseline of URL count
-  traverse(archiveJSON.urls[waybackObject.earliestYear]);
-  // Find final count of unique urls
-  traverse(archiveJSON.new_urls);
+  waybackObject.totalUniqueURLs += traverse(archiveJSON.urls[waybackObject.earliestYear]);
+  debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
+
+  waybackObject.totalUniqueURLs += traverse(archiveJSON.new_urls);
+  debug('Final url count: ' + waybackObject.totalUniqueURLs);
 }
 
 function alexaEngine (alexaJSON, waybackObject) {
