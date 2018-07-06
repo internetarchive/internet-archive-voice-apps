@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {debug} = require('../utils/logger')('ia:actions:wayback-machine');
+const {debug} = require('../utils/logger')('ia:actions:utils:traverse');
 
 /**
  * Traverse a given object

@@ -55,27 +55,27 @@ function handler (app) {
       archiveEngine(archiveJSON, waybackObject);
 
       // Parse data from alexa request
-      let alexaJSON;
       let XMLparser = new xml2js.Parser();
       let convertXML = new Promise((resolve, reject) => {
         XMLparser.parseString(allData[1].data, function (err, result) {
           if (err) {
-            debug('The XML parser didn\'t work');
-            waybackObject.speech = waybackStrings.error;
-            dialog.ask(app, waybackObject);
+            let error = new Error('The XML parser didn\'t work. Error message: ' + err);
+            reject(error);
           } else {
-            alexaJSON = JSON.parse(JSON.stringify(result));
+            resolve(result);
           }
         });
       });
       convertXML
         .then(function (fulfilled) {
-          debug(fulfilled);
+          debug('XML parse successful!');
+          alexaEngine(JSON.parse(JSON.stringify(fulfilled)), waybackObject);
         })
         .catch(function (error) {
           debug(error.message);
+          waybackObject.speech = waybackStrings.error;
+          dialog.ask(app, waybackObject);
         });
-      alexaEngine(alexaJSON, waybackObject);
 
       // Construct response dialog for action
       if (waybackObject.alexaUSRank !== 0) {
@@ -101,10 +101,10 @@ function archiveEngine (archiveJSON, waybackObject) {
 
   // Find baseline of URL count
   waybackObject.totalUniqueURLs += traverse(archiveJSON.urls[waybackObject.earliestYear]);
-  debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
+  // debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
 
   waybackObject.totalUniqueURLs += traverse(archiveJSON.new_urls);
-  debug('Final url count: ' + waybackObject.totalUniqueURLs);
+  // debug('Final url count: ' + waybackObject.totalUniqueURLs);
 }
 
 function alexaEngine (alexaJSON, waybackObject) {
