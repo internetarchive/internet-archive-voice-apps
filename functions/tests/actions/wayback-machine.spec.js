@@ -1,3 +1,4 @@
+const axios = require('axios');
 const {expect} = require('chai');
 const rewire = require('rewire');
 
@@ -17,9 +18,17 @@ describe('actions', () => {
       action.__set__('dialog', dialog);
     });
 
-    it('check to see that a promise is returned with network requests', () => {
+    it('check to see that overall action eventually returns a promise', () => {
       action.handler(app);
       expect(Promise.resolve()).to.be.a('promise');
+    });
+
+    it('check to see that axios request promises are working', () => {
+      let request = axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com');
+      console.log('REQUEST VARIABLE = ' + request);
+      expect(request).to.not.be.undefined;
+      // expect(action.axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com')).to.not.be.undefined;
+      // expect(action.axios.get('http://data.alexa.com/data?cli=10&url=cnn.com')).to.not.be.undefined;
     });
   });
 });
