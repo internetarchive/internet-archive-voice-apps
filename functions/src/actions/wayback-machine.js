@@ -47,74 +47,81 @@ function handler (app) {
   );
 
   return Promise.all([axios.get(archiveQueryURL), axios.get(alexaQueryURL)])
-    .then(function (allData) {
-      // All data available here in the order it was called.
-
-      // Parse data from archive request
-      let archiveJSON = allData[0].data;
-      archiveEngine(archiveJSON, waybackObject);
-
-      // Parse data from alexa request
-      let XMLparser = new xml2js.Parser();
-      let convertXML = new Promise((resolve, reject) => {
-        XMLparser.parseString(allData[1].data, function (err, result) {
-          if (err) {
-            let error = new Error('The XML parser didn\'t work. Error message: ' + err);
-            reject(error);
-          } else {
-            resolve(result);
-          }
+    .then(function (requestData) {
+      return Promise.all([archiveEngine(requestData[0].data, waybackObject), xmlConverter(requestData[1].data)])
+        .then(function (response) {
+          return Promise.all([alexaEngine(response[1], waybackObject)])
+            .then(function () {
+              // Construct response dialog for action
+              if (waybackObject.alexaUSRank !== 0) {
+                waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
+                waybackObject.speech += mustache.render(waybackStrings.additionalSpeech, waybackObject);
+              } else {
+                waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
+                waybackObject.speech += '.';
+              }
+              dialog.close(app, waybackObject);
+            });
         });
-      });
-      convertXML
-        .then(function (fulfilled) {
-          debug('XML parse successful!');
-          alexaEngine(JSON.parse(JSON.stringify(fulfilled)), waybackObject);
-        })
-        .catch(function (error) {
-          debug(error.message);
-          waybackObject.speech = waybackStrings.error;
-          dialog.ask(app, waybackObject);
-        });
-
-      // Construct response dialog for action
-      if (waybackObject.alexaUSRank !== 0) {
-        waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
-        waybackObject.speech += mustache.render(waybackStrings.additionalSpeech, waybackObject);
-      } else {
-        waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
-        waybackObject.speech += '.';
-      }
-
-      dialog.close(app, waybackObject);
-    });
+    }); // End of REQUEST promise
 } // End of handler
 
 function archiveEngine (archiveJSON, waybackObject) {
-  // Create array of capture years and then find earliest year
-  //  and most recent year.
-  let yearsArray = Object.keys(archiveJSON.captures);
-  waybackObject.earliestYear = yearsArray[0];
-  waybackObject.latestYear = yearsArray[yearsArray.length - 1];
+  return new Promise(function (resolve, reject) {
+    debug('Inside archiveEngine promise...');
+    // Create array of capture years and then find earliest year
+    //  and most recent year.
+    let yearsArray = Object.keys(archiveJSON.captures);
+    waybackObject.earliestYear = yearsArray[0];
+    waybackObject.latestYear = yearsArray[yearsArray.length - 1];
 
-  // Traverse URL category
+    // Traverse URL category
 
-  // Find baseline of URL count
-  waybackObject.totalUniqueURLs += traverse(archiveJSON.urls[waybackObject.earliestYear]);
-  // debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
+    // Find baseline of URL count
+    waybackObject.totalUniqueURLs += traverse(archiveJSON.urls[waybackObject.earliestYear]);
+    // debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
 
-  waybackObject.totalUniqueURLs += traverse(archiveJSON.new_urls);
-  // debug('Final url count: ' + waybackObject.totalUniqueURLs);
+    waybackObject.totalUniqueURLs += traverse(archiveJSON.new_urls);
+    // debug('Final url count: ' + waybackObject.totalUniqueURLs);
+
+    if (waybackObject.totalUniqueURLs > 0) {
+      debug('archiveEngine promise successful!');
+      resolve();
+    }
+  });
 }
 
 function alexaEngine (alexaJSON, waybackObject) {
-  waybackObject.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
-  try {
-    waybackObject.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
-  } catch (e) {
-    debug('Country not found');
-    debug(e);
-  }
+  return new Promise(function (resolve, reject) {
+    debug('Inside alexaEngine promise...');
+    waybackObject.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
+    try {
+      waybackObject.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
+    } catch (e) {
+      debug('Country not found');
+      debug(e);
+    }
+    if (waybackObject.alexaWorldRank > 0) {
+      debug('alexaEngine promise successful!');
+      resolve();
+    }
+  });
+}
+
+function xmlConverter (data) {
+  return new Promise(function (resolve, reject) {
+    debug('Inside xmlConverter promise...');
+    let XMLparser = new xml2js.Parser();
+    XMLparser.parseString(data, function (err, result) {
+      if (err) {
+        let error = new Error('The XML parser didn\'t work. Error message: ' + err);
+        reject(error);
+      } else {
+        debug('xmlConverter promise successful!');
+        resolve(JSON.parse(JSON.stringify(result)));
+      }
+    });
+  });
 }
 
 module.exports = {
