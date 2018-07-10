@@ -68,7 +68,7 @@ function handler (app) {
 
 function archiveEngine (archiveJSON, waybackObject) {
   return new Promise(function (resolve, reject) {
-    debug('Inside archiveEngine promise...');
+    // debug('Inside archiveEngine promise...');
     // Create array of capture years and then find earliest year
     //  and most recent year.
     let yearsArray = Object.keys(archiveJSON.captures);
@@ -85,7 +85,7 @@ function archiveEngine (archiveJSON, waybackObject) {
     // debug('Final url count: ' + waybackObject.totalUniqueURLs);
 
     if (waybackObject.totalUniqueURLs > 0) {
-      debug('archiveEngine promise successful!');
+      // debug('archiveEngine promise successful!');
       resolve();
     }
   });
@@ -93,7 +93,7 @@ function archiveEngine (archiveJSON, waybackObject) {
 
 function alexaEngine (alexaJSON, waybackObject) {
   return new Promise(function (resolve, reject) {
-    debug('Inside alexaEngine promise...');
+    // debug('Inside alexaEngine promise...');
     waybackObject.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
     try {
       waybackObject.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
@@ -102,7 +102,7 @@ function alexaEngine (alexaJSON, waybackObject) {
       debug(e);
     }
     if (waybackObject.alexaWorldRank > 0) {
-      debug('alexaEngine promise successful!');
+      // debug('alexaEngine promise successful!');
       resolve();
     }
   });
@@ -110,14 +110,14 @@ function alexaEngine (alexaJSON, waybackObject) {
 
 function xmlConverter (data) {
   return new Promise(function (resolve, reject) {
-    debug('Inside xmlConverter promise...');
+    // debug('Inside xmlConverter promise...');
     let XMLparser = new xml2js.Parser();
     XMLparser.parseString(data, function (err, result) {
       if (err) {
         let error = new Error('The XML parser didn\'t work. Error message: ' + err);
         reject(error);
       } else {
-        debug('xmlConverter promise successful!');
+        // debug('xmlConverter promise successful!');
         resolve(JSON.parse(JSON.stringify(result)));
       }
     });

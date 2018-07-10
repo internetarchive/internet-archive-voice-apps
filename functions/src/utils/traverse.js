@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {debug} = require('../utils/logger')('ia:actions:utils:traverse');
+// const {debug} = require('../utils/logger')('ia:actions:utils:traverse');
 
 /**
  * Traverse a given object
@@ -26,6 +26,6 @@ module.exports = function (obj) {
   while (results.length !== 0) {
     count += results.pop();
   }
-  debug('final count inside traverse = ' + count);
+  // debug('final count inside traverse = ' + count);
   return count;
 };
