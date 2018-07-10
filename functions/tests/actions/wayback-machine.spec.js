@@ -24,9 +24,10 @@ describe('actions', () => {
     });
 
     it('check to see that axios request promises are working', () => {
-      let request = axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com');
-      console.log('REQUEST VARIABLE = ' + request);
-      expect(request).to.not.be.undefined;
+      let archiveRequest = axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com');
+      let alexaRequest = axios.get('http://data.alexa.com/data?cli=10&url=cnn.com');
+      expect(archiveRequest).to.not.be.undefined;
+      expect(alexaRequest).to.not.be.undefined;
       // expect(action.axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com')).to.not.be.undefined;
       // expect(action.axios.get('http://data.alexa.com/data?cli=10&url=cnn.com')).to.not.be.undefined;
     });
