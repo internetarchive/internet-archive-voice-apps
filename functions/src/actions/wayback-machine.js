@@ -114,7 +114,7 @@ function xmlConverter (data) {
     let XMLparser = new xml2js.Parser();
     XMLparser.parseString(data, function (err, result) {
       if (err) {
-        let error = new Error('The XML parser didn\'t work. Error message: ' + err);
+        let error = new Error('The XML parser didn\'t work.');
         reject(error);
       } else {
         // debug('xmlConverter promise successful!');
