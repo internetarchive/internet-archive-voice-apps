@@ -4,6 +4,8 @@ const rewire = require('rewire');
 
 const action = rewire('../../src/actions/wayback-machine');
 
+const archiveRequest = require('../../fixtures/wayback-archive.json');
+const alexaRequest = require('../../fixtures/wayback-alexa.xml');
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
@@ -11,8 +13,8 @@ describe('actions', () => {
   describe('wayback machine', () => {
     let app;
     let dialog;
-    let archiveRequest = axios.get('http://web.archive.org/__wb/search/metadata?q=cnn.com');
-    let alexaRequest = axios.get('http://data.alexa.com/data?cli=10&url=cnn.com');
+    console.log('ARCHIVE REQUEST: ' + archiveRequest);
+    console.log('ALEXA REQUEST: ' + alexaRequest);
 
     beforeEach(() => {
       app = mockApp();
@@ -23,11 +25,6 @@ describe('actions', () => {
     it('check to see that overall action eventually returns a promise', () => {
       action.handler(app);
       expect(Promise.resolve()).to.be.a('promise');
-    });
-
-    it('check to see that axios request promises are working', () => {
-      expect(archiveRequest).to.not.be.undefined;
-      expect(alexaRequest).to.not.be.undefined;
     });
 
     it('check to see that archiveEngine is working', () => {
