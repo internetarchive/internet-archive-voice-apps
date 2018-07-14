@@ -48,12 +48,26 @@ function handler (app) {
 
   return Promise.all([axios.get(archiveQueryURL), axios.get(alexaQueryURL)])
     .then(function (requestData) {
-      return Promise.all([archiveEngine(requestData[0].data, waybackObject), xmlConverter(requestData[1].data)]);
+      return Promise.all([archiveEngine(requestData[0].data), xmlConverter(requestData[1].data)]);
     })
     .then(response => {
-      return Promise.all([alexaEngine(response[1], waybackObject)]);
+      let res = {};
+      // Merge response into object for assignment to WB obj
+      res = Object.assign({}, res, response[0]);
+
+      waybackObject.earliestYear = res.earliestYear;
+      waybackObject.latestYear = res.latestYear;
+      waybackObject.totalUniqueURLs = res.totalUniqueURLs;
+
+      return alexaEngine(response[1]);
     })
-    .then(a => {
+    .then(response => {
+      let res = {};
+      // Merge response into object for assignment to WB obj
+      res = Object.assign({}, res, response);
+      waybackObject.alexaUSRank = res.alexaUSRank;
+      waybackObject.alexaWorldRank = res.alexaWorldRank;
+
       // Construct response dialog for action
       if (waybackObject.alexaUSRank !== 0) {
         waybackObject.speech = mustache.render(waybackStrings.speech, waybackObject);
@@ -66,44 +80,52 @@ function handler (app) {
     });
 } // End of handler
 
-function archiveEngine (archiveJSON, waybackObject) {
+function archiveEngine (archiveJSON) {
   return new Promise(function (resolve, reject) {
     debug('Inside archiveEngine promise...');
+    let obj = { earliestYear: 0, latestYear: 0, totalUniqueURLs: 0 };
     // Create array of capture years and then find earliest year
     //  and most recent year.
     let yearsArray = Object.keys(archiveJSON.captures);
-    waybackObject.earliestYear = yearsArray[0];
-    waybackObject.latestYear = yearsArray[yearsArray.length - 1];
+    obj.earliestYear = yearsArray[0];
+    obj.latestYear = yearsArray[yearsArray.length - 1];
 
     // Traverse URL category
 
     // Find baseline of URL count
-    waybackObject.totalUniqueURLs += traverse(archiveJSON.urls[waybackObject.earliestYear]);
-    // debug('Baseline url count: ' + waybackObject.totalUniqueURLs);
+    obj.totalUniqueURLs += traverse(archiveJSON.urls[obj.earliestYear]);
+    // debug('Baseline url count: ' + obj.totalUniqueURLs);
 
-    waybackObject.totalUniqueURLs += traverse(archiveJSON.new_urls);
-    // debug('Final url count: ' + waybackObject.totalUniqueURLs);
+    obj.totalUniqueURLs += traverse(archiveJSON.new_urls);
+    // debug('Final url count: ' + obj.totalUniqueURLs);
 
-    if (waybackObject.totalUniqueURLs > 0) {
+    if (obj.totalUniqueURLs > 0) {
       debug('archiveEngine promise successful!');
-      resolve();
+      resolve(obj);
+    } else {
+      let error = new Error('archiveEngine didn\'t work.');
+      reject(error);
     }
   });
 }
 
-function alexaEngine (alexaJSON, waybackObject) {
+function alexaEngine (alexaJSON) {
   return new Promise(function (resolve, reject) {
     debug('Inside alexaEngine promise...');
-    waybackObject.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
+    let obj = { alexaWorldRank: 0, alexaUSRank: 0 };
+    obj.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
     try {
-      waybackObject.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
+      obj.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
     } catch (e) {
       debug('Country not found');
       debug(e);
     }
-    if (waybackObject.alexaWorldRank > 0) {
+    if (obj.alexaWorldRank > 0) {
       debug('alexaEngine promise successful!');
-      resolve();
+      resolve(obj);
+    } else {
+      let error = new Error('alexaEngine didn\'t work.');
+      reject(error);
     }
   });
 }
