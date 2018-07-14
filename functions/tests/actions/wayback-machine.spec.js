@@ -1,11 +1,10 @@
-const axios = require('axios');
 const {expect} = require('chai');
 const rewire = require('rewire');
 
 const action = rewire('../../src/actions/wayback-machine');
 
-const archiveRequest = require('../../fixtures/wayback-archive.json');
-const alexaRequest = require('../../fixtures/wayback-alexa.xml');
+const archiveRequest = require('../fixtures/wayback-archive.json');
+const alexaRequest = require('../fixtures/wayback-alexa.xml');
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
 
@@ -13,8 +12,6 @@ describe('actions', () => {
   describe('wayback machine', () => {
     let app;
     let dialog;
-    console.log('ARCHIVE REQUEST: ' + archiveRequest);
-    console.log('ALEXA REQUEST: ' + alexaRequest);
 
     beforeEach(() => {
       app = mockApp();
