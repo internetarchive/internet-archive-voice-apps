@@ -47,12 +47,12 @@ function handler (app) {
   );
 
   return Promise.all([axios.get(archiveQueryURL), axios.get(alexaQueryURL)])
-    .then(function (requestData) {
-      return Promise.all([archiveEngine(requestData[0].data), xmlConverter(requestData[1].data)]);
+    .then(([archiveRes, alexaRes]) => {
+      return ([archiveEngine(archiveRes.data), xmlConverter(alexaRes.data)]);
     })
-    .then(response => {
-      waybackObject = Object.assign(waybackObject, response[0]);
-      return alexaEngine(response[1]);
+    .then(([archiveEngineRes, xmlRes]) => {
+      waybackObject = Object.assign(waybackObject, archiveEngineRes);
+      return alexaEngine(xmlRes);
     })
     .then(response => {
       waybackObject = Object.assign(waybackObject, response);
