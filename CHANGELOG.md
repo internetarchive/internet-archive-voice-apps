@@ -1,5 +1,32 @@
 # Change Log
 
+## [2.1.13](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.13) (2018-07-16)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.12...2.1.13)
+
+**Implemented enhancements:**
+
+- create specified logger module to log performance [\#275](https://github.com/internetarchive/internet-archive-google-action/issues/275)
+- automating alexa skill dialog testing [\#273](https://github.com/internetarchive/internet-archive-google-action/issues/273) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- support randomly intent in context of search-music fsm state [\#271](https://github.com/internetarchive/internet-archive-google-action/issues/271)
+- clear alexa session attributes on InOneGoMusicPlayback intent and new session [\#259](https://github.com/internetarchive/internet-archive-google-action/issues/259) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Migrate Script for uploading dialog flow to v2 [\#236](https://github.com/internetarchive/internet-archive-google-action/issues/236)
+- bind alexa intents with google actions [\#196](https://github.com/internetarchive/internet-archive-google-action/issues/196)
+
+**Fixed bugs:**
+
+- Error during DynamoDB put:ValidationException: The parameter cannot be converted to a numeric value: NaN [\#225](https://github.com/internetarchive/internet-archive-google-action/issues/225) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature/alexa dialog changes [\#288](https://github.com/internetarchive/internet-archive-google-action/pull/288) ([adaveinthelife](https://github.com/adaveinthelife))
+- Feature/synonymous intents [\#281](https://github.com/internetarchive/internet-archive-google-action/pull/281) ([hyzhak](https://github.com/hyzhak))
+- Feature/automating alexa skill dialog testing [\#279](https://github.com/internetarchive/internet-archive-google-action/pull/279) ([hyzhak](https://github.com/hyzhak))
+- Feature/log performance [\#277](https://github.com/internetarchive/internet-archive-google-action/pull/277) ([hyzhak](https://github.com/hyzhak))
+- Hotfix/error during dynamodb put validation exception [\#274](https://github.com/internetarchive/internet-archive-google-action/pull/274) ([hyzhak](https://github.com/hyzhak))
+- Feature/randomly in context of search music state [\#272](https://github.com/internetarchive/internet-archive-google-action/pull/272) ([hyzhak](https://github.com/hyzhak))
+- Feature/clear alexa session attributes on in one go music playback intent [\#268](https://github.com/internetarchive/internet-archive-google-action/pull/268) ([hyzhak](https://github.com/hyzhak))
+- \[WIP\] \#236 Migrate Script for uploading dialog flow to v2 [\#266](https://github.com/internetarchive/internet-archive-google-action/pull/266) ([bimlendra](https://github.com/bimlendra))
+
 ## [2.1.12](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.12) (2018-05-02)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.11...2.1.12)
 
