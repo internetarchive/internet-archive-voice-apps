@@ -66,6 +66,11 @@ function handler (app) {
         waybackObject.speech += '.';
       }
       dialog.close(app, waybackObject);
+    })
+    .catch(err => {
+      debug('Wayback handler has an error: ', err);
+      waybackObject.speech = waybackObject.error;
+      dialog.ask(app, waybackObject);
     });
 } // End of handler
 
