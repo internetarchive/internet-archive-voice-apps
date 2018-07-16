@@ -66,7 +66,7 @@ function handler (app) {
     })
     .catch(err => {
       debug('Wayback handler has an error: ', err);
-      waybackObject.speech = waybackObject.error;
+      waybackObject.speech = waybackStrings.error;
       dialog.ask(app, waybackObject);
     });
 } // End of handler
