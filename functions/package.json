@@ -1,7 +1,7 @@
 {
   "name": "audio-interface-of-internet-archive",
   "description": "Audio Interface of Internet Archive",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "private": true,
   "author": "Internet Archive",
   "license": "AGPL-3.0",
