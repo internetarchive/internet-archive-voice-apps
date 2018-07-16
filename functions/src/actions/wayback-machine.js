@@ -52,10 +52,7 @@ function handler (app) {
     })
     .then(([archiveEngineRes, xmlRes]) => {
       waybackObject = Object.assign(waybackObject, archiveEngineRes);
-      return alexaEngine(xmlRes);
-    })
-    .then(response => {
-      waybackObject = Object.assign(waybackObject, response);
+      waybackObject = Object.assign(waybackObject, alexaEngine(xmlRes));
 
       // Construct response dialog for action
       if (waybackObject.alexaUSRank !== 0) {
@@ -97,7 +94,7 @@ function archiveEngine (archiveJSON) {
     return res;
   } else {
     let error = new Error('archiveEngine didn\'t work.');
-    return error;
+    throw error;
   }
 }
 
@@ -116,7 +113,7 @@ function alexaEngine (alexaJSON) {
     return res;
   } else {
     let error = new Error('alexaEngine didn\'t work.');
-    return error;
+    throw error;
   }
 }
 
