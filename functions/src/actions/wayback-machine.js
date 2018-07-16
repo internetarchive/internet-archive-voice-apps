@@ -21,7 +21,7 @@ const waybackStrings = require('../strings').intents.wayback;
  */
 function handler (app) {
   // Create wayback object
-  const waybackObject = {
+  let waybackObject = {
     url: '',
     earliestYear: 0,
     latestYear: 0,
@@ -51,22 +51,11 @@ function handler (app) {
       return Promise.all([archiveEngine(requestData[0].data), xmlConverter(requestData[1].data)]);
     })
     .then(response => {
-      let res = {};
-      // Merge response into object for assignment to WB obj
-      res = Object.assign({}, res, response[0]);
-
-      waybackObject.earliestYear = res.earliestYear;
-      waybackObject.latestYear = res.latestYear;
-      waybackObject.totalUniqueURLs = res.totalUniqueURLs;
-
+      waybackObject = Object.assign(waybackObject, response[0]);
       return alexaEngine(response[1]);
     })
     .then(response => {
-      let res = {};
-      // Merge response into object for assignment to WB obj
-      res = Object.assign({}, res, response);
-      waybackObject.alexaUSRank = res.alexaUSRank;
-      waybackObject.alexaWorldRank = res.alexaWorldRank;
+      waybackObject = Object.assign(waybackObject, response);
 
       // Construct response dialog for action
       if (waybackObject.alexaUSRank !== 0) {
@@ -81,53 +70,49 @@ function handler (app) {
 } // End of handler
 
 function archiveEngine (archiveJSON) {
-  return new Promise(function (resolve, reject) {
-    debug('Inside archiveEngine promise...');
-    let obj = { earliestYear: 0, latestYear: 0, totalUniqueURLs: 0 };
-    // Create array of capture years and then find earliest year
-    //  and most recent year.
-    let yearsArray = Object.keys(archiveJSON.captures);
-    obj.earliestYear = yearsArray[0];
-    obj.latestYear = yearsArray[yearsArray.length - 1];
+  debug('Inside archiveEngine...');
+  const res = { earliestYear: 0, latestYear: 0, totalUniqueURLs: 0 };
+  // Create array of capture years and then find earliest year
+  //  and most recent year.
+  let yearsArray = Object.keys(archiveJSON.captures);
+  res.earliestYear = yearsArray[0];
+  res.latestYear = yearsArray[yearsArray.length - 1];
 
-    // Traverse URL category
+  // Traverse URL category
 
-    // Find baseline of URL count
-    obj.totalUniqueURLs += traverse(archiveJSON.urls[obj.earliestYear]);
-    // debug('Baseline url count: ' + obj.totalUniqueURLs);
+  // Find baseline of URL count
+  res.totalUniqueURLs += traverse(archiveJSON.urls[res.earliestYear]);
+  // debug('Baseline url count: ' + obj.totalUniqueURLs);
 
-    obj.totalUniqueURLs += traverse(archiveJSON.new_urls);
-    // debug('Final url count: ' + obj.totalUniqueURLs);
+  res.totalUniqueURLs += traverse(archiveJSON.new_urls);
+  // debug('Final url count: ' + obj.totalUniqueURLs);
 
-    if (obj.totalUniqueURLs > 0) {
-      debug('archiveEngine promise successful!');
-      resolve(obj);
-    } else {
-      let error = new Error('archiveEngine didn\'t work.');
-      reject(error);
-    }
-  });
+  if (res.totalUniqueURLs > 0) {
+    debug('archiveEngine successful!');
+    return res;
+  } else {
+    let error = new Error('archiveEngine didn\'t work.');
+    return error;
+  }
 }
 
 function alexaEngine (alexaJSON) {
-  return new Promise(function (resolve, reject) {
-    debug('Inside alexaEngine promise...');
-    let obj = { alexaWorldRank: 0, alexaUSRank: 0 };
-    obj.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
-    try {
-      obj.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
-    } catch (e) {
-      debug('Country not found');
-      debug(e);
-    }
-    if (obj.alexaWorldRank > 0) {
-      debug('alexaEngine promise successful!');
-      resolve(obj);
-    } else {
-      let error = new Error('alexaEngine didn\'t work.');
-      reject(error);
-    }
-  });
+  debug('Inside alexaEngine...');
+  const res = { alexaWorldRank: 0, alexaUSRank: 0 };
+  res.alexaWorldRank = alexaJSON['ALEXA']['SD'][0]['POPULARITY'][0]['$']['TEXT'];
+  try {
+    res.alexaUSRank = alexaJSON['ALEXA']['SD'][0]['COUNTRY'][0]['$']['RANK'];
+  } catch (e) {
+    debug('Country not found');
+    debug(e);
+  }
+  if (res.alexaWorldRank > 0) {
+    debug('alexaEngine successful!');
+    return res;
+  } else {
+    let error = new Error('alexaEngine didn\'t work.');
+    return error;
+  }
 }
 
 function xmlConverter (data) {
