@@ -11,21 +11,57 @@ const helpStrings = require('../strings').intents.help;
  */
 function handler (app) {
   const state = fsm.getState(app);
-  switch (state) {
-    case 'playback':
-      dialog.ask(app, {
-        speech: mustache.render(helpStrings.playback, {state}),
-      });
-      break;
-    case 'playback-is-stoped':
-      // execute case y code block
-      break;
-    case 'search-music':
-      // execute case y code block
-      break;
-    default:
-      // execute default code block
+  let speech;
+  if (app.isFirstTry && app.isFirstTry()) {
+    speech = helpStrings.intro;
   }
+
+  if (!app.params) {
+    switch (state) {
+      case 'playback':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.playback + helpStrings.endQuestion),
+        });
+        break;
+      case 'playback-is-stoped':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.playbackstopped + helpStrings.endQuestion),
+        });
+        break;
+      case 'search-music':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.search + helpStrings.endQuestion),
+        });
+        break;
+      default:
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.default),
+        });
+    }
+  } else {
+    switch (app.param) {
+      case 'collection':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.collectionsInfo),
+        });
+        break;
+      case 'player':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.playerControl),
+        });
+        break;
+      case 'search-music':
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.search + helpStrings.endQuestion),
+        });
+        break;
+      default:
+        dialog.ask(app, {
+          speech: mustache.render(helpStrings.default),
+        });
+    }
+  } // End of switch statement
+  dialog.ask(app, Object.assign({}, helpStrings, {speech}));
 }
 
 module.exports = {
