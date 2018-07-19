@@ -93,13 +93,14 @@ module.exports = {
      */
     help: {
       collectionsInfo: 'There are two main collections to listen to. Our collection of 78s, which features a variety of genres including jazz, instrumental, and dance. Our other collection is of live concerts. These are live concert recordings that have been uploaded to the Archive. They include artists like the Grateful Dead and the Disco Biscuits.',
-      default: 'You are in the help interface for the Internet Archive voice app. Just ask me if you\'d like to hear more about our music collections or how the music player works. You can return to the main menu of options at any time by saying "Talk to the Internet Archive".',
+      default: 'You are in the help interface for the Internet Archive voice app. You can ask me if you\'d like to hear more about our music collections or how the music player works. You can return to the main app at any time by saying "Talk to the Internet Archive".',
       endQuestion: 'Would you like to hear more information about our collections or would you prefer to hear about how the music player can be controlled?',
-      intro: 'Welcome to the help interface for the Internet Archive voice app. You can return to the main menu of options at any time by saying "Talk to the Internet Archive".',
-      playback: 'You are currently using playback. This means that the Archive will continue to play music from the Archive\'s collections. There are two main collections to listen to- our collection of 78s or our collection of live concerts.',
-      playerControl: 'You can control the audio player by saying "pause" to stop the music and "play" to start it again. You can hear the titles of songs in the player by saying "title on". You can turn off this feature by saying "title off',
-      playbackstopped: 'Playback has stopped. You are probably at the end of a playlist. To return to the main menu of options, just say "Talk to the Internet Archive".',
-      search: 'You are currently using music search. You can listen to music from one of our two collections - 78s or live concerts. You can also say "play" and the name of an artist.',
+      error: 'I didn\'t catch that. Would you like to hear about collections or how the music player works?',
+      intro: 'Welcome to the help interface for the Internet Archive voice app. You can return to the main app at any time by saying "Talk to the Internet Archive".<break></break>',
+      playback: 'You are currently using playback. The Archive will continue to play music from the our collections. There are two main collections to listen to- our collection of 78s or our collection of live concerts.',
+      playerControl: 'You can control the audio player by saying "pause" to stop the music and "play" to start it again. You can skip to the next song by saying "next song". You can hear the titles of songs in the player by saying "title on". You can turn off this feature by saying "title off".',
+      playbackstopped: 'Playback has stopped. You are likely at the end of a playlist. To return to the main app, just say "Talk to the Internet Archive".',
+      search: 'You are currently using music search. You can listen to music from two of our collections - 78s or live concerts. You can also say "play" and the name of an artist.',
     },
 
     /**
