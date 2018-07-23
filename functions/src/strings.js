@@ -441,7 +441,7 @@ module.exports = {
     }],
 
     version: {
-      speech: 'Version is {{version}}.',
+      speech: 'Version is <say-as interpret-as="cardinal">{{version}}.</say-as>',
     },
 
     welcome: {
