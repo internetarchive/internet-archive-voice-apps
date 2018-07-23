@@ -1,5 +1,7 @@
+// const _ = require('lodash');
 const mustache = require('mustache');
 
+const constants = require('../constants');
 const {debug} = require('../utils/logger')('ia:actions:help');
 const dialog = require('../dialog');
 const fsm = require('../state/fsm');
@@ -14,16 +16,17 @@ function handler (app) {
   debug('INSIDE HELP HANDLER: ');
   const state = fsm.getState(app);
   debug('STARTING STATE: ' + state);
-  let convToken = app.conv.request.conversation.conversationToken;
 
-  if (convToken.indexOf('help-followup') === -1) {
+  if (state.indexOf('help') === -1) {
     debug('INSIDE INTRO');
     dialog.ask(app, {
       speech: mustache.render(helpStrings.intro),
     });
   }
+
   debug('PARAMETER: ' + util.inspect(app.params.getByName('help'), false, null));
   let command = app.params.getByName('help');
+
   if (!command) {
     debug('Inside state switch...');
     switch (state) {
@@ -75,6 +78,7 @@ function handler (app) {
         });
     }
   } // End of switch statement
+  fsm.transitionTo(app, constants.fsm.states.HELP);
 }
 
 module.exports = {
