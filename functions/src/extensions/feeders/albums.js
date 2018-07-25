@@ -14,7 +14,7 @@
  */
 
 const {debug, warning} = require('../../utils/logger')('ia:feeder:albums');
-
+const objToLowerCase = require('../../utils/map-to-lowercases');
 const albumsProvider = require('../../provider/albums');
 
 const DefaultFeeder = require('./_default');
@@ -31,7 +31,8 @@ class SyncAlbum extends DefaultFeeder {
    */
   build ({app, query, playlist}) {
     debug('lets build albums feeder');
-    const slots = query.getSlots(app);
+    // make all values low cases string
+    const slots = objToLowerCase(query.getSlots(app));
     debug('we have slots:', slots);
     let total;
     return albumsProvider
@@ -79,6 +80,7 @@ class SyncAlbum extends DefaultFeeder {
         return albumId;
       })
       .then((albumId) => {
+        albumId = albumId.toLowerCase();
         debug('id of album:', albumId);
         return albumId && albumsProvider.fetchAlbumDetails(app, albumId);
       })

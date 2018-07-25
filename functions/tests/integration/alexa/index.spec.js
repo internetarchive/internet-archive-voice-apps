@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 const path = require('path');
 const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
+const util = require('util');
 
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
@@ -30,13 +31,13 @@ describe('integration', () => {
           // mock requests to IA
           axiosMock = new MockAdapter(axios);
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../fixtures/coverage-and-year.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22&fl%5B%5D=year&rows=150&output=json'
+            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=year&rows=150&output=json'
           ).reply(200, require('../../fixtures/years.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22Grateful%20Dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
+            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:jazz&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
@@ -48,7 +49,10 @@ describe('integration', () => {
             'https://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
           ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=collection:etree&fl%5B%5D=creator,identifier&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/popular-of-etree.json'));
+          axiosMock.onGet(
+          ).reply(400);
 
           // mock attributes persistance
           sandbox = sinon.createSandbox({});
@@ -96,8 +100,10 @@ describe('integration', () => {
             return alexa
               .utter(user)
               .then(res => {
-                expect(res.response.outputSpeech.ssml).to.exist;
+                console.log('res', util.inspect(res));
                 if (typeof assistant === 'string') {
+                  expect(res.response.outputSpeech).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.exist;
                   expect(res.response.outputSpeech.ssml).to.include(assistant);
                 } else if ('directive' in assistant) {
                   expect(res.response).to.have.property('directives');
