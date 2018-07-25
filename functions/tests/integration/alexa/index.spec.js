@@ -7,7 +7,6 @@ const yaml = require('js-yaml');
 const path = require('path');
 const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
-const util = require('util');
 
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
@@ -100,7 +99,6 @@ describe('integration', () => {
             return alexa
               .utter(user)
               .then(res => {
-                console.log('res', util.inspect(res));
                 if (typeof assistant === 'string') {
                   expect(res.response.outputSpeech).to.exist;
                   expect(res.response.outputSpeech.ssml).to.exist;
