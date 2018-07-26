@@ -1,5 +1,29 @@
 # Change Log
 
+## [Unreleased](https://github.com/internetarchive/internet-archive-google-action/tree/HEAD)
+
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.0...HEAD)
+
+**Fixed bugs:**
+
+- Alexa spells version 2.1.12 as date [\#276](https://github.com/internetarchive/internet-archive-google-action/issues/276) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+## [2.2.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.0) (2018-07-25)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.13...2.2.0)
+
+**Implemented enhancements:**
+
+- Deploy new version of Alexa Skill to new AWS account [\#295](https://github.com/internetarchive/internet-archive-google-action/issues/295) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Make Alexa Skill available for beta testing [\#294](https://github.com/internetarchive/internet-archive-google-action/issues/294) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Add description of IA Alexa Skill [\#293](https://github.com/internetarchive/internet-archive-google-action/issues/293) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- add app icons to alexa skill [\#292](https://github.com/internetarchive/internet-archive-google-action/issues/292) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Improve welcome message [\#283](https://github.com/internetarchive/internet-archive-google-action/issues/283)
+
+**Merged pull requests:**
+
+- Fixed version dialog issue with Alexa and added changes to version spec test [\#298](https://github.com/internetarchive/internet-archive-google-action/pull/298) ([adaveinthelife](https://github.com/adaveinthelife))
+- Dialog changes [\#296](https://github.com/internetarchive/internet-archive-google-action/pull/296) ([adaveinthelife](https://github.com/adaveinthelife))
+
 ## [2.1.13](https://github.com/internetarchive/internet-archive-google-action/tree/2.1.13) (2018-07-16)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.12...2.1.13)
 
