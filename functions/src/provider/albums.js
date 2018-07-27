@@ -5,6 +5,7 @@ const util = require('util');
 const config = require('../config');
 const delayedPromise = require('../utils/delay');
 const {debug, error} = require('../utils/logger')('ia:provider:albums');
+const objToLowerCase = require('../utils/map-to-lowercases');
 
 const {buildQueryCondition} = require('./advanced-search');
 const endpointProcessor = require('../network/endpoint-processor');
@@ -132,7 +133,7 @@ function fetchAlbumsByQuery (app, query) {
     // creator's collection.
     coverage: '*',
     limit: 3,
-  }, query);
+  }, objToLowerCase(query));
 
   // create search query
   const condition = buildQueryCondition(query);
