@@ -21,7 +21,7 @@ describe('actions', () => {
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
       expect(dialog.ask.args[0][1]).to.have.property('speech')
-        .to.equal('Version is <say-as interpret-as="number">1.2.3</say-as>'.);
+        .to.equal('Version is <say-as interpret-as="number">1.2.3</say-as>.');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions');
     });
   });
