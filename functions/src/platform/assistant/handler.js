@@ -87,8 +87,6 @@ module.exports = (actionsMap) => {
       return matchedHandlers[0].handler(conv);
     }
 
-    // TODO: move to actions
-    // warning(`We missed action: "${app.getIntent()}".
     warning(`we missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
@@ -97,6 +95,8 @@ module.exports = (actionsMap) => {
       return matchedHandlers[0].handler(conv);
     }
 
+    warning(`something wrong we don't have unhandled handler`);
+    // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
   });
 
