@@ -11,7 +11,8 @@ function handler (app) {
 
 /**
  * handle Alexa Unhandled intent
- * TODO: could cover unhandled for Google Assistant as well
+ * cover unhandled for Google Assistant as well
+ *
  * @type {{handler: handler}}
  */
 module.exports = {
