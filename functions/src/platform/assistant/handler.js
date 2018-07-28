@@ -1,6 +1,7 @@
 const {dialogflow} = require('actions-on-google');
 const bst = require('bespoken-tools');
 const functions = require('firebase-functions');
+const _ = require('lodash');
 // const dashbotBuilder = require('dashbot');
 // FIXME: temporal solution details below
 // const domain = require('domain'); // eslint-disable-line
@@ -8,7 +9,8 @@ const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
 
-const {debug, error, warning} = require('./../../utils/logger')('ia:index');
+const strings = require('../../strings');
+const {debug, error, warning} = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
 const logRequest = require('./middlewares/log-request');
@@ -76,8 +78,10 @@ module.exports = (actionsMap) => {
   //   }
   // });
 
+  const getHandlerByName = name => handlers.filter(h => h.intent === name);
+
   app.fallback((conv) => {
-    const matchedHandlers = handlers.filter(h => h.intent === conv.action);
+    let matchedHandlers = getHandlerByName(conv.action);
     if (matchedHandlers.length > 0) {
       debug(`doesn't match intent name but matched manually by action name`);
       return matchedHandlers[0].handler(conv);
@@ -88,7 +92,12 @@ module.exports = (actionsMap) => {
     warning(`we missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
-    conv.ask(`can you rephrase it?`);
+    matchedHandlers = getHandlerByName('unhandled');
+    if (matchedHandlers.length > 0) {
+      return matchedHandlers[0].handler(conv);
+    }
+
+    conv.ask(_.sample(strings.intents.unhandled));
   });
 
   app.catch((conv, err) => {
