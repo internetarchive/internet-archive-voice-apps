@@ -43,4 +43,4 @@
   dialog:
   - user:
       intend: AMAZON.we_definitely_do_not_handle_it
-    assistant: "I'm not sure what you said. Can you repeat that?"
+    assistant: "Sorry, I'm afraid I don't follow you."

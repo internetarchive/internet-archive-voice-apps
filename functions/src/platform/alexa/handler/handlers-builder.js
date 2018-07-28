@@ -198,7 +198,7 @@ module.exports = (actions) => {
         if (!res) {
           warning(`we haven't found any valid handler`);
           handlers = {
-            default: require('../../../actions/input-unknown').handler,
+            default: require('../../../actions/unhandled').handler,
           };
           name = 'unknown intent';
         } else {

@@ -440,6 +440,10 @@ module.exports = {
       speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
     }],
 
+    unhandled: [{
+      speech: "Sorry, I'm afraid I don't follow you.",
+    }],
+
     version: {
       speech: 'Version is <say-as interpret-as="number">{{version}}</say-as>.',
     },
