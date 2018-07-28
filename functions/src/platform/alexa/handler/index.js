@@ -42,16 +42,6 @@ module.exports = (actions) => {
       // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }
 
-    // FIXME:
-    // temporal hack because bst doesn't suppor ASK SDK v2 yet
-    // https://github.com/bespoken/bst/issues/440
-    if (callback) {
-      skill.invoke(event, context).then(
-        res => callback(null, res),
-        err => callback(err)
-      );
-      return;
-    }
     return skill.invoke(event, context);
   };
 };
