@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 const path = require('path');
 const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
+const util = require('util');
 
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
@@ -95,22 +96,29 @@ describe('integration', () => {
         }
 
         dialog.forEach(({user, assistant}) => {
-          it(`should utter: "${user}" and get a response: "${JSON.stringify(assistant)}"`, () => {
-            return alexa
-              .utter(user)
-              .then(res => {
-                if (typeof assistant === 'string') {
-                  expect(res.response.outputSpeech).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.include(assistant);
-                } else if ('directive' in assistant) {
-                  expect(res.response).to.have.property('directives');
-                  expect(res.response.directives).to.be.an('array');
-                  expect(res.response.directives[0]).to.have.property('type', assistant.directive);
-                } else {
-                  throw new Error(`doesn't support response:`, assistant);
-                }
-              });
+          it(`should utter: "${util.inspect(user, {depth: null})}" and get a response: "${JSON.stringify(assistant)}"`, () => {
+            let res;
+            if (typeof (user) === 'string') {
+              res = alexa.utter(user);
+            } else if ('intend' in user) {
+              res = alexa.intend(user.intend);
+            } else {
+              throw new Error(`We don't support user scheme ${util.inspect(user, {depth: null})}`);
+            }
+            return res.then(res => {
+              expect(res).to.have.property('response').to.be.not.undefined;
+              if (typeof assistant === 'string') {
+                expect(res.response.outputSpeech).to.exist;
+                expect(res.response.outputSpeech.ssml).to.exist;
+                expect(res.response.outputSpeech.ssml).to.include(assistant);
+              } else if ('directive' in assistant) {
+                expect(res.response).to.have.property('directives');
+                expect(res.response.directives).to.be.an('array');
+                expect(res.response.directives[0]).to.have.property('type', assistant.directive);
+              } else {
+                throw new Error(`doesn't support response:`, assistant);
+              }
+            });
           });
         });
       });

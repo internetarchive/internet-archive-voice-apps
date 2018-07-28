@@ -38,3 +38,9 @@
   - user: 'play jazz'
     assistant:
       directive: 'AudioPlayer.Play'
+
+- scenario: 'unhandled intent -> graceful answer'
+  dialog:
+  - user:
+      intend: AMAZON.we_definitely_do_not_handle_it
+    assistant: "I'm not sure what you said. Can you repeat that?"
