@@ -46,8 +46,26 @@ describe('platform', () => {
 
         return wait()
           .then(() => {
-            expect(warning).to.be.calledOnce;
+            expect(warning).to.be.called;
             expect(warning.getCall(0).args[0]).to.includes(action);
+          });
+      });
+
+      it('should gracefully ask in case of missed action', () => {
+        let warning = sinon.spy();
+        handlerBuilder.__set__('warning', warning);
+
+        const handler = handlerBuilder();
+        const action = 'on-definitely-uncovered-action';
+
+        handler(buildIntentRequest({
+          action,
+          lastSeen: null,
+        }), res);
+
+        return wait()
+          .then(() => {
+            expect(res.speech()).to.includes(`Sorry, I'm afraid I don't follow you.`);
           });
       });
     });

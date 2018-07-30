@@ -1,13 +1,18 @@
+const _ = require('lodash');
+
+const dialog = require('../dialog');
+const strings = require('../strings').intents.unhandled;
 const {warning} = require('../utils/logger')('ia:actions:unhandled');
 
 function handler (app) {
-  // TODO: should log unhandled itents to Sentry
-  warning('Catch unhandled intent');
+  warning(`we haven't found any valid handler`);
+  dialog.ask(app, _.sample(strings));
 }
 
 /**
  * handle Alexa Unhandled intent
- * TODO: could cover unhandled for Google Assistant as well
+ * cover unhandled for Google Assistant as well
+ *
  * @type {{handler: handler}}
  */
 module.exports = {

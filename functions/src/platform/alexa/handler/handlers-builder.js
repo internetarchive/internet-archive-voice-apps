@@ -3,7 +3,7 @@ const util = require('util');
 
 const {App} = require('../app');
 const jsonify = require('../../../utils/jsonify');
-const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug, warning} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const fsm = require('../../../state/fsm');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
@@ -191,13 +191,20 @@ module.exports = (actions) => {
       handle: (handlerInput) => {
         debug('catch all the rest');
 
+        let handlers;
+        let name;
+
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
-          debug(`we haven't found any valid handler`);
-          return Promise.resolve();
+          warning(`we haven't found any valid handler`);
+          handlers = {
+            default: require('../../../actions/unhandled').handler,
+          };
+          name = 'unknown intent';
+        } else {
+          handlers = res.handlers;
+          name = res.name;
         }
-
-        const {handlers, name} = res;
 
         debug(`begin handle intent "${name}"`);
         return fetchAttributes(handlerInput)
