@@ -39,8 +39,10 @@ function fetchAttributes (handlerInput) {
   debug('fetch attributes');
   return handlerInput.attributesManager.getPersistentAttributes()
     .catch((err) => {
-      debug('we got error on gettting persistetn attributes', err);
-      debug('so we drop them to default');
+      warning(
+        'We got error on gettting persistetn attributes', err,
+        'so we drop them to default'
+      );
       return {};
     });
 }
