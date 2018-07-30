@@ -1,12 +1,21 @@
 # Change Log
 
-## [Unreleased](https://github.com/internetarchive/internet-archive-google-action/tree/HEAD)
+## [2.2.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.1) (2018-07-30)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.0...2.2.1)
 
-[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.0...HEAD)
+**Implemented enhancements:**
+
+- update deps [\#297](https://github.com/internetarchive/internet-archive-google-action/issues/297)
 
 **Fixed bugs:**
 
 - Alexa spells version 2.1.12 as date [\#276](https://github.com/internetarchive/internet-archive-google-action/issues/276) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature/handle unhandled intent [\#304](https://github.com/internetarchive/internet-archive-google-action/pull/304) ([hyzhak](https://github.com/hyzhak))
+- Update version.spec to fix test error [\#301](https://github.com/internetarchive/internet-archive-google-action/pull/301) ([adaveinthelife](https://github.com/adaveinthelife))
+- Feature/update deps [\#299](https://github.com/internetarchive/internet-archive-google-action/pull/299) ([hyzhak](https://github.com/hyzhak))
 
 ## [2.2.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.0) (2018-07-25)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.1.13...2.2.0)
