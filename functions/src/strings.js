@@ -89,6 +89,11 @@ module.exports = {
       speech: 'State of FSM is {{state}}',
     },
 
+    globalError: {
+      speech: 'We got some problem with performing your request. Please rephrase it.',
+      suggestions: ['reset'],
+    },
+
     /**
      * In one go actions for playback music
      */

@@ -2,6 +2,7 @@ const _ = require('lodash');
 const util = require('util');
 
 const {App} = require('../app');
+const globalErrorHandler = require('../../../actions/global-error');
 const jsonify = require('../../../utils/jsonify');
 const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
@@ -152,12 +153,14 @@ module.exports = (actions) => {
         const handler = fsm.selectHandler(app, handlers);
         return Promise.all([app, handler(app)]);
       })
-      .catch((err) => {
-        error(`fail on handling intent ${intentName}`, err);
-        return [app, null];
-      })
       // TODO: maybe we could store and response in the same time?
       .then(([app, res]) => storeAttributes(app, handlerInput))
+      .catch((err) => {
+        error(`fail on handling intent ${intentName}`, err);
+        // we should be aware that even here we could got exception
+        // so maybe here is no simple way to give response to user
+        return [app, globalErrorHandler.handler(app)];
+      })
       .then(() => {
         debug(`end handle intent "${intentName}"`);
         return handlerInput.responseBuilder.getResponse();
