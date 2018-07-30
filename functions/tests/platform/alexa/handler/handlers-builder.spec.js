@@ -1,8 +1,9 @@
 const {expect} = require('chai');
 const _ = require('lodash');
+const rewire = require('rewire');
 const sinon = require('sinon');
 
-const builder = require('../../../../src/platform/alexa/handler/handlers-builder');
+const builder = rewire('../../../../src/platform/alexa/handler/handlers-builder');
 const {App} = require('../../../../src/platform/alexa/app');
 const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
@@ -141,6 +142,24 @@ describe('platform', () => {
           .then(() => {
             expect(playSongHandler).to.have.been.called;
           });
+      });
+
+      describe('canHandle', () => {
+        it('should return false if something failed inside of it', () => {
+          builder.__set__('stripAmazonIntent', () => {
+            throw new Error('one error');
+          });
+          const logError = sinon.spy();
+          builder.__set__('error', logError);
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const res = builder(new Map([
+            ['no-input', {default: sinon.spy()}],
+            ['welcome', {default: sinon.spy()}],
+          ]));
+
+          expect(res[0].canHandle(input)).to.be.false;
+          expect(logError).to.be.called;
+        });
       });
     });
   });

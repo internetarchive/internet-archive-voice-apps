@@ -3,7 +3,7 @@ const util = require('util');
 
 const {App} = require('../app');
 const jsonify = require('../../../utils/jsonify');
-const {debug, warning} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const fsm = require('../../../state/fsm');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
@@ -141,23 +141,29 @@ module.exports = (actions) => {
         intent,
 
         canHandle: (handlerInput) => {
-          let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
-          if (intentName) {
-            // if intent starts with AMAZON we will cut this head
-            const newIntentName = stripAmazonIntent(intentName);
-            if (intentName !== newIntentName) {
-              intentName = newIntentName;
+          // we never want failed on user request
+          // but all failes should be logged
+          try {
+            let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
+            if (intentName) {
+              // if intent starts with AMAZON we will cut this head
+              const newIntentName = stripAmazonIntent(intentName);
+              if (intentName !== newIntentName) {
+                intentName = newIntentName;
+              }
+              return intentName === intent;
             }
-            return intentName === intent;
-          }
 
-          let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
-          if (requestType) {
-            const newRequestType = stripRequestType(requestType);
-            if (requestType !== newRequestType) {
-              requestType = newRequestType;
+            let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
+            if (requestType) {
+              const newRequestType = stripRequestType(requestType);
+              if (requestType !== newRequestType) {
+                requestType = newRequestType;
+              }
+              return requestType === intent;
             }
-            return requestType === intent;
+          } catch (err) {
+            error(`canHandler of ${intent} failed with`, err);
           }
 
           return false;
