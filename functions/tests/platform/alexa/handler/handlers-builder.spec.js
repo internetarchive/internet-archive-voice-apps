@@ -145,7 +145,29 @@ describe('platform', () => {
             });
         });
 
-        it('should log on failed handle', () => {
+        it('should log on failed main handle', () => {
+          const logError = sinon.spy();
+          builder.__set__('error', logError);
+          const res = builder(new Map([
+            [
+              'help',
+              {
+                default: () => {
+                  throw new Error('error inside of handler');
+                },
+              },
+            ],
+          ]));
+
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent');
+          const item = res.find(e => e.canHandle(input));
+          return item.handle(input)
+            .then(() => {
+              expect(logError).to.be.called;
+            });
+        });
+
+        it('should log on failed fallback handle', () => {
           const logError = sinon.spy();
           builder.__set__('error', logError);
           const res = builder(new Map([
@@ -160,7 +182,7 @@ describe('platform', () => {
           ]));
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
-          const item = res.find(e => e.canHandle());
+          const item = res.find(e => e.canHandle(input));
           return item.handle(input)
             .then(() => {
               expect(logError).to.be.called;
