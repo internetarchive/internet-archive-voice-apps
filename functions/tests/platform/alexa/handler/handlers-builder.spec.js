@@ -127,21 +127,45 @@ describe('platform', () => {
           });
       });
 
-      it(`should drop intent underscore tail when can't find matched handler`, () => {
-        const playSongHandler = sinon.spy();
+      describe('handle', () => {
+        it(`should drop intent underscore tail when can't find matched handler`, () => {
+          const playSongHandler = sinon.spy();
 
-        const res = builder(new Map([
-          ['play-songs', {default: playSongHandler}],
-        ]));
+          const res = builder(new Map([
+            ['play-songs', {default: playSongHandler}],
+          ]));
 
-        const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
-        const item = res.find(e => e.canHandle());
-        expect(item).to.be.not.undefined;
-        expect(item).to.be.not.null;
-        return item.handle(input)
-          .then(() => {
-            expect(playSongHandler).to.have.been.called;
-          });
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const item = res.find(e => e.canHandle());
+          expect(item).to.be.not.undefined;
+          expect(item).to.be.not.null;
+          return item.handle(input)
+            .then(() => {
+              expect(playSongHandler).to.have.been.called;
+            });
+        });
+
+        it('should log on failed handle', () => {
+          const logError = sinon.spy();
+          builder.__set__('error', logError);
+          const res = builder(new Map([
+            [
+              'play-songs',
+              {
+                default: () => {
+                  throw new Error('error inside of handler');
+                },
+              },
+            ],
+          ]));
+
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const item = res.find(e => e.canHandle());
+          return item.handle(input)
+            .then(() => {
+              expect(logError).to.be.called;
+            });
+        });
       });
 
       describe('canHandle', () => {
