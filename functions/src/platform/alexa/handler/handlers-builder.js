@@ -151,15 +151,15 @@ module.exports = (actions) => {
         debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
         app = new App(handlerInput, persistentAttributes);
         const handler = fsm.selectHandler(app, handlers);
-        return Promise.all([app, handler(app)]);
+        return handler(app);
       })
       // TODO: maybe we could store and response in the same time?
-      .then(([app, res]) => storeAttributes(app, handlerInput))
+      .then(res => storeAttributes(app, handlerInput))
       .catch((err) => {
         error(`fail on handling intent ${intentName}`, err);
         // we should be aware that even here we could got exception
         // so maybe here is no simple way to give response to user
-        return [app, globalErrorHandler.handler(app)];
+        return globalErrorHandler.handler(app);
       })
       .then(() => {
         debug(`end handle intent "${intentName}"`);
