@@ -212,25 +212,31 @@ describe('platform', () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
-              [
-                'help', {
-                  default: sinon.spy()
-                },
-              ],
+              ['help', {default: sinon.spy()}],
+              ['unhandled', {default: sinon.spy()}],
             ]));
 
             expect(logWarning).to.have.been.called;
           });
 
-          it(`shouldn't warn if we have global-error handler`, () => {
+          it(`should warn if we don't have unhandled handler`, () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
-              [
-                'global-error', {
-                  default: sinon.spy()
-                },
-              ],
+              ['help', {default: sinon.spy()}],
+              ['global-error', {default: sinon.spy()}],
+            ]));
+
+            expect(logWarning).to.have.been.called;
+          });
+
+          it(`shouldn't warn if we have global-error and unhandled handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              ['help', {default: sinon.spy()}],
+              ['global-error', {default: sinon.spy()}],
+              ['unhandled', {default: sinon.spy()}],
             ]));
 
             expect(logWarning).to.have.not.been.called;

@@ -141,6 +141,15 @@ module.exports = (actions) => {
 
   const globalErrorHandlers = actions.get('global-error');
 
+  if (!actions.has('unhandled')) {
+    warning(
+      'we missed action handler actions/unhandled,' +
+      'whicl is require to handle unhandled intents.'
+    );
+  }
+
+  const unhandledHandlers = actions.get('unhandled');
+
   /**
    * Intent handler
    *
@@ -231,9 +240,7 @@ module.exports = (actions) => {
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
           warning(`we haven't found any valid handler`);
-          handlers = {
-            default: require('../../../actions/unhandled').handler,
-          };
+          handlers = unhandledHandlers;
           intent = 'unknown intent';
         } else {
           handlers = res.handlers;
