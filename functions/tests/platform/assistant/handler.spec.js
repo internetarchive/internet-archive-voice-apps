@@ -31,8 +31,8 @@ describe('platform', () => {
     beforeEach(() => {
       res = new MockResponse();
       actions = new Map([
-        ['global-error', {default: sinon.spy()}],
-        ['unhandled', {default: sinon.spy()}],
+        ['global-error', {default: require('../../../src/actions/global-error')}],
+        ['unhandled', {default: require('../../../src/actions/unhandled')}],
       ]);
     });
 
