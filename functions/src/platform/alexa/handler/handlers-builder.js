@@ -144,7 +144,7 @@ module.exports = (actions) => {
   if (!actions.has('unhandled')) {
     warning(
       'we missed action handler actions/unhandled,' +
-      'whicl is require to handle unhandled intents.'
+      'which is require to handle unhandled intents.'
     );
   }
 

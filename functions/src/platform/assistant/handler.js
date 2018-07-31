@@ -34,6 +34,21 @@ module.exports = (actionsMap) => {
     );
   }
 
+  const getHandlerByName = name => handlers.filter(h => h.intent === name);
+
+  if (getHandlerByName('global-error').length === 0) {
+    warning(
+      'we missed action handler actions/global-error, ' +
+      'which is required to handle global unhandled errors.');
+  }
+
+  if (getHandlerByName('unhandled').length === 0) {
+    warning(
+      'we missed action handler actions/unhandled,' +
+      'which is require to handle unhandled intents.'
+    );
+  }
+
   // Sentry middleware
   if (functions.config().sentry) {
     app.middleware((conv) => {
@@ -77,8 +92,6 @@ module.exports = (actionsMap) => {
   //     dialog.close(conv.app, strings.errors.device.mediaResponse);
   //   }
   // });
-
-  const getHandlerByName = name => handlers.filter(h => h.intent === name);
 
   app.fallback((conv) => {
     let matchedHandlers = getHandlerByName(conv.action);

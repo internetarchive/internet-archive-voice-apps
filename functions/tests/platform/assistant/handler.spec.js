@@ -9,6 +9,7 @@ const {wait} = require('../../_utils/wait');
 
 describe('platform', () => {
   describe('assistant', () => {
+    let actions;
     let res;
     let functions, admin;
     let configStub, adminInitStub;
@@ -29,6 +30,10 @@ describe('platform', () => {
 
     beforeEach(() => {
       res = new MockResponse();
+      actions = new Map([
+        ['global-error', {default: sinon.spy()}],
+        ['unhandled', {default: sinon.spy()}],
+      ]);
     });
 
     describe('handler', () => {
@@ -36,7 +41,7 @@ describe('platform', () => {
         let warning = sinon.spy();
         handlerBuilder.__set__('warning', warning);
 
-        const handler = handlerBuilder();
+        const handler = handlerBuilder(actions);
         const action = 'on-definitely-uncovered-action';
 
         handler(buildIntentRequest({
@@ -67,6 +72,19 @@ describe('platform', () => {
           .then(() => {
             expect(res.speech()).to.includes(`Sorry, I'm afraid I don't follow you.`);
           });
+      });
+
+      [
+        'global-error',
+        'unhandled',
+      ].forEach((action) => {
+        it(`should warn in case of missed ${action} action`, () => {
+          let warning = sinon.spy();
+          handlerBuilder.__set__('warning', warning);
+          actions.delete(action);
+          handlerBuilder(actions);
+          expect(warning).to.have.been.called;
+        });
       });
     });
   });
