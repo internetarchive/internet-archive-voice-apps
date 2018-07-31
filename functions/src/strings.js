@@ -3,7 +3,7 @@ module.exports = {
    * v2
    */
   acknowledger: [
-    'OK, ',
+    'Okay, ',
     'Got it, ',
     'Sure, ',
     'Alright, ',
@@ -189,7 +189,7 @@ module.exports = {
        * to check our undestanding
        */
       acknowledges: [
-        'Ok! Lets go with the artist {{creator}}!',
+        'Okay! Lets go with the artist {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
 
@@ -271,7 +271,7 @@ module.exports = {
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was an excellent year!',
-        'Ok! Lets go with {{creator}}!',
+        'Okay! Lets go with {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
 
@@ -361,7 +361,7 @@ module.exports = {
         ],
 
         speech: [
-          'Ok, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. Do you have a particular year in mind?',
+          'Okay, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. Do you have a particular year in mind?',
         ],
 
         /**
@@ -428,7 +428,7 @@ module.exports = {
         speech: `Excellent! I'll be saying the title to each song.`,
       },
       true: {
-        speech: `Ok, muting song titles.`,
+        speech: `Okay, muting song titles.`,
       },
     },
 
