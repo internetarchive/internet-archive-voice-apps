@@ -2,7 +2,6 @@ const _ = require('lodash');
 const util = require('util');
 
 const {App} = require('../app');
-const globalErrorHandler = require('../../../actions/global-error');
 const jsonify = require('../../../utils/jsonify');
 const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
@@ -134,6 +133,14 @@ module.exports = (actions) => {
     return {};
   }
 
+  if (!actions.has('global-error')) {
+    warning(
+      'we missed action handler actions/global-error, ' +
+      'which is required to handle global unhandled errors.');
+  }
+
+  const globalErrorHandlers = actions.get('global-error');
+
   /**
    * Intent handler
    *
@@ -159,7 +166,7 @@ module.exports = (actions) => {
         error(`fail on handling intent ${intentName}`, err);
         // we should be aware that even here we could got exception
         // so maybe here is no simple way to give response to user
-        return globalErrorHandler.handler(app);
+        return fsm.selectHandler(app, globalErrorHandlers)(app);
       })
       .then(() => {
         debug(`end handle intent "${intentName}"`);

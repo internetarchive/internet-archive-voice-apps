@@ -155,8 +155,9 @@ describe('platform', () => {
                 default: () => {
                   throw new Error('error inside of handler');
                 },
-              },
+              }
             ],
+            ['global-error', {default: sinon.spy()}],
           ]));
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
@@ -168,6 +169,7 @@ describe('platform', () => {
         });
 
         describe('main hanler', () => {
+          let globalErrorHandler;
           let logError;
           let input;
           let handlerItem;
@@ -176,6 +178,7 @@ describe('platform', () => {
           beforeEach(() => {
             logError = sinon.spy();
             builder.__set__('error', logError);
+            globalErrorHandler = sinon.spy();
             handlers = builder(new Map([
               [
                 'help',
@@ -185,6 +188,7 @@ describe('platform', () => {
                   },
                 },
               ],
+              ['global-error', {default: globalErrorHandler}],
             ]));
             input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent');
             handlerItem = handlers.find(e => e.canHandle(input));
@@ -198,14 +202,38 @@ describe('platform', () => {
           });
 
           it('should fallback to repair phrase in case when we got error', () => {
-            const globalErrorHandler = sinon.spy();
-            builder.__set__('globalErrorHandler', {
-              handler: globalErrorHandler,
-            });
             return handlerItem.handle(input)
               .then(() => {
                 expect(globalErrorHandler).to.have.been.called;
               });
+          });
+
+          it(`should warn if we don't have global-error handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              [
+                'help', {
+                  default: sinon.spy()
+                },
+              ],
+            ]));
+
+            expect(logWarning).to.have.been.called;
+          });
+
+          it(`shouldn't warn if we have global-error handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              [
+                'global-error', {
+                  default: sinon.spy()
+                },
+              ],
+            ]));
+
+            expect(logWarning).to.have.not.been.called;
           });
         });
       });
