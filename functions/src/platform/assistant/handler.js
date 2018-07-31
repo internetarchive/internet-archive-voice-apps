@@ -120,7 +120,23 @@ module.exports = (actionsMap) => {
       conv.raven.captureException(err);
     }
 
-    conv.ask(`Can you rephrase it?`);
+    let globalErrorWasHandled = false;
+    if (globalErrorHandler) {
+      try {
+        globalErrorHandler.handler(conv);
+        globalErrorWasHandled = true;
+      } catch (err) {
+        error('error on global error handler', err);
+        if (conv.raven) {
+          conv.raven.captureException(err);
+        }
+      }
+    }
+
+    // last chance to give response to user
+    if (!globalErrorWasHandled) {
+      conv.ask(`Can you rephrase it?`);
+    }
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
