@@ -34,16 +34,27 @@ module.exports = (actionsMap) => {
     );
   }
 
-  const getHandlerByName = name => handlers.filter(h => h.intent === name)[0];
+  /**
+   * @private
+   *
+   * get handler by intent name
+   *
+   * @param name
+   * @returns {*}
+   */
+  function getHandlerByIntent (name) {
+    const handlerItem = handlers.find(h => h.intent === name);
+    return handlerItem && handlerItem.handler;
+  }
 
-  const globalErrorHandler = getHandlerByName('global-error');
+  const globalErrorHandler = getHandlerByIntent('global-error');
   if (!globalErrorHandler) {
     warning(
       'we missed action handler actions/global-error, ' +
       'which is required to handle global unhandled errors.');
   }
 
-  const unhandledHandler = getHandlerByName('unhandled');
+  const unhandledHandler = getHandlerByIntent('unhandled');
   if (!unhandledHandler) {
     warning(
       'we missed action handler actions/unhandled,' +
@@ -96,17 +107,17 @@ module.exports = (actionsMap) => {
   // });
 
   app.fallback((conv) => {
-    let matchedHandler = getHandlerByName(conv.action);
+    let matchedHandler = getHandlerByIntent(conv.action);
     if (matchedHandler) {
       debug(`doesn't match intent name but matched manually by action name`);
-      return matchedHandler.handler(conv);
+      return matchedHandler(conv);
     }
 
     warning(`we missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
     if (unhandledHandler) {
-      return unhandledHandler.handler(conv);
+      return unhandledHandler(conv);
     }
 
     warning(`something wrong we don't have unhandled handler`);
@@ -123,7 +134,7 @@ module.exports = (actionsMap) => {
     let globalErrorWasHandled = false;
     if (globalErrorHandler) {
       try {
-        globalErrorHandler.handler(conv);
+        globalErrorHandler(conv);
         globalErrorWasHandled = true;
       } catch (err) {
         error('error on global error handler', err);
