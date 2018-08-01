@@ -14,7 +14,18 @@ module.exports = (conv) => {
   debug('\n\n');
   info(`start handling action: ${conv.action}, intent: ${conv.intent}`);
   if (conv.user) {
-    info(`user.id:`, conv.user.storage);
+    let userId;
+    // if a value for userID exists in user storage, it's a returning user so we can
+    // just read the value and use it. If a value for userId does not exist in user storage,
+    // it's a new user, so we need to generate a new ID and save it in user storage.
+    if (userId in conv.user.storage) {
+      userId = conv.user.storage.userId;
+    } else {
+      // generateUUID is your function to generate ids.
+      userId = generateUUID();
+      conv.user.storage.userId = userId;
+    }
+    info(`user.id:`, userId);
     info(`user.last:`, conv.user.last);
     info(`user.name:`, util.inspect(conv.user.name));
   } else {
@@ -26,3 +37,14 @@ module.exports = (conv) => {
   debug(`user's persistent data:`, conv.user.storage);
   debug('\n\n');
 };
+
+function generateUUID () {
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}
+
+function s4 () {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+}
