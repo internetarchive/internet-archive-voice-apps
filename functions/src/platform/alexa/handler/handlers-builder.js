@@ -3,7 +3,7 @@ const util = require('util');
 
 const {App} = require('../app');
 const jsonify = require('../../../utils/jsonify');
-const {debug, warning} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const fsm = require('../../../state/fsm');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
@@ -39,8 +39,10 @@ function fetchAttributes (handlerInput) {
   debug('fetch attributes');
   return handlerInput.attributesManager.getPersistentAttributes()
     .catch((err) => {
-      debug('we got error on gettting persistetn attributes', err);
-      debug('so we drop them to default');
+      warning(
+        'We got error on gettting persistent attributes', err,
+        'so we drop them to default'
+      );
       return {};
     });
 }
@@ -131,6 +133,56 @@ module.exports = (actions) => {
     return {};
   }
 
+  if (!actions.has('global-error')) {
+    warning(
+      'we missed action handler actions/global-error, ' +
+      'which is required to handle global unhandled errors.');
+  }
+
+  const globalErrorHandlers = actions.get('global-error');
+
+  if (!actions.has('unhandled')) {
+    warning(
+      'we missed action handler actions/unhandled,' +
+      'which is require to handle unhandled intents.'
+    );
+  }
+
+  const unhandledHandlers = actions.get('unhandled');
+
+  /**
+   * Intent handler
+   *
+   * @param handlers
+   * @param intentName
+   * @param handlerInput
+   * @returns {Promise.<TResult>}
+   */
+  function handle (handlers, intentName, handlerInput) {
+    debug(`begin handle intent "${intentName}"`);
+
+    let app;
+    return fetchAttributes(handlerInput)
+      .then((persistentAttributes) => {
+        debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
+        app = new App(handlerInput, persistentAttributes);
+        const handler = fsm.selectHandler(app, handlers);
+        return handler(app);
+      })
+      // TODO: maybe we could store and response in the same time?
+      .then(res => storeAttributes(app, handlerInput))
+      .catch((err) => {
+        error(`fail on handling intent ${intentName}`, err);
+        // we should be aware that even here we could got exception
+        // so maybe here is no simple way to give response to user
+        return fsm.selectHandler(app, globalErrorHandlers)(app);
+      })
+      .then(() => {
+        debug(`end handle intent "${intentName}"`);
+        return handlerInput.responseBuilder.getResponse();
+      });
+  }
+
   return Array
     .from(actions.entries())
     .map(([name, handlers]) => {
@@ -139,44 +191,35 @@ module.exports = (actions) => {
         intent,
 
         canHandle: (handlerInput) => {
-          let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
-          if (intentName) {
-            // if intent starts with AMAZON we will cut this head
-            const newIntentName = stripAmazonIntent(intentName);
-            if (intentName !== newIntentName) {
-              intentName = newIntentName;
+          // we never want failed on user request
+          // but all failures should be logged
+          try {
+            let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
+            if (intentName) {
+              // if intent starts with AMAZON we will cut this head
+              const newIntentName = stripAmazonIntent(intentName);
+              if (intentName !== newIntentName) {
+                intentName = newIntentName;
+              }
+              return intentName === intent;
             }
-            return intentName === intent;
-          }
 
-          let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
-          if (requestType) {
-            const newRequestType = stripRequestType(requestType);
-            if (requestType !== newRequestType) {
-              requestType = newRequestType;
+            let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
+            if (requestType) {
+              const newRequestType = stripRequestType(requestType);
+              if (requestType !== newRequestType) {
+                requestType = newRequestType;
+              }
+              return requestType === intent;
             }
-            return requestType === intent;
+          } catch (err) {
+            error(`canHandler of ${intent} failed with`, err);
           }
 
           return false;
         },
 
-        handle: (handlerInput) => {
-          debug(`begin handle intent "${intent}"`);
-          return fetchAttributes(handlerInput)
-            .then((persistentAttributes) => {
-              debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
-              const app = new App(handlerInput, persistentAttributes);
-              const handler = fsm.selectHandler(app, handlers);
-              return Promise.all([app, handler(app)]);
-            })
-            // TODO: maybe we could store and response in the same time?
-            .then(([app, res]) => storeAttributes(app, handlerInput))
-            .then(() => {
-              debug(`end handle intent "${intent}"`);
-              return handlerInput.responseBuilder.getResponse();
-            });
-        },
+        handle: (handlerInput) => handle(handlers, intent, handlerInput),
       };
     })
     // it would catcha any intents
@@ -192,34 +235,19 @@ module.exports = (actions) => {
         debug('catch all the rest');
 
         let handlers;
-        let name;
+        let intent;
 
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
           warning(`we haven't found any valid handler`);
-          handlers = {
-            default: require('../../../actions/unhandled').handler,
-          };
-          name = 'unknown intent';
+          handlers = unhandledHandlers;
+          intent = 'unknown intent';
         } else {
           handlers = res.handlers;
-          name = res.name;
+          intent = res.name;
         }
 
-        debug(`begin handle intent "${name}"`);
-        return fetchAttributes(handlerInput)
-          .then((persistentAttributes) => {
-            debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
-            const app = new App(handlerInput, persistentAttributes);
-            const handler = fsm.selectHandler(app, handlers);
-            return Promise.all([app, handler(app)]);
-          })
-          // TODO: maybe we could store and response in the same time?
-          .then(([app, res]) => storeAttributes(app, handlerInput))
-          .then(() => {
-            debug(`end handle intent "${name}"`);
-            return handlerInput.responseBuilder.getResponse();
-          });
+        return handle(handlers, intent, handlerInput);
       },
     });
 };
