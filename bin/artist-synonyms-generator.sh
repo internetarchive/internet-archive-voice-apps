@@ -41,31 +41,59 @@ trap "kill $!" EXIT  #Die with parent if we die prematurely
 artists=`cat artists.txt`
 
 #Overwrite current synonym files if they exist
-echo -n > alexa-artist-list-with-synonyms.csv
-echo -n > google-artist-list-with-synonyms.csv
+echo -n > alexa-artist-synonyms.csv
+echo -n > google-artist-synonyms.csv
 
 #While loop to read through each line of artists list
 while IFS='' read -r line || [[ -n "$line" ]]; do
 #$artists | while IFS= read -r line; do
     name="$line"
-    echo -n $name"," >> alexa-artist-list-with-synonyms.csv
-    echo -n "\""$name"\""",""\""$name"\"">> google-artist-list-with-synonyms.csv
-    #Rule 1: Artists with ' and ' in name
+    echo -n $name"," >> alexa-artist-synonyms.csv
+    echo -n "\""$name"\""",""\""$name"\"">> google-artist-synonyms.csv
+    #Rule 1: Artists that contain ' and ' in name
     if [[ $name = *" and "* ]]; then
-        echo -n ","$name | sed 's/and.*//'>> alexa-artist-list-with-synonyms.csv
-        echo -n ",\"">> google-artist-list-with-synonyms.csv
-        echo -n $name | sed 's/and.*//'>> google-artist-list-with-synonyms.csv
-        echo -n "\"">> google-artist-list-with-synonyms.csv
+        echo -n ","$name | sed 's/ and.*//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/ and.*//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
     fi
     #Rule 2: Artists that begin with 'The '
     if [[ $name == "The "* ]]; then
-        echo -n ","$name | sed 's/The *//'>> alexa-artist-list-with-synonyms.csv
-        echo -n ",\"">> google-artist-list-with-synonyms.csv
-        echo -n $name | sed 's/The *//'>> google-artist-list-with-synonyms.csv
-        echo -n "\"">> google-artist-list-with-synonyms.csv
+        echo -n ","$name | sed 's/The *//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/The *//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
     fi
-    echo >> alexa-artist-list-with-synonyms.csv
-    echo >> google-artist-list-with-synonyms.csv
+    #Rule 3: Artists that end with ' group'
+    if [[ $name == *" Group" ]]; then
+        echo -n ","$name | sed 's/ Group//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/ Group//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
+    fi
+    #Rule 4: Artists that end with ' Band'
+    if [[ $name == *" Band" ]]; then
+        echo -n ","$name | sed 's/ Band//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/ Band//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
+    fi
+    #Rule 5: Artists that end with ' trio'
+    if [[ $name == *" Trio" ]]; then
+        echo -n ","$name | sed 's/ Trio//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/ Trio//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
+    fi
+    #Rule 6: Artists that contain ' & ' in name
+    if [[ $name = *" & "* ]]; then
+        echo -n ","$name | sed 's/ &.*//'>> alexa-artist-synonyms.csv
+        echo -n ",\"">> google-artist-synonyms.csv
+        echo -n $name | sed 's/ &.*//'>> google-artist-synonyms.csv
+        echo -n "\"">> google-artist-synonyms.csv
+    fi
+    echo >> alexa-artist-synonyms.csv
+    echo >> google-artist-synonyms.csv
 done <<< "$artists"
 
 echo -e "$checkit Created synonym CSV files for Alexa and Assistant"
