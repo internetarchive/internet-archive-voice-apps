@@ -40,7 +40,7 @@ function fetchAttributes (handlerInput) {
   return handlerInput.attributesManager.getPersistentAttributes()
     .catch((err) => {
       warning(
-        'We got error on gettting persistetn attributes', err,
+        'We got error on gettting persistent attributes', err,
         'so we drop them to default'
       );
       return {};
@@ -192,7 +192,7 @@ module.exports = (actions) => {
 
         canHandle: (handlerInput) => {
           // we never want failed on user request
-          // but all failes should be logged
+          // but all failures should be logged
           try {
             let intentName = _.get(handlerInput, 'requestEnvelope.request.intent.name');
             if (intentName) {

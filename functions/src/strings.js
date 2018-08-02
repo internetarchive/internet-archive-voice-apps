@@ -90,7 +90,7 @@ module.exports = {
     },
 
     globalError: {
-      speech: 'We got some problem with performing your request. Please rephrase it.',
+      speech: 'We had some problems performing your request. Please rephrase it.',
       suggestions: ['reset'],
     },
 
