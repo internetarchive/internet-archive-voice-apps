@@ -1,4 +1,5 @@
 const util = require('util');
+const uuidv4 = require('uuid/v4');
 
 const {debug, info} = require('../../../utils/logger')('ia:log-request');
 
@@ -21,8 +22,7 @@ module.exports = (conv) => {
     if (userId in conv.user.storage) {
       userId = conv.user.storage.userId;
     } else {
-      // generateUUID is your function to generate ids.
-      userId = generateUUID();
+      userId = uuidv4();
       conv.user.storage.userId = userId;
     }
     info(`user.id:`, userId);
@@ -37,14 +37,3 @@ module.exports = (conv) => {
   debug(`user's persistent data:`, conv.user.storage);
   debug('\n\n');
 };
-
-function generateUUID () {
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
-}
-
-function s4 () {
-  return Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-}
