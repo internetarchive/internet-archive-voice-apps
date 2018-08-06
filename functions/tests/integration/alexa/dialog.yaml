@@ -44,3 +44,9 @@
   - user:
       intend: AMAZON.we_definitely_do_not_handle_it
     assistant: "Sorry, I'm afraid I don't follow you."
+
+- scenario: "failed request for a collection from IA should gracefully fail"
+  dialog:
+  - user: 'play turbo folk'
+    assistant: 'We experience some technical problems on IA server,
+                please try again later or try something else.'

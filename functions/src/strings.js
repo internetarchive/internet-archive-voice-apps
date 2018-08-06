@@ -412,6 +412,13 @@ module.exports = {
       speech: 'Sorry, can you repeat that? {{reprompt}}',
     },
 
+    /**
+     * we got 4xx, 5xx response from a server
+     */
+    providerRequestError: {
+      speech: 'We experience some technical problems on IA server, please try again later or try something else.',
+    },
+
     repeat: {
       empty: {
         speech: `I don't see anything here to repeat.`,
@@ -475,7 +482,7 @@ module.exports = {
   events: {
     playlistIsEnded: {
       speech: 'Playlist has ended. Would you like to continue listening?',
-    }
+    },
   },
 
   /**

@@ -1,6 +1,7 @@
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const constants = require('../../constants');
+const providerErrors = require('../../provider/errors');
 const fsm = require('../../state/fsm');
 
 const acknowledge = require('./middlewares/acknowledge');
@@ -77,6 +78,11 @@ function build ({playlist, strings, query}) {
         debug(`we don't have playlist (or it is empty)`);
         debug('keys:', Object.keys(error));
         debug('error', error);
+
+        if (error instanceof providerErrors.ProviderError) {
+          return Promise.reject(error);
+        }
+
         const context = error.context;
         const brokenSlots = context ? context.newValues : {};
         const slots = context ? context.slots : {};

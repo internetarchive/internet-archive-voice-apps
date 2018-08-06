@@ -2,12 +2,13 @@ const _ = require('lodash');
 const util = require('util');
 
 const {App} = require('../app');
+
+const providerErrors = require('../../../provider/errors');
+const fsm = require('../../../state/fsm');
+const camelToKebab = require('../../../utils/camel-to-kebab');
+const kebabToCamel = require('../../../utils/kebab-to-camel');
 const jsonify = require('../../../utils/jsonify');
 const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
-
-const fsm = require('../../../state/fsm');
-const kebabToCamel = require('../../../utils/kebab-to-camel');
-const camelToKebab = require('../../../utils/camel-to-kebab');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
 function stripAmazonIntent (name) {
@@ -139,7 +140,7 @@ module.exports = (actions) => {
       'which is required to handle global unhandled errors.');
   }
 
-  const globalErrorHandlers = actions.get('global-error');
+  const globalErrorHandler = actions.get('global-error');
 
   if (!actions.has('unhandled')) {
     warning(
@@ -147,6 +148,8 @@ module.exports = (actions) => {
       'which is require to handle unhandled intents.'
     );
   }
+
+  const providerErrorHandler = actions.get('provider-request-error');
 
   const unhandledHandlers = actions.get('unhandled');
 
@@ -173,9 +176,14 @@ module.exports = (actions) => {
       .then(res => storeAttributes(app, handlerInput))
       .catch((err) => {
         error(`fail on handling intent ${intentName}`, err);
+
+        if (err instanceof providerErrors.ProviderError) {
+          return fsm.selectHandler(app, providerErrorHandler)(app);
+        }
+
         // we should be aware that even here we could got exception
         // so maybe here is no simple way to give response to user
-        return fsm.selectHandler(app, globalErrorHandlers)(app);
+        return fsm.selectHandler(app, globalErrorHandler)(app);
       })
       .then(() => {
         debug(`end handle intent "${intentName}"`);

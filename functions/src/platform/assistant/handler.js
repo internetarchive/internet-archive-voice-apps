@@ -9,6 +9,7 @@ const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
 
+const providerErrors = require('../../provider/errors');
 const strings = require('../../strings');
 const {debug, error, warning} = require('../../utils/logger')('ia:index');
 
@@ -129,6 +130,12 @@ module.exports = (actionsMap) => {
     error('We got unhandled error', err);
     if (conv.raven) {
       conv.raven.captureException(err);
+    }
+
+    // TODO: test it
+    if (err instanceof providerErrors.ProviderError) {
+      conv.ask(strings.events.requestFailed.speech);
+      return;
     }
 
     let globalErrorWasHandled = false;
