@@ -1,8 +1,8 @@
-const {expect} = require('chai');
+// const {expect} = require('chai');
 const rewire = require('rewire');
 
-const mockApp = require('../../../_utils/mocking/platforms/app');
-const mockDialog = require('../_utils/mocking/dialog');
+// const mockApp = require('../../../_utils/mocking/platforms/app');
+const mockDialog = require('../../../_utils/mocking/dialog');
 
 const logRequest = rewire('../../../../src/platform/assistant/middlewares/log-request.js');
 
@@ -16,8 +16,6 @@ describe('platform', () => {
     });
 
     it('should check if a user id is present', () => {
-      let app = mockApp();
-      logRequest.handler(app);
     });
   });
 });
