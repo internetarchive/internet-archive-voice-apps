@@ -34,6 +34,34 @@ module.exports = (actionsMap) => {
     );
   }
 
+  /**
+   * @private
+   *
+   * get handler by intent name
+   *
+   * @param name
+   * @returns {*}
+   */
+  function getHandlerByIntent (name) {
+    const handlerItem = handlers.find(h => h.intent === name);
+    return handlerItem && handlerItem.handler;
+  }
+
+  const globalErrorHandler = getHandlerByIntent('global-error');
+  if (!globalErrorHandler) {
+    warning(
+      'we missed action handler actions/global-error, ' +
+      'which is required to handle global unhandled errors.');
+  }
+
+  const unhandledHandler = getHandlerByIntent('unhandled');
+  if (!unhandledHandler) {
+    warning(
+      'we missed action handler actions/unhandled,' +
+      'which is require to handle unhandled intents.'
+    );
+  }
+
   // Sentry middleware
   if (functions.config().sentry) {
     app.middleware((conv) => {
@@ -78,21 +106,18 @@ module.exports = (actionsMap) => {
   //   }
   // });
 
-  const getHandlerByName = name => handlers.filter(h => h.intent === name);
-
   app.fallback((conv) => {
-    let matchedHandlers = getHandlerByName(conv.action);
-    if (matchedHandlers.length > 0) {
+    let matchedHandler = getHandlerByIntent(conv.action);
+    if (matchedHandler) {
       debug(`doesn't match intent name but matched manually by action name`);
-      return matchedHandlers[0].handler(conv);
+      return matchedHandler(conv);
     }
 
     warning(`we missed action: "${conv.action}".
              Intent: "${conv.intent}"`);
 
-    matchedHandlers = getHandlerByName('unhandled');
-    if (matchedHandlers.length > 0) {
-      return matchedHandlers[0].handler(conv);
+    if (unhandledHandler) {
+      return unhandledHandler(conv);
     }
 
     warning(`something wrong we don't have unhandled handler`);
@@ -106,7 +131,23 @@ module.exports = (actionsMap) => {
       conv.raven.captureException(err);
     }
 
-    conv.ask(`Can you rephrase it?`);
+    let globalErrorWasHandled = false;
+    if (globalErrorHandler) {
+      try {
+        globalErrorHandler(conv);
+        globalErrorWasHandled = true;
+      } catch (err) {
+        error('error on global error handler', err);
+        if (conv.raven) {
+          conv.raven.captureException(err);
+        }
+      }
+    }
+
+    // last chance to give response to user
+    if (!globalErrorWasHandled) {
+      conv.ask(`Can you rephrase it?`);
+    }
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));

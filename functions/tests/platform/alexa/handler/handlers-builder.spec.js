@@ -1,8 +1,9 @@
 const {expect} = require('chai');
 const _ = require('lodash');
+const rewire = require('rewire');
 const sinon = require('sinon');
 
-const builder = require('../../../../src/platform/alexa/handler/handlers-builder');
+const builder = rewire('../../../../src/platform/alexa/handler/handlers-builder');
 const {App} = require('../../../../src/platform/alexa/app');
 const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
@@ -126,21 +127,139 @@ describe('platform', () => {
           });
       });
 
-      it(`should drop intent underscore tail when can't find matched handler`, () => {
-        const playSongHandler = sinon.spy();
+      describe('handle', () => {
+        it(`should drop intent underscore tail when can't find matched handler`, () => {
+          const playSongHandler = sinon.spy();
 
-        const res = builder(new Map([
-          ['play-songs', {default: playSongHandler}],
-        ]));
+          const res = builder(new Map([
+            ['play-songs', {default: playSongHandler}],
+          ]));
 
-        const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
-        const item = res.find(e => e.canHandle());
-        expect(item).to.be.not.undefined;
-        expect(item).to.be.not.null;
-        return item.handle(input)
-          .then(() => {
-            expect(playSongHandler).to.have.been.called;
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const item = res.find(e => e.canHandle());
+          expect(item).to.be.not.undefined;
+          expect(item).to.be.not.null;
+          return item.handle(input)
+            .then(() => {
+              expect(playSongHandler).to.have.been.called;
+            });
+        });
+
+        it('should log on failed fallback handle', () => {
+          const logError = sinon.spy();
+          builder.__set__('error', logError);
+          const res = builder(new Map([
+            [
+              'play-songs',
+              {
+                default: () => {
+                  throw new Error('error inside of handler');
+                },
+              }
+            ],
+            ['global-error', {default: sinon.spy()}],
+          ]));
+
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const item = res.find(e => e.canHandle(input));
+          return item.handle(input)
+            .then(() => {
+              expect(logError).to.be.called;
+            });
+        });
+
+        describe('main hanler', () => {
+          let globalErrorHandler;
+          let logError;
+          let input;
+          let handlerItem;
+          let handlers;
+
+          beforeEach(() => {
+            logError = sinon.spy();
+            builder.__set__('error', logError);
+            globalErrorHandler = sinon.spy();
+            handlers = builder(new Map([
+              [
+                'help',
+                {
+                  default: () => {
+                    throw new Error('error inside of handler');
+                  },
+                },
+              ],
+              ['global-error', {default: globalErrorHandler}],
+            ]));
+            input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent');
+            handlerItem = handlers.find(e => e.canHandle(input));
           });
+
+          it('should log on failed main handle', () => {
+            return handlerItem.handle(input)
+              .then(() => {
+                expect(logError).to.be.called;
+              });
+          });
+
+          it('should fallback to repair phrase in case when we got error', () => {
+            return handlerItem.handle(input)
+              .then(() => {
+                expect(globalErrorHandler).to.have.been.called;
+              });
+          });
+
+          it(`should warn if we don't have global-error handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              ['help', {default: sinon.spy()}],
+              ['unhandled', {default: sinon.spy()}],
+            ]));
+
+            expect(logWarning).to.have.been.called;
+          });
+
+          it(`should warn if we don't have unhandled handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              ['help', {default: sinon.spy()}],
+              ['global-error', {default: sinon.spy()}],
+            ]));
+
+            expect(logWarning).to.have.been.called;
+          });
+
+          it(`shouldn't warn if we have global-error and unhandled handler`, () => {
+            const logWarning = sinon.spy();
+            builder.__set__('warning', logWarning);
+            handlers = builder(new Map([
+              ['help', {default: sinon.spy()}],
+              ['global-error', {default: sinon.spy()}],
+              ['unhandled', {default: sinon.spy()}],
+            ]));
+
+            expect(logWarning).to.have.not.been.called;
+          });
+        });
+      });
+
+      describe('canHandle', () => {
+        it('should return false if something failed inside of it', () => {
+          builder.__set__('stripAmazonIntent', () => {
+            throw new Error('one error');
+          });
+          const logError = sinon.spy();
+          builder.__set__('error', logError);
+          const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
+          const res = builder(new Map([
+            ['no-input', {default: sinon.spy()}],
+            ['welcome', {default: sinon.spy()}],
+          ]));
+
+          expect(res[0].canHandle(input)).to.be.false;
+          expect(logError).to.be.called;
+        });
       });
     });
   });

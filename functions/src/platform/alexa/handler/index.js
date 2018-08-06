@@ -17,7 +17,7 @@ module.exports = (actions) => {
   let skill;
   debug(`We can handle intents: ${handlers.map(({intent}) => `"${intent}"`).join(', ')}`);
 
-  return function (event, context, callback) {
+  return function (event, context) {
     if (!skill) {
       debug('lazy building');
 
