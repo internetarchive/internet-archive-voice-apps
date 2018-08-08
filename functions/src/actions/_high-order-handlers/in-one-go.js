@@ -1,7 +1,7 @@
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const constants = require('../../constants');
-const providerErrors = require('../../provider/errors');
+const errors = require('../../errors');
 const fsm = require('../../state/fsm');
 
 const acknowledge = require('./middlewares/acknowledge');
@@ -79,7 +79,9 @@ function build ({playlist, strings, query}) {
         debug('keys:', Object.keys(error));
         debug('error', error);
 
-        if (error instanceof providerErrors.ProviderError) {
+        if (error instanceof errors.HTTPError) {
+          // don't handle http error here
+          // because we are hendeling it on upper level
           return Promise.reject(error);
         }
 

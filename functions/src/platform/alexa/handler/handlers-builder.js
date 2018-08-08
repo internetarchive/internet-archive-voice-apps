@@ -3,7 +3,7 @@ const util = require('util');
 
 const {App} = require('../app');
 
-const providerErrors = require('../../../provider/errors');
+const errors = require('../../../errors');
 const fsm = require('../../../state/fsm');
 const camelToKebab = require('../../../utils/camel-to-kebab');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
@@ -177,7 +177,7 @@ module.exports = (actions) => {
       .catch((err) => {
         error(`fail on handling intent ${intentName}`, err);
 
-        if (err instanceof providerErrors.ProviderError) {
+        if (err instanceof errors.HTTPError) {
           return fsm.selectHandler(app, providerErrorHandler)(app);
         }
 

@@ -9,7 +9,7 @@ const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
 
-const providerErrors = require('../../provider/errors');
+const errors = require('../../errors');
 const strings = require('../../strings');
 const {debug, error, warning} = require('../../utils/logger')('ia:index');
 
@@ -133,7 +133,7 @@ module.exports = (actionsMap) => {
     }
 
     // TODO: test it
-    if (err instanceof providerErrors.ProviderError) {
+    if (err instanceof errors.HTTPError) {
       conv.ask(strings.events.requestFailed.speech);
       return;
     }

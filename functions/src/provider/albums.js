@@ -9,7 +9,6 @@ const {debug, error} = require('../utils/logger')('ia:provider:albums');
 const objToLowerCase = require('../utils/map-to-lowercases');
 
 const {buildQueryCondition} = require('./advanced-search');
-const errors = require('./errors');
 
 /**
  * Fetch details about Album
@@ -170,9 +169,6 @@ function fetchAlbumsByQuery (app, query) {
         'Get error on fetching albums of artist by:', util.inspect(query),
         'Error:', util.inspect(e),
       );
-      if (e.response.status >= 400) {
-        return Promise.reject(new errors.ProviderError(e));
-      }
       return Promise.reject(e);
     });
 }
