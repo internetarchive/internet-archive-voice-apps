@@ -1,6 +1,6 @@
 const dialog = require('../dialog');
 const query = require('../state/query');
-const strings = require('../strings').intents.providerRequestError;
+const strings = require('../strings').intents.httpRequestError;
 const selectors = require('../configurator/selectors');
 
 function handler (app) {

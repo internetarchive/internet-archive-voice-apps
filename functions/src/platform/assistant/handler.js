@@ -133,7 +133,7 @@ module.exports = (actionsMap) => {
     }
 
     if (err instanceof errors.HTTPError) {
-      conv.ask(strings.intents.providerRequestError.speech);
+      conv.ask(strings.intents.httpRequestError.speech);
       return;
     }
 

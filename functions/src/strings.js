@@ -95,6 +95,13 @@ module.exports = {
     },
 
     /**
+     * we got 4xx, 5xx response from a server
+     */
+    httpRequestError: {
+      speech: 'We experience some technical problems on IA server, please try again later or try something else.',
+    },
+
+    /**
      * In one go actions for playback music
      */
     inOneGoMusicPlayback: {
@@ -410,13 +417,6 @@ module.exports = {
 
     order: {
       speech: 'Sorry, can you repeat that? {{reprompt}}',
-    },
-
-    /**
-     * we got 4xx, 5xx response from a server
-     */
-    providerRequestError: {
-      speech: 'We experience some technical problems on IA server, please try again later or try something else.',
     },
 
     repeat: {

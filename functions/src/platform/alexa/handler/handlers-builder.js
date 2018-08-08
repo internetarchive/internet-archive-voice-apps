@@ -149,7 +149,7 @@ module.exports = (actions) => {
     );
   }
 
-  const providerErrorHandler = actions.get('provider-request-error');
+  const httpErrorHandler = actions.get('http-request-error');
 
   const unhandledHandlers = actions.get('unhandled');
 
@@ -178,7 +178,7 @@ module.exports = (actions) => {
         error(`fail on handling intent ${intentName}`, err);
 
         if (err instanceof errors.HTTPError) {
-          return fsm.selectHandler(app, providerErrorHandler)(app);
+          return fsm.selectHandler(app, httpErrorHandler)(app);
         }
 
         // we should be aware that even here we could got exception
