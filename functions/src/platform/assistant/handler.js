@@ -55,6 +55,13 @@ module.exports = (actionsMap) => {
       'which is required to handle global unhandled errors.');
   }
 
+  const httpRequestErrorHandler = getHandlerByIntent('http-request-error');
+  if (!httpRequestErrorHandler) {
+    warning(
+      'we missed action handler actions/http-request-error, ' +
+      'which is required to handle http request errors.');
+  }
+
   const unhandledHandler = getHandlerByIntent('unhandled');
   if (!unhandledHandler) {
     warning(
@@ -133,8 +140,11 @@ module.exports = (actionsMap) => {
     }
 
     if (err instanceof errors.HTTPError) {
-      conv.ask(strings.intents.httpRequestError.speech);
-      return;
+      if (httpRequestErrorHandler) {
+        return httpRequestErrorHandler(conv);
+      } else {
+        return conv.ask(strings.intents.httpRequestError.speech);
+      }
     }
 
     let globalErrorWasHandled = false;

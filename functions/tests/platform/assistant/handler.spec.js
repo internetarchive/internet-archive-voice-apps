@@ -32,8 +32,9 @@ describe('platform', () => {
     beforeEach(() => {
       res = new MockResponse();
       actions = new Map([
-        ['global-error', {default: require('../../../src/actions/global-error')}],
-        ['unhandled', {default: require('../../../src/actions/unhandled')}],
+        ['global-error', {default: require('../../../src/actions/global-error').handler}],
+        ['http-request-error', {default: require('../../../src/actions/http-request-error').handler}],
+        ['unhandled', {default: require('../../../src/actions/unhandled').handler}],
       ]);
     });
 
@@ -77,6 +78,7 @@ describe('platform', () => {
 
       [
         'global-error',
+        'http-request-error',
         'unhandled',
       ].forEach((action) => {
         it(`should warn in case of missed ${action} action`, () => {
@@ -88,12 +90,13 @@ describe('platform', () => {
         });
       });
 
-      it('should gracefully promot user in case of http error inside of a handler', () => {
+      it('should gracefully prompt user in case of http error inside of a handler', () => {
         actions.set('on-action', {
           default: () => {
             throw new errors.HTTPError();
           },
         });
+
         const handler = handlerBuilder(actions);
         handler(buildIntentRequest({
           action: 'on-action',
