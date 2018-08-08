@@ -132,9 +132,8 @@ module.exports = (actionsMap) => {
       conv.raven.captureException(err);
     }
 
-    // TODO: test it
     if (err instanceof errors.HTTPError) {
-      conv.ask(strings.events.requestFailed.speech);
+      conv.ask(strings.intents.providerRequestError.speech);
       return;
     }
 

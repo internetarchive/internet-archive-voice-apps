@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
+const errors = require('../../../src/errors');
 const handlerBuilder = rewire('../../../src/platform/assistant/handler');
 
 const {buildIntentRequest, MockResponse} = require('../../_utils/mocking');
@@ -85,6 +86,27 @@ describe('platform', () => {
           handlerBuilder(actions);
           expect(warning).to.have.been.called;
         });
+      });
+
+      it('should gracefully promot user in case of http error inside of a handler', () => {
+        actions.set('on-action', {
+          default: () => {
+            throw new errors.HTTPError();
+          },
+        });
+        const handler = handlerBuilder(actions);
+        handler(buildIntentRequest({
+          action: 'on-action',
+          lastSeen: null,
+        }), res);
+
+        return wait()
+          .then(() => {
+            expect(res.speech()).to.includes(
+              'We experience some technical problems on IA server, ' +
+              'please try again later or try something else.'
+            );
+          });
       });
     });
   });
