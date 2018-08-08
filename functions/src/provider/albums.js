@@ -166,8 +166,7 @@ function fetchAlbumsByQuery (app, query) {
     })
     .catch(e => {
       error(
-        'Get error on fetching albums of artist by:', util.inspect(query),
-        'Error:', util.inspect(e),
+        'Get error on fetching albums of artist by:', util.inspect(query)
       );
       return Promise.reject(e);
     });

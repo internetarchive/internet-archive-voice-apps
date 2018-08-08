@@ -76,12 +76,10 @@ function build ({playlist, strings, query}) {
       .then(playSong())
       .catch((error) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug('keys:', Object.keys(error));
-        debug('error', error);
 
         if (error instanceof errors.HTTPError) {
           // don't handle http error here
-          // because we are hendeling it on upper level
+          // because we are handling it on upper level
           return Promise.reject(error);
         }
 

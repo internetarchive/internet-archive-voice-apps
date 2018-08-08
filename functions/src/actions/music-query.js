@@ -1,5 +1,7 @@
 const selectors = require('../configurator/selectors');
 const constants = require('../constants');
+const errors = require('../errors');
+const middlewareErrors = require('./_high-order-handlers/middlewares/errors');
 const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
@@ -63,8 +65,21 @@ function handler (app) {
           .then(renderSpeech())
           .then(playSong());
       })
-      .catch((context) => {
+      .catch((error) => {
         debug(`we don't have playlist (or it is empty)`);
+
+        let context = error;
+        if (error instanceof middlewareErrors.MiddlewareError) {
+          context = error.context;
+          error = error.reason;
+        }
+
+        if (error instanceof errors.HTTPError) {
+          // don't handle http error here
+          // because we are handling it on upper level
+          return Promise.reject(error);
+        }
+
         const brokenSlots = context.newValues || {};
 
         fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
