@@ -8,9 +8,9 @@ const packageJSON = require('../package.json');
 
 const appConfig = require('./config');
 const env = require('./config/env');
+const errors = require('./errors');
 const mathjsExtensions = require('./mathjs');
 const axiosProfile = require('./performance/axios');
-const errors = require('./errors');
 const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
 
 /**

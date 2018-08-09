@@ -134,24 +134,27 @@ module.exports = (actions) => {
     return {};
   }
 
-  if (!actions.has('global-error')) {
+  const globalErrorHandler = actions.get('global-error');
+  if (!globalErrorHandler) {
     warning(
       'we missed action handler actions/global-error, ' +
       'which is required to handle global unhandled errors.');
   }
 
-  const globalErrorHandler = actions.get('global-error');
+  const httpRequestErrorHandler = actions.get('http-request-error');
+  if (!httpRequestErrorHandler) {
+    warning(
+      'we missed action handler actions/http-request-error, ' +
+      'which is required to handle http request errors.');
+  }
 
-  if (!actions.has('unhandled')) {
+  const unhandledHandler = actions.get('unhandled');
+  if (!unhandledHandler) {
     warning(
       'we missed action handler actions/unhandled,' +
       'which is require to handle unhandled intents.'
     );
   }
-
-  const httpErrorHandler = actions.get('http-request-error');
-
-  const unhandledHandlers = actions.get('unhandled');
 
   /**
    * Intent handler
@@ -178,7 +181,7 @@ module.exports = (actions) => {
         error(`fail on handling intent ${intentName}`, err);
 
         if (err instanceof errors.HTTPError) {
-          return fsm.selectHandler(app, httpErrorHandler)(app);
+          return fsm.selectHandler(app, httpRequestErrorHandler)(app);
         }
 
         // we should be aware that even here we could got exception
@@ -248,7 +251,7 @@ module.exports = (actions) => {
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
           warning(`we haven't found any valid handler`);
-          handlers = unhandledHandlers;
+          handlers = unhandledHandler;
           intent = 'unknown intent';
         } else {
           handlers = res.handlers;

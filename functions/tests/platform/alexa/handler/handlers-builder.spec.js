@@ -230,12 +230,13 @@ describe('platform', () => {
             expect(logWarning).to.have.been.called;
           });
 
-          it(`shouldn't warn if we have global-error and unhandled handler`, () => {
+          it(`shouldn't warn if we have global-error, http-request-error and unhandled handlers`, () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
               ['help', {default: sinon.spy()}],
               ['global-error', {default: sinon.spy()}],
+              ['http-request-error', {default: sinon.spy()}],
               ['unhandled', {default: sinon.spy()}],
             ]));
 
