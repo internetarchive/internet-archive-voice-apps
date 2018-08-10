@@ -98,7 +98,7 @@ module.exports = {
      * we got 4xx, 5xx response from a server
      */
     httpRequestError: {
-      speech: 'We experience some technical problems on IA server, please try again later or try something else.',
+      speech: 'We are currently experiencing some technical difficulties on the Archive server. Please try again later or try saying something else.',
     },
 
     /**

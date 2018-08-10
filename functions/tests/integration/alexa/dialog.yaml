@@ -48,8 +48,8 @@
 - scenario: "failed request for a collection from IA should gracefully fail in one go intent"
   dialog:
   - user: 'play turbo folk'
-    assistant: 'We experience some technical problems on IA server,
-                please try again later or try something else.'
+    assistant: 'We are currently experiencing some technical difficulties on the Archive server.
+                Please try again later or try saying something else.'
 
 - scenario: "failed request for a collection from IA should gracefully fail in music query intent"
   dialog:
@@ -58,5 +58,5 @@
                 What genre of music would you like to listen to?
                 Please select a genre like Jazz, Instrumental or Dance?'
   - user: 'turbo folk music'
-    assistant: 'We experience some technical problems on IA server,
-                please try again later or try something else.'
+    assistant: 'We are currently experiencing some technical difficulties on the Archive server.
+                Please try again later or try saying something else.'
