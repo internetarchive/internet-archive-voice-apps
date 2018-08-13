@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.2.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.2) (2018-08-13)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.1...2.2.2)
+
+**Implemented enhancements:**
+
+- Catch all exceptions in action handlers and prompt user [\#45](https://github.com/internetarchive/internet-archive-google-action/issues/45)
+
+**Fixed bugs:**
+
+- unhandled intent of Alexa [\#303](https://github.com/internetarchive/internet-archive-google-action/issues/303) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Change acknowledgement dialog to be more expressive. [\#300](https://github.com/internetarchive/internet-archive-google-action/issues/300)
+
+**Merged pull requests:**
+
+- Feature/catch all exceptions [\#309](https://github.com/internetarchive/internet-archive-google-action/pull/309) ([hyzhak](https://github.com/hyzhak))
+- feature / More expressive dialog [\#306](https://github.com/internetarchive/internet-archive-google-action/pull/306) ([adaveinthelife](https://github.com/adaveinthelife))
+
 ## [2.2.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.1) (2018-07-30)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.0...2.2.1)
 
