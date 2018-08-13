@@ -3,12 +3,12 @@ const _ = require('lodash');
 const util = require('util');
 
 const config = require('../config');
+const endpointProcessor = require('../network/endpoint-processor');
 const delayedPromise = require('../utils/delay');
 const {debug, error} = require('../utils/logger')('ia:provider:albums');
 const objToLowerCase = require('../utils/map-to-lowercases');
 
 const {buildQueryCondition} = require('./advanced-search');
-const endpointProcessor = require('../network/endpoint-processor');
 
 /**
  * Fetch details about Album
@@ -165,7 +165,9 @@ function fetchAlbumsByQuery (app, query) {
       };
     })
     .catch(e => {
-      error(`Get error on fetching albums of artist by: ${util.inspect(query)}, error:`, e);
+      error(
+        'Get error on fetching albums of artist by:', util.inspect(query)
+      );
       return Promise.reject(e);
     });
 }

@@ -2,12 +2,13 @@ const _ = require('lodash');
 const util = require('util');
 
 const {App} = require('../app');
+
+const errors = require('../../../errors');
+const fsm = require('../../../state/fsm');
+const camelToKebab = require('../../../utils/camel-to-kebab');
+const kebabToCamel = require('../../../utils/kebab-to-camel');
 const jsonify = require('../../../utils/jsonify');
 const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
-
-const fsm = require('../../../state/fsm');
-const kebabToCamel = require('../../../utils/kebab-to-camel');
-const camelToKebab = require('../../../utils/camel-to-kebab');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
 function stripAmazonIntent (name) {
@@ -133,22 +134,27 @@ module.exports = (actions) => {
     return {};
   }
 
-  if (!actions.has('global-error')) {
+  const globalErrorHandler = actions.get('global-error');
+  if (!globalErrorHandler) {
     warning(
       'we missed action handler actions/global-error, ' +
       'which is required to handle global unhandled errors.');
   }
 
-  const globalErrorHandlers = actions.get('global-error');
+  const httpRequestErrorHandler = actions.get('http-request-error');
+  if (!httpRequestErrorHandler) {
+    warning(
+      'we missed action handler actions/http-request-error, ' +
+      'which is required to handle http request errors.');
+  }
 
-  if (!actions.has('unhandled')) {
+  const unhandledHandler = actions.get('unhandled');
+  if (!unhandledHandler) {
     warning(
       'we missed action handler actions/unhandled,' +
       'which is require to handle unhandled intents.'
     );
   }
-
-  const unhandledHandlers = actions.get('unhandled');
 
   /**
    * Intent handler
@@ -173,9 +179,14 @@ module.exports = (actions) => {
       .then(res => storeAttributes(app, handlerInput))
       .catch((err) => {
         error(`fail on handling intent ${intentName}`, err);
+
+        if (err instanceof errors.HTTPError) {
+          return fsm.selectHandler(app, httpRequestErrorHandler)(app);
+        }
+
         // we should be aware that even here we could got exception
         // so maybe here is no simple way to give response to user
-        return fsm.selectHandler(app, globalErrorHandlers)(app);
+        return fsm.selectHandler(app, globalErrorHandler)(app);
       })
       .then(() => {
         debug(`end handle intent "${intentName}"`);
@@ -240,7 +251,7 @@ module.exports = (actions) => {
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
           warning(`we haven't found any valid handler`);
-          handlers = unhandledHandlers;
+          handlers = unhandledHandler;
           intent = 'unknown intent';
         } else {
           handlers = res.handlers;

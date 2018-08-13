@@ -9,6 +9,7 @@ const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
 
+const errors = require('../../errors');
 const strings = require('../../strings');
 const {debug, error, warning} = require('../../utils/logger')('ia:index');
 
@@ -52,6 +53,13 @@ module.exports = (actionsMap) => {
     warning(
       'we missed action handler actions/global-error, ' +
       'which is required to handle global unhandled errors.');
+  }
+
+  const httpRequestErrorHandler = getHandlerByIntent('http-request-error');
+  if (!httpRequestErrorHandler) {
+    warning(
+      'we missed action handler actions/http-request-error, ' +
+      'which is required to handle http request errors.');
   }
 
   const unhandledHandler = getHandlerByIntent('unhandled');
@@ -129,6 +137,14 @@ module.exports = (actionsMap) => {
     error('We got unhandled error', err);
     if (conv.raven) {
       conv.raven.captureException(err);
+    }
+
+    if (err instanceof errors.HTTPError) {
+      if (httpRequestErrorHandler) {
+        return httpRequestErrorHandler(conv);
+      } else {
+        return conv.ask(strings.intents.httpRequestError.speech);
+      }
     }
 
     let globalErrorWasHandled = false;

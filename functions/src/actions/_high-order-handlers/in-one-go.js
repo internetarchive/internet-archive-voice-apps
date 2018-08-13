@@ -1,6 +1,7 @@
 const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
 
 const constants = require('../../constants');
+const errors = require('../../errors');
 const fsm = require('../../state/fsm');
 
 const acknowledge = require('./middlewares/acknowledge');
@@ -75,8 +76,13 @@ function build ({playlist, strings, query}) {
       .then(playSong())
       .catch((error) => {
         debug(`we don't have playlist (or it is empty)`);
-        debug('keys:', Object.keys(error));
-        debug('error', error);
+
+        if (error instanceof errors.HTTPError) {
+          // don't handle http error here
+          // because we are handling it on upper level
+          return Promise.reject(error);
+        }
+
         const context = error.context;
         const brokenSlots = context ? context.newValues : {};
         const slots = context ? context.slots : {};

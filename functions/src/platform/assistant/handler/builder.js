@@ -17,6 +17,10 @@ module.exports = ({actionsMap}) =>
         debug(`begin handle intent "${intent}"`);
         const app = conv.app || new App(conv);
         const handler = fsm.selectHandler(app, handlers);
+        if (typeof handler !== 'function') {
+          debug('handlers:', handlers);
+          throw new Error(`we don't have handler function for intent "${intent}"`);
+        }
         storeAction(app, conv.action);
         return Promise.resolve(handler(app))
           .then(res => {

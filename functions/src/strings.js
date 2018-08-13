@@ -95,6 +95,13 @@ module.exports = {
     },
 
     /**
+     * we got 4xx, 5xx response from a server
+     */
+    httpRequestError: {
+      speech: 'We are currently experiencing some technical difficulties on the Archive server. Please try again later or try saying something else.',
+    },
+
+    /**
      * In one go actions for playback music
      */
     inOneGoMusicPlayback: {
@@ -475,7 +482,7 @@ module.exports = {
   events: {
     playlistIsEnded: {
       speech: 'Playlist has ended. Would you like to continue listening?',
-    }
+    },
   },
 
   /**

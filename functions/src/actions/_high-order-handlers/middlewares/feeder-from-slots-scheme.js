@@ -1,5 +1,5 @@
 const feeders = require('../../../extensions/feeders');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-slot-scheme');
+const {debug, warning} = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-slots-scheme');
 
 /**
  * Get feeder from slots scheme
