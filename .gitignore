@@ -8,5 +8,5 @@ node_modules
 functions/firebase-debug.log
 npm-debug.log
 .DS_Store
-bin/alexa-artist-list-with-synonyms.csv
-bin/google-artist-list-with-synonyms.csv
+bin/alexa-artist-synonyms.csv
+bin/google-artist-synonyms.csv
