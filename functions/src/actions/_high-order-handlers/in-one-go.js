@@ -9,12 +9,13 @@ const ask = require('./middlewares/ask');
 const copyArgumentToSlots = require('./middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./middlewares/copy-defaults-to-slots');
 const feederFromSlotScheme = require('./middlewares/feeder-from-slots-scheme');
+const findRepairPhrase = require('./middlewares/find-repair-phrase');
+const findRepairScheme = require('./middlewares/find-repair-scheme');
 const fulfilResolvers = require('./middlewares/fulfil-resolvers');
 const parepareSongData = require('./middlewares/song-data');
 const playlistFromFeeder = require('./middlewares/playlist-from-feeder');
 const playSong = require('./middlewares/play-song');
 const renderSpeech = require('./middlewares/render-speech');
-const repairBrokenSlots = require('./middlewares/repair-broken-slots');
 const suggestions = require('./middlewares/suggestions');
 
 /**
@@ -95,7 +96,7 @@ function build ({playlist, strings, query}) {
 
         fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
-        return repairBrokenSlots()(Object.assign({}, context, {
+        return Promise.resolve(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
           speech: [],
@@ -104,7 +105,9 @@ function build ({playlist, strings, query}) {
             suggestions: [],
           }),
         }))
+          .then(findRepairScheme())
           .then(suggestions({exclude}))
+          .then(findRepairPhrase())
           .then(fulfilResolvers())
           .then(renderSpeech())
           // TODO: should clean broken slots from queue state

@@ -18,7 +18,10 @@ function find (options, context) {
   debug('the priority slots are:', prioritySlots);
   debug('the slots are:', slots);
 
-  const slotNames = Object.keys(slots);
+  const slotNames = Object.entries(slots)
+    // exclude empty arrays
+    .filter(([key, value]) => !Array.isArray(value) || (value.length > 0))
+    .map(([key, value]) => key);
 
   if (!prioritySlots) {
     debug(`we don't have priority slots so we will use the main set of slots`);
@@ -61,16 +64,37 @@ function find (options, context) {
 
 /**
  * Get list of templates which match slots
+ * with maximum intersection
  *
  * @param {Array} templateRequirements
  * @param {Object} slots
  * @returns {Array
  */
 function getMatchedTemplates (templateRequirements, slots) {
-  return templateRequirements && templateRequirements
+  if (!templateRequirements) {
+    return null;
+  }
+
+  const templates = templateRequirements
+    // drop all template which requires more than we have in slots
     .filter(
       ({requirements}) => requirements.every(r => _.includes(slots, r))
     )
+    .map(
+      ({requirements, template}) => ({
+        similarity: _.intersection(requirements, slots).length,
+        template,
+      })
+    )
+    .sort((a, b) => b.similarity - a.similarity);
+
+  if (templates.length === 0) {
+    return null;
+  }
+
+  // get 1st group with equal similarity
+  const similarityOfFirstGroup = templates[0].similarity;
+  return _.takeWhile(templates, ({similarity}) => similarity === similarityOfFirstGroup)
     .map(({template}) => template);
 }
 

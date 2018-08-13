@@ -60,3 +60,18 @@
   - user: 'turbo folk music'
     assistant: 'We are currently experiencing some technical difficulties on the Archive server.
                 Please try again later or try saying something else.'
+
+- scenario: 'handle empty playlist in one go intent'
+  dialog:
+  - user: '1990 year'
+  - user: 'play folk'
+    assistant: "I don't have folk of 1990. Maybe you would like to listen something else?"
+
+- scenario: 'handle empty playlist in one go intent'
+  dialog:
+  - user: '1910 year'
+  - user: 'play rock'
+    assistant: "I don't have rock of 1910. Try USA 1910, for example."
+# TODO:
+# it is ok for the moment but actually we want:
+#    assistant: "I don't have rock of 1990. Try jazz, for example."
