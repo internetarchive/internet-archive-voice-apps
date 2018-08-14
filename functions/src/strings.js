@@ -166,6 +166,9 @@ module.exports = {
           `I don't have {{subject}} of {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have {{subject}} of {{year}}. Maybe you would like to listen something else?`,
         ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
       },
     },
 
@@ -341,6 +344,9 @@ module.exports = {
           speech: [
             `We don't have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?`,
           ],
+          default: {
+            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          },
         },
       }, {
         /**
@@ -394,6 +400,9 @@ module.exports = {
             `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
             `I don't have that concert. Try {{years-interval.suggestions}}.`,
           ],
+          default: {
+            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          },
         },
       }],
 
