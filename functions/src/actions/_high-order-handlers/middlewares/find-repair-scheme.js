@@ -1,6 +1,8 @@
 const promptSelector = require('../../../slots/slots-of-template');
 const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:find-repair-scheme');
 
+const {requiredParameter} = require('./utils');
+
 /**
  * Middleware
  *
@@ -15,7 +17,12 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:find-r
  */
 module.exports = () => (ctx) => {
   debug('start');
+
   const {brokenSlots, slotScheme} = ctx;
+
+  requiredParameter(brokenSlots, {name: 'brokenSlots'});
+  requiredParameter(slotScheme, {name: 'slotScheme'});
+
   const brokenSlotsNames = Object.keys(brokenSlots);
 
   if (brokenSlotsNames.length === 0) {
