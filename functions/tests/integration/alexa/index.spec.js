@@ -47,6 +47,21 @@ describe('integration', () => {
             'fl%5B%5D=year&rows=150&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?' +
+            'q=coverage:%22new%20york%22%20AND%20' +
+            'collection:etree%20AND%20' +
+            'creator:%22grateful%20dead%22%20AND%20' +
+            'year:1900&' +
+            'fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?' +
+            'q=coverage:%22new%20york%22%20AND%20' +
+            'collection:etree%20AND%20' +
+            'creator:%22grateful%20dead%22&' +
+            'fl%5B%5D=year&rows=150&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:jazz&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(

@@ -14,7 +14,6 @@ const findRepairPhrase = require('./_high-order-handlers/middlewares/find-repair
 const findRepairScheme = require('./_high-order-handlers/middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./_high-order-handlers/middlewares/render-speech');
-const repairBrokenSlots = require('./_high-order-handlers/middlewares/repair-broken-slots');
 const suggestions = require('./_high-order-handlers/middlewares/suggestions');
 const prompt = require('./_high-order-handlers/middlewares/prompt');
 
@@ -86,13 +85,14 @@ function handler (app) {
 
         fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
-        return repairBrokenSlots()(Object.assign({}, context, {
+        return Promise.resolve(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
           speech: [],
         }))
+          .then(findRepairScheme())
           .then(suggestions({exclude: Object.keys(brokenSlots)}))
-          .then(fulfilResolvers())
+          .then(findRepairPhrase())
           .then(renderSpeech())
           // TODO: should clean broken slots from queue state
           .then(ask());

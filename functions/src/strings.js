@@ -377,6 +377,9 @@ module.exports = {
             `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
             `I don't have that concert in {{coverage}}. Maybe you would like {{suggestions.0}}?`,
           ],
+          default: {
+            speech: `I don't have that concert. Maybe you would like to try something else?`,
+          }
         },
       }, {
         /**
@@ -400,6 +403,8 @@ module.exports = {
             `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
             `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
             `I don't have that concert. Try {{years-interval.suggestions}}.`,
+            `I don't have any concert in {{coverage}}. Maybe you would like to try something else?`,
+            `I don't have concerts of {{creator}} in {{coverage}}. Maybe you would like to try something else?`,
           ],
           default: {
             speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
