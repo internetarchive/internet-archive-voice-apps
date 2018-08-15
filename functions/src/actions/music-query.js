@@ -93,6 +93,7 @@ function handler (app) {
           .then(findRepairScheme())
           .then(suggestions({exclude: Object.keys(brokenSlots)}))
           .then(findRepairPhrase())
+          .then(fulfilResolvers())
           .then(renderSpeech())
           // TODO: should clean broken slots from queue state
           .then(ask());
