@@ -375,6 +375,7 @@ module.exports = {
             `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
             `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
             `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
+            `I don't have that concert in {{coverage}}. Maybe you would like {{suggestions.0}}?`,
           ],
         },
       }, {

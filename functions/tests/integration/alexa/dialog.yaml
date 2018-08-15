@@ -75,3 +75,10 @@
 # TODO:
 # it is ok for the moment but actually we want:
 #    assistant: "I don't have rock of 1990. Try jazz, for example."
+
+- scenario: 'handle empty playlist in music query intent'
+  dialog:
+  - user: 'Live Collection'
+  - user: 'Grateful Dead'
+  - user: 'Kharkiv'
+    assistant: "I don't have that concert in Kharkiv. Maybe you would like Washington, DC 1973?"
