@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/ask');
+const strings = require('../../../../src/strings');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
 const mockDialog = require('../../../_utils/mocking/dialog');
@@ -26,6 +27,14 @@ describe('actions', () => {
               speech: 'One Two Tree',
               suggestions,
             });
+          });
+      });
+
+      it('should say something even when there is nothing to say', () => {
+        const app = mockApp();
+        return middleware()({app})
+          .then(() => {
+            expect(dialog.ask).to.have.been.calledWith(app, strings.events.nothingToSay);
           });
       });
     });

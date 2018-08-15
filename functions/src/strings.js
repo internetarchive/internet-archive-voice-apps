@@ -505,6 +505,10 @@ module.exports = {
     playlistIsEnded: {
       speech: 'Playlist has ended. Would you like to continue listening?',
     },
+
+    nothingToSay: {
+      speech: `I'm not sure what you said. Could you rephrase?`,
+    }
   },
 
   /**
