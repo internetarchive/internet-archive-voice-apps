@@ -14,10 +14,7 @@ function stage (newStage) {
     return;
   }
 
-  let ms;
-  if (currentStageTimer) {
-    ms = currentStageTimer();
-  }
+  const ms = currentStageTimer && currentStageTimer();
 
   switch (currentStage) {
     case module.exports.START:
@@ -29,13 +26,13 @@ function stage (newStage) {
     case module.exports.START:
       coldStart = true;
       break;
+
     case module.exports.PROCESS_REQUEST:
       if (coldStart) {
         coldStart = false;
       } else {
         info('warm start');
       }
-
       break;
   }
 
