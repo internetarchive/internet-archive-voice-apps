@@ -72,7 +72,7 @@ module.exports = (actionsMap) => {
   }
 
   app.middleware(() => {
-    pipeline.stage('process request');
+    pipeline.stage(pipeline.PROCESS_REQUEST);
   });
 
   // Sentry middleware
@@ -136,7 +136,7 @@ module.exports = (actionsMap) => {
     warning(`something wrong we don't have unhandled handler`);
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
-    pipeline.stage('idle');
+    pipeline.stage(pipeline.IDLE);
   });
 
   app.catch((conv, err) => {
@@ -170,7 +170,7 @@ module.exports = (actionsMap) => {
     if (!globalErrorWasHandled) {
       conv.ask(`Can you rephrase it?`);
     }
-    pipeline.stage('idle');
+    pipeline.stage(pipeline.IDLE);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));

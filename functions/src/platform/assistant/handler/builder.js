@@ -26,7 +26,7 @@ module.exports = ({actionsMap}) =>
         return Promise.resolve(handler(app))
           .then(res => {
             debug(`end handle intent "${intent}"`);
-            pipeline.stage('idle');
+            pipeline.stage(pipeline.IDLE);
             return res;
           });
       }

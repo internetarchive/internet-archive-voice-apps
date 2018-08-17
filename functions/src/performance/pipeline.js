@@ -22,5 +22,15 @@ function stage (newStage) {
 }
 
 module.exports = {
+  /**
+   * enum stages
+   */
+  // wait for the next request
+  IDLE: 'idle',
+  // process income request
+  PROCESS_REQUEST: 'process request',
+  // boot stage of the app
+  START: 'start',
+
   stage,
 };
