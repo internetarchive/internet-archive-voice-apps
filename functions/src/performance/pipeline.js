@@ -1,7 +1,7 @@
+const {timer} = require('../utils/logger')('ia:performance:pipeline');
+
 let currentStage = null;
 let currentStageTimer = null;
-
-const {timer} = require('../utils/logger')('ia:performance:pipeline');
 
 /**
  * Track stages of pipeline, and thier performance
