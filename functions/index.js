@@ -1,4 +1,7 @@
 'use strict';
+// put on the top to estimate performance of "start"
+const pipeline = require('./src/performance/pipeline');
+pipeline.stage('start');
 
 const actions = require('./src/actions');
 const assistantHandler = require('./src/platform/assistant/handler');
@@ -17,3 +20,4 @@ setup({platform: 'assistant'});
  * @type {HttpsFunction}
  */
 exports.assistant = assistantHandler(actionsMap);
+pipeline.stage('idle');

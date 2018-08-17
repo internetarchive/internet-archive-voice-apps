@@ -1,5 +1,6 @@
 const {App} = require('../app');
 
+const pipeline = require('../../../performance/pipeline');
 const {storeAction} = require('../../../state/actions');
 const fsm = require('../../../state/fsm');
 const {debug} = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
@@ -25,6 +26,7 @@ module.exports = ({actionsMap}) =>
         return Promise.resolve(handler(app))
           .then(res => {
             debug(`end handle intent "${intent}"`);
+            pipeline.stage('idle');
             return res;
           });
       }
