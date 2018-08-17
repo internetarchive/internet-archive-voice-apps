@@ -2,6 +2,7 @@ const Alexa = require('ask-sdk');
 const {DynamoDbPersistenceAdapter} = require('ask-sdk-dynamodb-persistence-adapter');
 const AWS = require('aws-sdk');
 
+const pipeline = require('../../../performance/pipeline');
 const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const ErrorHandler = require('./error-handler');
@@ -24,7 +25,13 @@ module.exports = (actions) => {
       skill = Alexa.SkillBuilders.custom()
         .addRequestHandlers(...handlers)
         .addErrorHandlers(ErrorHandler)
+        .addRequestInterceptors(
+          () => pipeline.stage(pipeline.PROCESS_REQUEST)
+        )
         .addRequestInterceptors(LogInterceptor)
+        .addResponseInterceptors(
+          () => pipeline.stage(pipeline.IDLE)
+        )
         .withPersistenceAdapter(dynamoDbPersistenceAdapter)
         // TODO: get from process.env
         // .withSkillId()

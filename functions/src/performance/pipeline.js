@@ -19,6 +19,12 @@ function stage (newStage) {
     ms = currentStageTimer();
   }
 
+  switch (currentStage) {
+    case module.exports.START:
+      info(`${ms} ms cold start`);
+      break;
+  }
+
   switch (newStage) {
     case module.exports.START:
       coldStart = true;
@@ -26,7 +32,6 @@ function stage (newStage) {
     case module.exports.PROCESS_REQUEST:
       if (coldStart) {
         coldStart = false;
-        info(`${ms} ms cold start`);
       } else {
         info('warm start');
       }
