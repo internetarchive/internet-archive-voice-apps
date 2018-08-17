@@ -1,5 +1,6 @@
-const {timer} = require('../utils/logger')('ia:performance:pipeline');
+const {info, timer} = require('../utils/logger')('ia:performance:pipeline');
 
+let coldStart;
 let currentStage = null;
 let currentStageTimer = null;
 
@@ -13,8 +14,24 @@ function stage (newStage) {
     return;
   }
 
+  let ms;
   if (currentStageTimer) {
-    currentStageTimer();
+    ms = currentStageTimer();
+  }
+
+  switch (newStage) {
+    case module.exports.START:
+      coldStart = true;
+      break;
+    case module.exports.PROCESS_REQUEST:
+      if (coldStart) {
+        coldStart = false;
+        info(`${ms} ms cold start`);
+      } else {
+        info('warm start');
+      }
+
+      break;
   }
 
   currentStage = newStage;

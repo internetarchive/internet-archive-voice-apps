@@ -82,9 +82,11 @@ module.exports = (name) => {
          * Stop last started performance
          */
         return () => {
-          performance(`${elapse()} ms`, id);
+          const ms = elapse();
+          performance(`${ms} ms`, id);
           const timerIndex = timerQueue.findIndex(i => i.id === id);
           timerQueue.splice(timerIndex, 1);
+          return ms;
         };
       },
     },
