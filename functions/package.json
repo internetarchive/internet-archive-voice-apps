@@ -37,7 +37,9 @@
     "object.entries": "^1.0.4",
     "raven": "^2.6.3",
     "replaceall": "^0.1.6",
-    "supports-color": "^5.4.0"
+    "supports-color": "^5.4.0",
+    "unzip": "^0.1.11",
+    "zipfolder": "^1.0.4"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",

@@ -9,6 +9,8 @@ const error = require(`debug`)(`ia:uploader:index:error`);
 
 const {uploadCollection} = require('./entities/collection');
 const {uploadGenres} = require('./entities/genres');
+const {downloadAgent} = require('./agent/agent-downloader');
+const {uploadAgent} = require('./agent/agent-uploader');
 
 const ALL = `all`;
 
@@ -16,7 +18,14 @@ const entities = {
   collection: uploadCollection,
   genres: uploadGenres,
 };
+
+const agent = {
+  upload: uploadAgent,
+  download: downloadAgent,
+};
+
 const all = {
+  agent: agent,
   entities: entities,
 };
 
