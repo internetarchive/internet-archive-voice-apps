@@ -1,10 +1,14 @@
-const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:ask');
+const {debug, error} = require('../../../utils/logger')('ia:actions:hoh:ask');
 const dialog = require('../../../dialog');
+const strings = require('../../../strings');
 
 /**
  * Middleware
  *
  * send ask response back to the user
+ * - response is mandatory, and even when we have nothing to say
+ * (what actualy looks like a bug)
+ * we should give response to user.
  *
  * @param app
  * @param speech
@@ -23,7 +27,8 @@ module.exports = () => (context) => {
       suggestions: suggestions && suggestions.filter(s => s).slice(0, 3),
     });
   } else {
-    warning(`hm... we don't have anything to say.`);
+    error(`hm... we don't have anything to say.`);
+    dialog.ask(app, strings.events.nothingToSay);
   }
 
   return Promise.resolve(context);

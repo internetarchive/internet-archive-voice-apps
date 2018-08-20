@@ -1,0 +1,20 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 14,
+    "params": {
+      "query": "_exists_:coverage AND year:1990 AND ( collection:etree OR collection:georgeblood )",
+      "qin": "_exists_:coverage AND year:1990 AND (collection:etree OR collection:georgeblood)",
+      "fields": "coverage,year",
+      "wt": "json",
+      "sort": "downloads desc",
+      "rows": "3",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 0,
+    "start": 0,
+    "docs": []
+  }
+}

@@ -40,6 +40,28 @@ describe('integration', () => {
             'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?' +
+            'q=coverage:kharkiv%20AND%20' +
+            'collection:etree%20AND%20' +
+            'creator:%22grateful%20dead%22&' +
+            'fl%5B%5D=year&rows=150&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?' +
+            'q=coverage:%22new%20york%22%20AND%20' +
+            'collection:etree%20AND%20' +
+            'creator:%22grateful%20dead%22%20AND%20' +
+            'year:1900&' +
+            'fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?' +
+            'q=coverage:%22new%20york%22%20AND%20' +
+            'collection:etree%20AND%20' +
+            'creator:%22grateful%20dead%22&' +
+            'fl%5B%5D=year&rows=150&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:jazz&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
@@ -51,6 +73,15 @@ describe('integration', () => {
           axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=collection:etree&fl%5B%5D=creator,identifier&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/popular-of-etree.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20subject:folk%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1910%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+          ).reply(200, require('../../provider/fixtures/coverages-of-1910.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+          ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
           ).reply(400);
 
@@ -107,16 +138,18 @@ describe('integration', () => {
             }
             return res.then(res => {
               expect(res).to.have.property('response').to.be.not.undefined;
-              if (typeof assistant === 'string') {
-                expect(res.response.outputSpeech).to.exist;
-                expect(res.response.outputSpeech.ssml).to.exist;
-                expect(res.response.outputSpeech.ssml).to.include(assistant);
-              } else if ('directive' in assistant) {
-                expect(res.response).to.have.property('directives');
-                expect(res.response.directives).to.be.an('array');
-                expect(res.response.directives[0]).to.have.property('type', assistant.directive);
-              } else {
-                throw new Error(`doesn't support response:`, assistant);
+              if (assistant !== undefined) {
+                if (typeof assistant === 'string') {
+                  expect(res.response.outputSpeech).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.include(assistant);
+                } else if ('directive' in assistant) {
+                  expect(res.response).to.have.property('directives');
+                  expect(res.response.directives).to.be.an('array');
+                  expect(res.response.directives[0]).to.have.property('type', assistant.directive);
+                } else {
+                  throw new Error(`doesn't support response:`, assistant);
+                }
               }
             });
           });

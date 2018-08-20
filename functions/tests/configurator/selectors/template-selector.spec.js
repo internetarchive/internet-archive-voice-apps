@@ -54,6 +54,26 @@ describe('configurator', () => {
             prioritySlots: ['collection'],
           })).to.be.null;
         });
+
+        it('should choose the most matched option', () => {
+          expect(selectors.find(options, {
+            slots: {
+              coverage: 'NY',
+              year: 2000,
+              subject: 'jazz',
+            }
+          })).to.be.equal(options[1]);
+        });
+
+        it('should ignore slot with empty array', () => {
+          expect(selectors.find([
+            '1st option {{suggestions.0}}',
+          ], {
+            slots: {
+              suggestions: [],
+            }
+          })).to.be.null;
+        });
       });
 
       describe('getMatchedTemplates', () => {
@@ -73,9 +93,7 @@ describe('configurator', () => {
             selector.getMatchedTemplates(extractor.extractRequrements(templates), slots)
           ).to.have.members([
             'Album {{coverage}} {{year}}!',
-            '{{coverage}} - good place!',
             '{{coverage}} {{year}} - great choice!',
-            '{{year}} - it was excellent year!',
           ]);
         });
       });

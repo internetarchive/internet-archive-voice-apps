@@ -61,6 +61,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
           }
         );
       }
+      debug('new suggestions are:', suggestions);
       return Object.assign(
         {}, context, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
       );

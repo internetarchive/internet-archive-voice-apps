@@ -10,9 +10,10 @@ const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
 
 const acknowledge = require('./_high-order-handlers/middlewares/acknowledge');
 const ask = require('./_high-order-handlers/middlewares/ask');
+const findRepairPhrase = require('./_high-order-handlers/middlewares/find-repair-phrase');
+const findRepairScheme = require('./_high-order-handlers/middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_high-order-handlers/middlewares/fulfil-resolvers');
 const renderSpeech = require('./_high-order-handlers/middlewares/render-speech');
-const repairBrokenSlots = require('./_high-order-handlers/middlewares/repair-broken-slots');
 const suggestions = require('./_high-order-handlers/middlewares/suggestions');
 const prompt = require('./_high-order-handlers/middlewares/prompt');
 
@@ -84,12 +85,14 @@ function handler (app) {
 
         fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
-        return repairBrokenSlots()(Object.assign({}, context, {
+        return Promise.resolve(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
           speech: [],
         }))
+          .then(findRepairScheme())
           .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(findRepairPhrase())
           .then(fulfilResolvers())
           .then(renderSpeech())
           // TODO: should clean broken slots from queue state
@@ -113,12 +116,14 @@ function handler (app) {
         // 2. get repair phrase from the last prompt
         // 3. render repair phrase
         const brokenSlots = context.newValues;
-        return repairBrokenSlots()(Object.assign({}, context, {
+        return Promise.resolve(Object.assign({}, context, {
           brokenSlots,
           // drop any acknowledges before
           speech: [],
         }))
-          .then(suggestions({exclude: Object.keys(brokenSlots)}));
+          .then(findRepairScheme())
+          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(findRepairPhrase());
       }
       return context;
     })

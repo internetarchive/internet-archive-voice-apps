@@ -151,6 +151,11 @@ module.exports = {
       /**
        * When user missed the available range
        * we should help them to find alternative.
+       *
+       * Hints:
+       * - gets group of speeches with the most intersection with existing slots
+       *   and get random
+       * - doesn't match to empty suggestions
        */
       repair: {
         speech: [
@@ -158,7 +163,12 @@ module.exports = {
           `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any albums for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
         ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
       },
     },
 
@@ -334,6 +344,9 @@ module.exports = {
           speech: [
             `We don't have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?`,
           ],
+          default: {
+            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          },
         },
       }, {
         /**
@@ -362,7 +375,11 @@ module.exports = {
             `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
             `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
             `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
+            `I don't have that concert in {{coverage}}. Maybe you would like {{suggestions.0}}?`,
           ],
+          default: {
+            speech: `I don't have that concert. Maybe you would like to try something else?`,
+          }
         },
       }, {
         /**
@@ -386,7 +403,12 @@ module.exports = {
             `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
             `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
             `I don't have that concert. Try {{years-interval.suggestions}}.`,
+            `I don't have any concert in {{coverage}}. Maybe you would like to try something else?`,
+            `I don't have concerts of {{creator}} in {{coverage}}. Maybe you would like to try something else?`,
           ],
+          default: {
+            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          },
         },
       }],
 
@@ -483,6 +505,10 @@ module.exports = {
     playlistIsEnded: {
       speech: 'Playlist has ended. Would you like to continue listening?',
     },
+
+    nothingToSay: {
+      speech: `I'm not sure what you said. Could you rephrase?`,
+    }
   },
 
   /**
