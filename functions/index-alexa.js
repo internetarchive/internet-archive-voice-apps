@@ -1,5 +1,9 @@
 'use strict';
 
+// put on the top to estimate performance of "start"
+const pipeline = require('./src/performance/pipeline');
+pipeline.stage(pipeline.START);
+
 const actions = require('./src/actions');
 const alexaHandler = require('./src/platform/alexa/handler');
 const setup = require('./src/setup');
@@ -17,3 +21,6 @@ setup({platform: 'alexa'});
  * @type {HttpsFunction}
  */
 exports.handler = alexaHandler(actionsMap);
+
+// end of "start" phase of pipeline, now we are waiting for request
+pipeline.stage(pipeline.IDLE);

@@ -10,6 +10,7 @@ const Raven = require('raven');
 const packageJSON = require('../../../package.json');
 
 const errors = require('../../errors');
+const pipeline = require('../../performance/pipeline');
 const strings = require('../../strings');
 const {debug, error, warning} = require('../../utils/logger')('ia:index');
 
@@ -69,6 +70,10 @@ module.exports = (actionsMap) => {
       'which is require to handle unhandled intents.'
     );
   }
+
+  app.middleware(() => {
+    pipeline.stage(pipeline.PROCESS_REQUEST);
+  });
 
   // Sentry middleware
   if (functions.config().sentry) {
@@ -131,6 +136,7 @@ module.exports = (actionsMap) => {
     warning(`something wrong we don't have unhandled handler`);
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
+    pipeline.stage(pipeline.IDLE);
   });
 
   app.catch((conv, err) => {
@@ -164,6 +170,7 @@ module.exports = (actionsMap) => {
     if (!globalErrorWasHandled) {
       conv.ask(`Can you rephrase it?`);
     }
+    pipeline.stage(pipeline.IDLE);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
