@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.2.3](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.3) (2018-08-20)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.2...2.2.3)
+
+**Implemented enhancements:**
+
+- improve performance logging [\#317](https://github.com/internetarchive/internet-archive-google-action/issues/317)
+- react gracefully when we can't get data from IA [\#82](https://github.com/internetarchive/internet-archive-google-action/issues/82)
+- Handle empty music query result [\#47](https://github.com/internetarchive/internet-archive-google-action/issues/47)
+
+**Merged pull requests:**
+
+- Feature/improve performance logging [\#320](https://github.com/internetarchive/internet-archive-google-action/pull/320) ([hyzhak](https://github.com/hyzhak))
+- Feature/handle empty response [\#319](https://github.com/internetarchive/internet-archive-google-action/pull/319) ([hyzhak](https://github.com/hyzhak))
+- Feature/handle ia endpoint fail [\#313](https://github.com/internetarchive/internet-archive-google-action/pull/313) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.2.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.2) (2018-08-13)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.1...2.2.2)
 
