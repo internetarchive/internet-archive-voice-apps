@@ -1,9 +1,5 @@
 module.exports = {
   /**
-   * v2
-   */
-
-  /**
    * settings for aliases resolver
    * we could match value of any context parameter to some value
    */
@@ -514,67 +510,6 @@ module.exports = {
 
     nothingToSay: {
       speech: `I'm not sure what you said. Could you rephrase?`,
-    }
-  },
-
-  /**
-   * v1
-   *
-   * @deprecated
-   */
-  appExit: "Okay, let's try this again later.",
-  errors: {
-    device: {
-      mediaResponse: {
-        speech: "Sorry, your device doesn't support media response.",
-      },
-    },
-    noInput: {
-      first: "Sorry, I couldn't hear you.",
-      reprompt: 'Sorry, can you repeat that?'
-    },
-    unknownInput: {
-      first: "I'm not sure what you said. Can you repeat that?",
-      reprompt: "I still didn't get that."
-    },
-    collection: {
-      notFound: 'has no available songs to play. Please choose a different artist, random is also an option'
-    },
-    topic: {
-      notFound: "I couldn't find any songs. Please select another topic, random is also an option"
-    },
-    yearAndCity: {
-      notFound: "I couldn't find any songs. Try a different city or year, random is also an option"
-    },
-    yearList: {
-      notFound: "I wasn't able to find a year list. Please select random"
-    }
-  },
-  fallback: {
-    whatWasThat: 'Sorry, what was that?',
-    didntCatchThat: "I didn't catch that.",
-    misunderstand: "I'm having trouble understanding you",
-    sayAgain: 'Sorry, can you say that again?',
-    finalReprompt: "I'm sorry I'm having trouble here. Maybe we should try this again later."
-  },
-  suggestion: {
-    artist: {
-      gratefulDead: 'Grateful Dead',
-      cowboyJunkies: 'Cowboy Junkies',
-      dittyBops: 'Ditty Bops',
-      discoBiscuits: 'Disco Biscuits',
-      hotButteredRum: 'Hot Buttered Rum',
-      kellerWilliams: 'Keller Williams'
-    },
-    artistsPrompt: 'I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example',
-    artistsPromptAlternative: 'We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams',
-    randomPrompt: 'I can play something randomly'
-  },
-  statements: {
-    salutation: {
-      thankYou: {
-        liveMusicCollection: 'Thanks for rocking with the Internet Archive’s live music collection!'
-      }
     }
   }
 };
