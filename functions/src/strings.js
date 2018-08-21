@@ -1,18 +1,16 @@
 module.exports = {
   /**
-   * v2
-   */
-  acknowledger: [
-    'Okay, ',
-    'Got it, ',
-    'Sure, ',
-    'Alright, ',
-    'Thanks, '
-  ],
-
-  /**
    * settings for aliases resolver
    * we could match value of any context parameter to some value
+   *
+   * Usage:
+   *
+   * "In any message you can substitute {{alias.collectionId}}"
+   *
+   * and if collectionId == 'etree' you would get
+   *
+   * "In any message you can substitute Live Concerts"
+   *
    */
   aliases: {
     collectionId: {
@@ -139,6 +137,7 @@ module.exports = {
         speech: [
           `I've got {{total}} {{subject}} albums. Let's listen to them.`,
           `I've got {{total}} albums from {{creator}} here. Let's start listening to them.`,
+          `I found {{total}} albums. Let's listen to them.`,
           `I found {{total}} {{subject}} albums. Let's listen to them.`,
           `Let's play {{subject}} music.`,
           `Let's play music from {{creator}}.`,
@@ -178,8 +177,14 @@ module.exports = {
     musicQuery: [{
       name: 'george blood collection',
 
+      /**
+       * engine chooses this scheme when have met that condition
+       */
       condition: 'equal(collectionId, "georgeblood")',
 
+      /**
+       * slots which we need for fulfillement
+       */
       slots: [
         'collectionId',
         'subject',
@@ -213,6 +218,9 @@ module.exports = {
       acknowledges: [
         'Okay! Lets go with the artist {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
+        `Okay! You've selected {{alias.collectionId}}.`,
+        `Got it! You've selected {{alias.collectionId}}.`,
+        `Alright! You've selected {{alias.collectionId}}.`,
       ],
 
       prompts: [{
@@ -248,6 +256,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
+          `I found {{total}} albums. Let's listen to them.`,
           `I've got {{total}} {{subject}} albums. Let's listen to them.`,
           `Here are some {{subject}} albums.`,
           `Let's play some {{subject}} music.`,
@@ -294,6 +303,7 @@ module.exports = {
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was an excellent year!',
         'Okay! Lets go with {{creator}}!',
+        'Alright! Lets go with {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
 
@@ -419,6 +429,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
+          `I found {{total}} albums. Let's listen to them.`,
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
@@ -508,67 +519,6 @@ module.exports = {
 
     nothingToSay: {
       speech: `I'm not sure what you said. Could you rephrase?`,
-    }
-  },
-
-  /**
-   * v1
-   *
-   * @deprecated
-   */
-  appExit: "Okay, let's try this again later.",
-  errors: {
-    device: {
-      mediaResponse: {
-        speech: "Sorry, your device doesn't support media response.",
-      },
-    },
-    noInput: {
-      first: "Sorry, I couldn't hear you.",
-      reprompt: 'Sorry, can you repeat that?'
-    },
-    unknownInput: {
-      first: "I'm not sure what you said. Can you repeat that?",
-      reprompt: "I still didn't get that."
-    },
-    collection: {
-      notFound: 'has no available songs to play. Please choose a different artist, random is also an option'
-    },
-    topic: {
-      notFound: "I couldn't find any songs. Please select another topic, random is also an option"
-    },
-    yearAndCity: {
-      notFound: "I couldn't find any songs. Try a different city or year, random is also an option"
-    },
-    yearList: {
-      notFound: "I wasn't able to find a year list. Please select random"
-    }
-  },
-  fallback: {
-    whatWasThat: 'Sorry, what was that?',
-    didntCatchThat: "I didn't catch that.",
-    misunderstand: "I'm having trouble understanding you",
-    sayAgain: 'Sorry, can you say that again?',
-    finalReprompt: "I'm sorry I'm having trouble here. Maybe we should try this again later."
-  },
-  suggestion: {
-    artist: {
-      gratefulDead: 'Grateful Dead',
-      cowboyJunkies: 'Cowboy Junkies',
-      dittyBops: 'Ditty Bops',
-      discoBiscuits: 'Disco Biscuits',
-      hotButteredRum: 'Hot Buttered Rum',
-      kellerWilliams: 'Keller Williams'
-    },
-    artistsPrompt: 'I have some music from The Ditty Bops, Cowboy Junkies, and Grateful Dead, for example',
-    artistsPromptAlternative: 'We also have music from Disco Biscuits, Hot Buttered Rum, and Keller Williams',
-    randomPrompt: 'I can play something randomly'
-  },
-  statements: {
-    salutation: {
-      thankYou: {
-        liveMusicCollection: 'Thanks for rocking with the Internet Archive’s live music collection!'
-      }
     }
   }
 };
