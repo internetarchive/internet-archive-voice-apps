@@ -1,3 +1,4 @@
+const entries = require('object.entries');
 const _ = require('lodash');
 const util = require('util');
 
@@ -18,7 +19,7 @@ function find (options, context) {
   debug('the priority slots are:', prioritySlots);
   debug('the slots are:', slots);
 
-  const slotNames = Object.entries(slots)
+  const slotNames = entries(slots)
     // exclude empty arrays
     .filter(([key, value]) => !Array.isArray(value) || (value.length > 0))
     .map(([key, value]) => key);
