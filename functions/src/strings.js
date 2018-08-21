@@ -2,13 +2,6 @@ module.exports = {
   /**
    * v2
    */
-  acknowledger: [
-    'Okay, ',
-    'Got it, ',
-    'Sure, ',
-    'Alright, ',
-    'Thanks, '
-  ],
 
   /**
    * settings for aliases resolver
@@ -220,6 +213,9 @@ module.exports = {
       acknowledges: [
         'Okay! Lets go with the artist {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
+        `Okay! You've selected {{alias.collectionId}}.`,
+        `Got it! You've selected {{alias.collectionId}}.`,
+        `Alright! You've selected {{alias.collectionId}}.`,
       ],
 
       prompts: [{
@@ -301,6 +297,7 @@ module.exports = {
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was an excellent year!',
         'Okay! Lets go with {{creator}}!',
+        'Alright! Lets go with {{creator}}!',
         `You've selected {{alias.collectionId}}.`,
       ],
 
