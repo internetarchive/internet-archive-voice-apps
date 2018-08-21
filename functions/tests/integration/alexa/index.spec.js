@@ -4,6 +4,7 @@ const MockAdapter = require('axios-mock-adapter');
 const fs = require('fs');
 const expect = require('chai').expect;
 const yaml = require('js-yaml');
+const lodash = require('lodash');
 const path = require('path');
 const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
@@ -88,6 +89,9 @@ describe('integration', () => {
           // mock attributes persistance
           sandbox = sinon.createSandbox({});
           sandbox.replace(dynamoDbPersistenceAdapter, 'DynamoDbPersistenceAdapter', DynamoDBMock);
+
+          // always choose 1st option
+          sandbox.replace(lodash, 'sample', sinon.stub().callsFake(ops => ops[0]));
 
           alexa = VirtualAlexa.Builder()
             .handler('./index-alexa.handler')
