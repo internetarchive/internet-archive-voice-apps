@@ -179,8 +179,14 @@ module.exports = {
     musicQuery: [{
       name: 'george blood collection',
 
+      /**
+       * engine chooses this scheme when have met that condition
+       */
       condition: 'equal(collectionId, "georgeblood")',
 
+      /**
+       * slots which we need for fulfillement
+       */
       slots: [
         'collectionId',
         'subject',
