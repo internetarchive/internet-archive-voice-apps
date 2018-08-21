@@ -2,6 +2,15 @@ module.exports = {
   /**
    * settings for aliases resolver
    * we could match value of any context parameter to some value
+   *
+   * Usage:
+   *
+   * "In any message you can substitute {{alias.collectionId}}"
+   *
+   * and if collectionId == 'etree' you would get
+   *
+   * "In any message you can substitute Live Concerts"
+   *
    */
   aliases: {
     collectionId: {
