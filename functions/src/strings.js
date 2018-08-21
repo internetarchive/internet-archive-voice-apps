@@ -251,6 +251,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
+          `I found {{total}} albums. Let's listen to them.`,
           `I've got {{total}} {{subject}} albums. Let's listen to them.`,
           `Here are some {{subject}} albums.`,
           `Let's play some {{subject}} music.`,
@@ -423,6 +424,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
+          `I found {{total}} albums. Let's listen to them.`,
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
