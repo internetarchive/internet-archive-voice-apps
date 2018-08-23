@@ -7,6 +7,7 @@ const fs = require('fs');
 const mkdirp = util.promisify(require('mkdirp'));
 const path = require('path');
 
+const clean = require('./clean-entities');
 const {preprocess} = require('./endpoint-processor');
 
 const fsWriteFile = util.promisify(fs.writeFile);
@@ -30,6 +31,8 @@ async function fetchAllAndSaveToFile (ops) {
     books = books.map(book => ops.fields.reduce((acc, field) => acc.concat(book[field]), []));
   }
 
+  books = clean.cleanEntities(books);
+
   await outputs[ops.output.format](ops.output, books);
 }
 
@@ -37,12 +40,6 @@ const outputs = {
   json: storeToJSON,
   csv: storeToCSV,
 };
-
-function stripBrackets (entities) {
-  return entities.map(e => {
-
-  });
-}
 
 async function storeToJSON (ops, entities) {
   if (!ops.encoding) {
