@@ -38,6 +38,12 @@ const outputs = {
   csv: storeToCSV,
 };
 
+function stripBrackets (entities) {
+  return entities.map(e => {
+
+  });
+}
+
 async function storeToJSON (ops, entities) {
   if (!ops.encoding) {
     throw new Error('It seems we have missed ops.encoding');
