@@ -6,7 +6,7 @@ module.exports = {
     // numOfPages: 3,
 
     // size of page
-    pageSize: 50,
+    pageSize: 100000,
 
     fields: [
       'title',
