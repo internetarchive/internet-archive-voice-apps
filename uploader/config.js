@@ -1,7 +1,6 @@
 module.exports = {
   books: {
-    endpoint: 'https://archive.org/advancedsearch.php?q=collection:{{collectionId}}&fl[]=creator,year,title,subject,identifier&rows={{pageSize}}&page={{pageIndex}}&output=json',
-    collectionId: 'librivoxaudio',
+    endpoint: 'http://archive.org/advancedsearch.php?q=collection:librivoxaudio&fl[]=creator,year,title,subject,identifier&rows={{pageSize}}&page={{pageIndex}}&output=json',
 
     // load only 3 pages
     numOfPages: 3,
