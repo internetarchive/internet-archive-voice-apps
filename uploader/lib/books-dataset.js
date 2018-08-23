@@ -7,8 +7,8 @@ const fs = require('fs');
 const mkdirp = util.promisify(require('mkdirp'));
 const path = require('path');
 
-const clean = require('./clean-entities');
 const {preprocess} = require('./endpoint-processor');
+const processEntities = require('./process-entities');
 
 const fsWriteFile = util.promisify(fs.writeFile);
 
@@ -31,7 +31,7 @@ async function fetchAllAndSaveToFile (ops) {
     books = books.map(book => ops.fields.reduce((acc, field) => acc.concat(book[field]), []));
   }
 
-  books = clean.cleanEntities(books);
+  books = processEntities.clean(books);
 
   await outputs[ops.output.format](ops.output, books);
 }

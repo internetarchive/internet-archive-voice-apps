@@ -3,7 +3,7 @@ module.exports = {
     endpoint: 'http://archive.org/advancedsearch.php?q=collection:librivoxaudio&fl[]=creator,year,title,subject,identifier&rows={{pageSize}}&page={{pageIndex}}&output=json',
 
     // load only 3 pages
-    numOfPages: 3,
+    // numOfPages: 3,
 
     // size of page
     pageSize: 50,
