@@ -1,7 +1,5 @@
-function uploader () {
-  console.log('uploader');
-  return fetch()
-    .then()
-}
+const books = require('./lib/books-dataset');
 
-uploader();
+const config = require('./config');
+
+books.fetchAllAndSaveToFile(config.books);
