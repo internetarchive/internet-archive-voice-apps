@@ -2,6 +2,7 @@
 const util = require('util');
 
 const axios = require('axios');
+const axiosRetry = require('axios-retry');
 const stringifyToCSV = util.promisify(require('csv').stringify);
 const fs = require('fs');
 const mkdirp = util.promisify(require('mkdirp'));
@@ -11,6 +12,8 @@ const {preprocess} = require('./endpoint-processor');
 const processEntities = require('./process-entities');
 
 const fsWriteFile = util.promisify(fs.writeFile);
+
+axiosRetry(axios, {retries: 5});
 
 /**
  * Fetch all books and store to file
@@ -22,7 +25,22 @@ async function fetchAllAndSaveToFile (ops) {
     process.stdout.write(`\r ${Math.round(100 * pageIndex / (numOfPages - 1))}%`);
   }
 
-  let books = await feetchAllBooks(ops, {onPageReceived});
+  let books;
+  try {
+    books = await feetchAllBooks(ops, {onPageReceived});
+  } catch (err) {
+    console.log('\nFailed request');
+    console.log('url:', err.config.url);
+    console.log('status:', err.response.status);
+    console.log('data:', err.response.data);
+    // TODO:
+    // after 201 pages we fail with error status 507
+    // and message:
+    //
+    // request
+    // https://archive.org/advancedsearch.php?q=collection:librivoxaudio&fl[]=creator,year,title,subject,identifier&rows=50&page=201&output=json
+    return;
+  }
 
   console.log('\nBooks are loaded');
 
@@ -73,7 +91,9 @@ async function feetchAllBooks (ops, handlers) {
   let numOfPages = ops.numOfPages;
   let entities = [];
   while (numOfPages === undefined || pageIndex < numOfPages) {
-    const res = await axios.get(preprocess(ops.endpoint, {...ops, pageIndex}));
+    const url = preprocess(ops.endpoint, {...ops, pageIndex});
+    const res = await axios.get(url);
+
     if (numOfPages === undefined) {
       numOfPages = res.data.response.numFound /
         Math.min(res.data.response.docs.length, ops.pageSize);
