@@ -8,6 +8,10 @@ module.exports = {
     // size of page
     pageSize: 50,
 
+    fields: [
+      'title',
+    ],
+
     // save to json
 
     // output: {
@@ -22,6 +26,7 @@ module.exports = {
       format: 'csv',
       filename: 'datasets/audio-books.csv',
       encoding: 'utf8',
+      quoted: true,
     },
   },
 };
