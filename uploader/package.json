@@ -5,6 +5,7 @@
   "description": "IA voice app dataset uploader",
   "main": "index.js",
   "scripts": {
+    "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/internetarchive/internet-archive-google-action/issues"
   },
-  "homepage": "https://github.com/internetarchive/internet-archive-google-action#readme"
+  "homepage": "https://github.com/internetarchive/internet-archive-google-action#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
