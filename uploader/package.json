@@ -1,0 +1,32 @@
+{
+  "name": "ia-voice-app-dataset-uploader",
+  "version": "0.1.0",
+  "private": true,
+  "description": "IA voice app dataset uploader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internetarchive/internet-archive-google-action.git"
+  },
+  "keywords": [
+    "uploader",
+    "dataset",
+    "internet",
+    "archive",
+    "uploader",
+    "actions",
+    "of",
+    "google",
+    "alexa",
+    "skill"
+  ],
+  "author": "Internet Archive",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/internetarchive/internet-archive-google-action/issues"
+  },
+  "homepage": "https://github.com/internetarchive/internet-archive-google-action#readme"
+}
