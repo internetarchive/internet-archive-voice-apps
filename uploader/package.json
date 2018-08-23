@@ -32,6 +32,7 @@
   "homepage": "https://github.com/internetarchive/internet-archive-google-action#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "mkdirp": "^0.5.1",
     "mustache": "^2.3.2"
   }
 }

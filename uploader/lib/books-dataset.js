@@ -1,6 +1,10 @@
+// put it on the top to be able to promisify on-fly all requested libs
+const util = require('util');
+
 const axios = require('axios');
 const fs = require('fs');
-const util = require('util');
+const mkdirp = util.promisify(require('mkdirp'));
+const path = require('path');
 
 const {preprocess} = require('./endpoint-processor');
 
@@ -36,6 +40,7 @@ async function storeToJSON (ops, entities) {
     throw new Error('It seems we have missed ops.output.filename');
   }
   console.log(`storing JSON file ${ops.output.filename}`);
+  await mkdirp(path.dirname(ops.output.filename));
   await fsWriteFile(ops.output.filename, JSON.stringify(entities), ops.output.encoding);
   console.log(`JSON file ${ops.output.filename} is stored`);
 }
