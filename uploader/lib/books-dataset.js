@@ -32,6 +32,7 @@ async function fetchAllAndSaveToFile (ops) {
   }
 
   books = processEntities.clean(books);
+  books = processEntities.sortEntities(books);
 
   await outputs[ops.output.format](ops.output, books);
 }
