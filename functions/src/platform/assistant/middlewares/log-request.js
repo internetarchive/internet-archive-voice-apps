@@ -1,4 +1,5 @@
 const util = require('util');
+const uuidv4 = require('uuid/v4');
 
 const {debug, info} = require('../../../utils/logger')('ia:log-request');
 
@@ -14,7 +15,17 @@ module.exports = (conv) => {
   debug('\n\n');
   info(`start handling action: ${conv.action}, intent: ${conv.intent}`);
   if (conv.user) {
-    info(`user.id:`, conv.user.id);
+    let userId;
+    // if a value for userID exists in user storage, it's a returning user so we can
+    // just read the value and use it. If a value for userId does not exist in user storage,
+    // it's a new user, so we need to generate a new ID and save it in user storage.
+    if (userId in conv.user.storage) {
+      userId = conv.user.storage.userId;
+    } else {
+      userId = uuidv4();
+      conv.user.storage.userId = userId;
+    }
+    info(`user.id:`, userId);
     info(`user.last:`, conv.user.last);
     info(`user.name:`, util.inspect(conv.user.name));
   } else {
