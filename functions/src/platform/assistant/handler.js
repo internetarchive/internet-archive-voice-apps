@@ -2,7 +2,7 @@ const {dialogflow} = require('actions-on-google');
 const bst = require('bespoken-tools');
 const functions = require('firebase-functions');
 const _ = require('lodash');
-// const dashbotBuilder = require('dashbot');
+const dashbotBuilder = require('dashbot');
 // FIXME: temporal solution details below
 // const domain = require('domain'); // eslint-disable-line
 const Raven = require('raven');
@@ -21,13 +21,10 @@ module.exports = (actionsMap) => {
   const app = dialogflow();
   let handlers = [];
 
-  // dashbot doesn't support official v2 yet
-  // (https://github.com/actionably/dashbot/issues/23)
-  //
-  // const dashbot = dashbotBuilder(
-  //   functions.config().dashbot.key, {
-  //     printErrors: false,
-  //   }).google;
+  const dashbot = dashbotBuilder(
+    functions.config().dashbot.key, {
+      printErrors: false,
+    }).google;
 
   if (actionsMap) {
     handlers = buildHandlers({actionsMap});
@@ -173,5 +170,5 @@ module.exports = (actionsMap) => {
     pipeline.stage(pipeline.IDLE);
   });
 
-  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
+  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app), dashbot.configHandler(app));
 };
