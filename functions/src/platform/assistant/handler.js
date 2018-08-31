@@ -170,5 +170,9 @@ module.exports = (actionsMap) => {
     pipeline.stage(pipeline.IDLE);
   });
 
-  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app), dashbot.configHandler(app));
+  // dashbot.configHandler(app);
+  // return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
+  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app, function (req, res) {
+    dashbot.configHandler(app);
+  }));
 };
