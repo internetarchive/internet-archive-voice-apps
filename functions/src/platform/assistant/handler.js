@@ -3,8 +3,8 @@ const {dialogflow} = require('actions-on-google');
 const bst = require('bespoken-tools');
 const functions = require('firebase-functions');
 const _ = require('lodash');
-// const dashbotBuilder = require('dashbot');
-const dashbot = require('dashbot')(functions.config().dashbot.key).google;
+const dashbotBuilder = require('dashbot');
+
 // FIXME: temporal solution details below
 // const domain = require('domain'); // eslint-disable-line
 const Raven = require('raven');
@@ -21,15 +21,12 @@ const logRequest = require('./middlewares/log-request');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();
-  dashbot.configHandler(app);
   let handlers = [];
 
-  /*
   const dashbot = dashbotBuilder(
     functions.config().dashbot.key, {
       printErrors: false,
     }).google;
-    */
 
   if (actionsMap) {
     handlers = buildHandlers({actionsMap});
@@ -178,26 +175,6 @@ module.exports = (actionsMap) => {
   // dashbot.configHandler(app);
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app), (req, res) => {
-    // dashbot.configHandler(req, res);
     dashbot.configHandler(app);
   });
-
-  // return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
-
-  /*
-  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, (req, res) => {
-    const app = new Dialogflow({request: req, response: res});
-    dashbot.configHandler(app);
-  }));
-  */
-  /*
-  return functions.https.onRequest((request, response) => {
-    dashbot.configHandler(app);
-    // return bst.Logless.capture(functions.config().bespoken.key, app);
-    return bst.Logless.capture(functions.config().bespoken.key, (request, response) => {
-      const app = new DialogflowApp({request: request, response: response});
-      dashbot.configHandler(app);
-    });
-  });
-  */
 };
