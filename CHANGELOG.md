@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.2.4](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.4) (2018-08-24)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.3...2.2.4)
+
+**Implemented enhancements:**
+
+- experimental feature - to read Moby Dick Chapter 3 [\#325](https://github.com/internetarchive/internet-archive-google-action/issues/325)
+- clean and update strings.js scheme [\#322](https://github.com/internetarchive/internet-archive-google-action/issues/322)
+
+**Merged pull requests:**
+
+- play audiobook moby dick ch3 [\#327](https://github.com/internetarchive/internet-archive-google-action/pull/327) ([hyzhak](https://github.com/hyzhak))
+- Feature/books uploader [\#326](https://github.com/internetarchive/internet-archive-google-action/pull/326) ([hyzhak](https://github.com/hyzhak))
+- Feature/clean and update strings.js scheme [\#323](https://github.com/internetarchive/internet-archive-google-action/pull/323) ([hyzhak](https://github.com/hyzhak))
+- Feature/hot fix [\#321](https://github.com/internetarchive/internet-archive-google-action/pull/321) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.2.3](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.3) (2018-08-20)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.2...2.2.3)
 

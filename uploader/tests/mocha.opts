@@ -1,0 +1,3 @@
+--require ./tests/_utils/deps.js
+
+./tests/**/*.spec.js

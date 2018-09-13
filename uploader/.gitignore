@@ -1,0 +1,9 @@
+# deps
+
+node_modules
+
+# dev env
+
+npm-debug.log
+.DS_Store
+datasets

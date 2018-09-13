@@ -41,7 +41,7 @@ echo -e "$checkit  push tag"
 git push --tags
 
 echo -e "$checkit  regenerate changeslog"
-git-generate-changelog --issue-line-labels alexa assistant dialog optimization
+git-generate-changelog --issue-line-labels alexa assistant dialog experiment optimization
 
 echo -e "$checkit  commit changelog"
 git commit -am ":scroll: changelog $PACKAGE_VERSION"
