@@ -62,7 +62,7 @@ describe('platform', () => {
         let warning = sinon.spy();
         handlerBuilder.__set__('warning', warning);
 
-        const handler = handlerBuilder();
+        const handler = handlerBuilder(actions);
         const action = 'on-definitely-uncovered-action';
 
         handler(buildIntentRequest({

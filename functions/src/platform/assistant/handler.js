@@ -120,6 +120,7 @@ module.exports = (actionsMap) => {
   // });
 
   app.fallback((conv) => {
+    debug('handle fallback');
     let matchedHandler = getHandlerByIntent(conv.action);
     if (matchedHandler) {
       debug(`doesn't match intent name but matched manually by action name`);
