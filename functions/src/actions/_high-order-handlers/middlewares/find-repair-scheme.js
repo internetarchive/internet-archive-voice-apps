@@ -1,5 +1,5 @@
 const promptSelector = require('../../../slots/slots-of-template');
-const { debug, warning } = require('../../../utils/logger')('ia:actions:hoh:find-repair-scheme');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:find-repair-scheme');
 
 const { requiredParameter } = require('./utils');
 

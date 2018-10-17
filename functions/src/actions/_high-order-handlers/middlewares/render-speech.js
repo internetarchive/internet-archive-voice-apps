@@ -20,6 +20,8 @@ module.exports = () => (args) => {
     debug(`don't have speech here`);
     return Promise.resolve(args);
   } else {
+    debug('slots:', slots);
+    debug('speech', speech);
     if (Array.isArray(speech)) {
       return Promise.resolve(Object.assign({}, args, {
         speech: speech.map(render(slots)),

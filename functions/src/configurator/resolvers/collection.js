@@ -1,5 +1,5 @@
 const collection = require('../../../provider/collection');
-const { debug } = require('../../../utils/logger')('ia:resolver:collection');
+const { debug } = require('../../../utils/logger')('ia:resolvers:collection');
 
 /**
  * Handle context to fetch collection details

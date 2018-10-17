@@ -2,7 +2,7 @@ const _ = require('lodash');
 const mustache = require('mustache');
 
 const suggestionExtensions = require('../../../extensions/suggestions');
-const { debug, warning } = require('../../../utils/logger')('ia:actions:middleware:suggestions');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:suggestions');
 
 /**
  * Middleware

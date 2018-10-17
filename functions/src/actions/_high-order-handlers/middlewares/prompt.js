@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { debug, warning } = require('../../../utils/logger')('ia:actions:hoh:substitute-prompt');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:substitute-prompt');
 
 // TODO: should be changed to configurator/selectors
 const selectors = require('../../../slots/slots-of-template');

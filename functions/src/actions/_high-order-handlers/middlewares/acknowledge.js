@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const selectors = require('../../../configurator/selectors');
-const { debug, warning } = require('../../../utils/logger')('ia:actions:hoh:acknowledge');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:acknowledge');
 
 /**
  * Midleware

@@ -1,7 +1,7 @@
 const util = require('util');
 
 const templateResolvers = require('../../../configurator/parsers/template-resolvers');
-const { debug } = require('../../../utils/logger')('ia:actions:middleware:fulfil-resolvers');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:fulfil-resolvers');
 
 /**
  * Middleware

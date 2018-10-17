@@ -1,5 +1,5 @@
 const collection = require('../../provider/collection');
-const { debug } = require('../../utils/logger')('ia:resolver:creator');
+const { debug } = require('../../utils/logger')('ia:resolvers:creator');
 
 /**
  * Handle context to fetch creator details

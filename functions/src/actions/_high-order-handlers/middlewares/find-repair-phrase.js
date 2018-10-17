@@ -2,7 +2,7 @@ const _ = require('lodash');
 const util = require('util');
 
 const selectors = require('../../../configurator/selectors');
-const { debug, warning } = require('../../../utils/logger')('ia:actions:hoh:find-repair-phrase');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:find-repair-phrase');
 
 const { requiredParameter } = require('./utils');
 
