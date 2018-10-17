@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const rebortEscape = require('../../src/utils/reborn-escape');
 

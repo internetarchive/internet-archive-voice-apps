@@ -4,18 +4,18 @@ const selectors = require('../../../configurator/selectors');
 const playback = require('../../../state/playback');
 const availableStrings = require('../../../strings').dialog.playSong;
 const esapceHTMLObject = require('../../../utils/escape-html-object');
-const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-data');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
 /**
  * Get songs data from feeder and them to slots
  */
 module.exports = () => (args) => {
   debug('start');
-  let {app, feeder, slots = {}, speech = []} = args;
+  let { app, feeder, slots = {}, speech = [] } = args;
   const songData = feeder.getCurrentItem(args);
   const mute = playback.isMuteSpeechBeforePlayback(app);
 
-  slots = Object.assign({}, slots, esapceHTMLObject(songData, {skipFields: ['audioURL', 'imageURL']}));
+  slots = Object.assign({}, slots, esapceHTMLObject(songData, { skipFields: ['audioURL', 'imageURL'] }));
 
   const strings = selectors.find(availableStrings, slots);
 

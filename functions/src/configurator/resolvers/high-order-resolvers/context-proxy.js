@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {debug, warning} = require('../../../utils/logger')('ia:resolver:hor:context-proxy');
+const { debug, warning } = require('../../../utils/logger')('ia:resolver:hor:context-proxy');
 
 module.exports = (processing) => {
   /**
@@ -9,7 +9,7 @@ module.exports = (processing) => {
    * @param slots
    * @returns {Promise}
    */
-  function handler ({slots}) {
+  function handler ({ slots }) {
     debug('start handling');
 
     // Actually we could use it without Promise
@@ -32,7 +32,7 @@ module.exports = (processing) => {
           return undefined;
         }
 
-        return processing({name, value: slots[name]});
+        return processing({ name, value: slots[name] });
       }
     }));
   }

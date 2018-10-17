@@ -24,7 +24,7 @@ function patchDebugScopeEnvVariable () {
     process.env.DEBUG = _.at(
       functionsConfig, 'debugger.scope')[0] || process.env.DEBUG;
   } catch (e) {
-    functionsConfig = {debugger: {scope: null}};
+    functionsConfig = { debugger: { scope: null } };
   }
 }
 
@@ -76,7 +76,7 @@ module.exports = (name) => {
         }
 
         const elapse = hirestime();
-        timerQueue.push({id, elapse});
+        timerQueue.push({ id, elapse });
 
         /**
          * Stop last started performance

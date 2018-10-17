@@ -1,4 +1,4 @@
-const {debug} = require('../utils/logger')('ia:actions:playback-started');
+const { debug } = require('../utils/logger')('ia:actions:playback-started');
 
 function handler (app) {
   // TODO: set playbackFinished

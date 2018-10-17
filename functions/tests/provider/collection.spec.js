@@ -1,5 +1,5 @@
 const MockAdapter = require('axios-mock-adapter');
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const collection = rewire('../../src/provider/collection');

@@ -2,9 +2,9 @@ const axios = require('axios');
 const util = require('util');
 
 const config = require('../config');
-const {debug, error} = require('../utils/logger')('ia:provider:creators');
+const { debug, error } = require('../utils/logger')('ia:provider:creators');
 
-const {buildQueryCondition} = require('./advanced-search');
+const { buildQueryCondition } = require('./advanced-search');
 const endpointProcessor = require('../network/endpoint-processor');
 
 /**

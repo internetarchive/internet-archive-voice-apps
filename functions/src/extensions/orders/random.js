@@ -7,7 +7,7 @@ class RandomOrderStrategy {
    * @param feederConfig
    * @returns {{limit: number, page: number}}
    */
-  getPage ({app, cursor, feederConfig}) {
+  getPage ({ app, cursor, feederConfig }) {
     return {
       // size of chunk
       limit: feederConfig.chunk.albums,
@@ -25,7 +25,7 @@ class RandomOrderStrategy {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({app, query, playlist}) {
+  hasNext ({ app, query, playlist }) {
     return !playlist.isEmpty(app);
   }
 
@@ -56,7 +56,7 @@ class RandomOrderStrategy {
    * @param songs
    * @returns {Array}
    */
-  songsPostProcessing ({songs}) {
+  songsPostProcessing ({ songs }) {
     return songs.sort(() => Math.random() - 0.5);
   }
 }

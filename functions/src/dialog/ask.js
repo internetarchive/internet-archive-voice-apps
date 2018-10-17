@@ -1,5 +1,5 @@
-const {savePhrase} = require('../state/dialog');
-const {debug} = require('../utils/logger')('ia:dialog:ask');
+const { savePhrase } = require('../state/dialog');
+const { debug } = require('../utils/logger')('ia:dialog:ask');
 
 /**
  * ask user with suggestions
@@ -9,7 +9,7 @@ const {debug} = require('../utils/logger')('ia:dialog:ask');
  * @param reprompt {string}
  * @param suggestions {array}
  */
-module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
+module.exports = function (app, { speech, reprompt = null, suggestions = null }) {
   debug('ask', speech, reprompt, suggestions);
 
   if (typeof app === 'string') {
@@ -30,5 +30,5 @@ module.exports = function (app, {speech, reprompt = null, suggestions = null}) {
     suggestions = suggestions.map(s => s.toString());
   }
 
-  app.response({speech, reprompt, suggestions});
+  app.response({ speech, reprompt, suggestions });
 };

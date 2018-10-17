@@ -1,10 +1,10 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const _ = require('lodash');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
 const builder = rewire('../../../../src/platform/alexa/handler/handlers-builder');
-const {App} = require('../../../../src/platform/alexa/app');
+const { App } = require('../../../../src/platform/alexa/app');
 const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
 describe('platform', () => {
@@ -17,7 +17,7 @@ describe('platform', () => {
         response = {
           speechOut: 'hello world!',
         };
-        handlerInput = mockHandlerInput({response});
+        handlerInput = mockHandlerInput({ response });
       });
 
       it('should return empty object for empty input', () => {
@@ -66,8 +66,8 @@ describe('platform', () => {
         const welcomeHandler = sinon.spy();
 
         const res = builder(new Map([
-          ['no-input', {default: noInputHandler}],
-          ['welcome', {default: welcomeHandler}],
+          ['no-input', { default: noInputHandler }],
+          ['welcome', { default: welcomeHandler }],
         ]));
 
         const wrappedNoInputHandler = res[0].handle;
@@ -116,8 +116,8 @@ describe('platform', () => {
         const welcomeHandler = sinon.spy();
 
         const res = builder(new Map([
-          ['no-input', {default: noInputHandler}],
-          ['welcome', {default: welcomeHandler}],
+          ['no-input', { default: noInputHandler }],
+          ['welcome', { default: welcomeHandler }],
         ]));
 
         const wrappedNoInputHandler = res[0].handle;
@@ -132,7 +132,7 @@ describe('platform', () => {
           const playSongHandler = sinon.spy();
 
           const res = builder(new Map([
-            ['play-songs', {default: playSongHandler}],
+            ['play-songs', { default: playSongHandler }],
           ]));
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
@@ -157,7 +157,7 @@ describe('platform', () => {
                 },
               }
             ],
-            ['global-error', {default: sinon.spy()}],
+            ['global-error', { default: sinon.spy() }],
           ]));
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
@@ -188,7 +188,7 @@ describe('platform', () => {
                   },
                 },
               ],
-              ['global-error', {default: globalErrorHandler}],
+              ['global-error', { default: globalErrorHandler }],
             ]));
             input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent');
             handlerItem = handlers.find(e => e.canHandle(input));
@@ -212,8 +212,8 @@ describe('platform', () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
-              ['help', {default: sinon.spy()}],
-              ['unhandled', {default: sinon.spy()}],
+              ['help', { default: sinon.spy() }],
+              ['unhandled', { default: sinon.spy() }],
             ]));
 
             expect(logWarning).to.have.been.called;
@@ -223,8 +223,8 @@ describe('platform', () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
-              ['help', {default: sinon.spy()}],
-              ['global-error', {default: sinon.spy()}],
+              ['help', { default: sinon.spy() }],
+              ['global-error', { default: sinon.spy() }],
             ]));
 
             expect(logWarning).to.have.been.called;
@@ -234,10 +234,10 @@ describe('platform', () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
             handlers = builder(new Map([
-              ['help', {default: sinon.spy()}],
-              ['global-error', {default: sinon.spy()}],
-              ['http-request-error', {default: sinon.spy()}],
-              ['unhandled', {default: sinon.spy()}],
+              ['help', { default: sinon.spy() }],
+              ['global-error', { default: sinon.spy() }],
+              ['http-request-error', { default: sinon.spy() }],
+              ['unhandled', { default: sinon.spy() }],
             ]));
 
             expect(logWarning).to.have.not.been.called;
@@ -254,8 +254,8 @@ describe('platform', () => {
           builder.__set__('error', logError);
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
           const res = builder(new Map([
-            ['no-input', {default: sinon.spy()}],
-            ['welcome', {default: sinon.spy()}],
+            ['no-input', { default: sinon.spy() }],
+            ['welcome', { default: sinon.spy() }],
           ]));
 
           expect(res[0].canHandle(input)).to.be.false;

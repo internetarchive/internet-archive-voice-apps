@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -27,7 +27,7 @@ describe('actions', () => {
         };
         middleware.__set__('selectors', selectorsMock);
         return middleware()(ctx)
-          .then(({speech}) => {
+          .then(({ speech }) => {
             expect(speech).to.include('hello world!');
           });
       });
@@ -38,7 +38,7 @@ describe('actions', () => {
         };
         middleware.__set__('selectors', selectorsMock);
         return middleware()(ctx)
-          .then(({speech}) => {
+          .then(({ speech }) => {
             expect(speech).to.include('default speech');
           });
       });

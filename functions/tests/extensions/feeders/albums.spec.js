@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const albums = rewire('../../../src/extensions/feeders/albums');
@@ -39,26 +39,26 @@ describe('feeders', () => {
   describe('albums', () => {
     it('should fetch album', () => {
       return albums
-        .build({app, playlist, query})
+        .build({ app, playlist, query })
         .then(() => {
           expect(playlist.hasNextSong(app)).to.be.true;
           expect(playlist.getCurrentSong(app)).to.be.ok;
-          expect(albums.isEmpty({app, query, playlist})).to.be.false;
-          expect(albums.getCurrentItem({app, playlist, query})).to.be.ok;
-          expect(albums.hasNext({app, query, playlist})).to.be.true;
+          expect(albums.isEmpty({ app, query, playlist })).to.be.false;
+          expect(albums.getCurrentItem({ app, playlist, query })).to.be.ok;
+          expect(albums.hasNext({ app, query, playlist })).to.be.true;
         });
     });
 
     it('should move to the next song on albums.next', () => {
       return albums
-        .build({app, playlist, query})
+        .build({ app, playlist, query })
         .then(() => {
-          expect(albums.getCurrentItem({app, query, playlist}))
+          expect(albums.getCurrentItem({ app, query, playlist }))
             .to.have.property('identifier', 'song-1');
-          return albums.next({app, query, playlist});
+          return albums.next({ app, query, playlist });
         })
         .then(() => {
-          expect(albums.getCurrentItem({app, query, playlist}))
+          expect(albums.getCurrentItem({ app, query, playlist }))
             .to.have.property('identifier', 'song-2');
         });
     });

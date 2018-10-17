@@ -1,12 +1,12 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
 const errors = require('../../../src/errors');
 const handlerBuilder = rewire('../../../src/platform/assistant/handler');
 
-const {buildIntentRequest, MockResponse} = require('../../_utils/mocking');
-const {wait} = require('../../_utils/wait');
+const { buildIntentRequest, MockResponse } = require('../../_utils/mocking');
+const { wait } = require('../../_utils/wait');
 
 describe('platform', () => {
   describe('assistant', () => {
@@ -32,9 +32,9 @@ describe('platform', () => {
     beforeEach(() => {
       res = new MockResponse();
       actions = new Map([
-        ['global-error', {default: require('../../../src/actions/global-error').handler}],
-        ['http-request-error', {default: require('../../../src/actions/http-request-error').handler}],
-        ['unhandled', {default: require('../../../src/actions/unhandled').handler}],
+        ['global-error', { default: require('../../../src/actions/global-error').handler }],
+        ['http-request-error', { default: require('../../../src/actions/http-request-error').handler }],
+        ['unhandled', { default: require('../../../src/actions/unhandled').handler }],
       ]);
     });
 

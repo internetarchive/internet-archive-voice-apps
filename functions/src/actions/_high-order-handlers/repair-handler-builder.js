@@ -1,9 +1,9 @@
 const mustache = require('mustache');
 
 const dialog = require('../../dialog');
-const {getLastAction, getLastRepetitionCount} = require('../../state/actions');
-const {getLastReprompt, getLastSuggestions} = require('../../state/dialog');
-const {debug} = require('../../utils/logger')('ia:actions:high-order-handlers:repair-handler-builder');
+const { getLastAction, getLastRepetitionCount } = require('../../state/actions');
+const { getLastReprompt, getLastSuggestions } = require('../../state/dialog');
+const { debug } = require('../../utils/logger')('ia:actions:high-order-handlers:repair-handler-builder');
 
 module.exports = {
   /**
@@ -50,7 +50,7 @@ module.exports = {
             {
               speech: mustache.render(
                 intentStrings[1].speech,
-                {reprompt}
+                { reprompt }
               ),
               reprompt,
               suggestions,

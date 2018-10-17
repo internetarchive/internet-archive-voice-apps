@@ -1,4 +1,4 @@
-const {debug, warning} = require('../utils/logger')('ia:actions:media-status-update');
+const { debug, warning } = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
 const strings = require('../strings');
@@ -47,7 +47,7 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  return helpers.playSong({app, next: true})
+  return helpers.playSong({ app, next: true })
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, strings.events.playlistIsEnded);

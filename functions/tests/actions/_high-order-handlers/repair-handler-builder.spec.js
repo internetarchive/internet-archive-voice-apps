@@ -1,8 +1,8 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const builder = rewire('../../../src/actions/_high-order-handlers/repair-handler-builder');
-const {storeAction} = require('../../../src/state/actions');
+const { storeAction } = require('../../../src/state/actions');
 const strings = require('../../../src/strings').intents.noInput;
 
 const mockApp = require('../../_utils/mocking/platforms/app');

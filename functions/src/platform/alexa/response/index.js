@@ -1,4 +1,4 @@
-const {debug} = require('../../../utils/logger')('ia:platform:alexa:response');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:response');
 
 /**
  * Create alexa response builder wrapper
@@ -15,7 +15,7 @@ module.exports = (handlerInput) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({close = false, media, mediaResponseOnly, speech, suggestions}) => {
+  ({ close = false, media, mediaResponseOnly, speech, suggestions }) => {
     debug('start');
     if (!Array.isArray(speech)) {
       speech = [speech];

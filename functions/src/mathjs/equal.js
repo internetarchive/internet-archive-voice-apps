@@ -1,6 +1,6 @@
 const math = require('mathjs');
 
-const {debug} = require('../utils/logger')('ia:mathjs:equal');
+const { debug } = require('../utils/logger')('ia:mathjs:equal');
 
 /**
  * Support equal command:
@@ -12,5 +12,5 @@ module.exports = () => {
   debug('support');
   math.import({
     equal: (a, b) => a === b,
-  }, {override: true});
+  }, { override: true });
 };

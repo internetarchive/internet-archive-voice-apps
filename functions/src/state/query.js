@@ -36,7 +36,7 @@
 
 const _ = require('lodash');
 
-const {group, SubGroup} = require('./helpers');
+const { group, SubGroup } = require('./helpers');
 
 const queryGroup = group('query');
 const skippedGroup = new SubGroup('skipped', queryGroup, []);

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const songsProvider = require('../../src/provider/songs');
 

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const escapeHTML = require('../../src/utils/escape-html');
 

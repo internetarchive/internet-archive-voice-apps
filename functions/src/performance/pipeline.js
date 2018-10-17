@@ -1,4 +1,4 @@
-const {info, timer} = require('../utils/logger')('ia:performance:pipeline');
+const { info, timer } = require('../utils/logger')('ia:performance:pipeline');
 
 let coldStart;
 let currentStage = null;

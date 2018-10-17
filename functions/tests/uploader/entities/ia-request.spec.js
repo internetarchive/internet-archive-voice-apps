@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const MockAdapter = require('axios-mock-adapter');
 
 const rewire = require('rewire');
@@ -22,13 +22,13 @@ describe('uploader', () => {
         });
 
         it('should return unique array for collection', () => {
-          var original = [{'creator': 'Grateful Dead'}, {'creator': 'Grateful Dead'}, {'creator': 'Disco Biscuits'}, {'creator': 'Phil Lesh (and Friends)'}];
+          var original = [{ 'creator': 'Grateful Dead' }, { 'creator': 'Grateful Dead' }, { 'creator': 'Disco Biscuits' }, { 'creator': 'Phil Lesh (and Friends)' }];
           var expected = [`Grateful Dead`, `Disco Biscuits`, `Phil Lesh and Friends`];
           expect(iaRequest.getUniqueCreatorsFromIA(original, `creator`)).to.be.eql(expected);
         });
 
         it('should return unique array for genres', () => {
-          var original = [{'creator': ['Jackson', 'Bauer']}, {'creator': ['Connie\'s Inn Orchestra', 'Jackson']}, {'creator': ['Paul Ric...sticker', 'Rice Brothers\' Gang']}];
+          var original = [{ 'creator': ['Jackson', 'Bauer'] }, { 'creator': ['Connie\'s Inn Orchestra', 'Jackson'] }, { 'creator': ['Paul Ric...sticker', 'Rice Brothers\' Gang'] }];
           var expected = [`Jackson`, `Bauer`, `Connie's Inn Orchestra`, `Paul Ric...sticker`, `Rice Brothers' Gang`];
           expect(iaRequest.getUniqueCreatorsFromIA(original, `creator`)).to.be.eql(expected);
         });

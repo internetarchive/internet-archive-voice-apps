@@ -4,9 +4,9 @@
 
 const _ = require('lodash');
 
-const {debug} = require('../utils/logger')('ia:state:fsm');
+const { debug } = require('../utils/logger')('ia:state:fsm');
 
-const {getData, setData} = require('./helpers').group('fsm');
+const { getData, setData } = require('./helpers').group('fsm');
 
 /**
  * Select appropriate handler from set available handlers
@@ -39,7 +39,7 @@ const transitionTo = (app, newState) => {
   debug(`transit from "${oldState}" to "${newState}"`);
 
   setData(app,
-    Object.assign({}, getData(app), {state: newState})
+    Object.assign({}, getData(app), { state: newState })
   );
 };
 

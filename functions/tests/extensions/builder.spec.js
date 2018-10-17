@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const path = require('path');
 
 const builder = require('../../src/extensions/builder');
@@ -14,7 +14,7 @@ describe('extensions', () => {
     let extensions;
 
     beforeEach(() => {
-      extensions = builder.build({root: path.join(__dirname, 'fixtures')});
+      extensions = builder.build({ root: path.join(__dirname, 'fixtures') });
     });
 
     describe('all', () => {

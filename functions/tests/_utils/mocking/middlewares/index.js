@@ -16,7 +16,7 @@ module.exports = (names) => {
       middlewareBuilder,
     };
   })
-    .reduce((acc, {name, middlewareBuilder}) => {
-      return Object.assign({}, acc, {[name]: middlewareBuilder});
+    .reduce((acc, { name, middlewareBuilder }) => {
+      return Object.assign({}, acc, { [name]: middlewareBuilder });
     }, {});
 };

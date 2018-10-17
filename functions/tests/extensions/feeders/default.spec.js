@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const DefaultFeeder = require('../../../src/extensions/feeders/_default');
 

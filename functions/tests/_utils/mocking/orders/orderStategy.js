@@ -15,7 +15,7 @@ class MockOrderStrategy {
 
   }
 
-  songsPostProcessing ({songs}) {
+  songsPostProcessing ({ songs }) {
     return songs;
   }
 }

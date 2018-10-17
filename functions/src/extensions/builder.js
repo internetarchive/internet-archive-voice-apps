@@ -1,7 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 
-const {debug, warning} = require('../utils/logger')('ia:extensions:builder');
+const { debug, warning } = require('../utils/logger')('ia:extensions:builder');
 
 /**
  * Builder for pluggable extension
@@ -16,7 +16,7 @@ class Extensions {
    * @param {boolean} recursive - get subdirectories
    * @param {string} root - start from this directory
    */
-  constructor ({recursive = false, root} = {}) {
+  constructor ({ recursive = false, root } = {}) {
     this.recursive = recursive;
     this.root = root;
   }
@@ -34,9 +34,9 @@ class Extensions {
     return glob
       .sync(pattern)
       .filter(filename => path.basename(filename) !== 'index.js')
-      .map(filename => ({filename, ext: require(filename)}))
+      .map(filename => ({ filename, ext: require(filename) }))
       // skip files without exports
-      .filter(({ext}) => typeof ext === 'function' || Object.keys(ext).length > 0);
+      .filter(({ ext }) => typeof ext === 'function' || Object.keys(ext).length > 0);
   }
 
   /**
@@ -92,7 +92,7 @@ class Extensions {
    */
   find (handler) {
     return this.all()
-      .map(({ext}) => ext)
+      .map(({ ext }) => ext)
       .find(ext => handler(ext)) || null;
   }
 }

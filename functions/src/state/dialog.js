@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {getData, setData} = require('./helpers').group('dialog');
+const { getData, setData } = require('./helpers').group('dialog');
 
 /**
  * save last phrase, could we useful in case of repetition

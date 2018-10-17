@@ -8,7 +8,7 @@ const sinon = require('sinon');
  * @param slots
  * @returns {{attributes: {}, emit: *}}
  */
-module.exports = ({deviceId = 'one-device', error = null, reason = null, slots = {}} = {}) => {
+module.exports = ({ deviceId = 'one-device', error = null, reason = null, slots = {} } = {}) => {
   const alexa = {
     attributes: {},
 

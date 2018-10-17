@@ -1,4 +1,4 @@
-const {error, info} = require('../utils/logger')('ia:actions:session-ended-request');
+const { error, info } = require('../utils/logger')('ia:actions:session-ended-request');
 
 function handler (app) {
   switch (app.params.getByName('reason')) {

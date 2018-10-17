@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/ask');
@@ -21,7 +21,7 @@ describe('actions', () => {
         const app = mockApp();
         const speech = ['One', 'Two', 'Tree'];
         const suggestions = ['Red', 'Green', 'Blue'];
-        return middleware()({app, speech, suggestions})
+        return middleware()({ app, speech, suggestions })
           .then(() => {
             expect(dialog.ask).to.have.been.calledWith(app, {
               speech: 'One Two Tree',
@@ -32,7 +32,7 @@ describe('actions', () => {
 
       it('should say something even when there is nothing to say', () => {
         const app = mockApp();
-        return middleware()({app})
+        return middleware()({ app })
           .then(() => {
             expect(dialog.ask).to.have.been.calledWith(app, strings.events.nothingToSay);
           });

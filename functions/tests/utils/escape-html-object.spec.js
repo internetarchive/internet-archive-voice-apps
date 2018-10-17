@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const escapeHTMLObject = require('../../src/utils/escape-html-object');
 
@@ -17,7 +17,7 @@ describe('utils', () => {
         album: [],
         track: 2,
         year: 2009
-      }, {skipFields: ['audioURL', 'imageURL']});
+      }, { skipFields: ['audioURL', 'imageURL'] });
 
       expect(res).to.have.property('audioURL', 'https://archive.org/download/jfjo2009-10-02.superlux.flac16/jfjo2009-10-02d1t02.mp3');
       expect(res).to.have.property('imageURL', 'https://archive.org/services/img/jfjo2009-10-02.superlux.flac16');

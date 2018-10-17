@@ -1,7 +1,7 @@
 const dialog = require('../dialog');
 
-const {getLastPhrase} = require('../state/dialog');
-const {debug} = require('../utils/logger')('ia:actions.repeat');
+const { getLastPhrase } = require('../state/dialog');
+const { debug } = require('../utils/logger')('ia:actions.repeat');
 
 /**
  * handle repeat intent

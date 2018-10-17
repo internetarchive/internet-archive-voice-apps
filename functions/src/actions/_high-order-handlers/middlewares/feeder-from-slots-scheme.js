@@ -1,12 +1,12 @@
 const feeders = require('../../../extensions/feeders');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-slots-scheme');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-slots-scheme');
 
 /**
  * Get feeder from slots scheme
  */
 module.exports = () => (context) => {
   debug('start');
-  const {slotScheme} = context;
+  const { slotScheme } = context;
   // both typing are correct
   const fulfilment = slotScheme.fulfilment || slotScheme.fulfillment;
   let feederName;
@@ -24,5 +24,5 @@ module.exports = () => (context) => {
     // TODO: should explain rejection
     return Promise.reject(context);
   }
-  return Promise.resolve(Object.assign({}, context, {feeder, feederName}));
+  return Promise.resolve(Object.assign({}, context, { feeder, feederName }));
 };

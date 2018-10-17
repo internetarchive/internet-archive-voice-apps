@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const camelToKebab = require('../../src/utils/camel-to-kebab');
 

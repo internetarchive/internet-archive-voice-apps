@@ -1,4 +1,4 @@
-const {debug, warning} = require('../../utils/logger')('ia:actions:in-one-go');
+const { debug, warning } = require('../../utils/logger')('ia:actions:in-one-go');
 
 const constants = require('../../constants');
 const errors = require('../../errors');
@@ -27,7 +27,7 @@ const suggestions = require('./middlewares/suggestions');
  * @param query - storage for search query data
  * @returns {{handler: handler}}
  */
-function build ({playlist, strings, query}) {
+function build ({ playlist, strings, query }) {
   debug(`build handler "${strings.name}"`);
 
   if (!strings.slots) {
@@ -56,21 +56,21 @@ function build ({playlist, strings, query}) {
     }
 
     // pipeline of action handling
-    return copyArgumentToSlots()({app, slotScheme, playlist, query})
+    return copyArgumentToSlots()({ app, slotScheme, playlist, query })
       .then(copyDefaultsToSlots())
       // expose slots
-      .then(ctx => Object.assign({}, ctx, {slots: ctx.query.getSlots(ctx.app)}))
+      .then(ctx => Object.assign({}, ctx, { slots: ctx.query.getSlots(ctx.app) }))
       // expose current platform to the slots
       .then(ctx =>
         Object.assign({}, ctx, {
           slots: Object.assign(
-            {}, ctx.slots, {platform: app.platform || 'assistant'}
+            {}, ctx.slots, { platform: app.platform || 'assistant' }
           )
         })
       )
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
-      .then(acknowledge({speeches: 'slotScheme.fulfillment.speech'}))
+      .then(acknowledge({ speeches: 'slotScheme.fulfillment.speech' }))
       .then(parepareSongData())
       .then(fulfilResolvers())
       .then(renderSpeech())
@@ -106,7 +106,7 @@ function build ({playlist, strings, query}) {
           }),
         }))
           .then(findRepairScheme())
-          .then(suggestions({exclude}))
+          .then(suggestions({ exclude }))
           .then(findRepairPhrase())
           .then(fulfilResolvers())
           .then(renderSpeech())

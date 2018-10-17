@@ -1,16 +1,16 @@
-const {App} = require('../app');
+const { App } = require('../app');
 
 const pipeline = require('../../../performance/pipeline');
-const {storeAction} = require('../../../state/actions');
+const { storeAction } = require('../../../state/actions');
 const fsm = require('../../../state/fsm');
-const {debug} = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
+const { debug } = require('../../../utils/logger')('ia:platform:assistant:handler:builder');
 
 /**
  * Build list of handlers
  *
  * @param actionsMap {Map}
  */
-module.exports = ({actionsMap}) =>
+module.exports = ({ actionsMap }) =>
   Array.from(actionsMap.entries())
     .map(([intent, handlers]) => ({
       intent,

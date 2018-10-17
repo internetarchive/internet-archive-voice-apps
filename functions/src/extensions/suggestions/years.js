@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const albumsProvider = require('../../provider/albums');
-const {debug, warning} = require('../../utils/logger')('ia:suggestions:years');
+const { debug, warning } = require('../../utils/logger')('ia:suggestions:years');
 
 const MAX_ITEMS = 16000;
 
@@ -13,7 +13,7 @@ const MAX_ITEMS = 16000;
  * @param slots
  * @returns {Promise.<{items: Array}>}
  */
-function handle ({app, slots}) {
+function handle ({ app, slots }) {
   debug(`handle years suggestions for creator:${slots.creatorId}`);
   let limit = MAX_ITEMS;
   if ('coverage' in slots && 'creator' in slots) {

@@ -1,4 +1,4 @@
-const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:repair-broken-slots');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:hoh:repair-broken-slots');
 
 const promptSelector = require('../../../slots/slots-of-template');
 const selectors = require('../../../configurator/selectors');
@@ -16,7 +16,7 @@ const selectors = require('../../../configurator/selectors');
  */
 module.exports = () => (context) => {
   debug('start');
-  const {brokenSlots, slotScheme, speech = []} = context;
+  const { brokenSlots, slotScheme, speech = [] } = context;
   const brokenSlotsNames = Object.keys(brokenSlots);
 
   if (brokenSlotsNames.length === 0) {

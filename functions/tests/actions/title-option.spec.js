@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const action = rewire('../../src/actions/title-option');
@@ -25,7 +25,7 @@ describe('actions', () => {
       action.handler(app);
       expect(dialog.ask).to.be.called;
       expect(app.persist.setData).to.have.been.calledWith(
-        'playback', {muteSpeech: true}
+        'playback', { muteSpeech: true }
       );
     });
   });

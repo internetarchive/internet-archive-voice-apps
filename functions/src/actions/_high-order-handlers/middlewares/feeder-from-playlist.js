@@ -1,5 +1,5 @@
 const feeders = require('../../../extensions/feeders');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-playlist');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:feeder-from-playlist');
 
 const errors = require('./errors');
 
@@ -12,7 +12,7 @@ class EmptyFeederError extends errors.MiddlewareError {
  */
 const middleware = () => (args) => {
   debug('start');
-  const {app, playlist} = args;
+  const { app, playlist } = args;
   const feederName = playlist.getFeeder(app);
   debug('feederName:', feederName);
   const feeder = feeders.getByName(feederName);
@@ -22,7 +22,7 @@ const middleware = () => (args) => {
     );
     return Promise.reject(new EmptyFeederError(args));
   }
-  return Promise.resolve(Object.assign({}, args, {feeder, feederName}));
+  return Promise.resolve(Object.assign({}, args, { feeder, feederName }));
 };
 
 module.exports = {

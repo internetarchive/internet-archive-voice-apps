@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const playlist = require('../../src/state/playlist');
 
@@ -13,9 +13,9 @@ describe('playlist', () => {
         playlist: {
           current: 1,
           items: [
-            {track: 1, title: 'song 1'},
-            {track: 2, title: 'song 2'},
-            {track: 3, title: 'song 3'},
+            { track: 1, title: 'song 1' },
+            { track: 2, title: 'song 2' },
+            { track: 3, title: 'song 3' },
           ],
         },
       },
@@ -41,8 +41,8 @@ describe('playlist', () => {
     describe('create', () => {
       it('should populate list of items and reset current song', () => {
         playlist.create(app, [
-          {track: 3, title: 'song 3'},
-          {track: 4, title: 'song 4'},
+          { track: 3, title: 'song 3' },
+          { track: 4, title: 'song 4' },
         ]);
 
         expect(playlist.getCurrentSong(app)).to.have.property('title', 'song 3');
@@ -89,9 +89,9 @@ describe('playlist', () => {
             playlist: {
               current: 2,
               items: [
-                {track: 1, title: 'song 1'},
-                {track: 2, title: 'song 2'},
-                {track: 3, title: 'song 3'},
+                { track: 1, title: 'song 1' },
+                { track: 2, title: 'song 2' },
+                { track: 3, title: 'song 3' },
               ],
             },
           },

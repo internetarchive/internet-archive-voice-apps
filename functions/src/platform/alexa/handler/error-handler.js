@@ -1,4 +1,4 @@
-const {error} = require('../../../utils/logger')('ia:platform:alexa:error-handler');
+const { error } = require('../../../utils/logger')('ia:platform:alexa:error-handler');
 
 /**
  * Handle error in alexa skill

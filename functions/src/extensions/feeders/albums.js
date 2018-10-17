@@ -13,7 +13,7 @@
  * - not efficient for big playlist and doesn't work for unlimited one
  */
 
-const {debug, warning} = require('../../utils/logger')('ia:feeder:albums');
+const { debug, warning } = require('../../utils/logger')('ia:feeder:albums');
 const objToLowerCase = require('../../utils/map-to-lowercases');
 const albumsProvider = require('../../provider/albums');
 
@@ -29,7 +29,7 @@ class SyncAlbum extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build ({app, query, playlist}) {
+  build ({ app, query, playlist }) {
     debug('lets build albums feeder');
     // make all values low cases string
     const slots = objToLowerCase(query.getSlots(app));
@@ -101,7 +101,7 @@ class SyncAlbum extends DefaultFeeder {
         debug(`let's create playlist for songs`);
         playlist.create(app, songs);
 
-        return {total};
+        return { total };
       });
     // TODO:
     // .catch(err => {

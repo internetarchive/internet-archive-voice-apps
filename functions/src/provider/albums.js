@@ -5,10 +5,10 @@ const util = require('util');
 const config = require('../config');
 const endpointProcessor = require('../network/endpoint-processor');
 const delayedPromise = require('../utils/delay');
-const {debug, error} = require('../utils/logger')('ia:provider:albums');
+const { debug, error } = require('../utils/logger')('ia:provider:albums');
 const objToLowerCase = require('../utils/map-to-lowercases');
 
-const {buildQueryCondition} = require('./advanced-search');
+const { buildQueryCondition } = require('./advanced-search');
 
 /**
  * Fetch details about Album
@@ -19,16 +19,16 @@ const {buildQueryCondition} = require('./advanced-search');
  * @param {number} [delay] delay between requests
  * @returns {Promise}
  */
-function fetchAlbumDetails (app, id, {retry = 0, delay = 1000} = {}) {
+function fetchAlbumDetails (app, id, { retry = 0, delay = 1000 } = {}) {
   return axios.get(
     endpointProcessor.preprocess(
-      config.endpoints.COLLECTION_URL, app, {id}
+      config.endpoints.COLLECTION_URL, app, { id }
     )
   )
     .catch((error) => {
       if (retry > 0) {
         return delayedPromise(delay)
-          .then(() => fetchAlbumDetails(id, {retry: retry - 1}));
+          .then(() => fetchAlbumDetails(id, { retry: retry - 1 }));
       } else {
         return Promise.reject(error);
       }
@@ -145,7 +145,7 @@ function fetchAlbumsByQuery (app, query) {
     endpointProcessor.preprocess(
       config.endpoints.QUERY_COLLECTIONS_URL,
       app,
-      Object.assign({}, query, {condition})
+      Object.assign({}, query, { condition })
     )
   )
     .then(res => {

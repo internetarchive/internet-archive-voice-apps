@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/copy-defaults-to-slots');
 const query = require('../../../../src/state/query');
@@ -17,9 +17,9 @@ describe('actions', () => {
             collections: ['etree', 'georgeblood'],
           }
         };
-        return Promise.resolve({app, query, slotScheme})
+        return Promise.resolve({ app, query, slotScheme })
           .then(middleware())
-          .then(({app, query, slotsScheme}) => {
+          .then(({ app, query, slotsScheme }) => {
             expect(query.getSlots(app)).to.be.deep.equal({
               band: 'the-band',
               album: 'the-album',
@@ -36,9 +36,9 @@ describe('actions', () => {
             band: 'the-band',
           }
         };
-        return Promise.resolve({app, query, slotScheme})
+        return Promise.resolve({ app, query, slotScheme })
           .then(middleware())
-          .then(({app, query, slotsScheme}) => {
+          .then(({ app, query, slotsScheme }) => {
             expect(query.getSlots(app)).to.be.deep.equal({
               band: 'other one',
             });

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/copy-arguments-to-slots');
 const query = require('../../../../src/state/query');
@@ -19,9 +19,9 @@ describe('actions', () => {
           slots: ['creators'],
         };
 
-        return Promise.resolve({app, query, slotScheme})
+        return Promise.resolve({ app, query, slotScheme })
           .then(middleware())
-          .then(({app, query, slotsScheme}) => {
+          .then(({ app, query, slotsScheme }) => {
             expect(app.persist.setData).to.be.called;
             expect(app.persist.setData.args[0][1]).to.deep.equal({
               values: {

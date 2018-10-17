@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/acknowledge');
@@ -28,11 +28,11 @@ describe('actions', () => {
           name: 'value',
         };
 
-        return middleware()({slots, slotScheme, newValues})
-          .then(({speech}) => {
+        return middleware()({ slots, slotScheme, newValues })
+          .then(({ speech }) => {
             expect(selectors.find).to.been.calledWith(
               slotScheme.acknowledges,
-              {prioritySlots: ['name'], slots}
+              { prioritySlots: ['name'], slots }
             );
             expect(speech).to.have.members([
               template,
@@ -51,7 +51,7 @@ describe('actions', () => {
         };
         const newValues = {};
 
-        return middleware()({slotScheme, newValues})
+        return middleware()({ slotScheme, newValues })
           .then(args => {
             expect(selectors.find).to.not.been.called;
             expect(args).to.not.have.property('speech');

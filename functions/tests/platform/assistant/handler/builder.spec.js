@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const sinon = require('sinon');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
@@ -9,10 +9,10 @@ describe('platform', () => {
   describe('assistant', () => {
     it('should populate intent handlers without states', () => {
       const actionsMap = new Map([
-        ['welcome', {default: sinon.spy}],
-        ['hello', {default: sinon.spy}],
+        ['welcome', { default: sinon.spy }],
+        ['hello', { default: sinon.spy }],
       ]);
-      const res = builder({actionsMap});
+      const res = builder({ actionsMap });
       expect(res).to.have.lengthOf(2);
       expect(res[0]).to.have.property('intent', 'welcome');
       expect(res[1]).to.have.property('intent', 'hello');
@@ -43,14 +43,14 @@ describe('platform', () => {
       });
 
       it('should populate intent handlers with states', () => {
-        const res = builder({actionsMap});
+        const res = builder({ actionsMap });
         expect(res).to.have.lengthOf(2);
         expect(res[0]).to.have.property('intent', 'welcome');
         expect(res[1]).to.have.property('intent', 'hello');
       });
 
       it('should run default handler when state is undefined', () => {
-        const res = builder({actionsMap});
+        const res = builder({ actionsMap });
         return res[0].handler({
           app,
         })
@@ -60,7 +60,7 @@ describe('platform', () => {
       });
 
       it('should run certain handler when state is defined and we have handler', () => {
-        const res = builder({actionsMap});
+        const res = builder({ actionsMap });
         app = mockApp({
           getData: {
             fsm: {
@@ -78,7 +78,7 @@ describe('platform', () => {
       });
 
       it(`should run default handler when state is defined but we don't have handler`, () => {
-        const res = builder({actionsMap});
+        const res = builder({ actionsMap });
         app = mockApp({
           getData: {
             fsm: {

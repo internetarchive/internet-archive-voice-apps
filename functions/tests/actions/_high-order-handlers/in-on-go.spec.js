@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const builder = rewire('../../../src/actions/_high-order-handlers/in-one-go');
@@ -19,7 +19,7 @@ describe('actions', () => {
         });
 
         it('should create object with handler method', () => {
-          expect(builder.build({strings})).to.have.property('handler');
+          expect(builder.build({ strings })).to.have.property('handler');
         });
       });
 
@@ -30,7 +30,7 @@ describe('actions', () => {
 
         beforeEach(() => {
           app = mockApp();
-          action = builder.build({strings, playlist, query});
+          action = builder.build({ strings, playlist, query });
 
           middlewares = mockMiddlewares([
             'copyArgumentToSlots',

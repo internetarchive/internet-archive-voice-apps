@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/render-speech');
 

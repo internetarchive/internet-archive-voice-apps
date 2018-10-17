@@ -1,4 +1,4 @@
-const {debug} = require('../utils/logger')('ia:actions:playback-stopped');
+const { debug } = require('../utils/logger')('ia:actions:playback-stopped');
 
 const playback = require('../state/playback');
 

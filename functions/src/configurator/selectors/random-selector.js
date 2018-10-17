@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {debug} = require('../../utils/logger')('ia:selectors:random-selector');
+const { debug } = require('../../utils/logger')('ia:selectors:random-selector');
 
 /**
  * Choose one option

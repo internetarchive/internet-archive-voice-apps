@@ -26,7 +26,7 @@ const entries = require('object.entries');
 
 const extension = require('../extensions/builder');
 
-const {actionNameByFileName} = require('./_helpers');
+const { actionNameByFileName } = require('./_helpers');
 
 /**
  * grab all actions and appropriate states
@@ -35,16 +35,16 @@ const {actionNameByFileName} = require('./_helpers');
  */
 function withStates () {
   const res = extension
-    .build({recursive: true, root: __dirname})
+    .build({ recursive: true, root: __dirname })
     .all()
-    .map(({filename, ext}) => ([actionNameByFileName(filename, __dirname), ext.handler]))
+    .map(({ filename, ext }) => ([actionNameByFileName(filename, __dirname), ext.handler]))
     .filter(action => action[1])
     .reduce((acc, [actionPath, handler]) => {
       let newState;
       if (actionPath.length === 1) {
-        newState = {default: handler};
+        newState = { default: handler };
       } else if (actionPath.length === 2) {
-        newState = {[actionPath[0]]: handler};
+        newState = { [actionPath[0]]: handler };
       } else {
         throw new Error(`We got actions which settle out of root or its sub-directories. 
                          What we can't interpret yet.`);

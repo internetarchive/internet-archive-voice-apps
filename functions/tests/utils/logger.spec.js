@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const debug = require('debug');
 const rewire = require('rewire');
 const sinon = require('sinon');
@@ -25,7 +25,7 @@ describe('utils', () => {
       });
 
       it('should log timer', () => {
-        const {timer} = logger('ia:tests:utils');
+        const { timer } = logger('ia:tests:utils');
         const stop = timer.start('hello world');
         stop();
 
@@ -35,7 +35,7 @@ describe('utils', () => {
       });
 
       it('should warn if we try to apply the same timer twice, without stoping previous', () => {
-        const {timer} = logger('ia:tests:utils');
+        const { timer } = logger('ia:tests:utils');
         timer.start('hello world');
         timer.start('hello world');
 

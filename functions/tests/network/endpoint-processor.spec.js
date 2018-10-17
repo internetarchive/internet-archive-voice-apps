@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const endpointProcessor = rewire('../../src/network/endpoint-processor');
@@ -29,7 +29,7 @@ describe('provider', () => {
       const url = endpointProcessor.preprocess(
         'http://{{platformSubDomain}}.archive.org/metadata/{{id}}',
         app,
-        {id: '12345'}
+        { id: '12345' }
       );
 
       expect(url).to.be.equal(

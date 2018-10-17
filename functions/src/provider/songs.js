@@ -10,7 +10,7 @@ const config = require('../config');
  * @returns {string}
  */
 function getSongUrlByAlbumIdAndFileName (albumId, filename) {
-  return mustache.render(config.endpoints.SONG_URL, {albumId, filename});
+  return mustache.render(config.endpoints.SONG_URL, { albumId, filename });
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const util = require('util');
 
 const templateResolvers = require('../../../configurator/parsers/template-resolvers');
-const {debug} = require('../../../utils/logger')('ia:actions:middleware:fulfil-resolvers');
+const { debug } = require('../../../utils/logger')('ia:actions:middleware:fulfil-resolvers');
 
 /**
  * Middleware
@@ -18,7 +18,7 @@ const {debug} = require('../../../utils/logger')('ia:actions:middleware:fulfil-r
  */
 module.exports = () => (ctx) => {
   debug('start');
-  const {slots = {}, speech} = ctx;
+  const { slots = {}, speech } = ctx;
 
   // TODO: should we be limitted by speech only?
   debug(`resolve slots for "${speech}"`);
@@ -29,7 +29,7 @@ module.exports = () => (ctx) => {
   return Promise
     .all(
       resolversToProcess
-        .map(({handler}) => handler(ctx))
+        .map(({ handler }) => handler(ctx))
     )
     .then(solutions => {
       debug('solutions:', solutions);
@@ -37,7 +37,7 @@ module.exports = () => (ctx) => {
       // zip/merge to collections
         .map((res, index) => {
           const resolver = resolversToProcess[index];
-          return Object.assign({}, resolver, {result: res});
+          return Object.assign({}, resolver, { result: res });
         })
         // pack result in the way:
         .reduce((acc, resolver) => {

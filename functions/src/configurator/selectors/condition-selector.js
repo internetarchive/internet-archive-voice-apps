@@ -1,7 +1,7 @@
 const math = require('mathjs');
 const util = require('util');
 
-const {debug, timer, warning} = require('../../utils/logger')('ia:selectors:condition-selector');
+const { debug, timer, warning } = require('../../utils/logger')('ia:selectors:condition-selector');
 
 function safieMathEval (condition, context) {
   try {
@@ -29,9 +29,9 @@ function find (options, context) {
 
   const stopFindOptionTimer = timer.start('find option');
   const option = options
-    .filter(({condition}) => condition)
+    .filter(({ condition }) => condition)
     .find(
-      ({condition}) => {
+      ({ condition }) => {
         const stopMathEvalTimer = timer.start('math.eval');
         const res = safieMathEval(condition, context);
         stopMathEvalTimer();
@@ -49,7 +49,7 @@ function find (options, context) {
   debug('we get default slot scheme');
 
   // default option doesn't have condition
-  const def = options.find(({condition}) => !condition);
+  const def = options.find(({ condition }) => !condition);
   if (def) {
     return def;
   }

@@ -1,5 +1,5 @@
-const {MiddlewareError} = require('./errors');
-const {debug} = require('../../../utils/logger')('ia:actions:middlewares:next-song');
+const { MiddlewareError } = require('./errors');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:next-song');
 
 /**
  * move to the next song
@@ -7,7 +7,7 @@ const {debug} = require('../../../utils/logger')('ia:actions:middlewares:next-so
  */
 module.exports = () => (context) => {
   debug('start');
-  const {feeder} = context;
+  const { feeder } = context;
   if (!feeder.hasNext(context)) {
     // TODO: Don't have next song
     debug(`don't have next song`);

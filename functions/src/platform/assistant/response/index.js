@@ -1,6 +1,6 @@
-const {Image, LinkOutSuggestion, MediaObject, Suggestions} = require('actions-on-google');
+const { Image, LinkOutSuggestion, MediaObject, Suggestions } = require('actions-on-google');
 
-const {debug, warning} = require('../../../utils/logger')('ia:platform.assistant.response');
+const { debug, warning } = require('../../../utils/logger')('ia:platform.assistant.response');
 
 /**
  *
@@ -14,7 +14,7 @@ module.exports = (conv) =>
    * @param suggestions {Array}
    * @param close {Boolean} close connection (end session). By default is false.
    */
-  ({media, speech, suggestions, close = false}) => {
+  ({ media, speech, suggestions, close = false }) => {
     let responses;
 
     responses = [].concat(speech)

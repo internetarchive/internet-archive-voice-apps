@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/play-song');
@@ -22,7 +22,7 @@ describe('actions', () => {
 
     describe('play song', () => {
       it('should return Promise', () => {
-        expect(middleware()({app, speech})).to.have.property('then');
+        expect(middleware()({ app, speech })).to.have.property('then');
       });
 
       it('should play song', () => {
@@ -30,7 +30,7 @@ describe('actions', () => {
         const slots = {
           id: '123456',
         };
-        return middleware({offset: 1234})({app, description, speech, slots})
+        return middleware({ offset: 1234 })({ app, description, speech, slots })
           .then(context => {
             expect(dialog.playSong).to.have.been.called;
             expect(dialog.playSong.args[0][0]).to.be.equal(app);
@@ -51,7 +51,7 @@ describe('actions', () => {
         };
         const res = fsm.getState(app);
         expect(res).to.be.undefined;
-        return middleware({})({app, description, speech, slots})
+        return middleware({})({ app, description, speech, slots })
           .then(context => {
             expect(fsm.getState(app)).to.be.equal(constants.fsm.states.PLAYBACK);
           });

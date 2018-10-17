@@ -2,14 +2,14 @@
  * integration tests for repeat
  */
 
-const {expect} = require('chai');
+const { expect } = require('chai');
 const mustache = require('mustache');
 const sinon = require('sinon');
 
 const strings = require('../../src/strings');
 
-const {wait} = require('../_utils/wait');
-const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
+const { wait } = require('../_utils/wait');
+const { buildIntentRequest, MockResponse } = require('../_utils/mocking');
 
 let index, configStub, adminInitStub, functions, admin;
 
@@ -71,7 +71,7 @@ describe('integration', () => {
           expect(res.speech()).to.contain(
             mustache.render(
               strings.intents.unknown[1].speech,
-              {reprompt: 'Direction?'}
+              { reprompt: 'Direction?' }
             )
           );
         });

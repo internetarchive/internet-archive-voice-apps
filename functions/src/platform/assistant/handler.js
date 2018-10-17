@@ -1,4 +1,4 @@
-const {dialogflow} = require('actions-on-google');
+const { dialogflow } = require('actions-on-google');
 const bst = require('bespoken-tools');
 const functions = require('firebase-functions');
 const _ = require('lodash');
@@ -12,7 +12,7 @@ const packageJSON = require('../../../package.json');
 const errors = require('../../errors');
 const pipeline = require('../../performance/pipeline');
 const strings = require('../../strings');
-const {debug, error, warning} = require('../../utils/logger')('ia:index');
+const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
 const logRequest = require('./middlewares/log-request');
@@ -30,9 +30,9 @@ module.exports = (actionsMap) => {
   //   }).google;
 
   if (actionsMap) {
-    handlers = buildHandlers({actionsMap});
+    handlers = buildHandlers({ actionsMap });
     handlers.forEach(
-      ({intent, handler}) => app.intent(intent, handler)
+      ({ intent, handler }) => app.intent(intent, handler)
     );
   }
 

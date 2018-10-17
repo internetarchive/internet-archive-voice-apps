@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const {debug, timer} = require('../utils/logger')('ia:performance:axio');
+const { debug, timer } = require('../utils/logger')('ia:performance:axio');
 
 /**
  * Use profile axios performance

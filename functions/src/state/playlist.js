@@ -1,6 +1,6 @@
-const {debug, warning} = require('../utils/logger')('ia:state:playlist');
+const { debug, warning } = require('../utils/logger')('ia:state:playlist');
 
-const {getData, setData} = require('./helpers').group('playlist');
+const { getData, setData } = require('./helpers').group('playlist');
 
 /**
  * Selector. Current song in the Playlist
@@ -32,7 +32,7 @@ function hasNextSong (app) {
  * @param {Object} [extra] - extra options
  */
 function create (app, items, extra = {}) {
-  const res = setData(app, Object.assign({}, getData(app), {extra}, {
+  const res = setData(app, Object.assign({}, getData(app), { extra }, {
     current: 0,
     items,
   }));
@@ -63,7 +63,7 @@ function getExtra (app) {
  * @param extra
  */
 function setExtra (app, extra) {
-  setData(app, Object.assign({}, getData(app), {extra}));
+  setData(app, Object.assign({}, getData(app), { extra }));
 }
 
 /**
@@ -83,7 +83,7 @@ function getFeeder (app) {
  * @param feederName
  */
 function setFeeder (app, feederName) {
-  setData(app, Object.assign({}, getData(app), {feederName}));
+  setData(app, Object.assign({}, getData(app), { feederName }));
 }
 
 /**
