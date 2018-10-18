@@ -25,7 +25,7 @@ module.exports = (actionsMap) => {
     // more details in source:
     // https://github.com/actionably/dashbot/blob/33376ff81af3962eb58ad8ebabc91827134333c5/src/make-request.js#L22
     //
-    // printErrors: false,
+    printErrors: false,
   }).google;
 
   dashbot.configHandler(app);
