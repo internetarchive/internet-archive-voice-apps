@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const {debug} = require('../../../utils/logger')('ia:platform:alexa:app');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:app');
 
 const params = require('../parameters');
 const persistance = require('../persistence');

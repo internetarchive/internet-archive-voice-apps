@@ -1,6 +1,6 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
-const {getLastPhrase, getLastReprompt, getReprompt, savePhrase} = require('../../src/state/dialog');
+const { getLastPhrase, getLastReprompt, getReprompt, savePhrase } = require('../../src/state/dialog');
 
 const mockApp = require('../_utils/mocking/platforms/app');
 
@@ -31,7 +31,7 @@ describe('state', () => {
 
     describe('getLastReprompt', () => {
       it('should return reprompt', () => {
-        savePhrase(app, {reprompt: 'Sorry! Repeat The number please!'});
+        savePhrase(app, { reprompt: 'Sorry! Repeat The number please!' });
         expect(getLastReprompt(app)).to.be.equal('Sorry! Repeat The number please!');
       });
     });

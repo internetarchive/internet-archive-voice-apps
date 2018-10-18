@@ -1,6 +1,6 @@
 const dialog = require('../../../dialog');
 const fsm = require('../../../state/fsm');
-const {debug} = require('../../../utils/logger')('ia:actions:middlewares:song-data');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
 const constants = require('../../../constants');
 
@@ -11,9 +11,9 @@ const constants = require('../../../constants');
  *
  * @param mediaResponseOnly {boolean} we should return media response only
  */
-module.exports = ({mediaResponseOnly = false, offset = 0} = {}) => (context) => {
+module.exports = ({ mediaResponseOnly = false, offset = 0 } = {}) => (context) => {
   debug('start');
-  const {app} = context;
+  const { app } = context;
 
   dialog.playSong(app, Object.assign(
     {}, context.slots, {

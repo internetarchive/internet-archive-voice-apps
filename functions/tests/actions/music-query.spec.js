@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const _ = require('lodash');
 const rewire = require('rewire');
 const sinon = require('sinon');
@@ -54,10 +54,10 @@ describe('actions', () => {
 
     provider = sinon.stub().returns(Promise.resolve({
       items: [
-        {coverage: 'barcelona'},
-        {coverage: 'london'},
-        {coverage: 'lviv'},
-        {coverage: 'tokyo'},
+        { coverage: 'barcelona' },
+        { coverage: 'london' },
+        { coverage: 'lviv' },
+        { coverage: 'tokyo' },
       ],
     }));
     getSuggestionProviderForSlots = sinon.stub().returns(provider);
@@ -194,7 +194,7 @@ describe('actions', () => {
           });
           fulfilResolversHandler = sinon.stub().returns({
             app,
-            slots: {creator: {title: 'Grateful Dead'}},
+            slots: { creator: { title: 'Grateful Dead' } },
             slotScheme: slotSchemeWithMultipleCases[0],
             speech: 'Ok! Lets go with {{creator.title}} band!',
             suggestions: [],

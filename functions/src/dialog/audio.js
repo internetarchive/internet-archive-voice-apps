@@ -4,7 +4,7 @@ const util = require('util');
 const config = require('../config');
 const selectors = require('../configurator/selectors');
 const availableStrings = require('../strings').dialog.playSong;
-const {debug} = require('../utils/logger')('ia:dialog:audio');
+const { debug } = require('../utils/logger')('ia:dialog:audio');
 
 /**
  * Play song to the user
@@ -63,17 +63,17 @@ function playSong (app, options) {
   //   return;
   // }
 
-  let {speech} = options;
+  let { speech } = options;
 
   if (typeof speech === 'string') {
-    speech = mustache.render(speech, Object.assign({}, options, {description}));
+    speech = mustache.render(speech, Object.assign({}, options, { description }));
   } else {
     speech = description;
   }
 
   let previousTrack = Object.assign({},
     options.previousTrack,
-    {contentURL: options.previousTrack && options.previousTrack.audioURL});
+    { contentURL: options.previousTrack && options.previousTrack.audioURL });
 
   app.response({
     speech,

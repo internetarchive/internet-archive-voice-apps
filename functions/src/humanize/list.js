@@ -2,7 +2,7 @@
  * Converts a array of items to a human readable string
  */
 
-function toFriendlyString (list, {ends = ' and ', delimiter = ', '} = {}) {
+function toFriendlyString (list, { ends = ' and ', delimiter = ', ' } = {}) {
   if (!list) {
     return '';
   }

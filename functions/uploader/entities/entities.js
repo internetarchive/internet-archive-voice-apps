@@ -45,7 +45,7 @@ function postEntitiesToDF (entityid, entities, first) {
     });
   }
   for (let i = first; i < last; i++) {
-    data.push({'synonyms': [entities[i]], 'value': entities[i]});
+    data.push({ 'synonyms': [entities[i]], 'value': entities[i] });
   }
   return getAccessToken()
     .then(accesstoken => {
@@ -56,7 +56,7 @@ function postEntitiesToDF (entityid, entities, first) {
           entityid,
           accesstoken,
         }
-      ), {method: `POST`, body: JSON.stringify({'entities': data})});
+      ), { method: `POST`, body: JSON.stringify({ 'entities': data }) });
     })
     .then(res => res.data)
     .then(data => {

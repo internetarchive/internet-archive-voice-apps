@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const preprocess = require('../../src/config/group-param-to-env-variable-name');
 
 describe('config', () => {

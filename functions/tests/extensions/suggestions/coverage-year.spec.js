@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const coverageYear = rewire('../../../src/extensions/suggestions/coverage-year');

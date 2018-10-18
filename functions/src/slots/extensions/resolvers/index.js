@@ -12,4 +12,4 @@ const builder = require('../../../extensions/builder');
  * to the result processed template.
  */
 
-module.exports = builder.build({root: __dirname});
+module.exports = builder.build({ root: __dirname });

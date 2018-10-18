@@ -4,4 +4,4 @@ const strings = require('../strings').intents.inOneGoMusicPlayback;
 
 const inOneGo = require('./_high-order-handlers/in-one-go');
 
-module.exports = inOneGo.build({playlist, strings, query});
+module.exports = inOneGo.build({ playlist, strings, query });

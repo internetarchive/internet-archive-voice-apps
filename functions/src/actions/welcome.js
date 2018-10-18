@@ -30,7 +30,7 @@ function handler (app) {
 
   fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
-  dialog.ask(app, Object.assign({}, welcomeStrings, {speech, reprompt}));
+  dialog.ask(app, Object.assign({}, welcomeStrings, { speech, reprompt }));
 }
 
 module.exports = {

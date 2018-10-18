@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const {getData, setData} = require('./helpers').group('actions');
+const { getData, setData } = require('./helpers').group('actions');
 
 /**
  * store current action

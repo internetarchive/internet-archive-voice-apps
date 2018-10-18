@@ -36,7 +36,7 @@ module.exports = {
       defaults: {
         creatorId: 'one-band',
         // we will explicitly skip this slot
-        coverage: {skip: true},
+        coverage: { skip: true },
         year: 1999,
       },
     },

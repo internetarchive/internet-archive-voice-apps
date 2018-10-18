@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/playlist-from-feeder');
@@ -15,18 +15,18 @@ describe('actions', () => {
     beforeEach(() => {
       app = mockApp();
       feeder = mockAlbums({
-        buildResolve: {total: 12345},
+        buildResolve: { total: 12345 },
       });
     });
 
     describe('playlist from feeder', () => {
       it('should return Promise', () => {
-        expect(middleware()({app, feeder, playlist})).to.have.property('then');
+        expect(middleware()({ app, feeder, playlist })).to.have.property('then');
       });
 
       it('should play song', () => {
         const feederName = 'Albums';
-        return middleware()({app, feeder, feederName, playlist, slots: {}})
+        return middleware()({ app, feeder, feederName, playlist, slots: {} })
           .then(context => {
             expect(playlist.getFeeder(app)).to.be.equal(feederName);
             expect(feeder.build).to.be.called;

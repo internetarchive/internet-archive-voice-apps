@@ -1,4 +1,4 @@
-const {debug} = require('../../utils/logger')('ia:order:natural');
+const { debug } = require('../../utils/logger')('ia:order:natural');
 
 class NaturalOrderStrategy {
   /**
@@ -9,7 +9,7 @@ class NaturalOrderStrategy {
    * @param feederConfig
    * @returns {{limit: number, page: number}}
    */
-  getPage ({app, cursor, feederConfig}) {
+  getPage ({ app, cursor, feederConfig }) {
     return {
       // size of chunk
       limit: feederConfig.chunk.albums,
@@ -26,7 +26,7 @@ class NaturalOrderStrategy {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({app, query, playlist}) {
+  hasNext ({ app, query, playlist }) {
     const cursor = playlist.getExtra(app).cursor;
     // Isn't it the last album
     if (cursor.current.album < cursor.total.albums - 1) {
@@ -42,7 +42,7 @@ class NaturalOrderStrategy {
    * @param query
    * @param playlist
    */
-  moveSourceCursorToTheNextPosition ({app, query, playlist}) {
+  moveSourceCursorToTheNextPosition ({ app, query, playlist }) {
     const cursor = playlist.getExtra(app).cursor;
     const current = Object.assign({}, cursor.current);
     current.song++;
@@ -60,7 +60,7 @@ class NaturalOrderStrategy {
 
     // store cursor
     playlist.setExtra(app, {
-      cursor: Object.assign({}, cursor, {current}),
+      cursor: Object.assign({}, cursor, { current }),
     });
   }
 
@@ -72,12 +72,12 @@ class NaturalOrderStrategy {
    * @param playlist
    * @param songsInFirstAlbum
    */
-  updateCursorTotal ({app, playlist, songsInFirstAlbum}) {
+  updateCursorTotal ({ app, playlist, songsInFirstAlbum }) {
     const cursor = playlist.getExtra(app).cursor;
     const total = Object.assign({}, cursor.total);
     total.songs = songsInFirstAlbum;
     playlist.setExtra(app, {
-      cursor: Object.assign({}, cursor, {total}),
+      cursor: Object.assign({}, cursor, { total }),
     });
   }
 
@@ -87,7 +87,7 @@ class NaturalOrderStrategy {
    * @param songs
    * @returns {Array}
    */
-  songsPostProcessing ({cursor, songs}) {
+  songsPostProcessing ({ cursor, songs }) {
     // start from song we need
     return songs.slice(cursor.current.song);
   }

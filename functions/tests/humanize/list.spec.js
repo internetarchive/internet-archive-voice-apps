@@ -1,13 +1,13 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
-const {list} = require('../../src/humanize');
+const { list } = require('../../src/humanize');
 
 describe('humanize', () => {
   describe('list', () => {
     describe('toSoftString', () => {
       it('should converts a array of items to a human readable string', () => {
         expect(
-          list.toFriendlyString(['A', 'B', 'C'], {ends: ' or '})
+          list.toFriendlyString(['A', 'B', 'C'], { ends: ' or ' })
         ).to.be.equal('A, B or C');
       });
 

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const mockAssistant = require('../../../_utils/mocking/platforms/assistant');
 

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -70,7 +70,7 @@ describe('actions', () => {
           confirm: ['years'],
         };
 
-        return middleware({exclude: ['year']})({
+        return middleware({ exclude: ['year'] })({
           app,
           slots: {
             artist: 'the band',

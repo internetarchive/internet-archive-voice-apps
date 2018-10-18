@@ -1,9 +1,9 @@
 const Alexa = require('ask-sdk');
-const {DynamoDbPersistenceAdapter} = require('ask-sdk-dynamodb-persistence-adapter');
+const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const AWS = require('aws-sdk');
 
 const pipeline = require('../../../performance/pipeline');
-const {debug} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const ErrorHandler = require('./error-handler');
 const LogInterceptor = require('./log-interceptor');
@@ -16,7 +16,7 @@ module.exports = (actions) => {
   });
   const handlers = handlersBuilder(actions);
   let skill;
-  debug(`We can handle intents: ${handlers.map(({intent}) => `"${intent}"`).join(', ')}`);
+  debug(`We can handle intents: ${handlers.map(({ intent }) => `"${intent}"`).join(', ')}`);
 
   return function (event, context) {
     if (!skill) {
@@ -43,7 +43,7 @@ module.exports = (actions) => {
       const region = process.env.AWS_REGION;
       if (region) {
         debug('set AWS region', region);
-        AWS.config.update({region});
+        AWS.config.update({ region });
       }
 
       // alexa.dynamoDBTableName = 'InternetArchiveSessions';

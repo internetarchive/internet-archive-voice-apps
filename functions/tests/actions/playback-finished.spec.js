@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const constants = require('../../src/constants');
 const fsm = require('../../src/state/fsm');

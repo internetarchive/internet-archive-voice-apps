@@ -3,7 +3,7 @@ const _ = require('lodash');
 const util = require('util');
 
 const extractor = require('../parsers/extract-requirements');
-const {debug, warning} = require('../../utils/logger')('ia:selectors:template-selector');
+const { debug, warning } = require('../../utils/logger')('ia:selectors:template-selector');
 
 /**
  * Choose template with maximum slots coverage
@@ -15,7 +15,7 @@ const {debug, warning} = require('../../utils/logger')('ia:selectors:template-se
 function find (options, context) {
   debug('select option as template');
 
-  let {prioritySlots, slots = {}} = context;
+  let { prioritySlots, slots = {} } = context;
   debug('the priority slots are:', prioritySlots);
   debug('the slots are:', slots);
 
@@ -79,10 +79,10 @@ function getMatchedTemplates (templateRequirements, slots) {
   const templates = templateRequirements
     // drop all template which requires more than we have in slots
     .filter(
-      ({requirements}) => requirements.every(r => _.includes(slots, r))
+      ({ requirements }) => requirements.every(r => _.includes(slots, r))
     )
     .map(
-      ({requirements, template}) => ({
+      ({ requirements, template }) => ({
         similarity: _.intersection(requirements, slots).length,
         template,
       })
@@ -95,8 +95,8 @@ function getMatchedTemplates (templateRequirements, slots) {
 
   // get 1st group with equal similarity
   const similarityOfFirstGroup = templates[0].similarity;
-  return _.takeWhile(templates, ({similarity}) => similarity === similarityOfFirstGroup)
-    .map(({template}) => template);
+  return _.takeWhile(templates, ({ similarity }) => similarity === similarityOfFirstGroup)
+    .map(({ template }) => template);
 }
 
 /**
@@ -109,12 +109,12 @@ function getMatchedTemplates (templateRequirements, slots) {
 function getMatchedTemplatesExactly (templateRequirements, slots) {
   const numOfSlots = slots.length;
   return templateRequirements && templateRequirements
-    .filter(({requirements}) => {
+    .filter(({ requirements }) => {
       const intersection = _.intersection(requirements, slots);
       return intersection.length === requirements.length &&
         intersection.length === numOfSlots;
     })
-    .map(({template}) => template);
+    .map(({ template }) => template);
 }
 
 module.exports = {

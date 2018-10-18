@@ -9,7 +9,7 @@ const esapceHTML = require('./escape-html');
  * @param {array} skipFields - don't escape these fields
  * @returns {*}
  */
-module.exports = function escapeStucture (data, {skipFields = []} = {}) {
+module.exports = function escapeStucture (data, { skipFields = [] } = {}) {
   if (!data) {
     return data;
   }

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -25,14 +25,14 @@ describe('actions', () => {
       });
 
       it('should find specialized slot scheme', () => {
-        const repairSlotScheme = {repair: 'fake repair slot scheme'};
+        const repairSlotScheme = { repair: 'fake repair slot scheme' };
         const promptSelector = {
           getPromptsForSlots: sinon.stub().returns(repairSlotScheme),
         };
         middleware.__set__('promptSelector', promptSelector);
 
         return middleware()(ctx)
-          .then(({repairScheme, suggestionsScheme}) => {
+          .then(({ repairScheme, suggestionsScheme }) => {
             expect(suggestionsScheme).to.be.equal(repairSlotScheme);
             expect(repairScheme).to.be.equal(repairSlotScheme.repair);
           });
@@ -47,7 +47,7 @@ describe('actions', () => {
         middleware.__set__('promptSelector', promptSelector);
 
         return middleware()(ctx)
-          .then(({repairScheme, suggestionsScheme}) => {
+          .then(({ repairScheme, suggestionsScheme }) => {
             expect(suggestionsScheme).to.be.equal(repairSlotScheme);
             expect(repairScheme).to.be.equal(slotScheme.repair);
           });

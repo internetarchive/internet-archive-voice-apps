@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const mockApp = require('../../_utils/mocking/platforms/app');

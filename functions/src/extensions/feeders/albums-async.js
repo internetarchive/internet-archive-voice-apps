@@ -16,7 +16,7 @@ const _ = require('lodash');
 
 const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
-const {debug, warning, error} = require('../../utils/logger')('ia:feeder:albums-async');
+const { debug, warning, error } = require('../../utils/logger')('ia:feeder:albums-async');
 const stripFileName = require('../../utils/strip-filename');
 
 const orderStrategies = require('../orders');
@@ -50,11 +50,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build ({app, query, playlist}) {
+  build ({ app, query, playlist }) {
     debug('build async songs feeder');
 
-    return this.fetchChunkOfSongs({app, query, playlist})
-      .then(({songs, songsInFirstAlbum, totalNumOfAlbums}) => {
+    return this.fetchChunkOfSongs({ app, query, playlist })
+      .then(({ songs, songsInFirstAlbum, totalNumOfAlbums }) => {
         // the only place where we modify state
         // so maybe we can put it out of this function?
         debug(`let's create playlist for songs`);
@@ -66,7 +66,7 @@ class AsyncAlbums extends DefaultFeeder {
             },
           }),
         });
-        return {total: totalNumOfAlbums};
+        return { total: totalNumOfAlbums };
       });
   }
 
@@ -79,7 +79,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise.<T>}
    */
-  fetchChunkOfSongs ({app, query, playlist}) {
+  fetchChunkOfSongs ({ app, query, playlist }) {
     const slots = query.getSlots(app);
     debug('we have slots:', slots);
 
@@ -103,7 +103,7 @@ class AsyncAlbums extends DefaultFeeder {
         Object.assign(
           {},
           slots,
-          orderStrategy.getPage({app, cursor, feederConfig})
+          orderStrategy.getPage({ app, cursor, feederConfig })
         )
       )
       .then((albums) => {
@@ -137,7 +137,7 @@ class AsyncAlbums extends DefaultFeeder {
 
         if (!albums || albums.length === 0) {
           debug('we got none albums');
-          return {songs: [], songsInFirstAlbum: 0, totalNumOfAlbums: 0};
+          return { songs: [], songsInFirstAlbum: 0, totalNumOfAlbums: 0 };
         }
 
         const songsInFirstAlbum = albums[0].songs.length;
@@ -151,12 +151,12 @@ class AsyncAlbums extends DefaultFeeder {
         if (songs.length === 0) {
           warning(`we received zero songs. It doesn't sound ok`);
           // let's try again
-          return this.fetchChunkOfSongs({app, query, playlist});
+          return this.fetchChunkOfSongs({ app, query, playlist });
         }
 
         debug(`we get ${songs.length} songs`);
 
-        songs = orderStrategy.songsPostProcessing({songs, cursor});
+        songs = orderStrategy.songsPostProcessing({ songs, cursor });
 
         // get chunk of songs
         if (feederConfig.chunk.songs) {
@@ -164,7 +164,7 @@ class AsyncAlbums extends DefaultFeeder {
           debug(`but only ${songs.length} in chunk left`);
         }
 
-        return {songs, songsInFirstAlbum, totalNumOfAlbums};
+        return { songs, songsInFirstAlbum, totalNumOfAlbums };
       })
       .catch(err => {
         error('We got an error:', err);
@@ -206,11 +206,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({app, query, playlist}) {
+  hasNext ({ app, query, playlist }) {
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
-    return orderStrategy.hasNext({app, query, playlist});
+    return orderStrategy.hasNext({ app, query, playlist });
   }
 
   /**
@@ -222,13 +222,13 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next ({app, query, playlist}) {
+  next ({ app, query, playlist }) {
     debug('move to the next song');
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
 
-    orderStrategy.moveSourceCursorToTheNextPosition({app, query, playlist});
+    orderStrategy.moveSourceCursorToTheNextPosition({ app, query, playlist });
 
     // check whether we need to fetch new chunk
     if (playlist.hasNextSong(app, query, playlist)) {
@@ -237,8 +237,8 @@ class AsyncAlbums extends DefaultFeeder {
       return Promise.resolve();
     } else {
       debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
-      return this.fetchChunkOfSongs({app, query, playlist})
-        .then(({songs, songsInFirstAlbum}) => {
+      return this.fetchChunkOfSongs({ app, query, playlist })
+        .then(({ songs, songsInFirstAlbum }) => {
           // we'll append new chunk of songs
           let items = playlist.getItems(app).concat(songs);
 

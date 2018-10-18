@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const util = require('util');
 
-const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
 
 /**
  * Session level persistance.
@@ -15,7 +15,7 @@ const {debug} = require('../../../utils/logger')('ia:platform:alexa:persistance:
  */
 module.exports = (handlerInput, persistentAttributes) => {
   debug('create');
-  debug('persistentAttributes:', util.inspect(persistentAttributes, {depth: null}));
+  debug('persistentAttributes:', util.inspect(persistentAttributes, { depth: null }));
 
   if (!handlerInput) {
     throw new Error('parameter handlerInput should be defined');
@@ -33,7 +33,7 @@ module.exports = (handlerInput, persistentAttributes) => {
     dropAll: () => {
       debug('drop all attributes');
       _.set(persistentAttributes, [deviceId], {});
-      debug(persistentAttributes, util.inspect(persistentAttributes, {depth: null}));
+      debug(persistentAttributes, util.inspect(persistentAttributes, { depth: null }));
     },
 
     /**
@@ -56,7 +56,7 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param value
      */
     setData: (name, value) => {
-      debug(`set attribute ${name} to`, util.inspect(value, {depth: null}));
+      debug(`set attribute ${name} to`, util.inspect(value, { depth: null }));
       _.set(persistentAttributes, [deviceId, name], value);
       return true;
     },

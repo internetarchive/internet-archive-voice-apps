@@ -1,4 +1,4 @@
-const {debug, error} = require('../../../utils/logger')('ia:actions:hoh:ask');
+const { debug, error } = require('../../../utils/logger')('ia:actions:hoh:ask');
 const dialog = require('../../../dialog');
 const strings = require('../../../strings');
 
@@ -19,7 +19,7 @@ const strings = require('../../../strings');
 module.exports = () => (context) => {
   debug('start');
 
-  const {app, speech, suggestions} = context;
+  const { app, speech, suggestions } = context;
 
   if (speech && speech.length > 0) {
     dialog.ask(app, {

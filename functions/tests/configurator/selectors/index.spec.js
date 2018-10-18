@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const selectors = require('../../../src/configurator/selectors');
 

@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const config = require('../config');
-const {debug, error} = require('../utils/logger')('ia:search:collection');
+const { debug, error } = require('../utils/logger')('ia:search:collection');
 
 const endpointProcessor = require('../network/endpoint-processor');
 
@@ -24,7 +24,7 @@ const endpointProcessor = require('../network/endpoint-processor');
 function fetchDetails (app, id) {
   debug(`fetch collection ${id}`);
   return axios.get(endpointProcessor.preprocess(
-    config.endpoints.COLLECTION_URL, app, {id}
+    config.endpoints.COLLECTION_URL, app, { id }
   ))
     .then(res => {
       return {
@@ -47,7 +47,7 @@ function fetchDetails (app, id) {
 function fetchItems (app, id) {
   debug(`fetch collection items ${id}`);
   return axios.get(endpointProcessor.preprocess(
-    config.endpoints.QUERY_COLLECTIONS_URL, app, {id}
+    config.endpoints.QUERY_COLLECTIONS_URL, app, { id }
   ))
     .then(res => res.data.response.docs)
     .catch(e => {

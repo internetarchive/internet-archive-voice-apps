@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {debug} = require('../../../utils/logger')('ia:actions:middleware:copy-arguments-to-slots');
+const { debug } = require('../../../utils/logger')('ia:actions:middleware:copy-arguments-to-slots');
 
 /**
  * Middleware
@@ -17,7 +17,7 @@ module.exports = () =>
 //   ({app, newValues = {}, query, slotScheme, ...res}) => {
   args => {
     debug('start');
-    let {app, newValues = {}, query, slotScheme} = args;
+    let { app, newValues = {}, query, slotScheme } = args;
     debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {
@@ -30,14 +30,14 @@ module.exports = () =>
         }
         if (value) {
           query.setSlot(app, slotName, value);
-          newValues = Object.assign({}, newValues, {[slotName]: value});
+          newValues = Object.assign({}, newValues, { [slotName]: value });
         }
         return newValues;
       }, newValues);
 
     debug(`and copied ${util.inspect(newValues)} slot(s)`);
     return Promise.resolve(
-      Object.assign({}, args, {newValues})
+      Object.assign({}, args, { newValues })
     );
     // sadly Google Firebase doesn't support modern Node.js
     // return Promise.resolve({app, newValues, query, slotScheme, ...res});

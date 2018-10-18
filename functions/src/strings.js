@@ -197,8 +197,8 @@ module.exports = {
       presets: {
         random: {
           defaults: {
-            collectionId: {skip: true},
-            subject: {skip: true},
+            collectionId: { skip: true },
+            subject: { skip: true },
             order: 'random',
           }
         },
@@ -285,10 +285,10 @@ module.exports = {
       presets: {
         random: {
           defaults: {
-            collectionId: {skip: true},
-            creator: {skip: true},
-            coverage: {skip: true},
-            year: {skip: true},
+            collectionId: { skip: true },
+            creator: { skip: true },
+            coverage: { skip: true },
+            year: { skip: true },
             order: 'random',
           }
         },

@@ -1,5 +1,5 @@
 const aliases = require('../../strings').aliases;
-const {debug, warning} = require('../../utils/logger')('ia:resolver:years-interval');
+const { debug, warning } = require('../../utils/logger')('ia:resolvers:alias');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
@@ -8,8 +8,11 @@ const contextProxy = require('./high-order-resolvers/context-proxy');
  *
  * @type {{handler, requirements}}
  */
-module.exports = contextProxy(({name, value}) => {
-  debug(aliases);
+module.exports = contextProxy(({ name, value }) => {
+  debug('start');
+  debug('aliases', aliases);
+  debug('name', name);
+  debug('value', value);
   if (!(name in aliases)) {
     warning(`we don't have aliases for "${name}".`);
     return undefined;

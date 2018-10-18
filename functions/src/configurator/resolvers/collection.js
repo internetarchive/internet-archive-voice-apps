@@ -1,5 +1,5 @@
 const collection = require('../../../provider/collection');
-const {debug} = require('../../../utils/logger')('ia:resolver:collection');
+const { debug } = require('../../../utils/logger')('ia:resolvers:collection');
 
 /**
  * Handle context to fetch collection details
@@ -7,7 +7,7 @@ const {debug} = require('../../../utils/logger')('ia:resolver:collection');
  * @param collectionId
  * @returns {Promise}
  */
-function handler ({app, slots} = {}) {
+function handler ({ app, slots } = {}) {
   if (!slots) {
     return Promise.resolve();
   }

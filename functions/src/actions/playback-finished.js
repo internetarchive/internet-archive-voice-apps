@@ -1,6 +1,6 @@
 const constants = require('../constants');
 const fsm = require('../state/fsm');
-const {debug} = require('../utils/logger')('ia:actions:playback-finished');
+const { debug } = require('../utils/logger')('ia:actions:playback-finished');
 
 function handler (app) {
   // TODO: set playbackFinished

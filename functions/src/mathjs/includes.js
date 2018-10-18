@@ -1,6 +1,6 @@
 const math = require('mathjs');
 
-const {debug} = require('../utils/logger')('ia:mathjs:equal');
+const { debug } = require('../utils/logger')('ia:mathjs:equal');
 
 /**
  * Support includes command:
@@ -20,5 +20,5 @@ module.exports = () => {
       }
       return array.indexOf(b) >= 0;
     },
-  }, {override: true});
+  }, { override: true });
 };

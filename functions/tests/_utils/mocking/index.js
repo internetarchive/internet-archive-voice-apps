@@ -6,7 +6,7 @@ const basicHeaderRequest = {
   'Google-Actions-API-Version': 2,
 };
 
-function getBody ({action, data = {}, userStorage = {}, lastSeen = '2018-02-15T15:54:15Z'}) {
+function getBody ({ action, data = {}, userStorage = {}, lastSeen = '2018-02-15T15:54:15Z' }) {
   return {
     id: '70c039ef-32e8-4a44-875c-81788cf5e1da',
     timestamp: '2018-02-15T15:55:15.889Z',
@@ -15,7 +15,7 @@ function getBody ({action, data = {}, userStorage = {}, lastSeen = '2018-02-15T1
     originalDetectIntentRequest: {
       payload: {
         user: {
-          userStorage: JSON.stringify({data: userStorage}),
+          userStorage: JSON.stringify({ data: userStorage }),
           lastSeen: lastSeen,
           locale: 'en-US',
           userId: 'ABwppHF87C7vRsEg2MsfxhYPar0beTkSw3KHiQEWc5OznoqwWNjh2Tko0Pp30Oow2Qak6BtTYs25J6HlSR03oQT70OVv'
@@ -39,7 +39,7 @@ function getBody ({action, data = {}, userStorage = {}, lastSeen = '2018-02-15T1
 
       parameters: {},
     },
-    status: {'code': 200, 'errorType': 'success', 'webhookTimedOut': false},
+    status: { 'code': 200, 'errorType': 'success', 'webhookTimedOut': false },
     sessionId: '1518710115665'
   };
 }

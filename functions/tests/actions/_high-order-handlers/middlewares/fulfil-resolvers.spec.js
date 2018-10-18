@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -21,8 +21,8 @@ describe('actions', () => {
       let yearsintervalHandler;
 
       beforeEach(() => {
-        creatorHandler = sinon.stub().returns(Promise.resolve({title: 'Grateful Dead'}));
-        yearsintervalHandler = sinon.stub().returns(Promise.resolve({suggestions: 'between 1970 and 2000'}));
+        creatorHandler = sinon.stub().returns(Promise.resolve({ title: 'Grateful Dead' }));
+        yearsintervalHandler = sinon.stub().returns(Promise.resolve({ suggestions: 'between 1970 and 2000' }));
         templateResolvers = mockTemplateResolvers([{
           handler: creatorHandler,
           name: 'creator',
@@ -39,9 +39,9 @@ describe('actions', () => {
       });
 
       it('should fulfil more than one resolvers', () => {
-        return Promise.resolve({speech})
+        return Promise.resolve({ speech })
           .then(middleware())
-          .then(({slots}) => {
+          .then(({ slots }) => {
             expect(templateResolvers.getTemplateResolvers).to.have.been.calledWith(
               speech,
               []
@@ -61,9 +61,9 @@ describe('actions', () => {
         const slots = {
           collectionId: '12345',
         };
-        return Promise.resolve({slots, speech})
+        return Promise.resolve({ slots, speech })
           .then(middleware())
-          .then(({slots}) => {
+          .then(({ slots }) => {
             expect(templateResolvers.getTemplateResolvers).to.have.been.calledWith(
               speech,
               ['collectionId']
@@ -81,9 +81,9 @@ describe('actions', () => {
       });
 
       it('should fulfil array of speeches', () => {
-        return Promise.resolve({speech: speeches})
+        return Promise.resolve({ speech: speeches })
           .then(middleware())
-          .then(({slots}) => {
+          .then(({ slots }) => {
             expect(slots).to.be.deep.equal({
               creator: {
                 title: 'Grateful Dead',

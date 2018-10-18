@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {debug, info} = require('../../../utils/logger')('ia:log-request');
+const { debug, info } = require('../../../utils/logger')('ia:log-request');
 
 /**
  * Log Request Middleware
@@ -9,7 +9,7 @@ const {debug, info} = require('../../../utils/logger')('ia:log-request');
  */
 module.exports = (conv) => {
   debug('\n\n');
-  debug(`request body: ${util.inspect(conv.request, {depth: null})}`);
+  debug(`request body: ${util.inspect(conv.request, { depth: null })}`);
   debug(`request headers:`, conv.headers);
   debug('\n\n');
   info(`start handling action: ${conv.action}, intent: ${conv.intent}`);

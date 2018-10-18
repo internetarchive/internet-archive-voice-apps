@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const sinon = require('sinon');
 const rewire = require('rewire');
 
@@ -26,10 +26,10 @@ describe('dialog', () => {
       const suggestions = ['one', 'two'];
       const reprompt = 'Hello!?';
 
-      ask(app, {speech, reprompt, suggestions});
+      ask(app, { speech, reprompt, suggestions });
 
       expect(app.response).to.be.calledOnce;
-      expect(app.response.args[0][0]).to.be.deep.equal({reprompt, speech, suggestions});
+      expect(app.response.args[0][0]).to.be.deep.equal({ reprompt, speech, suggestions });
       expect(savePhrase).to.be.calledOnce;
     });
   });

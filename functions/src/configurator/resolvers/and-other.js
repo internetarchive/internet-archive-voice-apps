@@ -1,4 +1,4 @@
-const {error} = require('../../utils/logger')('ia:resolver:and-other');
+const { error } = require('../../utils/logger')('ia:resolvers:and-other');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
@@ -7,7 +7,7 @@ const contextProxy = require('./high-order-resolvers/context-proxy');
  *
  * @type {{handler, requirements}}
  */
-module.exports = contextProxy(({value}) => {
+module.exports = contextProxy(({ value }) => {
   if (!Array.isArray(value)) {
     error('is not implemented yet!');
     return undefined;

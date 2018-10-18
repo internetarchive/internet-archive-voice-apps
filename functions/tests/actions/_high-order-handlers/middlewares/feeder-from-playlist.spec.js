@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const feederFromPlaylist = rewire('../../../../src/actions/_high-order-handlers/middlewares/feeder-from-playlist');
@@ -24,12 +24,12 @@ describe('actions', () => {
 
     describe('feeder from playlist', () => {
       it('should return Promise', () => {
-        expect(feederFromPlaylist.middleware()({app, playlist})).to.have.property('then');
+        expect(feederFromPlaylist.middleware()({ app, playlist })).to.have.property('then');
       });
 
       it('should put feeder in context', () => {
         playlist.setFeeder(app, feeder);
-        return feederFromPlaylist.middleware()({app, playlist})
+        return feederFromPlaylist.middleware()({ app, playlist })
           .then(context => {
             expect(context).to.have.property('feeder', feeder);
           });

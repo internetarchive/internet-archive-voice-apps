@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const handlerInputMock = require('../../../_utils/mocking/platforms/alexa/handler-input');
 const ask = require('../../../../src/platform/alexa/response');
@@ -13,7 +13,7 @@ describe('platform', () => {
       });
 
       it('should speak speech argument', () => {
-        ask(handlerInput)({speech: 'hello world!'});
+        ask(handlerInput)({ speech: 'hello world!' });
         expect(handlerInput.responseBuilder.speak).to.have.been
           .calledWith('hello world!');
       });

@@ -1,7 +1,7 @@
 const dialog = require('../dialog');
 const dialogState = require('../state/dialog');
 const strings = require('../strings');
-const {debug} = require('../utils/logger')('ia:actions:resume-intent');
+const { debug } = require('../utils/logger')('ia:actions:resume-intent');
 
 const feederFromPlaylist = require('./_high-order-handlers/middlewares/feeder-from-playlist');
 
@@ -14,7 +14,7 @@ const helpers = require('./playback/_helpers');
  * @param app
  */
 function handler (app) {
-  return helpers.playSong({app, next: false})
+  return helpers.playSong({ app, next: false })
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
         dialog.ask(app, dialog.merge(

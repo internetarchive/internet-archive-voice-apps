@@ -23,4 +23,4 @@
 
 const builder = require('../../extensions/builder');
 
-module.exports = builder.build({root: __dirname});
+module.exports = builder.build({ root: __dirname });

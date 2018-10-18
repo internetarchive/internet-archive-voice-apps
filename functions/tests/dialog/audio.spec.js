@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const mustache = require('mustache');
 const rewire = require('rewire');
 

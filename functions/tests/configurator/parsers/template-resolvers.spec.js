@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const templateResolvers = rewire('../../../src/configurator/parsers/template-resolvers');
@@ -35,9 +35,9 @@ describe('configurator', () => {
           timeHandler = () => {
           };
           resolvers = mockResolvers({
-            creator: {handler: creatorHandler},
-            location: {handler: locationHandler},
-            time: {handler: timeHandler},
+            creator: { handler: creatorHandler },
+            location: { handler: locationHandler },
+            time: { handler: timeHandler },
           });
           templateResolvers.__set__('resolvers', resolvers);
         });

@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/prompt');
 
@@ -23,7 +23,7 @@ describe('actions', () => {
           ],
         };
 
-        return middleware()({slots, slotScheme})
+        return middleware()({ slots, slotScheme })
           .then(args => {
             expect(args).to.have.property('speech')
               .to.have.members(['What is the albumn?']);
@@ -49,7 +49,7 @@ describe('actions', () => {
           ],
         };
 
-        return middleware()({slots, slotScheme})
+        return middleware()({ slots, slotScheme })
           .then(args => {
             expect(args).to.not.have.property('speech');
             expect(args).to.not.have.property('suggestionsScheme');

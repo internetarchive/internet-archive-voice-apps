@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 
 const suggestions = rewire('../../../src/extensions/suggestions/years');
@@ -53,7 +53,7 @@ describe('suggestions', () => {
         creatorId: 'band',
       };
       return suggestions
-        .handle({slots})
+        .handle({ slots })
         .then(res => {
           expect(res).to.have.property('items').with.deep.members([
             1970,

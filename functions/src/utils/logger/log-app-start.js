@@ -1,4 +1,4 @@
-const {debug} = require('./')('ia:start');
+const { debug } = require('./')('ia:start');
 const packageJSON = require('../../../package.json');
 
 module.exports = (actionsMap) => {

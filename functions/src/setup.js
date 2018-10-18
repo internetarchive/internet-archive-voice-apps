@@ -11,7 +11,7 @@ const env = require('./config/env');
 const errors = require('./errors');
 const mathjsExtensions = require('./mathjs');
 const axiosProfile = require('./performance/axios');
-const {debug, warning} = require('./utils/logger')('ia:axio:interceptions');
+const { debug, warning } = require('./utils/logger')('ia:axio:interceptions');
 
 /**
  * @private
@@ -30,7 +30,7 @@ const errorHandler = (error) => {
   return Promise.reject(new errors.HTTPError(error));
 };
 
-module.exports = ({platform}) => {
+module.exports = ({ platform }) => {
   // turn-off escaping in MustacheJS
   mustache.escape = v => v;
 
@@ -38,7 +38,7 @@ module.exports = ({platform}) => {
 
   const userAgent = mustache.render(
     appConfig.request.userAgent,
-    Object.assign({}, packageJSON, {platform})
+    Object.assign({}, packageJSON, { platform })
   );
 
   // clean interceptors

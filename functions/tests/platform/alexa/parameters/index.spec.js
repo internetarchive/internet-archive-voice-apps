@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 
@@ -15,16 +15,16 @@ describe('platform', () => {
         },
 
         slots: {
-          CITY: {value: 'NY'},
-          COLLECTION_ID: {value: 'etree'},
-          BAND: {value: 'Grateful Dead'},
+          CITY: { value: 'NY' },
+          COLLECTION_ID: { value: 'etree' },
+          BAND: { value: 'Grateful Dead' },
           SWITCH: {
             name: 'VALUE',
             value: 'on',
             resolutions: {
               resolutionsPerAuthority: [{
                 authority: 'amzn1.er-qwerty.BOOLEAN',
-                status: {code: 'ER_SUCCESS_MATCH'},
+                status: { code: 'ER_SUCCESS_MATCH' },
                 values: [{
                   value: {
                     name: 'true',
@@ -66,7 +66,7 @@ describe('platform', () => {
       });
 
       it(`should return undefined if we don't have slots`, () => {
-        const params = paramsBuilder(mockHandlerInput({slots: null}));
+        const params = paramsBuilder(mockHandlerInput({ slots: null }));
         expect(params.getByName('id')).to.be.undefined;
       });
     });

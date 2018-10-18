@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -29,7 +29,7 @@ describe('platform', () => {
         });
 
         it('should wrap speech to <speak> tag', () => {
-          response(assistant)({speech: 'hello world!'});
+          response(assistant)({ speech: 'hello world!' });
           expect(assistant.ask).to.have.been.calledWith(
             '<speak>hello world!</speak>'
           );

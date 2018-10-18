@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const mathjsExtensions = require('../../src/mathjs');
 
 let math = require('mathjs');

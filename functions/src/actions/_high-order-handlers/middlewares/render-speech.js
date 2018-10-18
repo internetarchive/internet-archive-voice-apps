@@ -1,5 +1,5 @@
 const mustache = require('mustache');
-const {debug} = require('../../../utils/logger')('ia:actions:middlewares:render-speech');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:render-speech');
 
 /**
  * Construct mustache render
@@ -15,11 +15,13 @@ const render = (slots) => (speech) => mustache.render(speech, slots);
  */
 module.exports = () => (args) => {
   debug('start');
-  const {slots, speech} = args;
+  const { slots, speech } = args;
   if (!speech || speech.length === 0) {
     debug(`don't have speech here`);
     return Promise.resolve(args);
   } else {
+    debug('slots:', slots);
+    debug('speech', speech);
     if (Array.isArray(speech)) {
       return Promise.resolve(Object.assign({}, args, {
         speech: speech.map(render(slots)),

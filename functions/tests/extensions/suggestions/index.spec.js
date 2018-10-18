@@ -1,6 +1,6 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
-const {getSuggestionProviderForSlots} = require('../../../src/extensions/suggestions');
+const { getSuggestionProviderForSlots } = require('../../../src/extensions/suggestions');
 
 describe('slots', () => {
   describe('suggestions', () => {

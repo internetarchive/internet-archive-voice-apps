@@ -49,12 +49,12 @@ const paramToStr = (name, value) => {
  */
 function buildQueryCondition (query) {
   return Object.keys(query)
-    .map(name => ({name, paramName: nameToParameter[name]}))
+    .map(name => ({ name, paramName: nameToParameter[name] }))
     .filter(
-      ({name, paramName}) => paramName && isValidParameter(query[name])
+      ({ name, paramName }) => paramName && isValidParameter(query[name])
     )
     .reduce(
-      (acc, {name, paramName}) => {
+      (acc, { name, paramName }) => {
         const value = query[name];
         if (Array.isArray(value)) {
           const options = value

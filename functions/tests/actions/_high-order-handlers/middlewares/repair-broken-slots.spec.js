@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -43,11 +43,11 @@ describe('actions', () => {
           name: 'value',
         };
 
-        return middleware()({brokenSlots, slots, slotScheme})
-          .then(({speech}) => {
+        return middleware()({ brokenSlots, slots, slotScheme })
+          .then(({ speech }) => {
             expect(selectors.find).to.been.calledWith(
               promptScheme.repair.speech,
-              {brokenSlots, slots, slotScheme}
+              { brokenSlots, slots, slotScheme }
             );
             expect(speech).to.have.members([
               template,
@@ -61,7 +61,7 @@ describe('actions', () => {
         };
         const brokenSlots = {};
 
-        return middleware()({brokenSlots, slotScheme})
+        return middleware()({ brokenSlots, slotScheme })
           .then(args => {
             expect(selectors.find).to.not.been.called;
             expect(args).to.not.have.property('speech');
@@ -85,12 +85,12 @@ describe('actions', () => {
         };
         middleware.__set__('promptSelector', promptSelector);
 
-        return middleware()({brokenSlots, slots, slotScheme})
-          .then(({speech}) => {
+        return middleware()({ brokenSlots, slots, slotScheme })
+          .then(({ speech }) => {
             expect(selectors.find).to.been.called;
             expect(selectors.find.args[0][0]).to.be.equal(slotScheme.repair.speech);
             expect(selectors.find.args[0][1]).to.be.deep.equal(
-              {brokenSlots, slots, slotScheme}
+              { brokenSlots, slots, slotScheme }
             );
           });
       });
@@ -114,12 +114,12 @@ describe('actions', () => {
         };
         middleware.__set__('promptSelector', promptSelector);
 
-        return middleware()({brokenSlots, slots, slotScheme})
+        return middleware()({ brokenSlots, slots, slotScheme })
           .then(() => {
             expect(selectors.find).to.been.called;
             expect(selectors.find.args[0][0]).to.be.equal(slotScheme.repair.speech);
             expect(selectors.find.args[0][1]).to.be.deep.equal(
-              {brokenSlots, slots, slotScheme}
+              { brokenSlots, slots, slotScheme }
             );
           });
       });
@@ -140,7 +140,7 @@ describe('actions', () => {
         };
         middleware.__set__('promptSelector', promptSelector);
 
-        return middleware()({brokenSlots, slots, slotScheme})
+        return middleware()({ brokenSlots, slots, slotScheme })
           .then(() => {
             expect(selectors.find).to.not.been.called;
           });

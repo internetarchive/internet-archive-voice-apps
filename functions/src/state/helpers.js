@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {debug} = require('../utils/logger')('ia:state');
+const { debug } = require('../utils/logger')('ia:state');
 
 /**
  * Use to build three hierarchy of properties
@@ -27,7 +27,7 @@ class SubGroup {
       Object.assign(
         {},
         this.parent.getData(app),
-        {[this.name]: values}
+        { [this.name]: values }
       )
     );
   }

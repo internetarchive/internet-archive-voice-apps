@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/next-song');
 
@@ -14,11 +14,11 @@ describe('actions', () => {
 
     describe('next song', () => {
       it('should return Promise', () => {
-        expect(middleware()({feeder})).to.have.property('then');
+        expect(middleware()({ feeder })).to.have.property('then');
       });
 
       it('should can next song', () => {
-        return middleware()({feeder})
+        return middleware()({ feeder })
           .then(context => {
             expect(feeder.hasNext).to.have.been.called;
             expect(feeder.next).to.have.been.called;

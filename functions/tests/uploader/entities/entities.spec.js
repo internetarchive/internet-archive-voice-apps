@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const MockAdapter = require('axios-mock-adapter');
 const rewire = require('rewire');
 
@@ -23,7 +23,7 @@ describe('uploader', () => {
         describe('For Success', () => {
           beforeEach(() => {
             const mock = new MockAdapter(entities.__get__('axios'));
-            mock.onPost().reply(200, {'body': successFromDF});
+            mock.onPost().reply(200, { 'body': successFromDF });
           });
 
           it('should reject array having length more than 30000', () => {
@@ -48,7 +48,7 @@ describe('uploader', () => {
         describe('For Failed', () => {
           beforeEach(() => {
             const mock = new MockAdapter(entities.__get__('axios'));
-            mock.onPost().reply(200, {'body': failFromDF});
+            mock.onPost().reply(200, { 'body': failFromDF });
           });
 
           it('should return error information from DF', () => {

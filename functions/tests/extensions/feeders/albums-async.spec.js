@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -29,23 +29,23 @@ describe('feeders', () => {
       feeder.__set__('albumsProvider', albumsProvider);
     }
 
-    function testNextSong ({album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true}) {
+    function testNextSong ({ album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true }) {
       let resolve;
       if (moveToNext) {
-        resolve = feeder.next({app, query, playlist});
+        resolve = feeder.next({ app, query, playlist });
       } else {
         resolve = Promise.resolve();
       }
 
       return resolve
         .then(() => {
-          expect(feeder.isEmpty({app, query, playlist})).to.be.false;
-          expect(feeder.getCurrentItem({app, query, playlist}))
+          expect(feeder.isEmpty({ app, query, playlist })).to.be.false;
+          expect(feeder.getCurrentItem({ app, query, playlist }))
             .to.have.property('filename', filename);
-          expect(feeder.getCurrentItem({app, query, playlist}))
+          expect(feeder.getCurrentItem({ app, query, playlist }))
             .to.have.property('album')
             .to.have.property('title', album);
-          expect(feeder.hasNext({app, query, playlist})).to.be.equal(hasNext);
+          expect(feeder.hasNext({ app, query, playlist })).to.be.equal(hasNext);
         });
     }
 
@@ -65,7 +65,7 @@ describe('feeders', () => {
       });
 
       return feeder
-        .build({app, query, playlist})
+        .build({ app, query, playlist })
         .then(() => testNextSong({
           album: 'album-1',
           app,
@@ -229,7 +229,7 @@ describe('feeders', () => {
       });
 
       return feeder
-        .build({app, query, playlist})
+        .build({ app, query, playlist })
         .then(() => testNextSong({
           album: 'album-1',
           app,
@@ -284,7 +284,7 @@ describe('feeders', () => {
       mockNewAlbum(null);
 
       return feeder
-        .build({app, query, playlist})
+        .build({ app, query, playlist })
         .then(res => {
           expect(res).to.have.property('total', 0);
           expect(playlist.isEmpty(app)).to.be.true;

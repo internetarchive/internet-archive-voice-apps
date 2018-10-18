@@ -2,7 +2,7 @@ const _ = require('lodash');
 const mustache = require('mustache');
 
 const suggestionExtensions = require('../../../extensions/suggestions');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware:suggestions');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:suggestions');
 
 /**
  * Middleware
@@ -13,11 +13,11 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:middleware
  * @param suggestionsScheme
  * @returns {Promise}
  */
-module.exports = ({exclude = []} = {}) => (context) => {
+module.exports = ({ exclude = [] } = {}) => (context) => {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
   debug('start');
-  const {app, slots, suggestionsScheme} = context;
+  const { app, slots, suggestionsScheme } = context;
   if (!suggestionsScheme) {
     warning(`skip middleware becase we don't have any suggestion scheme here`);
     return Promise.resolve(context);
@@ -28,7 +28,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
   if (suggestions) {
     debug('have static suggestions', suggestions);
     return Promise.resolve(
-      Object.assign({}, context, {slots: Object.assign({}, slots, {suggestions})}, {suggestions})
+      Object.assign({}, context, { slots: Object.assign({}, slots, { suggestions }) }, { suggestions })
     );
   }
 
@@ -43,7 +43,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
     debug('we found partly matched suggestion provider');
   }
 
-  return provider({app, slots: _.omit(slots, exclude)})
+  return provider({ app, slots: _.omit(slots, exclude) })
     .then(res => {
       let suggestions;
       if (suggestionsScheme.suggestionTemplate) {
@@ -63,7 +63,7 @@ module.exports = ({exclude = []} = {}) => (context) => {
       }
       debug('new suggestions are:', suggestions);
       return Object.assign(
-        {}, context, {slots: Object.assign({}, slots, {suggestions})}, {suggestions}
+        {}, context, { slots: Object.assign({}, slots, { suggestions }) }, { suggestions }
       );
     });
 };

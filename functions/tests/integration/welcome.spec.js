@@ -2,11 +2,11 @@
  * integration tests for repeat
  */
 
-const {expect} = require('chai');
+const { expect } = require('chai');
 const sinon = require('sinon');
 
-const {buildIntentRequest, MockResponse} = require('../_utils/mocking');
-const {wait} = require('../_utils/wait');
+const { buildIntentRequest, MockResponse } = require('../_utils/mocking');
+const { wait } = require('../_utils/wait');
 
 let index, configStub, adminInitStub, functions, admin;
 

@@ -1,4 +1,4 @@
-const {debug, warning} = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
+const { debug, warning } = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
 
 /**
  * User level persistance

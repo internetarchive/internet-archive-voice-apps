@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const extractor = require('../../../src/configurator/parsers/extract-requirements');
 

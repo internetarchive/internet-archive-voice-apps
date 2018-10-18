@@ -5,7 +5,7 @@
  * @param name
  * @param message
  */
-function requiredParameter (param, {name, message}) {
+function requiredParameter (param, { name, message }) {
   if (param === undefined) {
     if (!message && name) {
       message = `${name} is missed`;

@@ -25,7 +25,7 @@ describe('integration', () => {
   }
 
   describe('alexa', () => {
-    scenarios.forEach(({scenario, only = false, skip = false, dialog = [], launch = ''}) => {
+    scenarios.forEach(({ scenario, only = false, skip = false, dialog = [], launch = '' }) => {
       let describeScenario = only ? describe.only : (skip ? describe.skip : describe);
       describeScenario(`dialog: "${scenario}"`, () => {
         before(() => {
@@ -130,15 +130,15 @@ describe('integration', () => {
           });
         }
 
-        dialog.forEach(({user, assistant}) => {
-          it(`should utter: "${util.inspect(user, {depth: null})}" and get a response: "${JSON.stringify(assistant)}"`, () => {
+        dialog.forEach(({ user, assistant }) => {
+          it(`should utter: "${util.inspect(user, { depth: null })}" and get a response: "${JSON.stringify(assistant)}"`, () => {
             let res;
             if (typeof (user) === 'string') {
               res = alexa.utter(user);
             } else if ('intend' in user) {
               res = alexa.intend(user.intend);
             } else {
-              throw new Error(`We don't support user scheme ${util.inspect(user, {depth: null})}`);
+              throw new Error(`We don't support user scheme ${util.inspect(user, { depth: null })}`);
             }
             return res.then(res => {
               expect(res).to.have.property('response').to.be.not.undefined;

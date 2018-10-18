@@ -2,9 +2,9 @@ const _ = require('lodash');
 const util = require('util');
 
 const selectors = require('../../../configurator/selectors');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:find-repair-phrase');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:find-repair-phrase');
 
-const {requiredParameter} = require('./utils');
+const { requiredParameter } = require('./utils');
 
 /**
  * Middleware
@@ -20,14 +20,14 @@ const {requiredParameter} = require('./utils');
  */
 module.exports = () => (ctx) => {
   debug('start');
-  const {repairScheme, slotScheme, speech = []} = ctx;
+  const { repairScheme, slotScheme, speech = [] } = ctx;
 
   requiredParameter(repairScheme, {
     message: 'it seems we have missed repairScheme parameters. ' +
     'Maybe we haven\'t applied findRepairScheme() before to get it or ' +
     'slot scheme doessn\'t have repair phrases section'
   });
-  requiredParameter(slotScheme, {message: 'We missed slotScheme parameter'});
+  requiredParameter(slotScheme, { message: 'We missed slotScheme parameter' });
 
   debug('repair speech options:', repairScheme.speech);
   let template = selectors.find(repairScheme.speech, ctx);

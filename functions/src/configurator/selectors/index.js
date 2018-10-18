@@ -7,7 +7,7 @@
  */
 
 const builder = require('../../extensions/builder');
-const extensions = builder.build({root: __dirname});
+const extensions = builder.build({ root: __dirname });
 
 /**
  * Find valid option

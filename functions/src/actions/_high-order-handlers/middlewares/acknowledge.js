@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const selectors = require('../../../configurator/selectors');
-const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:acknowledge');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:acknowledge');
 
 /**
  * Midleware
@@ -13,9 +13,9 @@ const {debug, warning} = require('../../../utils/logger')('ia:actions:hoh:acknow
  *
  * @returns {Promise}
  */
-module.exports = ({prioritySlots = 'newValues', speeches = 'slotScheme.acknowledges'} = {}) => (context) => {
+module.exports = ({ prioritySlots = 'newValues', speeches = 'slotScheme.acknowledges' } = {}) => (context) => {
   debug('start');
-  const {slots} = context;
+  const { slots } = context;
   const newValues = _.get(context, prioritySlots) || {};
   const prioritySlotNames = Object.keys(newValues);
 
@@ -45,5 +45,5 @@ module.exports = ({prioritySlots = 'newValues', speeches = 'slotScheme.acknowled
 
   debug('we got matched acknowledge', template);
 
-  return Promise.resolve(Object.assign({}, context, {speech: [template]}));
+  return Promise.resolve(Object.assign({}, context, { speech: [template] }));
 };

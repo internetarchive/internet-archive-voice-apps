@@ -1,7 +1,7 @@
 const debug = require(`debug`)(`ia:uploader:collection:debug`);
 
 const config = require('../config');
-const {fetchNewEntitiesFromIAAndPostToDF} = require('./ia-request');
+const { fetchNewEntitiesFromIAAndPostToDF } = require('./ia-request');
 
 /**
  * get unique & filtered genres from InternetArchive & post to DialogFlow

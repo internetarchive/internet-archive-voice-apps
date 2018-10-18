@@ -1,14 +1,14 @@
 const _ = require('lodash');
 const util = require('util');
 
-const {App} = require('../app');
+const { App } = require('../app');
 
 const errors = require('../../../errors');
 const fsm = require('../../../state/fsm');
 const camelToKebab = require('../../../utils/camel-to-kebab');
 const kebabToCamel = require('../../../utils/kebab-to-camel');
 const jsonify = require('../../../utils/jsonify');
-const {debug, warning, error} = require('../../../utils/logger')('ia:platform:alexa:handler');
+const { debug, warning, error } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
 function stripAmazonIntent (name) {
@@ -58,7 +58,7 @@ function fetchAttributes (handlerInput) {
  */
 function storeAttributes (app, handlerInput) {
   const persistentAttributes = app.persist.getData();
-  debug('store attributes', util.inspect(persistentAttributes, {depth: null}));
+  debug('store attributes', util.inspect(persistentAttributes, { depth: null }));
   handlerInput.attributesManager.setPersistentAttributes(jsonify(persistentAttributes));
   return handlerInput.attributesManager.savePersistentAttributes();
 }
@@ -81,7 +81,7 @@ function findHandlersByInput (actions, handlerInput) {
   handlers = actions.get(camelToKebab(name));
 
   if (handlers) {
-    return {handlers, name};
+    return { handlers, name };
   }
 
   name = stripAmazonIntent(name);
@@ -89,7 +89,7 @@ function findHandlersByInput (actions, handlerInput) {
   handlers = actions.get(camelToKebab(name));
 
   if (handlers) {
-    return {handlers, name};
+    return { handlers, name };
   }
 
   let requestType = _.get(handlerInput, 'requestEnvelope.request.type');
@@ -99,7 +99,7 @@ function findHandlersByInput (actions, handlerInput) {
     debug('just type', requestType);
     handlers = actions.get(camelToKebab(requestType));
     if (handlers) {
-      return {handlers, name: requestType};
+      return { handlers, name: requestType };
     }
   }
 
@@ -113,7 +113,7 @@ function findHandlersByInput (actions, handlerInput) {
     debug('kebab', camelToKebab(name));
     handlers = actions.get(camelToKebab(name));
     if (handlers) {
-      return {handlers, name};
+      return { handlers, name };
     }
   }
 
@@ -170,7 +170,7 @@ module.exports = (actions) => {
     let app;
     return fetchAttributes(handlerInput)
       .then((persistentAttributes) => {
-        debug('got persistent attributes:', util.inspect(persistentAttributes, {depth: null}));
+        debug('got persistent attributes:', util.inspect(persistentAttributes, { depth: null }));
         app = new App(handlerInput, persistentAttributes);
         const handler = fsm.selectHandler(app, handlers);
         return handler(app);

@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {debug} = require('../../../utils/logger')('ia:actions:middleware:copy-defaults-to-slots');
+const { debug } = require('../../../utils/logger')('ia:actions:middleware:copy-defaults-to-slots');
 const entries = require('../../../utils/polyfill/entries');
 
 /**
@@ -18,14 +18,14 @@ module.exports = () =>
   //   ({app, newValues = {}, query, slotScheme, ...res}) => {
   args => {
     debug('start');
-    let {app, newValues = {}, query, slotScheme} = args;
+    let { app, newValues = {}, query, slotScheme } = args;
     if (slotScheme.defaults) {
       debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
       newValues = entries(slotScheme.defaults)
         .reduce((newValues, [slotName, value]) => {
           if (value && !query.hasSlot(app, slotName)) {
             query.setSlot(app, slotName, value);
-            newValues = Object.assign({}, newValues, {[slotName]: value});
+            newValues = Object.assign({}, newValues, { [slotName]: value });
           }
           return newValues;
         }, newValues);
@@ -33,7 +33,7 @@ module.exports = () =>
     }
 
     return Promise.resolve(
-      Object.assign({}, args, {newValues})
+      Object.assign({}, args, { newValues })
     );// use this one, once firebase would support modern node.js
     // return Promise.resolve({app, newValues, query, slotScheme, ...res});
   };

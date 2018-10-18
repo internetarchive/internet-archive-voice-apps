@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const mockHandlerInput = require('../../../_utils/mocking/platforms/alexa/handler-input');
 const persistance = require('../../../../src/platform/alexa/persistence/session');
@@ -14,7 +14,7 @@ describe('platform', () => {
 
       describe('device level', () => {
         it('should share state for one device', () => {
-          const handlerInput = mockHandlerInput({deviceId: 'device'});
+          const handlerInput = mockHandlerInput({ deviceId: 'device' });
           persistance(handlerInput, persistentAttributes).setData('value', 'hello world');
 
           expect(
@@ -23,8 +23,8 @@ describe('platform', () => {
         });
 
         it('should share state for one device', () => {
-          const handlerInput1 = mockHandlerInput({deviceId: 'device1'}, persistentAttributes);
-          const handlerInput2 = mockHandlerInput({deviceId: 'device2'}, persistentAttributes);
+          const handlerInput1 = mockHandlerInput({ deviceId: 'device1' }, persistentAttributes);
+          const handlerInput2 = mockHandlerInput({ deviceId: 'device2' }, persistentAttributes);
 
           persistance(handlerInput1, persistentAttributes).setData('value', '1');
           persistance(handlerInput2, persistentAttributes).setData('value', '2');
@@ -40,7 +40,7 @@ describe('platform', () => {
 
       describe('drop all', () => {
         it('should remove all session level attributes', () => {
-          const handlerInput = mockHandlerInput({deviceId: 'device'});
+          const handlerInput = mockHandlerInput({ deviceId: 'device' });
           persistance(handlerInput, persistentAttributes).setData('artist', 'Grateful Dead');
           persistance(handlerInput, persistentAttributes).setData('year', '1979');
           persistance(handlerInput, persistentAttributes).setData('genre', 'rock');

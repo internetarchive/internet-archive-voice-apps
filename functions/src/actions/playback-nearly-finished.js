@@ -1,6 +1,6 @@
 const dialog = require('../dialog');
 const strings = require('../strings');
-const {debug} = require('../utils/logger')('ia:actions:playback-nearly-finished');
+const { debug } = require('../utils/logger')('ia:actions:playback-nearly-finished');
 
 const helpers = require('./playback/_helpers');
 

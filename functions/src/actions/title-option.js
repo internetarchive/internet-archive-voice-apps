@@ -1,7 +1,7 @@
 const dialog = require('../dialog');
 const playback = require('../state/playback');
 const strings = require('../strings').intents.titleOption;
-const {debug} = require('../utils/logger')('ia:actions:title-option');
+const { debug } = require('../utils/logger')('ia:actions:title-option');
 
 function handler (app) {
   debug('start');

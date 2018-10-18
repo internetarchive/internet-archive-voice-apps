@@ -6,7 +6,7 @@ const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
-const {debug, warning} = require('../utils/logger')('ia:actions:music-query');
+const { debug, warning } = require('../utils/logger')('ia:actions:music-query');
 
 const acknowledge = require('./_high-order-handlers/middlewares/acknowledge');
 const ask = require('./_high-order-handlers/middlewares/ask');
@@ -38,7 +38,7 @@ const playSong = require('./_high-order-handlers/middlewares/play-song');
 function handler (app) {
   debug('Start music query handler');
 
-  const {slotScheme, newValues} = populateSlots(app);
+  const { slotScheme, newValues } = populateSlots(app);
 
   processPreset(app, slotScheme);
 
@@ -48,19 +48,19 @@ function handler (app) {
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {
     debug('pipeline playback');
-    return feederFromSlotScheme()({app, newValues, playlist, slots, slotScheme, query})
+    return feederFromSlotScheme()({ app, newValues, playlist, slots, slotScheme, query })
       // expose current platform to the slots
       .then(ctx =>
         Object.assign({}, ctx, {
           slots: Object.assign(
-            {}, ctx.slots, {platform: app.platform || 'assistant'}
+            {}, ctx.slots, { platform: app.platform || 'assistant' }
           )
         })
       )
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
-        return acknowledge({speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots'})(context)
+        return acknowledge({ speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots' })(context)
           .then(parepareSongData())
           .then(fulfilResolvers())
           .then(renderSpeech())
@@ -91,7 +91,7 @@ function handler (app) {
           speech: [],
         }))
           .then(findRepairScheme())
-          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(suggestions({ exclude: Object.keys(brokenSlots) }))
           .then(findRepairPhrase())
           .then(fulfilResolvers())
           .then(renderSpeech())
@@ -103,7 +103,7 @@ function handler (app) {
   fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
   debug('pipeline query');
-  return acknowledge()({app, slots, slotScheme, speech: [], newValues})
+  return acknowledge()({ app, slots, slotScheme, speech: [], newValues })
     .then(prompt())
     .then(suggestions())
     .then(context => {
@@ -122,7 +122,7 @@ function handler (app) {
           speech: [],
         }))
           .then(findRepairScheme())
-          .then(suggestions({exclude: Object.keys(brokenSlots)}))
+          .then(suggestions({ exclude: Object.keys(brokenSlots) }))
           .then(findRepairPhrase());
       }
       return context;
@@ -147,7 +147,7 @@ function populateSlots (app) {
     newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
     applyDefaultSlots(app, slotScheme.defaults);
   }
-  return {slotScheme, newValues};
+  return { slotScheme, newValues };
 }
 
 /**
@@ -198,7 +198,7 @@ function applyDefaultSlots (app, defaults) {
 /**
  *
  */
-function processPreset (app, slotScheme, {presetParamName = 'preset'} = {}) {
+function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
   let name;
   if (app.getArgument) {
     // @deprecated
