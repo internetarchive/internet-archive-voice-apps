@@ -24,7 +24,7 @@
     "axios": "^0.18.0",
     "bespoken-tools": "^2.0.32",
     "child-process-promise": "^2.2.1",
-    "dashbot": "^9.10.0",
+    "dashbot": "^10.1.1",
     "debug": "^4.1.0",
     "firebase-admin": "^6.0.0",
     "firebase-functions": "^2.0.5",
