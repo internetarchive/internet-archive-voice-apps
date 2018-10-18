@@ -1,10 +1,8 @@
 const { dialogflow } = require('actions-on-google');
 const bst = require('bespoken-tools');
+const dashbotBuilder = require('dashbot');
 const functions = require('firebase-functions');
 const _ = require('lodash');
-// const dashbotBuilder = require('dashbot');
-// FIXME: temporal solution details below
-// const domain = require('domain'); // eslint-disable-line
 const Raven = require('raven');
 
 const packageJSON = require('../../../package.json');
@@ -19,16 +17,20 @@ const logRequest = require('./middlewares/log-request');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();
+
+  const dashbot = dashbotBuilder(functions.config().dashbot.key, {
+    // it could be more useful if we would get callback on error and pass log through our logger
+    // but currently it uses console.log to log error
+    //
+    // more details in source:
+    // https://github.com/actionably/dashbot/blob/33376ff81af3962eb58ad8ebabc91827134333c5/src/make-request.js#L22
+    //
+    printErrors: false,
+  }).google;
+
+  dashbot.configHandler(app);
+
   let handlers = [];
-
-  // dashbot doesn't support official v2 yet
-  // (https://github.com/actionably/dashbot/issues/23)
-  //
-  // const dashbot = dashbotBuilder(
-  //   functions.config().dashbot.key, {
-  //     printErrors: false,
-  //   }).google;
-
   if (actionsMap) {
     handlers = buildHandlers({ actionsMap });
     handlers.forEach(
