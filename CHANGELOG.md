@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.2.5](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.5) (2018-10-18)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.4...2.2.5)
+
+**Implemented enhancements:**
+
+- Turn on Dashbot [\#315](https://github.com/internetarchive/internet-archive-google-action/issues/315)
+
+**Merged pull requests:**
+
+- Feature/integrate dashbot to dialogflow v2 [\#335](https://github.com/internetarchive/internet-archive-google-action/pull/335) ([hyzhak](https://github.com/hyzhak))
+- Feature/update deps [\#334](https://github.com/internetarchive/internet-archive-google-action/pull/334) ([hyzhak](https://github.com/hyzhak))
+- Feature/chmod 777 [\#332](https://github.com/internetarchive/internet-archive-google-action/pull/332) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.2.4](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.4) (2018-08-24)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.3...2.2.4)
 
