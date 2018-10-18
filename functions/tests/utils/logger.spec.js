@@ -8,19 +8,17 @@ const logger = rewire('../../src/utils/logger');
 describe('utils', () => {
   describe('logger', () => {
     describe('time', () => {
-      let consoleMock;
-
       beforeEach(() => {
-        consoleMock = {
-          info: sinon.spy(),
-          warn: sinon.spy(),
-        };
-        logger.__set__('console', consoleMock);
+        sinon.spy(console, 'info');
+        sinon.spy(console, 'warn');
 
         debug.enable('ia:*');
       });
 
       afterEach(() => {
+        console.info.restore();
+        console.warn.restore();
+
         debug.enable(debug.load());
       });
 
@@ -29,9 +27,9 @@ describe('utils', () => {
         const stop = timer.start('hello world');
         stop();
 
-        expect(consoleMock.info).to.be.called;
-        expect(consoleMock.info.args[0][0]).to.include('ia:tests:utils:performance');
-        expect(consoleMock.info.args[0][1]).to.include('hello world');
+        expect(console.info).to.be.called;
+        expect(console.info.args[0][0]).to.include('ia:tests:utils:performance');
+        expect(console.info.args[0][1]).to.include('hello world');
       });
 
       it('should warn if we try to apply the same timer twice, without stoping previous', () => {
@@ -39,7 +37,7 @@ describe('utils', () => {
         timer.start('hello world');
         timer.start('hello world');
 
-        expect(consoleMock.warn).to.be.called;
+        expect(console.warn).to.be.called;
       });
     });
   });
