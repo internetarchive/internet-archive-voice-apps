@@ -11,6 +11,12 @@
 set -e
 
 checkit='\xE2\x9C\x85'
+failed='\xE2\x9D\x8C'
+
+required='git-generate-changelog'
+echo -e "$checkit  check if $required installed"
+command -v git-generate-changelog >/dev/null 2>&1 || { echo -e >&2 "$failed  \033[1m$required\033[0m is required https://github.com/github-changelog-generator/github-changelog-generator#installation."; exit 1; }
+
 echo -e "$checkit  bump new version of repository"
 
 echo -e "$checkit  pull master"
