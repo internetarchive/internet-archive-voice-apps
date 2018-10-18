@@ -22,7 +22,7 @@
     "alexa-sdk": "^1.0.25",
     "ask-sdk": "^2.1.0",
     "axios": "^0.18.0",
-    "bespoken-tools": "^1.2.11",
+    "bespoken-tools": "^2.0.32",
     "child-process-promise": "^2.2.1",
     "dashbot": "^9.10.0",
     "debug": "^4.1.0",
