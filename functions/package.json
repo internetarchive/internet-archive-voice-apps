@@ -6,7 +6,7 @@
   "author": "Internet Archive",
   "license": "AGPL-3.0",
   "engines": {
-    "node": "~6"
+    "node": "8"
   },
   "scripts": {
     "lint": "eslint ./",
