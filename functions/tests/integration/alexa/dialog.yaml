@@ -39,6 +39,15 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
+- scenario: 'song details: when song is playing'
+  dialog:
+  - user: 'play jazz'
+    assistant:
+      directive: 'AudioPlayer.Play'
+  - user: 'what song is this'
+    assistant:
+      regexp: 'It is record (.*) of Grateful Dead'
+
 - scenario: 'unhandled intent -> graceful answer'
   dialog:
   - user:

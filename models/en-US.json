@@ -89,7 +89,7 @@
                     ]
                 },
                 {
-                    "name": "SongDetail",
+                    "name": "SongDetails",
                     "slots": [],
                     "samples": [
                         "what song is this",
@@ -129,7 +129,7 @@
                         },
                         {
                             "name": "ORDER_BY",
-                            "type": "ORDER"
+                            "type": "ORDERS"
                         },
                         {
                             "name": "COLLECTION",
@@ -225,7 +225,7 @@
                     "slots": [
                         {
                             "name": "ORDER_BY",
-                            "type": "ORDER"
+                            "type": "ORDERS"
                         }
                     ],
                     "samples": [
@@ -36655,7 +36655,7 @@
                     ]
                 },
                 {
-                    "name": "TOPIC_LIST",
+                    "name": "GENRES",
                     "values": [
                         {
                             "name": {
@@ -37835,7 +37835,7 @@
                     ]
                 },
                 {
-                    "name": "ORDER",
+                    "name": "ORDERS",
                     "values": [
                         {
                             "name": {

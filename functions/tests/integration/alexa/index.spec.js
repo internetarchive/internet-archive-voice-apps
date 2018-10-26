@@ -10,6 +10,8 @@ const sinon = require('sinon');
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
 const util = require('util');
 
+const { info } = require('../../../src/utils/logger')('ia:tests:integration:alexa');
+
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
 describe('integration', () => {
@@ -134,8 +136,10 @@ describe('integration', () => {
           it(`should utter: "${util.inspect(user, { depth: null })}" and get a response: "${JSON.stringify(assistant)}"`, () => {
             let res;
             if (typeof (user) === 'string') {
+              info(`>> user tells: ${user}`);
               res = alexa.utter(user);
             } else if ('intend' in user) {
+              info(`>> user intends: ${user.intend}`);
               res = alexa.intend(user.intend);
             } else {
               throw new Error(`We don't support user scheme ${util.inspect(user, { depth: null })}`);
@@ -143,10 +147,15 @@ describe('integration', () => {
             return res.then(res => {
               expect(res).to.have.property('response').to.be.not.undefined;
               if (assistant !== undefined) {
+                info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
                 if (typeof assistant === 'string') {
                   expect(res.response.outputSpeech).to.exist;
                   expect(res.response.outputSpeech.ssml).to.exist;
                   expect(res.response.outputSpeech.ssml).to.include(assistant);
+                } else if ('regexp' in assistant) {
+                  expect(res.response.outputSpeech).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.match(new RegExp(assistant.regexp));
                 } else if ('directive' in assistant) {
                   expect(res.response).to.have.property('directives');
                   expect(res.response.directives).to.be.an('array');
