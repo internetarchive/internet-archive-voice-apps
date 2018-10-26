@@ -476,7 +476,11 @@ module.exports = {
 
       fail: {
         speech: 'Fail to resume playback.',
-      }
+      },
+
+      nothing: {
+        speech: 'Nothing is playing right now.',
+      },
     },
 
     titleOption: {

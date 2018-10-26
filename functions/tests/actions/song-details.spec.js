@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
-const action = rewire('../../src/actions/song-details');
+const action = rewire('../../src/actions/playback/song-details');
 
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
