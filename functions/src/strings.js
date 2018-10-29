@@ -470,7 +470,7 @@ module.exports = {
 
     songsDetails: {
       action: {
-        speech: 'It is record {{title}} of {{creator}}{{#year}} {{year}}{{/year}}.',
+        speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
         resumePlayback: true,
       },
 
