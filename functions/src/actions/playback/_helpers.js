@@ -56,7 +56,7 @@ function playSong (ctx) {
 /**
  * resume track playback
  *
- * @param app
+ * @param ctx
  * @returns {Promise.<T>}
  */
 function resume (ctx) {

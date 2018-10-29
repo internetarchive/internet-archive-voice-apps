@@ -468,6 +468,21 @@ module.exports = {
       },
     },
 
+    songsDetails: {
+      action: {
+        speech: 'It is record {{title}} of {{creator}}{{#year}} {{year}}{{/year}}.',
+        resumePlayback: true,
+      },
+
+      fail: {
+        speech: 'Fail to resume playback.',
+      },
+
+      nothing: {
+        speech: 'Nothing is playing right now.',
+      },
+    },
+
     titleOption: {
       false: {
         speech: `Excellent! I'll be saying the title to each song.`,

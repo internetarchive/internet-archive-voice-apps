@@ -10,10 +10,17 @@ const LogInterceptor = require('./log-interceptor');
 const handlersBuilder = require('./handlers-builder');
 
 module.exports = (actions) => {
+  // TODO: we don't need it for session attributes
+  // turn on once we will have persistent attributes
+  const region = process.env.AWS_REGION || 'us-west-1';
+  debug('set AWS region', region);
+
   let dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
     createTable: true,
+    dynamoDBClient: new AWS.DynamoDB({ apiVersion: 'latest', region }),
     tableName: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',
   });
+
   const handlers = handlersBuilder(actions);
   let skill;
   debug(`We can handle intents: ${handlers.map(({ intent }) => `"${intent}"`).join(', ')}`);
@@ -36,17 +43,6 @@ module.exports = (actions) => {
         // TODO: get from process.env
         // .withSkillId()
         .create();
-
-      // TODO: we don't need it for session attributes
-      // turn on once we will have persistant attributes
-
-      const region = process.env.AWS_REGION;
-      if (region) {
-        debug('set AWS region', region);
-        AWS.config.update({ region });
-      }
-
-      // alexa.dynamoDBTableName = 'InternetArchiveSessions';
     }
 
     return skill.invoke(event, context);
