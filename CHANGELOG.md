@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.2.6](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.6) (2018-10-29)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.5...2.2.6)
+
+**Implemented enhancements:**
+
+- update to node@8 [\#336](https://github.com/internetarchive/internet-archive-google-action/issues/336)
+- Music player doesn't give title of song upon request during playback \[Song Details Intent\] [\#311](https://github.com/internetarchive/internet-archive-google-action/issues/311) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature/311 song details [\#341](https://github.com/internetarchive/internet-archive-google-action/pull/341) ([hyzhak](https://github.com/hyzhak))
+- update node to v8 [\#337](https://github.com/internetarchive/internet-archive-google-action/pull/337) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.2.5](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.5) (2018-10-18)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.4...2.2.5)
 
