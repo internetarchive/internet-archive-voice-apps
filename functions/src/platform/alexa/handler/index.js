@@ -17,7 +17,7 @@ module.exports = (actions) => {
 
   let dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
     createTable: true,
-    dynamoDBClient: new AWS.DynamoDB({ apiVersion: "latest", region }),
+    dynamoDBClient: new AWS.DynamoDB({ apiVersion: 'latest', region }),
     tableName: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',
   });
 
