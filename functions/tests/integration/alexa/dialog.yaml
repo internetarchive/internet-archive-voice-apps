@@ -106,6 +106,7 @@
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
 
 - scenario: 'handle stop intent when nothing is playing right now'
+#  only: true
   dialog:
   - user: 'stop'
     assistant:

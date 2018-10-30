@@ -79,9 +79,13 @@ module.exports = {
     /**
      * Exit intent
      */
-    exit: {
+    exit: [{
       speech: `Alright, see you next time!`,
-    },
+    }, {
+      speech: `Sure, see you later!`,
+    }, {
+      speech: `Sure, have a nice day!`,
+    }],
 
     getFSMState: {
       speech: 'State of FSM is {{state}}',
