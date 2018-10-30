@@ -104,3 +104,10 @@
   - user: 'New York'
   - user: 'year 1900'
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
+
+- scenario: 'handle stop intent when nothing is playing right now'
+  dialog:
+  - user: 'stop'
+    assistant:
+      tells: 'see you'
+      closeSession: true
