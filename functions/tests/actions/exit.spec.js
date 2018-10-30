@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const rewire = require('rewire');
 
 const action = rewire('../../src/actions/exit');
-const strings = require('../../src/strings').intents.exit;
 
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
@@ -20,7 +19,8 @@ describe('actions', () => {
 
     it('should tell goodbye and close session', () => {
       action.handler(app);
-      expect(dialog.close).to.have.been.calledWith(app, strings);
+      expect(dialog.close).to.have.been.called;
+      expect(dialog.close.args[0][0]).to.equal(app);
     });
   });
 });

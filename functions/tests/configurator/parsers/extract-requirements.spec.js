@@ -88,6 +88,14 @@ describe('configurator', () => {
           'year',
         ]);
       });
+
+      it('should not support regular object', () => {
+        expect(
+          extractor.getListOfRequiredSlots({
+            speech: '{{coverage}} is good place!',
+          })
+        ).to.be.empty;
+      });
     });
   });
 });

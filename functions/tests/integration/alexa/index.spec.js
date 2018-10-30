@@ -148,10 +148,26 @@ describe('integration', () => {
               expect(res).to.have.property('response').to.be.not.undefined;
               if (assistant !== undefined) {
                 info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
+
                 if (typeof assistant === 'string') {
                   expect(res.response.outputSpeech).to.exist;
                   expect(res.response.outputSpeech.ssml).to.exist;
                   expect(res.response.outputSpeech.ssml).to.include(assistant);
+                  return;
+                }
+
+                if ('endSessions' in assistant) {
+                  expect(res.response).to.have.property('shouldEndSession', assistant.endSessions);
+                  if (Object.keys(assistant).length === 1) {
+                    // we don't have other parameters to check
+                    return;
+                  }
+                }
+
+                if ('tells' in assistant) {
+                  expect(res.response.outputSpeech).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.exist;
+                  expect(res.response.outputSpeech.ssml).to.include(assistant.tells);
                 } else if ('regexp' in assistant) {
                   expect(res.response.outputSpeech).to.exist;
                   expect(res.response.outputSpeech.ssml).to.exist;
@@ -161,7 +177,7 @@ describe('integration', () => {
                   expect(res.response.directives).to.be.an('array');
                   expect(res.response.directives[0]).to.have.property('type', assistant.directive);
                 } else {
-                  throw new Error(`doesn't support response:`, assistant);
+                  throw new Error(`doesn't support response: ${util.inspect(assistant, { depth: null })}`);
                 }
               }
             });

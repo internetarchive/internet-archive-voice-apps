@@ -79,9 +79,13 @@ module.exports = {
     /**
      * Exit intent
      */
-    exit: {
+    exit: [{
       speech: `Alright, see you next time!`,
-    },
+    }, {
+      speech: `Sure, see you later!`,
+    }, {
+      speech: `Sure, have a nice day!`,
+    }],
 
     getFSMState: {
       speech: 'State of FSM is {{state}}',
@@ -470,7 +474,7 @@ module.exports = {
 
     songsDetails: {
       action: {
-        speech: 'It is record {{title}} of {{creator}}{{#year}} {{year}}{{/year}}.',
+        speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
         resumePlayback: true,
       },
 

@@ -56,6 +56,9 @@ function extractRequrements (templates, fields) {
  * @returns {Array}
  */
 function getListOfRequiredSlots (template) {
+  if (typeof template === 'object' && !Array.isArray(template)) {
+    return [];
+  }
   return [].concat(template)
     .reduce(
       (acc, t) => acc.concat(mustache.parse(t)),
