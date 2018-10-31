@@ -1,3 +1,4 @@
+const mustache = require('mustache');
 const path = require('path');
 
 module.exports = {
@@ -8,5 +9,16 @@ module.exports = {
    * @returns {string}
    */
   actionNameByFileName: (filename, root = path.resolve(__dirname, '..')) =>
-    path.relative(root, filename.replace(path.extname(filename), '')).split(path.sep)
+    path.relative(root, filename.replace(path.extname(filename), '')).split(path.sep),
+
+  /**
+   * Substitute context to scheme
+   *
+   * @param scheme
+   * @param ctx
+   * @returns {{speech: *}}
+   */
+  substitute: (scheme, ctx) => ({
+    speech: mustache.render(scheme.speech, ctx),
+  }),
 };

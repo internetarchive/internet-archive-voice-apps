@@ -14,6 +14,51 @@ const { info } = require('../../../src/utils/logger')('ia:tests:integration:alex
 
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
+/**
+ * Validate assistant/alexa response
+ *
+ * @private
+ * @param res
+ * @param rule
+ */
+function validateResponse (res, rule) {
+  if (typeof rule === 'string') {
+    expect(res.response.outputSpeech).to.exist;
+    expect(res.response.outputSpeech.ssml).to.exist;
+    expect(res.response.outputSpeech.ssml).to.include(rule);
+    return;
+  }
+
+  if ('all' in rule) {
+    rule.all.forEach(subRule => validateResponse(res, subRule));
+    return;
+  }
+
+  if ('endSessions' in rule) {
+    expect(res.response).to.have.property('shouldEndSession', rule.endSessions);
+    if (Object.keys(rule).length === 1) {
+      // we don't have other parameters to check
+      return;
+    }
+  }
+
+  if ('tells' in rule) {
+    expect(res.response.outputSpeech).to.exist;
+    expect(res.response.outputSpeech.ssml).to.exist;
+    expect(res.response.outputSpeech.ssml).to.include(rule.tells);
+  } else if ('regexp' in rule) {
+    expect(res.response.outputSpeech).to.exist;
+    expect(res.response.outputSpeech.ssml).to.exist;
+    expect(res.response.outputSpeech.ssml).to.match(new RegExp(rule.regexp));
+  } else if ('directive' in rule) {
+    expect(res.response).to.have.property('directives');
+    expect(res.response.directives).to.be.an('array');
+    expect(res.response.directives[0]).to.have.property('type', rule.directive);
+  } else {
+    throw new Error(`doesn't support response: ${util.inspect(rule, { depth: null })}`);
+  }
+}
+
 describe('integration', () => {
   let alexa;
   let sandbox;
@@ -144,41 +189,13 @@ describe('integration', () => {
             } else {
               throw new Error(`We don't support user scheme ${util.inspect(user, { depth: null })}`);
             }
+
             return res.then(res => {
               expect(res).to.have.property('response').to.be.not.undefined;
               if (assistant !== undefined) {
                 info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
 
-                if (typeof assistant === 'string') {
-                  expect(res.response.outputSpeech).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.include(assistant);
-                  return;
-                }
-
-                if ('endSessions' in assistant) {
-                  expect(res.response).to.have.property('shouldEndSession', assistant.endSessions);
-                  if (Object.keys(assistant).length === 1) {
-                    // we don't have other parameters to check
-                    return;
-                  }
-                }
-
-                if ('tells' in assistant) {
-                  expect(res.response.outputSpeech).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.include(assistant.tells);
-                } else if ('regexp' in assistant) {
-                  expect(res.response.outputSpeech).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.exist;
-                  expect(res.response.outputSpeech.ssml).to.match(new RegExp(assistant.regexp));
-                } else if ('directive' in assistant) {
-                  expect(res.response).to.have.property('directives');
-                  expect(res.response.directives).to.be.an('array');
-                  expect(res.response.directives[0]).to.have.property('type', assistant.directive);
-                } else {
-                  throw new Error(`doesn't support response: ${util.inspect(assistant, { depth: null })}`);
-                }
+                validateResponse(res, assistant);
               }
             });
           });

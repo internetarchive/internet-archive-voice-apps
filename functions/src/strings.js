@@ -107,7 +107,8 @@ module.exports = {
           '<s>For example by saying: </s>' +
           '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
           '<s>And finally you can just answer on my questions </s>' +
-          '<s>and I will pick the right music for you. </s>'
+          '<s>and I will pick the right music for you. </s>' +
+          '<p>{{previous.speech}}</p>'
       },
 
       'playback': {
