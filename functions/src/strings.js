@@ -96,6 +96,26 @@ module.exports = {
       suggestions: ['reset'],
     },
 
+    help: {
+      'default': {
+        speech:
+          '<s>You are using Internet Archive service.</s>' +
+          '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> records.</s>' +
+          '<s>You can ask to playback music of specific genre by asking: </s>' +
+          '<s>play jazz music <break strength="weak"/> or play classic music.</s>' +
+          '<s>As well you can ask me to play specific artist.</s>' +
+          '<s>For example by saying:</s>' +
+          '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
+          '<s>And finally you can just answer on my questions</s>' +
+          '<s>and I will pick the right music for you.</s>'
+      },
+
+      'playback': {
+        speech:
+          '<s>You are using Internet Archive service.</s>',
+      },
+    },
+
     /**
      * we got 4xx, 5xx response from a server
      */
