@@ -125,4 +125,4 @@
       # and repeat the last question
       - 'You can listen to our collections of 78s or live concerts'
       # but without the last acknowledge
-      # - without: 'Welcome to music at the Internet Archive'
+      - without: 'Welcome to music at the Internet Archive'

@@ -14,6 +14,14 @@ const { info } = require('../../../src/utils/logger')('ia:tests:integration:alex
 
 const DynamoDBMock = require('../../_utils/mocking/dynamodb');
 
+function expectOrNot (target, inverted) {
+  if (inverted) {
+    return expect(target).not;
+  } else {
+    return expect(target);
+  }
+}
+
 /**
  * Validate assistant/alexa response
  *
@@ -21,21 +29,25 @@ const DynamoDBMock = require('../../_utils/mocking/dynamodb');
  * @param res
  * @param rule
  */
-function validateResponse (res, rule) {
+function validateResponse (res, rule, inverted = false) {
   if (typeof rule === 'string') {
     expect(res.response.outputSpeech).to.exist;
     expect(res.response.outputSpeech.ssml).to.exist;
-    expect(res.response.outputSpeech.ssml).to.include(rule);
+    expectOrNot(res.response.outputSpeech.ssml, inverted).to.include(rule);
     return;
   }
 
+  if ('without' in rule) {
+    return validateResponse(res, rule.without, !inverted);
+  }
+
   if ('all' in rule) {
-    rule.all.forEach(subRule => validateResponse(res, subRule));
+    rule.all.forEach(subRule => validateResponse(res, subRule, inverted));
     return;
   }
 
   if ('endSessions' in rule) {
-    expect(res.response).to.have.property('shouldEndSession', rule.endSessions);
+    expectOrNot(res.response, inverted).to.have.property('shouldEndSession', rule.endSessions);
     if (Object.keys(rule).length === 1) {
       // we don't have other parameters to check
       return;
@@ -45,15 +57,15 @@ function validateResponse (res, rule) {
   if ('tells' in rule) {
     expect(res.response.outputSpeech).to.exist;
     expect(res.response.outputSpeech.ssml).to.exist;
-    expect(res.response.outputSpeech.ssml).to.include(rule.tells);
+    expectOrNot(res.response.outputSpeech.ssml, inverted).to.include(rule.tells);
   } else if ('regexp' in rule) {
     expect(res.response.outputSpeech).to.exist;
     expect(res.response.outputSpeech.ssml).to.exist;
-    expect(res.response.outputSpeech.ssml).to.match(new RegExp(rule.regexp));
+    expectOrNot(res.response.outputSpeech.ssml, inverted).to.match(new RegExp(rule.regexp));
   } else if ('directive' in rule) {
     expect(res.response).to.have.property('directives');
     expect(res.response.directives).to.be.an('array');
-    expect(res.response.directives[0]).to.have.property('type', rule.directive);
+    expectOrNot(res.response.directives[0], inverted).to.have.property('type', rule.directive);
   } else {
     throw new Error(`doesn't support response: ${util.inspect(rule, { depth: null })}`);
   }
