@@ -7,6 +7,7 @@ module.exports = {
       PLAYBACK: 'playback',
       PLAYBACK_IS_STOPPED: 'playback-is-stopped',
       SEARCH_MUSIC: 'search-music',
+      HELP: 'help',
     },
   },
 };

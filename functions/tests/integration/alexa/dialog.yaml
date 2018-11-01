@@ -137,3 +137,12 @@
     - user: 'live collection'
     - user: 'help'
       assistant: 'What artist would you like to listen to?'
+
+#- scenario: 'reprompt to the music query after help intent'
+#  dialog:
+#    - user: 'play jazz'
+#    - user: 'help'
+#      assistant: 'Do you want to continue payback?'
+#    - user: 'yes'
+#      assistant:
+#        directive: 'AudioPlayer.Play'

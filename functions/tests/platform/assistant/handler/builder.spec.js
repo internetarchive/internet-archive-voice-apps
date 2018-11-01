@@ -64,7 +64,7 @@ describe('platform', () => {
         app = mockApp({
           getData: {
             fsm: {
-              state: 'playback',
+              history: ['playback'],
             },
           },
         });

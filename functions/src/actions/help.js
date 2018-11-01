@@ -1,5 +1,5 @@
-const dialog = require('../dialog');
 const selectors = require('../configurator/selectors');
+const dialog = require('../dialog');
 const { getLastPhrase } = require('../state/dialog');
 const { getCurrentSong } = require('../state/playlist');
 const { getSlots } = require('../state/query');

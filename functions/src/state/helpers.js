@@ -53,6 +53,10 @@ module.exports = {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
       }
 
+      if (app === undefined) {
+        throw new Error(`Missed 'app' to get state`);
+      }
+
       return app.persist.getData(name) || defaults;
     },
 
@@ -66,6 +70,10 @@ module.exports = {
       debug(`set user's state "${name}" to "${util.inspect(value)}"`);
       if (typeof app === 'string' || !app) {
         throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
+      }
+
+      if (app === undefined) {
+        throw new Error(`Missed 'app' to set state`);
       }
 
       return app.persist.setData(name, value);
