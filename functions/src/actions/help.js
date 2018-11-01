@@ -1,6 +1,7 @@
 const dialog = require('../dialog');
 const selectors = require('../configurator/selectors');
 const { getLastPhrase } = require('../state/dialog');
+const { getCurrentSong } = require('../state/playlist');
 const { getSlots } = require('../state/query');
 const strings = require('../strings').intents.help;
 
@@ -10,6 +11,7 @@ function handler (app) {
   const ctx = Object.assign({}, {
     last: getLastPhrase(app),
     slots: getSlots(app),
+    playback: getCurrentSong(app),
   });
 
   dialog.ask(app, helpers.substitute(selectors.find(strings.default, ctx), ctx));

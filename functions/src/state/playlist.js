@@ -6,10 +6,14 @@ const { getData, setData } = require('./helpers').group('playlist');
  * Selector. Current song in the Playlist
  *
  * @param app
- * @returns {{id: string, title: string}}
+ * @returns {null|{id: string, title: string}}
  */
 function getCurrentSong (app) {
   const playlist = getData(app);
+  if (!(playlist && playlist.items)) {
+    return null;
+  }
+
   return playlist.items[playlist.current];
 }
 

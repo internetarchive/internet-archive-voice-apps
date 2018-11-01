@@ -10,7 +10,7 @@ const { getData, setData } = require('./helpers').group('dialog');
  */
 function savePhrase (app, phrase) {
   setData(app, Object.assign({}, getData(app), {
-    lastPhrase: phrase,
+    lastPhrase: Object.assign({}, getLastPhrase(app), _.omitBy(phrase, _.isUndefined)),
   }));
 }
 

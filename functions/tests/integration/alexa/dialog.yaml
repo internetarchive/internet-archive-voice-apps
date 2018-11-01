@@ -106,7 +106,6 @@
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
 
 - scenario: 'handle stop intent when nothing is playing right now'
-#  only: true
   dialog:
   - user: 'stop'
     assistant:
@@ -126,3 +125,11 @@
       - 'You can listen to our collections of 78s or live concerts'
       # but without the last acknowledge
       - without: 'Welcome to music at the Internet Archive'
+
+- scenraio: 'reprompt the welcome question even on double help intent'
+  dialog:
+  - user: 'help'
+  - user: 'help'
+    assistant:
+      all:
+      - 'You can listen to our collections of 78s or live concerts'

@@ -18,8 +18,21 @@ describe('state', () => {
   describe('dialog', () => {
     describe('savePhrase', () => {
       it('should store phrase and we could pick up it', () => {
-        savePhrase(app, 'Hi there!');
-        expect(getLastPhrase(app)).to.be.equal('Hi there!');
+        savePhrase(app, { speech: 'Hi there!' });
+        expect(getLastPhrase(app)).to.have.property('speech').to.be.equal('Hi there!');
+      });
+
+      it('should preserve previous reprompt if we have not pass new one', () => {
+        savePhrase(app, {
+          speech: 'speech 1',
+          reprompt: 'reprompt 1',
+        });
+
+        savePhrase(app, {
+          speech: 'speech 2',
+        });
+
+        expect(getLastPhrase(app)).to.have.property('reprompt').to.be.equal('reprompt 1');
       });
     });
 
