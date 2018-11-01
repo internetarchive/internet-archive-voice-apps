@@ -4,7 +4,7 @@ const selectors = require('../../../configurator/selectors');
 const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:acknowledge');
 
 /**
- * Midleware
+ * Middleware
  *
  * substitute speech which is better match slots
  * and especially new values.

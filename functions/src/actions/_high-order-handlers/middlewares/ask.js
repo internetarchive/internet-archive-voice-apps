@@ -16,20 +16,21 @@ const strings = require('../../../strings');
  *
  * @return {Promise}
  */
-module.exports = () => (context) => {
+module.exports = () => (ctx) => {
   debug('start');
 
-  const { app, speech, suggestions } = context;
+  const { app, reprompt, speech, suggestions } = ctx;
 
   if (speech && speech.length > 0) {
     dialog.ask(app, {
       speech: speech.join(' '),
       suggestions: suggestions && suggestions.filter(s => s).slice(0, 3),
+      reprompt,
     });
   } else {
     error(`hm... we don't have anything to say.`);
     dialog.ask(app, strings.events.nothingToSay);
   }
 
-  return Promise.resolve(context);
+  return Promise.resolve(ctx);
 };

@@ -112,7 +112,7 @@
       tells: 'see you'
       closeSession: true
 
-- scenraio: 'handle help on welcome'
+- scenario: 'handle help on welcome'
   dialog:
   - user: 'help'
     assistant:
@@ -126,10 +126,14 @@
       # but without the last acknowledge
       - without: 'Welcome to music at the Internet Archive'
 
-- scenraio: 'reprompt the welcome question even on double help intent'
+- scenario: 'reprompt the welcome question even on double help intent'
   dialog:
   - user: 'help'
   - user: 'help'
-    assistant:
-      all:
-      - 'You can listen to our collections of 78s or live concerts'
+    assistant: 'You can listen to our collections of 78s or live concerts'
+
+- scenario: 'reprompt to the music query after help intent'
+  dialog:
+    - user: 'live collection'
+    - user: 'help'
+      assistant: 'What artist would you like to listen to?'
