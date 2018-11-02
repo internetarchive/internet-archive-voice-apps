@@ -173,3 +173,8 @@
   dialog:
     - user: 'no'
       assistant: 'Which would you like to listen to?'
+
+- scenario: 'prompt user to the last question after version intent'
+  dialog:
+    - user: 'version'
+      assistant: 'Which would you like to listen to?'

@@ -32,13 +32,21 @@ module.exports = {
 
   substitute,
 
-  simpleResponse: (app, scheme) => {
-    const ctx = Object.assign({}, {
+  /**
+   * Generate simple response to user based on scheme and existing context
+   *
+   * @param app
+   * @param scheme
+   * @param extra
+   * @param defaultResponse
+   */
+  simpleResponse: (app, scheme, extra = {}, defaultResponse = {}) => {
+    const ctx = Object.assign({}, extra, {
       last: getLastPhrase(app),
       slots: getSlots(app),
       playback: getCurrentSong(app),
     });
 
-    dialog.ask(app, substitute(selectors.find(scheme, ctx), ctx));
+    dialog.ask(app, Object.assign({}, defaultResponse, substitute(selectors.find(scheme, ctx), ctx)));
   }
 };

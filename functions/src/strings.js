@@ -540,7 +540,8 @@ module.exports = {
     }],
 
     version: {
-      speech: 'Version is <say-as interpret-as="number">{{version}}</say-as>.',
+      speech: '<s>Version is <say-as interpret-as="number">{{version}}</say-as>.</s> ' +
+        '<s>{{last.reprompt}}</s>',
     },
 
     welcome: {
