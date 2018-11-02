@@ -3,5 +3,5 @@ const strings = require('../strings');
 const helpers = require('./_helpers');
 
 module.exports = {
-  handler: (app) => helpers.simpleResponse(app, strings.intents.help.default),
+  handler: (app) => helpers.simpleResponse(app, strings.intents.no),
 };
