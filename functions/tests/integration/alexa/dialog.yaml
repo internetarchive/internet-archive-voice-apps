@@ -147,14 +147,13 @@
       assistant:
         directive: 'AudioPlayer.Play'
 
-#- scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
-#  dialog:
-#    - user: 'play jazz'
-#    - user: 'help'
-#      assistant: 'Do you want to continue payback?'
-#    - user: 'not'
-#      assistant:
-#        tells: 'You can listen to our collections of 78s or live concerts.'
-#        without:
-#          directive:
-#            'AudioPlayer.Play'
+- scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
+  dialog:
+    - user: 'play jazz'
+    - user: 'help'
+    - user: 'not'
+      assistant:
+        tells: 'You can listen to our collections of 78s or live concerts.'
+        without:
+          directive:
+            'AudioPlayer.Play'

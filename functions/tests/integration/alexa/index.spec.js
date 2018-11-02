@@ -63,9 +63,11 @@ function validateResponse (res, rule, inverted = false) {
     expect(res.response.outputSpeech.ssml).to.exist;
     expectOrNot(res.response.outputSpeech.ssml, inverted).to.match(new RegExp(rule.regexp));
   } else if ('directive' in rule) {
-    expect(res.response).to.have.property('directives');
-    expect(res.response.directives).to.be.an('array');
-    expectOrNot(res.response.directives[0], inverted).to.have.property('type', rule.directive);
+    expectOrNot(res.response, inverted).to.have.property('directives');
+    if (!inverted) {
+      expect(res.response.directives).to.be.an('array');
+      expect(res.response.directives[0], inverted).to.have.property('type', rule.directive);
+    }
   } else {
     throw new Error(`doesn't support response: ${util.inspect(rule, { depth: null })}`);
   }
