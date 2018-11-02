@@ -3,7 +3,7 @@ const _ = require('lodash');
 const constants = require('../constants');
 const dialog = require('../dialog');
 const fsm = require('../state/fsm');
-const welcomeStrings = require('../strings').intents.welcome;
+const welcomeStrings = require('../strings').intents.welcome.default;
 
 /**
  * handle welcome intent
@@ -28,7 +28,7 @@ function handler (app) {
   // we clean all that information
   app.persist.dropAll();
 
-  fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
+  fsm.transitionTo(app, constants.fsm.states.WELCOME);
 
   dialog.ask(app, Object.assign({}, welcomeStrings, { speech, reprompt }));
 }

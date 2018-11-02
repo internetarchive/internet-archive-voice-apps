@@ -544,11 +544,18 @@ module.exports = {
     },
 
     welcome: {
-      acknowledges: [
-        'Welcome to music at the Internet Archive.'
-      ],
-      speech: 'You can listen to our collections of 78s or live concerts. Which would you like to listen to?',
-      suggestions: ['78s', 'Live Concerts']
+      default: {
+        acknowledges: [
+          'Welcome to music at the Internet Archive.'
+        ],
+        speech: 'You can listen to our collections of 78s or live concerts. Which would you like to listen to?',
+        suggestions: ['78s', 'Live Concerts'],
+      },
+
+      yes: {
+        speech: 'You need to select <break strength="weak"/>78s <break strength="weak"/>or Live Concerts',
+        suggestions: ['78s', 'Live Concerts'],
+      },
     },
 
     playback: {
@@ -560,6 +567,26 @@ module.exports = {
         speech: `I'm not sure what you said. If you don't mind I will continue playback.`,
       },
     },
+
+    no: [{
+      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
+        '<s>But however,</s> ' +
+        '<s>{{last.reprompt}}</s>',
+    }, {
+      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
+        '<s>But at any rate,</s> ' +
+        '<s>{{last.reprompt}}</s>',
+    }],
+
+    yes: [{
+      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
+        '<s>But anyway,</s> ' +
+        '<s>{{last.reprompt}}</s>',
+    }, {
+      speech: '<s>Sure!</s> ' +
+        '<s>But however,</s> ' +
+        '<s>{{last.reprompt}}</s>',
+    }, ],
   },
 
   events: {

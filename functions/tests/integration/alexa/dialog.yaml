@@ -157,3 +157,19 @@
         without:
           directive:
             'AudioPlayer.Play'
+
+- scenario: 'prompt user to the welcome question on improper "yes"'
+  dialog:
+    - user: 'yes'
+      assistant: 'You need to select'
+
+- scenario: 'prompt user to the last question on improper "yes"'
+  dialog:
+    - user: 'live'
+    - user: 'yes'
+      assistant: 'What artist would you like to listen to?'
+
+- scenario: 'prompt user to the last question on improper "no"'
+  dialog:
+    - user: 'no'
+      assistant: 'Which would you like to listen to?'
