@@ -33,7 +33,7 @@ describe('platform', () => {
 
         welcomeHandlers = {
           default: sinon.spy(),
-          playback: sinon.spy(),
+          playback: { default: sinon.spy() },
         };
 
         actionsMap = new Map([
@@ -64,7 +64,7 @@ describe('platform', () => {
         app = mockApp({
           getData: {
             fsm: {
-              state: 'playback',
+              history: ['playback'],
             },
           },
         });
@@ -73,7 +73,7 @@ describe('platform', () => {
           app,
         })
           .then(() => {
-            expect(welcomeHandlers.playback).to.have.been.calledWith(app);
+            expect(welcomeHandlers.playback.default).to.have.been.calledWith(app);
           });
       });
 

@@ -9,11 +9,11 @@ const { debug } = require('../utils/logger')('ia:dialog:ask');
  * @param reprompt {string}
  * @param suggestions {array}
  */
-module.exports = function (app, { speech, reprompt = null, suggestions = null }) {
+module.exports = function (app, { speech, reprompt = undefined, suggestions = undefined }) {
   debug('ask', speech, reprompt, suggestions);
 
   if (typeof app === 'string') {
-    throw new Error(`Argument 'app' should be DialogflowApp object but we get ${app}`);
+    throw new Error(`Argument 'app' should be Dialogflow App object but we get ${app}`);
   }
 
   if (!speech) {

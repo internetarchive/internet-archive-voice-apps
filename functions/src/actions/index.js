@@ -22,6 +22,7 @@
  *
  */
 
+const _ = require('lodash');
 const entries = require('object.entries');
 
 const extension = require('../extensions/builder');
@@ -40,18 +41,8 @@ function withStates () {
     .map(({ filename, ext }) => ([actionNameByFileName(filename, __dirname), ext.handler]))
     .filter(action => action[1])
     .reduce((acc, [actionPath, handler]) => {
-      let newState;
-      if (actionPath.length === 1) {
-        newState = { default: handler };
-      } else if (actionPath.length === 2) {
-        newState = { [actionPath[0]]: handler };
-      } else {
-        throw new Error(`We got actions which settle out of root or its sub-directories. 
-                         What we can't interpret yet.`);
-      }
-
-      const actionName = actionPath[actionPath.length - 1];
-      acc[actionName] = Object.assign({}, acc[actionName], newState);
+      const actionName = actionPath.pop();
+      _.set(acc, [actionName, ...actionPath, 'default'], handler);
       return acc;
     }, {});
 

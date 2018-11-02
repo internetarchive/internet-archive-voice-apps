@@ -106,9 +106,54 @@
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
 
 - scenario: 'handle stop intent when nothing is playing right now'
-#  only: true
   dialog:
   - user: 'stop'
     assistant:
       tells: 'see you'
       closeSession: true
+
+- scenario: 'handle help on welcome'
+  dialog:
+  - user: 'help'
+    assistant:
+      all:
+      # we are checking that we have all of those phrases in response
+      # in particular part of a help message:
+      - 'You are using Internet Archive service.'
+      - 'Here we have collections of Live Concerts and 78'
+      # and repeat the last question
+      - 'You can listen to our collections of 78s or live concerts'
+      # but without the last acknowledge
+      - without: 'Welcome to music at the Internet Archive'
+
+- scenario: 'reprompt the welcome question even on double help intent'
+  dialog:
+  - user: 'help'
+  - user: 'help'
+    assistant: 'You can listen to our collections of 78s or live concerts'
+
+- scenario: 'reprompt to the music query after help intent'
+  dialog:
+    - user: 'live collection'
+    - user: 'help'
+      assistant: 'What artist would you like to listen to?'
+
+- scenario: 'continue playback if user agreed after asking for help'
+  dialog:
+    - user: 'play jazz'
+    - user: 'help'
+      assistant: 'Do you want to continue payback'
+    - user: 'yes'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
+  dialog:
+    - user: 'play jazz'
+    - user: 'help'
+    - user: 'not'
+      assistant:
+        tells: 'You can listen to our collections of 78s or live concerts.'
+        without:
+          directive:
+            'AudioPlayer.Play'

@@ -41,6 +41,7 @@ module.exports = () => (args) => {
 
   return Promise.resolve(Object.assign({}, args, {
     suggestionsScheme: promptScheme,
-    speech: speech.concat(template)
+    speech: speech.concat(template),
+    reprompt: template,
   }));
 };

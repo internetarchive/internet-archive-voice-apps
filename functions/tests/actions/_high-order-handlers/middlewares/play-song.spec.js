@@ -49,11 +49,11 @@ describe('actions', () => {
         const slots = {
           id: '123456',
         };
-        const res = fsm.getState(app);
+        const res = fsm.getLastState(app);
         expect(res).to.be.undefined;
         return middleware({})({ app, description, speech, slots })
           .then(context => {
-            expect(fsm.getState(app)).to.be.equal(constants.fsm.states.PLAYBACK);
+            expect(fsm.getLastState(app)).to.be.equal(constants.fsm.states.PLAYBACK);
           });
       });
     });

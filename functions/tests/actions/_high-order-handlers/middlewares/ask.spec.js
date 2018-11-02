@@ -26,6 +26,7 @@ describe('actions', () => {
             expect(dialog.ask).to.have.been.calledWith(app, {
               speech: 'One Two Tree',
               suggestions,
+              reprompt: undefined,
             });
           });
       });
