@@ -64,10 +64,8 @@ function selectHandler (app, handlers) {
     const handler = _.get(handlers, history);
     if (handler) {
       // it is not a leaf
-      if (typeof handler === 'object') {
-        return handler.default;
-      }
-      return handler;
+      debug(`we have matched state sequence ${history}`);
+      return handler.default;
     }
 
     history = _.tail(history);

@@ -18,7 +18,7 @@ function handler (app) {
 
   fsm.transitionTo(app, constants.fsm.states.HELP);
 
-  dialog.ask(app, helpers.substitute(selectors.find(strings.default, ctx), ctx));
+  dialog.ask(app, helpers.substitute(selectors.find(strings.playback.default, ctx), ctx));
 }
 
 module.exports = {

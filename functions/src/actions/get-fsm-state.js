@@ -11,11 +11,15 @@ const { debug } = require('../utils/logger')('ia:actions:fsm-current-state');
  * @param app
  */
 function handler (app) {
-  const state = fsm.getState(app);
+  const state = fsm.getLastState(app);
   debug('fsm state:', state);
   dialog.ask(app, {
     speech: mustache.render(strings.speech, { state }),
   });
+
+  // TODO: continue last action
+  // in case of playback we should continue playback of song
+  // otherwise we should ask the last question
 }
 
 module.exports = {

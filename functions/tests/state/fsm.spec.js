@@ -16,10 +16,10 @@ describe('state', () => {
         default: sinon.spy(),
         playback: {
           default: sinon.spy(),
-          help: sinon.spy(),
+          help: { default: sinon.spy() },
           subscription: {
-            hide: sinon.spy(),
-            show: sinon.spy(),
+            hide: { default: sinon.spy() },
+            show: { default: sinon.spy() },
           },
         },
       };
@@ -99,14 +99,14 @@ describe('state', () => {
       it('should select sub-handler', () => {
         fsm.transitionTo(app, 'playback');
         fsm.transitionTo(app, 'help');
-        expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback.help);
+        expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback.help.default);
       });
 
       it(`should select sub-handler and drop head if it doesn't fit`, () => {
         fsm.transitionTo(app, 'show');
         fsm.transitionTo(app, 'playback');
         fsm.transitionTo(app, 'help');
-        expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback.help);
+        expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback.help.default);
       });
     });
   });

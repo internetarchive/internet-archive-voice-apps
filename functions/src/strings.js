@@ -88,7 +88,7 @@ module.exports = {
     }],
 
     getFSMState: {
-      speech: 'State of FSM is {{state}}',
+      speech: 'State of <say-as interpret-as="characters">FSM</say-as> is {{state}}',
     },
 
     globalError: {
@@ -97,7 +97,7 @@ module.exports = {
     },
 
     help: {
-      'default': {
+      default: {
         speech:
           '<s>You are using Internet Archive service. </s>' +
           '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> records. </s>' +
@@ -111,9 +111,19 @@ module.exports = {
           '<p>{{last.reprompt}}</p>'
       },
 
-      'playback': {
-        speech:
-          '<s>You are using Internet Archive service.</s>',
+      playback: {
+        default: {
+          speech:
+            '<s>You are listening <break strength="weak"/> {{playback.title}} <break strength="weak"/> of {{playback.creator}}{{#playback.year}} <break strength="weak"/> {{playback.year}}{{/playback.year}}.</s> ' +
+            '<s>But you can select any music which I have in my Internet Archive collection, </s>' +
+            '<s>by asking ' +
+            '<break strength="weak"/> play jazz music ' +
+            '<break strength="weak"/> or <break strength="weak"/> randomly play grateful dead' +
+            '<break strength="weak"/> or play any other genre or artist. </s> ' +
+            '<s>And finally you can just answer my questions so I would help you to find right records. </s>' +
+            '<s>Do you want to continue payback {{playback.creator}} record?</s>',
+          suggestions: ['yes', 'no'],
+        },
       },
     },
 

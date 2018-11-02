@@ -138,11 +138,23 @@
     - user: 'help'
       assistant: 'What artist would you like to listen to?'
 
-#- scenario: 'reprompt to the music query after help intent'
+- scenario: 'continue playback if user agreed after asking for help'
+  dialog:
+    - user: 'play jazz'
+    - user: 'help'
+      assistant: 'Do you want to continue payback'
+    - user: 'yes'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+#- scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
 #  dialog:
 #    - user: 'play jazz'
 #    - user: 'help'
 #      assistant: 'Do you want to continue payback?'
-#    - user: 'yes'
+#    - user: 'not'
 #      assistant:
-#        directive: 'AudioPlayer.Play'
+#        tells: 'You can listen to our collections of 78s or live concerts.'
+#        without:
+#          directive:
+#            'AudioPlayer.Play'

@@ -205,7 +205,9 @@ describe('integration', () => {
             return res.then(res => {
               expect(res).to.have.property('response').to.be.not.undefined;
               if (assistant !== undefined) {
-                info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
+                if (res.response.outputSpeech) {
+                  info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
+                }
 
                 validateResponse(res, assistant);
               }
