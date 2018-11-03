@@ -6,5 +6,8 @@ const strings = require('../strings');
 const helpers = require('./_helpers');
 
 module.exports = {
-  handler: app => helpers.simpleResponse(app, strings.intents.version, packageJSON, { suggestions: getLastSuggestions(app) }),
+  handler: app => helpers.simpleResponse(app,
+    strings.intents.version.default,
+    packageJSON,
+    { suggestions: getLastSuggestions(app) }),
 };

@@ -24,6 +24,8 @@ const renderSpeech = require('../_high-order-handlers/middlewares/render-speech'
  * @returns {Promise}
  */
 function playSong (ctx) {
+  debug('playSong');
+  debug(ctx);
   const { enqueue = false, next = false } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
     // expose current platform to the slots
@@ -60,15 +62,17 @@ function playSong (ctx) {
  * @returns {Promise.<T>}
  */
 function resume (ctx) {
+  debug('resume');
   return playSong(Object.assign({}, ctx, { next: false }))
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
+        debug('playlist is empty');
         dialog.ask(ctx.app, dialog.merge(
           strings.intents.resume.empty,
           dialogState.getReprompt(ctx.app)
         ));
       } else {
-        debug('It could be an error:', err);
+        debug('it could be an error:', err);
         return dialog.ask(ctx.app, dialog.merge(
           strings.intents.resume.fail,
           dialogState.getReprompt(ctx.app)

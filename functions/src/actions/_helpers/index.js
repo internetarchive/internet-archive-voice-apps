@@ -16,8 +16,18 @@ const { getSlots } = require('../../state/query');
  */
 function substitute (scheme, ctx) {
   return {
-    speech: mustache.render(scheme.speech, ctx),
+    speech: [mustache.render(scheme.speech, ctx)],
   };
+}
+
+function getSimpleResponse (app, scheme, extra = {}, defaultResponse = {}) {
+  const ctx = Object.assign({}, extra, {
+    last: getLastPhrase(app),
+    slots: getSlots(app),
+    playback: getCurrentSong(app),
+  });
+
+  return Object.assign({}, defaultResponse, substitute(selectors.find(scheme, ctx), ctx));
 }
 
 module.exports = {
@@ -30,6 +40,8 @@ module.exports = {
   actionNameByFileName: (filename, root = path.resolve(__dirname, '..')) =>
     path.relative(root, filename.replace(path.extname(filename), '')).split(path.sep),
 
+  getSimpleResponse,
+
   substitute,
 
   /**
@@ -41,12 +53,6 @@ module.exports = {
    * @param defaultResponse
    */
   simpleResponse: (app, scheme, extra = {}, defaultResponse = {}) => {
-    const ctx = Object.assign({}, extra, {
-      last: getLastPhrase(app),
-      slots: getSlots(app),
-      playback: getCurrentSong(app),
-    });
-
-    dialog.ask(app, Object.assign({}, defaultResponse, substitute(selectors.find(scheme, ctx), ctx)));
+    dialog.ask(app, getSimpleResponse(app, scheme, extra, defaultResponse));
   }
 };

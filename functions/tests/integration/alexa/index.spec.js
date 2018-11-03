@@ -192,7 +192,12 @@ describe('integration', () => {
         }
 
         dialog.forEach(({ user, assistant }) => {
-          it(`should utter: "${util.inspect(user, { depth: null })}" and get a response: "${JSON.stringify(assistant)}"`, () => {
+          const message = [];
+          message.push(`should utter: "${util.inspect(user, { depth: null })}"`);
+          if (assistant) {
+            message.push(`get a response: "${JSON.stringify(assistant)}"`);
+          }
+          it(message.join(' and '), () => {
             let res;
             if (typeof (user) === 'string') {
               info(`>> user tells: ${user}`);
