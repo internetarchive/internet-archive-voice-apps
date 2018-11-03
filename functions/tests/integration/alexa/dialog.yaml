@@ -155,8 +155,7 @@
       assistant:
         tells: 'You can listen to our collections of 78s or live concerts.'
         without:
-          directive:
-            'AudioPlayer.Play'
+          directive: 'AudioPlayer.Play'
 
 - scenario: 'prompt user to the welcome question on improper "yes"'
   dialog:
@@ -173,3 +172,18 @@
   dialog:
     - user: 'no'
       assistant: 'Which would you like to listen to?'
+
+- scenario: 'prompt user to the last question after version intent'
+  dialog:
+    - user: 'version'
+      assistant:
+        all:
+          - 'Version is'
+          - 'Which would you like to listen to?'
+
+- scenario: 'resume playback after version intent'
+  dialog:
+    - user: 'play jazz'
+    - user: 'version'
+      assistant:
+        directive: 'AudioPlayer.Play'
