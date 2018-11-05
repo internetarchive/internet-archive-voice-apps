@@ -187,3 +187,9 @@
     - user: 'version'
       assistant:
         directive: 'AudioPlayer.Play'
+
+- scenario: 'start over on music search restarts skill'
+  dialog:
+    - user: 'live'
+    - user: 'start over'
+      assistant: 'Welcome to music at the Internet Archive'
