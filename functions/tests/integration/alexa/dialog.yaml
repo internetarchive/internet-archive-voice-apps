@@ -193,3 +193,10 @@
     - user: 'live'
     - user: 'start over'
       assistant: 'Welcome to music at the Internet Archive'
+
+- scenario: 'start over on playback restarts current track'
+  dialog:
+    - user: 'play jazz'
+    - user: 'start over'
+      assistant:
+        directive: 'AudioPlayer.Play'
