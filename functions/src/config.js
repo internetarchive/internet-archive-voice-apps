@@ -42,6 +42,8 @@ module.exports = {
       endpoint: {
         platformSubDomain: 'askills-api',
       },
+
+      appName: 'The Internet Archive Skill',
     },
 
     assistant: {
@@ -51,6 +53,8 @@ module.exports = {
       endpoint: {
         platformSubDomain: 'gactions-api',
       },
+
+      appName: 'The Internet Archive Action',
     },
   },
 

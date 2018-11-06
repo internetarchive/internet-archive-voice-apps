@@ -1,6 +1,7 @@
 const mustache = require('mustache');
 const path = require('path');
 
+const config = require('../../config');
 const selectors = require('../../configurator/selectors');
 const dialog = require('../../dialog');
 const { getLastPhrase } = require('../../state/dialog');
@@ -25,6 +26,7 @@ function getSimpleResponse (app, scheme, extra = {}, defaultResponse = {}) {
     last: getLastPhrase(app),
     slots: getSlots(app),
     playback: getCurrentSong(app),
+    platform: config.platforms[app.platform],
   });
 
   return Object.assign({}, defaultResponse, substitute(selectors.find(scheme, ctx), ctx));
