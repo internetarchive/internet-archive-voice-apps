@@ -200,3 +200,13 @@
     - user: 'start over'
       assistant:
         directive: 'AudioPlayer.Play'
+
+- scenario: 'reprompt user on fallback intent'
+  skip: true # for the moment Bespoke virtual-alexa doesn't support fallback intent
+  dialog:
+    - user: "What is the distance to the Moon?"
+      assistant:
+        all:
+          - 'The Internet Archive skill can not help with that'
+          - 'but I can help you look up music records.'
+          - 'Which would you like to listen to?'
