@@ -93,7 +93,7 @@ module.exports = {
       // but on Google Assistant it would be The Internet Archive Action
       speech:
         '<s>{{platform.appName}} can not help with that.</s> ' +
-        '<s>But I can help you to find music record <break strength="weak"/> and play it.</s> ' +
+        '<s>But I can help you to find music records <break strength="weak"/> and play it.</s> ' +
         '<s>{{last.reprompt}}</s>'
     },
 
