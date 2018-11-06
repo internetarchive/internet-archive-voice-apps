@@ -200,3 +200,15 @@
     - user: 'start over'
       assistant:
         directive: 'AudioPlayer.Play'
+
+- scenario: 'reprompt user on fallback intent'
+  dialog:
+    - user:
+        # Bespoke virtual-alexa doesn't call AMAZON.FallbackIntent when can't find matched utterance
+        # so we should call it manually
+        intend: AMAZON.FallbackIntent
+      assistant:
+        all:
+          - 'The Internet Archive Skill can not help with that'
+          - 'But I can help you to find music record'
+          - 'Which would you like to listen to?'

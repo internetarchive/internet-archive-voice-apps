@@ -87,6 +87,16 @@ module.exports = {
       speech: `Sure, have a nice day!`,
     }],
 
+    fallback: {
+      // TODO: fix actually we shoudl substitute app name here
+      // because in alexa it is The Internet Archive Skill
+      // but on Google Assistant it would be The Internet Archive Action
+      speech:
+        '<s>{{platform.appName}} can not help with that.</s> ' +
+        '<s>But I can help you to find music records <break strength="weak"/> and play it.</s> ' +
+        '<s>{{last.reprompt}}</s>'
+    },
+
     getFSMState: {
       speech: 'State of <say-as interpret-as="characters">FSM</say-as> is {{state}}',
     },
@@ -108,7 +118,7 @@ module.exports = {
           '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
           '<s>And finally you can just answer on my questions </s>' +
           '<s>and I will pick the right music for you. </s>' +
-          '<p>{{last.reprompt}}</p>'
+          '<s>{{last.reprompt}}</s>'
       },
 
       playback: {
@@ -526,14 +536,6 @@ module.exports = {
         speech: `Okay, muting song titles.`,
       },
     },
-
-    unknown: [{
-      speech: "I'm not sure what you said. Can you repeat that?",
-    }, {
-      speech: "I still didn't get that. {{reprompt}}",
-    }, {
-      speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    }],
 
     unhandled: [{
       speech: "Sorry, I'm afraid I don't follow you.",

@@ -92,6 +92,12 @@
                     "name": "SongDetails",
                     "slots": [],
                     "samples": [
+                        "what song am I listening",
+                        "what is playing",
+                        "what is playing right now",
+                        "what does it play",
+                        "what is it",
+                        "what song is it",
                         "what song is this",
                         "which song is this",
                         "which song i am listening",
@@ -231,6 +237,10 @@
                     "samples": [
                         "{ORDER_BY}"
                     ]
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
                 }
             ],
             "types": [
