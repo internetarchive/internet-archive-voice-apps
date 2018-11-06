@@ -537,14 +537,6 @@ module.exports = {
       },
     },
 
-    unknown: [{
-      speech: "I'm not sure what you said. Can you repeat that?",
-    }, {
-      speech: "I still didn't get that. {{reprompt}}",
-    }, {
-      speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
-    }],
-
     unhandled: [{
       speech: "Sorry, I'm afraid I don't follow you.",
     }],
