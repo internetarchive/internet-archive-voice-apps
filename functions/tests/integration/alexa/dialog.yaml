@@ -202,11 +202,13 @@
         directive: 'AudioPlayer.Play'
 
 - scenario: 'reprompt user on fallback intent'
-  skip: true # for the moment Bespoke virtual-alexa doesn't support fallback intent
   dialog:
-    - user: "What is the distance to the Moon?"
+    - user:
+        # Bespoke virtual-alexa doesn't call AMAZON.FallbackIntent when can't find matched utterance
+        # so we should call it manually
+        intend: AMAZON.FallbackIntent
       assistant:
         all:
-          - 'The Internet Archive skill can not help with that'
-          - 'but I can help you look up music records.'
+          - 'The Internet Archive Skill can not help with that'
+          - 'But I can help you to find music record'
           - 'Which would you like to listen to?'
