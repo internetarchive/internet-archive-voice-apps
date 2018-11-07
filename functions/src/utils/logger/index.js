@@ -37,23 +37,23 @@ function patchDebugScopeEnvVariable () {
 module.exports = (name) => {
   const debug = loggerBuilder(`${name}:debug`);
   if (console.info) {
-    debug.log = console.info.bind(console);
+    debug.log = (...args) => console.info(...args);
   }
   const error = loggerBuilder(`${name}:error`);
   if (console.error) {
-    error.log = console.error.bind(console);
+    error.log = (...args) => console.error(...args);
   }
   const info = loggerBuilder(`${name}:info`);
   if (console.info) {
-    info.log = console.info.bind(console);
+    info.log = (...args) => console.info(...args);
   }
   const warning = loggerBuilder(`${name}:warning`);
   if (console.warn) {
-    warning.log = console.warn.bind(console);
+    warning.log = (...args) => console.warn(...args);
   }
   const performance = loggerBuilder(`${name}:performance`);
   if (console.info) {
-    performance.log = console.info.bind(console);
+    performance.log = (...args) => console.info(...args);
   }
 
   const timerQueue = [];
@@ -63,7 +63,7 @@ module.exports = (name) => {
     info,
     timer: {
       /**
-       * Start meature performance
+       * Start measure performance
        *
        * @param id
        */
