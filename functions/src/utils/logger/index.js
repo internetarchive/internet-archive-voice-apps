@@ -29,32 +29,33 @@ function patchDebugScopeEnvVariable () {
 }
 
 /**
+ * Wrap logger to specific scope
+ *
+ * @private
+ * @param scope
+ * @param consoleFuncName
+ * @returns {debug.IDebugger | * | Function}
+ */
+function wrapLogger (scope, consoleFuncName) {
+  const logger = loggerBuilder(scope.join(':'));
+  if (console.info) {
+    logger.log = (...args) => console[consoleFuncName](...args);
+  }
+  return logger;
+}
+
+/**
  * Construct logger for a module
  *
  * @param {String} name - name of the module
  * @returns {{debug: *, error: *, warning: *}}
  */
 module.exports = (name) => {
-  const debug = loggerBuilder(`${name}:debug`);
-  if (console.info) {
-    debug.log = console.info.bind(console);
-  }
-  const error = loggerBuilder(`${name}:error`);
-  if (console.error) {
-    error.log = console.error.bind(console);
-  }
-  const info = loggerBuilder(`${name}:info`);
-  if (console.info) {
-    info.log = console.info.bind(console);
-  }
-  const warning = loggerBuilder(`${name}:warning`);
-  if (console.warn) {
-    warning.log = console.warn.bind(console);
-  }
-  const performance = loggerBuilder(`${name}:performance`);
-  if (console.info) {
-    performance.log = console.info.bind(console);
-  }
+  const debug = wrapLogger([name, '[debug]'], 'info');
+  const error = wrapLogger([name, '[error]'], 'error');
+  const info = wrapLogger([name, '[error]'], 'info');
+  const warning = wrapLogger([name, '[warning]'], 'warn');
+  const performance = wrapLogger([name, '[performance]'], 'info');
 
   const timerQueue = [];
   return {
@@ -63,7 +64,7 @@ module.exports = (name) => {
     info,
     timer: {
       /**
-       * Start meature performance
+       * Start measure performance
        *
        * @param id
        */

@@ -28,7 +28,7 @@ describe('utils', () => {
         stop();
 
         expect(console.info).to.be.called;
-        expect(console.info.args[0][0]).to.include('ia:tests:utils:performance');
+        expect(console.info.args[0][0]).to.include('ia:tests:utils:[performance]');
         expect(console.info.args[0][1]).to.include('hello world');
       });
 

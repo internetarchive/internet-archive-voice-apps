@@ -1,9 +1,10 @@
 const Alexa = require('ask-sdk');
 const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const AWS = require('aws-sdk');
+const bst = require('bespoken-tools');
 
 const pipeline = require('../../../performance/pipeline');
-const { debug } = require('../../../utils/logger')('ia:platform:alexa:handler');
+const { debug, warning } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const ErrorHandler = require('./error-handler');
 const LogInterceptor = require('./log-interceptor');
@@ -22,29 +23,28 @@ module.exports = (actions) => {
   });
 
   const handlers = handlersBuilder(actions);
-  let skill;
   debug(`We can handle intents: ${handlers.map(({ intent }) => `"${intent}"`).join(', ')}`);
 
-  return function (event, context) {
-    if (!skill) {
-      debug('lazy building');
+  let lambda = Alexa.SkillBuilders.custom()
+    .addRequestHandlers(...handlers)
+    .addErrorHandlers(ErrorHandler)
+    .addRequestInterceptors(
+      () => pipeline.stage(pipeline.PROCESS_REQUEST)
+    )
+    .addRequestInterceptors(LogInterceptor)
+    .addResponseInterceptors(
+      () => pipeline.stage(pipeline.IDLE)
+    )
+    .withPersistenceAdapter(dynamoDbPersistenceAdapter)
+    .lambda();
 
-      skill = Alexa.SkillBuilders.custom()
-        .addRequestHandlers(...handlers)
-        .addErrorHandlers(ErrorHandler)
-        .addRequestInterceptors(
-          () => pipeline.stage(pipeline.PROCESS_REQUEST)
-        )
-        .addRequestInterceptors(LogInterceptor)
-        .addResponseInterceptors(
-          () => pipeline.stage(pipeline.IDLE)
-        )
-        .withPersistenceAdapter(dynamoDbPersistenceAdapter)
-        // TODO: get from process.env
-        // .withSkillId()
-        .create();
-    }
+  // wrap with bespoken service to send logs there
+  if (process.env.BESPOKEN_KEY) {
+    // FIXME: bespoken doesn't support ANSI color escape codes yet
+    lambda = bst.Logless.capture(process.env.BESPOKEN_KEY, lambda);
+  } else {
+    warning('env variable BESPOKEN_KEY should be defined to send logs to bespoken');
+  }
 
-    return skill.invoke(event, context);
-  };
+  return lambda;
 };
