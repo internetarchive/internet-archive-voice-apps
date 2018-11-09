@@ -22,11 +22,10 @@ class NaturalOrderStrategy {
    * Do we have next item
    *
    * @param app
-   * @param slots
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({ app, query, playlist }) {
+  hasNext ({ app, playlist }) {
     const cursor = playlist.getExtra(app).cursor;
     // Isn't it the last album
     if (cursor.current.album < cursor.total.albums - 1) {
@@ -62,6 +61,13 @@ class NaturalOrderStrategy {
     playlist.setExtra(app, {
       cursor: Object.assign({}, cursor, { current }),
     });
+  }
+
+  /**
+   * Do we have previous item
+   */
+  hasPrevious () {
+    // const cursor = playlist.getExtra(app).cursor;
   }
 
   /**

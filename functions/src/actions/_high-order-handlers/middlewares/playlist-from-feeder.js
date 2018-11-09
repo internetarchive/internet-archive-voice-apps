@@ -2,8 +2,7 @@ const { debug, info } = require('../../../utils/logger')('ia:actions:middlewares
 const { MiddlewareError } = require('./errors');
 
 /**
- * Update playlist data from feeder
- * - usually we create new playlist
+ * Create playlist data from feeder
  */
 module.exports = () => (context) => {
   debug('start');

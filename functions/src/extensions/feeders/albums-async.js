@@ -43,7 +43,7 @@ const feederName = stripFileName(__filename);
 class AsyncAlbums extends DefaultFeeder {
   /**
    * Prefetch some songs from albums
-   * and update playlist
+   * and create playlist
    *
    * @param app
    * @param query
@@ -231,7 +231,7 @@ class AsyncAlbums extends DefaultFeeder {
     orderStrategy.moveSourceCursorToTheNextPosition({ app, query, playlist });
 
     // check whether we need to fetch new chunk
-    if (playlist.hasNextSong(app, query, playlist)) {
+    if (playlist.hasNextSong(app)) {
       debug('we have next song so just move cursor without fetching new data');
       playlist.next(app);
       return Promise.resolve();

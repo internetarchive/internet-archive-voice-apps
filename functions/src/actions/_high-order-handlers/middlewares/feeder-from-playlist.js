@@ -10,9 +10,9 @@ class EmptyFeederError extends errors.MiddlewareError {
 /**
  * get feeder from playlist state
  */
-const middleware = () => (args) => {
+const middleware = () => (ctx) => {
   debug('start');
-  const { app, playlist } = args;
+  const { app, playlist } = ctx;
   const feederName = playlist.getFeeder(app);
   debug('feederName:', feederName);
   const feeder = feeders.getByName(feederName);
@@ -20,9 +20,9 @@ const middleware = () => (args) => {
     warning(
       `for some reasons playlist asks "${feederName}" which we don't have`
     );
-    return Promise.reject(new EmptyFeederError(args));
+    return Promise.reject(new EmptyFeederError(ctx));
   }
-  return Promise.resolve(Object.assign({}, args, { feeder, feederName }));
+  return Promise.resolve(Object.assign({}, ctx, { feeder, feederName }));
 };
 
 module.exports = {
