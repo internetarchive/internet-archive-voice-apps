@@ -53,7 +53,7 @@ function wrapLogger (scope, consoleFuncName) {
 module.exports = (name) => {
   const debug = wrapLogger([name, '[debug]'], 'info');
   const error = wrapLogger([name, '[error]'], 'error');
-  const info = wrapLogger([name, '[error]'], 'info');
+  const info = wrapLogger([name, '[info]'], 'info');
   const warning = wrapLogger([name, '[warning]'], 'warn');
   const performance = wrapLogger([name, '[performance]'], 'info');
 
