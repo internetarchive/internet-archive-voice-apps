@@ -1,12 +1,36 @@
 # Change Log
 
+## [2.3.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.3.0) (2018-11-09)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.6...2.3.0)
+
+**Implemented enhancements:**
+
+- send logs to bespoken [\#358](https://github.com/internetarchive/internet-archive-google-action/issues/358)
+- support fallback intent [\#356](https://github.com/internetarchive/internet-archive-google-action/issues/356)
+- support start over intent [\#354](https://github.com/internetarchive/internet-archive-google-action/issues/354)
+- default answer for yes and no user's request [\#349](https://github.com/internetarchive/internet-archive-google-action/issues/349)
+- extend fsm with history and hierarchy [\#347](https://github.com/internetarchive/internet-archive-google-action/issues/347)
+- stop command should close Alexa Skill [\#338](https://github.com/internetarchive/internet-archive-google-action/issues/338) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Version action keeps session open without prompt [\#310](https://github.com/internetarchive/internet-archive-google-action/issues/310)
+- give context help for user [\#233](https://github.com/internetarchive/internet-archive-google-action/issues/233)
+
+**Merged pull requests:**
+
+- Feature/send logs to bespoken [\#361](https://github.com/internetarchive/internet-archive-google-action/pull/361) ([hyzhak](https://github.com/hyzhak))
+- Feature/fallback intent [\#360](https://github.com/internetarchive/internet-archive-google-action/pull/360) ([hyzhak](https://github.com/hyzhak))
+- Feature/354 start over intent [\#357](https://github.com/internetarchive/internet-archive-google-action/pull/357) ([hyzhak](https://github.com/hyzhak))
+- Feature/310 prompt after version intent [\#351](https://github.com/internetarchive/internet-archive-google-action/pull/351) ([hyzhak](https://github.com/hyzhak))
+- Feature/349 default handler for yes no [\#350](https://github.com/internetarchive/internet-archive-google-action/pull/350) ([hyzhak](https://github.com/hyzhak))
+- Feature/233 context help [\#346](https://github.com/internetarchive/internet-archive-google-action/pull/346) ([hyzhak](https://github.com/hyzhak))
+- feature/338-stop-intent-should-close-alexa-skill [\#343](https://github.com/internetarchive/internet-archive-google-action/pull/343) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.2.6](https://github.com/internetarchive/internet-archive-google-action/tree/2.2.6) (2018-10-29)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.5...2.2.6)
 
 **Implemented enhancements:**
 
 - update to node@8 [\#336](https://github.com/internetarchive/internet-archive-google-action/issues/336)
-- Music player doesn't give title of song upon request during playback \[Song Details Intent\] [\#311](https://github.com/internetarchive/internet-archive-google-action/issues/311) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- Music player should give title of song upon request during playback \[Song Details Intent\] [\#311](https://github.com/internetarchive/internet-archive-google-action/issues/311) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
 
 **Merged pull requests:**
 
