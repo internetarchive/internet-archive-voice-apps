@@ -66,8 +66,16 @@ class NaturalOrderStrategy {
   /**
    * Do we have previous item
    */
-  hasPrevious () {
-    // const cursor = playlist.getExtra(app).cursor;
+  hasPrevious ({ app, playlist }) {
+    const { current } = playlist.getExtra(app).cursor;
+
+    // Isn't it the 1st album
+    if (current.album > 0) {
+      return true;
+    }
+
+    // Isn't it the 1st song?
+    return current.song > 0;
   }
 
   /**

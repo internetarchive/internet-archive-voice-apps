@@ -32,7 +32,7 @@ describe('extensions', () => {
           cursor.current.album = 4;
           cursor.total.albums = 10;
           cursor.current.song = 0;
-          cursor.total.songs = 0;
+          cursor.total.songs = 10;
           expect(natural.hasNext({ app, playlist })).to.be.true;
         });
 
@@ -53,16 +53,28 @@ describe('extensions', () => {
         });
       });
 
-      describe.skip('#hasPrevious', () => {
+      describe('#hasPrevious', () => {
         it('should have previous song when it is not the first album', () => {
+          cursor.current.album = 4;
+          cursor.total.albums = 10;
+          cursor.current.song = 0;
+          cursor.total.songs = 1;
           expect(natural.hasPrevious({ app, playlist })).to.be.true;
         });
 
         it('should have previous song when it is not the first song in the 1st album', () => {
+          cursor.current.album = 0;
+          cursor.total.albums = 10;
+          cursor.current.song = 1;
+          cursor.total.songs = 1;
           expect(natural.hasPrevious({ app, playlist })).to.be.true;
         });
 
         it('should not have previous song when it is the first song in the 1st album', () => {
+          cursor.current.album = 0;
+          cursor.total.albums = 10;
+          cursor.current.song = 0;
+          cursor.total.songs = 1;
           expect(natural.hasPrevious({ app, playlist })).to.be.false;
         });
       });
