@@ -16,6 +16,20 @@ class RandomOrderStrategy {
   }
 
   /**
+   * Do we have previous item
+   *
+   * Should always have previous item if feeder is valid
+   *
+   * @param app
+   * @param slots
+   * @param playlist
+   * @returns {boolean}
+   */
+  hasPrevious ({ app, query, playlist }) {
+    return !playlist.isEmpty(app);
+  }
+
+  /**
    * Do we have next item
    *
    * Should always have next item if feeder is valid
