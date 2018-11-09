@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.3.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.3.1) (2018-11-09)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.3.0...2.3.1)
+
+**Merged pull requests:**
+
+- hotfix/typo-in-info-log [\#363](https://github.com/internetarchive/internet-archive-google-action/pull/363) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.3.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.3.0) (2018-11-09)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.2.6...2.3.0)
 
