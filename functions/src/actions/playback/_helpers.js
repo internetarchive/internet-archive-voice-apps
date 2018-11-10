@@ -15,7 +15,6 @@ const previousSong = require('../_high-order-handlers/middlewares/previous-song'
 const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
 
-
 /**
  * map skip name to skip behaviour
  *

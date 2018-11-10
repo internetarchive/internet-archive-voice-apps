@@ -53,7 +53,7 @@ module.exports = (conv) => {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
 
-      conv.user.storage = {};
+      // conv.user.storage = {};
       conv.data[name] = value;
       const size = JSON.stringify({ data: conv.data }).length;
       debug(`size of session data: ${size} bytes`);
