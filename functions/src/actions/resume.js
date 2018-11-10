@@ -14,7 +14,7 @@ const helpers = require('./playback/_helpers');
  * @param app
  */
 function handler (app) {
-  return helpers.playSong({ app, next: false })
+  return helpers.playSong({ app, skip: null })
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
         dialog.ask(app, dialog.merge(

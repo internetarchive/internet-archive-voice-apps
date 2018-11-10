@@ -47,7 +47,7 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  return helpers.playSong({ app, next: true })
+  return helpers.playSong({ app, skip: 'forward' })
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, strings.events.playlistIsEnded);

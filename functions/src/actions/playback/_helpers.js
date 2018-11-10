@@ -11,22 +11,33 @@ const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-f
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
 const nextSong = require('../_high-order-handlers/middlewares/next-song');
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
+const previousSong = require('../_high-order-handlers/middlewares/previous-song');
 const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
+
+
+/**
+ * map skip name to skip behaviour
+ *
+ * @type {{back: *, forward: *}}
+ */
+const skipHandlers = {
+  'back': previousSong(),
+  'forward': nextSong(),
+};
 
 /**
  * play one song
  *
- * @param app
- * @param {boolean} mediaResponseOnly - alexa doesn't allow any response except of media response
- * @param {boolean} enqueue - add next song in the queue (we should pass previous track)
- * @param {boolean} next - play next song
+ * @param ctx
+ * @param {boolean} ctx.enqueue - add next song in the queue (we should pass previous track)
+ * @param {boolean} ctx.skip - skip back, forward
  * @returns {Promise}
  */
 function playSong (ctx) {
   debug('playSong');
   debug(ctx);
-  const { enqueue = false, next = false } = ctx;
+  const { enqueue = false, skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
     // expose current platform to the slots
     .then(ctx =>
@@ -37,14 +48,14 @@ function playSong (ctx) {
       })
     )
     .then(ctx => {
-      if (next) {
+      if (skip) {
         // we need previous track token for Alexa playback
         if (enqueue) {
           const previousTrack = playlist.getCurrentSong(ctx.app);
           ctx = Object.assign({}, ctx);
           _.set(ctx, ['slots', 'previousTrack'], previousTrack);
         }
-        return nextSong()(ctx);
+        return skipHandlers[skip](ctx);
       }
       return ctx;
     })
@@ -63,7 +74,7 @@ function playSong (ctx) {
  */
 function resume (ctx) {
   debug('resume');
-  return playSong(Object.assign({}, ctx, { next: false }))
+  return playSong(Object.assign({}, ctx, { skip: null }))
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
         debug('playlist is empty');

@@ -57,7 +57,7 @@ describe('actions', () => {
     it('should play next song', () => {
       playbackFailed.handler(app);
       expect(helpers.playSong).to.have.been.called;
-      expect(helpers.playSong.args[0][0]).to.deep.equal({ app, next: true });
+      expect(helpers.playSong.args[0][0]).to.deep.equal({ app, skip: 'forward' });
     });
   });
 });

@@ -10,7 +10,7 @@ const helpers = require('./playback/_helpers');
  * @param app
  */
 function handler (app) {
-  return helpers.playSong({ app, next: true })
+  return helpers.playSong({ app, skip: 'back' })
     .catch(e => {
       debug('It could be an error:', e);
       return dialog.ask(app, strings.events.playlistIsEnded);
