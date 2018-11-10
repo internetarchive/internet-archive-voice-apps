@@ -212,3 +212,17 @@
           - 'The Internet Archive Skill can not help with that'
           - 'But I can help you to find music record'
           - 'Which would you like to listen to?'
+
+- scenario: 'play next song'
+  dialog:
+    - user: 'play jazz'
+    - user: 'next'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'play previous song'
+  dialog:
+    - user: 'play jazz'
+    - user: 'previous'
+      assistant:
+        directive: 'AudioPlayer.Play'
