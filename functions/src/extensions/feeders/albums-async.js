@@ -245,37 +245,40 @@ class AsyncAlbums extends DefaultFeeder {
 
     orderStrategy.moveSourceCursorToTheNextPosition({ app, query, playlist });
 
-    // check whether we need to fetch new chunk
-    if (playlist.hasNextSong(app)) {
-      debug('we have next song so just move cursor without fetching new data');
-      playlist.next(app);
-      return Promise.resolve();
-    } else {
-      debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
-      return this.fetchChunkOfSongs({ app, query, playlist })
-        .then(({ songs, songsInFirstAlbum }) => {
-          // we'll append new chunk of songs
-          let items = playlist.getItems(app).concat(songs);
+    return Promise.resolve()
+      .then(() => {
+        // check whether we need to fetch new chunk
+        if (playlist.hasNextSong(app)) {
+          debug('we have next song so just move cursor without fetching new data');
+        } else {
+          debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
+          return this
+            .fetchChunkOfSongs({ app, query, playlist })
+            .then(({ songs, songsInFirstAlbum }) => {
+              // we'll append new chunk of songs
+              let items = playlist.getItems(app).concat(songs);
 
-          // but we shouldn't exceed available size of chunk
-          const feederConfig = this.getConfigForOrder(app, query);
-          if (items.length > feederConfig.chunk.songs) {
-            const shift = items.length - feederConfig.chunk.songs;
-            debug(`drop ${shift} old song(s)`);
-            items = items.slice(shift);
-            playlist.shift(app, -shift);
-          }
-          playlist.updateItems(app, items);
+              // but we shouldn't exceed available size of chunk
+              const feederConfig = this.getConfigForOrder(app, query);
+              if (items.length > feederConfig.chunk.songs) {
+                const shift = items.length - feederConfig.chunk.songs;
+                debug(`drop ${shift} old song(s)`);
+                items = items.slice(shift);
+                playlist.shift(app, -shift);
+              }
+              playlist.updateItems(app, items);
 
-          orderStrategy.updateCursorTotal({
-            app,
-            playlist,
-            songsInFirstAlbum,
-          });
-
-          playlist.next(app);
-        });
-    }
+              orderStrategy.updateCursorTotal({
+                app,
+                playlist,
+                songsInFirstAlbum,
+              });
+            });
+        }
+      })
+      .then(() => {
+        playlist.next(app);
+      });
   }
 
   /**
