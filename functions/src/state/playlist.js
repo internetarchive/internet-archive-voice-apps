@@ -28,6 +28,11 @@ function hasNextSong (app) {
   return playlist.items ? playlist.current < playlist.items.length - 1 : false;
 }
 
+function hasPreviousSong (app) {
+  // TODO:
+  return null;
+}
+
 /**
  * Reducer: Create new playlist
  *
@@ -113,6 +118,10 @@ function next (app) {
   }));
 }
 
+function previous (app) {
+  // TODO:
+}
+
 /**
  * Shift current position in chunk
  *
@@ -157,7 +166,9 @@ module.exports = {
   getFeeder,
   setFeeder,
   hasNextSong,
+  hasPreviousSong,
   next,
+  previous,
   shift,
   getItems,
   updateItems,

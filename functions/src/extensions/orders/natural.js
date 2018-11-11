@@ -96,7 +96,7 @@ class NaturalOrderStrategy {
   }
 
   /**
-   * Chup few songs at the start because we've already fetched them
+   * to chap few songs at the start because we've already fetched them
    *
    * @param songs
    * @returns {Array}

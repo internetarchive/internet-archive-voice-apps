@@ -202,7 +202,7 @@ function applyDefaultSlots (app, defaults) {
  * @param presetParamName
  */
 function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
-  let name= app.params.getByName(presetParamName);
+  let name = app.params.getByName(presetParamName);
   if (!name) {
     debug(`it wasn't preset`);
     return;

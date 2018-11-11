@@ -206,6 +206,21 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
+  hasPrevious ({ app, query, playlist }) {
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+    return orderStrategy.hasPrevious({ app, query, playlist });
+  }
+
+  /**
+   * Do we have next item?
+   *
+   * @param app
+   * @param slots
+   * @param playlist
+   * @returns {boolean}
+   */
   hasNext ({ app, query, playlist }) {
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
@@ -261,6 +276,19 @@ class AsyncAlbums extends DefaultFeeder {
           playlist.next(app);
         });
     }
+  }
+
+  /**
+   * Move to the previous song
+   *
+   * @param app
+   * @param query
+   * @param playlist
+   *
+   * @returns {Promise.<T>}
+   */
+  previous ({ app, query, playlist }) {
+    // TODO:
   }
 }
 
