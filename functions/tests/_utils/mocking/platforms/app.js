@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const sinon = require('sinon');
 
 module.exports = ({ getByName = {}, getData = {}, getRequestError = {}, isNewSession = false, offset = 0, platform = 'assistant' } = {}) => ({
@@ -16,6 +17,7 @@ module.exports = ({ getByName = {}, getData = {}, getRequestError = {}, isNewSes
       getData = {};
     }),
     getData: sinon.stub().callsFake(name => getData[name]),
+    isEmpty: sinon.stub().returns(_.isEmpty(getData)),
     setData: sinon.stub().callsFake((name, value) => {
       getData[name] = value;
       return true;

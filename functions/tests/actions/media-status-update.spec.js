@@ -21,6 +21,12 @@ describe('actions', () => {
           status: 'FINISHED',
         }
       },
+      getData: {
+        // to
+        playlist: {
+          feederName: 'albums-async',
+        },
+      }
     });
 
     helpers = {

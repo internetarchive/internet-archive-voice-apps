@@ -1,4 +1,4 @@
-const { debug, warning } = require('../utils/logger')('ia:actions:media-status-update');
+const { debug, error, warning } = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
 const strings = require('../strings');
@@ -40,6 +40,16 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
+  if (app.persist.isEmpty()) {
+    error(`something really strange we got end of music track but user's session is empty`);
+    // we are going to play short sample to hope that next time we would get session back
+    dialog.playSong(app, {
+      mediaResponseOnly: true,
+      audioURL: 'https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3',
+    });
+    return Promise.resolve();
+  }
+
   return helpers.playSong({ app, skip: 'forward' })
     .catch(context => {
       debug('It could be an error:', context);
