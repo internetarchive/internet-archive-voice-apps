@@ -29,6 +29,17 @@ function hasNextSong (app) {
 }
 
 /**
+ * Do we have previous song
+ *
+ * @param app
+ * @returns {boolean}
+ */
+function hasPreviousSong (app) {
+  const playlist = getData(app);
+  return !!playlist.items && playlist.current > 0;
+}
+
+/**
  * Reducer: Create new playlist
  *
  * @param app
@@ -114,6 +125,18 @@ function next (app) {
 }
 
 /**
+ * Reducer: Choose previous song
+ *
+ * @param app
+ */
+function previous (app) {
+  const playlist = getData(app);
+  setData(app, Object.assign({}, playlist, {
+    current: playlist.current - 1,
+  }));
+}
+
+/**
  * Shift current position in chunk
  *
  * @param app
@@ -157,7 +180,9 @@ module.exports = {
   getFeeder,
   setFeeder,
   hasNextSong,
+  hasPreviousSong,
   next,
+  previous,
   shift,
   getItems,
   updateItems,

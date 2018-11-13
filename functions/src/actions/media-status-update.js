@@ -20,15 +20,8 @@ const helpers = require('./playback/_helpers');
  */
 function handler (app) {
   debug('start');
-  let mediaStatus;
-  if (app.getArgument) {
-    // @deprecated
-    mediaStatus = app.getArgument('MEDIA_STATUS');
-  } else {
-    mediaStatus = app.params.getByName('MEDIA_STATUS');
-  }
 
-  const status = mediaStatus.status;
+  const { status } = app.params.getByName('MEDIA_STATUS');
 
   if (status === 'FINISHED') {
     return handleFinished(app);
@@ -47,7 +40,7 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  return helpers.playSong({ app, next: true })
+  return helpers.playSong({ app, skip: 'forward' })
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, strings.events.playlistIsEnded);

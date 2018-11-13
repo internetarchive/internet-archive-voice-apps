@@ -47,7 +47,7 @@ describe('actions', () => {
       // app.MEDIA_STATUS.extension.status = app.Media.Status.FINISHED;
       return action.handler(app)
         .then(() => {
-          expect(helpers.playSong).to.have.been.calledWith({ app, next: true });
+          expect(helpers.playSong).to.have.been.calledWith({ app, skip: 'forward' });
         });
     });
   });

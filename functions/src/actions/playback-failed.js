@@ -16,7 +16,7 @@ function handler (app) {
 
   warning(`Fail to playback ${currentTrack.audioUrl} with ${e.type}: "${e.message}"`);
 
-  return helpers.playSong({ app, next: true })
+  return helpers.playSong({ app, skip: 'forward' })
     .catch(e => {
       debug('It could be an error:', e);
       return dialog.ask(app, strings.events.playlistIsEnded);

@@ -1,4 +1,8 @@
 class RandomOrderStrategy {
+  clampCursorSongPosition () {
+
+  }
+
   /**
    * Get paging for fetching data from source
    *
@@ -13,6 +17,20 @@ class RandomOrderStrategy {
       limit: feederConfig.chunk.albums,
       page: 0,
     };
+  }
+
+  /**
+   * Do we have previous item
+   *
+   * Should always have previous item if feeder is valid
+   *
+   * @param app
+   * @param slots
+   * @param playlist
+   * @returns {boolean}
+   */
+  hasPrevious ({ app, query, playlist }) {
+    return !playlist.isEmpty(app);
   }
 
   /**
@@ -36,6 +54,16 @@ class RandomOrderStrategy {
    * Because we allow to fetch similar things again
    */
   moveSourceCursorToTheNextPosition () {
+
+  }
+
+  /**
+   * Move source cursor to the previous position.
+   *
+   * We don't need it for the random strategy.
+   * Because we allow to fetch similar things again
+   */
+  moveSourceCursorToThePreviousPosition () {
 
   }
 

@@ -1,7 +1,7 @@
 const persistance = require('./session');
 
 /**
- * Return persistance interface
+ * Return persistence interface
  *
  * @param assistant app
  */

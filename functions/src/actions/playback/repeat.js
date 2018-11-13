@@ -11,7 +11,7 @@ const helpers = require('./_helpers');
  * @param app
  */
 function handler (app) {
-  return helpers.playSong({ app, next: false })
+  return helpers.playSong({ app, skip: null })
     .catch(context => {
       debug('It could be an error:', context);
       return dialog.ask(app, strings.intents.repeat.empty);

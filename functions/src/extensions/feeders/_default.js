@@ -3,7 +3,7 @@ const mustache = require('mustache');
 const config = require('../../config');
 const songsProvider = require('../../provider/songs');
 const { debug } = require('../../utils/logger')('ia:feeder:default');
-const rebortEscape = require('../../utils/reborn-escape');
+const rebornEscape = require('../../utils/reborn-escape');
 
 class DefaultFeeder {
   build ({ app, query, playlist }) {
@@ -34,6 +34,18 @@ class DefaultFeeder {
   }
 
   /**
+   * Do we have previous item?
+   *
+   * @param app
+   * @param slots
+   * @param playlist
+   * @returns {boolean}
+   */
+  hasPrevious ({ app, slots, playlist }) {
+    return playlist.hasPreviousSong(app);
+  }
+
+  /**
    * Do we have next item?
    *
    * @param app
@@ -48,13 +60,26 @@ class DefaultFeeder {
   /**
    * Move to the next song
    *
-   * TODO: should be async because we could have multiple albumns here
+   * TODO: should be async because we could have multiple albums here
    *
    * @returns {Promise.<T>}
    */
   next ({ app, slots, playlist }) {
     debug('move to the next song');
     playlist.next(app);
+    return Promise.resolve();
+  }
+
+  /**
+   * Move to the previous song
+   *
+   * TODO: should be async because we could have multiple albums here
+   *
+   * @returns {Promise.<T>}
+   */
+  previous ({ app, slots, playlist }) {
+    debug('move to the next song');
+    playlist.previous(app);
     return Promise.resolve();
   }
 
@@ -69,7 +94,7 @@ class DefaultFeeder {
     return album.songs
       .map((song, idx) => Object.assign({}, song, {
         audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(
-          album.id, rebortEscape(song.filename)),
+          album.id, rebornEscape(song.filename)),
         collections: album.collections,
         coverage: album.coverage,
         creator: album.creator,

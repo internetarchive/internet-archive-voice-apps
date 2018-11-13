@@ -1,5 +1,5 @@
 /**
- * Original escape was depricated so we can't use it
+ * Original escape was deprecated so we can't use it
  *
  * To be more stringent in adhering to RFC 3986
  *

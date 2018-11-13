@@ -8,7 +8,7 @@ function handler (app) {
   return helpers.playSong({
     app,
     mediaResponseOnly: true,
-    next: true,
+    skip: 'forward',
     enqueue: true,
   })
     .catch(context => {

@@ -7,9 +7,9 @@ const { debug } = require('../../../utils/logger')('ia:actions:middleware:copy-a
  * which transfer arguments to slots
  *
  * @param app
- * @param newValues
- * @param query
- * @param slotScheme
+ * @param app.newValues
+ * @param app.query
+ * @param app.slotScheme
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
 module.exports = () =>
@@ -21,13 +21,7 @@ module.exports = () =>
     debug(`we have [${slotScheme.slots}] to check`);
     newValues = slotScheme.slots
       .reduce((newValues, slotName) => {
-        let value;
-        if (app.getArgument) {
-          // @deprecated
-          value = app.getArgument(slotName);
-        } else {
-          value = app.params.getByName(slotName);
-        }
+        let value = app.params.getByName(slotName);
         if (value) {
           query.setSlot(app, slotName, value);
           newValues = Object.assign({}, newValues, { [slotName]: value });
