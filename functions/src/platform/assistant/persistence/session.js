@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { debug } = require('../../../utils/logger')('ia:platform:assistant:persistence:session');
 
 /**
@@ -33,6 +35,15 @@ module.exports = (conv) => {
       }
 
       return conv.data[name];
+    },
+
+    /**
+     * Is empty session data
+     *
+     * @returns {boolean}
+     */
+    isEmpty () {
+      return _.isEmpty(conv.data);
     },
 
     /**

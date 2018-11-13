@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { debug, warning } = require('../../../utils/logger')('ia:platform:assistant:persistence:session');
 
 /**
@@ -25,6 +27,15 @@ module.exports = (conv) => {
       }
 
       return conv.user.storage[name];
+    },
+
+    /**
+     * Is empty user's storage
+     *
+     * @returns {boolean}
+     */
+    isEmpty () {
+      return _.isEmpty(conv.user.storage);
     },
 
     /**

@@ -12,6 +12,9 @@ const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistenc
  * https://github.com/internetarchive/internet-archive-google-action/issues/246
  *
  * @param handlerInput
+ * @param persistentAttributes
+ *
+ * @returns {*}
  */
 module.exports = (handlerInput, persistentAttributes) => {
   debug('create');
@@ -47,6 +50,15 @@ module.exports = (handlerInput, persistentAttributes) => {
         return persistentAttributes;
       }
       return _.get(persistentAttributes, [deviceId, name]);
+    },
+
+    /**
+     * Is empty user's storage
+     *
+     * @returns {boolean}
+     */
+    isEmpty () {
+      return _.isEmpty(_.get(persistentAttributes, deviceId));
     },
 
     /**
