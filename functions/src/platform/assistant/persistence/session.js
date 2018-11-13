@@ -18,7 +18,7 @@ module.exports = (conv) => {
     /**
      * Drop all session data
      */
-    dropAll: () => {
+    dropAll () {
       debug('drop all attributes');
       conv.data = {};
     },
@@ -29,7 +29,7 @@ module.exports = (conv) => {
      * @param name
      * @returns {{}}
      */
-    getData: (name) => {
+    getData (name) {
       if (!conv.data) {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
@@ -57,7 +57,7 @@ module.exports = (conv) => {
      *
      * @returns {Boolean} Data was stored
      */
-    setData: (name, value) => {
+    setData (name, value) {
       debug(`set attribute ${name} to`, value);
 
       if (!conv.data) {

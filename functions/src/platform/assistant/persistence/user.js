@@ -21,7 +21,7 @@ module.exports = (conv) => {
      * @param name
      * @returns {{}}
      */
-    getData: (name) => {
+    getData (name) {
       if (!conv.user.storage) {
         throw new Error('"data" field is missed in conv. We can not get user\'s data');
       }
@@ -49,7 +49,7 @@ module.exports = (conv) => {
      *
      * @returns {Boolean} Data was stored
      */
-    setData: (name, value) => {
+    setData (name, value) {
       debug(`set attribute ${name} to`, value);
 
       if (!conv.user.storage) {

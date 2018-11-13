@@ -33,7 +33,7 @@ module.exports = (handlerInput, persistentAttributes) => {
     /**
      * Drop all session data
      */
-    dropAll: () => {
+    dropAll () {
       debug('drop all attributes');
       _.set(persistentAttributes, [deviceId], {});
       debug(persistentAttributes, util.inspect(persistentAttributes, { depth: null }));
@@ -45,7 +45,7 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param name
      * @returns {{}}
      */
-    getData: (name) => {
+    getData (name) {
       if (!name) {
         return persistentAttributes;
       }
@@ -67,7 +67,7 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param name
      * @param value
      */
-    setData: (name, value) => {
+    setData (name, value) {
       debug(`set attribute ${name} to`, util.inspect(value, { depth: null }));
       _.set(persistentAttributes, [deviceId, name], value);
       return true;
