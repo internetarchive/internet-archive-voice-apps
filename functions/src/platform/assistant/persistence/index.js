@@ -1,8 +1,8 @@
-const persistance = require('./session');
+const persistence = require('./session');
 
 /**
  * Return persistence interface
  *
  * @param assistant app
  */
-module.exports = (conv) => persistance(conv);
+module.exports = (conv) => persistence(conv);

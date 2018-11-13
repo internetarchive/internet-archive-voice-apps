@@ -1,7 +1,7 @@
-const { debug, warning } = require('../../../utils/logger')('ia:platform:assistant:persistance:session');
+const { debug, warning } = require('../../../utils/logger')('ia:platform:assistant:persistence:session');
 
 /**
- * User level persistance
+ * User level persistence
  *
  * @param conv
  */

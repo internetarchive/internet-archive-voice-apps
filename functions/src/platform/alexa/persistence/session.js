@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const util = require('util');
 
-const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistence:device-level');
 
 /**
- * Session level persistance.
+ * Session level persistence.
  * More details here https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs/wiki/Skill-Attributes#session-attributes
  *
  * but because of limitations of Alexa session storage
