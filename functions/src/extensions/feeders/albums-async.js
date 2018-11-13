@@ -58,6 +58,7 @@ class AsyncAlbums extends DefaultFeeder {
         // the only place where we modify state
         // so maybe we can put it out of this function?
         debug(`let's create playlist for songs`);
+        songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, songs);
         playlist.create(app, songs, {
           cursor: Object.assign({}, defaultCursor, {
             total: {
@@ -137,10 +138,16 @@ class AsyncAlbums extends DefaultFeeder {
 
         if (!albums || albums.length === 0) {
           debug('we got none albums');
-          return { songs: [], songsInFirstAlbum: 0, totalNumOfAlbums: 0 };
+          return {
+            songs: [],
+            songsInFirstAlbum: 0,
+            songsNumInLastAlbum: 0,
+            totalNumOfAlbums: 0,
+          };
         }
 
         const songsInFirstAlbum = albums[0].songs.length;
+        const numOfSongsInLastAlbum = albums[albums.length - 1].songs.length;
 
         let songs = albums
           .map(this.processAlbumSongs)
@@ -154,22 +161,88 @@ class AsyncAlbums extends DefaultFeeder {
           return this.fetchChunkOfSongs({ app, query, playlist });
         }
 
-        debug(`we get ${songs.length} songs`);
-
-        songs = orderStrategy.songsPostProcessing({ songs, cursor });
-
-        // get chunk of songs
-        if (feederConfig.chunk.songs) {
-          songs = songs.slice(0, feederConfig.chunk.songs);
-          debug(`but only ${songs.length} in chunk left`);
-        }
-
-        return { songs, songsInFirstAlbum, totalNumOfAlbums };
+        return {
+          songs,
+          songsInFirstAlbum,
+          numOfSongsInLastAlbum,
+          totalNumOfAlbums
+        };
       })
       .catch(err => {
         error('We got an error:', err);
         return Promise.reject(err);
       });
+  }
+
+  /**
+   * Process list of songs before move to the next song
+   *
+   * @param app
+   * @param query
+   * @param playlist
+   * @param songs
+   * @returns {*[]}
+   */
+  processNewSongsBeforeMoveToNext ({ app, query, playlist }, songs) {
+    debug('process songs on moving to next');
+    const cursor = this.getCursor(app, playlist);
+    const feederConfig = this.getConfigForOrder(app, query);
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+
+    debug(`we get ${songs.length} songs`);
+
+    songs = orderStrategy.songsPostProcessing({ songs, cursor });
+
+    // to chap few songs at the start because we've already fetched them
+    // start from song we need
+    songs = songs.slice(cursor.current.song);
+
+    // get chunk of songs
+    if (feederConfig.chunk.songs) {
+      songs = songs.slice(0, feederConfig.chunk.songs);
+      debug(`but only ${songs.length} in chunk left`);
+    }
+
+    return songs;
+  }
+
+  /**
+   * Process list of songs before move to the previous song
+   *
+   * @param songs
+   * @param app
+   * @param query
+   * @param playlist
+   * @returns {*[]}
+   */
+  processNewSongsBeforeMoveToPrevious ({ app, query, playlist }, songs) {
+    debug('process songs on moving to previous');
+    const cursor = this.getCursor(app, playlist);
+    const feederConfig = this.getConfigForOrder(app, query);
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+
+    debug(`we get ${songs.length} songs`);
+
+    songs = orderStrategy.songsPostProcessing({ songs, cursor });
+
+    // to chap few songs at the end because we've already fetched them
+    // start from song we need
+    songs = songs.slice(0, cursor.current.song + 1);
+
+    debug(`left ${songs.length} songs after dropping after ${cursor.current.song}`);
+
+    // get chunk of songs
+    if (feederConfig.chunk.songs) {
+      songs = _.takeRight(songs, feederConfig.chunk.songs);
+      // songs = songs.slice(0, feederConfig.chunk.songs);`
+      debug(`but only ${songs.length} in chunk left`);
+    }
+
+    return songs;
   }
 
   /**
@@ -206,11 +279,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasPrevious ({ app, query, playlist }) {
+  hasNext ({ app, query, playlist }) {
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
-    return orderStrategy.hasPrevious({ app, query, playlist });
+    return orderStrategy.hasNext({ app, query, playlist });
   }
 
   /**
@@ -221,11 +294,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({ app, query, playlist }) {
+  hasPrevious ({ app, query, playlist }) {
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
-    return orderStrategy.hasNext({ app, query, playlist });
+    return orderStrategy.hasPrevious({ app, query, playlist });
   }
 
   /**
@@ -255,7 +328,9 @@ class AsyncAlbums extends DefaultFeeder {
           return this
             .fetchChunkOfSongs({ app, query, playlist })
             .then(({ songs, songsInFirstAlbum }) => {
-              // we'll append new chunk of songs
+              songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, songs);
+
+              // merge new songs
               let items = playlist.getItems(app).concat(songs);
 
               // but we shouldn't exceed available size of chunk
@@ -291,7 +366,56 @@ class AsyncAlbums extends DefaultFeeder {
    * @returns {Promise.<T>}
    */
   previous ({ app, query, playlist }) {
-    // TODO:
+    debug('move to the previous song');
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+
+    orderStrategy.moveSourceCursorToThePreviousPosition({ app, query, playlist });
+
+    return Promise.resolve()
+      .then(() => {
+        // check whether we need to fetch new chunk
+        if (playlist.hasPreviousSong(app)) {
+          debug('we have previous song so just move cursor without fetching new data');
+        } else {
+          debug(`we don't have previous song in playlist so we'll fetch new chunk of songs`);
+          return this
+            .fetchChunkOfSongs({ app, query, playlist })
+            .then(({ songs, numOfSongsInLastAlbum }) => {
+              orderStrategy.clampCursorSongPosition({ app, playlist }, numOfSongsInLastAlbum - 1);
+
+              songs = this.processNewSongsBeforeMoveToPrevious({ app, query, playlist }, songs);
+
+              // but we shouldn't exceed available size of chunk
+              const feederConfig = this.getConfigForOrder(app, query);
+
+              // get last tail of songs
+              songs = _.takeRight(songs, feederConfig.chunk.songs);
+
+              // merge new songs
+              let items = songs.concat(playlist.getItems(app));
+
+              if (items.length > feederConfig.chunk.songs) {
+                debug(`drop ${items.length - feederConfig.chunk.songs} old song(s)`);
+                items = items.slice(0, feederConfig.chunk.songs);
+              }
+              // because we append new songs at the playlist start
+              // we should shift its current position to the size of appended songs
+              playlist.shift(app, songs.length);
+              playlist.updateItems(app, items);
+
+              orderStrategy.updateCursorTotal({
+                app,
+                playlist,
+                numOfSongsInLastAlbum,
+              });
+            });
+        }
+      })
+      .then(() => {
+        playlist.previous(app);
+      });
   }
 }
 

@@ -1,4 +1,8 @@
 class RandomOrderStrategy {
+  clampCursorSongPosition () {
+
+  }
+
   /**
    * Get paging for fetching data from source
    *
@@ -50,6 +54,16 @@ class RandomOrderStrategy {
    * Because we allow to fetch similar things again
    */
   moveSourceCursorToTheNextPosition () {
+
+  }
+
+  /**
+   * Move source cursor to the previous position.
+   *
+   * We don't need it for the random strategy.
+   * Because we allow to fetch similar things again
+   */
+  moveSourceCursorToThePreviousPosition () {
 
   }
 

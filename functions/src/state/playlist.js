@@ -28,9 +28,15 @@ function hasNextSong (app) {
   return playlist.items ? playlist.current < playlist.items.length - 1 : false;
 }
 
+/**
+ * Do we have previous song
+ *
+ * @param app
+ * @returns {boolean}
+ */
 function hasPreviousSong (app) {
-  // TODO:
-  return null;
+  const playlist = getData(app);
+  return !!playlist.items && playlist.current > 0;
 }
 
 /**
@@ -118,8 +124,16 @@ function next (app) {
   }));
 }
 
+/**
+ * Reducer: Choose previous song
+ *
+ * @param app
+ */
 function previous (app) {
-  // TODO:
+  const playlist = getData(app);
+  setData(app, Object.assign({}, playlist, {
+    current: playlist.current - 1,
+  }));
 }
 
 /**

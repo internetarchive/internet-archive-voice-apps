@@ -1,6 +1,28 @@
+const _ = require('lodash');
+
 const { debug } = require('../../utils/logger')('ia:order:natural');
 
 class NaturalOrderStrategy {
+  /**
+   * when we process function
+   * orderStrategy.moveSourceCursorToThePreviousPosition
+   * and step to the previous album
+   * and should move to the last song in that album
+   * we don't know this information
+   * we should clamp this position
+   *
+   * @param app
+   * @param playlist
+   * @param maxValue
+   */
+  clampCursorSongPosition ({ app, playlist }, maxValue) {
+    let extra = playlist.getExtra(app);
+    extra = _.update(extra, 'cursor.current.song',
+      value => Math.min(value, maxValue)
+    );
+    playlist.setExtra(app, extra);
+  }
+
   /**
    * Get paging for fetching data from source
    *
@@ -16,6 +38,21 @@ class NaturalOrderStrategy {
       // request next portion of albums
       page: Math.floor(cursor.current.album / feederConfig.chunk.albums),
     };
+  }
+
+  /**
+   * Do we have previous item
+   */
+  hasPrevious ({ app, playlist }) {
+    const { current } = playlist.getExtra(app).cursor;
+
+    // Isn't it the 1st album
+    if (current.album > 0) {
+      return true;
+    }
+
+    // Isn't it the 1st song?
+    return current.song > 0;
   }
 
   /**
@@ -63,19 +100,27 @@ class NaturalOrderStrategy {
     });
   }
 
-  /**
-   * Do we have previous item
-   */
-  hasPrevious ({ app, playlist }) {
-    const { current } = playlist.getExtra(app).cursor;
-
-    // Isn't it the 1st album
-    if (current.album > 0) {
-      return true;
+  moveSourceCursorToThePreviousPosition ({ app, query, playlist }) {
+    const cursor = playlist.getExtra(app).cursor;
+    const current = Object.assign({}, cursor.current);
+    current.song--;
+    if (current.song < 0) {
+      debug('move cursor to a previous album');
+      // TODO: set song to the last in an album
+      current.song = 100000;
+      current.album--;
+      if (current.album < 0) {
+        debug('the begin of playlist');
+        current.album++;
+      }
+    } else {
+      debug('move cursor to a previous song');
     }
 
-    // Isn't it the 1st song?
-    return current.song > 0;
+    // store cursor
+    playlist.setExtra(app, {
+      cursor: Object.assign({}, cursor, { current }),
+    });
   }
 
   /**
@@ -101,9 +146,8 @@ class NaturalOrderStrategy {
    * @param songs
    * @returns {Array}
    */
-  songsPostProcessing ({ cursor, songs }) {
-    // start from song we need
-    return songs.slice(cursor.current.song);
+  songsPostProcessing ({ songs }) {
+    return songs;
   }
 }
 

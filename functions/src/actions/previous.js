@@ -5,7 +5,7 @@ const { debug } = require('../utils/logger')('ia:actions:next');
 const helpers = require('./playback/_helpers');
 
 /**
- * handle playback failed request
+ * handle playback previous song request
  *
  * @param app
  */

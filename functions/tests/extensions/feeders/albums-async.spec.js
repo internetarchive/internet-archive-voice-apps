@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const _ = require('lodash');
 const rewire = require('rewire');
 const sinon = require('sinon');
 
@@ -39,13 +40,36 @@ describe('feeders', () => {
 
       return resolve
         .then(() => {
-          expect(feeder.isEmpty({ app, query, playlist })).to.be.false;
+          expect(feeder.isEmpty({ app, query, playlist }))
+            .to.be.false;
           expect(feeder.getCurrentItem({ app, query, playlist }))
             .to.have.property('filename', filename);
           expect(feeder.getCurrentItem({ app, query, playlist }))
             .to.have.property('album')
             .to.have.property('title', album);
-          expect(feeder.hasNext({ app, query, playlist })).to.be.equal(hasNext);
+          expect(feeder.hasNext({ app, query, playlist }))
+            .to.be.equal(hasNext);
+        });
+    }
+
+    function testPreviousSong ({ album, app, feeder, filename, playlist, query, hasPrevious = true, moveToPrevious = true }) {
+      let resolve;
+      if (moveToPrevious) {
+        resolve = feeder.previous({ app, query, playlist });
+      } else {
+        resolve = Promise.resolve();
+      }
+
+      return resolve
+        .then(() => {
+          expect(feeder.isEmpty({ app, query, playlist })).to.be.false;
+          expect(feeder.getCurrentItem({ app, query, playlist })).to.be.ok;
+          expect(feeder.getCurrentItem({ app, query, playlist }))
+            .to.have.property('filename', filename);
+          expect(feeder.getCurrentItem({ app, query, playlist }))
+            .to.have.property('album')
+            .to.have.property('title', album);
+          expect(feeder.hasPrevious({ app, query, playlist })).to.be.equal(hasPrevious);
         });
     }
 
@@ -114,6 +138,10 @@ describe('feeders', () => {
               filename: 'filename-2',
             }, {
               filename: 'filename-3',
+            }, {
+              filename: 'filename-4',
+            }, {
+              filename: 'filename-5',
             }]
           });
         })
@@ -143,6 +171,10 @@ describe('feeders', () => {
               filename: 'filename-2',
             }, {
               filename: 'filename-3',
+            }, {
+              filename: 'filename-4',
+            }, {
+              filename: 'filename-5',
             }]
           });
         })
@@ -151,6 +183,22 @@ describe('feeders', () => {
           app,
           feeder,
           filename: 'filename-3',
+          playlist,
+          query
+        }))
+        .then(() => testNextSong({
+          album: 'album-2',
+          app,
+          feeder,
+          filename: 'filename-4',
+          playlist,
+          query
+        }))
+        .then(() => testNextSong({
+          album: 'album-2',
+          app,
+          feeder,
+          filename: 'filename-5',
           playlist,
           query
         }))
@@ -204,6 +252,157 @@ describe('feeders', () => {
           playlist,
           query,
           hasNext: false,
+        }));
+    });
+
+    it('should fetch previous ordered song', () => {
+      app = mockApp();
+      // TODO: should try with undefined order
+      query.setSlot(app, 'order', 'natural');
+      mockNewAlbum({
+        title: 'album-4',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }, {
+          filename: 'filename-3',
+        }]
+      });
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => {
+          // move to the 1st song of 4th album
+          let extra = playlist.getExtra(app);
+          extra = _.set(extra, 'cursor.current', { album: 3, song: 0 });
+          playlist.setExtra(app, extra);
+        })
+        .then(() => testPreviousSong({
+          album: 'album-4',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          moveToPrevious: false,
+          hasPrevious: true,
+        }))
+        .then(() => {
+          // we will request next chunk of songs
+          mockNewAlbum({
+            title: 'album-3',
+            songs: [{
+              filename: 'filename-1',
+            }, {
+              filename: 'filename-2',
+            }, {
+              filename: 'filename-3',
+            }]
+          });
+        })
+        .then(() => testPreviousSong({
+          album: 'album-3',
+          app,
+          feeder,
+          filename: 'filename-3',
+          playlist,
+          query,
+          hasPrevious: true,
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-3',
+          app,
+          feeder,
+          filename: 'filename-2',
+          playlist,
+          query,
+          hasPrevious: true,
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-3',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          hasPrevious: true,
+        }))
+        .then(() => {
+          // we will request next chunk of songs
+          mockNewAlbum({
+            title: 'album-2',
+            songs: [{
+              filename: 'filename-1',
+            }, {
+              filename: 'filename-2',
+            }, {
+              filename: 'filename-3',
+            }]
+          });
+        })
+        .then(() => testPreviousSong({
+          album: 'album-2',
+          app,
+          feeder,
+          filename: 'filename-3',
+          playlist,
+          query,
+          hasPrevious: true,
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-2',
+          app,
+          feeder,
+          filename: 'filename-2',
+          playlist,
+          query
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-2',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query
+        }))
+        .then(() => {
+          // we will request next chunk of songs
+          mockNewAlbum({
+            title: 'album-1',
+            songs: [{
+              filename: 'filename-1',
+            }, {
+              filename: 'filename-2',
+            }, {
+              filename: 'filename-3',
+            }]
+          });
+        })
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-3',
+          playlist,
+          query
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-2',
+          playlist,
+          query
+        }))
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          hasPrevious: false,
         }));
     });
 
