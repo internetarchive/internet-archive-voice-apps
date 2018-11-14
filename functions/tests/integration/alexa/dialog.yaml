@@ -221,7 +221,6 @@
         directive: 'AudioPlayer.Play'
 
 - scenario: 'play previous song'
-  skip: true
   dialog:
     - user: 'play jazz'
     - user: 'previous'
