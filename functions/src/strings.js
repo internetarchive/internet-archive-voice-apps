@@ -217,6 +217,17 @@ module.exports = {
     },
 
     /**
+     * Loop On action
+     */
+    loopOn: {
+      default: {
+        speech:
+          '<s>Alright! I will repeat records in a loop</s>' +
+          '<s>{{last.reprompt}}</s>',
+      }
+    },
+
+    /**
      * Action: with slots scheme for music search query
      */
     musicQuery: [{

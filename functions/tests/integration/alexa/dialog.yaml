@@ -226,3 +226,8 @@
     - user: 'previous'
       assistant:
         directive: 'AudioPlayer.Play'
+
+- scenario: 'loop on'
+  dialog:
+    - user: 'loop on'
+      assistant: 'I will repeat records in a loop'
