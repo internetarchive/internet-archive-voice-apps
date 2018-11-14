@@ -3,6 +3,18 @@ const _ = require('lodash');
 const { debug, warning } = require('../../../utils/logger')('ia:platform:assistant:persistence:session');
 
 /**
+ * We can't use more than 1e4 bytes
+ *
+ * TODO: so maybe it could have sense to compress data?
+ * - https://github.com/mongodb/js-bson write to binary JSON
+ * - compress
+ * - base64?
+ *
+ * @type {number}
+ */
+const maxAvailableSize = 1e4;
+
+/**
  * User level persistence
  *
  * @param conv
@@ -15,6 +27,14 @@ module.exports = (conv) => {
   }
 
   return {
+    /**
+     * Drop all user's data
+     */
+    dropAll () {
+      debug('drop all attributes');
+      conv.user.storage = {};
+    },
+
     /**
      * Get data
      *
@@ -59,8 +79,9 @@ module.exports = (conv) => {
       const oldValue = conv.user.storage[name];
       conv.user.storage[name] = value;
       const size = JSON.stringify({ data: conv.user.storage }).length;
-      debug(`size of user data: ${size} bytes`);
-      if (size > 1e4) {
+      debug(`size of user data: ${size} bytes, ${Math.floor(100 * size / maxAvailableSize)}% of available`);
+      if (size > maxAvailableSize) {
+        // https://github.com/actions-on-google/actions-on-google-nodejs/issues/134
         warning(`we exceed limitation of platform for user storage (size: ${size} bytes)`);
         conv.user.storage[name] = oldValue;
         return false;

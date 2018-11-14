@@ -30,7 +30,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'repeat',
-        data: {
+        userStorage: {
           dialog: {
             lastPhrase: {
               speech: 'Where to go?',

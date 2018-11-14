@@ -1,6 +1,7 @@
 const { debug, error, warning } = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
+const playlist = require('../state/playlist');
 const strings = require('../strings');
 
 const helpers = require('./playback/_helpers');
@@ -40,7 +41,7 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
-  if (app.persist.isEmpty()) {
+  if (app.persist.isEmpty() || !playlist.getFeeder(app)) {
     error(`something really strange we got end of music track but user's session is empty`);
     // we are going to play short sample to hope that next time we would get session back
     dialog.playSong(app, {

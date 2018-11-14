@@ -1,4 +1,5 @@
-const persistence = require('./session');
+// const persistence = require('./session');
+const persistence = require('./user');
 
 /**
  * Return persistence interface

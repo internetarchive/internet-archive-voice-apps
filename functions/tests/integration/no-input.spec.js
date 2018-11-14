@@ -43,7 +43,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'no-input',
-        data: {
+        userStorage: {
           dialog: {
             lastPhrase: {
               reprompt: 'Direction?',
@@ -72,7 +72,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'no-input',
-        data: {
+        userStorage: {
           actions: {
             action: 'no-input',
             count: 2,
@@ -94,7 +94,7 @@ describe('integration', () => {
       const res = new MockResponse();
       const req = buildIntentRequest({
         action: 'no-input',
-        data: {
+        userStorage: {
           actions: {
             action: 'some.other.action',
             count: 2,
