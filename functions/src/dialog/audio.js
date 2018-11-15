@@ -92,13 +92,10 @@ function playSong (app, options) {
 
     mediaResponseOnly: options.mediaResponseOnly,
 
-    suggestions: [
-      'next song',
-      {
-        url: mustache.render(config.endpoints.ALBUM_DETAIL, options),
-        title: mustache.render(strings.suggestionLink, options),
-      },
-    ],
+    suggestions: strings.suggestions.concat({
+      url: mustache.render(config.endpoints.ALBUM_DETAIL, options),
+      title: mustache.render(strings.suggestionLink, options),
+    }),
   });
 }
 

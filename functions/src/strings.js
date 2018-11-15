@@ -47,6 +47,10 @@ module.exports = {
       }],
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
+      suggestions: [
+        'previous song',
+        'next song',
+      ]
     }, {
       description: 'Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
@@ -69,6 +73,10 @@ module.exports = {
       }],
       title: '{{title}} by {{creator}} {{year}}',
       suggestionLink: 'on Archive.org',
+      suggestions: [
+        'previous song',
+        'next song',
+      ]
     }],
   },
 

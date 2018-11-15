@@ -38,6 +38,9 @@ describe('dialog', () => {
       `,
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
+      suggestions: [
+        'next song'
+      ],
     });
   });
 
