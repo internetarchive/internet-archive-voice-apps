@@ -7,7 +7,7 @@ const playbackHelpers = require('./_helpers');
 function handler (app) {
   playlist.setLoop(app, false);
   defaultHelpers.simpleResponse(app, strings.intents.loopOff.playback);
-  playbackHelpers.resume({ app });
+  return playbackHelpers.resume({ app });
 }
 
 module.exports = {
