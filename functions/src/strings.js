@@ -224,6 +224,12 @@ module.exports = {
         speech:
           '<s>Alright! I will stop playback after the last record</s>' +
           '<s>{{last.reprompt}}</s>',
+      },
+
+      playback: {
+        speech:
+          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>{{last.reprompt}}</s>',
       }
     },
     /**
@@ -234,6 +240,11 @@ module.exports = {
         speech:
           '<s>Alright! I will repeat records in a loop</s>' +
           '<s>{{last.reprompt}}</s>',
+      },
+
+      playback: {
+        speech:
+          '<s>Alright! I will repeat records in a loop</s>',
       }
     },
 
