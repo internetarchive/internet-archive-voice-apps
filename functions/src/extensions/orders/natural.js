@@ -118,7 +118,13 @@ class NaturalOrderStrategy {
       current.album--;
       if (current.album < 0) {
         debug('the begin of playlist');
-        current.album++;
+
+        if (playlist.isLoop(app)) {
+          current.album = cursor.total.albums - 1;
+          current.song = 1e9;
+        } else {
+          current.album++;
+        }
       }
     } else {
       debug('move cursor to a previous song');

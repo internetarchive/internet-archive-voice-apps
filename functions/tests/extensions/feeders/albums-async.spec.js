@@ -257,7 +257,6 @@ describe('feeders', () => {
 
     it('should fetch previous ordered song', () => {
       app = mockApp();
-      // TODO: should try with undefined order
       query.setSlot(app, 'order', 'natural');
       mockNewAlbum({
         title: 'album-4',
@@ -572,6 +571,68 @@ describe('feeders', () => {
           filename: 'filename-1',
           playlist,
           query,
+        }));
+    });
+
+    it('should loop to the last record on previous when loop is on', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'natural');
+      playlist.setLoop(app, true);
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }],
+      }, 1);
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          moveToPrevious: false,
+        }))
+        // // loop to the last record
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-2',
+          playlist,
+          query,
+        }));
+    });
+
+    it('should not loop on previous when loop is off', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'natural');
+      playlist.setLoop(app, false);
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }],
+      }, 1);
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testPreviousSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          moveToPrevious: false,
+          hasPrevious: false,
         }));
     });
 
