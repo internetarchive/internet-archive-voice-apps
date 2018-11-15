@@ -122,6 +122,14 @@ function isLoop (app) {
   return !!getData(app).loop;
 }
 
+function setLoop (app, loopOn) {
+  const playlist = getData(app);
+  setData(app, {
+    ...playlist,
+    loop: loopOn,
+  });
+}
+
 /**
  * Reducer: Choose next song
  *
@@ -185,6 +193,7 @@ module.exports = {
   getCurrentSong,
   isEmpty,
   isLoop,
+  setLoop,
   create,
   getExtra,
   setExtra,

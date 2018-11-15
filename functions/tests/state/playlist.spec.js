@@ -73,6 +73,11 @@ describe('playlist', () => {
     it('should be off by default', () => {
       expect(playlist.isLoop(app)).to.be.false;
     });
+
+    it('should be on when enabled', () => {
+      playlist.setLoop(app, true);
+      expect(playlist.isLoop(app)).to.be.true;
+    });
   });
 
   describe('selectors', () => {
