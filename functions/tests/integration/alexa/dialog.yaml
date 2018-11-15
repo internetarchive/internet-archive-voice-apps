@@ -236,3 +236,17 @@
   dialog:
     - user: 'loop off'
       assistant: "I will stop playback after the last record"
+
+- scenario: 'resume playback after loop on'
+  dialog:
+    - user: 'play jazz'
+    - user: 'loop on'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'loop off'
+  dialog:
+    - user: 'play jazz'
+    - user: 'loop off'
+      assistant:
+        directive: 'AudioPlayer.Play'
