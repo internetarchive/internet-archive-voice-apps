@@ -231,3 +231,8 @@
   dialog:
     - user: 'loop on'
       assistant: 'I will repeat records in a loop'
+
+- scenario: 'loop off'
+  dialog:
+    - user: 'loop off'
+      assistant: "I will stop playback after the last record"

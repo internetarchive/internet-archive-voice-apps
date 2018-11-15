@@ -217,6 +217,16 @@ module.exports = {
     },
 
     /**
+     * Loop Off action
+     */
+    loopOff: {
+      default: {
+        speech:
+          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>{{last.reprompt}}</s>',
+      }
+    },
+    /**
      * Loop On action
      */
     loopOn: {
