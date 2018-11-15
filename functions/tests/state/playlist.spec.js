@@ -69,6 +69,12 @@ describe('playlist', () => {
     });
   });
 
+  describe('loop', () => {
+    it('should be off by default', () => {
+      expect(playlist.isLoop(app)).to.be.false;
+    });
+  });
+
   describe('selectors', () => {
     describe('getCurrentSong', () => {
       it('should return current song', () => {

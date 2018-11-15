@@ -113,6 +113,16 @@ function isEmpty (app) {
 }
 
 /**
+ * Should we loop
+ *
+ * @param app
+ * @returns {boolean}
+ */
+function isLoop (app) {
+  return !!getData(app).loop;
+}
+
+/**
  * Reducer: Choose next song
  *
  * @param app
@@ -174,6 +184,7 @@ function updateItems (app, items) {
 module.exports = {
   getCurrentSong,
   isEmpty,
+  isLoop,
   create,
   getExtra,
   setExtra,
