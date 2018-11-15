@@ -78,6 +78,12 @@ describe('playlist', () => {
       playlist.setLoop(app, true);
       expect(playlist.isLoop(app)).to.be.true;
     });
+
+    it('should exist after create', () => {
+      playlist.setLoop(app, true);
+      playlist.create(app);
+      expect(playlist.isLoop(app)).to.be.true;
+    });
   });
 
   describe('selectors', () => {

@@ -16,13 +16,13 @@ describe('feeders', () => {
     let albumsProvider;
     let app;
 
-    function mockNewAlbum (album) {
+    function mockNewAlbum (album, numOfAlbums = 3) {
       albumsProvider = Object.assign({}, albumsProvider, mockAlbumsProvider({
         fetchAlbumsByQueryResolve: {
           items: album ? [{
             identifier: album,
           }] : [],
-          total: album ? 3 : 0,
+          total: numOfAlbums,
         },
 
         fetchAlbumDetailsResolve: album,
@@ -406,26 +406,100 @@ describe('feeders', () => {
         }));
     });
 
-    it('should fetch next random song', () => {
-      const orderStrategy = mockOrderStrategy();
-      const orderStrategies = {
-        getByName: sinon.stub().returns(orderStrategy),
-      };
-      feeder.__set__('orderStrategies', orderStrategies);
+    describe('random order', () => {
+      let originalOrderStrategies;
 
+      beforeEach(() => {
+        const orderStrategy = mockOrderStrategy();
+        const orderStrategies = {
+          getByName: sinon.stub().returns(orderStrategy),
+        };
+        originalOrderStrategies = feeder.__get__('orderStrategies');
+        feeder.__set__('orderStrategies', orderStrategies);
+      });
+
+      afterEach(() => {
+        feeder.__set__('orderStrategies', originalOrderStrategies);
+      });
+
+      it('should fetch next', () => {
+        app = mockApp();
+        query.setSlot(app, 'order', 'random');
+
+        mockNewAlbum({
+          title: 'album-1',
+          songs: [{
+            filename: 'filename-1',
+          }, {
+            filename: 'filename-2',
+          }, {
+            filename: 'filename-3',
+          }]
+        });
+
+        return feeder
+          .build({ app, query, playlist })
+          .then(() => testNextSong({
+            album: 'album-1',
+            app,
+            feeder,
+            filename: 'filename-1',
+            playlist,
+            query,
+            moveToNext: false,
+          }))
+          .then(() => testNextSong({
+            album: 'album-1',
+            app,
+            feeder,
+            filename: 'filename-2',
+            playlist,
+            query
+          }))
+          .then(() => {
+            // we will request next chunk of songs
+            mockNewAlbum({
+              title: 'album-2',
+              songs: [{
+                filename: 'filename-1',
+              }, {
+                filename: 'filename-2',
+              }, {
+                filename: 'filename-3',
+              }]
+            });
+          })
+          .then(() => testNextSong({
+            album: 'album-2',
+            app,
+            feeder,
+            filename: 'filename-1',
+            playlist,
+            query,
+          }))
+          .then(() => testNextSong({
+            album: 'album-2',
+            app,
+            feeder,
+            filename: 'filename-2',
+            playlist,
+            query
+          }));
+      });
+    });
+
+    it('should loop to the 1st record when loop is on', () => {
       app = mockApp();
-      query.setSlot(app, 'order', 'random');
-
+      query.setSlot(app, 'order', 'natural');
+      playlist.setLoop(app, true);
       mockNewAlbum({
         title: 'album-1',
         songs: [{
           filename: 'filename-1',
         }, {
           filename: 'filename-2',
-        }, {
-          filename: 'filename-3',
-        }]
-      });
+        }],
+      }, 1);
 
       return feeder
         .build({ app, query, playlist })
@@ -446,41 +520,65 @@ describe('feeders', () => {
           playlist,
           query
         }))
-        .then(() => {
-          // we will request next chunk of songs
-          mockNewAlbum({
-            title: 'album-2',
-            songs: [{
-              filename: 'filename-1',
-            }, {
-              filename: 'filename-2',
-            }, {
-              filename: 'filename-3',
-            }]
-          });
-        })
+        // loop to the 1st record
         .then(() => testNextSong({
-          album: 'album-2',
+          album: 'album-1',
           app,
           feeder,
           filename: 'filename-1',
           playlist,
           query,
+        }));
+    });
+
+    it('should not loop when loop is off', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'natural');
+      playlist.setLoop(app, false);
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }],
+      }, 1);
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testNextSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          moveToNext: false,
         }))
         .then(() => testNextSong({
-          album: 'album-2',
+          album: 'album-1',
           app,
           feeder,
           filename: 'filename-2',
           playlist,
-          query
+          query,
+          hasNext: false,
+        }))
+        // loop to the 1st record
+        .then(() => testNextSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
         }));
     });
 
     it('should build feeder with 0 songs for empty response', () => {
       app = mockApp();
       query.setSlot(app, 'order', 'natural');
-      mockNewAlbum(null);
+      mockNewAlbum(null, 0);
 
       return feeder
         .build({ app, query, playlist })

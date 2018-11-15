@@ -280,6 +280,10 @@ class AsyncAlbums extends DefaultFeeder {
    * @returns {boolean}
    */
   hasNext ({ app, query, playlist }) {
+    if (playlist.isLoop(app)) {
+      return true;
+    }
+
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
@@ -295,6 +299,10 @@ class AsyncAlbums extends DefaultFeeder {
    * @returns {boolean}
    */
   hasPrevious ({ app, query, playlist }) {
+    if (playlist.isLoop(app)) {
+      return true;
+    }
+
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );

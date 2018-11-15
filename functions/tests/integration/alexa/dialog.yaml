@@ -244,7 +244,7 @@
       assistant:
         directive: 'AudioPlayer.Play'
 
-- scenario: 'loop off'
+- scenario: 'resume playback after loop off'
   dialog:
     - user: 'play jazz'
     - user: 'loop off'
