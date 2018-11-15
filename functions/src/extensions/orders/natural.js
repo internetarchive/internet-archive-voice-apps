@@ -88,7 +88,12 @@ class NaturalOrderStrategy {
       current.album++;
       if (current.album >= cursor.total.albums) {
         debug('the end of playlist');
-        current.album--;
+        if (playlist.isLoop(app)) {
+          current.album = 0;
+          current.song = 0;
+        } else {
+          current.album--;
+        }
       }
     } else {
       debug('move cursor to a next song');
@@ -106,12 +111,20 @@ class NaturalOrderStrategy {
     current.song--;
     if (current.song < 0) {
       debug('move cursor to a previous album');
-      // TODO: set song to the last in an album
-      current.song = 100000;
+      // we should set song to the last in an album
+      // but because we don't know yet which is the last just set to the max available value
+      // later we will use #clampCursorSongPosition to fit it to the right value
+      current.song = 1e9;
       current.album--;
       if (current.album < 0) {
         debug('the begin of playlist');
-        current.album++;
+
+        if (playlist.isLoop(app)) {
+          current.album = cursor.total.albums - 1;
+          current.song = 1e9;
+        } else {
+          current.album++;
+        }
       }
     } else {
       debug('move cursor to a previous song');

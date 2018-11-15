@@ -32,7 +32,7 @@ describe('actions', () => {
       playbackHelpers = {
         resume: sinon.spy(),
       };
-      action.__set__('helpers', playbackHelpers);
+      action.__set__('playbackHelpers', playbackHelpers);
     });
 
     it('should tell record title and artist name', () => {

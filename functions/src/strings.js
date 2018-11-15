@@ -47,6 +47,10 @@ module.exports = {
       }],
       title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
       suggestionLink: 'on Archive.org',
+      suggestions: [
+        'previous song',
+        'next song',
+      ]
     }, {
       description: 'Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
@@ -69,6 +73,10 @@ module.exports = {
       }],
       title: '{{title}} by {{creator}} {{year}}',
       suggestionLink: 'on Archive.org',
+      suggestions: [
+        'previous song',
+        'next song',
+      ]
     }],
   },
 
@@ -214,6 +222,38 @@ module.exports = {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
         },
       },
+    },
+
+    /**
+     * Loop Off action
+     */
+    loopOff: {
+      default: {
+        speech:
+          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>{{last.reprompt}}</s>',
+      },
+
+      playback: {
+        speech:
+          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>{{last.reprompt}}</s>',
+      }
+    },
+    /**
+     * Loop On action
+     */
+    loopOn: {
+      default: {
+        speech:
+          '<s>Alright! I will repeat records in a loop</s>' +
+          '<s>{{last.reprompt}}</s>',
+      },
+
+      playback: {
+        speech:
+          '<s>Alright! I will repeat records in a loop</s>',
+      }
     },
 
     /**

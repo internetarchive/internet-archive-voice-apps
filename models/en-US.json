@@ -4,38 +4,6 @@
             "invocationName": "internet archive",
             "intents": [
                 {
-                    "name": "AMAZON.NavigateSettingsIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.MoreIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.PageDownIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.PageUpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.ScrollRightIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.ScrollDownIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.ScrollLeftIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.ScrollUpIntent",
-                    "samples": []
-                },
-                {
                     "name": "AMAZON.CancelIntent",
                     "samples": []
                 },
@@ -74,19 +42,6 @@
                 {
                     "name": "AMAZON.YesIntent",
                     "samples": []
-                },
-                {
-                    "name": "Discovery",
-                    "slots": [],
-                    "samples": [
-                        "what else do you have",
-                        "What else",
-                        "Give me more",
-                        "Please Give me more",
-                        "Not interested show me more",
-                        "Please show me more",
-                        "Show me more"
-                    ]
                 },
                 {
                     "name": "SongDetails",
@@ -240,6 +195,14 @@
                 },
                 {
                     "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.LoopOffIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.LoopOnIntent",
                     "samples": []
                 }
             ],

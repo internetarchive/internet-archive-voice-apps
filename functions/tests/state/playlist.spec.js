@@ -69,6 +69,23 @@ describe('playlist', () => {
     });
   });
 
+  describe('loop', () => {
+    it('should be off by default', () => {
+      expect(playlist.isLoop(app)).to.be.false;
+    });
+
+    it('should be on when enabled', () => {
+      playlist.setLoop(app, true);
+      expect(playlist.isLoop(app)).to.be.true;
+    });
+
+    it('should exist after create', () => {
+      playlist.setLoop(app, true);
+      playlist.create(app);
+      expect(playlist.isLoop(app)).to.be.true;
+    });
+  });
+
   describe('selectors', () => {
     describe('getCurrentSong', () => {
       it('should return current song', () => {

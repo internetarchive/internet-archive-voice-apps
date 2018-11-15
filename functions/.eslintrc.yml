@@ -6,7 +6,7 @@ plugins:
   - 'chai-friendly'
   - 'mocha'
 parserOptions:
-  ecmaVersion: 7
+  ecmaVersion: 2018
   sourceType: script
 rules:
   chai-friendly/no-unused-expressions: 2

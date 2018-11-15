@@ -25,7 +25,7 @@ const setMuteSpeechBeforePlayback = (app, muteSpeech) =>
   }));
 
 /**
- * Get current played track offest
+ * Get current played track offset
  *
  * @param app
  */

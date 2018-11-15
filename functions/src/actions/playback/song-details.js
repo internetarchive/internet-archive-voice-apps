@@ -5,7 +5,7 @@ const playlistState = require('../../state/playlist');
 const strings = require('../../strings').intents.songsDetails;
 const { error } = require('../../utils/logger/index')('ia:actions:resume-intent');
 
-const helpers = require('./_helpers');
+const playbackHelpers = require('./_helpers');
 
 function handler (app) {
   const song = playlistState.getCurrentSong(app);
@@ -16,7 +16,7 @@ function handler (app) {
 
   // resume playback
   if (strings.action.resumePlayback) {
-    return helpers.resume({ app });
+    return playbackHelpers.resume({ app });
   } else {
     error('is not implemented');
   }

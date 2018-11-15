@@ -221,9 +221,32 @@
         directive: 'AudioPlayer.Play'
 
 - scenario: 'play previous song'
-  skip: true
   dialog:
     - user: 'play jazz'
     - user: 'previous'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'loop on'
+  dialog:
+    - user: 'loop on'
+      assistant: 'I will repeat records in a loop'
+
+- scenario: 'loop off'
+  dialog:
+    - user: 'loop off'
+      assistant: "I will stop playback after the last record"
+
+- scenario: 'resume playback after loop on'
+  dialog:
+    - user: 'play jazz'
+    - user: 'loop on'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'resume playback after loop off'
+  dialog:
+    - user: 'play jazz'
+    - user: 'loop off'
       assistant:
         directive: 'AudioPlayer.Play'
