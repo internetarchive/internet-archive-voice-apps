@@ -122,12 +122,15 @@ function isLoop (app) {
   return !!getData(app).loop;
 }
 
+/**
+ * set loop on/off
+ *
+ * @param app
+ * @param loopOn
+ */
 function setLoop (app, loopOn) {
   const playlist = getData(app);
-  setData(app, {
-    ...playlist,
-    loop: loopOn,
-  });
+  setData(app, { ...playlist, loop: loopOn });
 }
 
 /**
@@ -137,9 +140,15 @@ function setLoop (app, loopOn) {
  */
 function next (app) {
   const playlist = getData(app);
-  setData(app, Object.assign({}, playlist, {
-    current: playlist.current + 1,
-  }));
+  let current = playlist.current + 1;
+  if (current >= playlist.items.length) {
+    if (playlist.loop) {
+      current = 0;
+    } else {
+      current = playlist.items.length - 1;
+    }
+  }
+  setData(app, { ...playlist, current });
 }
 
 /**
@@ -149,9 +158,15 @@ function next (app) {
  */
 function previous (app) {
   const playlist = getData(app);
-  setData(app, Object.assign({}, playlist, {
-    current: playlist.current - 1,
-  }));
+  let current = playlist.current - 1;
+  if (current < 0) {
+    if (playlist.loop) {
+      current = playlist.items.length - 1;
+    } else {
+      current = 0;
+    }
+  }
+  setData(app, { ...playlist, current });
 }
 
 /**

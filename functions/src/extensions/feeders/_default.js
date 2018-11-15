@@ -42,6 +42,10 @@ class DefaultFeeder {
    * @returns {boolean}
    */
   hasPrevious ({ app, slots, playlist }) {
+    if (playlist.isLoop(app)) {
+      return true;
+    }
+
     return playlist.hasPreviousSong(app);
   }
 
@@ -54,6 +58,10 @@ class DefaultFeeder {
    * @returns {boolean}
    */
   hasNext ({ app, slots, playlist }) {
+    if (playlist.isLoop(app)) {
+      return true;
+    }
+
     return playlist.hasNextSong(app);
   }
 
