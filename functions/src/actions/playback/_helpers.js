@@ -7,6 +7,7 @@ const query = require('../../state/query');
 const strings = require('../../strings');
 const { debug } = require('../../utils/logger')('ia:actions:playback/_helpers');
 
+const defaultHelper = require('../_helpers');
 const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
 const nextSong = require('../_high-order-handlers/middlewares/next-song');
@@ -91,7 +92,13 @@ function resume (ctx) {
     });
 }
 
+function simpleResponseAndResume (app, scheme, extra = {}, defaultResponse = {}) {
+  defaultHelper.simpleResponse(app, scheme, extra, defaultResponse);
+  return resume({ app });
+}
+
 module.exports = {
   playSong,
   resume,
+  simpleResponseAndResume,
 };

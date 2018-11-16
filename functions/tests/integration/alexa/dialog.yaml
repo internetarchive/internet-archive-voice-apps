@@ -263,3 +263,17 @@
   dialog:
     - user: 'shuffle off'
       assistant: 'records in the original order'
+
+- scenario: 'resume playback after shuffle on'
+  dialog:
+    - user: 'play jazz'
+    - user: 'shuffle on'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'resume playback after shuffle off'
+  dialog:
+    - user: 'play jazz'
+    - user: 'shuffle off'
+      assistant:
+        directive: 'AudioPlayer.Play'

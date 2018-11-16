@@ -1,5 +1,5 @@
-const strings = require('../strings');
-const query = require('../state/query');
+const strings = require('../../strings');
+const query = require('../../state/query');
 
 const helpers = require('./_helpers');
 
