@@ -526,6 +526,12 @@ module.exports = {
       },
     }],
 
+    next: {
+      default: {
+        speech: 'Nothing is playing right now.',
+      },
+    },
+
     noInput: [{
       speech: "Sorry, I couldn't hear you.",
     }, {
@@ -536,6 +542,12 @@ module.exports = {
 
     order: {
       speech: 'Sorry, can you repeat that? {{reprompt}}',
+    },
+
+    previous: {
+      default: {
+        speech: 'Nothing is playing right now.',
+      },
     },
 
     repeat: {
@@ -554,7 +566,7 @@ module.exports = {
       },
     },
 
-    songsDetails: {
+    songDetails: {
       action: {
         speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
         resumePlayback: true,
@@ -644,7 +656,7 @@ module.exports = {
       speech: '<s>Sure!</s> ' +
         '<s>But however,</s> ' +
         '<s>{{last.reprompt}}</s>',
-    }, ],
+    },],
   },
 
   events: {

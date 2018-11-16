@@ -230,6 +230,22 @@
       assistant:
         directive: 'AudioPlayer.Play'
 
+- scenario: 'nothing is playing when user ask play next song out of playback'
+  dialog:
+    - user: 'next'
+      assistant:
+        all:
+          - 'Nothing is playing right now'
+          - 'Which would you like to listen to?'
+
+- scenario: 'nothing is playing when user ask play previous song out of playback'
+  dialog:
+    - user: 'previous'
+      assistant:
+        all:
+          - 'Nothing is playing right now'
+          - 'Which would you like to listen to?'
+
 - scenario: 'loop on'
   dialog:
     - user: 'loop on'
