@@ -2,7 +2,7 @@ const mustache = require('mustache');
 
 const dialog = require('../../dialog/index');
 const playlistState = require('../../state/playlist');
-const strings = require('../../strings').intents.songsDetails;
+const strings = require('../../strings').intents.songDetails;
 const { error } = require('../../utils/logger/index')('ia:actions:resume-intent');
 
 const playbackHelpers = require('./_helpers');
