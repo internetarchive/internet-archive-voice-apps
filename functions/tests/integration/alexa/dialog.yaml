@@ -250,3 +250,13 @@
     - user: 'loop off'
       assistant:
         directive: 'AudioPlayer.Play'
+
+- scenario: 'shuffle on by default'
+  dialog:
+    - user: 'shuffle on'
+      assistant: 'records in a random order'
+
+- scenario: 'shuffle off by default'
+  dialog:
+    - user: 'shuffle off'
+      assistant: 'records in the original order'

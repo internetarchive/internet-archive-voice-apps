@@ -32,6 +32,35 @@ function getSimpleResponse (app, scheme, extra = {}, defaultResponse = {}) {
   return Object.assign({}, defaultResponse, substitute(selectors.find(scheme, ctx), ctx));
 }
 
+function simpleResponse (app, scheme, extra = {}, defaultResponse = {}) {
+  return dialog.ask(app, getSimpleResponse(app, scheme, extra, defaultResponse));
+}
+
+/**
+ * Generate simple response to user based on scheme and existing context
+ * and reprompt to the last question
+ *
+ * @param app
+ * @param scheme
+ * @param extra
+ * @param defaultResponse
+ */
+function simpleResponseAndResume (app, scheme, extra = {}, defaultResponse = {}) {
+  const ctx = Object.assign({}, extra, {
+    last: getLastPhrase(app),
+    slots: getSlots(app),
+    playback: getCurrentSong(app),
+    platform: config.platforms[app.platform],
+  });
+
+  dialog.ask(app, dialog.merge(
+    getSimpleResponse(app, scheme, extra, defaultResponse),
+    substitute({
+      speech: '<s>{{last.reprompt}}</s>',
+    }, ctx)
+  ));
+}
+
 module.exports = {
   /**
    * Strip file name from full path to get the name of action
@@ -54,7 +83,7 @@ module.exports = {
    * @param extra
    * @param defaultResponse
    */
-  simpleResponse: (app, scheme, extra = {}, defaultResponse = {}) => {
-    dialog.ask(app, getSimpleResponse(app, scheme, extra, defaultResponse));
-  }
+  simpleResponse,
+
+  simpleResponseAndResume,
 };

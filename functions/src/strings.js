@@ -627,6 +627,14 @@ module.exports = {
         '<s>{{last.reprompt}}</s>',
     }],
 
+    shuffleOff: [{
+      speech: `Got it! I'll play records in the original order`,
+    }],
+
+    shuffleOn: [{
+      speech: `Got it! I'll play records in a random order`,
+    }],
+
     yes: [{
       speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
         '<s>But anyway,</s> ' +
