@@ -485,7 +485,8 @@ module.exports = {
         ],
 
         speech: [
-          'Okay, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. Do you have a particular year in mind?',
+          '<s>Okay, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. </s>' +
+          '<s>Do you have a particular year in mind?</s>',
         ],
 
         /**
