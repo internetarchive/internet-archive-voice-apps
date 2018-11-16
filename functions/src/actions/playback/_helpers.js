@@ -28,6 +28,16 @@ const skipHandlers = {
 };
 
 /**
+ * Enqueue next record without moving to the next playlist item
+ *
+ * @param ctx
+ * @returns {Promise}
+ */
+function enqueue (ctx) {
+  return Promise.resolve(1);
+}
+
+/**
  * play one song
  *
  * @param ctx
@@ -102,6 +112,7 @@ function simpleResponseAndResume (app, scheme, extra = {}, defaultResponse = {})
 }
 
 module.exports = {
+  enqueue,
   playSong,
   resume,
   simpleResponseAndResume,
