@@ -9,6 +9,7 @@ const { debug, error } = require('../utils/logger')('ia:provider:albums');
 const objToLowerCase = require('../utils/map-to-lowercases');
 
 const { buildQueryCondition } = require('./advanced-search');
+const orders = require('./orders');
 
 /**
  * Fetch details about Album
@@ -69,10 +70,11 @@ function fetchAlbumDetails (app, id, { retry = 0, delay = 1000 } = {}) {
 function fetchAlbumsByCreatorId (app, id, {
   limit = 3,
   page = 0,
-  order = 'downloads+desc',
+  order = 'best',
   fields = 'identifier,coverage,title,year',
 } = {}) {
   debug(`fetch albums of ${id}`);
+  const iaOrder = orders[order];
   return axios.get(
     endpointProcessor.preprocess(
       config.endpoints.COLLECTION_ITEMS_URL, app,
@@ -80,7 +82,7 @@ function fetchAlbumsByCreatorId (app, id, {
         id,
         limit,
         page,
-        order,
+        order: iaOrder,
         fields,
       }
     )
@@ -141,11 +143,13 @@ function fetchAlbumsByQuery (app, query) {
 
   debug('Fetch albums by', query);
 
+  const iaOrder = orders[query.order];
+  console.log('iaOrder', iaOrder);
   return axios.get(
     endpointProcessor.preprocess(
       config.endpoints.QUERY_COLLECTIONS_URL,
       app,
-      Object.assign({}, query, { condition })
+      { ...query, order: iaOrder, condition },
     )
   )
     .then(res => {
