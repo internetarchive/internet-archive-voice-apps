@@ -485,7 +485,8 @@ module.exports = {
         ],
 
         speech: [
-          'Okay, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. Do you have a particular year in mind?',
+          '<s>Okay, {{creator}} has played in {{coverage}} sometime in {{years-interval.suggestions}}. </s>' +
+          '<s>Do you have a particular year in mind?</s>',
         ],
 
         /**
@@ -625,6 +626,14 @@ module.exports = {
       speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
         '<s>But at any rate,</s> ' +
         '<s>{{last.reprompt}}</s>',
+    }],
+
+    shuffleOff: [{
+      speech: `Got it! I'll play records in the original order`,
+    }],
+
+    shuffleOn: [{
+      speech: `Got it! I'll play records in a random order`,
     }],
 
     yes: [{

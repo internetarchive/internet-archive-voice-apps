@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "internet archive",
+            "invocationName": "internet archive draft",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -203,6 +203,14 @@
                 },
                 {
                     "name": "AMAZON.LoopOnIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ShuffleOnIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ShuffleOffIntent",
                     "samples": []
                 }
             ],

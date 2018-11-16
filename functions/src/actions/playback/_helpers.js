@@ -2,11 +2,13 @@ const _ = require('lodash');
 
 const dialog = require('../../dialog');
 const dialogState = require('../../state/dialog');
+const playback = require('../../state/playback');
 const playlist = require('../../state/playlist');
 const query = require('../../state/query');
 const strings = require('../../strings');
 const { debug } = require('../../utils/logger')('ia:actions:playback/_helpers');
 
+const defaultHelper = require('../_helpers');
 const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
 const nextSong = require('../_high-order-handlers/middlewares/next-song');
@@ -38,7 +40,7 @@ function playSong (ctx) {
   debug(ctx);
   const { enqueue = false, skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
-    // expose current platform to the slots
+  // expose current platform to the slots
     .then(ctx =>
       Object.assign({}, ctx, {
         slots: Object.assign(
@@ -73,7 +75,10 @@ function playSong (ctx) {
  */
 function resume (ctx) {
   debug('resume');
-  return playSong(Object.assign({}, ctx, { skip: null }))
+  return playSong(Object.assign({}, ctx, {
+    offset: playback.getOffset(ctx.app),
+    skip: null
+  }))
     .catch(err => {
       if (err instanceof feederFromPlaylist.EmptyFeederError) {
         debug('playlist is empty');
@@ -91,7 +96,13 @@ function resume (ctx) {
     });
 }
 
+function simpleResponseAndResume (app, scheme, extra = {}, defaultResponse = {}) {
+  defaultHelper.simpleResponse(app, scheme, extra, defaultResponse);
+  return resume({ app });
+}
+
 module.exports = {
   playSong,
   resume,
+  simpleResponseAndResume,
 };

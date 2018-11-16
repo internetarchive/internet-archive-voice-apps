@@ -7,6 +7,8 @@ const { debug, error } = require('../utils/logger')('ia:provider:creators');
 const { buildQueryCondition } = require('./advanced-search');
 const endpointProcessor = require('../network/endpoint-processor');
 
+const orders = require('./orders');
+
 /**
  * Fetch popular creators by query condition
  *
@@ -18,7 +20,7 @@ function fetchCreatorsBy (app, query) {
   const {
     limit = 3,
     page = 0,
-    order = 'downloads+desc'
+    order = 'best'
   } = query;
 
   // create search query
@@ -26,6 +28,7 @@ function fetchCreatorsBy (app, query) {
   debug(`condition ${condition}`);
 
   const fields = 'creator,identifier';
+  const iaOrder = orders[order];
   return axios
     .get(
       endpointProcessor.preprocess(
@@ -33,7 +36,7 @@ function fetchCreatorsBy (app, query) {
           condition,
           limit,
           page,
-          order,
+          order: iaOrder,
           fields,
         }
       )

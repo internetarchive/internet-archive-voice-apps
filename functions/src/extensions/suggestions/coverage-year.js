@@ -17,7 +17,7 @@ function handle ({ app, slots }) {
       Object.assign({}, slots, {
         limit: 3,
         fields: 'coverage,year',
-        order: 'downloads+desc',
+        order: 'best',
       })
     );
 }

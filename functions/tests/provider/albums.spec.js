@@ -123,7 +123,7 @@ describe('albums', () => {
       return albumsProvider
         .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
-          order: 'downloads+desc',
+          order: 'best',
         })
         .then((res) => {
           expect(res).to.be.ok;
@@ -143,7 +143,7 @@ describe('albums', () => {
         .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',
           page: 1,
-          order: 'downloads+desc',
+          order: 'best',
         })
         .then((res) => {
           expect(res).to.be.ok;
@@ -163,7 +163,7 @@ describe('albums', () => {
       return albumsProvider
         .fetchAlbumsByQuery(app, {
           collectionId: ['collection-1', 'collection-2'],
-          order: 'downloads+desc',
+          order: 'best',
         })
         .then((res) => {
           expect(urls[0]).to.be.equal(
