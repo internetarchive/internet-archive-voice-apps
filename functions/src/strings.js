@@ -656,7 +656,7 @@ module.exports = {
       speech: '<s>Sure!</s> ' +
         '<s>But however,</s> ' +
         '<s>{{last.reprompt}}</s>',
-    },],
+    }],
   },
 
   events: {
