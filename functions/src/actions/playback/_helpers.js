@@ -12,6 +12,7 @@ const defaultHelper = require('../_helpers');
 const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
 const nextSong = require('../_high-order-handlers/middlewares/next-song');
+const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-platform-to-slots');
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
 const previousSong = require('../_high-order-handlers/middlewares/previous-song');
 const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
@@ -34,7 +35,25 @@ const skipHandlers = {
  * @returns {Promise}
  */
 function enqueue (ctx) {
-  return Promise.resolve(1);
+  return feederFromPlaylist.middleware()({
+    ...ctx,
+    mediaResponseOnly: true,
+    //   skip: 'forward',
+    //   enqueue: true
+  })
+    .then(mapPlatformToSlots())
+    .then(() => {
+      ctx = Object.assign({}, ctx);
+      _.set(ctx, ['slots', 'previousTrack'], playlist.getCurrentSong(ctx.app));
+      return ctx;
+    })
+    // TODO: ....
+    .then(nextSong({ move: false }))
+    .then(parepareSongData())
+    .then(fulfilResolvers())
+    .then(renderSpeech())
+    // Alexa doesn't allow any response except of media response
+    .then(playSongMiddleware(ctx));
 }
 
 /**
@@ -48,7 +67,7 @@ function enqueue (ctx) {
 function playSong (ctx) {
   debug('playSong');
   debug(ctx);
-  const { enqueue = false, skip = null } = ctx;
+  const { skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
   // expose current platform to the slots
     .then(ctx =>
@@ -60,12 +79,6 @@ function playSong (ctx) {
     )
     .then(ctx => {
       if (skip) {
-        // we need previous track token for Alexa playback
-        if (enqueue) {
-          const previousTrack = playlist.getCurrentSong(ctx.app);
-          ctx = Object.assign({}, ctx);
-          _.set(ctx, ['slots', 'previousTrack'], previousTrack);
-        }
         return skipHandlers[skip](ctx);
       }
       return ctx;

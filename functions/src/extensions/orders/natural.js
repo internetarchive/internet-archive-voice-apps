@@ -26,12 +26,11 @@ class NaturalOrderStrategy {
   /**
    * Get paging for fetching data from source
    *
-   * @param app
    * @param cursor
    * @param feederConfig
    * @returns {{limit: number, page: number}}
    */
-  getPage ({ app, cursor, feederConfig }) {
+  getPage ({ cursor, feederConfig }) {
     return {
       // size of chunk
       limit: feederConfig.chunk.albums,
@@ -73,14 +72,16 @@ class NaturalOrderStrategy {
   }
 
   /**
-   * Move source cursor to the next position
+   * Where would we step on next record
+   *
    * @param app
-   * @param query
+   * @param current
    * @param playlist
+   * @returns {*}
    */
-  moveSourceCursorToTheNextPosition ({ app, query, playlist }) {
+  getNextCursorPosition ({ app, current, playlist }) {
+    current = Object.assign({}, current);
     const cursor = playlist.getExtra(app).cursor;
-    const current = Object.assign({}, cursor.current);
     current.song++;
     if (current.song >= cursor.total.songs) {
       debug('move cursor to a next album');
@@ -99,10 +100,7 @@ class NaturalOrderStrategy {
       debug('move cursor to a next song');
     }
 
-    // store cursor
-    playlist.setExtra(app, {
-      cursor: Object.assign({}, cursor, { current }),
-    });
+    return current;
   }
 
   moveSourceCursorToThePreviousPosition ({ app, query, playlist }) {

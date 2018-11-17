@@ -4,8 +4,11 @@ const { debug } = require('../../../utils/logger')('ia:actions:middlewares:next-
 /**
  * move to the next song
  * and fails if we haven't found it
+ *
+ * @param {boolean} move
+ * @returns {Function}
  */
-module.exports = () => (ctx) => {
+module.exports = ({ move = true } = {}) => (ctx) => {
   debug('start');
   const { feeder } = ctx;
   if (!feeder.hasNext(ctx)) {
@@ -14,6 +17,5 @@ module.exports = () => (ctx) => {
     return Promise.reject(new MiddlewareError(ctx, `don't have next song`));
   }
 
-  return feeder.next(ctx)
-    .then(() => ctx);
+  return feeder.next(ctx, move);
 };

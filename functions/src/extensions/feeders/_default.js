@@ -72,7 +72,7 @@ class DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next ({ app, slots, playlist }) {
+  next ({ app, slots, playlist }, move = true) {
     debug('move to the next song');
     playlist.next(app);
     return Promise.resolve();

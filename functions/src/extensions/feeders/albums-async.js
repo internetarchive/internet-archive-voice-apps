@@ -104,7 +104,7 @@ class AsyncAlbums extends DefaultFeeder {
         Object.assign(
           {},
           slots,
-          orderStrategy.getPage({ app, cursor, feederConfig })
+          orderStrategy.getPage({ cursor, feederConfig })
         )
       )
       .then((albums) => {
@@ -271,6 +271,22 @@ class AsyncAlbums extends DefaultFeeder {
     return _.at(playlist.getExtra(app), 'cursor')[0] || defaultCursor;
   }
 
+  getCursorCurrent ({ app, playlist }) {
+    return this.getCursor(app, playlist).current;
+  }
+
+  setCursorCurrent (ctx, current) {
+    const { app, playlist } = ctx;
+
+    // store cursor
+    playlist.setExtra(app, {
+      cursor: {
+        ...playlist.getExtra(app).cursor,
+        current,
+      },
+    });
+  }
+
   /**
    * Do we have next item?
    *
@@ -312,25 +328,28 @@ class AsyncAlbums extends DefaultFeeder {
   /**
    * Move to the next song
    *
-   * @param app
-   * @param query
-   * @param playlist
+   * @param ctx
+   * @param {boolean} move
    *
    * @returns {Promise.<T>}
    */
-  next ({ app, query, playlist }) {
+  next (ctx, move = true) {
+    const { app, query, playlist } = ctx;
     debug('move to the next song');
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
 
-    orderStrategy.moveSourceCursorToTheNextPosition({ app, query, playlist });
+    const current = this.getCursorCurrent(ctx);
+    const nextCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, playlist });
+    this.setCursorCurrent(ctx, nextCurrentCursor);
 
     return Promise.resolve()
       .then(() => {
         // check whether we need to fetch new chunk
         if (playlist.hasNextSong(app)) {
           debug('we have next song so just move cursor without fetching new data');
+          return ctx;
         } else {
           debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
           return this
@@ -356,11 +375,14 @@ class AsyncAlbums extends DefaultFeeder {
                 playlist,
                 songsInFirstAlbum,
               });
+
+              return ctx;
             });
         }
       })
-      .then(() => {
+      .then(ctx => {
         playlist.next(app);
+        return ctx;
       });
   }
 

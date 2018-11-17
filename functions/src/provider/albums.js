@@ -144,7 +144,6 @@ function fetchAlbumsByQuery (app, query) {
   debug('Fetch albums by', query);
 
   const iaOrder = orders[query.order];
-  console.log('iaOrder', iaOrder);
   return axios.get(
     endpointProcessor.preprocess(
       config.endpoints.QUERY_COLLECTIONS_URL,

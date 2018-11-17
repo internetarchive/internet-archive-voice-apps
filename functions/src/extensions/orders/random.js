@@ -19,6 +19,10 @@ class RandomOrderStrategy {
     };
   }
 
+  getNextCursorPosition ({ current }) {
+    return current;
+  }
+
   /**
    * Do we have previous item
    *
