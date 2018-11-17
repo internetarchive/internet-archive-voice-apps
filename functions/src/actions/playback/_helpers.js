@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const dialog = require('../../dialog');
 const dialogState = require('../../state/dialog');
 const playback = require('../../state/playback');
@@ -42,11 +40,13 @@ function enqueue (ctx) {
     //   enqueue: true
   })
     .then(mapPlatformToSlots())
-    .then(() => {
-      ctx = Object.assign({}, ctx);
-      _.set(ctx, ['slots', 'previousTrack'], playlist.getCurrentSong(ctx.app));
-      return ctx;
-    })
+    .then(ctx => ({
+      ...ctx,
+      slots: {
+        ...ctx.slots,
+        previousTrack: playlist.getCurrentSong(ctx.app),
+      },
+    }))
     // TODO: ....
     .then(nextSong({ move: false }))
     .then(parepareSongData())

@@ -26,16 +26,16 @@ class NaturalOrderStrategy {
   /**
    * Get paging for fetching data from source
    *
-   * @param cursor
+   * @param currentCursor
    * @param feederConfig
    * @returns {{limit: number, page: number}}
    */
-  getPage ({ cursor, feederConfig }) {
+  getPage ({ currentCursor, feederConfig }) {
     return {
       // size of chunk
       limit: feederConfig.chunk.albums,
       // request next portion of albums
-      page: Math.floor(cursor.current.album / feederConfig.chunk.albums),
+      page: Math.floor(currentCursor.album / feederConfig.chunk.albums),
     };
   }
 
@@ -80,8 +80,8 @@ class NaturalOrderStrategy {
    * @returns {*}
    */
   getNextCursorPosition ({ app, current, playlist }) {
-    current = Object.assign({}, current);
     const cursor = playlist.getExtra(app).cursor;
+    current = Object.assign({}, current);
     current.song++;
     if (current.song >= cursor.total.songs) {
       debug('move cursor to a next album');
@@ -98,6 +98,34 @@ class NaturalOrderStrategy {
       }
     } else {
       debug('move cursor to a next song');
+    }
+
+    return current;
+  }
+
+  getPreviousCursorPosition ({ app, current, playlist }) {
+    const cursor = playlist.getExtra(app).cursor;
+    current = { ...current };
+    current.song--;
+    if (current.song < 0) {
+      debug('move cursor to a previous album');
+      // we should set song to the last in an album
+      // but because we don't know yet which is the last just set to the max available value
+      // later we will use #clampCursorSongPosition to fit it to the right value
+      current.song = 1e9;
+      current.album--;
+      if (current.album < 0) {
+        debug('the begin of playlist');
+
+        if (playlist.isLoop(app)) {
+          current.album = cursor.total.albums - 1;
+          current.song = 1e9;
+        } else {
+          current.album++;
+        }
+      }
+    } else {
+      debug('move cursor to a previous song');
     }
 
     return current;

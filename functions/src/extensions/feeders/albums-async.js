@@ -50,10 +50,12 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build ({ app, query, playlist }) {
+  build (ctx) {
     debug('build async songs feeder');
+    const { app, query, playlist } = ctx;
 
-    return this.fetchChunkOfSongs({ app, query, playlist })
+    const currentCursor = this.getCursorCurrent(ctx);
+    return this.fetchChunkOfSongs({ app, currentCursor, query, playlist })
       .then(({ songs, songsInFirstAlbum, totalNumOfAlbums }) => {
         // the only place where we modify state
         // so maybe we can put it out of this function?
@@ -80,7 +82,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise.<T>}
    */
-  fetchChunkOfSongs ({ app, query, playlist }) {
+  fetchChunkOfSongs ({ app, currentCursor, query, playlist }) {
     const slots = query.getSlots(app);
     debug('we have slots:', slots);
 
@@ -91,7 +93,7 @@ class AsyncAlbums extends DefaultFeeder {
 
     debug('config of feeder', feederConfig);
 
-    const cursor = this.getCursor(app, playlist);
+    // const cursor = this.getCursor(app, playlist);
     let totalNumOfAlbums = 0;
 
     const orderStrategy = orderStrategies.getByName(
@@ -104,7 +106,7 @@ class AsyncAlbums extends DefaultFeeder {
         Object.assign(
           {},
           slots,
-          orderStrategy.getPage({ cursor, feederConfig })
+          orderStrategy.getPage({ currentCursor, feederConfig })
         )
       )
       .then((albums) => {
@@ -158,7 +160,7 @@ class AsyncAlbums extends DefaultFeeder {
         if (songs.length === 0) {
           warning(`we received zero songs. It doesn't sound ok`);
           // let's try again
-          return this.fetchChunkOfSongs({ app, query, playlist });
+          return this.fetchChunkOfSongs({ app, currentCursor, query, playlist });
         }
 
         return {
@@ -341,8 +343,8 @@ class AsyncAlbums extends DefaultFeeder {
     );
 
     const current = this.getCursorCurrent(ctx);
-    const nextCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, playlist });
-    this.setCursorCurrent(ctx, nextCurrentCursor);
+    const newCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, playlist });
+    this.setCursorCurrent(ctx, newCurrentCursor);
 
     return Promise.resolve()
       .then(() => {
@@ -353,7 +355,7 @@ class AsyncAlbums extends DefaultFeeder {
         } else {
           debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
           return this
-            .fetchChunkOfSongs({ app, query, playlist })
+            .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, songsInFirstAlbum }) => {
               songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, songs);
 
@@ -389,19 +391,21 @@ class AsyncAlbums extends DefaultFeeder {
   /**
    * Move to the previous song
    *
-   * @param app
-   * @param query
-   * @param playlist
+   * @param ctx
    *
    * @returns {Promise.<T>}
    */
-  previous ({ app, query, playlist }) {
+  previous (ctx) {
     debug('move to the previous song');
+    const { app, query, playlist } = ctx;
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
 
-    orderStrategy.moveSourceCursorToThePreviousPosition({ app, query, playlist });
+    const current = this.getCursorCurrent(ctx);
+    const newCurrentCursor = orderStrategy.getPreviousCursorPosition({ app, current, playlist });
+    this.setCursorCurrent(ctx, newCurrentCursor);
+    // orderStrategy.moveSourceCursorToThePreviousPosition({ app, query, playlist });
 
     return Promise.resolve()
       .then(() => {
@@ -411,7 +415,7 @@ class AsyncAlbums extends DefaultFeeder {
         } else {
           debug(`we don't have previous song in playlist so we'll fetch new chunk of songs`);
           return this
-            .fetchChunkOfSongs({ app, query, playlist })
+            .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, numOfSongsInLastAlbum }) => {
               orderStrategy.clampCursorSongPosition({ app, playlist }, numOfSongsInLastAlbum - 1);
 

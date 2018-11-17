@@ -6,12 +6,10 @@ class RandomOrderStrategy {
   /**
    * Get paging for fetching data from source
    *
-   * @param app
-   * @param cursor
    * @param feederConfig
    * @returns {{limit: number, page: number}}
    */
-  getPage ({ app, cursor, feederConfig }) {
+  getPage ({ feederConfig }) {
     return {
       // size of chunk
       limit: feederConfig.chunk.albums,
@@ -20,6 +18,10 @@ class RandomOrderStrategy {
   }
 
   getNextCursorPosition ({ current }) {
+    return current;
+  }
+
+  getPreviousCursorPosition ({ current }) {
     return current;
   }
 
@@ -49,16 +51,6 @@ class RandomOrderStrategy {
    */
   hasNext ({ app, query, playlist }) {
     return !playlist.isEmpty(app);
-  }
-
-  /**
-   * Move source cursor to the next position.
-   *
-   * We don't need it for the random strategy.
-   * Because we allow to fetch similar things again
-   */
-  moveSourceCursorToTheNextPosition () {
-
   }
 
   /**
