@@ -344,7 +344,9 @@ class AsyncAlbums extends DefaultFeeder {
 
     const current = this.getCursorCurrent(ctx);
     const newCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, playlist });
-    this.setCursorCurrent(ctx, newCurrentCursor);
+    if (move) {
+      this.setCursorCurrent(ctx, newCurrentCursor);
+    }
 
     return Promise.resolve()
       .then(() => {
@@ -383,7 +385,9 @@ class AsyncAlbums extends DefaultFeeder {
         }
       })
       .then(ctx => {
-        playlist.next(app);
+        if (move) {
+          playlist.next(app);
+        }
         return ctx;
       });
   }
@@ -405,7 +409,6 @@ class AsyncAlbums extends DefaultFeeder {
     const current = this.getCursorCurrent(ctx);
     const newCurrentCursor = orderStrategy.getPreviousCursorPosition({ app, current, playlist });
     this.setCursorCurrent(ctx, newCurrentCursor);
-    // orderStrategy.moveSourceCursorToThePreviousPosition({ app, query, playlist });
 
     return Promise.resolve()
       .then(() => {

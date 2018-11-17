@@ -131,37 +131,6 @@ class NaturalOrderStrategy {
     return current;
   }
 
-  moveSourceCursorToThePreviousPosition ({ app, query, playlist }) {
-    const cursor = playlist.getExtra(app).cursor;
-    const current = Object.assign({}, cursor.current);
-    current.song--;
-    if (current.song < 0) {
-      debug('move cursor to a previous album');
-      // we should set song to the last in an album
-      // but because we don't know yet which is the last just set to the max available value
-      // later we will use #clampCursorSongPosition to fit it to the right value
-      current.song = 1e9;
-      current.album--;
-      if (current.album < 0) {
-        debug('the begin of playlist');
-
-        if (playlist.isLoop(app)) {
-          current.album = cursor.total.albums - 1;
-          current.song = 1e9;
-        } else {
-          current.album++;
-        }
-      }
-    } else {
-      debug('move cursor to a previous song');
-    }
-
-    // store cursor
-    playlist.setExtra(app, {
-      cursor: Object.assign({}, cursor, { current }),
-    });
-  }
-
   /**
    * Should update total number of songs
    * actually we could get new number

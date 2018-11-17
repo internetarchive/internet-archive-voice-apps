@@ -54,16 +54,6 @@ class RandomOrderStrategy {
   }
 
   /**
-   * Move source cursor to the previous position.
-   *
-   * We don't need it for the random strategy.
-   * Because we allow to fetch similar things again
-   */
-  moveSourceCursorToThePreviousPosition () {
-
-  }
-
-  /**
    * Update cursor total.
    *
    * We don't need it for the random strategy.

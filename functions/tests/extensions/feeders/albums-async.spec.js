@@ -30,10 +30,10 @@ describe('feeders', () => {
       feeder.__set__('albumsProvider', albumsProvider);
     }
 
-    function testNextSong ({ album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true }) {
+    function testNextSong ({ album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true, fetchOnly = false }) {
       let resolve;
-      if (moveToNext) {
-        resolve = feeder.next({ app, query, playlist });
+      if (moveToNext || fetchOnly) {
+        resolve = feeder.next({ app, query, playlist }, !fetchOnly);
       } else {
         resolve = Promise.resolve();
       }
@@ -571,6 +571,42 @@ describe('feeders', () => {
           filename: 'filename-1',
           playlist,
           query,
+        }));
+    });
+
+    it('should fetch but do not move to the next song', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'natural');
+      playlist.setLoop(app, false);
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }],
+      }, 1);
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testNextSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          moveToNext: false,
+        }))
+        .then(() => testNextSong({
+          album: 'album-1',
+          app,
+          feeder,
+          filename: 'filename-1',
+          playlist,
+          query,
+          fetchOnly: true,
+          hasNext: true
         }));
     });
 
