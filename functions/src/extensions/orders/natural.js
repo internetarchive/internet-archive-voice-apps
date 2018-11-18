@@ -79,8 +79,7 @@ class NaturalOrderStrategy {
    * @param playlist
    * @returns {*}
    */
-  getNextCursorPosition ({ app, current, playlist }) {
-    const cursor = playlist.getExtra(app).cursor;
+  getNextCursorPosition ({ app, current, cursor, playlist }) {
     current = Object.assign({}, current);
     current.song++;
     if (current.song >= cursor.total.songs) {

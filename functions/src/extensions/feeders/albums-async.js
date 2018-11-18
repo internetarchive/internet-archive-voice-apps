@@ -78,6 +78,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @private
    * @param app
+   * @param currentCursor
    * @param query
    * @param playlist
    * @returns {Promise.<T>}
@@ -156,6 +157,21 @@ class AsyncAlbums extends DefaultFeeder {
           .reduce((allSongs, albumSongs) => {
             return allSongs.concat(albumSongs);
           }, []);
+
+        let current = currentCursor;
+        let cursor = this.getCursor(app, playlist);
+
+        songs = songs.map(s => {
+          current = orderStrategy.getNextCursorPosition({
+            app, cursor, playlist,
+            current: current,
+          });
+
+          return {
+            ...s,
+            cursor: current,
+          };
+        });
 
         if (songs.length === 0) {
           warning(`we received zero songs. It doesn't sound ok`);
@@ -342,8 +358,9 @@ class AsyncAlbums extends DefaultFeeder {
       query.getSlot(app, 'order')
     );
 
+    const cursor = this.getCursor(app, playlist);
     const current = this.getCursorCurrent(ctx);
-    const newCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, playlist });
+    const newCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, cursor, playlist });
     if (move) {
       this.setCursorCurrent(ctx, newCurrentCursor);
     }

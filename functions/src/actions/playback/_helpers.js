@@ -13,8 +13,8 @@ const nextSong = require('../_high-order-handlers/middlewares/next-song');
 const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-platform-to-slots');
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
 const previousSong = require('../_high-order-handlers/middlewares/previous-song');
-const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
+const mapSongDataToSlots = require('../_high-order-handlers/middlewares/song-data');
 
 /**
  * map skip name to skip behaviour
@@ -35,7 +35,8 @@ const skipHandlers = {
 function enqueue (ctx) {
   return feederFromPlaylist.middleware()({
     ...ctx,
-    mediaResponseOnly: true,
+    playlist,
+    query,
     //   skip: 'forward',
     //   enqueue: true
   })
@@ -47,13 +48,22 @@ function enqueue (ctx) {
         previousTrack: playlist.getCurrentSong(ctx.app),
       },
     }))
-    // TODO: ....
-    .then(nextSong({ move: false }))
-    .then(parepareSongData())
+    .then(nextSong({
+      // we need just fetch next song,
+      // and on AMAZON.StartIntent we finally move there
+      move: false,
+    }))
+    .then(mapSongDataToSlots({
+      // map next (enqueued) song
+      type: 'next',
+    }))
     .then(fulfilResolvers())
     .then(renderSpeech())
-    // Alexa doesn't allow any response except of media response
-    .then(playSongMiddleware(ctx));
+    .then(playSongMiddleware({
+      // Alexa doesn't allow any response except of media response
+      // when we add to queue
+      mediaResponseOnly: true,
+    }));
 }
 
 /**
@@ -83,7 +93,7 @@ function playSong (ctx) {
       }
       return ctx;
     })
-    .then(parepareSongData())
+    .then(mapSongDataToSlots())
     .then(fulfilResolvers())
     .then(renderSpeech())
     // Alexa doesn't allow any response except of media response

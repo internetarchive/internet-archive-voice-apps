@@ -12,7 +12,7 @@ const feederFromSlotScheme = require('./middlewares/feeder-from-slots-scheme');
 const findRepairPhrase = require('./middlewares/find-repair-phrase');
 const findRepairScheme = require('./middlewares/find-repair-scheme');
 const fulfilResolvers = require('./middlewares/fulfil-resolvers');
-const parepareSongData = require('./middlewares/song-data');
+const mapSongDataToSlots = require('./middlewares/song-data');
 const playlistFromFeeder = require('./middlewares/playlist-from-feeder');
 const playSong = require('./middlewares/play-song');
 const renderSpeech = require('./middlewares/render-speech');
@@ -71,7 +71,7 @@ function build ({ playlist, strings, query }) {
       .then(feederFromSlotScheme())
       .then(playlistFromFeeder())
       .then(acknowledge({ speeches: 'slotScheme.fulfillment.speech' }))
-      .then(parepareSongData())
+      .then(mapSongDataToSlots())
       .then(fulfilResolvers())
       .then(renderSpeech())
       .then(playSong())

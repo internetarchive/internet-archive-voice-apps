@@ -18,8 +18,8 @@ const suggestions = require('./_high-order-handlers/middlewares/suggestions');
 const prompt = require('./_high-order-handlers/middlewares/prompt');
 
 const feederFromSlotScheme = require('./_high-order-handlers/middlewares/feeder-from-slots-scheme');
-const parepareSongData = require('./_high-order-handlers/middlewares/song-data');
 const playlistFromFeeder = require('./_high-order-handlers/middlewares/playlist-from-feeder');
+const mapSongDataToSlots = require('./_high-order-handlers/middlewares/song-data');
 const playSong = require('./_high-order-handlers/middlewares/play-song');
 
 /**
@@ -61,7 +61,7 @@ function handler (app) {
       .then((context) => {
         debug('got playlist');
         return acknowledge({ speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots' })(context)
-          .then(parepareSongData())
+          .then(mapSongDataToSlots())
           .then(fulfilResolvers())
           .then(renderSpeech())
           .then(playSong());

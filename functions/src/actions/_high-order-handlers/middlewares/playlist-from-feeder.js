@@ -1,24 +1,27 @@
-const { debug, info } = require('../../../utils/logger')('ia:actions:middlewares:playlist-from-feeder');
+const { debug, warning } = require('../../../utils/logger')('ia:actions:middlewares:playlist-from-feeder');
 const { MiddlewareError } = require('./errors');
 
 /**
- * Create playlist data from feeder
+ * Build playlist data from feeder
  */
-module.exports = () => (context) => {
+module.exports = () => (ctx) => {
   debug('start');
-  const { app, feeder, feederName, playlist, slots } = context;
+  const { app, feeder, feederName, playlist, slots } = ctx;
   playlist.setFeeder(app, feederName);
   return feeder
-    .build(context)
+    .build(ctx)
     .then(res => {
-      if (feeder.isEmpty(context)) {
+      if (feeder.isEmpty(ctx)) {
         // TODO: should give feedback about problem
         debug('empty playlist');
-        return Promise.reject(new MiddlewareError(context, { emptyPlaylist: true }));
+        return Promise.reject(new MiddlewareError(ctx, { emptyPlaylist: true }));
       }
-      return Object.assign({}, context, { slots: Object.assign({}, slots, { total: res.total }) });
+      return {
+        ...ctx,
+        slots: { ...slots, total: res.total },
+      };
     }, error => {
-      info('fail on creating playlist', error);
-      return Promise.reject(new MiddlewareError(context, error));
+      warning('fail on creating playlist. Got Error:', error);
+      return Promise.reject(new MiddlewareError(ctx, error));
     });
 };

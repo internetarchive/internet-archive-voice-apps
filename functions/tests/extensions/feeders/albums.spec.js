@@ -37,6 +37,21 @@ describe('feeders', () => {
   });
 
   describe('albums', () => {
+    // TODO: test empty response
+    describe('none', () => {
+      it('should return empty list of songs, when there is no songs', () => {
+        return albums
+          .build({ app, playlist, query })
+          .then(() => {
+            expect(playlist.hasNextSong(app)).to.be.true;
+            expect(playlist.getCurrentSong(app)).to.be.ok;
+            expect(albums.isEmpty({ app, query, playlist })).to.be.false;
+            expect(albums.getCurrentItem({ app, playlist, query })).to.be.ok;
+            expect(albums.hasNext({ app, query, playlist })).to.be.true;
+          });
+      });
+    });
+
     it('should fetch album', () => {
       return albums
         .build({ app, playlist, query })

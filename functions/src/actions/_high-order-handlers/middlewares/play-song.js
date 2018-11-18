@@ -1,6 +1,6 @@
 const dialog = require('../../../dialog');
 const fsm = require('../../../state/fsm');
-const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
+const { debug } = require('../../../utils/logger')('ia:actions:middlewares:play-song');
 
 const constants = require('../../../constants');
 
@@ -9,20 +9,22 @@ const constants = require('../../../constants');
  * speeach and description are used
  * to give additional description of song
  *
- * @param mediaResponseOnly {boolean} we should return media response only
+ * @param {boolean} mediaResponseOnly we should return media response only
+ * @param {int} offset
+ * @returns {function(*): *}
  */
-module.exports = ({ mediaResponseOnly = false, offset = 0 } = {}) => (context) => {
+module.exports = ({ mediaResponseOnly = false, offset = 0 } = {}) => (ctx) => {
   debug('start');
-  const { app } = context;
 
-  dialog.playSong(app, Object.assign(
-    {}, context.slots, {
-      mediaResponseOnly,
-      offset,
-      speech: context.speech.join(' '),
-      description: context.description,
-    }
-  ));
+  const { app, slots } = ctx;
+
+  dialog.playSong(app, {
+    ...slots,
+    mediaResponseOnly,
+    offset,
+    speech: ctx.speech.join(' '),
+    description: ctx.description,
+  });
 
   fsm.transitionTo(app, constants.fsm.states.PLAYBACK);
   return Promise.resolve();

@@ -3,19 +3,26 @@ const mustache = require('mustache');
 const selectors = require('../../../configurator/selectors');
 const playback = require('../../../state/playback');
 const availableStrings = require('../../../strings').dialog.playSong;
-const esapceHTMLObject = require('../../../utils/escape-html-object');
+const escapeHTMLObject = require('../../../utils/escape-html-object');
 const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
+const songGetters = {
+  current: ({ app, playlist }) => playlist.getCurrentSong(app),
+  next: ({ app, playlist }) => playlist.getNextSong(app),
+};
+
 /**
- * Get songs data from feeder and them to slots
+ * Get songs data from playlist and them to slots
+ * @param {string} type
+ * @returns {function(*=): *}
  */
-module.exports = () => (args) => {
+module.exports = ({ type = 'current' } = {}) => (ctx) => {
   debug('start');
-  let { app, feeder, slots = {}, speech = [] } = args;
-  const songData = feeder.getCurrentItem(args);
+  let { app, slots = {}, speech = [] } = ctx;
+  const song = songGetters[type](ctx);
   const mute = playback.isMuteSpeechBeforePlayback(app);
 
-  slots = Object.assign({}, slots, esapceHTMLObject(songData, { skipFields: ['audioURL', 'imageURL'] }));
+  slots = Object.assign({}, slots, escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }));
 
   const strings = selectors.find(availableStrings, slots);
 
@@ -32,11 +39,10 @@ module.exports = () => (args) => {
     speech = [].concat(speech, description);
   }
 
-  return Promise.resolve(Object.assign({},
-    args,
-    {
-      slots,
-      speech,
-      description,
-    }));
+  return Promise.resolve({
+    ...ctx,
+    slots,
+    speech,
+    description,
+  });
 };

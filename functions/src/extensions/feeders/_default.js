@@ -29,7 +29,7 @@ class DefaultFeeder {
    * @param playlist
    * @returns {{id: string, title: string}}
    */
-  getCurrentItem ({ app, playlist }) {
+  getCurrentItem ({ app, playlist }, type = 'current') {
     return playlist.getCurrentSong(app);
   }
 
