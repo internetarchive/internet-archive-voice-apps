@@ -163,7 +163,9 @@ class AsyncAlbums extends DefaultFeeder {
 
         songs = songs.map(s => {
           current = orderStrategy.getNextCursorPosition({
-            app, cursor, playlist,
+            app,
+            cursor,
+            playlist,
             current: current,
           });
 

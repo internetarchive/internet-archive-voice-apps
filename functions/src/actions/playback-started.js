@@ -31,7 +31,6 @@ function updateSourceCursor ({ app, playlist }, current) {
   });
 }
 
-
 /**
  * handle Alexa AudioPlayer.PlaybackStarted intent
  * @type {{handler: handler}}
