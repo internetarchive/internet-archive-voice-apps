@@ -1,20 +1,24 @@
-const dialog = require('../../dialog');
-const dialogState = require('../../state/dialog');
-const playback = require('../../state/playback');
-const playlist = require('../../state/playlist');
-const query = require('../../state/query');
-const strings = require('../../strings');
-const { debug } = require('../../utils/logger')('ia:actions:playback/_helpers');
+const dialog = require('../../../dialog');
+const constants = require('../../../constants');
+const dialogState = require('../../../state/dialog');
+const fsm = require('../../../state/fsm');
+const playback = require('../../../state/playback');
+const playlist = require('../../../state/playlist');
+const query = require('../../../state/query');
+const strings = require('../../../strings');
+const { debug } = require('../../../utils/logger')('ia:actions:playback/_helpers');
 
-const defaultHelper = require('../_helpers');
-const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
-const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
-const nextSong = require('../_high-order-handlers/middlewares/next-song');
-const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-platform-to-slots');
-const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
-const previousSong = require('../_high-order-handlers/middlewares/previous-song');
-const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
-const { mapSongDataToSlots } = require('../_high-order-handlers/middlewares/song-data');
+const defaultHelper = require('../../_helpers');
+const feederFromPlaylist = require('../../_high-order-handlers/middlewares/feeder-from-playlist');
+const fulfilResolvers = require('../../_high-order-handlers/middlewares/fulfil-resolvers');
+const { rewindToTheFirstSong } = require('../../_high-order-handlers/middlewares/rewind-to-the-first-song');
+const { rewindToTheLastSong } = require('../../_high-order-handlers/middlewares/rewind-to-the-last-song');
+const { nextSong, DoNotHaveNextSongError } = require('../../_high-order-handlers/middlewares/next-song');
+const mapPlatformToSlots = require('../../_high-order-handlers/middlewares/map-platform-to-slots');
+const playSongMiddleware = require('../../_high-order-handlers/middlewares/play-song');
+const { previousSong, DoNotHavePreviousSongError } = require('../../_high-order-handlers/middlewares/previous-song');
+const renderSpeech = require('../../_high-order-handlers/middlewares/render-speech');
+const { mapSongDataToSlots } = require('../../_high-order-handlers/middlewares/song-data');
 
 /**
  * map skip name to skip behaviour
@@ -22,8 +26,10 @@ const { mapSongDataToSlots } = require('../_high-order-handlers/middlewares/song
  * @type {{back: *, forward: *}}
  */
 const skipHandlers = {
+  'to-the-first': rewindToTheFirstSong(),
   'back': previousSong(),
   'forward': nextSong(),
+  'to-the-last': rewindToTheLastSong(),
 };
 
 /**
@@ -68,8 +74,7 @@ function enqueue (ctx) {
  * play one song
  *
  * @param ctx
- * @param {boolean} ctx.enqueue - add next song in the queue (we should pass previous track)
- * @param {boolean} ctx.skip - skip back, forward
+ * @param {string} ctx.skip - skip back, forward
  * @returns {Promise}
  */
 function playSong (ctx) {
@@ -88,7 +93,21 @@ function playSong (ctx) {
     .then(fulfilResolvers())
     .then(renderSpeech())
     // Alexa doesn't allow any response except of media response
-    .then(playSongMiddleware(ctx));
+    .then(playSongMiddleware(ctx))
+    .catch(err => {
+      const { app } = ctx;
+      if (err instanceof DoNotHavePreviousSongError) {
+        debug('playlist is ending (from begin)');
+        fsm.transitionTo(app, constants.fsm.states.PLAYLIST_IS_ENDED_FROM_BEGIN);
+        return defaultHelper.simpleResponse(app, strings.events.playlistIsEndedFromBegin);
+      }
+      if (err instanceof DoNotHaveNextSongError) {
+        debug('playlist is ending (from end)');
+        fsm.transitionTo(app, constants.fsm.states.PLAYLIST_IS_ENDED);
+        return defaultHelper.simpleResponse(app, strings.events.playlistIsEnded);
+      }
+      return Promise.reject(err);
+    });
 }
 
 /**

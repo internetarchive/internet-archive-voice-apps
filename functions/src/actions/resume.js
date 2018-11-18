@@ -4,7 +4,6 @@ const strings = require('../strings');
 const { debug } = require('../utils/logger')('ia:actions:resume-intent');
 
 const feederFromPlaylist = require('./_high-order-handlers/middlewares/feeder-from-playlist');
-
 const helpers = require('./playback/_helpers');
 
 /**

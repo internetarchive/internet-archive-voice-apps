@@ -1,6 +1,6 @@
-const dialog = require('../../dialog/index');
+const dialog = require('../../dialog');
 const strings = require('../../strings');
-const { debug } = require('../../utils/logger/index')('ia:actions:next');
+const { debug } = require('../../utils/logger')('ia:actions:next');
 
 const helpers = require('./_helpers');
 

@@ -196,6 +196,18 @@ function getIndexBeforeCurrent (app) {
 }
 
 /**
+ * Rewind to the first item
+ *
+ * @param app
+ */
+function first (app) {
+  setData(app, {
+    ...getData(app),
+    current: 0,
+  });
+}
+
+/**
  * Reducer: Choose next song
  *
  * @param app
@@ -208,7 +220,7 @@ function next (app) {
 }
 
 /**
- * Reducer: Choose previous song
+ * Reducer: Choose previous item
  *
  * @param app
  */
@@ -216,6 +228,18 @@ function previous (app) {
   setData(app, {
     ...getData(app),
     current: getIndexBeforeCurrent(app),
+  });
+}
+
+/**
+ * rewind to the last item
+ *
+ * @param app
+ */
+function last (app) {
+  setData(app, {
+    ...getData(app),
+    current: getLength(app) - 1,
   });
 }
 
@@ -230,6 +254,16 @@ function shift (app, value) {
   setData(app, Object.assign({}, playlist, {
     current: playlist.current + value,
   }));
+}
+
+/**
+ * Get Number of items
+ *
+ * @param app
+ * @returns {number}
+ */
+function getLength (app) {
+  return getItems(app).length;
 }
 
 /**
@@ -281,8 +315,10 @@ module.exports = {
   hasNextSong,
   hasPreviousSong,
   moveTo,
+  first,
   next,
   previous,
+  last,
   shift,
   updateItems,
 };

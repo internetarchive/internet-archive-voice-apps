@@ -344,6 +344,10 @@ class AsyncAlbums extends DefaultFeeder {
   }
 
   /**
+   * TODO: first and last
+   */
+
+  /**
    * Do we have next item?
    *
    * @param app

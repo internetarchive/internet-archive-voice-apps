@@ -108,6 +108,92 @@
   - user: 'year 1900'
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
 
+- scenario: 'resume playback after end of the playlist on previous'
+  dialog:
+    - user: 'live collection'
+    - user: 'Grateful Dead'
+    - user: 'city Washington year 1970'
+    - user: 'previous'
+      assistent:
+        all:
+          - 'playlist is ending'
+          - 'Would you like to continue listening'
+    - user: 'yes'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'restart app after end of the playlist on previous'
+  dialog:
+    - user: 'live collection'
+    - user: 'Grateful Dead'
+    - user: 'city Washington year 1970'
+    - user: 'previous'
+      assistent:
+        all:
+          - 'playlist is ending'
+          - 'Would you like to continue listening'
+    - user: 'no'
+      assistant: 'Which would you like to listen to?'
+
+- scenario: 'resume playback after end of the playlist on next'
+  dialog:
+    - user: 'live collection'
+    - user: 'Grateful Dead'
+    - user: 'city Washington year 1970'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+      assistant:
+        all:
+          - 'playlist is ending'
+          - 'Would you like to continue listening'
+        without:
+          directive: 'AudioPlayer.Play'
+    - user: 'yes'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
+- scenario: 'restart app after end of the playlist on next'
+  dialog:
+    - user: 'live collection'
+    - user: 'Grateful Dead'
+    - user: 'city Washington year 1970'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+    - user: 'next'
+      assistant:
+        all:
+          - 'playlist is ending'
+          - 'Would you like to continue listening'
+        without:
+          directive: 'AudioPlayer.Play'
+    - user: 'no'
+      assistant: 'Which would you like to listen to?'
+
 - scenario: 'handle stop intent when nothing is playing right now'
   dialog:
   - user: 'stop'

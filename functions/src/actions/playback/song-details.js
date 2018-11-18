@@ -1,9 +1,9 @@
 const mustache = require('mustache');
 
-const dialog = require('../../dialog/index');
+const dialog = require('../../dialog');
 const playlistState = require('../../state/playlist');
 const strings = require('../../strings').intents.songDetails;
-const { error } = require('../../utils/logger/index')('ia:actions:resume-intent');
+const { error } = require('../../utils/logger')('ia:actions:resume-intent');
 
 const playbackHelpers = require('./_helpers');
 

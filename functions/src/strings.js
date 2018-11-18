@@ -664,6 +664,10 @@ module.exports = {
       speech: 'Playlist has ended. Would you like to continue listening?',
     },
 
+    playlistIsEndedFromBegin: {
+      speech: 'It was the first track. Would you like to continue listening from the last track?',
+    },
+
     nothingToSay: {
       speech: `I'm not sure what you said. Could you rephrase?`,
     }

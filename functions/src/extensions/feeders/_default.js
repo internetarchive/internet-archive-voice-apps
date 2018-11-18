@@ -86,6 +86,18 @@ class DefaultFeeder {
   }
 
   /**
+   * Rewind to the first song
+   *
+   * @param ctx
+   * @returns {*}
+   */
+  first (ctx) {
+    const { app, playlist } = ctx;
+    playlist.first(app);
+    return Promise.resolve(ctx);
+  }
+
+  /**
    * Move to the next song
    *
    * TODO: should be async because we could have multiple albums here
@@ -114,6 +126,18 @@ class DefaultFeeder {
     const { app, playlist } = ctx;
     debug('move to the previous song');
     playlist.previous(app);
+    return Promise.resolve(ctx);
+  }
+
+  /**
+   * Rewind to the last song
+   *
+   * @param ctx
+   * @returns {*}
+   */
+  last (ctx) {
+    const { app, playlist } = ctx;
+    playlist.last(app);
     return Promise.resolve(ctx);
   }
 
