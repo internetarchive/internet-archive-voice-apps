@@ -102,6 +102,17 @@ class NaturalOrderStrategy {
     return current;
   }
 
+  /**
+   * Get next item in playlist
+   *
+   * @param app
+   * @param playlist
+   * @returns {*}
+   */
+  getNextItem ({ app, playlist }) {
+    return playlist.getNextItem(app);
+  }
+
   getPreviousCursorPosition ({ app, current, playlist }) {
     const cursor = playlist.getExtra(app).cursor;
     current = { ...current };

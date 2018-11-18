@@ -19,7 +19,7 @@ const prompt = require('./_high-order-handlers/middlewares/prompt');
 
 const feederFromSlotScheme = require('./_high-order-handlers/middlewares/feeder-from-slots-scheme');
 const playlistFromFeeder = require('./_high-order-handlers/middlewares/playlist-from-feeder');
-const mapSongDataToSlots = require('./_high-order-handlers/middlewares/song-data');
+const { mapSongDataToSlots } = require('./_high-order-handlers/middlewares/song-data');
 const playSong = require('./_high-order-handlers/middlewares/play-song');
 
 /**

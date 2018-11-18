@@ -14,7 +14,7 @@ const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-plat
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
 const previousSong = require('../_high-order-handlers/middlewares/previous-song');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
-const mapSongDataToSlots = require('../_high-order-handlers/middlewares/song-data');
+const { mapSongDataToSlots } = require('../_high-order-handlers/middlewares/song-data');
 
 /**
  * map skip name to skip behaviour

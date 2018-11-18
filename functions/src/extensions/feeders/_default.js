@@ -5,6 +5,8 @@ const songsProvider = require('../../provider/songs');
 const { debug } = require('../../utils/logger')('ia:feeder:default');
 const rebornEscape = require('../../utils/reborn-escape');
 
+const orderStrategies = require('../orders');
+
 class DefaultFeeder {
   build ({ app, query, playlist }) {
     throw new Error('Not Implemented!');
@@ -25,12 +27,19 @@ class DefaultFeeder {
    * Current item of feeder
    *
    * @param app
-   * @param slots
    * @param playlist
    * @returns {{id: string, title: string}}
    */
-  getCurrentItem ({ app, playlist }, type = 'current') {
+  getCurrentItem ({ app, playlist }) {
     return playlist.getCurrentSong(app);
+  }
+
+  getNextItem (ctx) {
+    const { app, query } = ctx;
+    const orderStrategy = orderStrategies.getByName(
+      query.getSlot(app, 'order')
+    );
+    return orderStrategy.getNextItem(ctx);
   }
 
   /**
@@ -41,8 +50,13 @@ class DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasPrevious ({ app, slots, playlist }) {
+  hasPrevious ({ app, playlist, query, slots }) {
     if (playlist.isLoop(app)) {
+      return true;
+    }
+
+    // always have something when songs in shuffle
+    if (query.getSlot(app, 'order') === 'random') {
       return true;
     }
 
@@ -57,8 +71,14 @@ class DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({ app, slots, playlist }) {
+  hasNext (ctx) {
+    const { app, query, playlist } = ctx;
     if (playlist.isLoop(app)) {
+      return true;
+    }
+
+    // always have something when songs in shuffle
+    if (query.getSlot(app, 'order') === 'random') {
       return true;
     }
 

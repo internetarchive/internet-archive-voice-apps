@@ -38,14 +38,14 @@ describe('actions', () => {
 
     describe('song data', () => {
       it('should return Promise', () => {
-        expect(middleware()({ app, playlist })).to.have.property('then');
+        expect(middleware.mapSongDataToSlots()({ app, playlist })).to.have.property('then');
       });
 
       it('should play song', () => {
         const slots = {
           id: '123456',
         };
-        return middleware()({ app, playlist, slots })
+        return middleware.mapSongDataToSlots()({ app, playlist, slots })
           .then(context => {
             expect(context).to.have.property('description', strings.description);
             expect(context).to.have.property('speech')
@@ -60,7 +60,7 @@ describe('actions', () => {
           id: '123456',
         };
         const firstSpeech = 'Hello World';
-        return middleware()({ app, playlist, slots, speech: [firstSpeech] })
+        return middleware.mapSongDataToSlots()({ app, playlist, slots, speech: [firstSpeech] })
           .then(context => {
             expect(context).to.have.property('speech').with.members([
               firstSpeech,
@@ -77,7 +77,7 @@ describe('actions', () => {
           id: '123456',
         };
         const firstSpeech = 'Hello World';
-        return middleware()({ app, playlist, slots, speech: [firstSpeech] })
+        return middleware.mapSongDataToSlots()({ app, playlist, slots, speech: [firstSpeech] })
           .then(context => {
             expect(context).to.have.property('speech').with.members([
               firstSpeech,
@@ -86,7 +86,7 @@ describe('actions', () => {
       });
 
       it('should escape song title', () => {
-        return middleware()({ app, playlist, slots: {} })
+        return middleware.mapSongDataToSlots()({ app, playlist, slots: {} })
           .then(ctx => {
             expect(ctx.slots).to.have.property('title', '&quot;Last Night Blues');
             expect(ctx.slots).to.have.property('creator')

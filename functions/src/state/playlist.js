@@ -23,7 +23,7 @@ function getCurrentSong (app) {
  * @param app
  * @returns {*}
  */
-function getNextSong (app) {
+function getNextItem (app) {
   const playlist = getData(app);
   if (!(playlist && playlist.items)) {
     return null;
@@ -269,7 +269,7 @@ module.exports = {
   getCurrentSong,
   getItems,
   getItemByToken,
-  getNextSong,
+  getNextItem,
   isEmpty,
   isLoop,
   setLoop,

@@ -4,7 +4,7 @@ const selectors = require('../../../configurator/selectors');
 const playback = require('../../../state/playback');
 const availableStrings = require('../../../strings').dialog.playSong;
 const escapeHTMLObject = require('../../../utils/escape-html-object');
-const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
+const { debug, info } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
 const errors = require('./errors');
 
@@ -14,7 +14,7 @@ class EmptySongDataError extends errors.MiddlewareError {
 
 const songGetters = {
   current: ({ app, playlist }) => playlist.getCurrentSong(app),
-  next: ({ app, playlist }) => playlist.getNextSong(app),
+  next: (ctx) => ctx.feeder.getNextItem(ctx),
 };
 
 /**
@@ -22,12 +22,13 @@ const songGetters = {
  * @param {string} type
  * @returns {function(*=): *}
  */
-module.exports = ({ type = 'current' } = {}) => (ctx) => {
+const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
   debug('start');
   let { app, slots = {}, speech = [] } = ctx;
   const song = songGetters[type](ctx);
 
   if (!song) {
+    info('there is no song data');
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
@@ -56,4 +57,9 @@ module.exports = ({ type = 'current' } = {}) => (ctx) => {
     speech,
     description,
   });
+};
+
+module.exports = {
+  EmptySongDataError,
+  mapSongDataToSlots,
 };

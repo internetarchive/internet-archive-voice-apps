@@ -295,6 +295,17 @@ class AsyncAlbums extends DefaultFeeder {
     return this.getCursor(app, playlist).current;
   }
 
+  // /**
+  //  * we overwrite default because don't need to do extra shuffling
+  //  *
+  //  * @param app
+  //  * @param playlist
+  //  * @returns {*}
+  //  */
+  // getNextItem ({ app, playlist }) {
+  //   return playlist.getNextSong(app)
+  // }
+
   setCursorCurrent (ctx, current) {
     const { app, playlist } = ctx;
 
@@ -320,9 +331,15 @@ class AsyncAlbums extends DefaultFeeder {
       return true;
     }
 
+    // always have something when songs in shuffle
+    if (query.getSlot(app, 'order') === 'random') {
+      return true;
+    }
+
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
+
     return orderStrategy.hasNext({ app, query, playlist });
   }
 
@@ -339,9 +356,15 @@ class AsyncAlbums extends DefaultFeeder {
       return true;
     }
 
+    // always have something when songs in shuffle
+    if (query.getSlot(app, 'order') === 'random') {
+      return true;
+    }
+
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
+
     return orderStrategy.hasPrevious({ app, query, playlist });
   }
 
