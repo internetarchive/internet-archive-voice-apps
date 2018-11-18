@@ -1,5 +1,9 @@
-const { MiddlewareError } = require('./errors');
 const { debug } = require('../../../utils/logger')('ia:actions:middlewares:next-song');
+
+const errors = require('./errors');
+
+class DoNotHaveNextSongError extends errors.EndOfThePlaylistError {
+}
 
 /**
  * move to the next song
@@ -8,14 +12,19 @@ const { debug } = require('../../../utils/logger')('ia:actions:middlewares:next-
  * @param {boolean} move
  * @returns {Function}
  */
-module.exports = ({ move = true } = {}) => (ctx) => {
+const nextSong = ({ move = true } = {}) => (ctx) => {
   debug('start');
   const { feeder } = ctx;
   if (!feeder.hasNext(ctx)) {
     // TODO: Don't have next song
     debug(`don't have next song`);
-    return Promise.reject(new MiddlewareError(ctx, `don't have next song`));
+    return Promise.reject(new DoNotHaveNextSongError(ctx, `don't have next song`));
   }
 
   return feeder.next(ctx, move);
+};
+
+module.exports = {
+  nextSong,
+  DoNotHaveNextSongError,
 };

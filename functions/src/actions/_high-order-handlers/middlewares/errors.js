@@ -16,6 +16,10 @@ class MiddlewareError extends Error {
   }
 }
 
+class EndOfThePlaylistError extends MiddlewareError {
+}
+
 module.exports = {
+  EndOfThePlaylistError,
   MiddlewareError,
 };

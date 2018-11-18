@@ -108,6 +108,20 @@
   - user: 'year 1900'
     assistant: "I don't have concerts of Grateful Dead in New York. Maybe you would like to try something else?"
 
+- scenario: 'resume playback after end of the playlist'
+  dialog:
+    - user: 'live collection'
+    - user: 'Grateful Dead'
+    - user: 'city Washington year 1970'
+    - user: 'previous'
+      assistent:
+        all:
+          - 'playlist is ending'
+          - 'Would you like to continue listening'
+    - user: 'yes'
+      assistant:
+        directive: 'AudioPlayer.Play'
+
 - scenario: 'handle stop intent when nothing is playing right now'
   dialog:
   - user: 'stop'

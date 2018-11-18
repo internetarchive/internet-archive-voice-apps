@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 
-const middleware = require('../../../../src/actions/_high-order-handlers/middlewares/next-song');
+const { nextSong } = require('../../../../src/actions/_high-order-handlers/middlewares/next-song');
 
 const mockFeeder = require('../../../_utils/mocking/feeders/albums');
 
@@ -14,12 +14,12 @@ describe('actions', () => {
 
     describe('next song', () => {
       it('should return Promise', () => {
-        expect(middleware()({ feeder })).to.have.property('then');
+        expect(nextSong()({ feeder })).to.have.property('then');
       });
 
       it('should can next song', () => {
-        return middleware()({ feeder })
-          .then(context => {
+        return nextSong()({ feeder })
+          .then(() => {
             expect(feeder.hasNext).to.have.been.called;
             expect(feeder.next).to.have.been.called;
           });
