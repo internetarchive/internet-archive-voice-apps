@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 class RandomOrderStrategy {
   clampCursorSongPosition () {
 
@@ -21,6 +23,23 @@ class RandomOrderStrategy {
     return current;
   }
 
+  /**
+   * Get next item in playlist
+   *
+   * @param app
+   * @param playlist
+   * @returns {int}
+   */
+  getNextItem ({ app, playlist }) {
+    return _.sample(playlist.getItems(app));
+  }
+
+  /**
+   * Get previous cursor position
+   *
+   * @param current
+   * @returns {int}
+   */
   getPreviousCursorPosition ({ current }) {
     return current;
   }

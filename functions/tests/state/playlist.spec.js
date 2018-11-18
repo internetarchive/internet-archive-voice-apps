@@ -95,9 +95,9 @@ describe('playlist', () => {
       });
     });
 
-    describe('getNextSong', () => {
+    describe('getNextItem', () => {
       it('should return next song', () => {
-        const song = playlist.getNextSong(app);
+        const song = playlist.getNextItem(app);
         expect(song).to.have.property('track', 3);
         expect(song).to.have.property('title', 'song 3');
       });
@@ -105,7 +105,7 @@ describe('playlist', () => {
       it('should loop next song if loop is on', () => {
         playlist.next(app);
         playlist.setLoop(app, true);
-        const song = playlist.getNextSong(app);
+        const song = playlist.getNextItem(app);
         expect(song).to.have.property('track', 1);
         expect(song).to.have.property('title', 'song 1');
       });
@@ -113,7 +113,7 @@ describe('playlist', () => {
       it('should return no song if loop is off', () => {
         playlist.next(app);
         playlist.setLoop(app, false);
-        const song = playlist.getNextSong(app);
+        const song = playlist.getNextItem(app);
         expect(song).to.have.undefined;
       });
     });

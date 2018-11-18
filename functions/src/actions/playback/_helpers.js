@@ -14,7 +14,7 @@ const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-plat
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
 const previousSong = require('../_high-order-handlers/middlewares/previous-song');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
-const mapSongDataToSlots = require('../_high-order-handlers/middlewares/song-data');
+const { mapSongDataToSlots } = require('../_high-order-handlers/middlewares/song-data');
 
 /**
  * map skip name to skip behaviour
@@ -37,8 +37,6 @@ function enqueue (ctx) {
     ...ctx,
     playlist,
     query,
-    //   skip: 'forward',
-    //   enqueue: true
   })
     .then(mapPlatformToSlots())
     .then(ctx => ({
@@ -79,14 +77,7 @@ function playSong (ctx) {
   debug(ctx);
   const { skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
-  // expose current platform to the slots
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, { platform: ctx.app.platform || 'assistant' }
-        )
-      })
-    )
+    .then(mapPlatformToSlots())
     .then(ctx => {
       if (skip) {
         return skipHandlers[skip](ctx);

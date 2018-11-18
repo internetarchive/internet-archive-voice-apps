@@ -10,6 +10,7 @@ function handler (app) {
       if (!(err instanceof EmptySongDataError)) {
         error('we got unexpected error:', err);
       }
+
       // TODO: could we tell something to user after all?
       debug('playlist is ending');
     });
