@@ -37,7 +37,7 @@ describe('actions', () => {
             'copyDefaultsToSlots',
             'feederFromSlotScheme',
             'fulfilResolvers',
-            'parepareSongData',
+            'mapSongDataToSlots',
             'playlistFromFeeder',
             'playSong',
             'renderSpeech',

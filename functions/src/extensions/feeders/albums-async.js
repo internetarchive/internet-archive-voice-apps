@@ -50,10 +50,12 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build ({ app, query, playlist }) {
+  build (ctx) {
     debug('build async songs feeder');
+    const { app, query, playlist } = ctx;
 
-    return this.fetchChunkOfSongs({ app, query, playlist })
+    const currentCursor = this.getCursorCurrent(ctx);
+    return this.fetchChunkOfSongs({ app, currentCursor, query, playlist })
       .then(({ songs, songsInFirstAlbum, totalNumOfAlbums }) => {
         // the only place where we modify state
         // so maybe we can put it out of this function?
@@ -76,11 +78,12 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @private
    * @param app
+   * @param currentCursor
    * @param query
    * @param playlist
    * @returns {Promise.<T>}
    */
-  fetchChunkOfSongs ({ app, query, playlist }) {
+  fetchChunkOfSongs ({ app, currentCursor, query, playlist }) {
     const slots = query.getSlots(app);
     debug('we have slots:', slots);
 
@@ -91,7 +94,7 @@ class AsyncAlbums extends DefaultFeeder {
 
     debug('config of feeder', feederConfig);
 
-    const cursor = this.getCursor(app, playlist);
+    // const cursor = this.getCursor(app, playlist);
     let totalNumOfAlbums = 0;
 
     const orderStrategy = orderStrategies.getByName(
@@ -104,7 +107,7 @@ class AsyncAlbums extends DefaultFeeder {
         Object.assign(
           {},
           slots,
-          orderStrategy.getPage({ app, cursor, feederConfig })
+          orderStrategy.getPage({ currentCursor, feederConfig })
         )
       )
       .then((albums) => {
@@ -155,10 +158,27 @@ class AsyncAlbums extends DefaultFeeder {
             return allSongs.concat(albumSongs);
           }, []);
 
+        let current = currentCursor;
+        let cursor = this.getCursor(app, playlist);
+
+        songs = songs.map(s => {
+          current = orderStrategy.getNextCursorPosition({
+            app,
+            cursor,
+            playlist,
+            current: current,
+          });
+
+          return {
+            ...s,
+            cursor: current,
+          };
+        });
+
         if (songs.length === 0) {
           warning(`we received zero songs. It doesn't sound ok`);
           // let's try again
-          return this.fetchChunkOfSongs({ app, query, playlist });
+          return this.fetchChunkOfSongs({ app, currentCursor, query, playlist });
         }
 
         return {
@@ -271,6 +291,22 @@ class AsyncAlbums extends DefaultFeeder {
     return _.at(playlist.getExtra(app), 'cursor')[0] || defaultCursor;
   }
 
+  getCursorCurrent ({ app, playlist }) {
+    return this.getCursor(app, playlist).current;
+  }
+
+  setCursorCurrent (ctx, current) {
+    const { app, playlist } = ctx;
+
+    // store cursor
+    playlist.setExtra(app, {
+      cursor: {
+        ...playlist.getExtra(app).cursor,
+        current,
+      },
+    });
+  }
+
   /**
    * Do we have next item?
    *
@@ -312,29 +348,35 @@ class AsyncAlbums extends DefaultFeeder {
   /**
    * Move to the next song
    *
-   * @param app
-   * @param query
-   * @param playlist
+   * @param ctx
+   * @param {boolean} move
    *
    * @returns {Promise.<T>}
    */
-  next ({ app, query, playlist }) {
+  next (ctx, move = true) {
+    const { app, query, playlist } = ctx;
     debug('move to the next song');
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
 
-    orderStrategy.moveSourceCursorToTheNextPosition({ app, query, playlist });
+    const cursor = this.getCursor(app, playlist);
+    const current = this.getCursorCurrent(ctx);
+    const newCurrentCursor = orderStrategy.getNextCursorPosition({ app, current, cursor, playlist });
+    if (move) {
+      this.setCursorCurrent(ctx, newCurrentCursor);
+    }
 
     return Promise.resolve()
       .then(() => {
         // check whether we need to fetch new chunk
         if (playlist.hasNextSong(app)) {
           debug('we have next song so just move cursor without fetching new data');
+          return ctx;
         } else {
           debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
           return this
-            .fetchChunkOfSongs({ app, query, playlist })
+            .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, songsInFirstAlbum }) => {
               songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, songs);
 
@@ -356,30 +398,36 @@ class AsyncAlbums extends DefaultFeeder {
                 playlist,
                 songsInFirstAlbum,
               });
+
+              return ctx;
             });
         }
       })
-      .then(() => {
-        playlist.next(app);
+      .then(ctx => {
+        if (move) {
+          playlist.next(app);
+        }
+        return ctx;
       });
   }
 
   /**
    * Move to the previous song
    *
-   * @param app
-   * @param query
-   * @param playlist
+   * @param ctx
    *
    * @returns {Promise.<T>}
    */
-  previous ({ app, query, playlist }) {
+  previous (ctx) {
     debug('move to the previous song');
+    const { app, query, playlist } = ctx;
     const orderStrategy = orderStrategies.getByName(
       query.getSlot(app, 'order')
     );
 
-    orderStrategy.moveSourceCursorToThePreviousPosition({ app, query, playlist });
+    const current = this.getCursorCurrent(ctx);
+    const newCurrentCursor = orderStrategy.getPreviousCursorPosition({ app, current, playlist });
+    this.setCursorCurrent(ctx, newCurrentCursor);
 
     return Promise.resolve()
       .then(() => {
@@ -389,7 +437,7 @@ class AsyncAlbums extends DefaultFeeder {
         } else {
           debug(`we don't have previous song in playlist so we'll fetch new chunk of songs`);
           return this
-            .fetchChunkOfSongs({ app, query, playlist })
+            .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, numOfSongsInLastAlbum }) => {
               orderStrategy.clampCursorSongPosition({ app, playlist }, numOfSongsInLastAlbum - 1);
 

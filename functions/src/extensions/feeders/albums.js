@@ -50,6 +50,7 @@ class SyncAlbum extends DefaultFeeder {
           case 0:
             // TODO: there is no such album
             // - suggest other albums
+            debug('there is no albums');
             break;
           case 1:
             albumId = albums.items[0].identifier;
@@ -80,15 +81,17 @@ class SyncAlbum extends DefaultFeeder {
         return albumId;
       })
       .then((albumId) => {
-        albumId = albumId.toLowerCase();
-        debug('id of album:', albumId);
-        return albumId && albumsProvider.fetchAlbumDetails(app, albumId);
+        if (albumId) {
+          albumId = albumId.toLowerCase();
+          debug('id of album:', albumId);
+          return albumsProvider.fetchAlbumDetails(app, albumId);
+        }
       })
       .then(album => {
         if (!album) {
           debug('we get none album');
           // TODO: we don't get album
-          return;
+          return null;
         }
 
         debug('We get album', album);

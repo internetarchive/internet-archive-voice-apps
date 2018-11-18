@@ -12,9 +12,7 @@ const { debug } = require('../../../utils/logger')('ia:actions:middlewares:fulfi
  * - solve all resolvers in speech attribute
  * - and substitute result
  *
- * @param slots
- * @param speech
- * @returns {Promise}
+ * @returns {function({slots, speech}): *}
  */
 module.exports = () => (ctx) => {
   debug('start');
@@ -35,23 +33,23 @@ module.exports = () => (ctx) => {
       debug('solutions:', solutions);
       return solutions
       // zip/merge to collections
-        .map((res, index) => {
+        .map((result, index) => {
           const resolver = resolversToProcess[index];
-          return Object.assign({}, resolver, { result: res });
+          return { ...resolver, result };
         })
         // pack result in the way:
         .reduce((acc, resolver) => {
           debug(`we get result resolver.result: ${util.inspect(resolver.result)} to bake for "${resolver.name}"`);
-          return Object.assign({}, acc, {
+          return {
+            ...acc,
             [resolver.name]: resolver.result,
-          });
+          };
         }, {});
     })
     .then(newSlots => {
-      return Promise.resolve(
-        Object.assign({}, ctx, {
-          slots: Object.assign({}, slots, newSlots),
-        })
-      );
+      return Promise.resolve({
+        ...ctx,
+        slots: Object.assign({}, slots, newSlots),
+      });
     });
 };

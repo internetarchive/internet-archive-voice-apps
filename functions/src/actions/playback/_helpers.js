@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const dialog = require('../../dialog');
 const dialogState = require('../../state/dialog');
 const playback = require('../../state/playback');
@@ -12,10 +10,11 @@ const defaultHelper = require('../_helpers');
 const feederFromPlaylist = require('../_high-order-handlers/middlewares/feeder-from-playlist');
 const fulfilResolvers = require('../_high-order-handlers/middlewares/fulfil-resolvers');
 const nextSong = require('../_high-order-handlers/middlewares/next-song');
+const mapPlatformToSlots = require('../_high-order-handlers/middlewares/map-platform-to-slots');
 const playSongMiddleware = require('../_high-order-handlers/middlewares/play-song');
 const previousSong = require('../_high-order-handlers/middlewares/previous-song');
-const parepareSongData = require('../_high-order-handlers/middlewares/song-data');
 const renderSpeech = require('../_high-order-handlers/middlewares/render-speech');
+const mapSongDataToSlots = require('../_high-order-handlers/middlewares/song-data');
 
 /**
  * map skip name to skip behaviour
@@ -28,6 +27,46 @@ const skipHandlers = {
 };
 
 /**
+ * Enqueue next record without moving to the next playlist item
+ *
+ * @param ctx
+ * @returns {Promise}
+ */
+function enqueue (ctx) {
+  return feederFromPlaylist.middleware()({
+    ...ctx,
+    playlist,
+    query,
+    //   skip: 'forward',
+    //   enqueue: true
+  })
+    .then(mapPlatformToSlots())
+    .then(ctx => ({
+      ...ctx,
+      slots: {
+        ...ctx.slots,
+        previousTrack: playlist.getCurrentSong(ctx.app),
+      },
+    }))
+    .then(nextSong({
+      // we need just fetch next song,
+      // and on AMAZON.StartIntent we finally move there
+      move: false,
+    }))
+    .then(mapSongDataToSlots({
+      // map next (enqueued) song
+      type: 'next',
+    }))
+    .then(fulfilResolvers())
+    .then(renderSpeech())
+    .then(playSongMiddleware({
+      // Alexa doesn't allow any response except of media response
+      // when we add to queue
+      mediaResponseOnly: true,
+    }));
+}
+
+/**
  * play one song
  *
  * @param ctx
@@ -38,7 +77,7 @@ const skipHandlers = {
 function playSong (ctx) {
   debug('playSong');
   debug(ctx);
-  const { enqueue = false, skip = null } = ctx;
+  const { skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
   // expose current platform to the slots
     .then(ctx =>
@@ -50,17 +89,11 @@ function playSong (ctx) {
     )
     .then(ctx => {
       if (skip) {
-        // we need previous track token for Alexa playback
-        if (enqueue) {
-          const previousTrack = playlist.getCurrentSong(ctx.app);
-          ctx = Object.assign({}, ctx);
-          _.set(ctx, ['slots', 'previousTrack'], previousTrack);
-        }
         return skipHandlers[skip](ctx);
       }
       return ctx;
     })
-    .then(parepareSongData())
+    .then(mapSongDataToSlots())
     .then(fulfilResolvers())
     .then(renderSpeech())
     // Alexa doesn't allow any response except of media response
@@ -102,6 +135,7 @@ function simpleResponseAndResume (app, scheme, extra = {}, defaultResponse = {})
 }
 
 module.exports = {
+  enqueue,
   playSong,
   resume,
   simpleResponseAndResume,

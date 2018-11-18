@@ -18,6 +18,21 @@ function getCurrentSong (app) {
 }
 
 /**
+ * Get next song in playlist
+ *
+ * @param app
+ * @returns {*}
+ */
+function getNextSong (app) {
+  const playlist = getData(app);
+  if (!(playlist && playlist.items)) {
+    return null;
+  }
+
+  return playlist.items[getIndexAfterCurrent(app)];
+}
+
+/**
  * Selector. Do we have next song
  *
  * @param app
@@ -134,21 +149,62 @@ function setLoop (app, loopOn) {
 }
 
 /**
- * Reducer: Choose next song
+ * Move current position to the song
  *
  * @param app
+ * @param song
  */
-function next (app) {
+function moveTo (app, song) {
+  const playlist = getData(app);
+  setData(app, { ...playlist, current: playlist.items.indexOf(song) });
+}
+
+/**
+ * get index after current
+ *
+ * @param app
+ * @returns {*}
+ * @private
+ */
+function getIndexAfterCurrent (app) {
   const playlist = getData(app);
   let current = playlist.current + 1;
   if (current >= playlist.items.length) {
     if (playlist.loop) {
       current = 0;
-    } else {
+    }
+  }
+  return current;
+}
+
+/**
+ * get index before current
+ *
+ * @param app
+ * @returns {number}
+ * @private
+ */
+function getIndexBeforeCurrent (app) {
+  const playlist = getData(app);
+  let current = playlist.current - 1;
+  if (current < 0) {
+    if (playlist.loop) {
       current = playlist.items.length - 1;
     }
   }
-  setData(app, { ...playlist, current });
+  return current;
+}
+
+/**
+ * Reducer: Choose next song
+ *
+ * @param app
+ */
+function next (app) {
+  setData(app, {
+    ...getData(app),
+    current: getIndexAfterCurrent(app),
+  });
 }
 
 /**
@@ -157,16 +213,10 @@ function next (app) {
  * @param app
  */
 function previous (app) {
-  const playlist = getData(app);
-  let current = playlist.current - 1;
-  if (current < 0) {
-    if (playlist.loop) {
-      current = playlist.items.length - 1;
-    } else {
-      current = 0;
-    }
-  }
-  setData(app, { ...playlist, current });
+  setData(app, {
+    ...getData(app),
+    current: getIndexBeforeCurrent(app),
+  });
 }
 
 /**
@@ -193,6 +243,17 @@ function getItems (app) {
 }
 
 /**
+ * Get playlist item by token
+ *
+ * @param app
+ * @param token
+ * @returns {*}
+ */
+function getItemByToken (app, token) {
+  return getData(app).items.find(i => i.audioURL === token);
+}
+
+/**
  * update items in playlist
  *
  * @param app
@@ -206,6 +267,9 @@ function updateItems (app, items) {
 
 module.exports = {
   getCurrentSong,
+  getItems,
+  getItemByToken,
+  getNextSong,
   isEmpty,
   isLoop,
   setLoop,
@@ -216,9 +280,9 @@ module.exports = {
   setFeeder,
   hasNextSong,
   hasPreviousSong,
+  moveTo,
   next,
   previous,
   shift,
-  getItems,
   updateItems,
 };

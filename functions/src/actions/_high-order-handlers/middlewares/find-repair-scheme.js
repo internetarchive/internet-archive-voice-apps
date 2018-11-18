@@ -11,7 +11,7 @@ const { requiredParameter } = require('./utils');
  * so we are getting repair scheme and suggestion scheme
  *
  * @param brokenSlots
- * @param slotCheme
+ * @param slotScheme
  *
  * @returns {Promise}
  */

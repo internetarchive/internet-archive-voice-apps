@@ -3,12 +3,12 @@ class MockOrderStrategy {
     return {};
   }
 
-  hasNext () {
-    return true;
+  getNextCursorPosition ({ current }) {
+    return current;
   }
 
-  moveSourceCursorToTheNextPosition () {
-
+  hasNext () {
+    return true;
   }
 
   updateCursorTotal () {

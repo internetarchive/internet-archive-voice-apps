@@ -29,7 +29,7 @@ class DefaultFeeder {
    * @param playlist
    * @returns {{id: string, title: string}}
    */
-  getCurrentItem ({ app, playlist }) {
+  getCurrentItem ({ app, playlist }, type = 'current') {
     return playlist.getCurrentSong(app);
   }
 
@@ -70,12 +70,17 @@ class DefaultFeeder {
    *
    * TODO: should be async because we could have multiple albums here
    *
+   * @param ctx
+   * @param move
    * @returns {Promise.<T>}
    */
-  next ({ app, slots, playlist }) {
-    debug('move to the next song');
-    playlist.next(app);
-    return Promise.resolve();
+  next (ctx, move = true) {
+    const { app, playlist } = ctx;
+    if (move) {
+      debug('move to the next song');
+      playlist.next(app);
+    }
+    return Promise.resolve(ctx);
   }
 
   /**
@@ -85,10 +90,11 @@ class DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  previous ({ app, slots, playlist }) {
+  previous (ctx) {
+    const { app, playlist } = ctx;
     debug('move to the previous song');
     playlist.previous(app);
-    return Promise.resolve();
+    return Promise.resolve(ctx);
   }
 
   /**
