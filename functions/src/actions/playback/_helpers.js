@@ -37,8 +37,6 @@ function enqueue (ctx) {
     ...ctx,
     playlist,
     query,
-    //   skip: 'forward',
-    //   enqueue: true
   })
     .then(mapPlatformToSlots())
     .then(ctx => ({
@@ -79,14 +77,7 @@ function playSong (ctx) {
   debug(ctx);
   const { skip = null } = ctx;
   return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
-  // expose current platform to the slots
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, { platform: ctx.app.platform || 'assistant' }
-        )
-      })
-    )
+    .then(mapPlatformToSlots())
     .then(ctx => {
       if (skip) {
         return skipHandlers[skip](ctx);
