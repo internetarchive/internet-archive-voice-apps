@@ -39,15 +39,31 @@ describe('feeders', () => {
   describe('albums', () => {
     // TODO: test empty response
     describe('none', () => {
+      let originalAlbumsProvider;
+
+      beforeEach(() => {
+        originalAlbumsProvider = albums.__get__('albumsProvider');
+        albums.__set__('albumsProvider', mockAlbumsProvider({
+          fetchAlbumDetailsResolve: null,
+          fetchAlbumsByQueryResolve: {
+            items: [],
+          },
+        }));
+      });
+
+      afterEach(() => {
+        albums.__set__('albumsProvider', originalAlbumsProvider);
+      });
+
       it('should return empty list of songs, when there is no songs', () => {
         return albums
           .build({ app, playlist, query })
           .then(() => {
-            expect(playlist.hasNextSong(app)).to.be.true;
-            expect(playlist.getCurrentSong(app)).to.be.ok;
-            expect(albums.isEmpty({ app, query, playlist })).to.be.false;
-            expect(albums.getCurrentItem({ app, playlist, query })).to.be.ok;
-            expect(albums.hasNext({ app, query, playlist })).to.be.true;
+            expect(playlist.hasNextSong(app)).to.be.false;
+            expect(playlist.getCurrentSong(app)).to.be.null;
+            expect(albums.isEmpty({ app, query, playlist })).to.be.true;
+            expect(albums.getCurrentItem({ app, playlist, query })).to.be.null;
+            expect(albums.hasNext({ app, query, playlist })).to.be.false;
           });
       });
     });
