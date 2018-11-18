@@ -74,7 +74,7 @@ function enqueue (ctx) {
  * play one song
  *
  * @param ctx
- * @param {boolean} ctx.skip - skip back, forward
+ * @param {string} ctx.skip - skip back, forward
  * @returns {Promise}
  */
 function playSong (ctx) {
