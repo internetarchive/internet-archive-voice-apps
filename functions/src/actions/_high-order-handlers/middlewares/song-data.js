@@ -6,6 +6,12 @@ const availableStrings = require('../../../strings').dialog.playSong;
 const escapeHTMLObject = require('../../../utils/escape-html-object');
 const { debug } = require('../../../utils/logger')('ia:actions:middlewares:song-data');
 
+const errors = require('./errors');
+
+class EmptySongDataError extends errors.MiddlewareError {
+
+}
+
 const songGetters = {
   current: ({ app, playlist }) => playlist.getCurrentSong(app),
   next: ({ app, playlist }) => playlist.getNextSong(app),
@@ -20,6 +26,11 @@ module.exports = ({ type = 'current' } = {}) => (ctx) => {
   debug('start');
   let { app, slots = {}, speech = [] } = ctx;
   const song = songGetters[type](ctx);
+
+  if (!song) {
+    return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
+  }
+
   const mute = playback.isMuteSpeechBeforePlayback(app);
 
   slots = Object.assign({}, slots, escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }));

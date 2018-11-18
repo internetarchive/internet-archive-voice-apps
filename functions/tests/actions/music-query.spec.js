@@ -46,7 +46,7 @@ describe('actions', () => {
 
     playbackMiddlewares = mockMiddlewares([
       'feederFromSlotScheme',
-      'parepareSongData',
+      'mapSongDataToSlots',
       'playlistFromFeeder',
       'playSong',
     ]);
@@ -119,7 +119,7 @@ describe('actions', () => {
           });
       });
 
-      it('should recieve value for old slot', () => {
+      it('should receive value for old slot', () => {
         app = mockApp({
           getByName: {
             category: 'plates',
@@ -132,7 +132,7 @@ describe('actions', () => {
           });
       });
 
-      it('should recieve value for new slot', () => {
+      it('should receive value for new slot', () => {
         app = mockApp({
           getByName: {
             category: 'plates',

@@ -4,6 +4,7 @@ module.exports = [{
   slots: [
     'plate',
     'category',
+    'year',
   ],
 
   condition: 'category == "plates"',

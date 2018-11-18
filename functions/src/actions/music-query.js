@@ -44,6 +44,7 @@ function handler (app) {
 
   const slots = query.getSlots(app);
   debug('we had slots:', Object.keys(slots));
+  debug('we need slots:', slotScheme.slots);
 
   const complete = query.hasSlots(app, slotScheme.slots);
   if (complete) {

@@ -95,6 +95,29 @@ describe('playlist', () => {
       });
     });
 
+    describe('getNextSong', () => {
+      it('should return next song', () => {
+        const song = playlist.getNextSong(app);
+        expect(song).to.have.property('track', 3);
+        expect(song).to.have.property('title', 'song 3');
+      });
+
+      it('should loop next song if loop is on', () => {
+        playlist.next(app);
+        playlist.setLoop(app, true);
+        const song = playlist.getNextSong(app);
+        expect(song).to.have.property('track', 1);
+        expect(song).to.have.property('title', 'song 1');
+      });
+
+      it('should return no song if loop is off', () => {
+        playlist.next(app);
+        playlist.setLoop(app, false);
+        const song = playlist.getNextSong(app);
+        expect(song).to.have.undefined;
+      });
+    });
+
     describe('hasNextSong', () => {
       it('should return true if we have next song', () => {
         expect(playlist.hasNextSong(app)).to.be.true;

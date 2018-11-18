@@ -20,6 +20,20 @@ describe('actions', () => {
       app = mockApp();
       selectors = mockSelectors({ findResult: [strings, strings.wordless[0]] });
       middleware.__set__('selectors', selectors);
+      playlist.create(app, [{
+        title: '"Last Night Blues',
+        creator: [
+          'Joe Liggins & His Honeydrippers',
+          'Joe Liggins',
+          '"Little" Willie Jackson',
+        ],
+        track: 1,
+        year: 1947,
+        someInnerObject: {
+          quot: '"',
+          amp: '&',
+        },
+      }]);
     });
 
     describe('song data', () => {
@@ -37,9 +51,7 @@ describe('actions', () => {
             expect(context).to.have.property('speech')
               .with.members([strings.wordless[0].speech]);
             expect(context).to.have.property('slots')
-              .which.deep.equal({
-                id: slots.id,
-              });
+              .with.property('id', slots.id);
           });
       });
 
@@ -74,20 +86,6 @@ describe('actions', () => {
       });
 
       it('should escape song title', () => {
-        playlist.create(app, [{
-          title: '"Last Night Blues',
-          creator: [
-            'Joe Liggins & His Honeydrippers',
-            'Joe Liggins',
-            '"Little" Willie Jackson',
-          ],
-          track: 1,
-          year: 1947,
-          someInnerObject: {
-            quot: '"',
-            amp: '&',
-          },
-        }]);
         return middleware()({ app, playlist, slots: {} })
           .then(ctx => {
             expect(ctx.slots).to.have.property('title', '&quot;Last Night Blues');

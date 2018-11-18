@@ -1,25 +1,18 @@
-const dialog = require('../dialog');
-const strings = require('../strings');
-const { debug } = require('../utils/logger')('ia:actions:playback-nearly-finished');
+const { debug, error } = require('../utils/logger')('ia:actions:playback-nearly-finished');
 
 const helpers = require('./playback/_helpers');
+
+const { EmptySongDataError } = require('./_high-order-handlers/middlewares/song-data');
 
 function handler (app) {
   return helpers.enqueue({ app })
     .catch((err) => {
-      debug('It could be an error:', err);
-      return dialog.ask(app, strings.events.playlistIsEnded);
+      if (!(err instanceof EmptySongDataError)) {
+        error('we got unexpected error:', err);
+      }
+      // TODO: could we tell something to user after all?
+      debug('playlist is ending');
     });
-  // return helpers.playSong({
-  //   app,
-  //   mediaResponseOnly: true,
-  //   skip: 'forward',
-  //   enqueue: true,
-  // })
-  //   .catch(context => {
-  //     debug('It could be an error:', context);
-  //     return dialog.ask(app, strings.events.playlistIsEnded);
-  //   });
 }
 
 /**
