@@ -1,5 +1,28 @@
 # Change Log
 
+## [2.4.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.0) (2018-11-19)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.3.1...2.4.0)
+
+**Implemented enhancements:**
+
+- reprompt playback actions on non-playback state [\#370](https://github.com/internetarchive/internet-archive-google-action/issues/370)
+- shuffle for sync-album [\#369](https://github.com/internetarchive/internet-archive-google-action/issues/369)
+- use AudioPlayer.PlaybackStarted instead of AudioPlayer.PlaybackNearlyFinished to move current playing cursor [\#368](https://github.com/internetarchive/internet-archive-google-action/issues/368) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+- handle end of playlist [\#364](https://github.com/internetarchive/internet-archive-google-action/issues/364)
+- support previous intent [\#355](https://github.com/internetarchive/internet-archive-google-action/issues/355)
+- support shuffle on/off intent [\#353](https://github.com/internetarchive/internet-archive-google-action/issues/353)
+- support loop on/off intent [\#352](https://github.com/internetarchive/internet-archive-google-action/issues/352)
+
+**Merged pull requests:**
+
+- Feature/364 handle end of playlist [\#376](https://github.com/internetarchive/internet-archive-google-action/pull/376) ([hyzhak](https://github.com/hyzhak))
+- Feature/369 shuffle for async album [\#375](https://github.com/internetarchive/internet-archive-google-action/pull/375) ([hyzhak](https://github.com/hyzhak))
+- Feature/368 support alexa playback nearly finished [\#373](https://github.com/internetarchive/internet-archive-google-action/pull/373) ([hyzhak](https://github.com/hyzhak))
+- Feature/370 reprompt playback actions on non playback stat [\#372](https://github.com/internetarchive/internet-archive-google-action/pull/372) ([hyzhak](https://github.com/hyzhak))
+- Feature/shuffle [\#371](https://github.com/internetarchive/internet-archive-google-action/pull/371) ([hyzhak](https://github.com/hyzhak))
+- Feature/loop on off [\#367](https://github.com/internetarchive/internet-archive-google-action/pull/367) ([hyzhak](https://github.com/hyzhak))
+- Feature/previous intent [\#362](https://github.com/internetarchive/internet-archive-google-action/pull/362) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.3.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.3.1) (2018-11-09)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.3.0...2.3.1)
 
