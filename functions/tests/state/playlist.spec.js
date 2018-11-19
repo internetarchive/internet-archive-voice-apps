@@ -113,8 +113,9 @@ describe('playlist', () => {
       it('should return no song if loop is off', () => {
         playlist.next(app);
         playlist.setLoop(app, false);
-        const song = playlist.getNextItem(app);
-        expect(song).to.have.undefined;
+        expect(() => {
+          playlist.getNextItem(app);
+        }).to.throw(playlist.errors.PlaylistStateError);
       });
     });
 

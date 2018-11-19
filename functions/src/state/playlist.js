@@ -2,6 +2,9 @@ const { debug, warning } = require('../utils/logger')('ia:state:playlist');
 
 const { getData, setData } = require('./helpers').group('playlist');
 
+class PlaylistStateError extends Error {
+}
+
 /**
  * Selector. Current song in the Playlist
  *
@@ -172,6 +175,8 @@ function getIndexAfterCurrent (app) {
   if (current >= playlist.items.length) {
     if (playlist.loop) {
       current = 0;
+    } else {
+      throw new PlaylistStateError(`Current playlist index should be less than number of items, but got ${current}`);
     }
   }
   return current;
@@ -190,6 +195,8 @@ function getIndexBeforeCurrent (app) {
   if (current < 0) {
     if (playlist.loop) {
       current = playlist.items.length - 1;
+    } else {
+      throw new PlaylistStateError(`Current playlist index should be more or equal to 0, but got ${current}`);
     }
   }
   return current;
@@ -300,6 +307,10 @@ function updateItems (app, items) {
 }
 
 module.exports = {
+  errors: {
+    PlaylistStateError,
+  },
+
   getCurrentSong,
   getItems,
   getItemByToken,
