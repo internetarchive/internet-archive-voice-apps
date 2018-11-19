@@ -19,6 +19,7 @@ command -v git-generate-changelog >/dev/null 2>&1 || { echo -e >&2 "$failed  \03
 
 if [[ -z "${CHANGELOG_GITHUB_TOKEN}" ]]; then
   echo -e "$failed  \033[1mCHANGELOG_GITHUB_TOKEN\033[0m is required env variable"
+  exit 1
 fi
 
 echo -e "$checkit  bump new version of repository"
