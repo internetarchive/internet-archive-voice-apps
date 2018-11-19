@@ -19,7 +19,7 @@ const albumsProvider = require('../../provider/albums');
 const { debug, warning, error } = require('../../utils/logger')('ia:feeder:albums-async');
 const stripFileName = require('../../utils/strip-filename');
 
-const orderStrategies = require('../orders');
+const { orders, DEFAULT_ORDER } = require('../orders');
 
 const DefaultFeeder = require('./_default');
 
@@ -97,8 +97,8 @@ class AsyncAlbums extends DefaultFeeder {
     // const cursor = this.getCursor(app, playlist);
     let totalNumOfAlbums = 0;
 
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     return albumsProvider
@@ -207,8 +207,8 @@ class AsyncAlbums extends DefaultFeeder {
     debug('process songs on moving to next');
     const cursor = this.getCursor(app, playlist);
     const feederConfig = this.getConfigForOrder(app, query);
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     debug(`we get ${songs.length} songs`);
@@ -241,8 +241,8 @@ class AsyncAlbums extends DefaultFeeder {
     debug('process songs on moving to previous');
     const cursor = this.getCursor(app, playlist);
     const feederConfig = this.getConfigForOrder(app, query);
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     debug(`we get ${songs.length} songs`);
@@ -336,8 +336,8 @@ class AsyncAlbums extends DefaultFeeder {
       return true;
     }
 
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     return orderStrategy.hasNext({ app, query, playlist });
@@ -365,8 +365,8 @@ class AsyncAlbums extends DefaultFeeder {
       return true;
     }
 
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     return orderStrategy.hasPrevious({ app, query, playlist });
@@ -383,8 +383,8 @@ class AsyncAlbums extends DefaultFeeder {
   next (ctx, move = true) {
     const { app, query, playlist } = ctx;
     debug('move to the next song');
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     const cursor = this.getCursor(app, playlist);
@@ -448,8 +448,8 @@ class AsyncAlbums extends DefaultFeeder {
   previous (ctx) {
     debug('move to the previous song');
     const { app, query, playlist } = ctx;
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
 
     const current = this.getCursorCurrent(ctx);

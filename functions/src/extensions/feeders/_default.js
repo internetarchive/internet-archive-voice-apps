@@ -5,7 +5,7 @@ const songsProvider = require('../../provider/songs');
 const { debug } = require('../../utils/logger')('ia:feeder:default');
 const rebornEscape = require('../../utils/reborn-escape');
 
-const orderStrategies = require('../orders');
+const { orders, DEFAULT_ORDER } = require('../orders');
 
 class DefaultFeeder {
   build ({ app, query, playlist }) {
@@ -36,8 +36,8 @@ class DefaultFeeder {
 
   getNextItem (ctx) {
     const { app, query } = ctx;
-    const orderStrategy = orderStrategies.getByName(
-      query.getSlot(app, 'order')
+    const orderStrategy = orders.getByName(
+      query.getSlot(app, 'order') || DEFAULT_ORDER
     );
     return orderStrategy.getNextItem(ctx);
   }

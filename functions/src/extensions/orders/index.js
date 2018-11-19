@@ -3,4 +3,7 @@
  */
 const builder = require('../builder');
 
-module.exports = builder.build({ root: __dirname });
+module.exports = {
+  DEFAULT_ORDER: 'natural',
+  orders: builder.build({ root: __dirname }),
+};

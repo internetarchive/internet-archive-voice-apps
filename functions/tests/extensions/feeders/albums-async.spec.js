@@ -406,19 +406,19 @@ describe('feeders', () => {
     });
 
     describe('random order', () => {
-      let originalOrderStrategies;
+      let originalOrders;
 
       beforeEach(() => {
         const orderStrategy = mockOrderStrategy();
-        const orderStrategies = {
+        const orders = {
           getByName: sinon.stub().returns(orderStrategy),
         };
-        originalOrderStrategies = feeder.__get__('orderStrategies');
-        feeder.__set__('orderStrategies', orderStrategies);
+        originalOrders = feeder.__get__('orders');
+        feeder.__set__('orders', orders);
       });
 
       afterEach(() => {
-        feeder.__set__('orderStrategies', originalOrderStrategies);
+        feeder.__set__('orders', originalOrders);
       });
 
       it('should fetch next', () => {
