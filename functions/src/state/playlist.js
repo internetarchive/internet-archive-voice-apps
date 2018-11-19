@@ -32,7 +32,7 @@ function getNextItem (app) {
     return null;
   }
 
-  return playlist.items[getIndexAfterCurrent(app)];
+  return playlist.items[_validateCurrent(app, getIndexAfterCurrent(app))];
 }
 
 /**
@@ -171,15 +171,37 @@ function moveTo (app, song) {
  */
 function getIndexAfterCurrent (app) {
   const playlist = getData(app);
-  let current = playlist.current + 1;
-  if (current >= playlist.items.length) {
+  return playlist.current + 1;
+}
+
+/**
+ * validate current value
+ *
+ * @param value
+ * @returns {*}
+ * @private
+ */
+function _validateCurrent (app, value) {
+  const playlist = getData(app);
+  if (value < 0) {
     if (playlist.loop) {
-      current = 0;
+      value = playlist.items.length - 1;
     } else {
-      throw new PlaylistStateError(`Current playlist index should be less than number of items, but got ${current}`);
+      throw new PlaylistStateError(
+        `Current playlist index should be more or equal to 0, but got ${value}`
+      );
+    }
+  } else if (value >= playlist.items.length) {
+    if (playlist.loop) {
+      value = 0;
+    } else {
+      throw new PlaylistStateError(
+        `Current playlist index should be less than number of items ${playlist.items.length}, but got ${value}`
+      );
     }
   }
-  return current;
+
+  return value;
 }
 
 /**
@@ -191,15 +213,7 @@ function getIndexAfterCurrent (app) {
  */
 function getIndexBeforeCurrent (app) {
   const playlist = getData(app);
-  let current = playlist.current - 1;
-  if (current < 0) {
-    if (playlist.loop) {
-      current = playlist.items.length - 1;
-    } else {
-      throw new PlaylistStateError(`Current playlist index should be more or equal to 0, but got ${current}`);
-    }
-  }
-  return current;
+  return playlist.current - 1;
 }
 
 /**
@@ -222,7 +236,7 @@ function first (app) {
 function next (app) {
   setData(app, {
     ...getData(app),
-    current: getIndexAfterCurrent(app),
+    current: _validateCurrent(app, getIndexAfterCurrent(app)),
   });
 }
 
@@ -234,7 +248,7 @@ function next (app) {
 function previous (app) {
   setData(app, {
     ...getData(app),
-    current: getIndexBeforeCurrent(app),
+    current: _validateCurrent(app, getIndexBeforeCurrent(app)),
   });
 }
 
@@ -259,7 +273,7 @@ function last (app) {
 function shift (app, value) {
   const playlist = getData(app);
   setData(app, Object.assign({}, playlist, {
-    current: playlist.current + value,
+    current: _validateCurrent(app, playlist.current + value),
   }));
 }
 
