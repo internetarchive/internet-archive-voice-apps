@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.4.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.1) (2018-11-20)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.0...2.4.1)
+
+**Fixed bugs:**
+
+- I am having trouble connecting to the audio file U.R.I. error [\#380](https://github.com/internetarchive/internet-archive-google-action/issues/380)
+- fail on previous intent for "play genre" [\#377](https://github.com/internetarchive/internet-archive-google-action/issues/377)
+
+**Merged pull requests:**
+
+- Hotfix/380 missed crowd noise [\#382](https://github.com/internetarchive/internet-archive-google-action/pull/382) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/377 fail on previous intent for play genre [\#381](https://github.com/internetarchive/internet-archive-google-action/pull/381) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.4.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.0) (2018-11-19)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.3.1...2.4.0)
 
