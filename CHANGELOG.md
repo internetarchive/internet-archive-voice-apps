@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.4.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.2) (2018-11-20)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.1...2.4.2)
+
+**Merged pull requests:**
+
+- don't lower case album id, because it could be urls are case sensitive [\#384](https://github.com/internetarchive/internet-archive-google-action/pull/384) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.4.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.1) (2018-11-20)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.0...2.4.1)
 
