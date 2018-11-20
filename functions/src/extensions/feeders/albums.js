@@ -82,7 +82,6 @@ class SyncAlbum extends DefaultFeeder {
       })
       .then((albumId) => {
         if (albumId) {
-          albumId = albumId.toLowerCase();
           debug('id of album:', albumId);
           return albumsProvider.fetchAlbumDetails(app, albumId);
         }

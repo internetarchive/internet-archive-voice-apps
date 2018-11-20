@@ -21,6 +21,8 @@ const orders = require('./orders');
  * @returns {Promise}
  */
 function fetchAlbumDetails (app, id, { retry = 0, delay = 1000 } = {}) {
+  debug('fetch album details', id);
+
   return axios.get(
     endpointProcessor.preprocess(
       config.endpoints.COLLECTION_URL, app, { id }
@@ -35,6 +37,7 @@ function fetchAlbumDetails (app, id, { retry = 0, delay = 1000 } = {}) {
       }
     })
     .then(res => {
+      debug('we got album res:', res);
       const json = res.data;
       return {
         id,
