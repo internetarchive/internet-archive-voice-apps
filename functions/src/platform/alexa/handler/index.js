@@ -42,9 +42,11 @@ module.exports = (actions) => {
   // wrap all log services
 
   if (process.env.DASHBOT_KEY) {
+    // for the moment doesn't work
+    // because of https://github.com/actionably/dashbot/issues/28
     lambda = dashbot(process.env.DASHBOT_KEY).alexa.handler(lambda);
   } else {
-    warning('env variable DASHBOT_KEY should be defined to send logs to dashbot')
+    warning('env variable DASHBOT_KEY should be defined to send logs to dashbot');
   }
 
   if (process.env.BESPOKEN_KEY) {
