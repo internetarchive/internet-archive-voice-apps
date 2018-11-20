@@ -159,7 +159,9 @@ function setLoop (app, loopOn) {
  */
 function moveTo (app, song) {
   const playlist = getData(app);
-  setData(app, { ...playlist, current: playlist.items.indexOf(song) });
+  const current = playlist.items.indexOf(song);
+  setData(app, { ...playlist, current });
+  return current;
 }
 
 /**
