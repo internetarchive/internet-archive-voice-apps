@@ -2,6 +2,7 @@ const Alexa = require('ask-sdk');
 const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const AWS = require('aws-sdk');
 const bst = require('bespoken-tools');
+const dashbot = require('dashbot');
 
 const pipeline = require('../../../performance/pipeline');
 const { debug, warning } = require('../../../utils/logger')('ia:platform:alexa:handler');
@@ -38,7 +39,14 @@ module.exports = (actions) => {
     .withPersistenceAdapter(dynamoDbPersistenceAdapter)
     .lambda();
 
-  // wrap with bespoken service to send logs there
+  // wrap all log services
+
+  if (process.env.DASHBOT_KEY) {
+    lambda = dashbot(process.env.DASHBOT_KEY).alexa.handler(lambda);
+  } else {
+    warning('env variable DASHBOT_KEY should be defined to send logs to dashbot')
+  }
+
   if (process.env.BESPOKEN_KEY) {
     // FIXME: bespoken doesn't support ANSI color escape codes yet
     lambda = bst.Logless.capture(process.env.BESPOKEN_KEY, lambda);
