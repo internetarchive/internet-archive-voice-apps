@@ -42,11 +42,18 @@ describe('feeders', () => {
         .then(() => {
           expect(feeder.isEmpty({ app, query, playlist }))
             .to.be.false;
-          expect(feeder.getCurrentItem({ app, query, playlist }))
-            .to.have.property('filename', filename);
-          expect(feeder.getCurrentItem({ app, query, playlist }))
-            .to.have.property('album')
-            .to.have.property('title', album);
+
+          if (filename) {
+            expect(feeder.getCurrentItem({ app, query, playlist }))
+              .to.have.property('filename', filename);
+          }
+
+          if (album) {
+            expect(feeder.getCurrentItem({ app, query, playlist }))
+              .to.have.property('album')
+              .to.have.property('title', album);
+          }
+
           expect(feeder.hasNext({ app, query, playlist }))
             .to.be.equal(hasNext);
         });
@@ -88,24 +95,25 @@ describe('feeders', () => {
         }]
       });
 
+      const ctx = {
+        app,
+        feeder,
+        playlist,
+        query,
+      };
+
       return feeder
         .build({ app, query, playlist })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-1',
-          app,
-          feeder,
           filename: 'filename-1',
-          playlist,
-          query,
           moveToNext: false,
         }))
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-1',
-          app,
-          feeder,
           filename: 'filename-2',
-          playlist,
-          query
         }))
         .then(() => {
           // we will request next chunk of songs
@@ -121,12 +129,9 @@ describe('feeders', () => {
           });
         })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-1',
-          app,
-          feeder,
           filename: 'filename-3',
-          playlist,
-          query
         }))
         .then(() => {
           // we will request next chunk of songs
@@ -146,20 +151,14 @@ describe('feeders', () => {
           });
         })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-2',
-          app,
-          feeder,
           filename: 'filename-1',
-          playlist,
-          query,
         }))
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-2',
-          app,
-          feeder,
           filename: 'filename-2',
-          playlist,
-          query
         }))
         .then(() => {
           // we will request next chunk of songs
@@ -179,28 +178,19 @@ describe('feeders', () => {
           });
         })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-2',
-          app,
-          feeder,
           filename: 'filename-3',
-          playlist,
-          query
         }))
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-2',
-          app,
-          feeder,
           filename: 'filename-4',
-          playlist,
-          query
         }))
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-2',
-          app,
-          feeder,
           filename: 'filename-5',
-          playlist,
-          query
         }))
         .then(() => {
           // we will request next chunk of songs
@@ -216,20 +206,14 @@ describe('feeders', () => {
           });
         })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-3',
-          app,
-          feeder,
           filename: 'filename-1',
-          playlist,
-          query
         }))
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-3',
-          app,
-          feeder,
           filename: 'filename-2',
-          playlist,
-          query
         }))
         .then(() => {
           // we will request next chunk of songs
@@ -245,12 +229,9 @@ describe('feeders', () => {
           });
         })
         .then(() => testNextSong({
+          ...ctx,
           album: 'album-3',
-          app,
-          feeder,
           filename: 'filename-3',
-          playlist,
-          query,
           hasNext: false,
         }));
     });
@@ -460,11 +441,11 @@ describe('feeders', () => {
             mockNewAlbum({
               title: 'album-2',
               songs: [{
-                filename: 'filename-1',
+                filename: 'album-2/filename-1',
               }, {
-                filename: 'filename-2',
+                filename: 'album-2/filename-2',
               }, {
-                filename: 'filename-3',
+                filename: 'album-2/filename-3',
               }]
             });
           })
@@ -472,7 +453,7 @@ describe('feeders', () => {
             album: 'album-2',
             app,
             feeder,
-            filename: 'filename-1',
+            filename: 'album-2/filename-1',
             playlist,
             query,
           }))
@@ -480,7 +461,7 @@ describe('feeders', () => {
             album: 'album-2',
             app,
             feeder,
-            filename: 'filename-2',
+            filename: 'album-2/filename-2',
             playlist,
             query
           }));
@@ -562,15 +543,6 @@ describe('feeders', () => {
           playlist,
           query,
           hasNext: false,
-        }))
-        // loop to the 1st record
-        .then(() => testNextSong({
-          album: 'album-1',
-          app,
-          feeder,
-          filename: 'filename-1',
-          playlist,
-          query,
         }));
     });
 
@@ -605,6 +577,48 @@ describe('feeders', () => {
           filename: 'filename-1',
           playlist,
           query,
+          fetchOnly: true,
+          hasNext: true
+        }));
+    });
+
+    it('should fetch and move to the next song', () => {
+      app = mockApp();
+      query.setSlot(app, 'order', 'random');
+      playlist.setLoop(app, false);
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }],
+      }, 2);
+
+      const ctx = {
+        app,
+        feeder,
+        playlist,
+        query,
+      };
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testNextSong({
+          ...ctx,
+          moveToNext: false,
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          fetchOnly: true,
+          hasNext: true
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          hasNext: true
+        }))
+        .then(() => testNextSong({
+          ...ctx,
           fetchOnly: true,
           hasNext: true
         }));

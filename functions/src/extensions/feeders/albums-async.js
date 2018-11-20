@@ -35,6 +35,18 @@ const defaultCursor = {
   },
 };
 
+class AlbumsAsyncError extends Error {
+
+}
+
+/**
+ * Unique ID of song
+ * Specific to IA metadata
+ *
+ * @type {string}
+ */
+const SONG_UID = 'audioURL';
+
 /**
  * name of feeder
  */
@@ -212,12 +224,13 @@ class AsyncAlbums extends DefaultFeeder {
     );
 
     debug(`we get ${songs.length} songs`);
-
     songs = orderStrategy.songsPostProcessing({ songs, cursor });
 
     // to chap few songs at the start because we've already fetched them
     // start from song we need
+    debug(`cursor.current.song = ${cursor.current.song}`);
     songs = songs.slice(cursor.current.song);
+    debug('songs:', songs);
 
     // get chunk of songs
     if (feederConfig.chunk.songs) {
@@ -253,7 +266,7 @@ class AsyncAlbums extends DefaultFeeder {
     // start from song we need
     songs = songs.slice(0, cursor.current.song + 1);
 
-    debug(`left ${songs.length} songs after dropping after ${cursor.current.song}`);
+    debug(`left ${songs.length} songs after dropping songs from ${cursor.current.song}`);
 
     // get chunk of songs
     if (feederConfig.chunk.songs) {
@@ -382,7 +395,7 @@ class AsyncAlbums extends DefaultFeeder {
    */
   next (ctx, move = true) {
     const { app, query, playlist } = ctx;
-    debug('move to the next song');
+    debug('move to the next song. move:', move);
     const orderStrategy = orders.getByName(
       query.getSlot(app, 'order') || DEFAULT_ORDER
     );
@@ -399,6 +412,9 @@ class AsyncAlbums extends DefaultFeeder {
         // check whether we need to fetch new chunk
         if (playlist.hasNextSong(app)) {
           debug('we have next song so just move cursor without fetching new data');
+          if (move) {
+            playlist.next(app);
+          }
           return ctx;
         } else {
           debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
@@ -407,19 +423,37 @@ class AsyncAlbums extends DefaultFeeder {
             .then(({ songs, songsInFirstAlbum }) => {
               songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, songs);
 
+              if (songs.length === 0) {
+                throw new AlbumsAsyncError('trying to append empty songs list');
+              }
+
               // merge new songs
-              let items = playlist.getItems(app).concat(songs);
+              let items = _.unionBy(playlist.getItems(app), songs, SONG_UID);
 
               // but we shouldn't exceed available size of chunk
               const feederConfig = this.getConfigForOrder(app, query);
               if (items.length > feederConfig.chunk.songs) {
-                const shift = items.length - feederConfig.chunk.songs;
+                debug('we exceed available space and should drop few songs');
+                let shift = items.length - feederConfig.chunk.songs;
                 debug(`drop ${shift} old song(s)`);
                 items = items.slice(shift);
-                playlist.shift(app, -shift);
+                // we don't need to slide in case of move
+                // because later we will jump to the 1st fetched song
+                if (!move) {
+                  debug(`slide current position on ${-shift}`);
+                  playlist.shift(app, -shift);
+                }
               }
+
               playlist.updateItems(app, items);
 
+              if (move) {
+                // we have attached new songs and would like to jump to the 1st song
+                const firstAddedSong = items.find(i => i[SONG_UID] === songs[0][SONG_UID]);
+                playlist.moveTo(app, firstAddedSong);
+              }
+
+              // as well move source cursor
               orderStrategy.updateCursorTotal({
                 app,
                 playlist,
@@ -429,12 +463,6 @@ class AsyncAlbums extends DefaultFeeder {
               return ctx;
             });
         }
-      })
-      .then(ctx => {
-        if (move) {
-          playlist.next(app);
-        }
-        return ctx;
       });
   }
 
@@ -461,6 +489,8 @@ class AsyncAlbums extends DefaultFeeder {
         // check whether we need to fetch new chunk
         if (playlist.hasPreviousSong(app)) {
           debug('we have previous song so just move cursor without fetching new data');
+          playlist.previous(app);
+          return ctx;
         } else {
           debug(`we don't have previous song in playlist so we'll fetch new chunk of songs`);
           return this
@@ -485,7 +515,7 @@ class AsyncAlbums extends DefaultFeeder {
               }
               // because we append new songs at the playlist start
               // we should shift its current position to the size of appended songs
-              playlist.shift(app, songs.length);
+              playlist.shift(app, songs.length - 1);
               playlist.updateItems(app, items);
 
               orderStrategy.updateCursorTotal({
@@ -493,11 +523,10 @@ class AsyncAlbums extends DefaultFeeder {
                 playlist,
                 numOfSongsInLastAlbum,
               });
+
+              return ctx;
             });
         }
-      })
-      .then(() => {
-        playlist.previous(app);
       });
   }
 }
