@@ -15,7 +15,10 @@ function handler (app) {
 
   let speech;
   if (app.isFirstTry && app.isFirstTry()) {
-    speech = '<audio src="https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3" />' + _.sample(welcomeStrings.acknowledges) + ' ' + welcomeStrings.speech;
+    // TODO: we could have special phrase for user's which come 1st time
+    // and also which has been returned
+    // for example we could propose to continue playback last played playlist
+    speech = _.sample(welcomeStrings.acknowledges) + ' ' + welcomeStrings.speech;
   } else {
     speech = _.sample(welcomeStrings.acknowledges) + ' ' + welcomeStrings.speech;
   }
