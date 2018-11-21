@@ -75,6 +75,6 @@ describe('dialog', () => {
         suggestions: ['world1', 'world2'],
         reprompt: 'which?'
       });
-    })
+    });
   });
 });
