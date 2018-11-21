@@ -1,11 +1,12 @@
 const _ = require('lodash');
 
 /**
- * Merge speech instances
+ * Merge speech schemes
  *
  * @param args
+ * @returns {*}
  */
-module.exports = (...args) => args.reduce(
+module.exports = (...args) => args.filter(i => !!i).reduce(
   (acc, item) => {
     if ('speech' in item) {
       acc.speech = []
