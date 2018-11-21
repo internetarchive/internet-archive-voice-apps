@@ -9,7 +9,6 @@ const { debug, info } = require('../../../utils/logger')('ia:actions:middlewares
 const errors = require('./errors');
 
 class EmptySongDataError extends errors.MiddlewareError {
-
 }
 
 const songGetters = {
@@ -18,7 +17,11 @@ const songGetters = {
 };
 
 /**
- * Get songs data from playlist and them to slots
+ * Get songs data from playlist and put them to:
+ * - speech
+ * - description
+ * - and slots
+ *
  * @param {string} type
  * @returns {function(*=): *}
  */
