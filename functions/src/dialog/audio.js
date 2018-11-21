@@ -25,44 +25,6 @@ function playSong (app, options) {
   const strings = selectors.find(availableStrings, options);
   const description = options.description || mustache.render(strings.description, options);
 
-  // if (!app.response) {
-  //   // @deprecated
-  //   let response = app.buildRichResponse();
-  //   let {speech} = options;
-  //
-  //   if (speech) {
-  //     response = response.addSimpleResponse(`
-  //       <speak>
-  //         ${mustache.render(speech, Object.assign({}, options, {description}))}
-  //       </speak>`
-  //     );
-  //   } else {
-  //     response = response.addSimpleResponse(description);
-  //   }
-  //
-  //   response = response
-  //     .addMediaResponse(app.buildMediaResponse()
-  //       .addMediaObjects([app.buildMediaObject(
-  //         mustache.render(strings.title, options),
-  //         options.audioURL
-  //       )
-  //         .setDescription(description)
-  //         .setImage(
-  //           options.imageURL || config.media.DEFAULT_SONG_IMAGE,
-  //           app.Media.ImageType.LARGE
-  //         )
-  //       ])
-  //     )
-  //     .addSuggestions(options.suggestions)
-  //     .addSuggestionLink(
-  //       mustache.render(strings.suggestionLink, options),
-  //       mustache.render(config.endpoints.ALBUM_DETAIL, options)
-  //     );
-  //
-  //   app.ask(response);
-  //   return;
-  // }
-
   let { speech } = options;
 
   if (typeof speech === 'string') {
