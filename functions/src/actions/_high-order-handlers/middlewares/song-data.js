@@ -35,18 +35,17 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
-  const mute = playback.isMuteSpeechBeforePlayback(app);
+  const playbackUIScheme = selectors.find(availableStrings, slots);
 
   slots = Object.assign({}, slots, escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }));
 
-  const strings = selectors.find(availableStrings, slots);
-
   // TODO: maybe it would be better to use mustache later
   // with resolvers and render-speech
-  const description = mustache.render(strings.description, slots);
+  const description = mustache.render(playbackUIScheme.description, slots);
 
+  const mute = playback.isMuteSpeechBeforePlayback(app);
   if (mute) {
-    const wordless = selectors.find(strings.wordless, slots);
+    const wordless = selectors.find(playbackUIScheme.wordless, slots);
     if (wordless && wordless.speech) {
       speech = [].concat(speech, wordless.speech);
     }
