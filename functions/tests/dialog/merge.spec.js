@@ -64,5 +64,17 @@ describe('dialog', () => {
         reprompt: 'Which album?'
       });
     });
+
+    it('should merge with undefined', () => {
+      expect(merge({
+        speech: 'hello world',
+        suggestions: ['world1', 'world2'],
+        reprompt: 'which?'
+      }, undefined)).to.be.deep.equal({
+        speech: ['hello world'],
+        suggestions: ['world1', 'world2'],
+        reprompt: 'which?'
+      });
+    })
   });
 });

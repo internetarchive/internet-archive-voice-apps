@@ -5,7 +5,7 @@ const _ = require('lodash');
  *
  * @param args
  */
-module.exports = (...args) => args.reduce(
+module.exports = (...args) => args.filter(i => !!i).reduce(
   (acc, item) => {
     if ('speech' in item) {
       acc.speech = []
