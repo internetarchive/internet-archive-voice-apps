@@ -35,14 +35,17 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
-  const slotsWithOriginalSongDetails = {
-    ...slots,
-    ...song,
-  };
-
+  // we need to escape song data because they could have special symbols
+  // like < or > but we should do it only for speech because it uses SSML
   const slotsWithEscapedSongDetails = {
     ...slots,
     ...escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }),
+  };
+
+  // in all other cases we could have these special symbols
+  const slotsWithOriginalSongDetails = {
+    ...slots,
+    ...song,
   };
 
   const playbackUIScheme = selectors.find(availableStrings, slotsWithOriginalSongDetails);
