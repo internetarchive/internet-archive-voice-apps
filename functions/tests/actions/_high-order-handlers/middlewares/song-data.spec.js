@@ -1,7 +1,9 @@
 const { expect } = require('chai');
+const mustache = require('mustache');
 const rewire = require('rewire');
 
 const middleware = rewire('../../../../src/actions/_high-order-handlers/middlewares/song-data');
+const playback = require('../../../../src/state/playback');
 const playlist = require('../../../../src/state/playlist');
 
 const mockApp = require('../../../_utils/mocking/platforms/app');
@@ -12,12 +14,16 @@ describe('actions', () => {
     let app;
     let selectors;
     let strings = {
-      description: 'description',
+      description: 'description: {{title}}',
       wordless: [{ speech: 'speech' }],
     };
 
     beforeEach(() => {
       app = mockApp();
+
+      // disable escape
+      mustache.escape = v => v;
+
       selectors = mockSelectors({ findResult: [strings, strings.wordless[0]] });
       middleware.__set__('selectors', selectors);
       playlist.create(app, [{
@@ -47,7 +53,7 @@ describe('actions', () => {
         };
         return middleware.mapSongDataToSlots()({ app, playlist, slots })
           .then(context => {
-            expect(context).to.have.property('description', strings.description);
+            expect(context).to.have.property('description');
             expect(context).to.have.property('speech')
               .with.members([strings.wordless[0].speech]);
             expect(context).to.have.property('slots')
@@ -86,21 +92,27 @@ describe('actions', () => {
       });
 
       it('should escape song title', () => {
+        playback.setMuteSpeechBeforePlayback(app, false);
         return middleware.mapSongDataToSlots()({ app, playlist, slots: {} })
           .then(ctx => {
-            expect(ctx.slots).to.have.property('title', '&quot;Last Night Blues');
+            // should change those properties
+            expect(ctx.speech).to.be.deep.equal(['description: &quot;Last Night Blues']);
+
+            // and left the rest
+            expect(ctx.description).to.be.deep.equal('description: "Last Night Blues');
+            expect(ctx.slots).to.have.property('title', '"Last Night Blues');
             expect(ctx.slots).to.have.property('creator')
               .to.have.members([
-                'Joe Liggins &amp; His Honeydrippers',
+                'Joe Liggins & His Honeydrippers',
                 'Joe Liggins',
-                '&quot;Little&quot; Willie Jackson',
+                '"Little" Willie Jackson',
               ]);
             expect(ctx.slots).to.have.property('track', 1);
             expect(ctx.slots).to.have.property('year', 1947);
             expect(ctx.slots).to.have.property('someInnerObject')
               .to.be.deep.equal({
-                quot: '&quot;',
-                amp: '&amp;',
+                quot: '"',
+                amp: '&',
               });
           });
       });

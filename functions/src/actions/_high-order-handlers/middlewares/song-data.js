@@ -9,7 +9,6 @@ const { debug, info } = require('../../../utils/logger')('ia:actions:middlewares
 const errors = require('./errors');
 
 class EmptySongDataError extends errors.MiddlewareError {
-
 }
 
 const songGetters = {
@@ -18,7 +17,11 @@ const songGetters = {
 };
 
 /**
- * Get songs data from playlist and them to slots
+ * Get songs data from playlist and put them to:
+ * - speech
+ * - description
+ * - and slots
+ *
  * @param {string} type
  * @returns {function(*=): *}
  */
@@ -32,28 +35,45 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
-  const mute = playback.isMuteSpeechBeforePlayback(app);
+  // we need to escape song data because they could have special symbols
+  // like < or > but we should do it only for speech because it uses SSML
+  const slotsWithEscapedSongDetails = {
+    ...slots,
+    ...escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }),
+  };
 
-  slots = Object.assign({}, slots, escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }));
+  // in all other cases we could have these special symbols
+  const slotsWithOriginalSongDetails = {
+    ...slots,
+    ...song,
+  };
 
-  const strings = selectors.find(availableStrings, slots);
+  const playbackUIScheme = selectors.find(availableStrings, slotsWithOriginalSongDetails);
 
-  // TODO: maybe it would be better to use mustache later
-  // with resolvers and render-speech
-  const description = mustache.render(strings.description, slots);
+  let songSpeech;
 
-  if (mute) {
-    const wordless = selectors.find(strings.wordless, slots);
+  if (playback.isMuteSpeechBeforePlayback(app)) {
+    let wordless = selectors.find(playbackUIScheme.wordless, slotsWithEscapedSongDetails);
     if (wordless && wordless.speech) {
-      speech = [].concat(speech, wordless.speech);
+      songSpeech = wordless.speech;
     }
   } else {
-    speech = [].concat(speech, description);
+    songSpeech = playbackUIScheme.description;
   }
 
+  if (songSpeech) {
+    // TODO: maybe it would be better to use mustache later
+    // with resolvers and render-speech
+    // but we should somehow pass both - encoded and non encoded data
+    // maybe write resolver
+    // but in the same time it shouldn't affect description
+    speech = [].concat(speech, mustache.render(songSpeech, slotsWithEscapedSongDetails));
+  }
+
+  const description = mustache.render(playbackUIScheme.description, slotsWithOriginalSongDetails);
   return Promise.resolve({
     ...ctx,
-    slots,
+    slots: slotsWithOriginalSongDetails,
     speech,
     description,
   });
