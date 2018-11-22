@@ -103,17 +103,17 @@ describe('actions', () => {
             expect(ctx.slots).to.have.property('title', '"Last Night Blues');
             expect(ctx.slots).to.have.property('creator')
               .to.have.members([
-              'Joe Liggins & His Honeydrippers',
-              'Joe Liggins',
-              '"Little" Willie Jackson',
-            ]);
+                'Joe Liggins & His Honeydrippers',
+                'Joe Liggins',
+                '"Little" Willie Jackson',
+              ]);
             expect(ctx.slots).to.have.property('track', 1);
             expect(ctx.slots).to.have.property('year', 1947);
             expect(ctx.slots).to.have.property('someInnerObject')
               .to.be.deep.equal({
-              quot: '"',
-              amp: '&',
-            });
+                quot: '"',
+                amp: '&',
+              });
           });
       });
     });

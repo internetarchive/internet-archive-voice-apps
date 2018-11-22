@@ -35,31 +35,37 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
-  const playbackUIScheme = selectors.find(availableStrings, slots);
+  const slotsWithOriginalSongDetails = {
+    ...slots,
+    ...song,
+  };
 
   const slotsWithEscapedSongDetails = {
     ...slots,
     ...escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }),
   };
 
-  // TODO: maybe it would be better to use mustache later
-  // with resolvers and render-speech
+  const playbackUIScheme = selectors.find(availableStrings, slotsWithOriginalSongDetails);
 
-  const mute = playback.isMuteSpeechBeforePlayback(app);
-  if (mute) {
-    const wordless = selectors.find(playbackUIScheme.wordless, slotsWithEscapedSongDetails);
+  let songSpeech;
+
+  if (playback.isMuteSpeechBeforePlayback(app)) {
+    let wordless = selectors.find(playbackUIScheme.wordless, slotsWithEscapedSongDetails);
     if (wordless && wordless.speech) {
-      speech = [].concat(speech, wordless.speech);
+      songSpeech = wordless.speech;
     }
   } else {
-    const songSpeech = mustache.render(playbackUIScheme.description, slotsWithEscapedSongDetails);
-    speech = [].concat(speech, songSpeech);
+    songSpeech = playbackUIScheme.description;
   }
 
-  const slotsWithOriginalSongDetails = {
-    ...slots,
-    ...song,
-  };
+  if (songSpeech) {
+    // TODO: maybe it would be better to use mustache later
+    // with resolvers and render-speech
+    // but we should somehow pass both - encoded and non encoded data
+    // maybe write resolver
+    // but in the same time it shouldn't affect description
+    speech = [].concat(speech, mustache.render(songSpeech, slotsWithEscapedSongDetails));
+  }
 
   const description = mustache.render(playbackUIScheme.description, slotsWithOriginalSongDetails);
   return Promise.resolve({
