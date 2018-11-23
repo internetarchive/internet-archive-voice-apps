@@ -98,6 +98,7 @@
                         }
                     ],
                     "samples": [
+                        "{ORDER_BY} Play {SUBJECT} {COLLECTION}",
                         "play {ORDER_BY} of {SUBJECT}",
                         "play {COLLECTION} {SUBJECT}",
                         "play {CREATOR} music",

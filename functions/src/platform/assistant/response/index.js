@@ -1,8 +1,12 @@
-const { Image, LinkOutSuggestion, MediaObject, Suggestions } = require('actions-on-google');
+const _ = require('lodash');
+
+const { Image, LinkOutSuggestion, MediaObject, SimpleResponse, Suggestions } = require('actions-on-google');
 
 const { debug, warning } = require('../../../utils/logger')('ia:platform.assistant.response');
 
 /**
+ *
+ * Build response interface
  *
  * @param conv
  */
@@ -10,15 +14,25 @@ module.exports = (conv) =>
   /**
    * Response with question
    *
-   * @param speech {String}
-   * @param suggestions {Array}
+   * @param media {Object} media response
+   * @param speech {String|Array} speech
+   * @param suggestions {Array} recommendations
+   * @param text {String|Array} display text
    * @param close {Boolean} close connection (end session). By default is false.
    */
-  ({ media, speech, suggestions, close = false }) => {
+  ({ media, speech, suggestions, text, close = false }) => {
     let responses;
 
     responses = [].concat(speech)
       .map(s => `<speak>${s}</speak>`);
+
+    text = [].concat(text);
+
+    responses = _.zip(responses, text).map(([speech, text]) => new SimpleResponse({
+      speech,
+      // if text is undefined we won't inject it to result object
+      ...text && { text },
+    }));
 
     if (suggestions) {
       debug('has suggestions');
