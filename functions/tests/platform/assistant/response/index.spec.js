@@ -14,25 +14,28 @@ describe('platform', () => {
         let Image;
         let LinkOutSuggestion;
         let MediaObject;
+        let SimpleResponse;
         let Suggestions;
 
         beforeEach(() => {
           assistant = mockAssistant();
           Image = sinon.stub().returnsArg(0);
           LinkOutSuggestion = sinon.stub().returnsArg(0);
+          SimpleResponse = sinon.stub().returnsArg(0);
           Suggestions = sinon.stub().returnsArg(0);
           MediaObject = sinon.stub().returnsArg(0);
           response.__set__('Image', Image);
           response.__set__('LinkOutSuggestion', LinkOutSuggestion);
           response.__set__('MediaObject', MediaObject);
+          response.__set__('SimpleResponse', SimpleResponse);
           response.__set__('Suggestions', Suggestions);
         });
 
         it('should wrap speech to <speak> tag', () => {
           response(assistant)({ speech: 'hello world!' });
-          expect(assistant.ask).to.have.been.calledWith(
-            '<speak>hello world!</speak>'
-          );
+          expect(assistant.ask).to.have.been.calledWith({
+            speech: '<speak>hello world!</speak>',
+          });
         });
 
         it('should response suggestions', () => {
@@ -45,6 +48,20 @@ describe('platform', () => {
           expect(Suggestions).to.have.been.calledWith([
             'world one', 'world two',
           ]);
+        });
+
+        it('should response text', () => {
+          response(assistant)({
+            speech: 'hello world!',
+            text: 'hello :world:!',
+            suggestions: ['world one', 'world two'],
+          });
+
+          expect(assistant.ask).to.have.been.calledTwice;
+          expect(assistant.ask).to.have.been.calledWith({
+            speech: '<speak>hello world!</speak>',
+            text: 'hello :world:!',
+          });
         });
 
         it('should response suggested link', () => {
@@ -60,9 +77,9 @@ describe('platform', () => {
           });
 
           expect(assistant.ask).to.have.been.calledThrice;
-          expect(assistant.ask).to.have.been.calledWith(
-            '<speak>hello world!</speak>'
-          );
+          expect(assistant.ask).to.have.been.calledWith({
+            speech: '<speak>hello world!</speak>'
+          });
           expect(LinkOutSuggestion).to.have.been.calledWith({
             url: 'https://archive.org/details/etree',
             name: 'on Archive.org'
@@ -78,15 +95,15 @@ describe('platform', () => {
             ],
           });
           expect(assistant.close).to.have.been.calledTwice;
-          expect(assistant.close.args[0][0]).to.be.equal(
-            `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
-          );
-          expect(assistant.close.args[1][0]).to.be.equal(
-            `<speak>And it isn't even lonely when no one's ever there.</speak>`
-          );
+          expect(assistant.close.args[0][0]).to.be.deep.equal({
+            speech: `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
+          });
+          expect(assistant.close.args[1][0]).to.be.deep.equal({
+            speech: `<speak>And it isn't even lonely when no one's ever there.</speak>`
+          });
         });
 
-        it('should unpack array of speeaches', () => {
+        it('should unpack array of speaches', () => {
           response(assistant)({
             speech: [
               `Well, there ain't nobody safer than someone who doesn't care.`,
@@ -94,12 +111,12 @@ describe('platform', () => {
             ],
           });
           expect(assistant.ask).to.have.been.calledTwice;
-          expect(assistant.ask.args[0][0]).to.be.equal(
-            `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
-          );
-          expect(assistant.ask.args[1][0]).to.be.equal(
-            `<speak>And it isn't even lonely when no one's ever there.</speak>`
-          );
+          expect(assistant.ask.args[0][0]).to.be.deep.equal({
+            speech: `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
+          });
+          expect(assistant.ask.args[1][0]).to.be.deep.equal({
+            speech: `<speak>And it isn't even lonely when no one's ever there.</speak>`
+          });
         });
 
         it('should start playing audio file from passed url', () => {
