@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.5.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.0) (2018-11-23)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.2...2.5.0)
+
+**Implemented enhancements:**
+
+- fix the special character display issue [\#117](https://github.com/internetarchive/internet-archive-google-action/issues/117)
+
+**Fixed bugs:**
+
+- simple response and resume doesn't work when we don't have last phrase [\#386](https://github.com/internetarchive/internet-archive-google-action/issues/386)
+- Can't play random grateful dead [\#383](https://github.com/internetarchive/internet-archive-google-action/issues/383)
+
+**Merged pull requests:**
+
+- Bugfix/song title typing [\#390](https://github.com/internetarchive/internet-archive-google-action/pull/390) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/386 merge with undefined [\#387](https://github.com/internetarchive/internet-archive-google-action/pull/387) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.4.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.4.2) (2018-11-20)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.1...2.4.2)
 
