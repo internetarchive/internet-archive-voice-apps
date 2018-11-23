@@ -141,6 +141,19 @@ describe('platform', () => {
             'https://archive.org/download/old-track.mp3'
           );
       });
+
+      it('should pass text to withSimpleCard', () => {
+        ask(handlerInput)({
+          speech: 'Hello World!',
+          text: 'Hello :world:!',
+        });
+
+        expect(handlerInput.responseBuilder.withStandardCard).to.have.been
+          .calledWith(
+            'Internet Archive',
+            'Hello :world:!',
+          );
+      });
     });
   });
 });

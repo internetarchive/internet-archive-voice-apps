@@ -15,7 +15,7 @@ module.exports = (handlerInput) =>
    * @param speech {String}
    * @param suggestions {Array}
    */
-  ({ close = false, media, mediaResponseOnly, speech, suggestions }) => {
+  ({ close = false, media, mediaResponseOnly, speech, suggestions, text = null }) => {
     debug('start');
     if (!Array.isArray(speech)) {
       speech = [speech];
@@ -28,6 +28,9 @@ module.exports = (handlerInput) =>
       } else {
         debug('speak', speech);
         handlerInput.responseBuilder.speak(speech);
+        if (text) {
+          handlerInput.responseBuilder.withStandardCard('Internet Archive', text);
+        }
       }
     } else {
       debug('there is nothing to speak');
