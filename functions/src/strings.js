@@ -96,7 +96,7 @@ module.exports = {
     }],
 
     fallback: {
-      // TODO: fix actually we shoudl substitute app name here
+      // TODO: fix actually we should substitute app name here
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
@@ -120,7 +120,7 @@ module.exports = {
           '<s>You are using Internet Archive service. </s>' +
           '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> records. </s>' +
           '<s>You can ask to playback music of specific genre by asking: </s>' +
-          '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
+          '<s>Jam to some Jazz <break strength="weak"/> or play classic music. </s>' +
           '<s>As well you can ask me to play specific artist. </s>' +
           '<s>For example by saying: </s>' +
           '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
@@ -135,7 +135,7 @@ module.exports = {
             '<s>You are listening <break strength="weak"/> {{playback.title}} <break strength="weak"/> of {{playback.creator}}{{#playback.year}} <break strength="weak"/> {{playback.year}}{{/playback.year}}.</s> ' +
             '<s>But you can select any music which I have in my Internet Archive collection, </s>' +
             '<s>by asking ' +
-            '<break strength="weak"/> play jazz music ' +
+            '<break strength="weak"/> Jam to some Jazz ' +
             '<break strength="weak"/> or <break strength="weak"/> randomly play grateful dead' +
             '<break strength="weak"/> or play any other genre or artist. </s> ' +
             '<s>And finally you can just answer my questions so I would help you to find right records. </s>' +

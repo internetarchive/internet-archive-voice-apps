@@ -9,3 +9,5 @@ functions/firebase-debug.log
 npm-debug.log
 .DS_Store
 
+.env
+functions/.runtimeconfig.json
