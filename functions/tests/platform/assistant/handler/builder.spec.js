@@ -116,7 +116,7 @@ describe('platform', () => {
         })
           .then(() => {
             expect(after.handle).to.have.been.calledOnce;
-          })
+          });
       });
     });
   });

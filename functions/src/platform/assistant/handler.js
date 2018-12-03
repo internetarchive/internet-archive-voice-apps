@@ -8,7 +8,6 @@ const Raven = require('raven');
 const packageJSON = require('../../../package.json');
 
 const errors = require('../../errors');
-const pipeline = require('../../performance/pipeline');
 const strings = require('../../strings');
 const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
@@ -18,6 +17,7 @@ const after = require('./middlewares/after');
 const firestoreGetUserDataMiddleware = require('./middlewares/firestore-get-user-data');
 const firestoreSetUserDataMiddleware = require('./middlewares/firestore-set-user-data');
 const logRequestMiddleware = require('./middlewares/log-request');
+const pipelineMiddleware = require('./middlewares/pipeline');
 const userUIDMiddleware = require('./middlewares/user-uid');
 
 module.exports = (actionsMap) => {
@@ -78,9 +78,7 @@ module.exports = (actionsMap) => {
     );
   }
 
-  app.middleware(() => {
-    pipeline.stage(pipeline.PROCESS_REQUEST);
-  });
+  app.middleware(pipelineMiddleware.start);
 
   // Sentry middleware
   if (functions.config().sentry) {
@@ -131,6 +129,7 @@ module.exports = (actionsMap) => {
   //
   // app.middleware(firestoreSetUserDataMiddleware);
   after.middleware(firestoreSetUserDataMiddleware(db));
+  after.middleware(pipelineMiddleware.finish);
 
   // log request
   app.middleware(logRequestMiddleware);
@@ -162,7 +161,6 @@ module.exports = (actionsMap) => {
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
     after.handle(conv);
-    pipeline.stage(pipeline.IDLE);
   });
 
   app.catch((conv, err) => {
@@ -197,7 +195,6 @@ module.exports = (actionsMap) => {
       conv.ask(`Can you rephrase it?`);
     }
     after.handle(conv);
-    pipeline.stage(pipeline.IDLE);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));

@@ -39,7 +39,7 @@ describe('platform', () => {
         ['unhandled', { default: require('../../../src/actions/unhandled').handler }],
       ]);
 
-      firestoreDoc = { data: sinon.spy() };
+      firestoreDoc = { data: sinon.spy(), set: sinon.spy() };
 
       firestore = {};
       firestore.collection = sinon.stub().returns(firestore);

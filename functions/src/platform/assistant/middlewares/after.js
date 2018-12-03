@@ -4,16 +4,29 @@
  *
  * https://github.com/actions-on-google/actions-on-google-nodejs/issues/182
  */
-module.exports = {
+
+class Middlewares {
+  constructor () {
+    this._middlewares = [];
+  }
+
   /**
-   * run middleware after handling intent
+   * store and run after
+   *
    * @param middleware
    */
   middleware (middleware) {
-    // TODO: store and run after
-  },
+    this._middlewares.push(middleware);
+  }
 
+  /**
+   * run all middlewares
+   *
+   * @param conv
+   */
   handle (conv) {
-    // TODO: run all middlewares
-  },
-};
+    this._middlewares.forEach(m => m(conv));
+  }
+}
+
+module.exports = new Middlewares();
