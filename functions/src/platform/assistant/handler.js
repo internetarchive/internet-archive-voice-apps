@@ -13,7 +13,8 @@ const strings = require('../../strings');
 const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
-const logRequest = require('./middlewares/log-request');
+const logRequestMiddleware = require('./middlewares/log-request');
+const userUIDMiddleware = require('./middlewares/user-uid');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();
@@ -110,8 +111,10 @@ module.exports = (actionsMap) => {
     });
   }
 
+  // prepare user's data
+  app.middleware(userUIDMiddleware);
   // log request
-  app.middleware(logRequest);
+  app.middleware(logRequestMiddleware);
 
   // compatability middleware
   // TODO:
