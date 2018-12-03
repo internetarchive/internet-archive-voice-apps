@@ -17,6 +17,13 @@ describe('platform', () => {
           middleware(conv);
           expect(conv).to.have.property('user').which.have.property('userID', '123456789');
         });
+
+        it('should not create new user storage if we already have it', () => {
+          const convOld = { user: {} };
+          const newConv = { ...convOld };
+          middleware(newConv);
+          expect(convOld.user).to.be.equal(newConv.user);
+        });
       });
     });
   });
