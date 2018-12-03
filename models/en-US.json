@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "internet archive draft",
+            "invocationName": "internet archive",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -45,18 +45,24 @@
                 },
                 {
                     "name": "SongDetails",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "MEDIA_TYPE",
+                            "type": "MEDIA_TYPES"
+                        }
+                    ],
                     "samples": [
-                        "what song am I listening",
                         "what is playing",
                         "what is playing right now",
-                        "what does it play",
                         "what is it",
-                        "what song is it",
-                        "what song is this",
-                        "which song is this",
-                        "which song i am listening",
-                        "what song i am listening"
+                        "what I'm hearing",
+                        "what {MEDIA_TYPE} i am listening",
+                        "what {MEDIA_TYPE} is it",
+                        "what {MEDIA_TYPE} is that",
+                        "what {MEDIA_TYPE} is this",
+                        "what's that noise",
+                        "which {MEDIA_TYPE} is this",
+                        "which {MEDIA_TYPE} i am listening"
                     ]
                 },
                 {
@@ -37839,6 +37845,20 @@
                                     "all",
                                     "any",
                                     "randomly"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MEDIA_TYPES",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "song",
+                                "synonyms": [
+                                    "record",
+                                    "track"
                                 ]
                             }
                         }

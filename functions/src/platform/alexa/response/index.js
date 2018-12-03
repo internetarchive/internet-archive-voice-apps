@@ -14,6 +14,7 @@ module.exports = (handlerInput) =>
    * @param mediaResponseOnly {boolean}
    * @param speech {String}
    * @param suggestions {Array}
+   * @param text {String}
    */
   ({ close = false, media, mediaResponseOnly, speech, suggestions, text = null }) => {
     debug('start');
@@ -24,7 +25,7 @@ module.exports = (handlerInput) =>
 
     if (speech) {
       if (mediaResponseOnly) {
-        debug('speachout is not allowed');
+        debug('speech is not allowed');
       } else {
         debug('speak', speech);
         handlerInput.responseBuilder.speak(speech);
