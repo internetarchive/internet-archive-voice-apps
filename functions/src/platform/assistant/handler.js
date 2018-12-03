@@ -13,6 +13,7 @@ const strings = require('../../strings');
 const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
+const dbConnector = require('./firestore').firestore;
 const after = require('./middlewares/after');
 const firestoreGetUserDataMiddleware = require('./middlewares/firestore-get-user-data');
 const firestoreSetUserDataMiddleware = require('./middlewares/firestore-set-user-data');
@@ -114,11 +115,13 @@ module.exports = (actionsMap) => {
     });
   }
 
+  const db = dbConnector.connect();
+
   // prepare user's data
   app.middleware(userUIDMiddleware);
 
   // fetch user's data from firestore
-  app.middleware(firestoreGetUserDataMiddleware);
+  app.middleware(firestoreGetUserDataMiddleware(db));
 
   // TODO: fix, once it would be official supported
   // for the moment action on google api doesn't support
@@ -127,7 +130,7 @@ module.exports = (actionsMap) => {
   // https://github.com/actions-on-google/actions-on-google-nodejs/issues/182
   //
   // app.middleware(firestoreSetUserDataMiddleware);
-  after.middleware(firestoreSetUserDataMiddleware);
+  after.middleware(firestoreSetUserDataMiddleware(db));
 
   // log request
   app.middleware(logRequestMiddleware);
