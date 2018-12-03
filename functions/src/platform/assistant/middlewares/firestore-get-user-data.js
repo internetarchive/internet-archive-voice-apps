@@ -1,6 +1,5 @@
 const { debug, info, error } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-get-user-data');
 
-
 /**
  * Get user's data and session from Firestore
  *
