@@ -11,6 +11,12 @@ describe('platform', () => {
           middleware(conv);
           expect(conv).to.have.property('user').which.have.property('userID');
         });
+
+        it('should not create new id if we already have it', () => {
+          const conv = { user: { userID: '123456789' } };
+          middleware(conv);
+          expect(conv).to.have.property('user').which.have.property('userID', '123456789');
+        });
       });
     });
   });
