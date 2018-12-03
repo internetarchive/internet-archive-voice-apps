@@ -37,7 +37,7 @@ module.exports = (actionsMap) => {
 
   let handlers = [];
   if (actionsMap) {
-    handlers = buildHandlers({ actionsMap });
+    handlers = buildHandlers({ actionsMap, after });
     handlers.forEach(
       ({ intent, handler }) => app.intent(intent, handler)
     );
@@ -161,6 +161,7 @@ module.exports = (actionsMap) => {
     warning(`something wrong we don't have unhandled handler`);
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
+    after.handle(conv);
     pipeline.stage(pipeline.IDLE);
   });
 
@@ -195,6 +196,7 @@ module.exports = (actionsMap) => {
     if (!globalErrorWasHandled) {
       conv.ask(`Can you rephrase it?`);
     }
+    after.handle(conv);
     pipeline.stage(pipeline.IDLE);
   });
 

@@ -9,8 +9,10 @@ const { debug } = require('../../../utils/logger')('ia:platform:assistant:handle
  * Build list of handlers
  *
  * @param actionsMap {Map}
+ * @param after
+ * @returns {{intent, handler: (function(*=): *)}[]}
  */
-module.exports = ({ actionsMap }) =>
+module.exports = ({ actionsMap, after }) =>
   Array.from(actionsMap.entries())
     .map(([intent, handlers]) => ({
       intent,
@@ -26,6 +28,7 @@ module.exports = ({ actionsMap }) =>
         return Promise.resolve(handler(app))
           .then(res => {
             debug(`end handle intent "${intent}"`);
+            after.handle(conv);
             pipeline.stage(pipeline.IDLE);
             return res;
           });

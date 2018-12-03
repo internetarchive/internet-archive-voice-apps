@@ -11,5 +11,9 @@ module.exports = {
    */
   middleware (middleware) {
     // TODO: store and run after
-  }
+  },
+
+  handle (conv) {
+    // TODO: run all middlewares
+  },
 };
