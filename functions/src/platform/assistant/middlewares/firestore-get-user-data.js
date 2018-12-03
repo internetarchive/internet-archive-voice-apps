@@ -9,16 +9,16 @@
  * @returns {Function}
  */
 module.exports = (db) => async (conv) => {
-  const { userId, sessionId } = conv.user.storage;
+  const { newUser, newSession, userId, sessionId } = conv.user.storage;
 
   // get user's data and session
   const [userDoc, sessionDoc] = await Promise.all([
-    db.collection('users').doc(userId),
-    db.collection('sessions').doc(sessionId),
+    !newUser && db.collection('users').doc(userId),
+    !newSession && db.collection('sessions').doc(sessionId),
   ]);
 
   conv.firestore = {
-    userData: userDoc.data() || {},
-    sessionData: sessionDoc.data() || {},
+    userData: userDoc.exists ? userDoc.data() : {},
+    sessionData: sessionDoc.exist ? sessionDoc.data() : {},
   };
 };

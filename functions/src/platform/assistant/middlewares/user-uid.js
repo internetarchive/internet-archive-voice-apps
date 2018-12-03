@@ -20,9 +20,15 @@ module.exports = (conv) => {
     // firestores sorts collections by it's id
     // so we would sort user's data by date of creation
     conv.user.storage.userId = [Date.now(), uuidv4()].join('-');
+    conv.user.storage.newUser = true;
+  } else {
+    conv.user.storage.newUser = false;
   }
 
   if (!conv.user.storage.sessionId) {
     conv.user.storage.sessionId = [Date.now(), uuidv4()].join('-');
+    conv.user.storage.newSession = true;
+  } else {
+    conv.user.storage.newSession = false;
   }
 };
