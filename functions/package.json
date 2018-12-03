@@ -37,7 +37,8 @@
     "object.entries": "^1.0.4",
     "raven": "^2.6.4",
     "replaceall": "^0.1.6",
-    "supports-color": "^5.5.0"
+    "supports-color": "^5.5.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
