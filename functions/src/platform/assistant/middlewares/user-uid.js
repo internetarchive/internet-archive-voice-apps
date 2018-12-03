@@ -15,12 +15,14 @@ module.exports = (conv) => {
     conv.user.storage = {};
   }
 
-  if (conv.user.storage.userID) {
-    return;
+  if (!conv.user.storage.userId) {
+    // put timestamp at the start because
+    // firestores sorts collections by it's id
+    // so we would sort user's data by date of creation
+    conv.user.storage.userId = [Date.now(), uuidv4()].join('-');
   }
 
-  // put timestamp at the start because
-  // firestores sorts collections by it's id
-  // so we would sort user's data by date of creation
-  conv.user.storage.userID = [Date.now(), uuidv4()].join('-');
+  if (!conv.user.storage.sessionId) {
+    conv.user.storage.sessionId = [Date.now(), uuidv4()].join('-');
+  }
 };

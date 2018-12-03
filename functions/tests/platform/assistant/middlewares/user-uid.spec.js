@@ -6,34 +6,56 @@ describe('platform', () => {
   describe('assistant', () => {
     describe('middlewares', () => {
       describe('user-uid', () => {
-        it('should create new unique user id if it was not there before', () => {
-          const conv = {};
-          middleware(conv);
-          expect(conv).to.have.property('user')
-            .which.have.property('storage')
-            .which.have.property('userID');
+        describe('user, storage', () => {
+          it('should not create new user if we already have it', () => {
+            const convOld = { user: {} };
+            const newConv = { ...convOld };
+            middleware(newConv);
+            expect(convOld.user).to.be.equal(newConv.user);
+          });
+
+          it(`should not create new user's storage if we already have it`, () => {
+            const convOld = { user: { storage: {} } };
+            const newConv = { ...convOld };
+            middleware(newConv);
+            expect(convOld.user.storage).to.be.equal(newConv.user.storage);
+          });
         });
 
-        it('should not create new id if we already have it', () => {
-          const conv = { user: { storage: { userID: '123456789' } } };
-          middleware(conv);
-          expect(conv).to.have.property('user')
-            .which.have.property('storage')
-            .which.have.property('userID', '123456789');
+        describe('userId', () => {
+          it('should create new unique user id if it was not there before', () => {
+            const conv = {};
+            middleware(conv);
+            expect(conv).to.have.property('user')
+              .which.have.property('storage')
+              .which.have.property('userId');
+          });
+
+          it('should not create new id if we already have it', () => {
+            const conv = { user: { storage: { userId: '123456789' } } };
+            middleware(conv);
+            expect(conv).to.have.property('user')
+              .which.have.property('storage')
+              .which.have.property('userId', '123456789');
+          });
         });
 
-        it('should not create new user if we already have it', () => {
-          const convOld = { user: {} };
-          const newConv = { ...convOld };
-          middleware(newConv);
-          expect(convOld.user).to.be.equal(newConv.user);
-        });
+        describe('sessionId', () => {
+          it('should create new unique session id if it was not there before', () => {
+            const conv = {};
+            middleware(conv);
+            expect(conv).to.have.property('user')
+              .which.have.property('storage')
+              .which.have.property('sessionId');
+          });
 
-        it(`should not create new user's storage if we already have it`, () => {
-          const convOld = { user: { storage: {} } };
-          const newConv = { ...convOld };
-          middleware(newConv);
-          expect(convOld.user.storage).to.be.equal(newConv.user.storage);
+          it('should not create new id if we already have it', () => {
+            const conv = { user: { storage: { sessionId: '123456789' } } };
+            middleware(conv);
+            expect(conv).to.have.property('user')
+              .which.have.property('storage')
+              .which.have.property('sessionId', '123456789');
+          });
         });
       });
     });
