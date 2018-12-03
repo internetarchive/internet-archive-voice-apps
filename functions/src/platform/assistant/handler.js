@@ -13,6 +13,9 @@ const strings = require('../../strings');
 const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
+const after = require('./middlewares/after');
+const firestoreGetUserDataMiddleware = require('./middlewares/firestore-get-user-data');
+const firestoreSetUserDataMiddleware = require('./middlewares/firestore-set-user-data');
 const logRequestMiddleware = require('./middlewares/log-request');
 const userUIDMiddleware = require('./middlewares/user-uid');
 
@@ -113,10 +116,23 @@ module.exports = (actionsMap) => {
 
   // prepare user's data
   app.middleware(userUIDMiddleware);
+
+  // fetch user's data from firestore
+  app.middleware(firestoreGetUserDataMiddleware);
+
+  // TODO: fix, once it would be official supported
+  // for the moment action on google api doesn't support
+  // middleware which should runs
+  // after handling intent
+  // https://github.com/actions-on-google/actions-on-google-nodejs/issues/182
+  //
+  // app.middleware(firestoreSetUserDataMiddleware);
+  after.middleware(firestoreSetUserDataMiddleware);
+
   // log request
   app.middleware(logRequestMiddleware);
 
-  // compatability middleware
+  // compatibility middleware
   // TODO:
   // app.middleware((conv) => {
   //   if (!conv.available.surfaces.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
