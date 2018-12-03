@@ -1,3 +1,6 @@
+const { debug, info, error } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-get-user-data');
+
+
 /**
  * Get user's data and session from Firestore
  *
@@ -9,16 +12,30 @@
  * @returns {Function}
  */
 module.exports = (db) => async (conv) => {
+  info('start');
+
   const { newUser, newSession, userId, sessionId } = conv.user.storage;
 
-  // get user's data and session
-  const [userDoc, sessionDoc] = await Promise.all([
-    !newUser && db.collection('users').doc(userId),
-    !newSession && db.collection('sessions').doc(sessionId),
-  ]);
+  // get user's and session data
+  try {
+    const [userDoc, sessionDoc] = await Promise.all([
+      !newUser && db.collection('users').doc(userId),
+      !newSession && db.collection('sessions').doc(sessionId),
+    ]);
 
-  conv.firestore = {
-    userData: userDoc.exists ? userDoc.data() : { id: userId },
-    sessionData: sessionDoc.exist ? sessionDoc.data() : { id: sessionId },
-  };
+    const userData = userDoc.exists ? userDoc.data() : { id: userId };
+    const sessionData = sessionDoc.exist ? sessionDoc.data() : { id: sessionId };
+
+    debug('user data', userData);
+    debug('session data', sessionData);
+
+    conv.firestore = { userData, sessionData };
+  } catch (err) {
+    error('fail on getting user and session data from firestore', err);
+    debug('set user and session data to default');
+    conv.firestore = {
+      userData: { id: userId },
+      sessionData: { id: sessionId },
+    };
+  }
 };
