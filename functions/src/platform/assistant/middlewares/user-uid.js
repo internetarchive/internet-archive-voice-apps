@@ -15,5 +15,8 @@ module.exports = (conv) => {
     return;
   }
 
+  // put timestamp at the start because
+  // firestores sorts collections by it's id
+  // so we would sort user's data by date of creation
   conv.user.userID = [Date.now(), uuidv4()].join('-');
 };
