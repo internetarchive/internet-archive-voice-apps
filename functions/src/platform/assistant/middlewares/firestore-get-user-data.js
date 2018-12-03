@@ -18,7 +18,7 @@ module.exports = (db) => async (conv) => {
   ]);
 
   conv.firestore = {
-    userData: userDoc.exists ? userDoc.data() : {},
-    sessionData: sessionDoc.exist ? sessionDoc.data() : {},
+    userData: userDoc.exists ? userDoc.data() : { id: userId },
+    sessionData: sessionDoc.exist ? sessionDoc.data() : { id: sessionId },
   };
 };
