@@ -660,6 +660,10 @@ module.exports = {
   },
 
   events: {
+    failed: {
+      speech: 'fail on playback',
+    },
+
     playlistIsEnded: {
       speech: 'Playlist has ended. Would you like to continue listening?',
     },

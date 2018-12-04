@@ -8,12 +8,17 @@ const Raven = require('raven');
 const packageJSON = require('../../../package.json');
 
 const errors = require('../../errors');
-const pipeline = require('../../performance/pipeline');
 const strings = require('../../strings');
 const { debug, error, warning } = require('../../utils/logger')('ia:index');
 
 const buildHandlers = require('./handler/builder');
+const dbConnector = require('./firestore').firestore;
+const after = require('./middlewares/after');
+const firestoreUserDataMiddlewareBuilder = require('./middlewares/firestore-user-data');
 const logRequestMiddleware = require('./middlewares/log-request');
+const logEmptySessionDataMiddleware = require('./middlewares/log-empty-session-data');
+const logSessionDurationMiddleware = require('./middlewares/log-session-duration');
+const pipelineMiddleware = require('./middlewares/pipeline');
 const userUIDMiddleware = require('./middlewares/user-uid');
 
 module.exports = (actionsMap) => {
@@ -33,7 +38,7 @@ module.exports = (actionsMap) => {
 
   let handlers = [];
   if (actionsMap) {
-    handlers = buildHandlers({ actionsMap });
+    handlers = buildHandlers({ actionsMap, after });
     handlers.forEach(
       ({ intent, handler }) => app.intent(intent, handler)
     );
@@ -74,9 +79,7 @@ module.exports = (actionsMap) => {
     );
   }
 
-  app.middleware(() => {
-    pipeline.stage(pipeline.PROCESS_REQUEST);
-  });
+  app.middleware(pipelineMiddleware.start);
 
   // Sentry middleware
   if (functions.config().sentry) {
@@ -111,12 +114,36 @@ module.exports = (actionsMap) => {
     });
   }
 
+  const db = dbConnector.connect();
+
   // prepare user's data
   app.middleware(userUIDMiddleware);
+
+  const firestoreUserDataMiddleware = firestoreUserDataMiddlewareBuilder(db);
+  // fetch user's data from firestore
+  app.middleware(firestoreUserDataMiddleware.start);
+
+  // TODO: fix, once it would be official supported
+  // for the moment action on google api doesn't support
+  // middleware which should runs
+  // after handling intent
+  // https://github.com/actions-on-google/actions-on-google-nodejs/issues/182
+  //
+  // app.middleware(firestoreSetUserDataMiddleware);
+  after.middleware(firestoreUserDataMiddleware.finish);
+  after.middleware(pipelineMiddleware.finish);
+
   // log request
   app.middleware(logRequestMiddleware);
 
-  // compatability middleware
+  // log issues
+  // https://github.com/actions-on-google/actions-on-google-nodejs/issues/256
+  // it is solved but would be useful to know when this problem will be fixed
+  app.middleware(logEmptySessionDataMiddleware);
+
+  app.middleware(logSessionDurationMiddleware);
+
+  // compatibility middleware
   // TODO:
   // app.middleware((conv) => {
   //   if (!conv.available.surfaces.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
@@ -124,7 +151,7 @@ module.exports = (actionsMap) => {
   //   }
   // });
 
-  app.fallback((conv) => {
+  app.fallback(async (conv) => {
     debug('handle fallback');
     let matchedHandler = getHandlerByIntent(conv.action);
     if (matchedHandler) {
@@ -142,10 +169,10 @@ module.exports = (actionsMap) => {
     warning(`something wrong we don't have unhandled handler`);
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
-    pipeline.stage(pipeline.IDLE);
+    await after.handle(conv);
   });
 
-  app.catch((conv, err) => {
+  app.catch(async (conv, err) => {
     error('We got unhandled error', err);
     if (conv.raven) {
       conv.raven.captureException(err);
@@ -176,7 +203,8 @@ module.exports = (actionsMap) => {
     if (!globalErrorWasHandled) {
       conv.ask(`Can you rephrase it?`);
     }
-    pipeline.stage(pipeline.IDLE);
+
+    await after.handle(conv);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));

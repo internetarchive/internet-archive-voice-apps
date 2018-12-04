@@ -2,6 +2,7 @@ const _ = require('lodash');
 
 const { Image, LinkOutSuggestion, MediaObject, SimpleResponse, Suggestions } = require('actions-on-google');
 
+const platformConfig = require('../../../config').platforms.assistant;
 const { debug, warning } = require('../../../utils/logger')('ia:platform.assistant.response');
 
 /**
@@ -15,16 +16,22 @@ module.exports = (conv) =>
    * Response with question
    *
    * @param media {Object} media response
+   * @param mediaResponseOnly {boolean}
    * @param speech {String|Array} speech
    * @param suggestions {Array} recommendations
    * @param text {String|Array} display text
    * @param close {Boolean} close connection (end session). By default is false.
    */
-  ({ media, speech, suggestions, text, close = false }) => {
+  ({ media, mediaResponseOnly, speech, suggestions, text, close = false }) => {
     let responses;
 
-    responses = [].concat(speech)
-      .map(s => `<speak>${s}</speak>`);
+    if (mediaResponseOnly) {
+      debug('media response only');
+      responses = [platformConfig.minimalSpeechForMediaResponse];
+    } else {
+      responses = [].concat(speech)
+        .map(s => `<speak>${s}</speak>`);
+    }
 
     text = [].concat(text);
 

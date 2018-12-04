@@ -14,7 +14,7 @@ module.exports = (conv) => {
   debug('\n\n');
   info(`start handling action: ${conv.action}, intent: ${conv.intent}`);
   if (conv.user) {
-    info(`user.id:`, conv.user.id);
+    info(`userId:`, conv.user.storage.userId);
     info(`user.last:`, conv.user.last);
     info(`user.name:`, util.inspect(conv.user.name));
   } else {

@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const util = require('util');
 
-const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistance:device-level');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistence:device-level');
 
 /**
- * Session level persistance.
+ * Session level persistence.
  * More details here https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs/wiki/Skill-Attributes#session-attributes
  *
  * but because of limitations of Alexa session storage
@@ -12,6 +12,9 @@ const { debug } = require('../../../utils/logger')('ia:platform:alexa:persistanc
  * https://github.com/internetarchive/internet-archive-google-action/issues/246
  *
  * @param handlerInput
+ * @param persistentAttributes
+ *
+ * @returns {*}
  */
 module.exports = (handlerInput, persistentAttributes) => {
   debug('create');
@@ -30,7 +33,7 @@ module.exports = (handlerInput, persistentAttributes) => {
     /**
      * Drop all session data
      */
-    dropAll: () => {
+    dropAll () {
       debug('drop all attributes');
       _.set(persistentAttributes, [deviceId], {});
       debug(persistentAttributes, util.inspect(persistentAttributes, { depth: null }));
@@ -42,11 +45,20 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param name
      * @returns {{}}
      */
-    getData: (name) => {
+    getData (name) {
       if (!name) {
         return persistentAttributes;
       }
       return _.get(persistentAttributes, [deviceId, name]);
+    },
+
+    /**
+     * Is empty user's storage
+     *
+     * @returns {boolean}
+     */
+    isEmpty () {
+      return _.isEmpty(_.get(persistentAttributes, deviceId));
     },
 
     /**
@@ -55,7 +67,7 @@ module.exports = (handlerInput, persistentAttributes) => {
      * @param name
      * @param value
      */
-    setData: (name, value) => {
+    setData (name, value) {
       debug(`set attribute ${name} to`, util.inspect(value, { depth: null }));
       _.set(persistentAttributes, [deviceId, name], value);
       return true;

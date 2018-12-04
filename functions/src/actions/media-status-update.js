@@ -1,6 +1,7 @@
-const { debug, warning } = require('../utils/logger')('ia:actions:media-status-update');
+const { debug, error, warning } = require('../utils/logger')('ia:actions:media-status-update');
 
 const dialog = require('../dialog');
+const playlist = require('../state/playlist');
 const strings = require('../strings');
 
 const helpers = require('./playback/_helpers');
@@ -21,15 +22,23 @@ const helpers = require('./playback/_helpers');
 function handler (app) {
   debug('start');
 
-  const { status } = app.params.getByName('MEDIA_STATUS');
+  const mediaStatusParam = app.params.getByName('MEDIA_STATUS');
+  const { status } = mediaStatusParam;
 
-  if (status === 'FINISHED') {
-    return handleFinished(app);
-  } else {
-    // log that we got unknown status
-    // for example (app.Media.Status.UNSPECIFIED)
-    warning(`Got unexpected media update ${status}`);
-    return Promise.resolve();
+  switch (status) {
+    case 'FINISHED':
+      return handleFinished(app);
+    case 'FAILED':
+      // got once:
+      // failureReason: 'AUDIO_NOT_PLAYABLE'
+      const { failureReason } = mediaStatusParam;
+      warning(`failureReason ${failureReason}`);
+      return dialog.close(app, strings.events.playlistIsEnded);
+    default:
+      // log that we got unknown status
+      // for example (app.Media.Status.UNSPECIFIED)
+      warning(`Got unexpected media update ${status}`);
+      return Promise.resolve();
   }
 }
 
@@ -40,6 +49,16 @@ function handler (app) {
  */
 function handleFinished (app) {
   debug('handle finished');
+  if (app.persist.isEmpty() || !playlist.getFeeder(app)) {
+    error(`something really strange we got end of music track but user's session is empty`);
+    // we are going to play short sample to hope that next time we would get session back
+    dialog.playSong(app, {
+      mediaResponseOnly: true,
+      audioURL: 'https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3',
+    });
+    return Promise.resolve();
+  }
+
   return helpers.playSong({ app, skip: 'forward' })
     .catch(context => {
       debug('It could be an error:', context);

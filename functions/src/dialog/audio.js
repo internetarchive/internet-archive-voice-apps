@@ -12,9 +12,13 @@ const { debug } = require('../utils/logger')('ia:dialog:audio');
  * @param app
  * @param {Object} options
  * @param {string} options.audioURL - The Link to the track
- * @param {string} options.coverage - The Desciption of Places
+ * @param {string} options.coverage - The Description of Places
  * @param {string} options.imageURL - The Link to the track image
  * @param {string|Array<string>} options.suggestions
+ * @param {number} options.mediaResponseOnly - don't give any other reponse expect media response
+ * it doesn't work completely on Google Assistant - because it doesn't allow to give
+ * media response without text message.
+ * In contract to it Alexa doesn't allow to get response with text messages on next record
  * @param {Object} options.speech - customize speech before song
  * @param {number} options.track
  * @param {string} options.title

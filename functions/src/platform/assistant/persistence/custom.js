@@ -1,13 +1,15 @@
 const _ = require('lodash');
 
-const { debug } = require('../../../utils/logger')('ia:platform:assistant:persistence:session');
+const { debug } = require('../../../utils/logger')('ia:platform:assistant:persistence:custom');
 
 /**
- * Session level persistence
+ * Custom level persistence
  *
- * @param conv
+ * @param field {array} specified where we are going to store session data
+ * @param cleanOnDropAll
+ * @returns {*}
  */
-module.exports = (conv) => {
+module.exports = ({ field, cleanOnDropAll }) => (conv) => {
   debug('create');
   debug(conv);
   if (!conv) {
@@ -19,8 +21,11 @@ module.exports = (conv) => {
      * Drop all session data
      */
     dropAll () {
+      if (!cleanOnDropAll) {
+        return;
+      }
       debug('drop all attributes');
-      conv.data = {};
+      _.set(conv, field, {});
     },
 
     /**
@@ -30,11 +35,11 @@ module.exports = (conv) => {
      * @returns {{}}
      */
     getData (name) {
-      if (!conv.data) {
-        throw new Error('"data" field is missed in conv. We can not get user\'s data');
+      if (!_.has(conv, field)) {
+        throw new Error(`"${field}" field is missed in conv. We can not get user's data`);
       }
 
-      return conv.data[name];
+      return _.get(conv, field.concat(name).join('.'));
     },
 
     /**
@@ -43,7 +48,7 @@ module.exports = (conv) => {
      * @returns {boolean}
      */
     isEmpty () {
-      return _.isEmpty(conv.data);
+      return _.isEmpty(_.get(conv, field));
     },
 
     /**
@@ -60,13 +65,12 @@ module.exports = (conv) => {
     setData (name, value) {
       debug(`set attribute ${name} to`, value);
 
-      if (!conv.data) {
-        throw new Error('"data" field is missed in conv. We can not get user\'s data');
+      if (!_.has(conv, field)) {
+        throw new Error(`"${field}" field is missed in conv. We can not set user's data`);
       }
 
-      // conv.user.storage = {};
-      conv.data[name] = value;
-      const size = JSON.stringify({ data: conv.data }).length;
+      _.set(conv, field.concat(name), value);
+      const size = JSON.stringify(_.get(conv, field)).length;
       debug(`size of session data: ${size} bytes`);
       return true;
     },

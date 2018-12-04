@@ -12,6 +12,7 @@ describe('platform', () => {
   describe('assistant', () => {
     let actions;
     let res;
+    let firestore;
     let functions, admin;
     let configStub, adminInitStub;
 
@@ -36,6 +37,17 @@ describe('platform', () => {
         ['http-request-error', { default: require('../../../src/actions/http-request-error').handler }],
         ['unhandled', { default: require('../../../src/actions/unhandled').handler }],
       ]);
+
+      firestore = {};
+      firestore.collection = sinon.stub().returns(firestore);
+      firestore.doc = sinon.stub().returns(firestore);
+      firestore.get = sinon.stub().returns(firestore);
+      firestore.set = sinon.stub().returns(firestore);
+      firestore.data = sinon.spy();
+
+      handlerBuilder.__set__('dbConnector', {
+        connect: sinon.stub().returns(firestore),
+      });
     });
 
     describe('handler', () => {
