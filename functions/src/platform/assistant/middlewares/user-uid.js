@@ -26,7 +26,7 @@ module.exports = (conv) => {
     conv.user.storage.newUser = false;
   }
 
-  if (!conv.user.storage.sessionId || _.isEmpty(conv.data)) {
+  if (!conv.user.storage.sessionId || conv.request.conversation.type === 'NEW') {
     conv.user.storage.sessionId = [Date.now(), uuidv4()].join('-');
     conv.user.storage.newSession = true;
   } else {

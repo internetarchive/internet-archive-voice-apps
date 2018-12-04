@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const _ = require('lodash');
 
 const mockApp = require('../../../_utils/mocking/platforms/assistant');
 const middleware = require('../../../../src/platform/assistant/middlewares/user-uid');
@@ -50,10 +51,12 @@ describe('platform', () => {
               .which.have.property('sessionId');
           });
 
-          it('should not create new id if we already have it', () => {
+          it('should not create new id we in conversation', () => {
             const conv = mockApp();
             middleware(conv);
             const previousSessionId = conv.user.storage.sessionId;
+
+            _.set(conv, 'request.conversation.type', 'ACTIVE');
 
             middleware(conv);
             expect(conv).to.have.property('user')
@@ -61,13 +64,12 @@ describe('platform', () => {
               .which.have.property('sessionId', previousSessionId);
           });
 
-          it('should start new session when we got request with empty request data (conv.data)', () => {
+          it('should start new session when we got new conversation', () => {
             const conv = mockApp();
             middleware(conv);
             const previousSessionId = conv.user.storage.sessionId;
 
-            // empty dialog flow session data
-            conv.data = {};
+            _.set(conv, 'request.conversation.type', 'NEW');
 
             middleware(conv);
             expect(conv).to.have.property('user')

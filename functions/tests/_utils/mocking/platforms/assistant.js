@@ -21,6 +21,7 @@ module.exports = function mockApp ({
   _.set(app, 'Media.ImageType.LARGE', 'Media.ImageType.LARGE');
   _.set(app, 'MEDIA_STATUS.extension.status', null);
   _.set(app, 'Media.Status.FINISHED', 'Media.Status.FINISHED');
+  _.set(app, 'request.conversation.type', 'NEW');
 
   app.arguments = {
     get: sinon.stub().callsFake(name => args[name]),
