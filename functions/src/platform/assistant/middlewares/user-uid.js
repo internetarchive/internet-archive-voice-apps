@@ -1,11 +1,10 @@
-const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 
 const { debug, info, warning } = require('../../../utils/logger')('ia:platform.assistant.middlewares.user-data');
 
 /**
  * Generate Unique user id if it wasn't exist yet
- * and create user's storage if we don't have it before
+ * and create user's session if we don't have it before
  *
  * @param conv
  */
@@ -41,7 +40,4 @@ module.exports = (conv) => {
     conv.user.storage.newSession = false;
     debug('active session', conv.user.storage.sessionId);
   }
-
-  // add mark to not have empty dialogflow session data
-  _.set(conv.data, 'updateAt', Date.now());
 };

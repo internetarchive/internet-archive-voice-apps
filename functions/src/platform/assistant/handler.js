@@ -16,6 +16,7 @@ const dbConnector = require('./firestore').firestore;
 const after = require('./middlewares/after');
 const firestoreUserDataMiddlewareBuilder = require('./middlewares/firestore-user-data');
 const logRequestMiddleware = require('./middlewares/log-request');
+const logEmptySessionDataMiddleware = require('./middlewares/log-empty-session-data');
 const pipelineMiddleware = require('./middlewares/pipeline');
 const userUIDMiddleware = require('./middlewares/user-uid');
 
@@ -133,6 +134,11 @@ module.exports = (actionsMap) => {
 
   // log request
   app.middleware(logRequestMiddleware);
+
+  // log issues
+  // https://github.com/actions-on-google/actions-on-google-nodejs/issues/256
+  // it is solved but would be useful to know when this problem will be fixed
+  app.middleware(logEmptySessionDataMiddleware);
 
   // compatibility middleware
   // TODO:

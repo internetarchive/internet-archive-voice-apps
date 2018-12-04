@@ -21,6 +21,10 @@ function getBody ({ action, data = {}, userStorage = {}, lastSeen = '2018-02-15T
           userId: 'ABwppHF87C7vRsEg2MsfxhYPar0beTkSw3KHiQEWc5OznoqwWNjh2Tko0Pp30Oow2Qak6BtTYs25J6HlSR03oQT70OVv',
           storage: {},
         },
+
+        conversation: {
+          type: 'NEW',
+        },
       },
     },
 
