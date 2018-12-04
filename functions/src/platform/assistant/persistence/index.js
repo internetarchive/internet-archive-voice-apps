@@ -10,4 +10,4 @@ const persistence = require('./custom');
  * @param conv
  * @returns {*}
  */
-module.exports = (conv) => persistence(['firestore', 'sessionData'])(conv);
+module.exports = (conv) => persistence({ field: ['firestore', 'sessionData'], cleanOnDropAll: false })(conv);

@@ -6,8 +6,10 @@ const { debug } = require('../../../utils/logger')('ia:platform:assistant:persis
  * Custom level persistence
  *
  * @param field {array} specified where we are going to store session data
+ * @param cleanOnDropAll
+ * @returns {*}
  */
-module.exports = (field) => (conv) => {
+module.exports = ({ field, cleanOnDropAll }) => (conv) => {
   debug('create');
   debug(conv);
   if (!conv) {
@@ -19,9 +21,11 @@ module.exports = (field) => (conv) => {
      * Drop all session data
      */
     dropAll () {
-      debug('drop all attributes (expect id)');
-      const id = _.get(conv, field.concat('id'));
-      _.set(conv, field, { id });
+      if (!cleanOnDropAll) {
+        return;
+      }
+      debug('drop all attributes');
+      _.set(conv, field, {});
     },
 
     /**

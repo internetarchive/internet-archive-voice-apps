@@ -10,7 +10,7 @@ describe('platform', () => {
     let persistence;
 
     beforeEach(() => {
-      persistence = persistenceBuilder(['firestore', 'sessionData']);
+      persistence = persistenceBuilder({ field: ['firestore', 'sessionData'], cleanOnDropAll: true });
     });
 
     function addFirestoreStorage (conv) {
