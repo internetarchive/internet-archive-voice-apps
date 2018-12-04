@@ -1,5 +1,33 @@
 const { debug, info, error, timer } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
 
+/**
+ * create default user
+ *
+ * @param id
+ * @returns {{id: *, createdAt: *}}
+ */
+function buildDefaultUser (id) {
+  debug('build default user');
+  return {
+    id,
+    createdAt: Date.now(),
+  };
+}
+
+/**
+ * build default session
+ *
+ * @param id
+ * @returns {{id: *, createdAt: *}}
+ */
+function buildDefaultSession (id) {
+  debug('build default session');
+  return {
+    id,
+    createdAt: Date.now(),
+  };
+}
+
 module.exports = (db) => ({
   async start (conv) {
     info('start');
@@ -8,29 +36,30 @@ module.exports = (db) => ({
 
     // get user's and session data
     try {
+      debug(`we are going to get user ${userId}`);
+      debug(`we are going to get session ${sessionId}`);
+
       const stopFirestoreTimer = timer.start('get-user-and-session-data');
       const [userDoc, sessionDoc] = await Promise.all([
         !newUser && db.collection('users').doc(userId),
         !newSession && db.collection('sessions').doc(sessionId),
       ]);
 
-      const userData = userDoc.exists ? userDoc.data() : { id: userId };
-      const sessionData = sessionDoc.exist ? sessionDoc.data() : { id: sessionId };
+      const userData = userDoc.exists ? userDoc.data() : buildDefaultUser(userId);
+      const sessionData = sessionDoc.exist ? sessionDoc.data() : buildDefaultSession(sessionId);
 
       stopFirestoreTimer();
 
-      debug('user data', userData);
-      debug('session data', sessionData);
+      debug('get user data', userData);
+      debug('get session data', sessionData);
 
       conv.firestore = { userData, sessionData };
-
-      debug('conv.firestore', conv.firestore);
     } catch (err) {
       error('fail on getting user and session data from firestore', err);
       debug('set user and session data to default');
       conv.firestore = {
-        userData: { id: userId },
-        sessionData: { id: sessionId },
+        userData: buildDefaultUser(userId),
+        sessionData: buildDefaultSession(sessionId),
       };
     }
   },
@@ -44,10 +73,8 @@ module.exports = (db) => ({
       return;
     }
 
-    debug('firestore 1:', firestore);
     delete conv.firestore;
     const { userData, sessionData } = firestore;
-    debug('firestore 2:', firestore);
 
     debug('store user and session data');
 

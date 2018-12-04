@@ -22,15 +22,23 @@ const helpers = require('./playback/_helpers');
 function handler (app) {
   debug('start');
 
-  const { status } = app.params.getByName('MEDIA_STATUS');
+  const mediaStatusParam = app.params.getByName('MEDIA_STATUS');
+  const { status } = mediaStatusParam;
 
-  if (status === 'FINISHED') {
-    return handleFinished(app);
-  } else {
-    // log that we got unknown status
-    // for example (app.Media.Status.UNSPECIFIED)
-    warning(`Got unexpected media update ${status}`);
-    return Promise.resolve();
+  switch (status) {
+    case 'FINISHED':
+      return handleFinished(app);
+    case 'FAILED':
+      // got once:
+      // failureReason: 'AUDIO_NOT_PLAYABLE'
+      const { failureReason } = mediaStatusParam;
+      warning(`failureReason ${failureReason}`);
+      return dialog.close(app, strings.events.playlistIsEnded);
+    default:
+      // log that we got unknown status
+      // for example (app.Media.Status.UNSPECIFIED)
+      warning(`Got unexpected media update ${status}`);
+      return Promise.resolve();
   }
 }
 
