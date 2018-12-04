@@ -87,6 +87,10 @@ module.exports = (db) => ({
     const userRef = db.collection('users').doc(userData.id);
     const sessionRef = userRef.collection('sessions').doc(sessionData.id);
 
+    // TODO: store only when we have new data
+    userData.updatedAt = Date.now();
+    sessionData.updatedAt = Date.now();
+
     try {
       await Promise.all([
         userRef.set(userData),
