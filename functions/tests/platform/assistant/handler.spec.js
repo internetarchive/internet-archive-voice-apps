@@ -13,7 +13,6 @@ describe('platform', () => {
     let actions;
     let res;
     let firestore;
-    let firestoreDoc;
     let functions, admin;
     let configStub, adminInitStub;
 
@@ -39,11 +38,12 @@ describe('platform', () => {
         ['unhandled', { default: require('../../../src/actions/unhandled').handler }],
       ]);
 
-      firestoreDoc = { data: sinon.spy(), set: sinon.spy() };
-
       firestore = {};
       firestore.collection = sinon.stub().returns(firestore);
-      firestore.doc = sinon.stub().returns(firestoreDoc);
+      firestore.doc = sinon.stub().returns(firestore);
+      firestore.get = sinon.stub().returns(firestore);
+      firestore.set = sinon.stub().returns(firestore);
+      firestore.data = sinon.spy();
 
       handlerBuilder.__set__('dbConnector', {
         connect: sinon.stub().returns(firestore),

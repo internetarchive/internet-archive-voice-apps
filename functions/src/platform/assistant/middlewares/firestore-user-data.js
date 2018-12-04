@@ -40,9 +40,13 @@ module.exports = (db) => ({
       debug(`we are going to get session ${sessionId}`);
 
       const stopFirestoreTimer = timer.start('get-user-and-session-data');
+
+      const userRef = db.collection('users').doc(userId);
+      const sessionRef = userRef.collection('sessions').doc(sessionId);
+
       const [userDoc, sessionDoc] = await Promise.all([
-        !newUser && db.collection('users').doc(userId),
-        !newSession && db.collection('sessions').doc(sessionId),
+        !newUser && userRef.get(),
+        !newSession && sessionRef.get(),
       ]);
 
       const userData = userDoc.exists ? userDoc.data() : buildDefaultUser(userId);
@@ -79,10 +83,14 @@ module.exports = (db) => ({
     debug('store user and session data');
 
     const stopFirestoreTimer = timer.start('set-user-and-session-data');
+
+    const userRef = db.collection('users').doc(userData.id);
+    const sessionRef = userRef.collection('sessions').doc(sessionData.id);
+
     try {
       await Promise.all([
-        db.collection('users').doc(userData.id).set(userData),
-        db.collection('sessions').doc(sessionData.id).set(sessionData),
+        userRef.set(userData),
+        sessionRef.set(sessionData),
       ]);
       debug('user and session data stored');
     } catch (err) {
