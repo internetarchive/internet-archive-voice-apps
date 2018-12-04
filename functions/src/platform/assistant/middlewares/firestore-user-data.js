@@ -123,7 +123,7 @@ module.exports = (db) => ({
       ]);
       debug(`user ${userData.id} and session ${sessionData.id} data stored`);
     } catch (err) {
-      error('failed to store user and/or session data', err);
+      error(`failed to store user ${userData.id} and/or session ${sessionData.id} data`, err);
     }
     stopFirestoreTimer();
   }
