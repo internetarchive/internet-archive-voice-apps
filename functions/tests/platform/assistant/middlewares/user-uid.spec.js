@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 
+const mockApp = require('../../../_utils/mocking/platforms/assistant');
 const middleware = require('../../../../src/platform/assistant/middlewares/user-uid');
 
 describe('platform', () => {
@@ -50,11 +51,29 @@ describe('platform', () => {
           });
 
           it('should not create new id if we already have it', () => {
-            const conv = { user: { storage: { sessionId: '123456789' } } };
+            const conv = mockApp();
+            middleware(conv);
+            const previousSessionId = conv.user.storage.sessionId;
+
             middleware(conv);
             expect(conv).to.have.property('user')
               .which.have.property('storage')
-              .which.have.property('sessionId', '123456789');
+              .which.have.property('sessionId', previousSessionId);
+          });
+
+          it('should start new session when we got request with empty request data (conv.data)', () => {
+            const conv = mockApp();
+            middleware(conv);
+            const previousSessionId = conv.user.storage.sessionId;
+
+            // empty dialog flow session data
+            conv.data = {};
+
+            middleware(conv);
+            expect(conv).to.have.property('user')
+              .which.have.property('storage')
+              .which.have.property('sessionId')
+              .which.not.equal(previousSessionId);
           });
         });
       });

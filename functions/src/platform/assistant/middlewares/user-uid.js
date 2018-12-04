@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 
 /**
@@ -25,10 +26,13 @@ module.exports = (conv) => {
     conv.user.storage.newUser = false;
   }
 
-  if (!conv.user.storage.sessionId) {
+  if (!conv.user.storage.sessionId || _.isEmpty(conv.data)) {
     conv.user.storage.sessionId = [Date.now(), uuidv4()].join('-');
     conv.user.storage.newSession = true;
   } else {
     conv.user.storage.newSession = false;
   }
+
+  // add mark to not have empty dialogflow session data
+  _.set(conv.data, 'updateAt', Date.now());
 };
