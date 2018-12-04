@@ -17,14 +17,16 @@ function buildDefaultUser (id) {
 /**
  * Build default session
  *
+ * @param conv
  * @param id
- * @returns {{id: *, createdAt: *}}
+ * @returns {*}
  */
-function buildDefaultSession (id) {
+function buildDefaultSession (conv, id) {
   debug('build default session');
   return {
     id,
     idx: 0,
+    conversationId: conv.request.conversationId,
     createdAt: Date.now(),
   };
 }
@@ -67,7 +69,7 @@ module.exports = (db) => ({
       ]);
 
       const userData = userDoc.exists ? userDoc.data() : buildDefaultUser(userId);
-      const sessionData = sessionDoc.exists ? updateSession(sessionDoc.data()) : buildDefaultSession(sessionId);
+      const sessionData = sessionDoc.exists ? updateSession(sessionDoc.data()) : buildDefaultSession(conv, sessionId);
 
       stopFirestoreTimer();
 
@@ -80,7 +82,7 @@ module.exports = (db) => ({
       debug('set user and session data to default');
       conv.firestore = {
         userData: buildDefaultUser(userId),
-        sessionData: buildDefaultSession(sessionId),
+        sessionData: buildDefaultSession(conv, sessionId),
       };
     }
   },
