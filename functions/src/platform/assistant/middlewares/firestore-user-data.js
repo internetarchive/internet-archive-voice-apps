@@ -1,7 +1,7 @@
 const { debug, info, error, timer } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
 
 /**
- * create default user
+ * Create default user
  *
  * @param id
  * @returns {{id: *, createdAt: *}}
@@ -15,7 +15,7 @@ function buildDefaultUser (id) {
 }
 
 /**
- * build default session
+ * Build default session
  *
  * @param id
  * @returns {{id: *, createdAt: *}}
@@ -24,11 +24,28 @@ function buildDefaultSession (id) {
   debug('build default session');
   return {
     id,
+    idx: 0,
     createdAt: Date.now(),
   };
 }
 
+/**
+ * Update session data
+ *
+ * @param session
+ * @returns {{id: *}}
+ */
+function updateSession (session) {
+  return { ...session, id: session.id + 1 };
+}
+
 module.exports = (db) => ({
+  /**
+   * Start firestore middleware
+   *
+   * @param conv
+   * @returns {Promise<void>}
+   */
   async start (conv) {
     info('start');
 
@@ -50,7 +67,7 @@ module.exports = (db) => ({
       ]);
 
       const userData = userDoc.exists ? userDoc.data() : buildDefaultUser(userId);
-      const sessionData = sessionDoc.exist ? sessionDoc.data() : buildDefaultSession(sessionId);
+      const sessionData = sessionDoc.exist ? updateSession(sessionDoc.data()) : buildDefaultSession(sessionId);
 
       stopFirestoreTimer();
 
@@ -68,6 +85,12 @@ module.exports = (db) => ({
     }
   },
 
+  /**
+   * Finish firestore middleware
+   *
+   * @param conv
+   * @returns {Promise<void>}
+   */
   async finish (conv) {
     info('finish');
 
