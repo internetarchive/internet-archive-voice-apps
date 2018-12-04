@@ -105,7 +105,7 @@ module.exports = (db) => ({
     delete conv.firestore;
     const { userData, sessionData } = firestore;
 
-    debug('store user and session data');
+    debug(`store user ${userData.id} and session ${sessionData.id} data`);
 
     const stopFirestoreTimer = timer.start('set-user-and-session-data');
 
