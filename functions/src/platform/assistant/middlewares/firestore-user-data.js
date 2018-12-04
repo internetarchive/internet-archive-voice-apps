@@ -36,7 +36,7 @@ function buildDefaultSession (id) {
  * @returns {{idx: *}}
  */
 function updateSession (session) {
-  return { ...session, idx: session.idx + 1 };
+  return { ...session, idx: (session.idx || 0) + 1 };
 }
 
 module.exports = (db) => ({
