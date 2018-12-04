@@ -142,7 +142,7 @@ module.exports = (actionsMap) => {
   //   }
   // });
 
-  app.fallback((conv) => {
+  app.fallback(async (conv) => {
     debug('handle fallback');
     let matchedHandler = getHandlerByIntent(conv.action);
     if (matchedHandler) {
@@ -160,10 +160,10 @@ module.exports = (actionsMap) => {
     warning(`something wrong we don't have unhandled handler`);
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
-    after.handle(conv);
+    await after.handle(conv);
   });
 
-  app.catch((conv, err) => {
+  app.catch(async (conv, err) => {
     error('We got unhandled error', err);
     if (conv.raven) {
       conv.raven.captureException(err);
@@ -194,7 +194,8 @@ module.exports = (actionsMap) => {
     if (!globalErrorWasHandled) {
       conv.ask(`Can you rephrase it?`);
     }
-    after.handle(conv);
+
+    await after.handle(conv);
   });
 
   return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));

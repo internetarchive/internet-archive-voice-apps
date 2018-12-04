@@ -19,8 +19,9 @@ module.exports = (field) => (conv) => {
      * Drop all session data
      */
     dropAll () {
-      debug('drop all attributes');
-      _.set(conv, field, {});
+      debug('drop all attributes (expect id)');
+      const id = _.get(conv, field.concat('id'));
+      _.set(conv, field, { id });
     },
 
     /**

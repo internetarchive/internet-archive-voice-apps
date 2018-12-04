@@ -20,6 +20,8 @@ module.exports = (db) => ({
       debug('session data', sessionData);
 
       conv.firestore = { userData, sessionData };
+
+      debug('conv.firestore', conv.firestore);
     } catch (err) {
       error('fail on getting user and session data from firestore', err);
       debug('set user and session data to default');
@@ -30,7 +32,7 @@ module.exports = (db) => ({
     }
   },
 
-  finish (conv) {
+  async finish (conv) {
     info('finish');
 
     const firestore = conv.firestore;
@@ -39,13 +41,15 @@ module.exports = (db) => ({
       return;
     }
 
+    debug('firestore 1:', firestore);
     delete conv.firestore;
     const { userData, sessionData } = firestore;
+    debug('firestore 2:', firestore);
 
     debug('store user and session data');
 
     // we are not waiting until data will be stored
-    Promise.all([
+    await Promise.all([
       db.collection('users').doc(userData.id).set(userData),
       db.collection('sessions').doc(sessionData.id).set(sessionData),
     ]).then(() => {

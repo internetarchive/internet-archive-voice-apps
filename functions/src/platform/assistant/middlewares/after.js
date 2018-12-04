@@ -24,8 +24,14 @@ class Middlewares {
    *
    * @param conv
    */
-  handle (conv) {
-    this._middlewares.forEach(m => m(conv));
+  async handle (conv) {
+    // run consistently
+    // but it may have sense to run them in parallel
+    // but for that each middleware should have list of dependencies
+    // to prevent running them in wrong sequence
+    for (const m of this._middlewares) {
+      await m(conv);
+    }
   }
 }
 
