@@ -14,8 +14,7 @@ const { debug, error, warning } = require('../../utils/logger')('ia:index');
 const buildHandlers = require('./handler/builder');
 const dbConnector = require('./firestore').firestore;
 const after = require('./middlewares/after');
-const firestoreGetUserDataMiddleware = require('./middlewares/firestore-get-user-data');
-const firestoreSetUserDataMiddleware = require('./middlewares/firestore-set-user-data');
+const firestoreUserDataMiddlewareBuilder = require('./middlewares/firestore-user-data');
 const logRequestMiddleware = require('./middlewares/log-request');
 const pipelineMiddleware = require('./middlewares/pipeline');
 const userUIDMiddleware = require('./middlewares/user-uid');
@@ -118,8 +117,9 @@ module.exports = (actionsMap) => {
   // prepare user's data
   app.middleware(userUIDMiddleware);
 
+  const firestoreUserDataMiddleware = firestoreUserDataMiddlewareBuilder(db);
   // fetch user's data from firestore
-  app.middleware(firestoreGetUserDataMiddleware(db));
+  app.middleware(firestoreUserDataMiddleware.start);
 
   // TODO: fix, once it would be official supported
   // for the moment action on google api doesn't support
@@ -128,7 +128,7 @@ module.exports = (actionsMap) => {
   // https://github.com/actions-on-google/actions-on-google-nodejs/issues/182
   //
   // app.middleware(firestoreSetUserDataMiddleware);
-  after.middleware(firestoreSetUserDataMiddleware(db));
+  after.middleware(firestoreUserDataMiddleware.finish);
   after.middleware(pipelineMiddleware.finish);
 
   // log request
