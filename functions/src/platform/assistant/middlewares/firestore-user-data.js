@@ -1,4 +1,4 @@
-const { debug, info, error } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
+const { debug, info, error, timer } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
 
 module.exports = (db) => ({
   async start (conv) {
@@ -8,6 +8,7 @@ module.exports = (db) => ({
 
     // get user's and session data
     try {
+      const stopFirestoreTimer = timer.start('get-user-and-session-data');
       const [userDoc, sessionDoc] = await Promise.all([
         !newUser && db.collection('users').doc(userId),
         !newSession && db.collection('sessions').doc(sessionId),
@@ -15,6 +16,8 @@ module.exports = (db) => ({
 
       const userData = userDoc.exists ? userDoc.data() : { id: userId };
       const sessionData = sessionDoc.exist ? sessionDoc.data() : { id: sessionId };
+
+      stopFirestoreTimer();
 
       debug('user data', userData);
       debug('session data', sessionData);
@@ -48,14 +51,16 @@ module.exports = (db) => ({
 
     debug('store user and session data');
 
-    // we are not waiting until data will be stored
-    await Promise.all([
-      db.collection('users').doc(userData.id).set(userData),
-      db.collection('sessions').doc(sessionData.id).set(sessionData),
-    ]).then(() => {
+    const stopFirestoreTimer = timer.start('set-user-and-session-data');
+    try {
+      await Promise.all([
+        db.collection('users').doc(userData.id).set(userData),
+        db.collection('sessions').doc(sessionData.id).set(sessionData),
+      ]);
       debug('user and session data stored');
-    }, (err) => {
+    } catch (err) {
       error('failed to store user and/or session data', err);
-    });
+    }
+    stopFirestoreTimer();
   }
 });
