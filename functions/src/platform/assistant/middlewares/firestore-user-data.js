@@ -33,10 +33,10 @@ function buildDefaultSession (id) {
  * Update session data
  *
  * @param session
- * @returns {{id: *}}
+ * @returns {{idx: *}}
  */
 function updateSession (session) {
-  return { ...session, id: session.id + 1 };
+  return { ...session, idx: session.idx + 1 };
 }
 
 module.exports = (db) => ({
@@ -67,7 +67,7 @@ module.exports = (db) => ({
       ]);
 
       const userData = userDoc.exists ? userDoc.data() : buildDefaultUser(userId);
-      const sessionData = sessionDoc.exist ? updateSession(sessionDoc.data()) : buildDefaultSession(sessionId);
+      const sessionData = sessionDoc.exists ? updateSession(sessionDoc.data()) : buildDefaultSession(sessionId);
 
       stopFirestoreTimer();
 
@@ -119,7 +119,7 @@ module.exports = (db) => ({
         userRef.set(userData),
         sessionRef.set(sessionData),
       ]);
-      debug('user and session data stored');
+      debug(`user ${userData.id} and session ${sessionData.id} data stored`);
     } catch (err) {
       error('failed to store user and/or session data', err);
     }
