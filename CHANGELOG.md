@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.5.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.1) (2018-12-04)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.0...2.5.1)
+
+**Implemented enhancements:**
+
+- split speech and display texting [\#392](https://github.com/internetarchive/internet-archive-google-action/issues/392)
+
+**Fixed bugs:**
+
+- "playlist has ended... would you like to continue" bug [\#329](https://github.com/internetarchive/internet-archive-google-action/issues/329)
+- warning: conv.user.id is DEPRECATED [\#290](https://github.com/internetarchive/internet-archive-google-action/issues/290)
+
+**Merged pull requests:**
+
+- Feature/290 stop using conv.user.id [\#399](https://github.com/internetarchive/internet-archive-google-action/pull/399) ([hyzhak](https://github.com/hyzhak))
+- Feature/392 split speech and display [\#393](https://github.com/internetarchive/internet-archive-google-action/pull/393) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/329 play list is ending before too early [\#366](https://github.com/internetarchive/internet-archive-google-action/pull/366) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.0](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.0) (2018-11-23)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.4.2...2.5.0)
 
