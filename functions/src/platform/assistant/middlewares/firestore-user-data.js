@@ -1,3 +1,5 @@
+const util = require('util');
+
 const { debug, info, error, timer } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
 
 /**
@@ -131,6 +133,9 @@ module.exports = (db) => ({
       debug(`user ${userData.id} and session ${sessionData.id} data stored`);
     } catch (err) {
       error(`failed to store user ${userData.id} and/or session ${sessionData.id} data`, err);
+      // log data so in case of fail we would know what was the reason
+      debug('failed userData', util.inspect(userData));
+      debug('failed sessionData', util.inspect(sessionData));
     }
     stopFirestoreTimer();
   }
