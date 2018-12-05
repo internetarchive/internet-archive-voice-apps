@@ -26,7 +26,7 @@ function buildDefaultSession (conv, id) {
   return {
     id,
     idx: 0,
-    conversationId: conv.request.conversationId,
+    conversationId: conv.request.conversation.conversationId,
     createdAt: Date.now(),
   };
 }
@@ -105,7 +105,7 @@ module.exports = (db) => ({
     delete conv.firestore;
     const { userData, sessionData } = firestore;
 
-    debug('store user and session data');
+    debug(`store user ${userData.id} and session ${sessionData.id} data`);
 
     const stopFirestoreTimer = timer.start('set-user-and-session-data');
 
@@ -116,6 +116,13 @@ module.exports = (db) => ({
     userData.updatedAt = Date.now();
     sessionData.updatedAt = Date.now();
 
+    // TODO: because firebase doesn't allow undefined fields
+    // we could get error:
+    // failed to store user and/or session data Error: Argument "data" is not a valid Document.
+    // Cannot use "undefined" as a Firestore value (found in field conversationId).
+
+    // we should verify data before store it
+
     try {
       await Promise.all([
         userRef.set(userData),
@@ -123,7 +130,7 @@ module.exports = (db) => ({
       ]);
       debug(`user ${userData.id} and session ${sessionData.id} data stored`);
     } catch (err) {
-      error('failed to store user and/or session data', err);
+      error(`failed to store user ${userData.id} and/or session ${sessionData.id} data`, err);
     }
     stopFirestoreTimer();
   }
