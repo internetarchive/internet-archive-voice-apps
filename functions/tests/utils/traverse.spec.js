@@ -29,32 +29,32 @@ const fixtureWithUndefined = {
           year: undefined,
           cursor: { album: 0, song: 0 }
         },
-          {
-            filename: 'Hraval Kolovratek - Hudba Jiri Fenel - Vlasa Rohaneva.mp3',
-            title: 'Hraval Kolovratek',
-            audioURL: 'https://archive.org/download/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b/Hraval%20Kolovratek%20-%20Hudba%20Jiri%20Fenel%20-%20Vlasa%20Rohaneva.mp3',
-            collections:
+        {
+          filename: 'Hraval Kolovratek - Hudba Jiri Fenel - Vlasa Rohaneva.mp3',
+          title: 'Hraval Kolovratek',
+          audioURL: 'https://archive.org/download/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b/Hraval%20Kolovratek%20-%20Hudba%20Jiri%20Fenel%20-%20Vlasa%20Rohaneva.mp3',
+          collections:
               ['78rpm',
                 'archiveofcontemporarymusic',
                 'georgeblood',
                 'audio_music'],
-            coverage: 'USA',
-            creator:
+          coverage: 'USA',
+          creator:
               ['Hudba Jiri Fenel',
                 'Vlasa Rohaneva',
                 'Zpivaji sestry Skovajsovy',
                 'Hraje lidevy soubor Vaclava Berky'],
-            imageURL: 'https://archive.org/services/img/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
-            suggestions: ['Next'],
-            album:
+          imageURL: 'https://archive.org/services/img/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
+          suggestions: ['Next'],
+          album:
               {
                 id: '78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
                 title: 'Hraval Kolovratek'
               },
-            track: 1,
-            year: undefined,
-            cursor: { album: 0, song: 0 }
-          }],
+          track: 1,
+          year: undefined,
+          cursor: { album: 0, song: 0 }
+        }],
       current: 0,
       extra:
         {
@@ -110,32 +110,32 @@ const fixtureWithNull = {
           year: null,
           cursor: { album: 0, song: 0 }
         },
-          {
-            filename: 'Hraval Kolovratek - Hudba Jiri Fenel - Vlasa Rohaneva.mp3',
-            title: 'Hraval Kolovratek',
-            audioURL: 'https://archive.org/download/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b/Hraval%20Kolovratek%20-%20Hudba%20Jiri%20Fenel%20-%20Vlasa%20Rohaneva.mp3',
-            collections:
+        {
+          filename: 'Hraval Kolovratek - Hudba Jiri Fenel - Vlasa Rohaneva.mp3',
+          title: 'Hraval Kolovratek',
+          audioURL: 'https://archive.org/download/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b/Hraval%20Kolovratek%20-%20Hudba%20Jiri%20Fenel%20-%20Vlasa%20Rohaneva.mp3',
+          collections:
               ['78rpm',
                 'archiveofcontemporarymusic',
                 'georgeblood',
                 'audio_music'],
-            coverage: 'USA',
-            creator:
+          coverage: 'USA',
+          creator:
               ['Hudba Jiri Fenel',
                 'Vlasa Rohaneva',
                 'Zpivaji sestry Skovajsovy',
                 'Hraje lidevy soubor Vaclava Berky'],
-            imageURL: 'https://archive.org/services/img/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
-            suggestions: ['Next'],
-            album:
+          imageURL: 'https://archive.org/services/img/78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
+          suggestions: ['Next'],
+          album:
               {
                 id: '78_hraval-kolovratek_hudba-jiri-fenel-vlasa-rohaneva-zpivaji-sestry-skovajsovy-hraje-l_gbia0002171b',
                 title: 'Hraval Kolovratek'
               },
-            track: 1,
-            year: null,
-            cursor: { album: 0, song: 0 }
-          }],
+          track: 1,
+          year: null,
+          cursor: { album: 0, song: 0 }
+        }],
       current: 0,
       extra:
         {
