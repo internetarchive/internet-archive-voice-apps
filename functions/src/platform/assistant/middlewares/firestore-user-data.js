@@ -127,7 +127,7 @@ module.exports = (db) => ({
     userData.updatedAt = Date.now();
     sessionData.updatedAt = Date.now();
 
-    // TODO: because firebase doesn't allow undefined fields
+    // because firebase doesn't allow undefined fields
     // we could get error:
     // failed to store user and/or session data Error: Argument "data" is not a valid Document.
     // Cannot use "undefined" as a Firestore value (found in field conversationId).
