@@ -134,8 +134,8 @@ module.exports = (db) => ({
     } catch (err) {
       error(`failed to store user ${userData.id} and/or session ${sessionData.id} data`, err);
       // log data so in case of fail we would know what was the reason
-      debug('failed userData', util.inspect(userData));
-      debug('failed sessionData', util.inspect(sessionData));
+      debug('failed userData', util.inspect(userData, { depth: null }));
+      debug('failed sessionData', util.inspect(sessionData, { depth: null }));
     }
     stopFirestoreTimer();
   }
