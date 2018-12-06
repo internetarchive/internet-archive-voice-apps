@@ -433,6 +433,7 @@ class AsyncAlbums extends DefaultFeeder {
 
               // merge new songs
               let items = _.unionBy(playlist.getItems(app), songs, SONG_UID);
+              debug('got songs after merge', items);
 
               // but we shouldn't exceed available size of chunk
               const feederConfig = this.getConfigForOrder(app, query);
@@ -449,11 +450,13 @@ class AsyncAlbums extends DefaultFeeder {
                 }
               }
 
+              debug('update playlist with new items', items);
               playlist.updateItems(app, items);
 
               if (move) {
                 // we have attached new songs and would like to jump to the 1st song
                 const firstAddedSong = items.find(i => i[SONG_UID] === songs[0][SONG_UID]);
+                debug(`we would find 1st songs of added songs ${firstAddedSong}, and move there`);
                 playlist.moveTo(app, firstAddedSong);
               }
 

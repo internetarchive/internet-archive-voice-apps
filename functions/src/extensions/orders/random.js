@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { debug } = require('../../utils/logger')('ia:order:random');
 
 class RandomOrderStrategy {
   clampCursorSongPosition () {
@@ -78,7 +79,7 @@ class RandomOrderStrategy {
    * We don't need it for the random strategy.
    */
   updateCursorTotal () {
-
+    debug('update cursor total');
   }
 
   /**

@@ -150,6 +150,7 @@ class NaturalOrderStrategy {
    * @param songsInFirstAlbum
    */
   updateCursorTotal ({ app, playlist, songsInFirstAlbum }) {
+    debug('update cursor total');
     const cursor = playlist.getExtra(app).cursor;
     const total = Object.assign({}, cursor.total);
     total.songs = songsInFirstAlbum;
