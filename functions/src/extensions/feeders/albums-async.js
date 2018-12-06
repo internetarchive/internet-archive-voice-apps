@@ -233,7 +233,7 @@ class AsyncAlbums extends DefaultFeeder {
     debug('songs:', songs);
 
     // get chunk of songs
-    if (feederConfig.chunk.songs) {
+    if (feederConfig.chunk.songs && songs.length > feederConfig.chunk.songs) {
       songs = songs.slice(0, feederConfig.chunk.songs);
       debug(`but only ${songs.length} in chunk left`);
     }
