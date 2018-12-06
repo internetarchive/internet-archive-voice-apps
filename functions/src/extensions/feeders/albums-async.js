@@ -229,14 +229,18 @@ class AsyncAlbums extends DefaultFeeder {
     // to chap few songs at the start because we've already fetched them
     // start from song we need
     debug(`cursor.current.song = ${cursor.current.song}`);
-    songs = songs.slice(cursor.current.song);
-    debug('songs:', songs);
+    if (cursor.current.song > 0) {
+      debug(`chap ${cursor.current.song} songs at the start`);
+      songs = songs.slice(cursor.current.song);
+    }
 
     // get chunk of songs
     if (feederConfig.chunk.songs && songs.length > feederConfig.chunk.songs) {
       songs = songs.slice(0, feederConfig.chunk.songs);
       debug(`but only ${songs.length} in chunk left`);
     }
+
+    debug('songs:', songs);
 
     return songs;
   }
