@@ -161,10 +161,10 @@ function moveTo (app, song) {
   debug('move to', song);
   const playlist = getData(app);
   debug('in:', playlist.items);
-  const current = playlist.items.indexOf(song);
-  debug(`index is ${current}`);
-  setData(app, { ...playlist, current });
-  return current;
+  const idx = playlist.items.indexOf(song);
+  debug(`song index is ${idx}`);
+  setData(app, { ...playlist, current: _validateCurrent(app, idx) });
+  return idx;
 }
 
 /**
