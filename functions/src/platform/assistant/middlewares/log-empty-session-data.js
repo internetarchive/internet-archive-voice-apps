@@ -10,7 +10,6 @@ const { debug, warning } = require('../../../utils/logger')('ia:platform.assista
  */
 module.exports = (conv) => {
   debug('start');
-  debug('conv', conv);
 
   if (_.isEmpty(conv.data) && conv.request.conversation.type !== 'NEW') {
     warning('#256 got empty dailogflow session data!');

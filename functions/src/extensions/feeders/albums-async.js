@@ -399,7 +399,7 @@ class AsyncAlbums extends DefaultFeeder {
    */
   next (ctx, move = true) {
     const { app, query, playlist } = ctx;
-    debug('move to the next song. move:', move);
+    debug('get next song. move:', move);
     const orderStrategy = orders.getByName(
       query.getSlot(app, 'order') || DEFAULT_ORDER
     );
@@ -431,12 +431,22 @@ class AsyncAlbums extends DefaultFeeder {
                 throw new AlbumsAsyncError('trying to append empty songs list');
               }
 
+              const feederConfig = this.getConfigForOrder(app, query);
+              if (playlist.getItems(app).length > 0 && !move && songs.length >= feederConfig.chunk.songs) {
+                // when we don't move we need to store one extra item
+                // and list of appended items more or equal to maximum size of chunk
+                // we should drop one song to preserve space for ths current song
+                debug('drop one song from appended to preserve space for the current song');
+                songs = songs.slice(0, songs.length - 1);
+              }
+
+              debug(`we are going to merge ${songs.length} songs`);
+
               // merge new songs
               let items = _.unionBy(playlist.getItems(app), songs, SONG_UID);
               debug('got songs after merge', items);
 
               // but we shouldn't exceed available size of chunk
-              const feederConfig = this.getConfigForOrder(app, query);
               if (items.length > feederConfig.chunk.songs) {
                 debug('we exceed available space and should drop few songs');
                 let shift = items.length - feederConfig.chunk.songs;
