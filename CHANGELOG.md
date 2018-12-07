@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.5.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.2) (2018-12-07)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.1...2.5.2)
+
+**Fixed bugs:**
+
+- incorrect `conversationId` getter [\#401](https://github.com/internetarchive/internet-archive-google-action/issues/401)
+- Cannot use "undefined" as a Firestore value  [\#400](https://github.com/internetarchive/internet-archive-google-action/issues/400)
+- alexa stops long random playlist after a while [\#395](https://github.com/internetarchive/internet-archive-google-action/issues/395)
+
+**Merged pull requests:**
+
+- Bugfix/395 alexa stops long random playlist after a while [\#408](https://github.com/internetarchive/internet-archive-google-action/pull/408) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/400 cannot use undefined as firestore value [\#404](https://github.com/internetarchive/internet-archive-google-action/pull/404) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/401 incorrect conversation id getter [\#402](https://github.com/internetarchive/internet-archive-google-action/pull/402) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.1](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.1) (2018-12-04)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.0...2.5.1)
 
