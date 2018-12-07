@@ -37,7 +37,7 @@ function fetchAlbumDetails (app, id, { retry = 0, delay = 1000 } = {}) {
       }
     })
     .then(res => {
-      debug('we got album res:', res);
+      debug(`we got album ${id} res:`, res);
       const json = res.data;
       return {
         id,

@@ -229,14 +229,18 @@ class AsyncAlbums extends DefaultFeeder {
     // to chap few songs at the start because we've already fetched them
     // start from song we need
     debug(`cursor.current.song = ${cursor.current.song}`);
-    songs = songs.slice(cursor.current.song);
-    debug('songs:', songs);
+    if (cursor.current.song > 0) {
+      debug(`chap ${cursor.current.song} songs at the start`);
+      songs = songs.slice(cursor.current.song);
+    }
 
     // get chunk of songs
-    if (feederConfig.chunk.songs) {
+    if (feederConfig.chunk.songs && songs.length > feederConfig.chunk.songs) {
       songs = songs.slice(0, feederConfig.chunk.songs);
       debug(`but only ${songs.length} in chunk left`);
     }
+
+    debug('songs:', songs);
 
     return songs;
   }
@@ -395,7 +399,7 @@ class AsyncAlbums extends DefaultFeeder {
    */
   next (ctx, move = true) {
     const { app, query, playlist } = ctx;
-    debug('move to the next song. move:', move);
+    debug('get next song. move:', move);
     const orderStrategy = orders.getByName(
       query.getSlot(app, 'order') || DEFAULT_ORDER
     );
@@ -427,11 +431,22 @@ class AsyncAlbums extends DefaultFeeder {
                 throw new AlbumsAsyncError('trying to append empty songs list');
               }
 
+              const feederConfig = this.getConfigForOrder(app, query);
+              if (playlist.getItems(app).length > 0 && !move && songs.length >= feederConfig.chunk.songs) {
+                // when we don't move we need to store one extra item
+                // and list of appended items more or equal to maximum size of chunk
+                // we should drop one song to preserve space for ths current song
+                debug('drop one song from appended to preserve space for the current song');
+                songs = songs.slice(0, songs.length - 1);
+              }
+
+              debug(`we are going to merge ${songs.length} songs`);
+
               // merge new songs
               let items = _.unionBy(playlist.getItems(app), songs, SONG_UID);
+              debug('got songs after merge', items);
 
               // but we shouldn't exceed available size of chunk
-              const feederConfig = this.getConfigForOrder(app, query);
               if (items.length > feederConfig.chunk.songs) {
                 debug('we exceed available space and should drop few songs');
                 let shift = items.length - feederConfig.chunk.songs;
@@ -445,11 +460,13 @@ class AsyncAlbums extends DefaultFeeder {
                 }
               }
 
+              debug('update playlist with new items', items);
               playlist.updateItems(app, items);
 
               if (move) {
                 // we have attached new songs and would like to jump to the 1st song
                 const firstAddedSong = items.find(i => i[SONG_UID] === songs[0][SONG_UID]);
+                debug(`we would find 1st songs of added songs ${firstAddedSong}, and move there`);
                 playlist.moveTo(app, firstAddedSong);
               }
 

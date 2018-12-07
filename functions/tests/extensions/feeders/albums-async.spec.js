@@ -648,7 +648,7 @@ describe('feeders', () => {
           query,
           moveToPrevious: false,
         }))
-        // // loop to the last record
+        // loop to the last record
         .then(() => testPreviousSong({
           album: 'album-1',
           app,

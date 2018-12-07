@@ -158,10 +158,13 @@ function setLoop (app, loopOn) {
  * @param song
  */
 function moveTo (app, song) {
+  debug('move to', song);
   const playlist = getData(app);
-  const current = playlist.items.indexOf(song);
-  setData(app, { ...playlist, current });
-  return current;
+  debug('in:', playlist.items);
+  const idx = playlist.items.indexOf(song);
+  debug(`song index is ${idx}`);
+  setData(app, { ...playlist, current: _validateCurrent(app, idx) });
+  return idx;
 }
 
 /**
