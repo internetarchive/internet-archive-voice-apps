@@ -1,7 +1,7 @@
 const { debug, error } = require('../utils/logger')('ia:actions:playback-nearly-finished');
 
 const helpers = require('./playback/_helpers');
-const { EmptySongDataError } = require('./_high-order-handlers/middlewares/song-data');
+const { EmptySongDataError } = require('./_middlewares/song-data');
 
 function handler (app) {
   return helpers.enqueue({ app })

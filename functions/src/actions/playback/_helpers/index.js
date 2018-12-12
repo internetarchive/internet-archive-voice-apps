@@ -9,16 +9,16 @@ const strings = require('../../../strings');
 const { debug } = require('../../../utils/logger')('ia:actions:playback/_helpers');
 
 const defaultHelper = require('../../_helpers');
-const feederFromPlaylist = require('../../_high-order-handlers/middlewares/feeder-from-playlist');
-const fulfilResolvers = require('../../_high-order-handlers/middlewares/fulfil-resolvers');
-const { rewindToTheFirstSong } = require('../../_high-order-handlers/middlewares/rewind-to-the-first-song');
-const { rewindToTheLastSong } = require('../../_high-order-handlers/middlewares/rewind-to-the-last-song');
-const { nextSong, DoNotHaveNextSongError } = require('../../_high-order-handlers/middlewares/next-song');
-const mapPlatformToSlots = require('../../_high-order-handlers/middlewares/map-platform-to-slots');
-const playSongMiddleware = require('../../_high-order-handlers/middlewares/play-song');
-const { previousSong, DoNotHavePreviousSongError } = require('../../_high-order-handlers/middlewares/previous-song');
-const renderSpeech = require('../../_high-order-handlers/middlewares/render-speech');
-const { mapSongDataToSlots } = require('../../_high-order-handlers/middlewares/song-data');
+const feederFromPlaylist = require('../../_middlewares/feeder-from-playlist');
+const fulfilResolvers = require('../../_middlewares/fulfil-resolvers');
+const { rewindToTheFirstSong } = require('../../_middlewares/rewind-to-the-first-song');
+const { rewindToTheLastSong } = require('../../_middlewares/rewind-to-the-last-song');
+const { nextSong, DoNotHaveNextSongError } = require('../../_middlewares/next-song');
+const mapPlatformToSlots = require('../../_middlewares/map-platform-to-slots');
+const playSongMiddleware = require('../../_middlewares/play-song');
+const { previousSong, DoNotHavePreviousSongError } = require('../../_middlewares/previous-song');
+const renderSpeech = require('../../_middlewares/render-speech');
+const { mapSongDataToSlots } = require('../../_middlewares/song-data');
 
 /**
  * map skip name to skip behaviour

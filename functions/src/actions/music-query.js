@@ -1,26 +1,26 @@
 const selectors = require('../configurator/selectors');
 const constants = require('../constants');
 const errors = require('../errors');
-const middlewareErrors = require('./_high-order-handlers/middlewares/errors');
+const middlewareErrors = require('./_middlewares/errors');
 const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const availableSchemes = require('../strings').intents.musicQuery;
 const { debug, warning } = require('../utils/logger')('ia:actions:music-query');
 
-const acknowledge = require('./_high-order-handlers/middlewares/acknowledge');
-const ask = require('./_high-order-handlers/middlewares/ask');
-const findRepairPhrase = require('./_high-order-handlers/middlewares/find-repair-phrase');
-const findRepairScheme = require('./_high-order-handlers/middlewares/find-repair-scheme');
-const fulfilResolvers = require('./_high-order-handlers/middlewares/fulfil-resolvers');
-const renderSpeech = require('./_high-order-handlers/middlewares/render-speech');
-const suggestions = require('./_high-order-handlers/middlewares/suggestions');
-const prompt = require('./_high-order-handlers/middlewares/prompt');
+const acknowledge = require('./_middlewares/acknowledge');
+const ask = require('./_middlewares/ask');
+const findRepairPhrase = require('./_middlewares/find-repair-phrase');
+const findRepairScheme = require('./_middlewares/find-repair-scheme');
+const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
+const renderSpeech = require('./_middlewares/render-speech');
+const suggestions = require('./_middlewares/suggestions');
+const prompt = require('./_middlewares/prompt');
 
-const feederFromSlotScheme = require('./_high-order-handlers/middlewares/feeder-from-slots-scheme');
-const playlistFromFeeder = require('./_high-order-handlers/middlewares/playlist-from-feeder');
-const { mapSongDataToSlots } = require('./_high-order-handlers/middlewares/song-data');
-const playSong = require('./_high-order-handlers/middlewares/play-song');
+const feederFromSlotScheme = require('./_middlewares/feeder-from-slots-scheme');
+const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
+const { mapSongDataToSlots } = require('./_middlewares/song-data');
+const playSong = require('./_middlewares/play-song');
 
 /**
  * Handle music query action

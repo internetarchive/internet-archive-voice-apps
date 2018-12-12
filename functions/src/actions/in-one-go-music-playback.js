@@ -8,19 +8,19 @@ const constants = require('../constants');
 const errors = require('../errors');
 const fsm = require('../state/fsm');
 
-const acknowledge = require('./_high-order-handlers/middlewares/acknowledge');
-const ask = require('./_high-order-handlers/middlewares/ask');
-const copyArgumentToSlots = require('./_high-order-handlers/middlewares/copy-arguments-to-slots');
-const copyDefaultsToSlots = require('./_high-order-handlers/middlewares/copy-defaults-to-slots');
-const feederFromSlotScheme = require('./_high-order-handlers/middlewares/feeder-from-slots-scheme');
-const findRepairPhrase = require('./_high-order-handlers/middlewares/find-repair-phrase');
-const findRepairScheme = require('./_high-order-handlers/middlewares/find-repair-scheme');
-const fulfilResolvers = require('./_high-order-handlers/middlewares/fulfil-resolvers');
-const { mapSongDataToSlots } = require('./_high-order-handlers/middlewares/song-data');
-const playlistFromFeeder = require('./_high-order-handlers/middlewares/playlist-from-feeder');
-const playSong = require('./_high-order-handlers/middlewares/play-song');
-const renderSpeech = require('./_high-order-handlers/middlewares/render-speech');
-const suggestions = require('./_high-order-handlers/middlewares/suggestions');
+const acknowledge = require('./_middlewares/acknowledge');
+const ask = require('./_middlewares/ask');
+const copyArgumentToSlots = require('./_middlewares/copy-arguments-to-slots');
+const copyDefaultsToSlots = require('./_middlewares/copy-defaults-to-slots');
+const feederFromSlotScheme = require('./_middlewares/feeder-from-slots-scheme');
+const findRepairPhrase = require('./_middlewares/find-repair-phrase');
+const findRepairScheme = require('./_middlewares/find-repair-scheme');
+const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
+const { mapSongDataToSlots } = require('./_middlewares/song-data');
+const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
+const playSong = require('./_middlewares/play-song');
+const renderSpeech = require('./_middlewares/render-speech');
+const suggestions = require('./_middlewares/suggestions');
 
 /**
  * handle "in one go" action
