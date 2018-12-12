@@ -136,7 +136,7 @@ function handler (app) {
 function populateSlots (app) {
   let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
-  let newValues = fillSlots(app, slotScheme);
+  let newValues = copyArgumentsToSlots(app, slotScheme);
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
@@ -145,7 +145,7 @@ function populateSlots (app) {
     slotScheme = newScheme;
     // update slots for new scheme
     checkSlotScheme(slotScheme);
-    newValues = Object.assign({}, newValues, fillSlots(app, slotScheme));
+    newValues = Object.assign({}, newValues, copyArgumentsToSlots(app, slotScheme));
     applyDefaultSlots(app, slotScheme.defaults);
   }
   return { slotScheme, newValues };
@@ -233,7 +233,7 @@ function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
  * @param slotScheme
  * @returns {{}}
  */
-function fillSlots (app, slotScheme) {
+function copyArgumentsToSlots (app, slotScheme) {
   return slotScheme.slots
     .reduce((newValues, slotName) => {
       let value = app.params.getByName(slotName);
