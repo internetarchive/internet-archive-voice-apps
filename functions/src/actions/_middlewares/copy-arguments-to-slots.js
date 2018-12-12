@@ -27,5 +27,5 @@ module.exports = () => args => {
     }, { ...newValues });
 
   debug(`and copied ${util.inspect(newValues)} slot(s)`);
-  return Promise.resolve({ ...args, newValues })
+  return Promise.resolve({ ...args, newValues });
 };

@@ -17,6 +17,7 @@ const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
 const { mapSongDataToSlots } = require('./_middlewares/song-data');
+const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
 const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
 const playSong = require('./_middlewares/play-song');
 const renderSpeech = require('./_middlewares/render-speech');
@@ -46,13 +47,7 @@ function handler (app) {
     // expose slots
     .then(ctx => Object.assign({}, ctx, { slots: ctx.query.getSlots(ctx.app) }))
     // expose current platform to the slots
-    .then(ctx =>
-      Object.assign({}, ctx, {
-        slots: Object.assign(
-          {}, ctx.slots, { platform: app.platform || 'assistant' }
-        )
-      })
-    )
+    .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
     .then(playlistFromFeeder())
     .then(acknowledge({ speeches: 'slotScheme.fulfillment.speech' }))
