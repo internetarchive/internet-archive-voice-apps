@@ -40,7 +40,8 @@ function handler (app) {
   }
 
   // pipeline of action handling
-  return copyArgumentToSlots()({ app, slotScheme, playlist, query })
+  return Promise.resolve({ app, slotScheme, playlist, query })
+    .then(copyArgumentToSlots())
     .then(copyDefaultsToSlots())
     // expose slots
     .then(ctx => Object.assign({}, ctx, { slots: ctx.query.getSlots(ctx.app) }))
