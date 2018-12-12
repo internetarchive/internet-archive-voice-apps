@@ -12,5 +12,5 @@ module.exports = () => ctx => {
       ...ctx.slots,
       platform: ctx.app.platform || 'assistant',
     },
-  }
+  };
 };

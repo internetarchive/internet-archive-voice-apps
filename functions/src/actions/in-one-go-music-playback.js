@@ -16,8 +16,8 @@ const feederFromSlotScheme = require('./_middlewares/feeder-from-slots-scheme');
 const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
-const { mapSongDataToSlots } = require('./_middlewares/song-data');
 const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
+const { mapSongDataToSlots } = require('./_middlewares/song-data');
 const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
 const playSong = require('./_middlewares/play-song');
 const renderSpeech = require('./_middlewares/render-speech');
@@ -44,8 +44,8 @@ function handler (app) {
   return Promise.resolve({ app, slotScheme, playlist, query })
     .then(copyArgumentToSlots())
     .then(copyDefaultsToSlots())
-    // expose slots
-    .then(ctx => Object.assign({}, ctx, { slots: ctx.query.getSlots(ctx.app) }))
+    // set slots variable
+    .then(ctx => ({ ...ctx, slots: ctx.query.getSlots(ctx.app) }))
     // expose current platform to the slots
     .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
@@ -71,7 +71,7 @@ function handler (app) {
       // we shouldn't exclude collections and creators
       // because without them we would have too broad scope
       const exclude = Object.keys(brokenSlots)
-        // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
+      // .filter(name => ['collectionId', 'creator'].indexOf(name) < 0);
         .filter(name => ['collectionId'].indexOf(name) < 0);
 
       fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);

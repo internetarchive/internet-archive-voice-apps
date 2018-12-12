@@ -13,6 +13,7 @@ const ask = require('./_middlewares/ask');
 const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
+const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
 const renderSpeech = require('./_middlewares/render-speech');
 const suggestions = require('./_middlewares/suggestions');
 const prompt = require('./_middlewares/prompt');
@@ -51,13 +52,7 @@ function handler (app) {
     debug('pipeline playback');
     return feederFromSlotScheme()({ app, newValues, playlist, slots, slotScheme, query })
       // expose current platform to the slots
-      .then(ctx =>
-        Object.assign({}, ctx, {
-          slots: Object.assign(
-            {}, ctx.slots, { platform: app.platform || 'assistant' }
-          )
-        })
-      )
+      .then(mapPlatformToSlots())
       .then(playlistFromFeeder())
       .then((context) => {
         debug('got playlist');
