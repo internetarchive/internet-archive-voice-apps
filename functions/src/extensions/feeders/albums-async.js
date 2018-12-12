@@ -444,7 +444,7 @@ class AsyncAlbums extends DefaultFeeder {
 
               // merge new songs
               let items = _.unionBy(playlist.getItems(app), songs, SONG_UID);
-              debug('got songs after merge', items);
+              debug(`got ${items.length} songs after merge`, items);
 
               // but we shouldn't exceed available size of chunk
               if (items.length > feederConfig.chunk.songs) {
