@@ -350,6 +350,30 @@ module.exports = {
           `Let's dive into {{year}}.`,
         ],
       },
+
+      /**
+       * When user missed the available range
+       * we should help them to find alternative.
+       *
+       * Hints:
+       * - gets group of speeches with the most intersection with existing slots
+       *   and get random
+       * - doesn't match to empty suggestions
+       */
+      repair: {
+        speech: [
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+        ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
+      },
     }, {
       name: 'DEFAULT music search query',
 

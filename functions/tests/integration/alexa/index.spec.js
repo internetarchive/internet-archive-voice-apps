@@ -130,6 +130,9 @@ describe('integration', () => {
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20subject:jazz%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:christmas&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+          ).reply(200, require('../../fixtures/albums-empty.json'));
+          axiosMock.onGet(
             'https://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
           ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
           axiosMock.onGet(
