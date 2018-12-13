@@ -59,7 +59,7 @@ function handler (app) {
     .then(playSong())
     .catch((error) => {
       debug(`we don't have playlist (or it is empty)`);
-      debug(error)
+      debug(error);
 
       if (error instanceof errors.HTTPError) {
         // don't handle http error here
