@@ -22,6 +22,7 @@ const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
 const playSong = require('./_middlewares/play-song');
 const renderSpeech = require('./_middlewares/render-speech');
 const suggestions = require('./_middlewares/suggestions');
+const mapSlotValues = require('./_middlewares/map-slot-values');
 
 /**
  * handle "in one go" action
@@ -49,6 +50,7 @@ function handler (app) {
     // set slots variable
     .then(ctx => ({ ...ctx, slots: query.getSlots(ctx.app) }))
     // expose current platform to the slots
+    .then(mapSlotValues())
     .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
     .then(playlistFromFeeder())

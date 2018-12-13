@@ -78,12 +78,7 @@ describe('integration', () => {
   let sandbox;
   let axiosMock;
 
-  let scenarios = [];
-  try {
-    scenarios = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
-  } catch (e) {
-    console.error(e);
-  }
+  const scenarios = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
 
   describe('alexa', () => {
     scenarios.forEach(({ scenario, only = false, skip = false, dialog = [], launch = '' }) => {
