@@ -312,16 +312,16 @@ class AsyncAlbums extends DefaultFeeder {
     return this.getCursor(app, playlist).current;
   }
 
-  // /**
-  //  * we overwrite default because don't need to do extra shuffling
-  //  *
-  //  * @param app
-  //  * @param playlist
-  //  * @returns {*}
-  //  */
-  // getNextItem ({ app, playlist }) {
-  //   return playlist.getNextSong(app)
-  // }
+  /**
+   * we overwrite default because don't need to do extra shuffling
+   *
+   * @param app
+   * @param playlist
+   * @returns {*}
+   */
+  getNextItem ({ app, playlist }) {
+    return playlist.getNextItem(app);
+  }
 
   setCursorCurrent (ctx, current) {
     const { app, playlist } = ctx;
