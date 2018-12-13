@@ -41,11 +41,13 @@ function handler (app) {
   }
 
   // pipeline of action handling
+  // @deprecated: should remove playlist and query
+  // but some other modules could use them
   return Promise.resolve({ app, slotScheme, playlist, query })
     .then(copyArgumentToSlots())
     .then(copyDefaultsToSlots())
     // set slots variable
-    .then(ctx => ({ ...ctx, slots: ctx.query.getSlots(ctx.app) }))
+    .then(ctx => ({ ...ctx, slots: query.getSlots(ctx.app) }))
     // expose current platform to the slots
     .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
@@ -57,6 +59,7 @@ function handler (app) {
     .then(playSong())
     .catch((error) => {
       debug(`we don't have playlist (or it is empty)`);
+      debug(error)
 
       if (error instanceof errors.HTTPError) {
         // don't handle http error here
@@ -64,9 +67,9 @@ function handler (app) {
         return Promise.reject(error);
       }
 
-      const context = error.context;
-      const brokenSlots = context ? context.newValues : {};
-      const slots = context ? context.slots : {};
+      const ctx = error.context;
+      const brokenSlots = ctx ? ctx.newValues : {};
+      const slots = ctx ? ctx.slots : {};
 
       // we shouldn't exclude collections and creators
       // because without them we would have too broad scope
@@ -76,15 +79,17 @@ function handler (app) {
 
       fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
 
-      return Promise.resolve(Object.assign({}, context, {
+      return Promise.resolve({
+        ...ctx,
         brokenSlots,
         // drop any acknowledges before
         speech: [],
         suggestions: [],
-        slots: Object.assign({}, slots, {
+        slots: {
+          ...slots,
           suggestions: [],
-        }),
-      }))
+        },
+      })
         .then(findRepairScheme())
         .then(suggestions({ exclude }))
         .then(findRepairPhrase())

@@ -51,8 +51,9 @@ module.exports = () => (ctx) => {
     return Promise.resolve(ctx);
   }
 
-  return Promise.resolve(Object.assign({}, ctx, {
+  return Promise.resolve({
+    ...ctx,
     repairScheme,
     suggestionsScheme: repairSlotScheme,
-  }));
+  });
 };

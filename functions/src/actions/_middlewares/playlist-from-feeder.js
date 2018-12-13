@@ -1,12 +1,13 @@
+const playlist = require('../../state/playlist');
 const { debug, warning } = require('../../utils/logger/index')('ia:actions:middlewares:playlist-from-feeder');
 const { MiddlewareError } = require('./errors');
 
 /**
  * Build playlist data from feeder
  */
-module.exports = () => (ctx) => {
+module.exports = () => ctx => {
   debug('start');
-  const { app, feeder, feederName, playlist, slots } = ctx;
+  const { app, feeder, feederName, slots } = ctx;
   playlist.setFeeder(app, feederName);
   return feeder
     .build(ctx)

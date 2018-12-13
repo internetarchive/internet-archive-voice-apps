@@ -43,7 +43,8 @@ module.exports = () => (ctx) => {
     template = repairScheme.default.speech;
   }
 
-  return Promise.resolve(Object.assign({}, ctx, {
-    speech: speech.concat(template)
-  }));
+  return Promise.resolve({
+    ...ctx,
+    speech: speech.concat(template),
+  });
 };

@@ -1,20 +1,21 @@
 const util = require('util');
 
+const query = require('../../state/query');
+
 const { debug } = require('../../utils/logger/index')('ia:actions:middleware:copy-arguments-to-slots');
 
 /**
  * Middleware
  * which transfer arguments to slots
  *
- * @param app
- * @param app.newValues
- * @param app.query
- * @param app.slotScheme
+ * @param ctx
+ * @param ctx.newValues
+ * @param ctx.slotScheme
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
-module.exports = () => args => {
+module.exports = () => ctx => {
   debug('start');
-  let { app, newValues = {}, query, slotScheme } = args;
+  let { app, newValues = {}, slotScheme } = ctx;
   debug(`we have [${slotScheme.slots}] to check`);
   newValues = slotScheme.slots
     .reduce((newValues, slotName) => {
@@ -27,5 +28,5 @@ module.exports = () => args => {
     }, { ...newValues });
 
   debug(`and copied ${util.inspect(newValues)} slot(s)`);
-  return Promise.resolve({ ...args, newValues });
+  return Promise.resolve({ ...ctx, newValues });
 };

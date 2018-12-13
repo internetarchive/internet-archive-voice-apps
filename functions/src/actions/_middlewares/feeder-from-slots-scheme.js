@@ -4,9 +4,9 @@ const { debug, warning } = require('../../utils/logger/index')('ia:actions:middl
 /**
  * Get feeder from slots scheme
  */
-module.exports = () => (context) => {
+module.exports = () => ctx => {
   debug('start');
-  const { slotScheme } = context;
+  const { slotScheme } = ctx;
   // both typing are correct
   const fulfilment = slotScheme.fulfilment || slotScheme.fulfillment;
   let feederName;
@@ -22,7 +22,7 @@ module.exports = () => (context) => {
       `we need feeder "${feederName}" for fulfillment slot dialog`
     );
     // TODO: should explain rejection
-    return Promise.reject(context);
+    return Promise.reject(ctx);
   }
-  return Promise.resolve(Object.assign({}, context, { feeder, feederName }));
+  return Promise.resolve(Object.assign({}, ctx, { feeder, feederName }));
 };

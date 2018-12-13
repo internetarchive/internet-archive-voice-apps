@@ -1,5 +1,6 @@
 const util = require('util');
 
+const query = require('../../state/query');
 const { debug } = require('../../utils/logger/index')('ia:actions:middleware:copy-defaults-to-slots');
 const entries = require('../../utils/polyfill/entries');
 
@@ -13,27 +14,21 @@ const entries = require('../../utils/polyfill/entries');
  * @param slotScheme
  * @returns {Promise.<{app: *, newValues, query: *, slotScheme: *}>}
  */
-module.exports = () =>
-  // use this one, once firebase would support modern node.js
-  //   ({app, newValues = {}, query, slotScheme, ...res}) => {
-  args => {
-    debug('start');
-    let { app, newValues = {}, query, slotScheme } = args;
-    if (slotScheme.defaults) {
-      debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
-      newValues = entries(slotScheme.defaults)
-        .reduce((newValues, [slotName, value]) => {
-          if (value && !query.hasSlot(app, slotName)) {
-            query.setSlot(app, slotName, value);
-            newValues = Object.assign({}, newValues, { [slotName]: value });
-          }
-          return newValues;
-        }, newValues);
-      debug(`and copied ${util.inspect(newValues)} slot(s)`);
-    }
+module.exports = () => ctx => {
+  debug('start');
+  let { app, newValues = {}, slotScheme } = ctx;
+  if (slotScheme.defaults) {
+    debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
+    newValues = entries(slotScheme.defaults)
+      .reduce((newValues, [slotName, value]) => {
+        if (value && !query.hasSlot(app, slotName)) {
+          query.setSlot(app, slotName, value);
+          newValues = Object.assign({}, newValues, { [slotName]: value });
+        }
+        return newValues;
+      }, newValues);
+    debug(`and copied ${util.inspect(newValues)} slot(s)`);
+  }
 
-    return Promise.resolve(
-      Object.assign({}, args, { newValues })
-    );// use this one, once firebase would support modern node.js
-    // return Promise.resolve({app, newValues, query, slotScheme, ...res});
-  };
+  return Promise.resolve({ ...ctx, newValues });
+};

@@ -13,23 +13,28 @@ const { debug, warning } = require('../../utils/logger/index')('ia:actions:middl
  * @param suggestionsScheme
  * @returns {Promise}
  */
-module.exports = ({ exclude = [] } = {}) => (context) => {
+module.exports = ({ exclude = [] } = {}) => (ctx) => {
   // TODO: migrate to the `...rest` style
   // once Google Firebase migrates to modern Node.js
   debug('start');
-  const { app, slots, suggestionsScheme } = context;
+  const { app, slots, suggestionsScheme } = ctx;
   if (!suggestionsScheme) {
     warning(`skip middleware becase we don't have any suggestion scheme here`);
-    return Promise.resolve(context);
+    return Promise.resolve(ctx);
   }
 
   let suggestions = suggestionsScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);
-    return Promise.resolve(
-      Object.assign({}, context, { slots: Object.assign({}, slots, { suggestions }) }, { suggestions })
-    );
+    return Promise.resolve({
+      ...ctx,
+      slots: {
+        ...slots,
+        suggestions,
+      },
+      suggestions,
+    });
   }
 
   const slotNames = suggestionsScheme.confirm || suggestionsScheme.slots;
@@ -38,7 +43,7 @@ module.exports = ({ exclude = [] } = {}) => (context) => {
     provider = suggestionExtensions.getSuggestionProviderForSubSetOfSlots(slotNames);
     if (!provider) {
       warning(`don't have any suggestions for: ${slotNames}. Maybe we should add them.`);
-      return Promise.resolve(context);
+      return Promise.resolve(ctx);
     }
     debug('we found partly matched suggestion provider');
   }
@@ -62,8 +67,13 @@ module.exports = ({ exclude = [] } = {}) => (context) => {
         );
       }
       debug('new suggestions are:', suggestions);
-      return Object.assign(
-        {}, context, { slots: Object.assign({}, slots, { suggestions }) }, { suggestions }
-      );
+      return {
+        ...ctx,
+        slots: {
+          ...slots,
+          suggestions,
+        },
+        suggestions,
+      };
     });
 };

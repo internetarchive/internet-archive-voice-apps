@@ -49,7 +49,7 @@ module.exports = () => (ctx) => {
     .then(newSlots => {
       return Promise.resolve({
         ...ctx,
-        slots: Object.assign({}, slots, newSlots),
+        slots: {...slots, ...newSlots},
       });
     });
 };

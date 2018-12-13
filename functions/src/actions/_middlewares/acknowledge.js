@@ -13,24 +13,24 @@ const { debug, warning } = require('../../utils/logger/index')('ia:actions:middl
  *
  * @returns {Promise}
  */
-module.exports = ({ prioritySlots = 'newValues', speeches = 'slotScheme.acknowledges' } = {}) => (context) => {
+module.exports = ({ prioritySlots = 'newValues', speeches = 'slotScheme.acknowledges' } = {}) => (ctx) => {
   debug('start');
-  const { slots } = context;
-  const newValues = _.get(context, prioritySlots) || {};
+  const { slots } = ctx;
+  const newValues = _.get(ctx, prioritySlots, {});
   const prioritySlotNames = Object.keys(newValues);
 
   // we get new values
   if (prioritySlotNames.length === 0) {
     debug(`we don't have any priority slots`);
-    return Promise.resolve(context);
+    return Promise.resolve(ctx);
   }
 
   debug('priority slots:', newValues);
 
-  const availableTemplates = _.get(context, speeches);
+  const availableTemplates = _.get(ctx, speeches);
   if (!availableTemplates) {
     warning(`we can't find available templates in "${speeches}"`);
-    return Promise.resolve(context);
+    return Promise.resolve(ctx);
   }
 
   const template = selectors.find(availableTemplates, {
@@ -40,10 +40,10 @@ module.exports = ({ prioritySlots = 'newValues', speeches = 'slotScheme.acknowle
 
   if (!template) {
     debug(`we haven't found right acknowledge maybe we should create few for "${prioritySlotNames}"`);
-    return Promise.resolve(context);
+    return Promise.resolve(ctx);
   }
 
   debug('we got matched acknowledge', template);
 
-  return Promise.resolve(Object.assign({}, context, { speech: [template] }));
+  return Promise.resolve({ ...ctx, speech: [template] });
 };
