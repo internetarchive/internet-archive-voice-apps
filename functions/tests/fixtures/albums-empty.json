@@ -1,0 +1,20 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 158,
+    "params": {
+      "query": "_exists_:coverage AND collection:georgeblood AND subject:\"christmas music\"",
+      "qin": "_exists_:coverage AND collection:georgeblood AND subject:\"christmas music\"",
+      "fields": "identifier,coverage,title,year",
+      "wt": "json",
+      "sort": "random",
+      "rows": "2",
+      "start": 0
+    }
+  },
+  "response": {
+    "numFound": 0,
+    "start": 0,
+    "docs": []
+  }
+}

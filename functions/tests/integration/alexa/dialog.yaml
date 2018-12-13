@@ -42,6 +42,12 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
+- scenario: 'when response drop music at the end of genre'
+  dialog:
+  - user: 'seventy eighties'
+  - user: 'christmas music'
+    assistant: "I don't have"
+
 - scenario: 'song details: when song is playing'
   dialog:
   - user: 'play jazz'
