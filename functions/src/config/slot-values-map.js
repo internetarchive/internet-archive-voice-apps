@@ -1,5 +1,5 @@
 module.exports = {
-  genre: {
+  subject: {
     'christmas music': 'christmas',
   },
 };

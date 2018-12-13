@@ -35,8 +35,9 @@ function reduceArrayValue (slotRules, originalValue) {
     const newSubValue = getReplacement(slotRules, v);
     if (v !== newSubValue) {
       valueHasChanged = true;
+      debug(`replace "${v}" with "${newSubValue}" value`);
     }
-    return getReplacement(slotRules, v);
+    return newSubValue;
   }));
 
   return {
@@ -54,8 +55,12 @@ function reduceArrayValue (slotRules, originalValue) {
  */
 function reduceStringValue (slotRules, originalValue) {
   const newValue = getReplacement(slotRules, originalValue);
+  const valueHasChanged = newValue !== originalValue;
+  if (valueHasChanged) {
+    debug(`replace "${originalValue}" with "${newValue}" value`);
+  }
   return {
-    valueHasChanged: newValue !== originalValue,
+    valueHasChanged,
     newValue,
   };
 }
