@@ -42,8 +42,6 @@ function handler (app) {
 
   const { slotScheme, newValues } = populateSlots(app);
 
-  console.log('newValues', newValues);
-
   processPreset(app, slotScheme);
 
   const slots = query.getSlots(app);
