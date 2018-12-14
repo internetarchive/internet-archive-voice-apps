@@ -1,3 +1,5 @@
+const Alexa = require('ask-sdk-core');
+
 const { debug } = require('../../../utils/logger')('ia:platform:alexa:response');
 
 /**
@@ -53,6 +55,11 @@ module.exports = (handlerInput) =>
           }
         }
 
+        const art = new Alexa.ImageHelper()
+          .withDescription(m.name)
+          .addImageInstance(m.imageURL)
+          .getImage();
+
         debug('playback audio', m.contentURL);
         handlerInput.responseBuilder.addAudioPlayerPlayDirective(
           // behavior,
@@ -63,7 +70,23 @@ module.exports = (handlerInput) =>
           // offsetInMilliseconds
           m.offset,
           // expectedPreviousToken
-          previousToken
+          previousToken,
+          // audioItemMetadata
+          {
+            // This is typically used for the audio track title.
+            title: m.name,
+            // Subtitle text to display, such as a category or an artist name.
+            subtitle: m.description,
+            // An Image object representing the album art to display.
+            // This object uses the same format as images used in the Display interface templates.
+            art,
+
+            // backgroundImage: 'backgroundImage'
+            // more about format of image
+            // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#image-object-specifications
+            // and guide lines about image
+            // https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html#images
+          }
         );
       });
       handlerInput.responseBuilder.withShouldEndSession(true);
