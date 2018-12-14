@@ -14,6 +14,7 @@ const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
 const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
+const mapSlotValues = require('./_middlewares/map-slot-values');
 const renderSpeech = require('./_middlewares/render-speech');
 const suggestions = require('./_middlewares/suggestions');
 const prompt = require('./_middlewares/prompt');
@@ -40,6 +41,8 @@ function handler (app) {
   debug('Start music query handler');
 
   const { slotScheme, newValues } = populateSlots(app);
+
+  console.log('newValues', newValues);
 
   processPreset(app, slotScheme);
 
@@ -128,10 +131,14 @@ function handler (app) {
     .then(ask());
 }
 
+// TODO: require refactoring
+// we should put it in regular pipeline with middlewares
 function populateSlots (app) {
   let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = copyArgumentsToSlots(app, slotScheme);
+  newValues = mapSlotValues()({ slots: newValues }).slots;
+  copySlotsToQueryStore({ app, slots: newValues });
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
@@ -141,6 +148,8 @@ function populateSlots (app) {
     // update slots for new scheme
     checkSlotScheme(slotScheme);
     newValues = Object.assign({}, newValues, copyArgumentsToSlots(app, slotScheme));
+    newValues = mapSlotValues()({ slots: newValues }).slots;
+    copySlotsToQueryStore({ app, slots: newValues });
     applyDefaultSlots(app, slotScheme.defaults);
   }
   return { slotScheme, newValues };
@@ -233,11 +242,18 @@ function copyArgumentsToSlots (app, slotScheme) {
     .reduce((newValues, slotName) => {
       let value = app.params.getByName(slotName);
       if (value) {
-        query.setSlot(app, slotName, value);
+        // query.setSlot(app, slotName, value);
         newValues[slotName] = value;
       }
       return newValues;
     }, {});
+}
+
+function copySlotsToQueryStore (ctx) {
+  const { app, slots } = ctx;
+  for (const [slotName, slotValue] of Object.entries(slots)) {
+    query.setSlot(app, slotName, slotValue);
+  }
 }
 
 module.exports = {

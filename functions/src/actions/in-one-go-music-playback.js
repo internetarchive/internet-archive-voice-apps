@@ -17,12 +17,12 @@ const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
 const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
+const mapSlotValues = require('./_middlewares/map-slot-values');
 const { mapSongDataToSlots } = require('./_middlewares/song-data');
 const playlistFromFeeder = require('./_middlewares/playlist-from-feeder');
 const playSong = require('./_middlewares/play-song');
 const renderSpeech = require('./_middlewares/render-speech');
 const suggestions = require('./_middlewares/suggestions');
-const mapSlotValues = require('./_middlewares/map-slot-values');
 
 /**
  * handle "in one go" action
@@ -49,8 +49,8 @@ function handler (app) {
     .then(copyDefaultsToSlots())
     // set slots variable
     .then(ctx => ({ ...ctx, slots: query.getSlots(ctx.app) }))
-    // expose current platform to the slots
     .then(mapSlotValues())
+    // expose current platform to the slots
     .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
     .then(playlistFromFeeder())
