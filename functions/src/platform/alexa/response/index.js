@@ -60,6 +60,9 @@ module.exports = (handlerInput) =>
           .addImageInstance(m.imageURL)
           .getImage();
 
+        // TODO: we could find better image for background
+        const backgroundImage = art;
+
         debug('playback audio', m.contentURL);
         handlerInput.responseBuilder.addAudioPlayerPlayDirective(
           // behavior,
@@ -81,7 +84,7 @@ module.exports = (handlerInput) =>
             // This object uses the same format as images used in the Display interface templates.
             art,
 
-            // backgroundImage: 'backgroundImage'
+            backgroundImage
             // more about format of image
             // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#image-object-specifications
             // and guide lines about image
