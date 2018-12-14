@@ -1,5 +1,19 @@
 # Change Log
 
+## [2.5.3](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.3) (2018-12-14)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.2...2.5.3)
+
+**Fixed bugs:**
+
+- genre could conflicts with response [\#410](https://github.com/internetarchive/internet-archive-google-action/issues/410) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Merged pull requests:**
+
+- process query slots before pass to music query action [\#415](https://github.com/internetarchive/internet-archive-google-action/pull/415) ([hyzhak](https://github.com/hyzhak))
+- Feature/upgrade deps [\#414](https://github.com/internetarchive/internet-archive-google-action/pull/414) ([hyzhak](https://github.com/hyzhak))
+- request next song instead of random song [\#413](https://github.com/internetarchive/internet-archive-google-action/pull/413) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/410 genre could conflicts with response [\#411](https://github.com/internetarchive/internet-archive-google-action/pull/411) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.2](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.2) (2018-12-07)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.1...2.5.2)
 
