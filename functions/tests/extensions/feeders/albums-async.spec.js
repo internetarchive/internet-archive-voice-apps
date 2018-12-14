@@ -30,7 +30,7 @@ describe('feeders', () => {
       feeder.__set__('albumsProvider', albumsProvider);
     }
 
-    function testNextSong ({ album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true, fetchOnly = false }) {
+    function testNextSong ({ album, app, feeder, filename, playlist, query, hasNext = true, moveToNext = true, fetchOnly = false, getNextItem = null }) {
       let resolve;
       if (moveToNext || fetchOnly) {
         resolve = feeder.next({ app, query, playlist }, !fetchOnly);
@@ -56,6 +56,11 @@ describe('feeders', () => {
 
           expect(feeder.hasNext({ app, query, playlist }))
             .to.be.equal(hasNext);
+
+          if (getNextItem) {
+            expect(feeder.getNextItem({ app, playlist }))
+              .to.have.property('filename', getNextItem);
+          }
         });
     }
 
@@ -257,6 +262,109 @@ describe('feeders', () => {
           album: 'album-1',
           filename: 'filename-3',
         }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+          hasNext: false,
+        }));
+    });
+
+    it('should fetch next ordered song (but with duplications and pre-fetching)', () => {
+      app = mockApp();
+      // TODO: should try with undefined order
+      query.setSlot(app, 'order', 'natural');
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-3',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-3',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-3',
+        }]
+      }, 1);
+
+      const ctx = {
+        app,
+        feeder,
+        playlist,
+        query,
+      };
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-1',
+          moveToNext: false,
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          getNextItem: 'filename-2',
+          fetchOnly: true,
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-2',
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          getNextItem: 'filename-3',
+          fetchOnly: true,
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        // TODO:
+        // .then(() => testNextSong({
+        //   ...ctx,
+        //   album: 'album-1',
+        //   getNextItem: 'filename-3',
+        //   fetchOnly: true,
+        // }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        // TODO:
+        // .then(() => testNextSong({
+        //   ...ctx,
+        //   album: 'album-1',
+        //   getNextItem: 'filename-3',
+        //   fetchOnly: true,
+        // }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        // TODO:
+        // .then(() => testNextSong({
+        //   ...ctx,
+        //   album: 'album-1',
+        //   getNextItem: 'filename-3',
+        //   fetchOnly: true,
+        // }))
         .then(() => testNextSong({
           ...ctx,
           album: 'album-1',
