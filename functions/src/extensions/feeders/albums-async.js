@@ -465,9 +465,13 @@ class AsyncAlbums extends DefaultFeeder {
 
               if (move) {
                 // we have attached new songs and would like to jump to the 1st song
-                const firstAddedSong = items.find(i => i[SONG_UID] === songs[0][SONG_UID]);
+                const firstAddedSong = items.find(i => songs.find(song => i[SONG_UID] === song[SONG_UID]));
                 debug(`we would find 1st songs of added songs ${firstAddedSong}, and move there`);
-                playlist.moveTo(app, firstAddedSong);
+                if (firstAddedSong) {
+                  playlist.moveTo(app, firstAddedSong);
+                } else {
+                  warning('it seems that we have not add any songs and we can not find any of them in a items list');
+                }
               }
 
               // as well move source cursor
