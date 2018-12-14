@@ -27,7 +27,7 @@ describe('dialog', () => {
     };
 
     audio.__set__('availableStrings', {
-      description: 'Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      description: '{{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       speech: `
         <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                clipBegin="4.5s"
@@ -36,7 +36,7 @@ describe('dialog', () => {
           <desc>Playing track - Breezin&amp;#39;, Northampton, MA, 2010</desc>
         </audio>
       `,
-      title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
+      title: '{{title}}',
       suggestionLink: 'on Archive.org',
       suggestions: [
         'next song'

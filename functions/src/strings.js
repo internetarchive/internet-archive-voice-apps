@@ -26,7 +26,7 @@ module.exports = {
        */
       condition: 'includes(collections, "etree")',
 
-      description: 'Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
+      description: '{{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -45,14 +45,14 @@ module.exports = {
           </audio>
         `,
       }],
-      title: '{{title}} by {{creator}}{{#year}}, {{year}}{{/year}}',
+      title: '{{title}}',
       suggestionLink: 'on Archive.org',
       suggestions: [
         'previous song',
         'next song',
       ]
     }, {
-      description: 'Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}',
+      description: '{{creator}}{{#year}} {{year}}{{/year}}',
       // We should "say" something or play a sound between songs
       // official response:
       // https://github.com/actions-on-google/actions-on-google-nodejs/issues/103#issuecomment-373231791
@@ -71,7 +71,7 @@ module.exports = {
           </audio>
         `,
       }],
-      title: '{{title}} by {{creator}} {{year}}',
+      title: '{{title}}',
       suggestionLink: 'on Archive.org',
       suggestions: [
         'previous song',
