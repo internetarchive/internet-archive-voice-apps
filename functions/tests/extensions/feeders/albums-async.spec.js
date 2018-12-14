@@ -115,19 +115,6 @@ describe('feeders', () => {
           album: 'album-1',
           filename: 'filename-2',
         }))
-        .then(() => {
-          // we will request next chunk of songs
-          mockNewAlbum({
-            title: 'album-1',
-            songs: [{
-              filename: 'filename-1',
-            }, {
-              filename: 'filename-2',
-            }, {
-              filename: 'filename-3',
-            }]
-          });
-        })
         .then(() => testNextSong({
           ...ctx,
           album: 'album-1',
@@ -160,23 +147,6 @@ describe('feeders', () => {
           album: 'album-2',
           filename: 'filename-2',
         }))
-        .then(() => {
-          // we will request next chunk of songs
-          mockNewAlbum({
-            title: 'album-2',
-            songs: [{
-              filename: 'filename-1',
-            }, {
-              filename: 'filename-2',
-            }, {
-              filename: 'filename-3',
-            }, {
-              filename: 'filename-4',
-            }, {
-              filename: 'filename-5',
-            }]
-          });
-        })
         .then(() => testNextSong({
           ...ctx,
           album: 'album-2',
@@ -215,22 +185,81 @@ describe('feeders', () => {
           album: 'album-3',
           filename: 'filename-2',
         }))
-        .then(() => {
-          // we will request next chunk of songs
-          mockNewAlbum({
-            title: 'album-3',
-            songs: [{
-              filename: 'filename-1',
-            }, {
-              filename: 'filename-2',
-            }, {
-              filename: 'filename-3',
-            }]
-          });
-        })
         .then(() => testNextSong({
           ...ctx,
           album: 'album-3',
+          filename: 'filename-3',
+          hasNext: false,
+        }));
+    });
+
+    it('should fetch next ordered song (but with duplications)', () => {
+      app = mockApp();
+      // TODO: should try with undefined order
+      query.setSlot(app, 'order', 'natural');
+      mockNewAlbum({
+        title: 'album-1',
+        songs: [{
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-2',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-1',
+        }, {
+          filename: 'filename-3',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-3',
+        }, {
+          // rare case duplication of audioURL
+          // but however it's still possible
+          filename: 'filename-3',
+        }]
+      }, 1);
+
+      const ctx = {
+        app,
+        feeder,
+        playlist,
+        query,
+      };
+
+      return feeder
+        .build({ app, query, playlist })
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-1',
+          moveToNext: false,
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-2',
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        // TODO: it seems we have some duplications here
+        // we should have 2 filename-3 but have 4
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          filename: 'filename-3',
+        }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
           filename: 'filename-3',
           hasNext: false,
         }));
