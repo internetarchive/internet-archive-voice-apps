@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.5.4](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.4) (2018-12-15)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.3...2.5.4)
+
+**Implemented enhancements:**
+
+- use card to show title and image on playback [\#412](https://github.com/internetarchive/internet-archive-google-action/issues/412) [[alexa](https://github.com/internetarchive/internet-archive-google-action/labels/alexa)]
+
+**Fixed bugs:**
+
+- fail to playback next song when we got duplication in random response from IA [\#417](https://github.com/internetarchive/internet-archive-google-action/issues/417)
+- potential security vulnerability in one of project dependencies [\#409](https://github.com/internetarchive/internet-archive-google-action/issues/409)
+
+**Merged pull requests:**
+
+- Bugfix/fail on songs duplication 2 [\#419](https://github.com/internetarchive/internet-archive-google-action/pull/419) ([hyzhak](https://github.com/hyzhak))
+- Bugfix/fail on songs duplication [\#418](https://github.com/internetarchive/internet-archive-google-action/pull/418) ([hyzhak](https://github.com/hyzhak))
+- Feature/412 use card to show title and image on playback [\#416](https://github.com/internetarchive/internet-archive-google-action/pull/416) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.3](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.3) (2018-12-14)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.2...2.5.3)
 
