@@ -36,6 +36,20 @@ function getNextItem (app) {
 }
 
 /**
+ * Get last song in playlist
+ *
+ * @param app
+ * @returns {*}
+ */
+function getLastItem (app) {
+  const playlist = getData(app);
+  if (!playlist || !playlist.items || playlist.items.length === 0) {
+    return null;
+  }
+  return playlist.items[playlist.items.length - 1];
+}
+
+/**
  * Selector. Do we have next song
  *
  * @param app
@@ -334,6 +348,7 @@ module.exports = {
   getItems,
   getItemByToken,
   getNextItem,
+  getLastItem,
   isEmpty,
   isLoop,
   setLoop,
@@ -351,4 +366,6 @@ module.exports = {
   last,
   shift,
   updateItems,
+
+  PlaylistStateError
 };

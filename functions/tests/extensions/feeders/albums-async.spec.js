@@ -334,37 +334,34 @@ describe('feeders', () => {
           album: 'album-1',
           filename: 'filename-3',
         }))
-        // TODO:
-        // .then(() => testNextSong({
-        //   ...ctx,
-        //   album: 'album-1',
-        //   getNextItem: 'filename-3',
-        //   fetchOnly: true,
-        // }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          getNextItem: 'filename-3',
+          fetchOnly: true,
+        }))
         .then(() => testNextSong({
           ...ctx,
           album: 'album-1',
           filename: 'filename-3',
         }))
-        // TODO:
-        // .then(() => testNextSong({
-        //   ...ctx,
-        //   album: 'album-1',
-        //   getNextItem: 'filename-3',
-        //   fetchOnly: true,
-        // }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          getNextItem: 'filename-3',
+          fetchOnly: true,
+        }))
         .then(() => testNextSong({
           ...ctx,
           album: 'album-1',
           filename: 'filename-3',
         }))
-        // TODO:
-        // .then(() => testNextSong({
-        //   ...ctx,
-        //   album: 'album-1',
-        //   getNextItem: 'filename-3',
-        //   fetchOnly: true,
-        // }))
+        .then(() => testNextSong({
+          ...ctx,
+          album: 'album-1',
+          getNextItem: 'filename-3',
+          fetchOnly: true,
+        }))
         .then(() => testNextSong({
           ...ctx,
           album: 'album-1',

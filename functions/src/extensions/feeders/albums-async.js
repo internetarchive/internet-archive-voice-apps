@@ -16,6 +16,7 @@ const _ = require('lodash');
 
 const config = require('../../config');
 const albumsProvider = require('../../provider/albums');
+const { PlaylistStateError } = require('../../state/playlist');
 const { debug, warning, error } = require('../../utils/logger')('ia:feeder:albums-async');
 const stripFileName = require('../../utils/strip-filename');
 
@@ -322,7 +323,18 @@ class AsyncAlbums extends DefaultFeeder {
    * @returns {*}
    */
   getNextItem ({ app, playlist }) {
-    return playlist.getNextItem(app);
+    try {
+      return playlist.getNextItem(app);
+    } catch (err) {
+      // sometimes we can add 0 new songs, because all of them were the same
+      // as we had before, so we don't have next song (yet)
+      // so it will be ok to repeat the last song, before we can get new one
+      if (err instanceof PlaylistStateError) {
+        return playlist.getLastItem(app);
+      }
+
+      throw err;
+    }
   }
 
   setCursorCurrent (ctx, current) {
