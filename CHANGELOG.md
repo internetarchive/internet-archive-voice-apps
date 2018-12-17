@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.5.5](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.5) (2018-12-17)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.4...2.5.5)
+
+**Implemented enhancements:**
+
+- use proxy for bunch of IA API requests [\#420](https://github.com/internetarchive/internet-archive-google-action/issues/420)
+
+**Merged pull requests:**
+
+- Feature/420 use proxy for the rest of endpoints [\#421](https://github.com/internetarchive/internet-archive-google-action/pull/421) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.4](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.4) (2018-12-15)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.3...2.5.4)
 
