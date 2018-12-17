@@ -1,6 +1,6 @@
 module.exports = {
   endpoints: {
-    ALBUM_DETAIL: 'https://archive.org/details/{{album.id}}',
+    ALBUM_DETAIL: 'https://{{platformSubDomain}}.archive.org/proxy/details/{{album.id}}',
     ALBUMS_OF_CREATOR_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
@@ -23,11 +23,11 @@ module.exports = {
     '&rows={{limit}}' +
     '{{#page}}&page={{page}}{{/page}}' +
     '&output=json',
-    SONG_URL: 'https://archive.org/download/{{albumId}}/{{filename}}',
+    SONG_URL: 'https://{{platformSubDomain}}.archive.org/proxy/download/{{albumId}}/{{filename}}',
   },
 
   media: {
-    POSTER_OF_ALBUM: 'https://archive.org/services/img/{{id}}',
+    POSTER_OF_ALBUM: 'https://{{platformSubDomain}}.archive.org/proxy/services/img/{{id}}',
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 

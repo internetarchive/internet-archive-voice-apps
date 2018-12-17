@@ -23,7 +23,10 @@ describe('feeders', () => {
         };
 
         const feeder = new DefaultFeeder();
-        const songs = feeder.processAlbumSongs(album);
+        const app = {
+          platform: 'assistant'
+        };
+        const songs = feeder.processAlbumSongs(app, album);
         expect(songs).to.have.length(2);
         expect(songs[0]).to.have.property('collections', album.collections);
         expect(songs[1]).to.have.property('collections', album.collections);

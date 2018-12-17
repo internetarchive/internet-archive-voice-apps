@@ -169,7 +169,7 @@ class AsyncAlbums extends DefaultFeeder {
         const numOfSongsInLastAlbum = albums[albums.length - 1].songs.length;
 
         let songs = albums
-          .map(this.processAlbumSongs)
+          .map(album => this.processAlbumSongs(app, album))
           .reduce((allSongs, albumSongs) => {
             return allSongs.concat(albumSongs);
           }, []);

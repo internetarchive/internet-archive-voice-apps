@@ -95,7 +95,7 @@ class SyncAlbum extends DefaultFeeder {
 
         debug('We get album', album);
 
-        const songs = this.processAlbumSongs(album);
+        const songs = this.processAlbumSongs(app, album);
 
         debug(`We get ${songs.length} songs`);
         // the only place where we modify state
