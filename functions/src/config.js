@@ -23,7 +23,7 @@ module.exports = {
     '&rows={{limit}}' +
     '{{#page}}&page={{page}}{{/page}}' +
     '&output=json',
-    SONG_URL: 'https://archive.org/download/{{albumId}}/{{filename}}',
+    SONG_URL: 'https://{{platformSubDomain}}.archive.org/proxy/download/{{albumId}}/{{filename}}',
   },
 
   media: {

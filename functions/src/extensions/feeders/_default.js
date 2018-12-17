@@ -144,15 +144,18 @@ class DefaultFeeder {
   /**
    * Process album songs
    *
-   * @protected
+   * @param app
    * @param album
    * @returns {Array}
+   * @protected
    */
-  processAlbumSongs (album) {
+  processAlbumSongs (app, album) {
     return album.songs
       .map((song, idx) => Object.assign({}, song, {
-        audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(
-          album.id, rebornEscape(song.filename)),
+        audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(app, {
+          albumId: album.id,
+          filename: rebornEscape(song.filename)
+        }),
         collections: album.collections,
         coverage: album.coverage,
         creator: album.creator,
