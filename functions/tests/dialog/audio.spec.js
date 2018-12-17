@@ -76,7 +76,7 @@ describe('dialog', () => {
       expect(res).to.have.property('suggestions').to.have.lengthOf(2);
       expect(res.suggestions[0]).to.equal('next song');
       expect(res.suggestions[1]).to.deep.equal({
-        url: 'https://archive.org/details/',
+        url: 'https://gactions-api.archive.org/proxy/details/',
         title: mustache.render(strings.suggestionLink, options),
       });
     });

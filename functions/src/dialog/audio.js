@@ -6,6 +6,8 @@ const selectors = require('../configurator/selectors');
 const availableStrings = require('../strings').dialog.playSong;
 const { debug } = require('../utils/logger')('ia:dialog:audio');
 
+const endpointProcessor = require('../network/endpoint-processor');
+
 /**
  * Play song to the user
  *
@@ -59,7 +61,9 @@ function playSong (app, options) {
     mediaResponseOnly: options.mediaResponseOnly,
 
     suggestions: strings.suggestions.concat({
-      url: mustache.render(config.endpoints.ALBUM_DETAIL, options),
+      url: endpointProcessor.preprocess(
+        config.endpoints.ALBUM_DETAIL, app, options
+      ),
       title: mustache.render(strings.suggestionLink, options),
     }),
   });

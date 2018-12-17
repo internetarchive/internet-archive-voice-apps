@@ -1,6 +1,6 @@
 module.exports = {
   endpoints: {
-    ALBUM_DETAIL: 'https://archive.org/details/{{album.id}}',
+    ALBUM_DETAIL: 'https://{{platformSubDomain}}.archive.org/proxy/details/{{album.id}}',
     ALBUMS_OF_CREATOR_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
     '?q=collection:({{creatorId}})' +
     '&fl[]={{fields}}' +
