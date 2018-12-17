@@ -1,10 +1,9 @@
-const mustache = require('mustache');
-
 const config = require('../../config');
 const songsProvider = require('../../provider/songs');
 const { debug } = require('../../utils/logger')('ia:feeder:default');
 const rebornEscape = require('../../utils/reborn-escape');
 
+const endpointProcessor = require('../../network/endpoint-processor');
 const { orders, DEFAULT_ORDER } = require('../orders');
 
 class DefaultFeeder {
@@ -159,7 +158,9 @@ class DefaultFeeder {
         collections: album.collections,
         coverage: album.coverage,
         creator: album.creator,
-        imageURL: mustache.render(config.media.POSTER_OF_ALBUM, album),
+        imageURL: endpointProcessor.preprocess(
+          config.media.POSTER_OF_ALBUM, app, album
+        ),
         // TODO : add recommendations
         suggestions: ['Next'],
         album: {
