@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.5.6](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.6) (2018-12-18)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.5...2.5.6)
+
+**Fixed bugs:**
+
+- alexa still uses "Christmas music" in api request to IA [\#425](https://github.com/internetarchive/internet-archive-google-action/issues/425)
+
+**Merged pull requests:**
+
+- Hotfix/425 alexa still uses christmas music genre [\#426](https://github.com/internetarchive/internet-archive-google-action/pull/426) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.5](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.5) (2018-12-17)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.4...2.5.5)
 
