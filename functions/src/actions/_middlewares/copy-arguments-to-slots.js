@@ -1,7 +1,5 @@
 const util = require('util');
 
-const query = require('../../state/query');
-
 const { debug } = require('../../utils/logger/index')('ia:actions:middleware:copy-arguments-to-slots');
 
 /**
@@ -21,7 +19,6 @@ module.exports = () => ctx => {
     .reduce((newValues, slotName) => {
       let value = app.params.getByName(slotName);
       if (value) {
-        query.setSlot(app, slotName, value);
         newValues[slotName] = value;
       }
       return newValues;

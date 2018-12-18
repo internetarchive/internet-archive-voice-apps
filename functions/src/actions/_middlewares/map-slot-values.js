@@ -83,8 +83,8 @@ module.exports = (rules = defaultRule) => ctx => {
   debug('start');
   const newSlots = {};
   let hasChanged = false;
-  const { slots } = ctx;
-  for (let [slotName, originalValue] of Object.entries(slots)) {
+  const { newValues } = ctx;
+  for (let [slotName, originalValue] of Object.entries(newValues)) {
     const slotRules = rules[slotName];
 
     let reducer = doNothing;
@@ -108,8 +108,8 @@ module.exports = (rules = defaultRule) => ctx => {
 
   return {
     ...ctx,
-    slots: {
-      ...slots,
+    newValues: {
+      ...newValues,
       ...newSlots,
     },
   };

@@ -135,8 +135,8 @@ function populateSlots (app) {
   let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
   let newValues = copyArgumentsToSlots(app, slotScheme);
-  newValues = mapSlotValues()({ slots: newValues }).slots;
-  copySlotsToQueryStore({ app, slots: newValues });
+  newValues = mapSlotValues()({ newValues }).newValues;
+  copyNewValuesToQueryStore({ app, newValues });
   applyDefaultSlots(app, slotScheme.defaults);
 
   // new values could change actual slot scheme
@@ -146,8 +146,8 @@ function populateSlots (app) {
     // update slots for new scheme
     checkSlotScheme(slotScheme);
     newValues = Object.assign({}, newValues, copyArgumentsToSlots(app, slotScheme));
-    newValues = mapSlotValues()({ slots: newValues }).slots;
-    copySlotsToQueryStore({ app, slots: newValues });
+    newValues = mapSlotValues()({ newValues }).newValues;
+    copyNewValuesToQueryStore({ app, newValues });
     applyDefaultSlots(app, slotScheme.defaults);
   }
   return { slotScheme, newValues };
@@ -247,9 +247,9 @@ function copyArgumentsToSlots (app, slotScheme) {
     }, {});
 }
 
-function copySlotsToQueryStore (ctx) {
-  const { app, slots } = ctx;
-  for (const [slotName, slotValue] of Object.entries(slots)) {
+function copyNewValuesToQueryStore (ctx) {
+  const { app, newValues } = ctx;
+  for (const [slotName, slotValue] of Object.entries(newValues)) {
     query.setSlot(app, slotName, slotValue);
   }
 }

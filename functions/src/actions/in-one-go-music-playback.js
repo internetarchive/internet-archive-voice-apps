@@ -12,6 +12,7 @@ const acknowledge = require('./_middlewares/acknowledge');
 const ask = require('./_middlewares/ask');
 const copyArgumentToSlots = require('./_middlewares/copy-arguments-to-slots');
 const copyDefaultsToSlots = require('./_middlewares/copy-defaults-to-slots');
+const copySlotsToQuerySlots = require('./_middlewares/copy-slots-to-query-store');
 const feederFromSlotScheme = require('./_middlewares/feeder-from-slots-scheme');
 const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
@@ -46,10 +47,11 @@ function handler (app) {
   // but some other modules could use them
   return Promise.resolve({ app, slotScheme, playlist, query })
     .then(copyArgumentToSlots())
+    .then(mapSlotValues())
+    .then(copySlotsToQuerySlots())
     .then(copyDefaultsToSlots())
     // set slots variable
     .then(ctx => ({ ...ctx, slots: query.getSlots(ctx.app) }))
-    .then(mapSlotValues())
     // expose current platform to the slots
     .then(mapPlatformToSlots())
     .then(feederFromSlotScheme())
