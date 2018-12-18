@@ -5,7 +5,7 @@
 const _ = require('lodash');
 
 const defaultRule = require('../../config/slot-values-map');
-const { debug } = require('../../utils/logger/index')('ia:actions:middlewares:map-slot-values');
+const { debug } = require('../../utils/logger/index')('ia:actions:middleware:map-slot-values');
 
 function getReplacement (slotRules, value) {
   if (!slotRules) {

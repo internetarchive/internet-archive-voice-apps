@@ -138,7 +138,7 @@ async function populateSlots (ctx) {
   const { app } = ctx;
   let slotScheme = selectors.find(musicQuerySchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
-  ctx = {...ctx, slotScheme };
+  ctx = { ...ctx, slotScheme };
   ctx = await copyArgumentsToSlots()(ctx);
   ctx = await mapSlotValues()(ctx);
   ctx = await copyNewValuesToQueryStore()(ctx);
@@ -150,7 +150,7 @@ async function populateSlots (ctx) {
     slotScheme = newScheme;
     // update slots for new scheme
     checkSlotScheme(slotScheme);
-    ctx = {...ctx, slotScheme };
+    ctx = { ...ctx, slotScheme };
     ctx = await copyArgumentsToSlots()(ctx);
     ctx = await mapSlotValues()(ctx);
     ctx = await copyNewValuesToQueryStore()(ctx);
@@ -201,7 +201,6 @@ async function processPreset (app, slotScheme, { presetParamName = 'preset' } = 
 
   await copyDefaultsToSlots()({ app, slotScheme: preset });
 }
-
 
 module.exports = {
   handler,

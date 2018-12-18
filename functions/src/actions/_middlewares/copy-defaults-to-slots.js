@@ -30,7 +30,7 @@ module.exports = () => ctx => {
           newValues[slotName] = value;
         }
         return newValues;
-      }, {...newValues});
+      }, { ...newValues });
     debug(`and copied ${util.inspect(newValues)} slot(s)`);
   }
 
