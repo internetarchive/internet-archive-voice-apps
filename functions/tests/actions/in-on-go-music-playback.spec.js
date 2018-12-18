@@ -18,7 +18,7 @@ describe('actions / in one go handler / instance', () => {
     middlewares = mockMiddlewares([
       'copyArgumentToSlots',
       'mapSlotValues',
-      'copySlotsToQuerySlots',
+      'copyNewValuesToQueryStore',
       'copyDefaultsToSlots',
       'mapPlatformToSlots',
       'feederFromSlotScheme',

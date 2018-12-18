@@ -66,7 +66,7 @@ describe('actions', () => {
 
   describe('music query', () => {
     beforeEach(() => {
-      action.__set__('availableSchemes', slotSchemeWithMultipleCases);
+      action.__set__('musicQuerySchemes', slotSchemeWithMultipleCases);
     });
 
     describe('pipeline', () => {
@@ -148,7 +148,7 @@ describe('actions', () => {
 
     describe('single slot scheme', () => {
       beforeEach(() => {
-        action.__set__('availableSchemes', slotSchemeWithOneCase);
+        action.__set__('musicQuerySchemes', slotSchemeWithOneCase);
       });
 
       describe('defaults', () => {

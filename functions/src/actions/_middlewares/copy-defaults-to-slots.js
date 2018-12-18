@@ -22,11 +22,15 @@ module.exports = () => ctx => {
     newValues = entries(slotScheme.defaults)
       .reduce((newValues, [slotName, value]) => {
         if (value && !query.hasSlot(app, slotName)) {
-          query.setSlot(app, slotName, value);
-          newValues = Object.assign({}, newValues, { [slotName]: value });
+          if (value.skip) {
+            query.skipSlot(app, slotName);
+          } else {
+            query.setSlot(app, slotName, value);
+          }
+          newValues[slotName] = value;
         }
         return newValues;
-      }, newValues);
+      }, {...newValues});
     debug(`and copied ${util.inspect(newValues)} slot(s)`);
   }
 

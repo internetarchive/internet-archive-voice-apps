@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 
-const middleware = require('../../../src/actions/_middlewares/copy-slots-to-query-store');
+const middleware = require('../../../src/actions/_middlewares/copy-new-values-to-query-store');
 
 const mockApp = require('../../_utils/mocking/platforms/app');
 

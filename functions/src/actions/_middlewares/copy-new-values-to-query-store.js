@@ -1,6 +1,6 @@
 const query = require('../../state/query');
 
-const { debug } = require('../../utils/logger/index')('ia:actions:middleware:copy-slots-to-query-store');
+const { debug } = require('../../utils/logger/index')('ia:actions:middleware:copy-new-values-to-query-store');
 
 /**
  * Middleware
