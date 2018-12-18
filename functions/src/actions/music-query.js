@@ -43,7 +43,7 @@ const playSong = require('./_middlewares/play-song');
 async function handler (app) {
   debug('Start music query handler');
 
-  const { slotScheme, newValues } = await populateSlots({ app, playlist, query });
+  const { slotScheme, newValues } = await populateSlots({ app });
 
   await processPreset(app, slotScheme);
 
