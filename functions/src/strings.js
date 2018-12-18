@@ -297,8 +297,8 @@ module.exports = {
       },
 
       /**
-       * Acknowledge recieved value and repeat to give user change
-       * to check our undestanding
+       * Acknowledge received value and repeat to give user change
+       * to check our understanding
        */
       acknowledges: [
         'Okay! Lets go with the artist {{creator}}!',
@@ -549,6 +549,69 @@ module.exports = {
         ],
       },
     }],
+
+    // special case of music query by genre
+    musicQuerySubject: {
+      name: 'special case of music query by genre',
+
+      /**
+       * define fallback handler (actions/music-query)
+       */
+      action: 'music-query',
+
+      /**
+       * slots which we need for fulfillement
+       */
+      slots: [
+        'collectionId',
+        'creator',
+        'coverage',
+        'subject',
+        'year',
+      ],
+
+      /**
+       * default values for slots
+       */
+      defaults: {
+        'order': 'random',
+        'collectionId': ['etree', 'georgeblood'],
+        'creator': { skip: true },
+        'year': { skip: true },
+      },
+
+
+      /**
+       * and ask fulfillment for a feeder
+       */
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          `I've got {{total}} {{subject}} records. Let's listen to them.`,
+          `Great choose! I found {{total}} {{subject}} records. Let's listen to them.`,
+          `Excellent! Let's play {{subject}} music.`,
+        ],
+      },
+
+      /**
+       * When user missed the available range
+       * we should help them to find alternative.
+       *
+       * Hints:
+       * - gets group of speeches with the most intersection with existing slots
+       *   and get random
+       * - doesn't match to empty suggestions
+       */
+      repair: {
+        speech: [
+          `I don't have {{subject}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}}. Maybe you would like to listen something else?`,
+        ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
+      },
+    },
 
     next: {
       default: {
