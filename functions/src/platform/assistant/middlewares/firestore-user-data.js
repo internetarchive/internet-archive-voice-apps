@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const util = require('util');
 
 const { debug, info, error, timer } = require('../../../utils/logger')('ia:platform.assistant.middlewares.firestore-user-data');
@@ -29,7 +30,7 @@ function buildDefaultSession (conv, id) {
   return {
     id,
     idx: 0,
-    conversationId: conv.request.conversation.conversationId,
+    conversationId: _.get(conv, 'request.conversation.conversationId'),
     createdAt: Date.now(),
   };
 }
