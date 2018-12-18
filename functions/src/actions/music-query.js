@@ -5,7 +5,7 @@ const middlewareErrors = require('./_middlewares/errors');
 const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
-const availableSchemes = require('../strings').intents.musicQuery;
+const musicQuerySchemes = require('../strings').intents.musicQuery;
 const { debug, warning } = require('../utils/logger')('ia:actions:music-query');
 
 const acknowledge = require('./_middlewares/acknowledge');
@@ -13,6 +13,9 @@ const ask = require('./_middlewares/ask');
 const findRepairPhrase = require('./_middlewares/find-repair-phrase');
 const findRepairScheme = require('./_middlewares/find-repair-scheme');
 const fulfilResolvers = require('./_middlewares/fulfil-resolvers');
+const copyArgumentsToSlots = require('./_middlewares/copy-arguments-to-slots');
+const copyDefaultsToSlots = require('./_middlewares/copy-defaults-to-slots');
+const copyNewValuesToQueryStore = require('./_middlewares/copy-new-values-to-query-store');
 const mapPlatformToSlots = require('./_middlewares/map-platform-to-slots');
 const mapSlotValues = require('./_middlewares/map-slot-values');
 const renderSpeech = require('./_middlewares/render-speech');
@@ -37,12 +40,12 @@ const playSong = require('./_middlewares/play-song');
  * @param app
  * @returns {Promise}
  */
-function handler (app) {
+async function handler (app) {
   debug('Start music query handler');
 
-  const { slotScheme, newValues } = populateSlots(app);
+  const { slotScheme, newValues } = await populateSlots({ app });
 
-  processPreset(app, slotScheme);
+  await processPreset(app, slotScheme);
 
   const slots = query.getSlots(app);
   debug('we had slots:', Object.keys(slots));
@@ -52,7 +55,7 @@ function handler (app) {
   if (complete) {
     debug('pipeline playback');
     return feederFromSlotScheme()({ app, newValues, playlist, slots, slotScheme, query })
-      // expose current platform to the slots
+    // expose current platform to the slots
       .then(mapPlatformToSlots())
       .then(playlistFromFeeder())
       .then((context) => {
@@ -131,26 +134,29 @@ function handler (app) {
 
 // TODO: require refactoring
 // we should put it in regular pipeline with middlewares
-function populateSlots (app) {
-  let slotScheme = selectors.find(availableSchemes, query.getSlots(app));
+async function populateSlots (ctx) {
+  const { app } = ctx;
+  let slotScheme = selectors.find(musicQuerySchemes, query.getSlots(app));
   checkSlotScheme(slotScheme);
-  let newValues = copyArgumentsToSlots(app, slotScheme);
-  newValues = mapSlotValues()({ slots: newValues }).slots;
-  copySlotsToQueryStore({ app, slots: newValues });
-  applyDefaultSlots(app, slotScheme.defaults);
+  ctx = { ...ctx, slotScheme };
+  ctx = await copyArgumentsToSlots()(ctx);
+  ctx = await mapSlotValues()(ctx);
+  ctx = await copyNewValuesToQueryStore()(ctx);
+  ctx = await copyDefaultsToSlots()(ctx);
 
   // new values could change actual slot scheme
-  const newScheme = selectors.find(availableSchemes, query.getSlots(app));
+  const newScheme = selectors.find(musicQuerySchemes, query.getSlots(app));
   if (slotScheme !== newScheme) {
     slotScheme = newScheme;
     // update slots for new scheme
     checkSlotScheme(slotScheme);
-    newValues = Object.assign({}, newValues, copyArgumentsToSlots(app, slotScheme));
-    newValues = mapSlotValues()({ slots: newValues }).slots;
-    copySlotsToQueryStore({ app, slots: newValues });
-    applyDefaultSlots(app, slotScheme.defaults);
+    ctx = { ...ctx, slotScheme };
+    ctx = await copyArgumentsToSlots()(ctx);
+    ctx = await mapSlotValues()(ctx);
+    ctx = await copyNewValuesToQueryStore()(ctx);
+    ctx = await copyDefaultsToSlots()(ctx);
   }
-  return { slotScheme, newValues };
+  return ctx;
 }
 
 /**
@@ -168,43 +174,12 @@ function checkSlotScheme (slotScheme) {
 }
 
 /**
- * Apply default slots from slotsScheme
- *
- * @param app
- * @param defaults
- */
-function applyDefaultSlots (app, defaults) {
-  if (!defaults) {
-    return;
-  }
-
-  const appliedDefaults = Object.keys(defaults)
-    .filter(defaultSlotName => !query.hasSlot(app, defaultSlotName))
-    .map(defaultSlotName => {
-      const value = defaults[defaultSlotName];
-      if (value.skip) {
-        query.skipSlot(app, defaultSlotName);
-      } else {
-        query.setSlot(
-          app,
-          defaultSlotName,
-          defaults[defaultSlotName]
-        );
-      }
-
-      return defaultSlotName;
-    });
-
-  debug('We have used defaults:', appliedDefaults);
-}
-
-/**
  *
  * @param app
  * @param slotScheme
  * @param presetParamName
  */
-function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
+async function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
   let name = app.params.getByName(presetParamName);
   if (!name) {
     debug(`it wasn't preset`);
@@ -224,34 +199,7 @@ function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
     return;
   }
 
-  applyDefaultSlots(app, preset.defaults);
-}
-
-/**
- * Put all received values to slots
- * and return list of new values
- *
- * @param app
- * @param slotScheme
- * @returns {{}}
- */
-function copyArgumentsToSlots (app, slotScheme) {
-  return slotScheme.slots
-    .reduce((newValues, slotName) => {
-      let value = app.params.getByName(slotName);
-      if (value) {
-        // query.setSlot(app, slotName, value);
-        newValues[slotName] = value;
-      }
-      return newValues;
-    }, {});
-}
-
-function copySlotsToQueryStore (ctx) {
-  const { app, slots } = ctx;
-  for (const [slotName, slotValue] of Object.entries(slots)) {
-    query.setSlot(app, slotName, slotValue);
-  }
+  await copyDefaultsToSlots()({ app, slotScheme: preset });
 }
 
 module.exports = {

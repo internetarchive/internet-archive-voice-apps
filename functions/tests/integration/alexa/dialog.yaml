@@ -48,6 +48,12 @@
   - user: 'christmas music'
     assistant: "I don't have"
 
+- scenario: 'when response drop music at the end of genre'
+  dialog:
+  - user: 'seventy eighties'
+  - user: 'random'
+    assistant: "I found"
+
 - scenario: 'song details: when song is playing'
   dialog:
   - user: 'play jazz'

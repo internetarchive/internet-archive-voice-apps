@@ -5,7 +5,7 @@
 const _ = require('lodash');
 
 const defaultRule = require('../../config/slot-values-map');
-const { debug } = require('../../utils/logger/index')('ia:actions:middlewares:map-slot-values');
+const { debug } = require('../../utils/logger/index')('ia:actions:middleware:map-slot-values');
 
 function getReplacement (slotRules, value) {
   if (!slotRules) {
@@ -83,8 +83,8 @@ module.exports = (rules = defaultRule) => ctx => {
   debug('start');
   const newSlots = {};
   let hasChanged = false;
-  const { slots } = ctx;
-  for (let [slotName, originalValue] of Object.entries(slots)) {
+  const { newValues } = ctx;
+  for (let [slotName, originalValue] of Object.entries(newValues)) {
     const slotRules = rules[slotName];
 
     let reducer = doNothing;
@@ -108,8 +108,8 @@ module.exports = (rules = defaultRule) => ctx => {
 
   return {
     ...ctx,
-    slots: {
-      ...slots,
+    newValues: {
+      ...newValues,
       ...newSlots,
     },
   };
