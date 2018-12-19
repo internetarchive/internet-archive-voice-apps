@@ -21,13 +21,13 @@ const searchAndHelpFixture = {
 };
 
 describe('actions', () => {
-  describe('withState', () => {
-    beforeEach(() => {
-      actions.__set__('__dirname', path.join(__dirname, 'fixtures', 'fsm-structure'));
-    });
+  beforeEach(() => {
+    actions.__set__('__dirname', path.join(__dirname, 'fixtures', 'fsm-structure'));
+  });
 
+  describe('fromFiles', () => {
     it('should extract all available actions', () => {
-      const a = actions.withStates();
+      const a = actions.fromFiles();
       expect(a).to.have.any.key([
         'next',
         'play',
@@ -36,7 +36,7 @@ describe('actions', () => {
     });
 
     it('should extract flat structure', () => {
-      const a = actions.withStates();
+      const a = actions.fromFiles();
       expect(a.get('play'))
         .to.have.property('default', defaultFixture.play.handler);
 
@@ -48,7 +48,7 @@ describe('actions', () => {
     });
 
     it('should extract hierarchy structure', () => {
-      const a = actions.withStates();
+      const a = actions.fromFiles();
       expect(a.get('next'))
         .to.have.property('default', defaultFixture.next.handler);
       expect(a.get('next'))
@@ -57,6 +57,34 @@ describe('actions', () => {
         .to.have.property('search').to.have.property('default', searchFixture.next.handler);
       expect(a.get('next'))
         .to.have.property('search').to.have.property('help').to.have.property('default', searchAndHelpFixture.next.handler);
+    });
+  });
+
+  describe('fromScheme', () => {
+    it('should find action handler and map it', () => {
+      const previous = {
+        name: 'previous',
+        action: 'next'
+      };
+
+      const a = actions.fromJSON({
+        previous,
+        qwerty: {
+          name: 'qwerty'
+        }
+      });
+
+      expect(a)
+        .to.have.property('previous')
+        .which.have.property('default').is.a('function');
+
+      expect(a)
+        .to.not.have.property('qwerty');
+
+      const app = {};
+      a.previous.default(app);
+
+      expect(defaultFixture.next.build).to.have.been.calledWith(app);
     });
   });
 });
