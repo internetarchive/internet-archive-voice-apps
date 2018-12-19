@@ -37,26 +37,33 @@ describe('actions', () => {
 
     it('should extract flat structure', () => {
       const a = actions.fromFiles();
-      expect(a.get('play'))
-        .to.have.property('default', defaultFixture.play.handler);
+      expect(a)
+        .to.have.property('play')
+        .which.have.property('default', defaultFixture.play.handler);
 
-      expect(a.get('stop'))
-        .to.have.property('default', defaultFixture.stop.handler);
+      expect(a)
+        .to.have.property('stop')
+        .which.have.property('default', defaultFixture.stop.handler);
 
-      expect(a.get('stop'))
-        .to.have.property('playback').to.have.property('default', playbackFixture.stop.handler);
+      expect(a)
+        .to.have.property('stop')
+        .which.have.property('playback').to.have.property('default', playbackFixture.stop.handler);
     });
 
     it('should extract hierarchy structure', () => {
       const a = actions.fromFiles();
-      expect(a.get('next'))
-        .to.have.property('default', defaultFixture.next.handler);
-      expect(a.get('next'))
-        .to.have.property('playback').to.have.property('default', playbackFixture.next.handler);
-      expect(a.get('next'))
-        .to.have.property('search').to.have.property('default', searchFixture.next.handler);
-      expect(a.get('next'))
-        .to.have.property('search').to.have.property('help').to.have.property('default', searchAndHelpFixture.next.handler);
+      expect(a)
+        .to.have.property('next')
+        .which.property('default', defaultFixture.next.handler);
+      expect(a)
+        .to.have.property('next')
+        .which.have.property('playback').to.have.property('default', playbackFixture.next.handler);
+      expect(a)
+        .to.have.property('next')
+        .which.have.property('search').to.have.property('default', searchFixture.next.handler);
+      expect(a)
+        .to.have.property('next')
+        .which.property('search').to.have.property('help').to.have.property('default', searchAndHelpFixture.next.handler);
     });
   });
 

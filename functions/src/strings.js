@@ -653,17 +653,17 @@ module.exports = {
     },
 
     songDetails: {
-      action: {
-        speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
-        resumePlayback: true,
+      default: {
+        speech: 'Nothing is playing right now.',
       },
 
       fail: {
         speech: 'Fail to resume playback.',
       },
 
-      nothing: {
-        speech: 'Nothing is playing right now.',
+      playback: {
+        speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
+        resumePlayback: true,
       },
     },
 

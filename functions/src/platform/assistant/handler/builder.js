@@ -12,7 +12,7 @@ const { debug } = require('../../../utils/logger')('ia:platform:assistant:handle
  * @returns {{intent, handler: (function(*=): *)}[]}
  */
 module.exports = ({ actionsMap, after }) =>
-  Array.from(actionsMap.entries())
+  Object.entries(actionsMap)
     .map(([intent, handlers]) => ({
       intent,
       handler: async (conv) => {

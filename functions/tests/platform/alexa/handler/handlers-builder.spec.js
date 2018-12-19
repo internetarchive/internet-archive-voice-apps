@@ -27,20 +27,20 @@ describe('platform', () => {
       });
 
       it('should return array', () => {
-        const res = builder(new Map([
-          ['no-input', () => {}],
-          ['welcome', () => {}],
-        ]));
+        const res = builder({
+          'no-input': sinon.spy(),
+          'welcome': sinon.spy()
+        });
 
         expect(res).to.be.ok;
         expect(res).to.be.an('array').with.length(3);
       });
 
       it('should capitalize expected intent name', () => {
-        const res = builder(new Map([
-          ['no-input', () => {}],
-          ['welcome', () => {}],
-        ]));
+        const res = builder({
+          'no-input': sinon.spy(),
+          'welcome': sinon.spy()
+        });
 
         expect(res[0]).to.have.property('canHandle');
         expect(res[0]).to.have.property('handle');
@@ -65,10 +65,10 @@ describe('platform', () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
 
-        const res = builder(new Map([
-          ['no-input', { default: noInputHandler }],
-          ['welcome', { default: welcomeHandler }],
-        ]));
+        const res = builder({
+          'no-input': { default: noInputHandler },
+          'welcome': { default: welcomeHandler }
+        });
 
         const wrappedNoInputHandler = res[0].handle;
         return wrappedNoInputHandler(handlerInput)
@@ -80,9 +80,9 @@ describe('platform', () => {
 
       it('should catch request type', () => {
         const launchRequestHandler = sinon.spy();
-        const res = builder(new Map([
-          ['launch-request', launchRequestHandler],
-        ]));
+        const res = builder({
+          'launch-request': launchRequestHandler,
+        });
 
         expect(
           res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'LaunchRequest'))
@@ -91,9 +91,9 @@ describe('platform', () => {
 
       it('should catch AMAZON specific intents', () => {
         const helpHandler = sinon.spy();
-        const res = builder(new Map([
-          ['help', helpHandler],
-        ]));
+        const res = builder({
+          'help': helpHandler
+        });
 
         expect(
           res[0].canHandle(_.set({}, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent'))
@@ -102,9 +102,7 @@ describe('platform', () => {
 
       it('should catch AudioPlayer specific type', () => {
         const playbackStartedHandler = sinon.spy();
-        const res = builder(new Map([
-          ['playback-started', playbackStartedHandler],
-        ]));
+        const res = builder({ 'playback-started': playbackStartedHandler });
 
         expect(
           res[0].canHandle(_.set({}, 'requestEnvelope.request.type', 'AudioPlayer.PlaybackStarted'))
@@ -115,10 +113,10 @@ describe('platform', () => {
         const noInputHandler = sinon.spy();
         const welcomeHandler = sinon.spy();
 
-        const res = builder(new Map([
-          ['no-input', { default: noInputHandler }],
-          ['welcome', { default: welcomeHandler }],
-        ]));
+        const res = builder({
+          'no-input': { default: noInputHandler },
+          'welcome': { default: welcomeHandler }
+        });
 
         const wrappedNoInputHandler = res[0].handle;
         return wrappedNoInputHandler(handlerInput)
@@ -131,9 +129,9 @@ describe('platform', () => {
         it(`should drop intent underscore tail when can't find matched handler`, () => {
           const playSongHandler = sinon.spy();
 
-          const res = builder(new Map([
-            ['play-songs', { default: playSongHandler }],
-          ]));
+          const res = builder({
+            'play-songs': { default: playSongHandler }
+          });
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
           const item = res.find(e => e.canHandle());
@@ -148,17 +146,14 @@ describe('platform', () => {
         it('should log on failed fallback handle', () => {
           const logError = sinon.spy();
           builder.__set__('error', logError);
-          const res = builder(new Map([
-            [
-              'play-songs',
-              {
-                default: () => {
-                  throw new Error('error inside of handler');
-                },
+          const res = builder({
+            'play-songs': {
+              default: () => {
+                throw new Error('error inside of handler');
               }
-            ],
-            ['global-error', { default: sinon.spy() }],
-          ]));
+            },
+            'global-error': { default: sinon.spy() }
+          });
 
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
           const item = res.find(e => e.canHandle(input));
@@ -179,17 +174,14 @@ describe('platform', () => {
             logError = sinon.spy();
             builder.__set__('error', logError);
             globalErrorHandler = sinon.spy();
-            handlers = builder(new Map([
-              [
-                'help',
-                {
-                  default: () => {
-                    throw new Error('error inside of handler');
-                  },
+            handlers = builder({
+              'help': {
+                default: () => {
+                  throw new Error('error inside of handler');
                 },
-              ],
-              ['global-error', { default: globalErrorHandler }],
-            ]));
+              },
+              'global-error': { default: globalErrorHandler }
+            });
             input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'AMAZON.HelpIntent');
             handlerItem = handlers.find(e => e.canHandle(input));
           });
@@ -211,10 +203,10 @@ describe('platform', () => {
           it(`should warn if we don't have global-error handler`, () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
-            handlers = builder(new Map([
-              ['help', { default: sinon.spy() }],
-              ['unhandled', { default: sinon.spy() }],
-            ]));
+            handlers = builder({
+              'help': { default: sinon.spy() },
+              'unhandled': { default: sinon.spy() }
+            });
 
             expect(logWarning).to.have.been.called;
           });
@@ -222,10 +214,10 @@ describe('platform', () => {
           it(`should warn if we don't have unhandled handler`, () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
-            handlers = builder(new Map([
-              ['help', { default: sinon.spy() }],
-              ['global-error', { default: sinon.spy() }],
-            ]));
+            handlers = builder({
+              'help': { default: sinon.spy() },
+              'global-error': { default: sinon.spy() }
+            });
 
             expect(logWarning).to.have.been.called;
           });
@@ -233,12 +225,12 @@ describe('platform', () => {
           it(`shouldn't warn if we have global-error, http-request-error and unhandled handlers`, () => {
             const logWarning = sinon.spy();
             builder.__set__('warning', logWarning);
-            handlers = builder(new Map([
-              ['help', { default: sinon.spy() }],
-              ['global-error', { default: sinon.spy() }],
-              ['http-request-error', { default: sinon.spy() }],
-              ['unhandled', { default: sinon.spy() }],
-            ]));
+            handlers = builder({
+              'help': { default: sinon.spy() },
+              'global-error': { default: sinon.spy() },
+              'http-request-error': { default: sinon.spy() },
+              'unhandled': { default: sinon.spy() }
+            });
 
             expect(logWarning).to.have.not.been.called;
           });
@@ -253,10 +245,10 @@ describe('platform', () => {
           const logError = sinon.spy();
           builder.__set__('error', logError);
           const input = _.set(handlerInput, 'requestEnvelope.request.intent.name', 'PlaySongs_All');
-          const res = builder(new Map([
-            ['no-input', { default: sinon.spy() }],
-            ['welcome', { default: sinon.spy() }],
-          ]));
+          const res = builder({
+            'no-input': { default: sinon.spy() },
+            'welcome': { default: sinon.spy() }
+          });
 
           expect(res[0].canHandle(input)).to.be.false;
           expect(logError).to.be.called;

@@ -24,7 +24,6 @@
 
 const fs = require('fs');
 const _ = require('lodash');
-const entries = require('object.entries');
 const path = require('path');
 
 const extension = require('../extensions/builder');
@@ -38,7 +37,7 @@ const { actionNameByFileName } = require('./_helpers');
  * @returns {Array}
  */
 function fromFiles () {
-  const res = extension
+  return extension
     .build({ recursive: true, root: __dirname })
     .all()
     .map(({ filename, ext }) => ([actionNameByFileName(filename, __dirname), ext.handler]))
@@ -48,8 +47,6 @@ function fromFiles () {
       _.set(acc, [actionName, ...actionPath, 'default'], handler);
       return acc;
     }, {});
-
-  return new Map(entries(res));
 }
 
 /**
