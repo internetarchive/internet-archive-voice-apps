@@ -5,7 +5,7 @@ const middlewareErrors = require('./_middlewares/errors');
 const fsm = require('../state/fsm');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
-const musicQuerySchemes = require('../strings').intents.musicQuery;
+const defaultScheme = require('../strings').intents.musicQuery;
 const { debug, warning } = require('../utils/logger')('ia:actions:music-query');
 
 const acknowledge = require('./_middlewares/acknowledge');
@@ -28,182 +28,205 @@ const { mapSongDataToSlots } = require('./_middlewares/song-data');
 const playSong = require('./_middlewares/play-song');
 
 /**
- * Handle music query action
- * - fill slots of music query
- * - call fulfillment feeder
+ * build intent handler for dialog scheme
  *
- * TODO:
- * 1) it seems we could use express.js/koa middleware architecture here
- * 2) all that could should be builder for any slot-based actions
- * and should be placed to ./helpers.
- *
- * @param app
- * @returns {Promise}
+ * @param scheme
+ * @returns {{handler: handler, populateSlots: (function(*=): *), processPreset: processPreset}}
  */
-async function handler (app) {
-  debug('Start music query handler');
+function build (scheme) {
+  /**
+   * Handle music query action
+   * - fill slots of music query
+   * - call fulfillment feeder
+   *
+   * TODO:
+   * 1) it seems we could use express.js/koa middleware architecture here
+   * 2) all that could should be builder for any slot-based actions
+   * and should be placed to ./helpers.
+   *
+   * @param app
+   * @returns {Promise}
+   */
+  async function handler (app) {
+    debug('Start music query handler');
 
-  const { slotScheme, newValues } = await populateSlots({ app });
+    let ctx = await populateSlots({ app });
+    const { slotScheme, newValues } = ctx;
+    debug('new values', newValues);
 
-  await processPreset(app, slotScheme);
+    await processPreset(app, slotScheme);
 
-  const slots = query.getSlots(app);
-  debug('we had slots:', Object.keys(slots));
-  debug('we need slots:', slotScheme.slots);
+    const slots = query.getSlots(app);
+    debug('we had slots:', Object.keys(slots));
+    debug('we need slots:', slotScheme.slots);
+    debug('ctx.slots', Object.keys(ctx.slots));
 
-  const complete = query.hasSlots(app, slotScheme.slots);
-  if (complete) {
-    debug('pipeline playback');
-    return feederFromSlotScheme()({ app, newValues, playlist, slots, slotScheme, query })
-    // expose current platform to the slots
-      .then(mapPlatformToSlots())
-      .then(playlistFromFeeder())
-      .then((context) => {
-        debug('got playlist');
-        return acknowledge({ speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots' })(context)
-          .then(mapSongDataToSlots())
-          .then(fulfilResolvers())
-          .then(renderSpeech())
-          .then(playSong());
+    const complete = query.hasSlots(app, slotScheme.slots);
+    if (complete) {
+      debug('pipeline playback');
+      return feederFromSlotScheme()({ app, newValues, playlist, slots, slotScheme, query })
+      // expose current platform to the slots
+        .then(mapPlatformToSlots())
+        .then(playlistFromFeeder())
+        .then((context) => {
+          debug('got playlist');
+          return acknowledge({ speeches: 'slotScheme.fulfillment.speech', prioritySlots: 'slots' })(context)
+            .then(mapSongDataToSlots())
+            .then(fulfilResolvers())
+            .then(renderSpeech())
+            .then(playSong());
+        })
+        .catch((error) => {
+          debug(`we don't have playlist (or it is empty)`);
+
+          let context = error;
+          if (error instanceof middlewareErrors.MiddlewareError) {
+            context = error.context;
+            error = error.reason;
+          }
+
+          if (error instanceof errors.HTTPError) {
+            // don't handle http error here
+            // because we are handling it on upper level
+            return Promise.reject(error);
+          }
+
+          const brokenSlots = context.newValues || {};
+
+          fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
+
+          return Promise.resolve(Object.assign({}, context, {
+            brokenSlots,
+            // drop any acknowledges before
+            speech: [],
+          }))
+            .then(findRepairScheme())
+            .then(suggestions({ exclude: Object.keys(brokenSlots) }))
+            .then(findRepairPhrase())
+            .then(fulfilResolvers())
+            .then(renderSpeech())
+            // TODO: should clean broken slots from queue state
+            .then(ask());
+        });
+    }
+
+    fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
+
+    debug('pipeline query');
+    return acknowledge()({ app, slots, slotScheme, speech: [], newValues })
+      .then(prompt())
+      .then(suggestions())
+      .then(context => {
+        if (context.suggestions && context.suggestions.length === 0) {
+          // suggestions here are available range
+          // when it is 0 we should later last input
+          // TODO: when is is 1 we could choose this one option without asking
+
+          // 1. find last prompt
+          // 2. get repair phrase from the last prompt
+          // 3. render repair phrase
+          const brokenSlots = context.newValues;
+          return Promise.resolve(Object.assign({}, context, {
+            brokenSlots,
+            // drop any acknowledges before
+            speech: [],
+          }))
+            .then(findRepairScheme())
+            .then(suggestions({ exclude: Object.keys(brokenSlots) }))
+            .then(findRepairPhrase());
+        }
+        return context;
       })
-      .catch((error) => {
-        debug(`we don't have playlist (or it is empty)`);
-
-        let context = error;
-        if (error instanceof middlewareErrors.MiddlewareError) {
-          context = error.context;
-          error = error.reason;
-        }
-
-        if (error instanceof errors.HTTPError) {
-          // don't handle http error here
-          // because we are handling it on upper level
-          return Promise.reject(error);
-        }
-
-        const brokenSlots = context.newValues || {};
-
-        fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
-
-        return Promise.resolve(Object.assign({}, context, {
-          brokenSlots,
-          // drop any acknowledges before
-          speech: [],
-        }))
-          .then(findRepairScheme())
-          .then(suggestions({ exclude: Object.keys(brokenSlots) }))
-          .then(findRepairPhrase())
-          .then(fulfilResolvers())
-          .then(renderSpeech())
-          // TODO: should clean broken slots from queue state
-          .then(ask());
-      });
+      .then(fulfilResolvers())
+      .then(renderSpeech())
+      .then(ask());
   }
 
-  fsm.transitionTo(app, constants.fsm.states.SEARCH_MUSIC);
-
-  debug('pipeline query');
-  return acknowledge()({ app, slots, slotScheme, speech: [], newValues })
-    .then(prompt())
-    .then(suggestions())
-    .then(context => {
-      if (context.suggestions && context.suggestions.length === 0) {
-        // suggestions here are available range
-        // when it is 0 we should later last input
-        // TODO: when is is 1 we could choose this one option without asking
-
-        // 1. find last prompt
-        // 2. get repair phrase from the last prompt
-        // 3. render repair phrase
-        const brokenSlots = context.newValues;
-        return Promise.resolve(Object.assign({}, context, {
-          brokenSlots,
-          // drop any acknowledges before
-          speech: [],
-        }))
-          .then(findRepairScheme())
-          .then(suggestions({ exclude: Object.keys(brokenSlots) }))
-          .then(findRepairPhrase());
-      }
-      return context;
-    })
-    .then(fulfilResolvers())
-    .then(renderSpeech())
-    .then(ask());
-}
-
-// TODO: require refactoring
-// we should put it in regular pipeline with middlewares
-async function populateSlots (ctx) {
-  const { app } = ctx;
-  let slotScheme = selectors.find(musicQuerySchemes, query.getSlots(app));
-  checkSlotScheme(slotScheme);
-  ctx = { ...ctx, slotScheme };
-  ctx = await copyArgumentsToSlots()(ctx);
-  ctx = await mapSlotValues()(ctx);
-  ctx = await copyNewValuesToQueryStore()(ctx);
-  ctx = await copyDefaultsToSlots()(ctx);
-
-  // new values could change actual slot scheme
-  const newScheme = selectors.find(musicQuerySchemes, query.getSlots(app));
-  if (slotScheme !== newScheme) {
-    slotScheme = newScheme;
-    // update slots for new scheme
+  // TODO: require refactoring
+  // we should put it in regular pipeline with middlewares
+  async function populateSlots (ctx) {
+    const { app } = ctx;
+    const slots = query.getSlots(app);
+    let slotScheme = selectors.find(scheme, slots);
     checkSlotScheme(slotScheme);
-    ctx = { ...ctx, slotScheme };
+    ctx = { ...ctx, slots, slotScheme };
     ctx = await copyArgumentsToSlots()(ctx);
     ctx = await mapSlotValues()(ctx);
+    // TODO: it would be better to store to store at the end of handler
     ctx = await copyNewValuesToQueryStore()(ctx);
     ctx = await copyDefaultsToSlots()(ctx);
+
+    // new values could change actual slot scheme
+    const newScheme = selectors.find(scheme, query.getSlots(app));
+    if (slotScheme !== newScheme) {
+      slotScheme = newScheme;
+      // update slots for new scheme
+      checkSlotScheme(slotScheme);
+      ctx = { ...ctx, slotScheme };
+      ctx = await copyArgumentsToSlots()(ctx);
+      ctx = await mapSlotValues()(ctx);
+      ctx = await copyNewValuesToQueryStore()(ctx);
+      ctx = await copyDefaultsToSlots()(ctx);
+    }
+
+    return ctx;
   }
-  return ctx;
+
+  /**
+   *
+   * @param app
+   * @param slotScheme
+   * @param presetParamName
+   */
+  async function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
+    let name = app.params.getByName(presetParamName);
+    if (!name) {
+      debug(`it wasn't preset`);
+      return;
+    }
+
+    debug(`we got preset "${name}" in "${slotScheme.name}"`);
+
+    if (!slotScheme.presets || !(name in slotScheme.presets)) {
+      warning(`but we don't have it in presets of ${slotScheme.name}`);
+      return;
+    }
+
+    const preset = slotScheme.presets[name];
+    if (!('defaults' in preset)) {
+      warning(`but it doesn't have defaults`);
+      return;
+    }
+
+    await copyDefaultsToSlots()({ app, slotScheme: preset });
+  }
+
+  /**
+   *
+   * @param slotScheme
+   */
+  function checkSlotScheme (slotScheme) {
+    if (!slotScheme) {
+      throw new Error('There are no valid slot scheme. Need at least default');
+    }
+
+    if (slotScheme && slotScheme.name) {
+      debug(`we are going with "${slotScheme.name}" slot scheme`);
+    }
+  }
+
+  return {
+    handler,
+    populateSlots,
+    processPreset
+  };
 }
 
-/**
- *
- * @param slotScheme
- */
-function checkSlotScheme (slotScheme) {
-  if (!slotScheme) {
-    throw new Error('There are no valid slot scheme. Need at least default');
-  }
-
-  if (slotScheme && slotScheme.name) {
-    debug(`we are going with "${slotScheme.name}" slot scheme`);
-  }
-}
-
-/**
- *
- * @param app
- * @param slotScheme
- * @param presetParamName
- */
-async function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
-  let name = app.params.getByName(presetParamName);
-  if (!name) {
-    debug(`it wasn't preset`);
-    return;
-  }
-
-  debug(`we got preset "${name}" in "${slotScheme.name}"`);
-
-  if (!slotScheme.presets || !(name in slotScheme.presets)) {
-    warning(`but we don't have it in presets of ${slotScheme.name}`);
-    return;
-  }
-
-  const preset = slotScheme.presets[name];
-  if (!('defaults' in preset)) {
-    warning(`but it doesn't have defaults`);
-    return;
-  }
-
-  await copyDefaultsToSlots()({ app, slotScheme: preset });
-}
+const defaultInstance = build(defaultScheme);
 
 module.exports = {
-  handler,
-  populateSlots,
-  processPreset,
+  ...defaultInstance,
+  // we need to make that hack because this version of build doesn't return handler
+  // but also wrap it to object
+  build
 };

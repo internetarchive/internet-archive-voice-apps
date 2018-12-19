@@ -42,13 +42,19 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
-- scenario: 'when response drop music at the end of genre'
+- scenario: 'play music on: <genre>'
+  dialog:
+  - user: 'jazz music'
+    assistant:
+      directive: 'AudioPlayer.Play'
+
+- scenario: 'empty playlist: 78s -> <wrong_genre>'
   dialog:
   - user: 'seventy eighties'
   - user: 'christmas music'
-    assistant: "I don't have"
+    assistant: "I don't have christmas."
 
-- scenario: 'when response drop music at the end of genre'
+- scenario: 'play music on: 78s > <order>'
   dialog:
   - user: 'seventy eighties'
   - user: 'random'

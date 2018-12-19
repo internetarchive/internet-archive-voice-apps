@@ -94,27 +94,27 @@ describe('actions', () => {
     });
 
     it('should find action handler and map it', () => {
-      const previous = {
-        name: 'previous',
+      const previousSong = {
+        name: 'previous song',
         action: 'next'
       };
 
       const a = actions.fromJSON({
-        previous,
+        previousSong,
         qwerty: {
           name: 'qwerty'
         }
       });
 
       expect(a)
-        .to.have.property('previous')
+        .to.have.property('previous-song')
         .which.have.property('default').is.a('function');
 
       expect(a)
         .to.not.have.property('qwerty');
 
       const app = {};
-      a.previous.default(app);
+      a['previous-song'].default(app);
 
       expect(defaultFixture.next.build).to.have.been.calledWith(app);
     });

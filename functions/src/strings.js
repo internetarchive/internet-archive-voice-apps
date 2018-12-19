@@ -576,6 +576,7 @@ module.exports = {
       defaults: {
         'order': 'random',
         'collectionId': ['etree', 'georgeblood'],
+        'coverage': { skip: true },
         'creator': { skip: true },
         'year': { skip: true },
       },

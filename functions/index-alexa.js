@@ -7,9 +7,8 @@ pipeline.stage(pipeline.START);
 const actions = require('./src/actions');
 const alexaHandler = require('./src/platform/alexa/handler');
 const setup = require('./src/setup');
-const logAppStart = require('./src/utils/logger/log-app-start');
-
 const dialogsScheme = require('./src/strings').intents;
+const logAppStart = require('./src/utils/logger/log-app-start');
 
 const actionsMap = {
   ...actions.fromJSON(dialogsScheme),

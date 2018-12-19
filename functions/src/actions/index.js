@@ -49,7 +49,14 @@ function fromFiles () {
     }, {});
 }
 
-class MissedHandlerBuildError extends Error {}
+class MissedHandlerBuildError extends Error {
+}
+
+class HandlerIsNotFunctionError extends Error {
+}
+
+class BuildEmptyResult extends Error {
+}
 
 /**
  * grab actions from json scheme and map to handlers
@@ -69,14 +76,22 @@ function fromJSON (json) {
       if (!fs.existsSync(handlerPath)) {
         throw new Error(`we don't have handler file ${handlerPath}`);
       }
-      _.set(acc, [actionName, 'default'],
+      _.set(acc, [camelToKebab(actionName), 'default'],
         (app) => {
           // TODO: we should build action only once
           const module = require(handlerPath);
           if (typeof module['build'] !== 'function') {
             throw new MissedHandlerBuildError();
           }
-          return module.build(scheme)(app);
+          const handlerObject = module.build(scheme);
+          if (!handlerObject) {
+            throw new BuildEmptyResult();
+          }
+          const handler = ('handler' in handlerObject) ? handlerObject.handler : handlerObject;
+          if (typeof handler !== 'function') {
+            throw new HandlerIsNotFunctionError();
+          }
+          return handler(app);
         }
       );
       return acc;
