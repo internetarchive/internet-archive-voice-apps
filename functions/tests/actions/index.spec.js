@@ -74,6 +74,25 @@ describe('actions', () => {
       }).throw();
     });
 
+    it('should fail with erro when handler does not have build function', () => {
+      const previous = {
+        name: 'previous',
+        action: 'stop'
+      };
+
+      const a = actions.fromJSON({
+        previous,
+        qwerty: {
+          name: 'qwerty'
+        }
+      });
+
+      expect(() => {
+        const app = {};
+        a.previous.default(app);
+      }).throw(actions.MissedHandlerBuild);
+    });
+
     it('should find action handler and map it', () => {
       const previous = {
         name: 'previous',

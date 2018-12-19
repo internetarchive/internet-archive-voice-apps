@@ -49,6 +49,8 @@ function fromFiles () {
     }, {});
 }
 
+class MissedHandlerBuildError extends Error {}
+
 /**
  * grab actions from json scheme and map to handlers
  *
@@ -70,7 +72,11 @@ function fromJSON (json) {
       _.set(acc, [actionName, 'default'],
         (app) => {
           // TODO: we should build action only once
-          return require(handlerPath).build(scheme)(app);
+          const module = require(handlerPath);
+          if (typeof module['build'] !== 'function') {
+            throw new MissedHandlerBuildError();
+          }
+          return module.build(scheme)(app);
         }
       );
       return acc;
@@ -80,4 +86,5 @@ function fromJSON (json) {
 module.exports = {
   fromFiles,
   fromJSON,
+  MissedHandlerBuild: MissedHandlerBuildError,
 };
