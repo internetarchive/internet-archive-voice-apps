@@ -9,7 +9,12 @@ const alexaHandler = require('./src/platform/alexa/handler');
 const setup = require('./src/setup');
 const logAppStart = require('./src/utils/logger/log-app-start');
 
-const actionsMap = actions.fromFiles();
+const dialogsScheme = require('./src/strings').intents;
+
+const actionsMap = {
+  ...actions.fromJSON(dialogsScheme),
+  ...actions.fromFiles()
+};
 
 logAppStart(actionsMap);
 

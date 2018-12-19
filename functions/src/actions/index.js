@@ -56,6 +56,10 @@ function fromFiles () {
  * @returns {[string , any]}
  */
 function fromJSON (json) {
+  if (!json) {
+    throw new Error('parameter json is required');
+  }
+
   return Object.entries(json)
     .filter(([actionName, scheme]) => 'action' in scheme)
     .reduce((acc, [actionName, scheme]) => {

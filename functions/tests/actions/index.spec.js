@@ -68,6 +68,12 @@ describe('actions', () => {
   });
 
   describe('fromScheme', () => {
+    it('should fail if we have not pass json scheme', () => {
+      expect(() => {
+        actions.fromJSON();
+      }).throw();
+    });
+
     it('should find action handler and map it', () => {
       const previous = {
         name: 'previous',
