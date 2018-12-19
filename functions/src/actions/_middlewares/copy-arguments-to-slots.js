@@ -13,7 +13,7 @@ const { debug } = require('../../utils/logger/index')('ia:actions:middleware:cop
  */
 module.exports = () => ctx => {
   debug('start');
-  let { app, newValues = {}, slotScheme } = ctx;
+  let { app, newValues = {}, slots, slotScheme } = ctx;
   debug(`we have [${slotScheme.slots}] to check`);
   newValues = slotScheme.slots
     .reduce((newValues, slotName) => {
@@ -25,5 +25,5 @@ module.exports = () => ctx => {
     }, { ...newValues });
 
   debug(`and copied ${util.inspect(newValues)} slot(s)`);
-  return Promise.resolve({ ...ctx, newValues });
+  return Promise.resolve({ ...ctx, newValues, slots: { ...slots, ...newValues } });
 };

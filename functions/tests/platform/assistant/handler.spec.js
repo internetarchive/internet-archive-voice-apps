@@ -32,11 +32,11 @@ describe('platform', () => {
 
     beforeEach(() => {
       res = new MockResponse();
-      actions = new Map([
-        ['global-error', { default: require('../../../src/actions/global-error').handler }],
-        ['http-request-error', { default: require('../../../src/actions/http-request-error').handler }],
-        ['unhandled', { default: require('../../../src/actions/unhandled').handler }],
-      ]);
+      actions = {
+        'global-error': { default: require('../../../src/actions/global-error').handler },
+        'http-request-error': { default: require('../../../src/actions/http-request-error').handler },
+        'unhandled': { default: require('../../../src/actions/unhandled').handler }
+      };
 
       firestore = {};
       firestore.collection = sinon.stub().returns(firestore);
@@ -96,18 +96,18 @@ describe('platform', () => {
         it(`should warn in case of missed ${action} action`, () => {
           let warning = sinon.spy();
           handlerBuilder.__set__('warning', warning);
-          actions.delete(action);
+          delete actions[action];
           handlerBuilder(actions);
           expect(warning).to.have.been.called;
         });
       });
 
       it('should gracefully prompt user in case of http error inside of a handler', () => {
-        actions.set('on-action', {
+        actions['on-action'] = {
           default: () => {
             throw new errors.HTTPError();
           },
-        });
+        };
 
         const handler = handlerBuilder(actions);
         handler(buildIntentRequest({

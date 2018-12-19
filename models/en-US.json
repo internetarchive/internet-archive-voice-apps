@@ -127,10 +127,6 @@
                             "type": "COLLECTIONS"
                         },
                         {
-                            "name": "SUBJECT",
-                            "type": "AMAZON.Genre"
-                        },
-                        {
                             "name": "CREATOR",
                             "type": "COLLECTION_LIST"
                         },
@@ -144,7 +140,6 @@
                         }
                     ],
                     "samples": [
-                        "{SUBJECT} music",
                         "city {COVERAGE} year {YEAR}",
                         "search {CREATOR}",
                         "{COVERAGE} city",
@@ -156,8 +151,20 @@
                         "{YEAR}",
                         "{COVERAGE}",
                         "{CREATOR}",
-                        "{SUBJECT}",
                         "{COLLECTION_ID}"
+                    ]
+                },
+                {
+                    "name": "MusicQuerySubject",
+                    "slots": [
+                        {
+                            "name": "SUBJECT",
+                            "type": "AMAZON.Genre"
+                        }
+                    ],
+                    "samples": [
+                        "{SUBJECT} music",
+                        "{SUBJECT}"
                     ]
                 },
                 {
@@ -218,6 +225,38 @@
                 },
                 {
                     "name": "AMAZON.ShuffleOffIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
                     "samples": []
                 }
             ],

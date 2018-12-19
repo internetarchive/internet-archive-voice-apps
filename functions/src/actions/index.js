@@ -22,10 +22,12 @@
  *
  */
 
+const fs = require('fs');
 const _ = require('lodash');
-const entries = require('object.entries');
+const path = require('path');
 
 const extension = require('../extensions/builder');
+const camelToKebab = require('../utils/camel-to-kebab');
 
 const { actionNameByFileName } = require('./_helpers');
 
@@ -34,8 +36,8 @@ const { actionNameByFileName } = require('./_helpers');
  *
  * @returns {Array}
  */
-function withStates () {
-  const res = extension
+function fromFiles () {
+  return extension
     .build({ recursive: true, root: __dirname })
     .all()
     .map(({ filename, ext }) => ([actionNameByFileName(filename, __dirname), ext.handler]))
@@ -45,10 +47,59 @@ function withStates () {
       _.set(acc, [actionName, ...actionPath, 'default'], handler);
       return acc;
     }, {});
+}
 
-  return new Map(entries(res));
+class MissedHandlerBuildError extends Error {
+}
+
+class HandlerIsNotFunctionError extends Error {
+}
+
+class BuildEmptyResult extends Error {
+}
+
+/**
+ * grab actions from json scheme and map to handlers
+ *
+ * @param json
+ * @returns {[string , any]}
+ */
+function fromJSON (json) {
+  if (!json) {
+    throw new Error('parameter json is required');
+  }
+
+  return Object.entries(json)
+    .filter(([actionName, scheme]) => 'action' in scheme)
+    .reduce((acc, [actionName, scheme]) => {
+      const handlerPath = path.join(__dirname, camelToKebab(scheme.action)) + '.js';
+      if (!fs.existsSync(handlerPath)) {
+        throw new Error(`we don't have handler file ${handlerPath}`);
+      }
+      _.set(acc, [camelToKebab(actionName), 'default'],
+        (app) => {
+          // TODO: we should build action only once
+          const module = require(handlerPath);
+          if (typeof module['build'] !== 'function') {
+            throw new MissedHandlerBuildError();
+          }
+          const handlerObject = module.build(scheme);
+          if (!handlerObject) {
+            throw new BuildEmptyResult();
+          }
+          const handler = ('handler' in handlerObject) ? handlerObject.handler : handlerObject;
+          if (typeof handler !== 'function') {
+            throw new HandlerIsNotFunctionError();
+          }
+          return handler(app);
+        }
+      );
+      return acc;
+    }, {});
 }
 
 module.exports = {
-  withStates,
+  fromFiles,
+  fromJSON,
+  MissedHandlerBuild: MissedHandlerBuildError,
 };

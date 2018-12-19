@@ -2,7 +2,7 @@ const { debug } = require('./')('ia:start');
 const packageJSON = require('../../../package.json');
 
 module.exports = (actionsMap) => {
-  const actionNames = Array.from(actionsMap.keys())
+  const actionNames = Object.keys(actionsMap)
     .map(name => `"${name}"`)
     .join(', ');
 

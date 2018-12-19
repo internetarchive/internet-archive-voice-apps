@@ -62,6 +62,11 @@ describe('actions / middleware / map-slot-values', () => {
         ...ctx.newValues,
         genre: ['christmas'],
       },
+      slots: {
+        genre: [
+          'christmas'
+        ],
+      },
     });
   });
 
@@ -78,6 +83,9 @@ describe('actions / middleware / map-slot-values', () => {
     expect(res).to.be.deep.equal({
       newValues: {
         ...ctx.newValues,
+        genre: 'christmas',
+      },
+      slots: {
         genre: 'christmas',
       },
     });

@@ -14,10 +14,10 @@ describe('platform', () => {
     });
 
     it('should populate intent handlers without states', () => {
-      const actionsMap = new Map([
-        ['welcome', { default: sinon.spy }],
-        ['hello', { default: sinon.spy }],
-      ]);
+      const actionsMap = {
+        'welcome': { default: sinon.spy },
+        'hello': { default: sinon.spy }
+      };
       const res = builder({ actionsMap, after });
       expect(res).to.have.lengthOf(2);
       expect(res[0]).to.have.property('intent', 'welcome');
@@ -42,10 +42,10 @@ describe('platform', () => {
           playback: { default: sinon.spy() },
         };
 
-        actionsMap = new Map([
-          ['welcome', welcomeHandlers],
-          ['hello', helloHandlers],
-        ]);
+        actionsMap = {
+          'welcome': welcomeHandlers,
+          'hello': helloHandlers,
+        };
       });
 
       it('should populate intent handlers with states', () => {

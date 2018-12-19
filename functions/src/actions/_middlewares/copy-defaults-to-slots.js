@@ -16,8 +16,10 @@ const entries = require('../../utils/polyfill/entries');
  */
 module.exports = () => ctx => {
   debug('start');
-  let { app, newValues = {}, slotScheme } = ctx;
+  let { app, newValues = {}, slots = {}, slotScheme } = ctx;
+  debug('slotScheme.defaults', slotScheme);
   if (slotScheme.defaults) {
+    slots = { ...slots };
     debug(`we have [${Object.keys(slotScheme.defaults)}] to check`);
     newValues = entries(slotScheme.defaults)
       .reduce((newValues, [slotName, value]) => {
@@ -27,6 +29,7 @@ module.exports = () => ctx => {
           } else {
             query.setSlot(app, slotName, value);
           }
+          slots[slotName] = value;
           newValues[slotName] = value;
         }
         return newValues;
@@ -34,5 +37,5 @@ module.exports = () => ctx => {
     debug(`and copied ${util.inspect(newValues)} slot(s)`);
   }
 
-  return Promise.resolve({ ...ctx, newValues });
+  return Promise.resolve({ ...ctx, slots, newValues });
 };

@@ -78,7 +78,7 @@ function findHandlersByInput (actions, handlerInput) {
 
   name = _.get(handlerInput, 'requestEnvelope.request.intent.name');
   debug('intent name:', name);
-  handlers = actions.get(camelToKebab(name));
+  handlers = actions[camelToKebab(name)];
 
   if (handlers) {
     return { handlers, name };
@@ -86,7 +86,7 @@ function findHandlersByInput (actions, handlerInput) {
 
   name = stripAmazonIntent(name);
   debug('name without heading amazon:', name);
-  handlers = actions.get(camelToKebab(name));
+  handlers = actions[camelToKebab(name)];
 
   if (handlers) {
     return { handlers, name };
@@ -97,7 +97,7 @@ function findHandlersByInput (actions, handlerInput) {
   if (requestType) {
     requestType = stripRequestType(requestType);
     debug('just type', requestType);
-    handlers = actions.get(camelToKebab(requestType));
+    handlers = actions[camelToKebab(requestType)];
     if (handlers) {
       return { handlers, name: requestType };
     }
@@ -111,7 +111,7 @@ function findHandlersByInput (actions, handlerInput) {
     name = splitName.join('_');
     debug('without tail', name);
     debug('kebab', camelToKebab(name));
-    handlers = actions.get(camelToKebab(name));
+    handlers = actions[camelToKebab(name)];
     if (handlers) {
       return { handlers, name };
     }
@@ -134,21 +134,21 @@ module.exports = (actions) => {
     return {};
   }
 
-  const globalErrorHandler = actions.get('global-error');
+  const globalErrorHandler = actions['global-error'];
   if (!globalErrorHandler) {
     warning(
       'we missed action handler actions/global-error, ' +
       'which is required to handle global unhandled errors.');
   }
 
-  const httpRequestErrorHandler = actions.get('http-request-error');
+  const httpRequestErrorHandler = actions['http-request-error'];
   if (!httpRequestErrorHandler) {
     warning(
       'we missed action handler actions/http-request-error, ' +
       'which is required to handle http request errors.');
   }
 
-  const unhandledHandler = actions.get('unhandled');
+  const unhandledHandler = actions['unhandled'];
   if (!unhandledHandler) {
     warning(
       'we missed action handler actions/unhandled,' +
@@ -194,8 +194,7 @@ module.exports = (actions) => {
       });
   }
 
-  return Array
-    .from(actions.entries())
+  return Object.entries(actions)
     .map(([name, handlers]) => {
       const intent = kebabToCamel(name);
       return {
