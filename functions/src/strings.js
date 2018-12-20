@@ -139,7 +139,7 @@ module.exports = {
             '<break strength="weak"/> or <break strength="weak"/> randomly play grateful dead' +
             '<break strength="weak"/> or play any other genre or artist. </s> ' +
             '<s>And finally you can just answer my questions so I would help you to find right records. </s>' +
-            '<s>Do you want to continue payback {{playback.creator}} record?</s>',
+            '<s>Do you want to continue payback {{playback.creator}} records?</s>',
           suggestions: ['yes', 'no'],
         },
       },
