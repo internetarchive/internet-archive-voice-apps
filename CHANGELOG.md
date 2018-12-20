@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.5.7](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.7) (2018-12-20)
+[Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.6...2.5.7)
+
+**Implemented enhancements:**
+
+- update welcome phrase [\#424](https://github.com/internetarchive/internet-archive-google-action/issues/424)
+- "\<genre\>" should work as "play \<genre\>" [\#422](https://github.com/internetarchive/internet-archive-google-action/issues/422)
+
+**Merged pull requests:**
+
+- Feature/430 add dialogflow model [\#431](https://github.com/internetarchive/internet-archive-google-action/pull/431) ([hyzhak](https://github.com/hyzhak))
+- update welcoming phrase \> yes phrase [\#429](https://github.com/internetarchive/internet-archive-google-action/pull/429) ([hyzhak](https://github.com/hyzhak))
+- Feature/424 update welcoming phrase [\#428](https://github.com/internetarchive/internet-archive-google-action/pull/428) ([hyzhak](https://github.com/hyzhak))
+- Feature/422 genre should work as play genre [\#427](https://github.com/internetarchive/internet-archive-google-action/pull/427) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.6](https://github.com/internetarchive/internet-archive-google-action/tree/2.5.6) (2018-12-18)
 [Full Changelog](https://github.com/internetarchive/internet-archive-google-action/compare/2.5.5...2.5.6)
 
