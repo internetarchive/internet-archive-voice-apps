@@ -22,16 +22,19 @@ describe('actions', () => {
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
       expect(dialog.ask.args[0][1]).to.have.property('speech')
-        .to.equal('Welcome to music at the Internet Archive. You can listen to our collections of 78s or live concerts. Which would you like to listen to?');
+        .to.include('Welcome to music at the Internet Archive.')
+        .and.include('78s');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
-        .with.members(['78s', 'Live Concerts']);
+        .with.members(['78s', 'Live Concerts', 'Christmas music']);
     });
 
     it('should reprompt with speech', () => {
       let app = mockApp();
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
-        .to.include('You can listen to our collections of 78s or live concerts. Which would you like to listen to?');
+        .to.include('Want to listen to')
+        .and.include('78s')
+        .and.include('live');
     });
 
     it('should reset query slots', () => {

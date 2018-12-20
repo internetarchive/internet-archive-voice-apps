@@ -1,7 +1,7 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. You can listen to our collections of 78s or live concerts. Which would you like to listen to?'
+  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, live concerts, or Christmas music?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
@@ -151,7 +151,7 @@
           - 'playlist is ending'
           - 'Would you like to continue listening'
     - user: 'no'
-      assistant: 'Which would you like to listen to?'
+      assistant: 'Welcome to music at the Internet Archive'
 
 - scenario: 'resume playback after end of the playlist on next'
   dialog:
@@ -210,7 +210,7 @@
         without:
           directive: 'AudioPlayer.Play'
     - user: 'no'
-      assistant: 'Which would you like to listen to?'
+      assistant: 'Want to listen to 78s'
 
 - scenario: 'handle stop intent when nothing is playing right now'
   dialog:
@@ -229,7 +229,7 @@
       - 'You are using Internet Archive service.'
       - 'Here we have collections of Live Concerts and 78'
       # and repeat the last question
-      - 'You can listen to our collections of 78s or live concerts'
+      - 'Want to listen to 78s'
       # but without the last acknowledge
       - without: 'Welcome to music at the Internet Archive'
 
@@ -237,7 +237,7 @@
   dialog:
   - user: 'help'
   - user: 'help'
-    assistant: 'You can listen to our collections of 78s or live concerts'
+    assistant: 'Want to listen to 78s'
 
 - scenario: 'reprompt to the music query after help intent'
   dialog:
@@ -278,7 +278,7 @@
 - scenario: 'prompt user to the last question on improper "no"'
   dialog:
     - user: 'no'
-      assistant: 'Which would you like to listen to?'
+      assistant: 'Want to listen to 78s'
 
 - scenario: 'prompt user to the last question after version intent'
   dialog:
@@ -286,7 +286,7 @@
       assistant:
         all:
           - 'Version is'
-          - 'Which would you like to listen to?'
+          - 'Want to listen to 78s'
 
 - scenario: 'resume playback after version intent'
   dialog:
@@ -318,7 +318,7 @@
         all:
           - 'The Internet Archive Skill can not help with that'
           - 'But I can help you to find music record'
-          - 'Which would you like to listen to?'
+          - 'Want to listen to 78s'
 
 - scenario: 'play next song'
   dialog:
@@ -340,7 +340,7 @@
       assistant:
         all:
           - 'Nothing is playing right now'
-          - 'Which would you like to listen to?'
+          - 'Want to listen to 78s'
 
 - scenario: 'nothing is playing when user ask play previous song out of playback'
   dialog:
@@ -348,7 +348,7 @@
       assistant:
         all:
           - 'Nothing is playing right now'
-          - 'Which would you like to listen to?'
+          - 'Want to listen to 78s'
 
 - scenario: 'loop on'
   dialog:
