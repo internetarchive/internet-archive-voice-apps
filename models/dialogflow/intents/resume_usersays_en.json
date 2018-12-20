@@ -1,0 +1,26 @@
+[
+  {
+    "id": "b4635650-4a4c-4d27-ba08-0e8107864529",
+    "data": [
+      {
+        "text": "continue",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1525194651
+  },
+  {
+    "id": "1517751f-d499-4f0d-8be5-0e7de3997060",
+    "data": [
+      {
+        "text": "resume",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1525194651
+  }
+]

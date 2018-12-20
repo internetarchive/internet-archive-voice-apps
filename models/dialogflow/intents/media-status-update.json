@@ -1,0 +1,33 @@
+{
+  "id": "a4889775-7528-4992-8654-3587dbc9b1d9",
+  "name": "media-status-update",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "media-status-update",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Failed to get media status."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1539699216,
+  "fallbackIntent": false,
+  "events": [
+    {
+      "name": "actions_intent_MEDIA_STATUS"
+    }
+  ]
+}

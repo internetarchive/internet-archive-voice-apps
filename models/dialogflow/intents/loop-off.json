@@ -1,0 +1,29 @@
+{
+  "id": "0f71579e-b348-400a-8b27-fcf1c4e11bd4",
+  "name": "loop-off",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "loop-off",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1542205142,
+  "fallbackIntent": false,
+  "events": []
+}

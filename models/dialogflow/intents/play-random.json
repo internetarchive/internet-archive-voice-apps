@@ -1,0 +1,29 @@
+{
+  "id": "40a2a70a-2dd7-437a-a923-e693cdcb8c04",
+  "name": "play-random",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "play-random",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "is not implemented yet"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 0,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1540906243,
+  "fallbackIntent": false,
+  "events": []
+}

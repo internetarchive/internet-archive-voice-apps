@@ -1,0 +1,29 @@
+{
+  "id": "3d1f3fe7-fbbc-409d-9717-3b45a21d90d3",
+  "name": "read-audiobook-moby-dick-chapter-3",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "read-audiobook-moby-dick-chapter-3",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1535114338,
+  "fallbackIntent": false,
+  "events": []
+}

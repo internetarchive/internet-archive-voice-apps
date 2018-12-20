@@ -1,0 +1,195 @@
+[
+  {
+    "id": "89f21736-6161-4b41-a227-240420eb8fec",
+    "data": [
+      {
+        "text": "go to sleep",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "01cfd7a1-fd60-4b60-b25d-3d8f61a9043c",
+    "data": [
+      {
+        "text": "I am stuck in the loop",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "707d7bd1-1ec8-469c-8e19-79fd557c97a2",
+    "data": [
+      {
+        "text": "stop the internet archive",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "69e110d2-e96b-4855-9d19-0abc6693caa7",
+    "data": [
+      {
+        "text": "end session",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9a4a07a3-cafb-4a74-9c09-fd7946e34e7d",
+    "data": [
+      {
+        "text": "hey Google please",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "51370494-72bc-449d-b2f6-e865362950c5",
+    "data": [
+      {
+        "text": "please take me out of this stupid St candidate place",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "257a25e4-5f1a-44a9-80de-754e4684d421",
+    "data": [
+      {
+        "text": "exit if I done that by exit if I\u0027d done that",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "0b00f15a-3078-414d-a7ce-ebd90830f10f",
+    "data": [
+      {
+        "text": "quite",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1524859908
+  },
+  {
+    "id": "c6609994-d342-40a6-87e0-e597299de6b1",
+    "data": [
+      {
+        "text": "off",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1524859908
+  },
+  {
+    "id": "f179ce6b-5e1b-45c8-a7ad-8727285b7c82",
+    "data": [
+      {
+        "text": "don\u0027t talk",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "22aac6fe-4665-466e-b487-58c2633f16cd",
+    "data": [
+      {
+        "text": "I want Google assistant",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "359321d1-e2e9-47a1-b974-4da6ace0da15",
+    "data": [
+      {
+        "text": "I don\u0027t want to listen anything",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a91f8b48-5738-4e6a-8e2f-8c6952dbf75e",
+    "data": [
+      {
+        "text": "close",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1524859908
+  },
+  {
+    "id": "635d03aa-1d5a-499e-90fc-b491652f01be",
+    "data": [
+      {
+        "text": "goodbye",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1524859908
+  },
+  {
+    "id": "c42e23b6-5e45-4268-9027-3ae370defff1",
+    "data": [
+      {
+        "text": "none",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "64da06c1-8081-4e06-b8d3-d76847266cc0",
+    "data": [
+      {
+        "text": "where\u0027s the lady",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

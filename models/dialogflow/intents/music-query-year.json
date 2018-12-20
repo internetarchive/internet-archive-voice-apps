@@ -1,0 +1,38 @@
+{
+  "id": "e60a2292-04db-4671-a457-f360c65b0bf1",
+  "name": "music-query-year",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "music-query",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "31dd53b8-b293-4d78-a6c9-d79a8cc19154",
+          "required": false,
+          "dataType": "@sys.number",
+          "name": "year",
+          "value": "$year",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 250000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1525167152,
+  "fallbackIntent": false,
+  "events": []
+}

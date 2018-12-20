@@ -1,0 +1,20 @@
+[
+  {
+    "value": "true",
+    "synonyms": [
+      "on",
+      "enable",
+      "use",
+      "true"
+    ]
+  },
+  {
+    "value": "false",
+    "synonyms": [
+      "off",
+      "diable",
+      "hide",
+      "false"
+    ]
+  }
+]

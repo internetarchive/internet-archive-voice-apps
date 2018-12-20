@@ -1,0 +1,33 @@
+{
+  "id": "32f829ce-8823-46fb-8e78-55a931a5f10d",
+  "parentId": "903bd4f5-bfbd-4018-b245-961d595a492e",
+  "rootParentId": "903bd4f5-bfbd-4018-b245-961d595a492e",
+  "name": "welcome - yes",
+  "auto": true,
+  "contexts": [
+    "welcome-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "welcome/welcome-yes",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "You need to select 78s or Live Concerts"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 250000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1522451601,
+  "fallbackIntent": false,
+  "events": []
+}

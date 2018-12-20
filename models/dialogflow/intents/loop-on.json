@@ -1,0 +1,29 @@
+{
+  "id": "1234e8a6-e699-4fa4-958f-e75b1a22a77f",
+  "name": "loop-on",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "loop-on",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1542205069,
+  "fallbackIntent": false,
+  "events": []
+}

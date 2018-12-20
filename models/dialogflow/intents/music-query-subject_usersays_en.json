@@ -1,0 +1,78 @@
+[
+  {
+    "id": "a2290db7-ddbf-48dd-89ed-833115182f74",
+    "data": [
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "live",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545262738
+  },
+  {
+    "id": "705f41d6-80e2-4c07-be7a-df7a5ad5b978",
+    "data": [
+      {
+        "text": "live",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545262738
+  },
+  {
+    "id": "4a30a8ce-0294-48f3-a503-a7a182c8f6f9",
+    "data": [
+      {
+        "text": "dance",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170567
+  },
+  {
+    "id": "eb670650-4b10-4f27-ac96-6174e3c23d67",
+    "data": [
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170390
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "id": "c5e8ba11-10d4-49c3-a0af-3a7580513083",
+  "name": "exit",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "exit",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Alright, see you next time!"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1524859908,
+  "fallbackIntent": false,
+  "events": []
+}

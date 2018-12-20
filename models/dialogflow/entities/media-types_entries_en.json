@@ -1,0 +1,20 @@
+[
+  {
+    "value": "track",
+    "synonyms": [
+      "track"
+    ]
+  },
+  {
+    "value": "song",
+    "synonyms": [
+      "song"
+    ]
+  },
+  {
+    "value": "record",
+    "synonyms": [
+      "record"
+    ]
+  }
+]

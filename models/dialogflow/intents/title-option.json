@@ -1,0 +1,38 @@
+{
+  "id": "a81635ca-f319-4743-9f73-63e69b410c6a",
+  "name": "title-option",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "title-option",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "9b6b6d0b-4670-471b-8c46-e08c619e6714",
+          "required": false,
+          "dataType": "@boolean",
+          "name": "value",
+          "value": "$value",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1521143059,
+  "fallbackIntent": false,
+  "events": []
+}

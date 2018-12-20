@@ -1,0 +1,78 @@
+{
+  "id": "0ce279d8-6f4f-4c59-9215-db7aa5b2bcea",
+  "name": "in-one-go-music-playback",
+  "auto": false,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "in-one-go-music-playback",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "abf48d9c-d569-401a-a90b-f9dc85d0c840",
+          "required": false,
+          "dataType": "@order",
+          "name": "order",
+          "value": "$order",
+          "isList": false
+        },
+        {
+          "id": "632d3378-66df-464e-b90b-b62997682eca",
+          "required": false,
+          "dataType": "@creators",
+          "name": "creator",
+          "value": "$creator",
+          "isList": false
+        },
+        {
+          "id": "38f823b4-a642-442d-9086-4dd0fa857ee2",
+          "required": false,
+          "dataType": "@genres",
+          "name": "subject",
+          "value": "$subject",
+          "isList": false
+        },
+        {
+          "id": "6735d09f-bed9-4a38-9ce4-e3f6413d402a",
+          "required": false,
+          "dataType": "@collections",
+          "name": "collectionId",
+          "value": "$collectionId",
+          "isList": false
+        },
+        {
+          "id": "23403395-09ea-4dac-b9b7-af07c7361822",
+          "required": false,
+          "dataType": "@sys.geo-city",
+          "name": "coverage",
+          "value": "$coverage",
+          "isList": false
+        },
+        {
+          "id": "af5f637b-80d2-4b4d-8cdc-435aa6db4800",
+          "required": false,
+          "dataType": "@sys.number-integer",
+          "name": "year",
+          "value": "$year",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1543932495,
+  "fallbackIntent": false,
+  "events": []
+}
