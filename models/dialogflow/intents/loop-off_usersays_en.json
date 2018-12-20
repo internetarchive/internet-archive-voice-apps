@@ -1,0 +1,53 @@
+[
+  {
+    "id": "b4c7941b-2e50-4ee4-a411-c990ec6046a9",
+    "data": [
+      {
+        "text": "don\u0027t repeat",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1542205142
+  },
+  {
+    "id": "d876a358-6b26-4c99-98b8-a2a4741cf946",
+    "data": [
+      {
+        "text": "loop",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "off",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1542205142
+  },
+  {
+    "id": "84c31216-c504-4ec8-8f9f-67e8560f8ff9",
+    "data": [
+      {
+        "text": "stop",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " repeat",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1542205142
+  }
+]

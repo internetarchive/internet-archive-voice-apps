@@ -160,7 +160,7 @@ describe('integration', () => {
 
           alexa = VirtualAlexa.Builder()
             .handler('./index-alexa.handler')
-            .interactionModelFile('../models/en-US.json')
+            .interactionModelFile(path.join('..', 'models', 'alexaskill', 'en-US.json'))
             .create();
         });
 

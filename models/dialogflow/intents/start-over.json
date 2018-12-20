@@ -1,0 +1,29 @@
+{
+  "id": "b6b239ad-7af6-4e26-be7b-c242272ad4ef",
+  "name": "start-over",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "start-over",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1541454883,
+  "fallbackIntent": false,
+  "events": []
+}

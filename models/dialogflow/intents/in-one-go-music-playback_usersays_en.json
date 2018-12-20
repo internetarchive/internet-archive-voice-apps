@@ -1,0 +1,1658 @@
+[
+  {
+    "id": "668a7754-7e58-4967-bb29-2c462faab77f",
+    "data": [
+      {
+        "text": "yes please play the hollies songs ",
+        "userDefined": false
+      },
+      {
+        "text": "from the 70s",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1543932495
+  },
+  {
+    "id": "d15eefba-4862-4505-a3b3-bce83a8553df",
+    "data": [
+      {
+        "text": "play some ",
+        "userDefined": false
+      },
+      {
+        "text": "1920",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "ragtime",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1543932495
+  },
+  {
+    "id": "6f14f6d5-b0e8-4426-ae5d-44e5706e37ed",
+    "data": [
+      {
+        "text": "play music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5ef37fba-7509-4a99-89a3-bced4b6fa31f",
+    "data": [
+      {
+        "text": "play",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c1999b9e-3718-42ff-a59e-0eaf5f96e8ae",
+    "data": [
+      {
+        "text": "play something from ",
+        "userDefined": false
+      },
+      {
+        "text": "278",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4ea9abf8-5c7c-4ed3-9a7c-a832de17a38e",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "German",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c7986ccf-3dd6-4851-8833-cab52725ef2b",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "French",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "42272a20-c50d-4fa3-85b7-207ea73b399b",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "religious",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9cce7f8c-b3f2-4c26-9b99-3daba5aa415b",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "opera",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "ab39ebb7-d761-43c3-a346-e6da3816391d",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "classic",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "6e855711-19c2-4b98-b4fa-a84c84dad572",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1de637d1-e9a5-4bae-beb4-fd09894b7f19",
+    "data": [
+      {
+        "text": "ask internet archive ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "16155128-c0aa-43a6-a086-be4015e8ca23",
+    "data": [
+      {
+        "text": "Oscar",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " internet archive to play some ",
+        "userDefined": false
+      },
+      {
+        "text": "random",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2e6aacf1-2ed9-414d-a467-9a45fc1bb63a",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "spoken word",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4481c6f0-f88f-4c9d-98de-7cbb4c893869",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "comedy",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "62ac249f-5423-468f-870d-c7cfcc0aeebe",
+    "data": [
+      {
+        "text": "ask the internet archive to ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d728c4d2-4ff0-4424-91cb-7a195b64cc1f",
+    "data": [
+      {
+        "text": "I don\u0027t know pick one",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "aa3f42ff-c17c-45e4-99d9-afede443646d",
+    "data": [
+      {
+        "text": "hey Google the ",
+        "userDefined": false
+      },
+      {
+        "text": "rock",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " songs",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "46caf6fd-1710-406d-992d-5811127983b5",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " songs",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1521327086
+  },
+  {
+    "id": "83afd9e4-2c87-4357-a5cc-d0d11fd656c7",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "1930",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "popular music",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "181696ea-91e4-4b84-bbb0-498a59e0cb80",
+    "data": [
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "live",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "5a929cb8-0ebf-4047-94a9-9abe6542b493",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "the best",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "e647fab5-016c-42f1-adc5-0463d08874a2",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "bluegrass",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e8af4ed0-2548-46a8-a773-1d778638ca96",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "Greek",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4ae80b1d-d717-4f3f-a7d1-89cf8463b83a",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "live",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "9ca0643a-3a38-434b-99e4-eddda070708f",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " concerts from ",
+        "userDefined": false
+      },
+      {
+        "text": "Brooklyn",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "61297716-312d-4f74-8030-762159a6271d",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "1977",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "3c60d1c7-2758-4236-b732-7b1dcd46106f",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Ramones",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "d19aaeeb-a0e9-4e59-8e48-2569945d2ed0",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "the best",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "56c824c5-597d-4d80-ac9c-c5f957072ba9",
+    "data": [
+      {
+        "text": "Listen to ",
+        "userDefined": false
+      },
+      {
+        "text": "the latest episode",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "Story Corps",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "f883cb67-784e-4361-a9b2-c5734b34a9ba",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1521327086
+  },
+  {
+    "id": "cacd41ef-6d80-494a-910c-3ccfaa2748cc",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "c5ede247-4927-465b-a174-45728228fab3",
+    "data": [
+      {
+        "text": "search the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "00d735a8-d4e0-4086-8a47-fdf87531eb9a",
+    "data": [
+      {
+        "text": "hey Google ask the internet archive to ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "caa79fc3-79fe-4c56-84f0-ebddb3a61d8f",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " of ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "ca513c1c-e3f5-4d5b-9ac3-db3fcfe6f375",
+    "data": [
+      {
+        "text": "Ask Internet Archive to play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c4278006-aafc-488a-a6a6-0b667cce685b",
+    "data": [
+      {
+        "text": "play something ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "40870aed-482a-487c-9686-e0ce46d6ba99",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "b88a0a9f-8519-4f0c-8ffb-cb5d678b8f44",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "097384e2-465c-4cf2-92af-70f01787219d",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "1970",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      },
+      {
+        "text": " music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "ab2f7caf-daf1-4129-998b-dddfc948bf67",
+    "data": [
+      {
+        "text": "ask the internet archive to ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "5308d024-038b-4a10-9a8c-316adffb893d",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1977",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "68becf02-64d8-47ff-8e8e-944819623c35",
+    "data": [
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "c07c73c9-1593-49f1-a267-f256f5569dd3",
+    "data": [
+      {
+        "text": "I want to listen songs",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "89f2049d-187d-4c70-ad66-c6789ca9ddd2",
+    "data": [
+      {
+        "text": "play collection ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " city ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " year ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1523896014
+  },
+  {
+    "id": "dc3d413f-23be-49c1-9815-c6bd95f2d92a",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "the Cowboy Junkies",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "55cf9a7c-8373-4298-9ee0-7c97a5e5ba46",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "random",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "0e7ac901-8fd1-407b-8d87-788116baf789",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "06f689f3-c908-4539-a776-cb2fe86c7355",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "0953f904-a51a-4cb9-9d8f-a9c43ad56955",
+    "data": [
+      {
+        "text": "let\u0027s play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1523896014
+  },
+  {
+    "id": "20928247-09e9-465a-bc0d-f67440709254",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "eb93ebf8-63f5-4848-82ef-49412dd71fc9",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "24862241-f945-44d5-8dd6-0ceec8e744c8",
+    "data": [
+      {
+        "text": "play internet archive ",
+        "userDefined": false
+      },
+      {
+        "text": "Blues",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "b89a6972-72cf-4b7a-81da-5070eb0775e7",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1528051573
+  },
+  {
+    "id": "d47f13cb-333e-4702-9f97-cd03acb6190a",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " search ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "updated": 1528051573
+  },
+  {
+    "id": "310cb045-3be2-4ac5-8f83-78039edba41f",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " search the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "89e7e69b-8b14-44ba-9767-1f31c697a654",
+    "data": [
+      {
+        "text": "search ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1523896014
+  },
+  {
+    "id": "9ba97e4a-ee45-4d0e-aea1-0a3e9e0443f8",
+    "data": [
+      {
+        "text": "hey Google play band ",
+        "userDefined": false
+      },
+      {
+        "text": "Ramones",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "e994fc60-6634-4f8a-b3cf-bd5a71287ce2",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play the ",
+        "userDefined": false
+      },
+      {
+        "text": "Disco Biscuits",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d27c0960-360c-4950-9632-e7e0f827d890",
+    "data": [
+      {
+        "text": "play concerts from ",
+        "userDefined": false
+      },
+      {
+        "text": "Brooklyn, NY",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "6920d88d-78a3-4fef-8f6c-436f8c4cccf9",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "all",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "3ecc0ce9-34c0-4a7c-bac5-781f74413165",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "c7e3863c-30ff-4978-9545-668d37c737e4",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "children",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " songs ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "78655c82-b02b-4bcd-be2b-a017e90b305b",
+    "data": [
+      {
+        "text": "play the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "156039bb-8524-4c02-8beb-7babe313b06e",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  },
+  {
+    "id": "7fe046be-02b6-4357-9edf-e5e30408eb24",
+    "data": [
+      {
+        "text": "play me some of them ",
+        "userDefined": false
+      },
+      {
+        "text": "hip Rhymes",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " yell",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1528051573
+  }
+]

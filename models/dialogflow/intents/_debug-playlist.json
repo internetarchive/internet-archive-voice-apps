@@ -1,0 +1,29 @@
+{
+  "id": "90877e46-c95b-4a87-bb64-cb59143dd2cc",
+  "name": "_debug-playlist",
+  "auto": false,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "debug-action",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1519326836,
+  "fallbackIntent": false,
+  "events": []
+}

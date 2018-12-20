@@ -1,0 +1,29 @@
+{
+  "id": "3d876f09-cf85-4802-ac86-a17e8fc19623",
+  "name": "shuffle-on",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "shuffle-on",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1542378617,
+  "fallbackIntent": false,
+  "events": []
+}

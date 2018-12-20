@@ -1,0 +1,44 @@
+{
+  "id": "1299dd2e-f383-4798-8aa9-f60bd6e43dda",
+  "name": "music-query-subject",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "music-query-subject",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "76acdca1-49b6-4d7d-9135-c67d715eaf2d",
+          "required": false,
+          "dataType": "@genres",
+          "name": "subject",
+          "value": "$subject",
+          "isList": false
+        },
+        {
+          "id": "96c8c184-51f8-4423-9326-c4196a6f393c",
+          "dataType": "@collections",
+          "name": "collectionId",
+          "value": "$collectionId"
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1545262738,
+  "fallbackIntent": false,
+  "events": []
+}

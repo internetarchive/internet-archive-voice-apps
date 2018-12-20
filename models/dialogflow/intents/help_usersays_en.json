@@ -1,0 +1,132 @@
+[
+  {
+    "id": "b25c3cc1-8b20-4fc3-8593-e55028e57e4c",
+    "data": [
+      {
+        "text": "OK Google Voice guide",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d4fcbaba-f405-4648-b31b-f78fb766680f",
+    "data": [
+      {
+        "text": "I don\u0027t know what you want",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d6e72145-9f8d-49e1-a0a4-83e24eda42f1",
+    "data": [
+      {
+        "text": "hey Google we don\u0027t know what you want",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9866e6f5-c066-46ec-a0bd-e8967ea7b1c8",
+    "data": [
+      {
+        "text": "I do not understand",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "b95b7c9d-828d-4960-83e3-f7c106648341",
+    "data": [
+      {
+        "text": "what can you play",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "561bb1fc-5a4f-44c7-9f94-a2b304dcb79f",
+    "data": [
+      {
+        "text": "please help",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1541165407
+  },
+  {
+    "id": "040ea748-df19-4992-8637-e0fd942c34f2",
+    "data": [
+      {
+        "text": "help ",
+        "userDefined": false
+      },
+      {
+        "text": "me",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1540935044
+  },
+  {
+    "id": "27e8596a-e5af-4390-92c9-429101a5596c",
+    "data": [
+      {
+        "text": "can you help ",
+        "userDefined": false
+      },
+      {
+        "text": "me",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1540935044
+  },
+  {
+    "id": "326f1320-fb7e-4e86-a552-a35035d42e0c",
+    "data": [
+      {
+        "text": "what can I do",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1540935044
+  },
+  {
+    "id": "3cc66050-2229-40b0-94cc-203c0b1196b6",
+    "data": [
+      {
+        "text": "help",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1540935044
+  }
+]

@@ -1,0 +1,1352 @@
+[
+  {
+    "value": "Blues",
+    "synonyms": [
+      "Blues"
+    ]
+  },
+  {
+    "value": "78rpm",
+    "synonyms": [
+      "78rpm"
+    ]
+  },
+  {
+    "value": "Bai o",
+    "synonyms": [
+      "Bai o"
+    ]
+  },
+  {
+    "value": "Dance",
+    "synonyms": [
+      "Dance"
+    ]
+  },
+  {
+    "value": "Armenian",
+    "synonyms": [
+      "Armenian"
+    ]
+  },
+  {
+    "value": "Calypso",
+    "synonyms": [
+      "Calypso"
+    ]
+  },
+  {
+    "value": "Foxtrot",
+    "synonyms": [
+      "Foxtrot"
+    ]
+  },
+  {
+    "value": "Circus",
+    "synonyms": [
+      "Circus"
+    ]
+  },
+  {
+    "value": "Dance Band",
+    "synonyms": [
+      "Dance Band"
+    ]
+  },
+  {
+    "value": "C W",
+    "synonyms": [
+      "C W"
+    ]
+  },
+  {
+    "value": "greek",
+    "synonyms": [
+      "greek"
+    ]
+  },
+  {
+    "value": "Vocal",
+    "synonyms": [
+      "Vocal"
+    ]
+  },
+  {
+    "value": "Popular song",
+    "synonyms": [
+      "Popular song"
+    ]
+  },
+  {
+    "value": "Whistling arrangement",
+    "synonyms": [
+      "Whistling arrangement"
+    ]
+  },
+  {
+    "value": "Western",
+    "synonyms": [
+      "Western"
+    ]
+  },
+  {
+    "value": "Novelty",
+    "synonyms": [
+      "Novelty"
+    ]
+  },
+  {
+    "value": "Mambo",
+    "synonyms": [
+      "Mambo"
+    ]
+  },
+  {
+    "value": "LP",
+    "synonyms": [
+      "LP"
+    ]
+  },
+  {
+    "value": "Bllues",
+    "synonyms": [
+      "Bllues"
+    ]
+  },
+  {
+    "value": "Caribbean",
+    "synonyms": [
+      "Caribbean"
+    ]
+  },
+  {
+    "value": "Jewish",
+    "synonyms": [
+      "Jewish"
+    ]
+  },
+  {
+    "value": "Opera",
+    "synonyms": [
+      "Opera"
+    ]
+  },
+  {
+    "value": "Sacred",
+    "synonyms": [
+      "Sacred"
+    ]
+  },
+  {
+    "value": "Hawaiian traditional",
+    "synonyms": [
+      "Hawaiian traditional"
+    ]
+  },
+  {
+    "value": "Children\u0027s",
+    "synonyms": [
+      "Children\u0027s"
+    ]
+  },
+  {
+    "value": "Big Band",
+    "synonyms": [
+      "Big Band"
+    ]
+  },
+  {
+    "value": "Square Dance",
+    "synonyms": [
+      "Square Dance"
+    ]
+  },
+  {
+    "value": "Italian",
+    "synonyms": [
+      "Italian"
+    ]
+  },
+  {
+    "value": "78rpm, schmaltz",
+    "synonyms": [
+      "78rpm, schmaltz"
+    ]
+  },
+  {
+    "value": "Spoken Word",
+    "synonyms": [
+      "Spoken Word"
+    ]
+  },
+  {
+    "value": "Whistling Music",
+    "synonyms": [
+      "Whistling Music"
+    ]
+  },
+  {
+    "value": "Vaudeville",
+    "synonyms": [
+      "Vaudeville"
+    ]
+  },
+  {
+    "value": "French",
+    "synonyms": [
+      "French"
+    ]
+  },
+  {
+    "value": "Folk Dance",
+    "synonyms": [
+      "Folk Dance"
+    ]
+  },
+  {
+    "value": "Baroque",
+    "synonyms": [
+      "Baroque"
+    ]
+  },
+  {
+    "value": "Harp",
+    "synonyms": [
+      "Harp"
+    ]
+  },
+  {
+    "value": "Spiritual",
+    "synonyms": [
+      "Spiritual"
+    ]
+  },
+  {
+    "value": "Fox Trot",
+    "synonyms": [
+      "Fox Trot"
+    ]
+  },
+  {
+    "value": "R B",
+    "synonyms": [
+      "R B"
+    ]
+  },
+  {
+    "value": "Noe",
+    "synonyms": [
+      "Noe"
+    ]
+  },
+  {
+    "value": "Tenor",
+    "synonyms": [
+      "Tenor"
+    ]
+  },
+  {
+    "value": "Hillbilly",
+    "synonyms": [
+      "Hillbilly"
+    ]
+  },
+  {
+    "value": "Square Dancing",
+    "synonyms": [
+      "Square Dancing"
+    ]
+  },
+  {
+    "value": "Irish Fiddling",
+    "synonyms": [
+      "Irish Fiddling"
+    ]
+  },
+  {
+    "value": "Baritone",
+    "synonyms": [
+      "Baritone"
+    ]
+  },
+  {
+    "value": "acoustic",
+    "synonyms": [
+      "acoustic"
+    ]
+  },
+  {
+    "value": "Synthesizer",
+    "synonyms": [
+      "Synthesizer"
+    ]
+  },
+  {
+    "value": "African",
+    "synonyms": [
+      "African"
+    ]
+  },
+  {
+    "value": "Country Gospel",
+    "synonyms": [
+      "Country Gospel"
+    ]
+  },
+  {
+    "value": "Jazz",
+    "synonyms": [
+      "Jazz"
+    ]
+  },
+  {
+    "value": "Yodel",
+    "synonyms": [
+      "Yodel"
+    ]
+  },
+  {
+    "value": "Accordion",
+    "synonyms": [
+      "Accordion"
+    ]
+  },
+  {
+    "value": "Comedy",
+    "synonyms": [
+      "Comedy"
+    ]
+  },
+  {
+    "value": "Film Music",
+    "synonyms": [
+      "Film Music"
+    ]
+  },
+  {
+    "value": "Gypsy",
+    "synonyms": [
+      "Gypsy"
+    ]
+  },
+  {
+    "value": "German",
+    "synonyms": [
+      "German"
+    ]
+  },
+  {
+    "value": "Organ",
+    "synonyms": [
+      "Organ"
+    ]
+  },
+  {
+    "value": "Guaracha",
+    "synonyms": [
+      "Guaracha"
+    ]
+  },
+  {
+    "value": "Cake Walk",
+    "synonyms": [
+      "Cake Walk"
+    ]
+  },
+  {
+    "value": "Mexican",
+    "synonyms": [
+      "Mexican"
+    ]
+  },
+  {
+    "value": "Musical Theater",
+    "synonyms": [
+      "Musical Theater"
+    ]
+  },
+  {
+    "value": "Paramount",
+    "synonyms": [
+      "Paramount"
+    ]
+  },
+  {
+    "value": "Advertisement",
+    "synonyms": [
+      "Advertisement"
+    ]
+  },
+  {
+    "value": "Folk",
+    "synonyms": [
+      "Folk"
+    ]
+  },
+  {
+    "value": "Tango",
+    "synonyms": [
+      "Tango"
+    ]
+  },
+  {
+    "value": "Ukelele Music",
+    "synonyms": [
+      "Ukelele Music"
+    ]
+  },
+  {
+    "value": "German Lied",
+    "synonyms": [
+      "German Lied"
+    ]
+  },
+  {
+    "value": "Poem",
+    "synonyms": [
+      "Poem"
+    ]
+  },
+  {
+    "value": "Dane",
+    "synonyms": [
+      "Dane"
+    ]
+  },
+  {
+    "value": "Brazilian",
+    "synonyms": [
+      "Brazilian"
+    ]
+  },
+  {
+    "value": "Spoken World",
+    "synonyms": [
+      "Spoken World"
+    ]
+  },
+  {
+    "value": "musical theatre",
+    "synonyms": [
+      "musical theatre"
+    ]
+  },
+  {
+    "value": "Whistling",
+    "synonyms": [
+      "Whistling"
+    ]
+  },
+  {
+    "value": "Old Time",
+    "synonyms": [
+      "Old Time"
+    ]
+  },
+  {
+    "value": "Rockabilly",
+    "synonyms": [
+      "Rockabilly"
+    ]
+  },
+  {
+    "value": "Pop Instrumental",
+    "synonyms": [
+      "Pop Instrumental"
+    ]
+  },
+  {
+    "value": "Soundtrack",
+    "synonyms": [
+      "Soundtrack"
+    ]
+  },
+  {
+    "value": "A Capella",
+    "synonyms": [
+      "A Capella"
+    ]
+  },
+  {
+    "value": "Piano",
+    "synonyms": [
+      "Piano"
+    ]
+  },
+  {
+    "value": "Children",
+    "synonyms": [
+      "Children"
+    ]
+  },
+  {
+    "value": "March",
+    "synonyms": [
+      "March"
+    ]
+  },
+  {
+    "value": "Sound Effects",
+    "synonyms": [
+      "Sound Effects"
+    ]
+  },
+  {
+    "value": "Mexican art song",
+    "synonyms": [
+      "Mexican art song"
+    ]
+  },
+  {
+    "value": "Opera buffa",
+    "synonyms": [
+      "Opera buffa"
+    ]
+  },
+  {
+    "value": "1946",
+    "synonyms": [
+      "1946"
+    ]
+  },
+  {
+    "value": "Bird Sounds",
+    "synonyms": [
+      "Bird Sounds"
+    ]
+  },
+  {
+    "value": "French Romantic",
+    "synonyms": [
+      "French Romantic"
+    ]
+  },
+  {
+    "value": "Country music",
+    "synonyms": [
+      "Country music"
+    ]
+  },
+  {
+    "value": "Xylophone Solo with Orchestra",
+    "synonyms": [
+      "Xylophone Solo with Orchestra"
+    ]
+  },
+  {
+    "value": "Swing",
+    "synonyms": [
+      "Swing"
+    ]
+  },
+  {
+    "value": "New Year\u0027s Eve",
+    "synonyms": [
+      "New Year\u0027s Eve"
+    ]
+  },
+  {
+    "value": "Parody",
+    "synonyms": [
+      "Parody"
+    ]
+  },
+  {
+    "value": "Klezmer",
+    "synonyms": [
+      "Klezmer"
+    ]
+  },
+  {
+    "value": "Dancing",
+    "synonyms": [
+      "Dancing"
+    ]
+  },
+  {
+    "value": "Promotional",
+    "synonyms": [
+      "Promotional"
+    ]
+  },
+  {
+    "value": "accordian",
+    "synonyms": [
+      "accordian"
+    ]
+  },
+  {
+    "value": "Cantata",
+    "synonyms": [
+      "Cantata"
+    ]
+  },
+  {
+    "value": "Polish",
+    "synonyms": [
+      "Polish"
+    ]
+  },
+  {
+    "value": "childrens",
+    "synonyms": [
+      "childrens"
+    ]
+  },
+  {
+    "value": "Rock\u0027n\u0027Roll",
+    "synonyms": [
+      "Rock\u0027n\u0027Roll"
+    ]
+  },
+  {
+    "value": "Holiday",
+    "synonyms": [
+      "Holiday"
+    ]
+  },
+  {
+    "value": "Rhumba",
+    "synonyms": [
+      "Rhumba"
+    ]
+  },
+  {
+    "value": "Broadway",
+    "synonyms": [
+      "Broadway"
+    ]
+  },
+  {
+    "value": "Merengue",
+    "synonyms": [
+      "Merengue"
+    ]
+  },
+  {
+    "value": "Budget",
+    "synonyms": [
+      "Budget"
+    ]
+  },
+  {
+    "value": "Group Vocal",
+    "synonyms": [
+      "Group Vocal"
+    ]
+  },
+  {
+    "value": "Pop",
+    "synonyms": [
+      "Pop"
+    ]
+  },
+  {
+    "value": "Bawdy Song",
+    "synonyms": [
+      "Bawdy Song"
+    ]
+  },
+  {
+    "value": "Jewish Novelty",
+    "synonyms": [
+      "Jewish Novelty"
+    ]
+  },
+  {
+    "value": "Instrumental",
+    "synonyms": [
+      "Instrumental"
+    ]
+  },
+  {
+    "value": "Harmonica",
+    "synonyms": [
+      "Harmonica"
+    ]
+  },
+  {
+    "value": "Christmas",
+    "synonyms": [
+      "Christmas"
+    ]
+  },
+  {
+    "value": "Christian",
+    "synonyms": [
+      "Christian"
+    ]
+  },
+  {
+    "value": "operatic marches and choruses",
+    "synonyms": [
+      "operatic marches and choruses"
+    ]
+  },
+  {
+    "value": "Harmonica Instrumental",
+    "synonyms": [
+      "Harmonica Instrumental"
+    ]
+  },
+  {
+    "value": "Instructional",
+    "synonyms": [
+      "Instructional"
+    ]
+  },
+  {
+    "value": "Rock   Roll Rhythm   Blues",
+    "synonyms": [
+      "Rock   Roll Rhythm   Blues"
+    ]
+  },
+  {
+    "value": "Neopolitan",
+    "synonyms": [
+      "Neopolitan"
+    ]
+  },
+  {
+    "value": "Musical",
+    "synonyms": [
+      "Musical"
+    ]
+  },
+  {
+    "value": "Story",
+    "synonyms": [
+      "Story"
+    ]
+  },
+  {
+    "value": "Bluegass",
+    "synonyms": [
+      "Bluegass"
+    ]
+  },
+  {
+    "value": "Waltz",
+    "synonyms": [
+      "Waltz"
+    ]
+  },
+  {
+    "value": "Country",
+    "synonyms": [
+      "Country"
+    ]
+  },
+  {
+    "value": "Speech",
+    "synonyms": [
+      "Speech"
+    ]
+  },
+  {
+    "value": "Circus March",
+    "synonyms": [
+      "Circus March"
+    ]
+  },
+  {
+    "value": "Chanson",
+    "synonyms": [
+      "Chanson"
+    ]
+  },
+  {
+    "value": "Choral",
+    "synonyms": [
+      "Choral"
+    ]
+  },
+  {
+    "value": "Jug Band",
+    "synonyms": [
+      "Jug Band"
+    ]
+  },
+  {
+    "value": "Int",
+    "synonyms": [
+      "Int"
+    ]
+  },
+  {
+    "value": "Cuban",
+    "synonyms": [
+      "Cuban"
+    ]
+  },
+  {
+    "value": "Lt",
+    "synonyms": [
+      "Lt"
+    ]
+  },
+  {
+    "value": "Field Recording",
+    "synonyms": [
+      "Field Recording"
+    ]
+  },
+  {
+    "value": "Pop Vocals",
+    "synonyms": [
+      "Pop Vocals"
+    ]
+  },
+  {
+    "value": "Jump Blues",
+    "synonyms": [
+      "Jump Blues"
+    ]
+  },
+  {
+    "value": "Lullaby",
+    "synonyms": [
+      "Lullaby"
+    ]
+  },
+  {
+    "value": "Vocal Quartet",
+    "synonyms": [
+      "Vocal Quartet"
+    ]
+  },
+  {
+    "value": "Rhythm",
+    "synonyms": [
+      "Rhythm"
+    ]
+  },
+  {
+    "value": "Dancce",
+    "synonyms": [
+      "Dancce"
+    ]
+  },
+  {
+    "value": "Doo-Wop",
+    "synonyms": [
+      "Doo-Wop"
+    ]
+  },
+  {
+    "value": "Operatic marches",
+    "synonyms": [
+      "Operatic marches"
+    ]
+  },
+  {
+    "value": "hip Rhymes",
+    "synonyms": [
+      "hip Rhymes"
+    ]
+  },
+  {
+    "value": "Square Dancing with Calls",
+    "synonyms": [
+      "Square Dancing with Calls"
+    ]
+  },
+  {
+    "value": "Mandolin",
+    "synonyms": [
+      "Mandolin"
+    ]
+  },
+  {
+    "value": "Scat Vocal",
+    "synonyms": [
+      "Scat Vocal"
+    ]
+  },
+  {
+    "value": "violin solo",
+    "synonyms": [
+      "violin solo"
+    ]
+  },
+  {
+    "value": "operetta",
+    "synonyms": [
+      "operetta"
+    ]
+  },
+  {
+    "value": "Popular",
+    "synonyms": [
+      "Popular"
+    ]
+  },
+  {
+    "value": "Aria",
+    "synonyms": [
+      "Aria"
+    ]
+  },
+  {
+    "value": "Romantic",
+    "synonyms": [
+      "Romantic"
+    ]
+  },
+  {
+    "value": "Fiddle",
+    "synonyms": [
+      "Fiddle"
+    ]
+  },
+  {
+    "value": "Male Vocal Duet",
+    "synonyms": [
+      "Male Vocal Duet"
+    ]
+  },
+  {
+    "value": "Neopolitan Song",
+    "synonyms": [
+      "Neopolitan Song"
+    ]
+  },
+  {
+    "value": "Torch Song",
+    "synonyms": [
+      "Torch Song"
+    ]
+  },
+  {
+    "value": "Sea Chantey",
+    "synonyms": [
+      "Sea Chantey"
+    ]
+  },
+  {
+    "value": "Swedish",
+    "synonyms": [
+      "Swedish"
+    ]
+  },
+  {
+    "value": "a cappella",
+    "synonyms": [
+      "a cappella"
+    ]
+  },
+  {
+    "value": "Pop Vocal",
+    "synonyms": [
+      "Pop Vocal"
+    ]
+  },
+  {
+    "value": "Rhythm   Blues",
+    "synonyms": [
+      "Rhythm   Blues"
+    ]
+  },
+  {
+    "value": "Latin",
+    "synonyms": [
+      "Latin"
+    ]
+  },
+  {
+    "value": "Choir",
+    "synonyms": [
+      "Choir"
+    ]
+  },
+  {
+    "value": "Russian",
+    "synonyms": [
+      "Russian"
+    ]
+  },
+  {
+    "value": "Ballet",
+    "synonyms": [
+      "Ballet"
+    ]
+  },
+  {
+    "value": "Ethnic Characterizations",
+    "synonyms": [
+      "Ethnic Characterizations"
+    ]
+  },
+  {
+    "value": "Military",
+    "synonyms": [
+      "Military"
+    ]
+  },
+  {
+    "value": "Cello arrangement",
+    "synonyms": [
+      "Cello arrangement"
+    ]
+  },
+  {
+    "value": "Vocadance",
+    "synonyms": [
+      "Vocadance"
+    ]
+  },
+  {
+    "value": "Romany",
+    "synonyms": [
+      "Romany"
+    ]
+  },
+  {
+    "value": "Dixieland",
+    "synonyms": [
+      "Dixieland"
+    ]
+  },
+  {
+    "value": "Popular Music",
+    "synonyms": [
+      "Popular Music"
+    ]
+  },
+  {
+    "value": "Film",
+    "synonyms": [
+      "Film"
+    ]
+  },
+  {
+    "value": "Gospel",
+    "synonyms": [
+      "Gospel"
+    ]
+  },
+  {
+    "value": "78rpm, children, spoken word",
+    "synonyms": [
+      "78rpm, children, spoken word"
+    ]
+  },
+  {
+    "value": "Orchestral",
+    "synonyms": [
+      "Orchestral"
+    ]
+  },
+  {
+    "value": "Bluegrass",
+    "synonyms": [
+      "Bluegrass"
+    ]
+  },
+  {
+    "value": "Yiddish",
+    "synonyms": [
+      "Yiddish"
+    ]
+  },
+  {
+    "value": "Verismo",
+    "synonyms": [
+      "Verismo"
+    ]
+  },
+  {
+    "value": "Historical",
+    "synonyms": [
+      "Historical"
+    ]
+  },
+  {
+    "value": "Yodeling",
+    "synonyms": [
+      "Yodeling"
+    ]
+  },
+  {
+    "value": "Two-Step",
+    "synonyms": [
+      "Two-Step"
+    ]
+  },
+  {
+    "value": "Norwegian",
+    "synonyms": [
+      "Norwegian"
+    ]
+  },
+  {
+    "value": "Political",
+    "synonyms": [
+      "Political"
+    ]
+  },
+  {
+    "value": "Novelty Piano",
+    "synonyms": [
+      "Novelty Piano"
+    ]
+  },
+  {
+    "value": "Ragtime",
+    "synonyms": [
+      "Ragtime"
+    ]
+  },
+  {
+    "value": "Religious",
+    "synonyms": [
+      "Religious"
+    ]
+  },
+  {
+    "value": "Boogie Woogie",
+    "synonyms": [
+      "Boogie Woogie"
+    ]
+  },
+  {
+    "value": "Old-Time",
+    "synonyms": [
+      "Old-Time"
+    ]
+  },
+  {
+    "value": "Musette",
+    "synonyms": [
+      "Musette"
+    ]
+  },
+  {
+    "value": "Marimba",
+    "synonyms": [
+      "Marimba"
+    ]
+  },
+  {
+    "value": "Ethnic",
+    "synonyms": [
+      "Ethnic"
+    ]
+  },
+  {
+    "value": "Interview",
+    "synonyms": [
+      "Interview"
+    ]
+  },
+  {
+    "value": "Samba",
+    "synonyms": [
+      "Samba"
+    ]
+  },
+  {
+    "value": "Jump",
+    "synonyms": [
+      "Jump"
+    ]
+  },
+  {
+    "value": "Boogie",
+    "synonyms": [
+      "Boogie"
+    ]
+  },
+  {
+    "value": "Humor",
+    "synonyms": [
+      "Humor"
+    ]
+  },
+  {
+    "value": "Rock and Roll",
+    "synonyms": [
+      "Rock and Roll"
+    ]
+  },
+  {
+    "value": "Spoken",
+    "synonyms": [
+      "Spoken"
+    ]
+  },
+  {
+    "value": "Polka",
+    "synonyms": [
+      "Polka"
+    ]
+  },
+  {
+    "value": "Vocal Duet",
+    "synonyms": [
+      "Vocal Duet"
+    ]
+  },
+  {
+    "value": "Rock Roll",
+    "synonyms": [
+      "Rock Roll"
+    ]
+  },
+  {
+    "value": "Rumba",
+    "synonyms": [
+      "Rumba"
+    ]
+  },
+  {
+    "value": "Dance Orchestra",
+    "synonyms": [
+      "Dance Orchestra"
+    ]
+  },
+  {
+    "value": "Irish",
+    "synonyms": [
+      "Irish"
+    ]
+  },
+  {
+    "value": "Laughing",
+    "synonyms": [
+      "Laughing"
+    ]
+  },
+  {
+    "value": "Educational",
+    "synonyms": [
+      "Educational"
+    ]
+  },
+  {
+    "value": "Baitone",
+    "synonyms": [
+      "Baitone"
+    ]
+  },
+  {
+    "value": "Classical",
+    "synonyms": [
+      "Classical"
+    ]
+  },
+  {
+    "value": "Russian Folk Song",
+    "synonyms": [
+      "Russian Folk Song"
+    ]
+  },
+  {
+    "value": "Traditional Czech",
+    "synonyms": [
+      "Traditional Czech"
+    ]
+  },
+  {
+    "value": "Vocal Group",
+    "synonyms": [
+      "Vocal Group"
+    ]
+  },
+  {
+    "value": "Scandinavian",
+    "synonyms": [
+      "Scandinavian"
+    ]
+  },
+  {
+    "value": "D",
+    "synonyms": [
+      "D"
+    ]
+  },
+  {
+    "value": "Western Swing",
+    "synonyms": [
+      "Western Swing"
+    ]
+  },
+  {
+    "value": "Art song",
+    "synonyms": [
+      "Art song"
+    ]
+  },
+  {
+    "value": "Nature Sounds",
+    "synonyms": [
+      "Nature Sounds"
+    ]
+  },
+  {
+    "value": "Theatre",
+    "synonyms": [
+      "Theatre"
+    ]
+  },
+  {
+    "value": "Hymn",
+    "synonyms": [
+      "Hymn"
+    ]
+  },
+  {
+    "value": "Bebop",
+    "synonyms": [
+      "Bebop"
+    ]
+  },
+  {
+    "value": "Opera overture",
+    "synonyms": [
+      "Opera overture"
+    ]
+  },
+  {
+    "value": "Hawaiian",
+    "synonyms": [
+      "Hawaiian"
+    ]
+  },
+  {
+    "value": "Stomp",
+    "synonyms": [
+      "Stomp"
+    ]
+  },
+  {
+    "value": "Brown",
+    "synonyms": [
+      "Brown"
+    ]
+  },
+  {
+    "value": "op",
+    "synonyms": [
+      "op"
+    ]
+  },
+  {
+    "value": "Be-Bop",
+    "synonyms": [
+      "Be-Bop"
+    ]
+  },
+  {
+    "value": "Cha Cha Cha",
+    "synonyms": [
+      "Cha Cha Cha"
+    ]
+  },
+  {
+    "value": "rock",
+    "synonyms": [
+      "rock"
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "id": "0cc4a89e-1891-4458-be85-ae81058170ce",
+  "name": "get-fsm-state",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "get-fsm-state",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1525172384,
+  "fallbackIntent": false,
+  "events": []
+}

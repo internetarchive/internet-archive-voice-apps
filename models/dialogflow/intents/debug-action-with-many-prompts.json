@@ -1,0 +1,28 @@
+{
+  "id": "9262dbd8-4a58-46e9-9c0f-57f9a4ef7655",
+  "name": "debug-action-with-many-prompts",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 0,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1540906640,
+  "fallbackIntent": false,
+  "events": []
+}

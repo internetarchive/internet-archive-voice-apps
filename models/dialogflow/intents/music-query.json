@@ -1,0 +1,84 @@
+{
+  "id": "dd807f59-6f61-4c86-944c-b072d4b85b9a",
+  "name": "music-query",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "music-query",
+      "affectedContexts": [
+        {
+          "name": "music-query-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "fc810eb4-e65f-4ba6-a3b2-5fec1d0cc4db",
+          "required": false,
+          "dataType": "@collections",
+          "name": "collectionId",
+          "value": "$collectionId",
+          "isList": false
+        },
+        {
+          "id": "0a3740d4-cf09-4ee7-84a5-d368c3f6058e",
+          "required": false,
+          "dataType": "@sys.number",
+          "name": "year",
+          "value": "$year",
+          "isList": false
+        },
+        {
+          "id": "8f66f1c7-559b-4308-87cb-1b109fa12341",
+          "required": false,
+          "dataType": "@sys.geo-city",
+          "name": "coverage",
+          "value": "$coverage",
+          "isList": false
+        },
+        {
+          "id": "87cd9326-7759-479d-9b94-6603afbe75bb",
+          "required": false,
+          "dataType": "@genres",
+          "name": "subject",
+          "value": "$subject",
+          "isList": false
+        },
+        {
+          "id": "94223abf-5b45-40c7-a5b5-f1d9b2705810",
+          "required": false,
+          "dataType": "@creators",
+          "name": "creator",
+          "value": "$creator",
+          "isList": false
+        },
+        {
+          "id": "0b7842b0-0381-40e8-8af3-4ebca0ec4e52",
+          "required": false,
+          "dataType": "@order",
+          "name": "order",
+          "value": "$order",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1545170488,
+  "fallbackIntent": false,
+  "events": []
+}

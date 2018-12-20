@@ -1,0 +1,42 @@
+{
+  "id": "f67c49cf-0fff-4836-ad61-0fd7254faaee",
+  "parentId": "dd807f59-6f61-4c86-944c-b072d4b85b9a",
+  "rootParentId": "dd807f59-6f61-4c86-944c-b072d4b85b9a",
+  "name": "music-query - presets",
+  "auto": true,
+  "contexts": [
+    "music-query-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "music-query",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "a3675196-eee9-43b2-871a-21d51c4dbbd2",
+          "required": false,
+          "dataType": "@order",
+          "name": "preset",
+          "value": "$preset",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1522268375,
+  "fallbackIntent": false,
+  "events": []
+}

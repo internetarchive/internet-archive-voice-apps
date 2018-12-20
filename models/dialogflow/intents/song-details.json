@@ -1,0 +1,38 @@
+{
+  "id": "f3ba53a6-f28c-40a6-8ff8-b61973b98201",
+  "name": "song-details",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "song-details",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "e4cd9d31-7cbf-4adf-8f8d-3eb0cd176b62",
+          "required": false,
+          "dataType": "@media-types",
+          "name": "media-types",
+          "value": "$media-types",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1540845603,
+  "fallbackIntent": false,
+  "events": []
+}

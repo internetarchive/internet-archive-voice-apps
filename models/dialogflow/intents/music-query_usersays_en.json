@@ -1,0 +1,298 @@
+[
+  {
+    "id": "c38923a7-ed90-4a77-8fb0-867c9ba1bfa4",
+    "data": [
+      {
+        "text": "@order:order",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "b81e17cc-f821-4fa9-909e-0632e24ce8cb",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "78 RPM",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      },
+      {
+        "text": " records",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1545170488
+  },
+  {
+    "id": "efab49af-45f8-4a87-8c2c-fcc3d1242d73",
+    "data": [
+      {
+        "text": "some classic ",
+        "userDefined": false
+      },
+      {
+        "text": "rock",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " please",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "92993380-deae-4504-a19c-c920cc8cee99",
+    "data": [
+      {
+        "text": "Classic ",
+        "userDefined": false
+      },
+      {
+        "text": "rock",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      },
+      {
+        "text": " artists",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "fb738b51-ff6b-4726-936d-bc78b65b71e4",
+    "data": [
+      {
+        "text": "random",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "rock",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1545170488
+  },
+  {
+    "id": "52536714-8ef4-4670-82c8-2843c2b6ded9",
+    "data": [
+      {
+        "text": "live shows",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "b1e630c7-af5d-4637-a54c-d3c1a62af6d6",
+    "data": [
+      {
+        "text": "random ",
+        "userDefined": false
+      },
+      {
+        "text": "rock",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "3e3fe9b6-124c-4f63-8156-4a676bd29baa",
+    "data": [
+      {
+        "text": "@collections:collectionId @genres:subject",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "e75c0b6d-f721-42b9-be6b-ba3b5cfe320f",
+    "data": [
+      {
+        "text": "@sys.geo-city:coverage @sys.number:year",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "e3432f3e-ed5c-4ba5-8ca8-10aaec634def",
+    "data": [
+      {
+        "text": "New Your",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " city",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "44828992-27d0-4dd1-8892-258ea10aead7",
+    "data": [
+      {
+        "text": "collection ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "67e28742-0dfc-459f-8b24-3ae1ad692893",
+    "data": [
+      {
+        "text": "@genres:subject @collections:collectionId",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "1df65719-2dd6-49b7-9695-393453b791ea",
+    "data": [
+      {
+        "text": "year ",
+        "userDefined": false
+      },
+      {
+        "text": "1995",
+        "alias": "year",
+        "meta": "@sys.number",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "dd863305-60d6-4ae0-b859-bad7a644eee6",
+    "data": [
+      {
+        "text": "2000",
+        "alias": "year",
+        "meta": "@sys.number",
+        "userDefined": false
+      },
+      {
+        "text": " year",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "68fdddbb-fb52-4b9b-b204-db473acc7bb3",
+    "data": [
+      {
+        "text": "@collections:collectionId",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "7ea42b32-3df0-4ffb-878e-251c5ee4f130",
+    "data": [
+      {
+        "text": "@creators:creator",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "81b92f3d-5282-47c5-837f-834768df5dff",
+    "data": [
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " collection",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1545170488
+  },
+  {
+    "id": "54709441-1834-4b82-9e34-1001cdbd45ce",
+    "data": [
+      {
+        "text": "@sys.geo-city:coverage",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": true,
+    "count": 0,
+    "updated": 1545170488
+  }
+]

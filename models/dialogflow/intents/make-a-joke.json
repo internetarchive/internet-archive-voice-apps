@@ -1,0 +1,33 @@
+{
+  "id": "66df5d92-472e-4ced-939c-ef08886f62e8",
+  "name": "make-a-joke",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "make-a-joke",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Please wait! There should be a joke",
+            "Please wait! There should be another joke",
+            "Wait a minute and enjoy our humor"
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1540846344,
+  "fallbackIntent": false,
+  "events": []
+}

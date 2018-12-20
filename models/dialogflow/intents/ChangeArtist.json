@@ -1,0 +1,29 @@
+{
+  "id": "5c4a3f3a-7f0b-4b23-b707-522fd856a77f",
+  "name": "ChangeArtist",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "input.welcome",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 0,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1523288276,
+  "fallbackIntent": false,
+  "events": []
+}

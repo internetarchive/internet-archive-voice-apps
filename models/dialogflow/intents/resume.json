@@ -1,0 +1,29 @@
+{
+  "id": "47f13b91-def2-4e13-a581-7ec49b50a7a7",
+  "name": "resume",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "resume",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1525194651,
+  "fallbackIntent": false,
+  "events": []
+}

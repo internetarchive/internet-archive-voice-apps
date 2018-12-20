@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b2952b09-76fe-41df-9326-f5c725293241",
+    "data": [
+      {
+        "text": "Play another artist",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1518306736
+  },
+  {
+    "id": "db894d33-ddd6-4693-99fb-21bc61dd87d1",
+    "data": [
+      {
+        "text": "change artist",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1518306736
+  },
+  {
+    "id": "1e07b356-0c14-4519-b2c8-9bb5818a02d7",
+    "data": [
+      {
+        "text": "play a different artist",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1518306736
+  },
+  {
+    "id": "1c61e2f1-62ce-4ec4-a20b-900c4f576843",
+    "data": [
+      {
+        "text": "another artist",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1518306736
+  },
+  {
+    "id": "7445183f-34d7-4259-9c77-691425bd2ffe",
+    "data": [
+      {
+        "text": "different artist",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1518306736
+  }
+]

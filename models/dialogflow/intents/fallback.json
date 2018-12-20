@@ -1,0 +1,29 @@
+{
+  "id": "70e8ba9a-53da-4b8a-b87c-51f7fbe9e53a",
+  "name": "fallback",
+  "auto": false,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "fallback",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Sorry, Unable to understand your request."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1542833074,
+  "fallbackIntent": true,
+  "events": []
+}

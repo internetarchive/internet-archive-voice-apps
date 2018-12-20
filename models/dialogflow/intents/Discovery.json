@@ -1,0 +1,23 @@
+{
+  "id": "584a2988-2082-4080-9883-c19f7cd68b0a",
+  "name": "Discovery",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "Discovery",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 0,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1523288285,
+  "fallbackIntent": false,
+  "events": []
+}
