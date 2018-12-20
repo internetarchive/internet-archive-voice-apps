@@ -702,8 +702,8 @@ module.exports = {
       },
 
       yes: {
-        speech: 'You need to select <break strength="weak"/>78s <break strength="weak"/>or Live Concerts',
-        suggestions: ['78s', 'Live Concerts'],
+        speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>live concerts, <break strength="weak"/>or Christmas music',
+        suggestions: ['78s', 'Live Concerts', 'Christmas music'],
       },
     },
 

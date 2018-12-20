@@ -271,7 +271,7 @@
 - scenario: 'prompt user to the welcome question on improper "yes"'
   dialog:
     - user: 'yes'
-      assistant: 'You need to select'
+      assistant: 'Please choose'
 
 - scenario: 'prompt user to the last question on improper "yes"'
   dialog:
