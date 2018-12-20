@@ -324,7 +324,8 @@ function getItems (app) {
  * @returns {*}
  */
 function getItemByToken (app, token) {
-  return getData(app).items.find(i => i.audioURL === token);
+  const { items } = getData(app);
+  return items && items.find(i => i.audioURL === token);
 }
 
 /**

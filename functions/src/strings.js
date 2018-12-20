@@ -139,7 +139,7 @@ module.exports = {
             '<break strength="weak"/> or <break strength="weak"/> randomly play grateful dead' +
             '<break strength="weak"/> or play any other genre or artist. </s> ' +
             '<s>And finally you can just answer my questions so I would help you to find right records. </s>' +
-            '<s>Do you want to continue payback {{playback.creator}} record?</s>',
+            '<s>Do you want to continue payback {{playback.creator}} records?</s>',
           suggestions: ['yes', 'no'],
         },
       },
@@ -697,8 +697,8 @@ module.exports = {
         acknowledges: [
           'Welcome to music at the Internet Archive.'
         ],
-        speech: 'You can listen to our collections of 78s or live concerts. Which would you like to listen to?',
-        suggestions: ['78s', 'Live Concerts'],
+        speech: 'Want to listen to 78s, live concerts, or Christmas music?',
+        suggestions: ['78s', 'Live Concerts', 'Christmas music'],
       },
 
       yes: {
