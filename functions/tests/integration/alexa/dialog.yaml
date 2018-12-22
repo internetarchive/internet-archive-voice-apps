@@ -321,7 +321,6 @@
       assistant:
         all:
           - 'The Internet Archive Skill can not help with that'
-          - 'But I can help you to find music record'
           - 'Want to listen to 78s'
 
 - scenario: 'play next song'
