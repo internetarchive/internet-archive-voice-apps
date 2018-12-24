@@ -11,6 +11,14 @@ module.exports = {
    *
    * "In any message you can substitute Live Concerts"
    *
+   *
+   * Important:
+   *
+   * - Request from @Mark - for `georgeblood` we should rename `{{N}} albums` to `{{N}} songs`,
+   * because sometimes we could get double sided 78s discs we would give incorrect number of songs.
+   *
+   * More: https://github.com/internetarchive/internet-archive-google-action/issues/389
+   *
    */
   aliases: {
     collectionId: {
@@ -117,7 +125,7 @@ module.exports = {
       default: {
         speech:
           '<s>You are using Internet Archive service. </s>' +
-          '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> records. </s>' +
+          '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> songs. </s>' +
           '<s>You can ask to playback music of specific genre by asking: </s>' +
           '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
           '<s>As well you can ask me to play specific artist. </s>' +
@@ -137,8 +145,8 @@ module.exports = {
             '<break strength="weak"/> play jazz music ' +
             '<break strength="weak"/> or <break strength="weak"/> randomly play grateful dead' +
             '<break strength="weak"/> or play any other genre or artist. </s> ' +
-            '<s>And finally you can just answer my questions so I would help you to find right records. </s>' +
-            '<s>Do you want to continue payback {{playback.creator}} records?</s>',
+            '<s>And finally you can just answer my questions so I would help you to find right songs. </s>' +
+            '<s>Do you want to continue payback {{playback.creator}} songs?</s>',
           suggestions: ['yes', 'no'],
         },
       },
@@ -187,15 +195,16 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `I've got {{total}} {{subject}} albums. Let's listen to them.`,
-          `I've got {{total}} albums from {{creator}} here. Let's start listening to them.`,
-          `I found {{total}} albums. Let's listen to them.`,
-          `I found {{total}} {{subject}} albums. Let's listen to them.`,
+          // use "songs" instead of "albums" request from @mark
+          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
+          `I've got {{total}} songs from {{creator}} here. Let's start listening to them.`,
+          `I found {{total}} songs. Let's listen to them.`,
+          `I found {{total}} {{subject}} songs. Let's listen to them.`,
           `Let's play {{subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
-          `I have {{total}} albums from {{year}}. Let's dive into them.`,
+          `I have {{total}} songs from {{year}}. Let's dive into them.`,
         ],
       },
 
@@ -211,8 +220,8 @@ module.exports = {
       repair: {
         speech: [
           `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
           `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
@@ -229,13 +238,13 @@ module.exports = {
     loopOff: {
       default: {
         speech:
-          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>Alright! I will stop playback after the last song</s>' +
           '<s>{{last.reprompt}}</s>',
       },
 
       playback: {
         speech:
-          '<s>Alright! I will stop playback after the last record</s>' +
+          '<s>Alright! I will stop playback after the last song</s>' +
           '<s>{{last.reprompt}}</s>',
       }
     },
@@ -245,13 +254,13 @@ module.exports = {
     loopOn: {
       default: {
         speech:
-          '<s>Alright! I will repeat records in a loop</s>' +
+          '<s>Alright! I will repeat songs in a loop</s>' +
           '<s>{{last.reprompt}}</s>',
       },
 
       playback: {
         speech:
-          '<s>Alright! I will repeat records in a loop</s>',
+          '<s>Alright! I will repeat songs in a loop</s>',
       }
     },
 
@@ -340,9 +349,10 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `I found {{total}} albums. Let's listen to them.`,
-          `I've got {{total}} {{subject}} albums. Let's listen to them.`,
-          `Here are some {{subject}} albums.`,
+          // use "songs" instead of "albums" request from @mark
+          `I found {{total}} songs. Let's listen to them.`,
+          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
+          `Here are some {{subject}} songs.`,
           `Let's play some {{subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
@@ -361,9 +371,10 @@ module.exports = {
        */
       repair: {
         speech: [
+          // use "songs" instead of "albums" request from @mark
           `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{creator}} albums for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any albums for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
           `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
@@ -538,7 +549,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `I found {{total}} albums. Let's listen to them.`,
+          `I found {{total}} concerts. Let's listen to them.`,
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
@@ -586,8 +597,9 @@ module.exports = {
       fulfillment: {
         feeder: 'albums-async',
         speech: [
-          `I've got {{total}} {{subject}} records. Let's listen to them.`,
-          `Great choose! I found {{total}} {{subject}} records. Let's listen to them.`,
+          // use "songs" instead of "albums" request from @mark
+          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
+          `Great choose! I found {{total}} {{subject}} songs. Let's listen to them.`,
           `Excellent! Let's play {{subject}} music.`,
         ],
       },
@@ -662,7 +674,7 @@ module.exports = {
       },
 
       playback: {
-        speech: 'It is record <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
+        speech: 'It is song <break strength="weak"/> {{title}} <break strength="weak"/> of {{creator}}{{#year}} <break strength="weak"/> {{year}}{{/year}}.',
         resumePlayback: true,
       },
     },
@@ -727,11 +739,11 @@ module.exports = {
     }],
 
     shuffleOff: [{
-      speech: `Got it! I'll play records in the original order`,
+      speech: `Got it! I'll play songs in the original order`,
     }],
 
     shuffleOn: [{
-      speech: `Got it! I'll play records in a random order`,
+      speech: `Got it! I'll play songs in a random order`,
     }],
 
     yes: [{
