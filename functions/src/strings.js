@@ -196,15 +196,15 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
-          `I've got {{total}} songs from {{creator}} here. Let's start listening to them.`,
-          `I found {{total}} songs. Let's listen to them.`,
-          `I found {{total}} {{subject}} songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{creator}} here. Let's start listening to them.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
           `Let's play {{subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
-          `I have {{total}} songs from {{year}}. Let's dive into them.`,
+          `I have <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{year}}. Let's dive into them.`,
         ],
       },
 
@@ -350,8 +350,8 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I found {{total}} songs. Let's listen to them.`,
-          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
           `Here are some {{subject}} songs.`,
           `Let's play some {{subject}} music.`,
           `Let's play music from {{creator}}.`,
@@ -549,7 +549,7 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `I found {{total}} concerts. Let's listen to them.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> concerts. Let's listen to them.`,
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
@@ -598,8 +598,8 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got {{total}} {{subject}} songs. Let's listen to them.`,
-          `Great choose! I found {{total}} {{subject}} songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `Great choose! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
           `Excellent! Let's play {{subject}} music.`,
         ],
       },
