@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const { debug } = require('../utils/logger')('metrics:skipped-song');
+
 const config = require('../config');
 const endpointProcessor = require('../network/endpoint-processor');
 
@@ -14,6 +16,7 @@ const endpointProcessor = require('../network/endpoint-processor');
  * @returns {*}
  */
 module.exports = function skippedSong (app, props) {
+  debug('start');
   return axios.head(
     endpointProcessor.preprocess(config.metrics.skip_song, app, props)
   );
