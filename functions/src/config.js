@@ -32,7 +32,7 @@ module.exports = {
   },
 
   metrics: {
-    skip_song: 'https://{{platformSubDomain}}.archive.org/event/skip/{{albumId}}/{{filename}}.mp3'
+    skip_song: 'https://{{platformSubDomain}}.archive.org/event/skip/{{albumId}}/{{filename}}'
   },
 
   /**

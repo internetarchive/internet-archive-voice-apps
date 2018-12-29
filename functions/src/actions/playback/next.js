@@ -15,7 +15,7 @@ function handler (app) {
   return helpers.playSong({ app, skip: 'forward' })
     .then(({ currentSongData }) => {
       if (!currentSongData) {
-        error('We do not have any data for previous song')
+        error('We do not have any data for previous song');
       } else {
         return skippedSong(app, {
           albumId: currentSongData.album.id,
