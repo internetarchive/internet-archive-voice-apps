@@ -729,12 +729,7 @@ module.exports = {
     },
 
     no: [{
-      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
-        '<s>But however,</s> ' +
-        '<s>{{last.reprompt}}</s>',
-    }, {
-      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
-        '<s>But at any rate,</s> ' +
+      speech: '<s>Could you please be more specific?</s> ' +
         '<s>{{last.reprompt}}</s>',
     }],
 
@@ -747,12 +742,7 @@ module.exports = {
     }],
 
     yes: [{
-      speech: '<s>Hm, <break strength="weak"/>Okey!</s> ' +
-        '<s>But anyway,</s> ' +
-        '<s>{{last.reprompt}}</s>',
-    }, {
-      speech: '<s>Sure!</s> ' +
-        '<s>But however,</s> ' +
+      speech: '<s>Could you please be more specific?</s> ' +
         '<s>{{last.reprompt}}</s>',
     }],
   },
