@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.5.9](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.9) (2018-12-29)
+[Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.8...2.5.9)
+
+**Implemented enhancements:**
+
+- improve english wording [\#437](https://github.com/internetarchive/internet-archive-voice-apps/issues/437)
+- log skipped songs [\#436](https://github.com/internetarchive/internet-archive-voice-apps/issues/436) [[alexa](https://github.com/internetarchive/internet-archive-voice-apps/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature/436 log skipped songs [\#439](https://github.com/internetarchive/internet-archive-voice-apps/pull/439) ([hyzhak](https://github.com/hyzhak))
+- Feature/437 improve english wording [\#438](https://github.com/internetarchive/internet-archive-voice-apps/pull/438) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.8](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.8) (2018-12-24)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.7...2.5.8)
 
