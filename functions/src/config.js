@@ -31,6 +31,10 @@ module.exports = {
     DEFAULT_SONG_IMAGE: 'http://archive.org/images/notfound.png',
   },
 
+  metrics: {
+    skip_song: 'https://{{platformSubDomain}}.archive.org/event/skip/{{albumId}}/{{filename}}.mp3'
+  },
+
   /**
    * settings specific for supported platforms
    */
