@@ -81,7 +81,7 @@ function playSong (ctx) {
   debug('playSong');
   debug(ctx);
   const { skip = null } = ctx;
-  return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
+  return feederFromPlaylist.middleware()({...ctx, query, playlist })
     .then(mapPlatformToSlots())
     .then(ctx => {
       if (skip) {
