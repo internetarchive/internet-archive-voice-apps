@@ -599,7 +599,7 @@ module.exports = {
         speech: [
           // use "songs" instead of "albums" request from @mark
           `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Great choose! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
           `Excellent! Let's play {{subject}} music.`,
         ],
       },
