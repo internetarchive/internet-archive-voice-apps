@@ -19,6 +19,7 @@ const playSongMiddleware = require('../../_middlewares/play-song');
 const { previousSong, DoNotHavePreviousSongError } = require('../../_middlewares/previous-song');
 const renderSpeech = require('../../_middlewares/render-speech');
 const { mapSongDataToSlots } = require('../../_middlewares/song-data');
+const { storeCurrentSongDataInContext } = require('../../_middlewares/store-current-song-data-in-context');
 
 /**
  * map skip name to skip behaviour
@@ -81,7 +82,8 @@ function playSong (ctx) {
   debug('playSong');
   debug(ctx);
   const { skip = null } = ctx;
-  return feederFromPlaylist.middleware()(Object.assign({}, ctx, { query, playlist }))
+  return feederFromPlaylist.middleware()({ ...ctx, query, playlist })
+    .then(storeCurrentSongDataInContext())
     .then(mapPlatformToSlots())
     .then(ctx => {
       if (skip) {

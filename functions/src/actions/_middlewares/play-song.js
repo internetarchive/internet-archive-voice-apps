@@ -27,5 +27,5 @@ module.exports = ({ mediaResponseOnly = false, offset = 0 } = {}) => (ctx) => {
   });
 
   fsm.transitionTo(app, constants.fsm.states.PLAYBACK);
-  return Promise.resolve();
+  return Promise.resolve(ctx);
 };

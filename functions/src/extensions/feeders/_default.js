@@ -151,6 +151,10 @@ class DefaultFeeder {
   processAlbumSongs (app, album) {
     return album.songs
       .map((song, idx) => Object.assign({}, song, {
+        album: {
+          id: album.id,
+          title: album.title,
+        },
         audioURL: songsProvider.getSongUrlByAlbumIdAndFileName(app, {
           albumId: album.id,
           filename: rebornEscape(song.filename)
@@ -161,12 +165,9 @@ class DefaultFeeder {
         imageURL: endpointProcessor.preprocess(
           config.media.POSTER_OF_ALBUM, app, album
         ),
+        filename: song.filename,
         // TODO : add recommendations
         suggestions: ['Next'],
-        album: {
-          id: album.id,
-          title: album.title,
-        },
         track: idx + 1,
         year: album.year,
       }));
