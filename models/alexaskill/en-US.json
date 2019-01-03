@@ -101,6 +101,10 @@
                         {
                             "name": "COLLECTION",
                             "type": "COLLECTIONS"
+                        },
+                        {
+                            "name": "YEAR",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER"
                         }
                     ],
                     "samples": [
@@ -116,7 +120,9 @@
                         "play {SUBJECT} {ORDER_BY}",
                         "play {SUBJECT}",
                         "play {SUBJECT} songs",
-                        "play {SUBJECT} music"
+                        "play {SUBJECT} music",
+                        "play {YEAR} year",
+                        "play {YEAR}"
                     ]
                 },
                 {

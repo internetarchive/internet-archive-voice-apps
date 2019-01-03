@@ -48,6 +48,12 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
+- scenario: 'play music on: play <year>'
+  dialog:
+  - user: 'play 2019 year'
+    assistant:
+      directive: 'AudioPlayer.Play'
+
 - scenario: 'empty playlist: 78s -> <wrong_genre>'
   dialog:
   - user: 'seventy eighties'

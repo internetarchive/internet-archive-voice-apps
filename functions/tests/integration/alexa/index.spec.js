@@ -97,6 +97,9 @@ describe('integration', () => {
             'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:2019%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+          ).reply(200, require('../../fixtures/albums.json'));
+          axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?' +
             'q=coverage:kharkiv%20AND%20' +
             'collection:etree%20AND%20' +
