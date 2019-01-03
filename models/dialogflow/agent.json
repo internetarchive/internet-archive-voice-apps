@@ -3,14 +3,18 @@
   "language": "en",
   "activeAssistantAgents": [],
   "disableInteractionLogs": false,
-  "disableStackdriverLogs": false,
+  "disableStackdriverLogs": true,
   "googleAssistant": {
     "googleAssistantCompatible": true,
     "welcomeIntentSignInRequired": false,
     "startIntents": [
       {
         "intentId": "0ce279d8-6f4f-4c59-9215-db7aa5b2bcea",
-        "signInRequired": true
+        "signInRequired": false
+      },
+      {
+        "intentId": "1299dd2e-f383-4798-8aa9-f60bd6e43dda",
+        "signInRequired": false
       }
     ],
     "systemIntents": [],
@@ -29,7 +33,7 @@
   },
   "defaultTimezone": "Africa/Casablanca",
   "webhook": {
-    "url": "https://b3021058.ngrok.io/internet-archive/us-central1/assistant",
+    "url": "https://us-central1-internet-archive.cloudfunctions.net/assistant",
     "headers": {
       "": ""
     },
@@ -42,7 +46,7 @@
   "customClassifierMode": "use.after",
   "mlMinConfidence": 0.3,
   "supportedLanguages": [],
-  "onePlatformApiVersion": "v2",
+  "onePlatformApiVersion": "v2beta1",
   "analyzeQueryTextSentiment": false,
   "enabledKnowledgeBaseNames": [],
   "knowledgeServiceConfidenceAdjustment": -0.4,
