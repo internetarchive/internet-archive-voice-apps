@@ -1,4 +1,4 @@
-# Internet Archive Google Action [![Build Status](https://travis-ci.org/internetarchive/internet-archive-google-action.svg?branch=master)](https://travis-ci.org/internetarchive/internet-archive-google-action) [![Coverage Status](https://coveralls.io/repos/github/internetarchive/internet-archive-google-action/badge.svg?branch=master)](https://coveralls.io/github/internetarchive/internet-archive-google-action?branch=master)
+# Internet Archive Google Action [![Build Status](https://travis-ci.org/internetarchive/internet-archive-voice-apps.svg?branch=master)](https://travis-ci.org/internetarchive/internet-archive-voice-apps) [![Coverage Status](https://coveralls.io/repos/github/internetarchive/internet-archive-google-action/badge.svg?branch=master)](https://coveralls.io/github/internetarchive/internet-archive-google-action?branch=master)
 
 ## Run Local Server
 
