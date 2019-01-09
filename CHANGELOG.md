@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.5.10](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.10) (2019-01-09)
+[Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.9...2.5.10)
+
+**Implemented enhancements:**
+
+- add dashbot to alexa [\#379](https://github.com/internetarchive/internet-archive-voice-apps/issues/379) [[alexa](https://github.com/internetarchive/internet-archive-voice-apps/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature / add support of dashbot logger [\#385](https://github.com/internetarchive/internet-archive-voice-apps/pull/385) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.9](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.9) (2018-12-29)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.8...2.5.9)
 
