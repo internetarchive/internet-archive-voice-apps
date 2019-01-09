@@ -48,9 +48,21 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
+# for the moment Bespoken Alexa tool extract <year> as <subject>
+# unskip those tests once Bespoken issue would be fixed
 - scenario: 'play music on: play <year>'
+  skip: true
   dialog:
-  - user: 'play 2019 year'
+  - user: 'play two thousand eighteen'
+    assistant:
+      directive: 'AudioPlayer.Play'
+
+# for the moment Bespoken Alexa tool extract <year> as <subject>
+# unskip those tests once Bespoken issue would be fixed
+- scenario: 'play music on: play <year> year'
+  skip: true
+  dialog:
+  - user: 'play 2018'
     assistant:
       directive: 'AudioPlayer.Play'
 
