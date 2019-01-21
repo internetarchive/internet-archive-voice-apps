@@ -12,10 +12,11 @@ See the developer guide and release notes at https://developers.google.com/actio
 #### Create Action for the project
 1. Click `CREATE` (continued from above step)
 2. Go to `settings` and click `export and import`, then click `restore from zip`.
-3. Restore from `models/dialogflow/dialogflow.zip`.
+3. zip the contents of `models/dialogflow/` and use that zip to restore the project. 
 #### Run Local Server
 Run server local with colorful logs
 1. `npm install -g firebase-tools`
+2. `touch functions/.runtimeconfig.json` and add fake keys (temporary workaround) refer [this](https://github.com/internetarchive/internet-archive-voice-apps/issues/434#issuecomment-453114249)
 2. `firebase init` (remove .firebaserc first)
 3. `firebase use --add` (and choose your own firebase project)
 4. `cd functions` and `npm install`
