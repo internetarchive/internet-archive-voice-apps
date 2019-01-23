@@ -15,7 +15,8 @@
     "start": "firebase serve --only functions:assistant",
     "start:alexa": "bst proxy lambda index-alexa",
     "deploy": "firebase deploy --only functions:assistant",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- -- -u exports -R spec tests/**/* && ./node_modules/.bin/codecov"
   },
   "dependencies": {
     "actions-on-google": "^2.5.0",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
     "chai": "^4.2.0",
+    "codecov": "^3.1.0",
     "eslint": "^5.10.0",
     "eslint-config-semistandard": "^13.0.0",
     "eslint-config-standard": "^12.0.0",
@@ -53,8 +55,10 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "istanbul": "^0.4.5",
     "js-yaml": "^3.12.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "rewire": "^4.0.1",
     "sinon": "^7.2.2",
     "sinon-chai": "^3.3.0",
