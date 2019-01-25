@@ -1,4 +1,4 @@
-# Internet Archive Google Action [![Build Status](https://travis-ci.org/internetarchive/internet-archive-voice-apps.svg?branch=master)](https://travis-ci.org/internetarchive/internet-archive-voice-apps) [![codecov](https://codecov.io/gh/yagyanshbhatia/internet-archive-voice-apps/branch/master/graph/badge.svg)](https://codecov.io/gh/yagyanshbhatia/internet-archive-voice-apps)
+# Internet Archive Google Action [![Build Status](https://travis-ci.org/internetarchive/internet-archive-voice-apps.svg?branch=master)](https://travis-ci.org/internetarchive/internet-archive-voice-apps) [![codecov](https://codecov.io/gh/internetarchive/internet-archive-voice-apps/branch/master/graph/badge.svg)](https://codecov.io/gh/internetarchive/internet-archive-voice-apps)
 
 ## Setup Instructions
 See the developer guide and release notes at https://developers.google.com/actions/ for more details.
