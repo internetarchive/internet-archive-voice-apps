@@ -16,7 +16,9 @@
     "start:alexa": "bst proxy lambda index-alexa",
     "deploy": "firebase deploy --only functions:assistant",
     "test": "npm run lint && npm run mocha",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- -- -u exports -R spec tests/**/* && ./node_modules/.bin/codecov"
+    "coverage": "npm run istanbul && npm run codecov",
+    "istanbul": "istanbul cover mocha -- -- -u exports -R spec tests/**/*",
+    "codecov": "codecov"
   },
   "dependencies": {
     "actions-on-google": "^2.5.0",
