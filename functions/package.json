@@ -11,14 +11,12 @@
   "scripts": {
     "lint": "eslint ./",
     "uploader": "node ./uploader",
-    "mocha": "mocha --opts ./tests/mocha.opts",
+    "mocha": "nyc mocha --opts ./tests/mocha.opts",
     "start": "firebase serve --only functions:assistant",
     "start:alexa": "bst proxy lambda index-alexa",
     "deploy": "firebase deploy --only functions:assistant",
     "test": "npm run lint && npm run mocha",
-    "coverage": "npm run istanbul && npm run codecov",
-    "istanbul": "istanbul cover mocha -- -- -u exports -R spec tests/**/*",
-    "codecov": "codecov"
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "dependencies": {
     "actions-on-google": "^2.5.0",
