@@ -61,7 +61,7 @@ module.exports = {
       appName: 'The Internet Archive Action',
 
       minimalSpeechForMediaResponse: `<speak>
-          <audio src="http://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+          <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                  clipBegin="4.5s"
                  clipEnd="5.5s"
                  soundLevel="10db">
