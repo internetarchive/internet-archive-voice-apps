@@ -14,22 +14,22 @@ describe('dialog', () => {
   beforeEach(() => {
     app = mockApp();
     options = {
-      audioURL: 'https://archive.org/download/gd73-06-10d1t01.mp3',
+      audioURL: 'http://archive.org/download/gd73-06-10d1t01.mp3',
       collections: ['etree'],
       coverage: 'Washington, DC',
       creator: 'Grateful Dead',
-      imageURL: 'https://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg',
+      imageURL: 'http://archive.org/gd73-06-10.sbd.hollister.174.sbeok.shnf/RFKJune73extras/Covers/GD6-10-73backtyedie.jpg',
       suggestions: ['rewind', 'next'],
       title: 'Morning Dew',
       track: 1,
       year: 1973,
-      url: 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg',
+      url: 'http://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg',
     };
 
     audio.__set__('availableStrings', {
       description: '{{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}',
       speech: `
-        <audio src="https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
+        <audio src="http://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg"
                clipBegin="4.5s"
                clipEnd="5.5s"
                soundLevel="10db">
@@ -76,13 +76,13 @@ describe('dialog', () => {
       expect(res).to.have.property('suggestions').to.have.lengthOf(2);
       expect(res.suggestions[0]).to.equal('next song');
       expect(res.suggestions[1]).to.deep.equal({
-        url: 'https://gactions-api.archive.org/proxy/details/',
+        url: 'http://gactions-api.archive.org/proxy/details/',
         title: mustache.render(strings.suggestionLink, options),
       });
     });
 
     it('should mute songs description speech and replace it with template (for example sound)', () => {
-      const soundURL = 'https://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
+      const soundURL = 'http://actions.google.com/sounds/v1/foley/cassette_tape_button.ogg';
       const strings = allowedStrings[0];
 
       audio.playSong(app, Object.assign({}, options, {

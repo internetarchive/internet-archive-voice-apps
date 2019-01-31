@@ -8,19 +8,19 @@ describe('utils', () => {
       const res = escapeHTMLObject({
         filename: 'jfjo2009-10-02d1t02.mp3',
         title: 'David',
-        audioURL: 'https://archive.org/download/jfjo2009-10-02.superlux.flac16/jfjo2009-10-02d1t02.mp3',
+        audioURL: 'http://archive.org/download/jfjo2009-10-02.superlux.flac16/jfjo2009-10-02d1t02.mp3',
         collections: [],
         coverage: 'Toronto, ON',
         creator: 'Jacob Fred Jazz Odyssey',
-        imageURL: 'https://archive.org/services/img/jfjo2009-10-02.superlux.flac16',
+        imageURL: 'http://archive.org/services/img/jfjo2009-10-02.superlux.flac16',
         suggestions: [],
         album: [],
         track: 2,
         year: 2009
       }, { skipFields: ['audioURL', 'imageURL'] });
 
-      expect(res).to.have.property('audioURL', 'https://archive.org/download/jfjo2009-10-02.superlux.flac16/jfjo2009-10-02d1t02.mp3');
-      expect(res).to.have.property('imageURL', 'https://archive.org/services/img/jfjo2009-10-02.superlux.flac16');
+      expect(res).to.have.property('audioURL', 'http://archive.org/download/jfjo2009-10-02.superlux.flac16/jfjo2009-10-02d1t02.mp3');
+      expect(res).to.have.property('imageURL', 'http://archive.org/services/img/jfjo2009-10-02.superlux.flac16');
     });
   });
 });

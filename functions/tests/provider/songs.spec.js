@@ -12,7 +12,7 @@ describe('search', () => {
           albumId: 'gd73-06-10.sbd.hollister.174.sbeok.shnf',
           filename: 'gd73-06-10d1t01.mp3'
         })).to.be.equal(
-          'https://gactions-api.archive.org/proxy/download/' +
+          'http://gactions-api.archive.org/proxy/download/' +
           'gd73-06-10.sbd.hollister.174.sbeok.shnf/' +
           'gd73-06-10d1t01.mp3'
         );

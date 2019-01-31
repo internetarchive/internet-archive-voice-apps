@@ -17,7 +17,7 @@ describe('actions', () => {
           playlist: {
             current: 0,
             items: [{
-              audioUrl: 'https://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3',
+              audioUrl: 'http://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3',
             }]
           },
         },
@@ -44,7 +44,7 @@ describe('actions', () => {
 
       expect(warning).to.be.called;
       expect(warning.args[0][0]).to.include(
-        'https://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3'
+        'http://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3'
       );
       expect(warning.args[0][0]).to.include(
         'MEDIA_ERROR_UNKNOWN'

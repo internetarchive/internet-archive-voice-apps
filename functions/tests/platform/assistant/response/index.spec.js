@@ -70,7 +70,7 @@ describe('platform', () => {
             suggestions: [
               'world one',
               {
-                url: 'https://archive.org/details/etree',
+                url: 'http://archive.org/details/etree',
                 title: 'on Archive.org'
               },
             ],
@@ -81,7 +81,7 @@ describe('platform', () => {
             speech: '<speak>hello world!</speak>'
           });
           expect(LinkOutSuggestion).to.have.been.calledWith({
-            url: 'https://archive.org/details/etree',
+            url: 'http://archive.org/details/etree',
             name: 'on Archive.org'
           });
         });
@@ -128,13 +128,13 @@ describe('platform', () => {
             media: [{
               name: 'Jazz in Paris',
               description: 'A funky Jazz tune',
-              contentURL: 'https://archive.org/download/song.mp3',
-              imageURL: 'https://archive.org/download/image.jpg',
+              contentURL: 'http://archive.org/download/song.mp3',
+              imageURL: 'http://archive.org/download/image.jpg',
             }],
             suggestions: [
               'next song',
               {
-                url: 'https://archive.org/details/etree',
+                url: 'http://archive.org/details/etree',
                 title: 'on Archive.org'
               },
             ],
@@ -143,16 +143,16 @@ describe('platform', () => {
           expect(assistant.ask).to.have.callCount(5);
 
           expect(Image).to.have.been.calledWith({
-            url: 'https://archive.org/download/image.jpg',
+            url: 'http://archive.org/download/image.jpg',
             alt: 'A funky Jazz tune',
           });
 
           expect(MediaObject).to.have.been.calledWith({
             name: 'Jazz in Paris',
-            url: 'https://archive.org/download/song.mp3',
+            url: 'http://archive.org/download/song.mp3',
             description: 'A funky Jazz tune',
             image: new Image({
-              url: 'https://archive.org/download/image.jpg',
+              url: 'http://archive.org/download/image.jpg',
               alt: 'A funky Jazz tune',
             }),
           });

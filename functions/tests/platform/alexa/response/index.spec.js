@@ -54,14 +54,14 @@ describe('platform', () => {
           media: [{
             name: 'song title',
             description: 'some description',
-            contentURL: 'https://archive.org/download/song.mp3',
-            imageURL: 'https://archive.org/download/image.jpg',
+            contentURL: 'http://archive.org/download/song.mp3',
+            imageURL: 'http://archive.org/download/image.jpg',
             offset: 0,
           }],
           suggestions: [
             'next song',
             {
-              url: 'https://archive.org/details/etree',
+              url: 'http://archive.org/details/etree',
               title: 'on Archive.org'
             },
           ],
@@ -79,14 +79,14 @@ describe('platform', () => {
           media: [{
             name: 'song title',
             description: 'some description',
-            contentURL: 'https://archive.org/download/song.mp3',
-            imageURL: 'https://archive.org/download/image.jpg',
+            contentURL: 'http://archive.org/download/song.mp3',
+            imageURL: 'http://archive.org/download/image.jpg',
             offset: 0,
           }],
           suggestions: [
             'next song',
             {
-              url: 'https://archive.org/details/etree',
+              url: 'http://archive.org/details/etree',
               title: 'on Archive.org'
             },
           ],
@@ -102,14 +102,14 @@ describe('platform', () => {
           .calledWith(
             'song title',
             'some description',
-            'https://archive.org/download/image.jpg'
+            'http://archive.org/download/image.jpg'
           );
 
         expect(handlerInput.responseBuilder.addAudioPlayerPlayDirective).to.have.been
           .calledWith(
             'REPLACE_ALL',
-            'https://archive.org/download/song.mp3',
-            'https://archive.org/download/song.mp3',
+            'http://archive.org/download/song.mp3',
+            'http://archive.org/download/song.mp3',
             0,
             null
           );
@@ -123,11 +123,11 @@ describe('platform', () => {
           media: [{
             name: 'song title',
             description: 'some description',
-            contentURL: 'https://archive.org/download/new-track.mp3',
-            imageURL: 'https://archive.org/download/image.jpg',
+            contentURL: 'http://archive.org/download/new-track.mp3',
+            imageURL: 'http://archive.org/download/image.jpg',
             offset: 12345,
             previousTrack: {
-              contentURL: 'https://archive.org/download/old-track.mp3',
+              contentURL: 'http://archive.org/download/old-track.mp3',
             },
           }],
         });
@@ -135,10 +135,10 @@ describe('platform', () => {
         expect(handlerInput.responseBuilder.addAudioPlayerPlayDirective).to.have.been
           .calledWith(
             'ENQUEUE',
-            'https://archive.org/download/new-track.mp3',
-            'https://archive.org/download/new-track.mp3',
+            'http://archive.org/download/new-track.mp3',
+            'http://archive.org/download/new-track.mp3',
             12345,
-            'https://archive.org/download/old-track.mp3'
+            'http://archive.org/download/old-track.mp3'
           );
       });
 

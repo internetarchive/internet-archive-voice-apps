@@ -54,7 +54,7 @@ function handleFinished (app) {
     // we are going to play short sample to hope that next time we would get session back
     dialog.playSong(app, {
       mediaResponseOnly: true,
-      audioURL: 'https://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3',
+      audioURL: 'http://s3.amazonaws.com/gratefulerrorlogs/CrowdNoise.mp3',
     });
     return Promise.resolve();
   }

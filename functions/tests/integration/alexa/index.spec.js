@@ -88,23 +88,23 @@ describe('integration', () => {
           // mock requests to IA
           axiosMock = new MockAdapter(axios);
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=year&rows=150&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=year&rows=150&output=json'
           ).reply(200, require('../../fixtures/years.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=coverage:washington%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22%20AND%20year:1970&fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?' +
+            'http://askills-api.archive.org/advancedsearch.php?' +
             'q=coverage:kharkiv%20AND%20' +
             'collection:etree%20AND%20' +
             'creator:%22grateful%20dead%22&' +
             'fl%5B%5D=year&rows=150&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?' +
+            'http://askills-api.archive.org/advancedsearch.php?' +
             'q=coverage:%22new%20york%22%20AND%20' +
             'collection:etree%20AND%20' +
             'creator:%22grateful%20dead%22%20AND%20' +
@@ -112,41 +112,41 @@ describe('integration', () => {
             'fl%5B%5D=identifier,coverage,title,year&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?' +
+            'http://askills-api.archive.org/advancedsearch.php?' +
             'q=coverage:%22new%20york%22%20AND%20' +
             'collection:etree%20AND%20' +
             'creator:%22grateful%20dead%22&' +
             'fl%5B%5D=year&rows=150&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:jazz&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:jazz&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20subject:jazz%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20subject:jazz%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:christmas&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood%20AND%20subject:christmas&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../fixtures/albums-empty.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
+            'http://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
           ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=collection:etree&fl%5B%5D=creator,identifier&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=collection:etree&fl%5B%5D=creator,identifier&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/popular-of-etree.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20subject:folk%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20subject:folk%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:etree%20AND%20creator:%22grateful%20dead%22&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../fixtures/coverage-and-year.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../fixtures/coverage-and-year.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1910%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1910%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/coverages-of-1910.json'));
           axiosMock.onGet(
-            'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
+            'http://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20year:1990%20AND%20(collection:etree%20OR%20collection:georgeblood)&fl%5B%5D=coverage,year&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/empty-response.json'));
           axiosMock.onGet(
           ).reply(400);
