@@ -60,6 +60,14 @@
   - user: 'random'
     assistant: "I found"
 
+- scenario: 'play <collection> should play <collection> only music'
+  dialog:
+  - user: 'play seventy eighties'
+    assistant:
+      request:
+        - url: 'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+          res: '../../fixtures/albums.json'
+
 - scenario: 'song details: when song is playing'
   dialog:
   - user: 'play jazz'

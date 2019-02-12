@@ -28,8 +28,10 @@ function expectOrNot (target, inverted) {
  * @private
  * @param res
  * @param rule
+ * @param inverted
+ * @param requestWasTriggered
  */
-function validateResponse (res, rule, inverted = false) {
+function validateResponse (res, rule, { inverted = false, requestWasTriggered }) {
   if (typeof rule === 'string') {
     expect(res.response.outputSpeech).to.exist;
     expect(res.response.outputSpeech.ssml).to.exist;
@@ -38,11 +40,12 @@ function validateResponse (res, rule, inverted = false) {
   }
 
   if ('without' in rule) {
-    return validateResponse(res, rule.without, !inverted);
+    validateResponse(res, rule.without, { inverted: !inverted });
+    return;
   }
 
   if ('all' in rule) {
-    rule.all.forEach(subRule => validateResponse(res, subRule, inverted));
+    rule.all.forEach(subRule => validateResponse(res, subRule, { inverted }));
     return;
   }
 
@@ -52,6 +55,15 @@ function validateResponse (res, rule, inverted = false) {
       // we don't have other parameters to check
       return;
     }
+  }
+
+  if ('request' in rule) {
+    if (requestWasTriggered) {
+      Object.entries(requestWasTriggered).forEach(([key, triggered]) => {
+        expect(triggered).to.be.true;
+      });
+    }
+    return;
   }
 
   if ('tells' in rule) {
@@ -131,6 +143,12 @@ describe('integration', () => {
             'https://askills-api.archive.org/metadata/gd70-10-23.aud.wolfson.15080.sbefail.shnf'
           ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
           axiosMock.onGet(
+            'https://askills-api.archive.org/metadata/gd1970-10-23.aud-wolfson.sketchy-bontempo.12227.shnf'
+          ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
+          axiosMock.onGet(
+            'https://askills-api.archive.org/metadata/gd1970-10-23.aud.wolfson.motb-0004.85071.flac16'
+          ).reply(200, require('../../fixtures/gd70-10-23.aud.wolfson.15080.sbefail.shnf.json'));
+          axiosMock.onGet(
             'https://askills-api.archive.org/advancedsearch.php?q=collection:etree&fl%5B%5D=creator,identifier&sort%5B%5D=downloads+desc&rows=3&output=json'
           ).reply(200, require('../../provider/fixtures/popular-of-etree.json'));
           axiosMock.onGet(
@@ -197,11 +215,25 @@ describe('integration', () => {
 
         dialog.forEach(({ user, assistant }) => {
           const message = [];
+
           message.push(`should utter: "${util.inspect(user, { depth: null })}"`);
           if (assistant) {
             message.push(`get a response: "${JSON.stringify(assistant)}"`);
           }
+
           it(message.join(' and '), () => {
+            let requestWasTriggered = {};
+            if (assistant && assistant.request) {
+              assistant.request.forEach(
+                ({ url, res }) => {
+                  axiosMock.onGet(url).reply(function (config) {
+                    requestWasTriggered[config.url] = true;
+                    return [200, require(res)];
+                  });
+                }
+              );
+            }
+
             let res;
             if (typeof (user) === 'string') {
               info(`>> user tells: ${user}`);
@@ -220,7 +252,7 @@ describe('integration', () => {
                   info(`>> assistant responses: ${res.response.outputSpeech.ssml}`);
                 }
 
-                validateResponse(res, assistant);
+                validateResponse(res, assistant, { requestWasTriggered });
               }
             });
           });
