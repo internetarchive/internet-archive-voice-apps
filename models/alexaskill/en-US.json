@@ -99,14 +99,14 @@
                             "type": "ORDERS"
                         },
                         {
-                            "name": "COLLECTION",
+                            "name": "COLLECTION_ID",
                             "type": "COLLECTIONS"
                         }
                     ],
                     "samples": [
-                        "{ORDER_BY} Play {SUBJECT} {COLLECTION}",
+                        "{ORDER_BY} Play {SUBJECT} {COLLECTION_ID}",
                         "play {ORDER_BY} of {SUBJECT}",
-                        "play {COLLECTION} {SUBJECT}",
+                        "play {COLLECTION_ID} {SUBJECT}",
                         "play {CREATOR} music",
                         "play {CREATOR} songs",
                         "{ORDER_BY} play {SUBJECT}",
