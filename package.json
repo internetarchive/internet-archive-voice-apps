@@ -1,0 +1,15 @@
+{
+  "name": "production-build-script-of-internet-archive",
+  "version": "1.0.0",
+  "description": "Production Build Script of Internet Archive",
+  "author": "Internet Archive",
+  "scripts": {
+    "build": "babel functions -d functions_dist --ignore node_modules,tests --copy-files && cp functions/.runtimeconfig.json functions_dist/ && npm --prefix functions_dist install --only=production"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}
