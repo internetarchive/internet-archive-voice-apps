@@ -4,7 +4,8 @@
   "description": "Production Build Script of Internet Archive",
   "author": "Internet Archive",
   "scripts": {
-    "build": "babel functions -d functions_dist --ignore node_modules,tests --copy-files && cp functions/.runtimeconfig.json functions_dist/ && npm --prefix functions_dist install --only=production"
+    "build": "babel functions -d functions_dist --ignore node_modules,tests --copy-files && cp functions/.runtimeconfig.json functions_dist/ && npm --prefix functions_dist install --only=production",
+    "watch": "babel functions -d functions_dist --ignore node_modules,tests --watch"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
