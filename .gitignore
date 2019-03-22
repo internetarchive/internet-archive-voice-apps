@@ -9,3 +9,7 @@ functions/firebase-debug.log
 npm-debug.log
 .DS_Store
 
+# prod build
+
+functions_dist
+
