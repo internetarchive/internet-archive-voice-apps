@@ -20,7 +20,7 @@
   "dependencies": {
     "actions-on-google": "^2.5.0",
     "alexa-sdk": "^1.0.25",
-    "ask-sdk": "^2.3.0",
+    "ask-sdk": "^2.5.1",
     "axios": "^0.18.0",
     "bespoken-tools": "^2.1.17",
     "child-process-promise": "^2.2.1",
