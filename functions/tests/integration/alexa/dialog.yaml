@@ -82,7 +82,11 @@
   - user: 'what song is this'
     assistant: 'Nothing is playing right now'
 
+# stop working in new version actually it doesn't have much sense:
+# because we can't get intent which isn't defined in skill model
+# so the only possible case when we have d
 - scenario: 'unhandled intent -> graceful answer'
+  skip: true
   dialog:
   - user:
       intend: AMAZON.we_definitely_do_not_handle_it
