@@ -38,7 +38,6 @@
     "object.entries": "^1.1.0",
     "raven": "^2.6.4",
     "replaceall": "^0.1.6",
-    "supports-color": "^5.5.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
