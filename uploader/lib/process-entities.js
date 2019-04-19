@@ -6,7 +6,7 @@ const _ = require('lodash');
  * @param value
  */
 function dropBrackets (value) {
-  return value.replace(/[\(,\)]/g, '');
+  return value.replace(/[(,)]/g, '');
 }
 
 /**
