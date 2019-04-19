@@ -23,7 +23,7 @@ async function fetchAllAndSaveToFile (ops) {
 
   const onPageReceived = (pageIndex, numOfPages) => {
     process.stdout.write(`\r ${Math.round(100 * pageIndex / (numOfPages - 1))}%`);
-  }
+  };
 
   let books;
   try {
@@ -81,7 +81,7 @@ async function storeToCSV (ops, entities) {
     throw new Error('It seems we have missed ops.filename');
   }
   console.log(`storing to CSV file ${ops.filename}`);
-  encodedEntities = await stringifyToCSV(entities, ops);
+  const encodedEntities = await stringifyToCSV(entities, ops);
   await fsWriteFile(ops.filename, encodedEntities, ops.encoding);
   console.log(`CSV file ${ops.filename} is stored`);
 }
