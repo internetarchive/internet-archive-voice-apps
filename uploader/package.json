@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/internetarchive/internet-archive-google-action#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "axios-retry": "^3.1.2",
     "csv": "^3.1.0",
     "lodash": "^4.17.11",
