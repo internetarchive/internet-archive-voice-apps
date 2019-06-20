@@ -24,7 +24,7 @@ const userUIDMiddleware = require('./middlewares/user-uid');
 module.exports = (actionsMap) => {
   const app = dialogflow();
 
-  if (_.has(functions.config(), ['dashbot','key'])) {
+  if (_.has(functions.config(), ['dashbot', 'key'])) {
     const dashbot = dashbotBuilder(functions.config().dashbot.key, {
       // it could be more useful if we would get callback on error and pass log through our logger
       // but currently it uses console.log to log error
@@ -211,7 +211,7 @@ module.exports = (actionsMap) => {
 
     await after.handle(conv);
   });
-  if (_.has(functions.config(), ['bespoken','key'])) {
+  if (_.has(functions.config(), ['bespoken', 'key'])) {
     return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
   } else {
     warning('\nWARNING : bespoken key missing\n');
