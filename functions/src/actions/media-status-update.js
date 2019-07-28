@@ -29,10 +29,11 @@ function handler (app) {
     case 'FINISHED':
       return handleFinished(app);
     case 'FAILED':
-      // got once:
-      // failureReason: 'AUDIO_NOT_PLAYABLE'
       const { failureReason } = mediaStatusParam;
-      warning(`failureReason ${failureReason}`);
+      const currentTrack = playlist.getCurrentSong(app);
+
+      // only get such reason: 'AUDIO_NOT_PLAYABLE'
+      warning(`Failure reason: "${failureReason}" for track ${currentTrack.audioUrl}`);
       return dialog.close(app, strings.events.playlistIsEnded);
     default:
       // log that we got unknown status
