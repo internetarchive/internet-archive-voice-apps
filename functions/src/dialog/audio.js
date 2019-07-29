@@ -43,6 +43,16 @@ function playSong (app, options) {
     options.previousTrack,
     { contentURL: options.previousTrack && options.previousTrack.audioURL });
 
+  let suggestions = strings.suggestions;
+  if (strings.suggestionLink && config.media.suggestionLink) {
+    suggestions = suggestions.concat({
+      url: endpointProcessor.preprocess(
+        config.endpoints.ALBUM_DETAIL, app, options
+      ),
+      title: mustache.render(strings.suggestionLink, options),
+    });
+  }
+
   app.response({
     speech,
 
@@ -60,12 +70,7 @@ function playSong (app, options) {
 
     mediaResponseOnly: options.mediaResponseOnly,
 
-    suggestions: strings.suggestions.concat({
-      url: endpointProcessor.preprocess(
-        config.endpoints.ALBUM_DETAIL, app, options
-      ),
-      title: mustache.render(strings.suggestionLink, options),
-    }),
+    suggestions,
   });
 }
 

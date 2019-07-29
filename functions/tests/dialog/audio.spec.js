@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const mustache = require('mustache');
 const rewire = require('rewire');
 
+const config = require('../../src/config');
 const audio = rewire('../../src/dialog/audio');
 const allowedStrings = require('../../src/strings').dialog.playSong;
 
@@ -46,6 +47,7 @@ describe('dialog', () => {
 
   describe('playSong', () => {
     it('should share audio response with user', () => {
+      config.media.suggestionLink = true;
       const strings = allowedStrings[0];
       audio.playSong(app, options);
 
