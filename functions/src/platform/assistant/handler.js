@@ -37,8 +37,7 @@ module.exports = (actionsMap) => {
 
     dashbot.configHandler(app);
   } else {
-    console.log('\n');
-    warning('\nWARNING : dashbot key missing\n');
+    warning('dashbot key missing\n');
   }
 
   let handlers = [];
@@ -214,7 +213,7 @@ module.exports = (actionsMap) => {
   if (_.has(functions.config(), ['bespoken', 'key'])) {
     return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
   } else {
-    warning('\nWARNING : bespoken key missing\n');
+    warning('bespoken key missing\n');
     return functions.https.onRequest(app);
   }
 };
