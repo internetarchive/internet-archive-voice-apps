@@ -24,17 +24,21 @@ const userUIDMiddleware = require('./middlewares/user-uid');
 module.exports = (actionsMap) => {
   const app = dialogflow();
 
-  const dashbot = dashbotBuilder(functions.config().dashbot.key, {
-    // it could be more useful if we would get callback on error and pass log through our logger
-    // but currently it uses console.log to log error
-    //
-    // more details in source:
-    // https://github.com/actionably/dashbot/blob/33376ff81af3962eb58ad8ebabc91827134333c5/src/make-request.js#L22
-    //
-    printErrors: false,
-  }).google;
+  if (_.has(functions.config(), ['dashbot', 'key'])) {
+    const dashbot = dashbotBuilder(functions.config().dashbot.key, {
+      // it could be more useful if we would get callback on error and pass log through our logger
+      // but currently it uses console.log to log error
+      //
+      // more details in source:
+      // https://github.com/actionably/dashbot/blob/33376ff81af3962eb58ad8ebabc91827134333c5/src/make-request.js#L22
+      //
+      printErrors: false,
+    }).google;
 
-  dashbot.configHandler(app);
+    dashbot.configHandler(app);
+  } else {
+    warning('dashbot key missing\n');
+  }
 
   let handlers = [];
   if (actionsMap) {
@@ -206,6 +210,10 @@ module.exports = (actionsMap) => {
 
     await after.handle(conv);
   });
-
-  return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
+  if (_.has(functions.config(), ['bespoken', 'key'])) {
+    return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
+  } else {
+    warning('bespoken key missing\n');
+    return functions.https.onRequest(app);
+  }
 };
