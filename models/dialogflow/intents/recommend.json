@@ -1,0 +1,52 @@
+{
+  "id": "f2167db0-f3bb-458e-8027-6d1fd12cdd10",
+  "name": "recommend",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "recommend",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "suggestion_chips",
+          "platform": "google",
+          "lang": "en",
+          "suggestions": [
+            {
+              "title": "78s"
+            },
+            {
+              "title": "Live concerts"
+            },
+            {
+              "title": "Christmas Music"
+            },
+            {
+              "title": "play Grateful Dead"
+            },
+            {
+              "title": "play The Cowboy Junkies"
+            }
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "What about Grateful Dead or The Cowboy Junkies. If you want to listen to more songs you can select from 78s, Live Concerts or Christmas Music."
+        }
+      ],
+      "defaultResponsePlatforms": {
+        "google": true
+      },
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

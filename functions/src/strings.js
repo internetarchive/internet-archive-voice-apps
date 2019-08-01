@@ -152,6 +152,20 @@ module.exports = {
       },
     },
 
+    recommend: {
+      speech:
+        '<s>What about The Grateful Dead or Cowboy Junkies. </s>' +
+        '<s>If you want to listen to more songs, then you can choose from Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> songs. </s>' +
+        '<s>You can ask to playback music of specific genre by asking: </s>' +
+        '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
+        '<s>As well you can ask me to play specific artist. </s>' +
+        '<s>For example by saying: </s>' +
+        '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
+        '<s>And finally you can just answer on my questions </s>' +
+        '<s>and I will pick the right music for you. </s>' +
+        '<s>{{last.reprompt}}</s>',
+    },
+
     /**
      * we got 4xx, 5xx response from a server
      */
