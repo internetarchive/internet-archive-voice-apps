@@ -5,6 +5,7 @@ module.exports = {
      */
     states: {
       HELP: 'help',
+      RECOMMEND: 'recommend',
       PLAYBACK: 'playback',
       PLAYBACK_IS_STOPPED: 'playback-is-stopped',
       PLAYLIST_IS_ENDED: 'playlist-is-ended',
