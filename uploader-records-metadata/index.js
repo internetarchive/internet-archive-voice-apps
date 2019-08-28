@@ -7,8 +7,8 @@ const _ = require(`lodash`);
 const debug = require(`debug`)(`ia:uploader:index:debug`);
 const error = require(`debug`)(`ia:uploader:index:error`);
 
-const { uploadCollection } = require('./entities/collection');
-const { uploadGenres } = require('./entities/genres');
+const { uploadCollection } = require('./lib/entities/collection');
+const { uploadGenres } = require('./lib/entities/genres');
 
 const ALL = `all`;
 
