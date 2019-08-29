@@ -23,7 +23,6 @@
     "ask-sdk": "^2.7.0",
     "axios": "^0.19.0",
     "bespoken-tools": "^2.3.38",
-    "child-process-promise": "^2.2.1",
     "dashbot": "^10.4.2",
     "debug": "^4.1.1",
     "firebase-admin": "^8.4.0",
