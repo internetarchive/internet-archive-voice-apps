@@ -15,7 +15,8 @@ module.exports = (platform) => (group, prop) => {
       res = require('../platform/assistant/env')(group, prop);
       break;
     default:
-      res = process.env[groupParamToEnvVarName(group, prop)];
+      const key = groupParamToEnvVarName(group, prop);
+      res = key ? process.env[key] : process.env;
       break;
   }
 
@@ -23,6 +24,7 @@ module.exports = (platform) => (group, prop) => {
     if (res.toLowerCase() === 'true') {
       return true;
     }
+
     if (res.toLowerCase() === 'false') {
       return false;
     }

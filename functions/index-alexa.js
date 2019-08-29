@@ -15,9 +15,11 @@ const actionsMap = {
   ...actions.fromFiles()
 };
 
-logAppStart(actionsMap);
+const platform = 'alexa';
 
-setup({ platform: 'alexa' });
+logAppStart({ platform, actionsMap });
+
+setup({ platform });
 
 /**
  * Alexa Lambda Endpoint

@@ -15,9 +15,11 @@ const actionsMap = {
   ...actions.fromFiles()
 };
 
-logAppStart(actionsMap);
+const platform = 'assistant';
 
-setup({ platform: 'assistant' });
+logAppStart({ platform, actionsMap });
+
+setup({ platform });
 
 /**
  * Action of Google Endpoint

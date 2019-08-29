@@ -4,9 +4,9 @@ patchDebugScopeEnvVariable();
 const loggerBuilder = require('debug');
 const hirestime = require('hirestime');
 
-const logEnvVariables = require('./log-env-variables');
-
-logEnvVariables();
+// const logEnvVariables = require('./log-env-variables');
+//
+// logEnvVariables();
 
 // it seems google firebase function doesn't give access to env variables
 // https://firebase.google.com/docs/functions/config-env
