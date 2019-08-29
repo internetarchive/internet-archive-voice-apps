@@ -1,5 +1,10 @@
 'use strict';
 
+const platform = 'assistant';
+
+const patch = require('./src/utils/logger/patch-debug-scope');
+patch(platform);
+
 // put on the top to estimate performance of "start"
 const pipeline = require('./src/performance/pipeline');
 pipeline.stage(pipeline.START);
@@ -14,8 +19,6 @@ const actionsMap = {
   ...actions.fromJSON(dialogsScheme),
   ...actions.fromFiles()
 };
-
-const platform = 'assistant';
 
 logAppStart({ platform, actionsMap });
 
