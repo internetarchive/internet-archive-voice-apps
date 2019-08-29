@@ -1,5 +1,3 @@
-const entries = require('object.entries');
-
 const escapeHTML = require('./escape-html');
 
 /**
@@ -23,7 +21,7 @@ module.exports = function escapeStructure (data, { skipFields = [] } = {}) {
   }
 
   if (typeof data === 'object') {
-    return entries(data)
+    return Object.entries(data)
       .map(([key, value]) => [key, skipFields.indexOf(key) < 0 ? escapeStructure(value) : value])
       .reduce((acc, [key, value]) => {
         acc[key] = value;
