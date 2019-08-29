@@ -1,6 +1,3 @@
-const functions = require('firebase-functions');
-const _ = require('lodash');
-
 const groupParamToEnvVarName = require('./group-param-to-env-variable-name');
 
 /**
@@ -15,7 +12,7 @@ module.exports = (platform) => (group, prop) => {
 
   switch (platform) {
     case 'assistant':
-      res = _.get(functions.config(), [group, prop]);
+      res = require('../platform/assistant/env')(group, prop);
       break;
     default:
       res = process.env[groupParamToEnvVarName(group, prop)];
