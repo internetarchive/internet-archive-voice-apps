@@ -3,8 +3,8 @@ const axios = require(`axios`);
 const debug = require(`debug`)(`ia:uploader:entities:debug`);
 const error = require(`debug`)(`ia:uploader:entities:error`);
 
-const config = require('../../src/config');
-const endpointProcessor = require('../../src/network/endpoint-processor');
+const config = require('../../../functions/src/config');
+const endpointProcessor = require('../../../functions/src/network/endpoint-processor');
 const entities = require('./entities');
 const util = require(`util`);
 

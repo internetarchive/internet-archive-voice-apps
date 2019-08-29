@@ -1,5 +1,10 @@
 'use strict';
 
+const platform = 'alexa';
+
+const patch = require('./src/utils/logger/patch-debug-scope');
+patch(platform);
+
 // put on the top to estimate performance of "start"
 const pipeline = require('./src/performance/pipeline');
 pipeline.stage(pipeline.START);
@@ -15,9 +20,9 @@ const actionsMap = {
   ...actions.fromFiles()
 };
 
-logAppStart(actionsMap);
+logAppStart({ platform, actionsMap });
 
-setup({ platform: 'alexa' });
+setup({ platform });
 
 /**
  * Alexa Lambda Endpoint

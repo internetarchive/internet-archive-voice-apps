@@ -1,17 +1,14 @@
-const functions = require('firebase-functions');
+const env = require('../../config/env');
 
 /**
  * we shouldn't use console
  * but it is trade-off because we can't be sure
  * that process.env will be patched form functions.config correctly
  */
-module.exports = () => {
-  if (process.env.X_GOOGLE_GCLOUD_PROJECT) {
-    console.info(`initial process.env:`, process.env);
-    try {
-      console.info(`initial functions.config()`, functions.config());
-    } catch (err) {
-      console.warning('failed to get functions.confg()', err);
-    }
+module.exports = (platform) => {
+  console.info(`initial process.env:`, process.env);
+  const config = env(platform)();
+  if (config !== process.env) {
+    console.info(`initial config:`, config);
   }
 };

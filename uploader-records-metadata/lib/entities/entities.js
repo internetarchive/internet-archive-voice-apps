@@ -5,7 +5,7 @@ const util = require(`util`);
 const { exec } = require('child-process-promise');
 
 const config = require('../config');
-const endpointProcessor = require('../../src/network/endpoint-processor');
+const endpointProcessor = require('../../../functions/src/network/endpoint-processor');
 
 const MAX_ENTITY = 30000;
 const MAX_REQUEST = 10000;
