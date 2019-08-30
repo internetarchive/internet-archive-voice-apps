@@ -1,5 +1,39 @@
 # Change Log
 
+## [2.5.12](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.12) (2019-08-30)
+[Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.10...2.5.12)
+
+**Implemented enhancements:**
+
+- simple recommendation [\#473](https://github.com/internetarchive/internet-archive-voice-apps/issues/473) [[alexa](https://github.com/internetarchive/internet-archive-voice-apps/labels/alexa)]
+- play \<year\> [\#441](https://github.com/internetarchive/internet-archive-voice-apps/issues/441)
+- improve google action performance [\#318](https://github.com/internetarchive/internet-archive-voice-apps/issues/318)
+
+**Fixed bugs:**
+
+- hit the limit of Amazon Lambda [\#476](https://github.com/internetarchive/internet-archive-voice-apps/issues/476) [[alexa](https://github.com/internetarchive/internet-archive-voice-apps/labels/alexa)]
+- Assistant goes into a loop when selected instrumental genre [\#447](https://github.com/internetarchive/internet-archive-voice-apps/issues/447)
+
+**Closed issues:**
+
+- Failure in setting up dev environment [\#469](https://github.com/internetarchive/internet-archive-voice-apps/issues/469)
+- Project Idea \#2 for GSoC 2019 [\#463](https://github.com/internetarchive/internet-archive-voice-apps/issues/463)
+- Problem in startup [\#446](https://github.com/internetarchive/internet-archive-voice-apps/issues/446)
+- Unresponsive webhook while hosting on firebase.  [\#443](https://github.com/internetarchive/internet-archive-voice-apps/issues/443)
+- Error while running local server [\#434](https://github.com/internetarchive/internet-archive-voice-apps/issues/434)
+
+**Merged pull requests:**
+
+- Feature/reduce size [\#477](https://github.com/internetarchive/internet-archive-voice-apps/pull/477) ([hyzhak](https://github.com/hyzhak))
+- Feature/473 simple recommendation [\#474](https://github.com/internetarchive/internet-archive-voice-apps/pull/474) ([sayak119](https://github.com/sayak119))
+- failure in setting dev environment due to missed .runtimeconfig.json [\#470](https://github.com/internetarchive/internet-archive-voice-apps/pull/470) ([sayak119](https://github.com/sayak119))
+- Bump axios from 0.18.0 to 0.18.1 in /uploader [\#468](https://github.com/internetarchive/internet-archive-voice-apps/pull/468) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Chore/upgrade deps [\#467](https://github.com/internetarchive/internet-archive-voice-apps/pull/467) ([hyzhak](https://github.com/hyzhak))
+- Chore/upgrade deps [\#465](https://github.com/internetarchive/internet-archive-voice-apps/pull/465) ([hyzhak](https://github.com/hyzhak))
+- Feature/upgrade deps [\#464](https://github.com/internetarchive/internet-archive-voice-apps/pull/464) ([hyzhak](https://github.com/hyzhak))
+- add integrational test of 'play \<collection\> should play \<collection\>… [\#450](https://github.com/internetarchive/internet-archive-voice-apps/pull/450) ([hyzhak](https://github.com/hyzhak))
+- Improved Readme and added a fake config \(temporary solution\) [\#444](https://github.com/internetarchive/internet-archive-voice-apps/pull/444) ([yagyanshbhatia](https://github.com/yagyanshbhatia))
+
 ## [2.5.10](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.10) (2019-01-09)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.9...2.5.10)
 
@@ -582,9 +616,7 @@
 
 **Merged pull requests:**
 
-- update: 'Ok, muting song titles' [\#169](https://github.com/internetarchive/internet-archive-voice-apps/pull/169) ([hyzhak](https://github.com/hyzhak))
 - Feature/accumulate response before send to server [\#168](https://github.com/internetarchive/internet-archive-voice-apps/pull/168) ([hyzhak](https://github.com/hyzhak))
-- WIP : test fail for audio.spec.js [\#166](https://github.com/internetarchive/internet-archive-voice-apps/pull/166) ([bimlendra](https://github.com/bimlendra))
 - Feature/convert resolvers to extensions [\#164](https://github.com/internetarchive/internet-archive-voice-apps/pull/164) ([hyzhak](https://github.com/hyzhak))
 
 ## [2.0.13](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.0.13) (2018-03-19)
@@ -629,6 +661,8 @@
 
 **Merged pull requests:**
 
+- update: 'Ok, muting song titles' [\#169](https://github.com/internetarchive/internet-archive-voice-apps/pull/169) ([hyzhak](https://github.com/hyzhak))
+- WIP : test fail for audio.spec.js [\#166](https://github.com/internetarchive/internet-archive-voice-apps/pull/166) ([bimlendra](https://github.com/bimlendra))
 - Feature/mute song titles [\#153](https://github.com/internetarchive/internet-archive-voice-apps/pull/153) ([hyzhak](https://github.com/hyzhak))
 - Feature/Improve description of local server running [\#149](https://github.com/internetarchive/internet-archive-voice-apps/pull/149) ([hyzhak](https://github.com/hyzhak))
 - Feature/use creator as filter [\#147](https://github.com/internetarchive/internet-archive-voice-apps/pull/147) ([hyzhak](https://github.com/hyzhak))
