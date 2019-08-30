@@ -152,6 +152,14 @@ module.exports = {
       },
     },
 
+    recommend: {
+      speech:
+        '<s>What about Grateful Dead or The Cowboy Junkies. </s>' +
+        '<s>If you want to listen to more songs, then you can choose from Live Concerts, Christmas Music and 78 <say-as interpret-as="characters">rpm</say-as> songs </s>' +
+        '<s>and I will pick the right music for you. </s>',
+      suggestions: ['78s', 'Live Concerts', 'Christmas Music', 'play Grateful Dead', 'play The Cowboy Junkies'],
+    },
+
     /**
      * we got 4xx, 5xx response from a server
      */

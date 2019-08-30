@@ -1,0 +1,74 @@
+[
+  {
+    "id": "b62a13e3-fd93-4d8f-a3bd-54c162149082",
+    "data": [
+      {
+        "text": "recommend ",
+        "userDefined": false
+      },
+      {
+        "text": "me",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " a ",
+        "userDefined": false
+      },
+      {
+        "text": "song",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "3a9b946c-08f4-4c3a-9d70-44befa4f1058",
+    "data": [
+      {
+        "text": "recommend a ",
+        "userDefined": false
+      },
+      {
+        "text": "song",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "016684c6-338e-45c5-8eec-0b54f4a1a752",
+    "data": [
+      {
+        "text": "recommend some music to ",
+        "userDefined": false
+      },
+      {
+        "text": "me",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "7cfb8773-bfe8-45c6-8773-a9fdd929f7c6",
+    "data": [
+      {
+        "text": "recommend some music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]
