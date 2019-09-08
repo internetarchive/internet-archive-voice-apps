@@ -1,5 +1,6 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
+const lodash = require('lodash');
 const moment = require('moment');
 
 
@@ -25,12 +26,14 @@ function getDB () {
 async function visitInactiveUsersAndTheirSessions (db, batchSize, callback) {
   const users = db.collection('users');
 
+  const haveNotUpdatedSinceDays = _.get(functions.config(), ['cleaner', 'haveNotUpdatedSinceDays'], 7);
+
   // get users which wasn't active for the week
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const inactiveUsersTimeOld = new Date();
+  inactiveUsersTimeOld.setDate(inactiveUsersTimeOld.getDate() - haveNotUpdatedSinceDays);
 
   const inactiveUsers = await users
-    .where('updatedAt', '<', oneWeekAgo.getTime())
+    .where('updatedAt', '<', inactiveUsersTimeOld.getTime())
     .orderBy('updatedAt', 'asc')
     // each user has at least one session, so we share batchSize between them
     .limit(batchSize / 2)
@@ -70,7 +73,7 @@ exports.cleaner = functions.pubsub.schedule('0 */1 * * *').onRun(async (context)
 
   const db = getDB();
 
-  const batchSize = 64;
+  const batchSize = _.get(functions.config(), ['cleaner', 'batchSize'], 64);
   let nProcessed = 0;
   const processedTypes = {};
 
