@@ -26,7 +26,7 @@ function getDB () {
 async function visitInactiveUsersAndTheirSessions (db, batchSize, callback) {
   const users = db.collection('users');
 
-  const haveNotUpdatedSinceDays = _.get(functions.config(), ['cleaner', 'haveNotUpdatedSinceDays'], 7);
+  const haveNotUpdatedSinceDays = parseInt(_.get(functions.config(), ['cleaner', 'have_not_updated_since_days'], 7));
 
   // get users which wasn't active for the week
   const inactiveUsersTimeOld = new Date();
@@ -73,7 +73,7 @@ exports.cleaner = functions.pubsub.schedule('0 */1 * * *').onRun(async (context)
 
   const db = getDB();
 
-  const batchSize = _.get(functions.config(), ['cleaner', 'batchSize'], 64);
+  const batchSize = parseInt(_.get(functions.config(), ['cleaner', 'batch_size'], 64));
   let nProcessed = 0;
   const processedTypes = {};
 
