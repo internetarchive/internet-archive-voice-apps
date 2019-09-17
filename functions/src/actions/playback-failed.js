@@ -14,7 +14,7 @@ function handler (app) {
   const e = app.getRequestError() || {};
   const currentTrack = playlist.getCurrentSong(app);
 
-  warning(`Fail to playback ${currentTrack.audioUrl} with ${e.type}: "${e.message}"`);
+  warning(`Fail to playback ${currentTrack.audioURL} with ${e.type}: "${e.message}"`);
 
   return helpers.playSong({ app, skip: 'forward' })
     .catch(e => {

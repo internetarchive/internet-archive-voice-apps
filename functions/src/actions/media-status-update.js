@@ -33,7 +33,7 @@ function handler (app) {
       const currentTrack = playlist.getCurrentSong(app);
 
       // only get such reason: 'AUDIO_NOT_PLAYABLE'
-      warning(`Failure reason: "${failureReason}" for track ${currentTrack.audioUrl}`);
+      warning(`Failure reason: "${failureReason}" for track ${currentTrack.audioURL}`);
       return dialog.close(app, strings.events.playlistIsEnded);
     default:
       // log that we got unknown status

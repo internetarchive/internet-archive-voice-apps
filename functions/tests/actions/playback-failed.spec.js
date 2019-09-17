@@ -17,7 +17,7 @@ describe('actions', () => {
           playlist: {
             current: 0,
             items: [{
-              audioUrl: 'https://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3',
+              audioURL: 'https://archive.org/download/nms2014-09-06.mtx.flac16/Nms2014-09-06D1t02.mp3',
             }]
           },
         },

@@ -16,7 +16,7 @@ function getDB () {
 }
 
 /**
- * iterate thought all inactive users and their sessions
+ * Iterate thought all inactive users and their sessions
  *
  * @param db
  * @param batchSize
