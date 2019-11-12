@@ -291,6 +291,122 @@ module.exports = {
      * Action: with slots scheme for music search query
      */
     musicQuery: [{
+      name: 'unlocked recordings',
+
+      /**
+       * engine chooses this scheme when have met that condition
+       */
+      condition: 'equal(collectionId, "unlockedrecordings")',
+
+      /**
+       * slots which we need for fulfillment
+       */
+      slots: [
+        'collectionId',
+        'subject',
+      ],
+
+      /**
+       * could be define in follow-up intent
+       * which return preset argument
+       */
+      presets: {
+        random: {
+          defaults: {
+            collectionId: { skip: true },
+            subject: { skip: true },
+            order: 'random',
+          }
+        },
+      },
+
+      /**
+       * default values for slots
+       */
+      defaults: {
+        order: 'random',
+      },
+
+      /**
+       * Acknowledge received value and repeat to give user change
+       * to check our understanding
+       */
+      acknowledges: [
+        'Okay! Lets go with the artist {{creator}}!',
+        `You've selected {{alias.collectionId}}.`,
+        `Okay! You've selected {{alias.collectionId}}.`,
+        `Got it! You've selected {{alias.collectionId}}.`,
+        `Alright! You've selected {{alias.collectionId}}.`,
+      ],
+
+      prompts: [{
+        /**
+         * prompt for single slot
+         */
+        confirm: [
+          'subject'
+        ],
+
+        /**
+         * slots which we need for fulfillment
+         */
+        speech: [
+          'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
+        ],
+
+        /**
+         * Fixed set of suggestions
+         */
+        suggestions: [
+          'Popular Music',
+          'Piano music',
+          'Symphonies',
+        ],
+      }],
+
+      /**
+       * feeder which we should call once we get all slots
+       * (we could have a lot of songs here - because we filter by genre)
+       */
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          // use "songs" instead of "albums" request from @mark
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `Here are some {{subject}} songs.`,
+          `Let's play some {{subject}} music.`,
+          `Let's play music from {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
+        ],
+      },
+
+      /**
+       * When user missed the available range
+       * we should help them to find alternative.
+       *
+       * Hints:
+       * - gets group of speeches with the most intersection with existing slots
+       *   and get random
+       * - doesn't match to empty suggestions
+       */
+      repair: {
+        speech: [
+          // use "songs" instead of "albums" request from @mark
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+        ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
+      },
+    }, {
       name: 'george blood collection',
 
       /**
