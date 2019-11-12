@@ -25,7 +25,7 @@ describe('actions', () => {
         .to.include('Welcome to music at the Internet Archive.')
         .and.include('78s');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
-        .with.members(['78s', 'Live Concerts', 'Christmas music']);
+        .with.members(['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music']);
     });
 
     it('should reprompt with speech', () => {

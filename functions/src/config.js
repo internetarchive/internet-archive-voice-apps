@@ -17,7 +17,7 @@ module.exports = {
     '&output=json',
     COLLECTION_URL: 'https://{{platformSubDomain}}.archive.org/metadata/{{id}}',
     QUERY_COLLECTIONS_URL: 'https://{{platformSubDomain}}.archive.org/advancedsearch.php' +
-    '?q={{condition}}' +
+    '?q=format:(mp3) AND {{condition}}' +
     '&fl[]={{fields}}' +
     '{{#order}}&sort[]={{order}}{{/order}}' +
     '&rows={{limit}}' +

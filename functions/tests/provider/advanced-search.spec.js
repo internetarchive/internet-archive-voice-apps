@@ -30,7 +30,7 @@ describe('provider', () => {
       });
     });
 
-    it('should check existance of field', () => {
+    it('should check existence of field', () => {
       const condition = advancedSearch.buildQueryCondition({
         coverage: '*',
         creator: 'the band',
