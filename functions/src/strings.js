@@ -26,6 +26,9 @@ module.exports = {
       georgeblood: '78s',
       unlockedrecordings: 'Unlocked Recordings'
     },
+    subject: {
+      'symphon*': 'Symphony'
+    },
   },
 
   dialog: {
@@ -219,11 +222,11 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
           `I've got <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{creator}} here. Let's start listening to them.`,
           `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Let's play {{subject}} music.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Let's play {{alias.subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -246,8 +249,8 @@ module.exports = {
           `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -373,9 +376,9 @@ module.exports = {
         speech: [
           // use "songs" instead of "albums" request from @mark
           `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Here are some {{subject}} songs.`,
-          `Let's play some {{subject}} music.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Here are some {{alias.subject}} songs.`,
+          `Let's play some {{alias.subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -398,9 +401,9 @@ module.exports = {
           `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
-          `I don't have {{subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -490,9 +493,9 @@ module.exports = {
         speech: [
           // use "songs" instead of "albums" request from @mark
           `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Here are some {{subject}} songs.`,
-          `Let's play some {{subject}} music.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Here are some {{alias.subject}} songs.`,
+          `Let's play some {{alias.subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -515,9 +518,9 @@ module.exports = {
           `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
-          `I don't have {{subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -693,7 +696,7 @@ module.exports = {
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
-          `Let's play {{subject}} concerts.`,
+          `Let's play {{alias.subject}} concerts.`,
           `Let's play concerts from {{coverage}}.`,
           `Let's dive into {{year}}.`,
         ],
@@ -738,9 +741,9 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Excellent! Let's play {{subject}} music.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Excellent! Let's play {{alias.subject}} music.`,
         ],
       },
 
@@ -755,8 +758,8 @@ module.exports = {
        */
       repair: {
         speech: [
-          `I don't have {{subject}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,

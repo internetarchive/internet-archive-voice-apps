@@ -1,5 +1,5 @@
 const aliases = require('../../strings').aliases;
-const { debug, warning } = require('../../utils/logger')('ia:resolvers:alias');
+const { debug, info, warning } = require('../../utils/logger')('ia:resolvers:alias');
 
 const contextProxy = require('./high-order-resolvers/context-proxy');
 
@@ -19,7 +19,8 @@ module.exports = contextProxy(({ name, value }) => {
   }
 
   if (!(value in aliases[name])) {
-    warning(`we don't have alias for "${value}" in "${name}".`);
+    info(`we don't have alias for "${value}" in "${name}".`);
+    return value;
   }
 
   return aliases[name][value];
