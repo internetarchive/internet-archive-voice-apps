@@ -1,3 +1,4 @@
+const selectors = require('../configurator/selectors');
 const playlist = require('../state/playlist');
 const query = require('../state/query');
 const strings = require('../strings').intents.inOneGoMusicPlayback;
@@ -32,8 +33,9 @@ const suggestions = require('./_middlewares/suggestions');
  * @returns {Promise.<T>}
  */
 function handler (app) {
-  debug(`start handler "${strings.name}"`);
-  const slotScheme = strings;
+  const slots = query.getSlots(app);
+  let slotScheme = selectors.find(strings, slots);
+  debug(`start handler "${slotScheme.name}"`);
 
   if (app.isNewSession()) {
     // this action is exposed outside as in-one-go-action

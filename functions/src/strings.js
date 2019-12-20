@@ -24,6 +24,10 @@ module.exports = {
     collectionId: {
       etree: 'Live Concerts',
       georgeblood: '78s',
+      unlockedrecordings: 'Unlocked Recordings'
+    },
+    subject: {
+      'symphon*': 'Symphony'
     },
   },
 
@@ -104,7 +108,7 @@ module.exports = {
     }],
 
     fallback: {
-      // TODO: fix actually we shoudl substitute app name here
+      // TODO: fix actually we should substitute app name here
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
@@ -125,7 +129,10 @@ module.exports = {
       default: {
         speech:
           '<s>You are using Internet Archive service. </s>' +
-          '<s>Here we have collections of Live Concerts and 78 <say-as interpret-as="characters">rpm</say-as> songs. </s>' +
+          '<s>Here we have collections of ' +
+          'Live Concerts, <break strength="weak"/> ' +
+          '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
+          'Unlocked Recordings. </s>' +
           '<s>You can ask to playback music of specific genre by asking: </s>' +
           '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
           '<s>As well you can ask me to play specific artist. </s>' +
@@ -155,9 +162,20 @@ module.exports = {
     recommend: {
       speech:
         '<s>What about Grateful Dead or The Cowboy Junkies. </s>' +
-        '<s>If you want to listen to more songs, then you can choose from Live Concerts, Christmas Music and 78 <say-as interpret-as="characters">rpm</say-as> songs </s>' +
+        '<s>If you want to listen to more songs, then you can choose from ' +
+        'Live Concerts, <break strength="weak"/> ' +
+        'Christmas Music, <break strength="weak"/> ' +
+        '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
+        'Unlocked Recordings. </s>' +
         '<s>and I will pick the right music for you. </s>',
-      suggestions: ['78s', 'Live Concerts', 'Christmas Music', 'play Grateful Dead', 'play The Cowboy Junkies'],
+      suggestions: [
+        '78s',
+        'Live Concerts',
+        'Unlocked Recordings',
+        'Christmas Music',
+        'play Grateful Dead',
+        'play The Cowboy Junkies'
+      ],
     },
 
     /**
@@ -194,7 +212,7 @@ module.exports = {
         // so user could ask
         // > play jazz
         // and we fetch all jazz from these collections
-        'collectionId': ['etree', 'georgeblood'],
+        'collectionId': ['etree', 'georgeblood', 'unlockedrecordings'],
       },
 
       /**
@@ -204,11 +222,11 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
           `I've got <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{creator}} here. Let's start listening to them.`,
           `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Let's play {{subject}} music.`,
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Let's play {{alias.subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -231,8 +249,8 @@ module.exports = {
           `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -276,15 +294,15 @@ module.exports = {
      * Action: with slots scheme for music search query
      */
     musicQuery: [{
-      name: 'george blood collection',
+      name: 'unlocked recordings',
 
       /**
        * engine chooses this scheme when have met that condition
        */
-      condition: 'equal(collectionId, "georgeblood")',
+      condition: 'equal(collectionId, "unlockedrecordings")',
 
       /**
-       * slots which we need for fulfillement
+       * slots which we need for fulfillment
        */
       slots: [
         'collectionId',
@@ -333,7 +351,123 @@ module.exports = {
         ],
 
         /**
-         * slots which we need for fulfillement
+         * slots which we need for fulfillment
+         */
+        speech: [
+          'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
+        ],
+
+        /**
+         * Fixed set of suggestions
+         */
+        suggestions: [
+          'Popular Music',
+          'Piano music',
+          'Symphonies',
+        ],
+      }],
+
+      /**
+       * feeder which we should call once we get all slots
+       * (we could have a lot of songs here - because we filter by genre)
+       */
+      fulfillment: {
+        feeder: 'albums-async',
+        speech: [
+          // use "songs" instead of "albums" request from @mark
+          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Here are some {{alias.subject}} songs.`,
+          `Let's play some {{alias.subject}} music.`,
+          `Let's play music from {{creator}}.`,
+          `Let's play music from {{coverage}}.`,
+          `Let's dive into {{year}}.`,
+        ],
+      },
+
+      /**
+       * When user missed the available range
+       * we should help them to find alternative.
+       *
+       * Hints:
+       * - gets group of speeches with the most intersection with existing slots
+       *   and get random
+       * - doesn't match to empty suggestions
+       */
+      repair: {
+        speech: [
+          // use "songs" instead of "albums" request from @mark
+          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have that. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+        ],
+        default: {
+          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+        },
+      },
+    }, {
+      name: 'george blood collection',
+
+      /**
+       * engine chooses this scheme when have met that condition
+       */
+      condition: 'equal(collectionId, "georgeblood")',
+
+      /**
+       * slots which we need for fulfillment
+       */
+      slots: [
+        'collectionId',
+        'subject',
+      ],
+
+      /**
+       * could be define in follow-up intent
+       * which return preset argument
+       */
+      presets: {
+        random: {
+          defaults: {
+            collectionId: { skip: true },
+            subject: { skip: true },
+            order: 'random',
+          }
+        },
+      },
+
+      /**
+       * default values for slots
+       */
+      defaults: {
+        order: 'random',
+      },
+
+      /**
+       * Acknowledge received value and repeat to give user change
+       * to check our understanding
+       */
+      acknowledges: [
+        'Okay! Lets go with the artist {{creator}}!',
+        `You've selected {{alias.collectionId}}.`,
+        `Okay! You've selected {{alias.collectionId}}.`,
+        `Got it! You've selected {{alias.collectionId}}.`,
+        `Alright! You've selected {{alias.collectionId}}.`,
+      ],
+
+      prompts: [{
+        /**
+         * prompt for single slot
+         */
+        confirm: [
+          'subject'
+        ],
+
+        /**
+         * slots which we need for fulfillment
          */
         speech: [
           'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
@@ -359,9 +493,9 @@ module.exports = {
         speech: [
           // use "songs" instead of "albums" request from @mark
           `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Here are some {{subject}} songs.`,
-          `Let's play some {{subject}} music.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Here are some {{alias.subject}} songs.`,
+          `Let's play some {{alias.subject}} music.`,
           `Let's play music from {{creator}}.`,
           `Let's play music from {{coverage}}.`,
           `Let's dive into {{year}}.`,
@@ -384,9 +518,9 @@ module.exports = {
           `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
           `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}} for {{year}}. Maybe you would like to listen something else?`,
-          `I don't have {{subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -396,7 +530,7 @@ module.exports = {
       name: 'DEFAULT music search query',
 
       /**
-       * slots which we need for fulfillement
+       * slots which we need for fulfillment
        */
       slots: [
         'collectionId',
@@ -422,8 +556,8 @@ module.exports = {
       },
 
       /**
-       * Acknowledge recieved value and repeat to give user change
-       * to check our undestanding
+       * Acknowledge received value and repeat to give user change
+       * to check our understanding
        */
       acknowledges: [
         '{{coverage}} - good place!',
@@ -455,6 +589,7 @@ module.exports = {
         suggestions: [
           '78s',
           'Live Concerts',
+          'Unlocked Recordings'
         ],
       }, {
         /**
@@ -561,7 +696,7 @@ module.exports = {
           `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
           `Let's play {{creator}} concerts.`,
           `Let's play concerts from {{creator}}.`,
-          `Let's play {{subject}} concerts.`,
+          `Let's play {{alias.subject}} concerts.`,
           `Let's play concerts from {{coverage}}.`,
           `Let's dive into {{year}}.`,
         ],
@@ -578,7 +713,7 @@ module.exports = {
       action: 'music-query',
 
       /**
-       * slots which we need for fulfillement
+       * slots which we need for fulfillment
        */
       slots: [
         'collectionId',
@@ -593,7 +728,7 @@ module.exports = {
        */
       defaults: {
         'order': 'random',
-        'collectionId': ['etree', 'georgeblood'],
+        'collectionId': ['etree', 'georgeblood', 'unlockedrecordings'],
         'coverage': { skip: true },
         'creator': { skip: true },
         'year': { skip: true },
@@ -606,9 +741,9 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{subject}} songs. Let's listen to them.`,
-          `Excellent! Let's play {{subject}} music.`,
+          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
+          `Excellent! Let's play {{alias.subject}} music.`,
         ],
       },
 
@@ -623,8 +758,8 @@ module.exports = {
        */
       repair: {
         speech: [
-          `I don't have {{subject}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{subject}}. Maybe you would like to listen something else?`,
+          `I don't have {{alias.subject}}. Try {{suggestions.0}}, for example.`,
+          `I don't have {{alias.subject}}. Maybe you would like to listen something else?`,
         ],
         default: {
           speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
@@ -716,13 +851,13 @@ module.exports = {
         acknowledges: [
           'Welcome to music at the Internet Archive.'
         ],
-        speech: 'Want to listen to 78s, live concerts, or Christmas music?',
-        suggestions: ['78s', 'Live Concerts', 'Christmas music'],
+        speech: 'Want to listen to 78s, live concerts, Unlocked Recordings or Christmas music?',
+        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
 
       yes: {
         speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>live concerts, <break strength="weak"/>or Christmas music',
-        suggestions: ['78s', 'Live Concerts', 'Christmas music'],
+        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
     },
 

@@ -129,14 +129,6 @@ function fetchAlbumsByCreatorId (app, id, {
 function fetchAlbumsByQuery (app, query) {
   query = Object.assign({}, {
     fields: 'identifier,coverage,title,year',
-    // we require `coverage` field here to filter items
-    // with this field only.
-    // Luckily for us only albums/converts/plates have it
-    // so it should work until we will find better solution here
-    //
-    // without this key we could get for example,
-    // creator's collection.
-    coverage: '*',
     limit: 3,
   }, objToLowerCase(query));
 

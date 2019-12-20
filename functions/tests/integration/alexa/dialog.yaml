@@ -1,7 +1,7 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, live concerts, or Christmas music?'
+  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, live concerts, Unlocked Recordings or Christmas music?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
@@ -65,7 +65,7 @@
   - user: 'play seventy eighties'
     assistant:
       request:
-        - url: 'https://askills-api.archive.org/advancedsearch.php?q=_exists_:coverage%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+        - url: 'https://askills-api.archive.org/advancedsearch.php?q=format:(mp3)%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
           res: '../../fixtures/albums.json'
 
 - scenario: 'song details: when song is playing'
@@ -108,13 +108,13 @@
     assistant: 'We are currently experiencing some technical difficulties on the Archive server.
                 Please try again later or try saying something else.'
 
-- scenario: 'handle empty playlist in one go intent'
+- scenario: 'handle empty playlist in one go intent v1'
   dialog:
   - user: '1990 year'
   - user: 'play folk'
     assistant: "I don't have folk for 1990. Maybe you would like to listen something else?"
 
-- scenario: 'handle empty playlist in one go intent'
+- scenario: 'handle empty playlist in one go intent v2'
   dialog:
   - user: '1910 year'
   - user: 'play rock'
@@ -239,7 +239,10 @@
       # we are checking that we have all of those phrases in response
       # in particular part of a help message:
       - 'You are using Internet Archive service.'
-      - 'Here we have collections of Live Concerts and 78'
+      - 'Here we have collections of'
+      - 'Live Concerts'
+      - '78'
+      - 'Unlocked Recordings'
       # and repeat the last question
       - 'Want to listen to 78s'
       # but without the last acknowledge
