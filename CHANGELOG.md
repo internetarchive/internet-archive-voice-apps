@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.5.13](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.13) (2019-12-20)
+[Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.12...2.5.13)
+
+**Implemented enhancements:**
+
+- Adding "Unlocked Recordings" collection [\#482](https://github.com/internetarchive/internet-archive-voice-apps/issues/482)
+- Schedule session of data cleaning [\#471](https://github.com/internetarchive/internet-archive-voice-apps/issues/471)
+
+**Merged pull requests:**
+
+- Feature/support collection unlockedrecordings [\#484](https://github.com/internetarchive/internet-archive-voice-apps/pull/484) ([hyzhak](https://github.com/hyzhak))
+- \#471 feat\(cleaner\): setup scheduler for obsolete users clearning [\#479](https://github.com/internetarchive/internet-archive-voice-apps/pull/479) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.12](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.12) (2019-08-30)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.10...2.5.12)
 
@@ -616,7 +629,9 @@
 
 **Merged pull requests:**
 
+- update: 'Ok, muting song titles' [\#169](https://github.com/internetarchive/internet-archive-voice-apps/pull/169) ([hyzhak](https://github.com/hyzhak))
 - Feature/accumulate response before send to server [\#168](https://github.com/internetarchive/internet-archive-voice-apps/pull/168) ([hyzhak](https://github.com/hyzhak))
+- WIP : test fail for audio.spec.js [\#166](https://github.com/internetarchive/internet-archive-voice-apps/pull/166) ([bimlendra](https://github.com/bimlendra))
 - Feature/convert resolvers to extensions [\#164](https://github.com/internetarchive/internet-archive-voice-apps/pull/164) ([hyzhak](https://github.com/hyzhak))
 
 ## [2.0.13](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.0.13) (2018-03-19)
@@ -661,8 +676,6 @@
 
 **Merged pull requests:**
 
-- update: 'Ok, muting song titles' [\#169](https://github.com/internetarchive/internet-archive-voice-apps/pull/169) ([hyzhak](https://github.com/hyzhak))
-- WIP : test fail for audio.spec.js [\#166](https://github.com/internetarchive/internet-archive-voice-apps/pull/166) ([bimlendra](https://github.com/bimlendra))
 - Feature/mute song titles [\#153](https://github.com/internetarchive/internet-archive-voice-apps/pull/153) ([hyzhak](https://github.com/hyzhak))
 - Feature/Improve description of local server running [\#149](https://github.com/internetarchive/internet-archive-voice-apps/pull/149) ([hyzhak](https://github.com/hyzhak))
 - Feature/use creator as filter [\#147](https://github.com/internetarchive/internet-archive-voice-apps/pull/147) ([hyzhak](https://github.com/hyzhak))
