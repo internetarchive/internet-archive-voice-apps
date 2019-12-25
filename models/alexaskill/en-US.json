@@ -9,7 +9,12 @@
                 },
                 {
                     "name": "AMAZON.HelpIntent",
-                    "samples": []
+                    "samples": [
+                        "what can you do",
+                        "what can you perform",
+                        "what can you play",
+                        "can you help me"
+                    ]
                 },
                 {
                     "name": "AMAZON.NextIntent",
@@ -101,9 +106,15 @@
                         {
                             "name": "COLLECTION_ID",
                             "type": "COLLECTIONS"
+                        },
+                        {
+                            "name": "YEAR",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER"
                         }
                     ],
                     "samples": [
+                        "can you play {SUBJECT} Music",
+                        "play me {ORDER_BY} music",
                         "{ORDER_BY} Play {SUBJECT} {COLLECTION_ID}",
                         "play {ORDER_BY} of {SUBJECT}",
                         "play {COLLECTION_ID} {SUBJECT}",
@@ -116,7 +127,10 @@
                         "play {SUBJECT} {ORDER_BY}",
                         "play {SUBJECT}",
                         "play {SUBJECT} songs",
-                        "play {SUBJECT} music"
+                        "play {SUBJECT} music",
+                        "play {YEAR} year",
+                        "play {YEAR}",
+                        "play music of {YEAR}"
                     ]
                 },
                 {
@@ -140,6 +154,10 @@
                         }
                     ],
                     "samples": [
+                        "choose {COLLECTION_ID}",
+                        "select {COLLECTION_ID}",
+                        "I want to listen to {COLLECTION_ID} music",
+                        "I want to listen to {COLLECTION_ID}",
                         "city {COVERAGE} year {YEAR}",
                         "search {CREATOR}",
                         "{COVERAGE} city",
@@ -163,6 +181,10 @@
                         }
                     ],
                     "samples": [
+                        "I want to listen to {SUBJECT} music",
+                        "I want to listen to {SUBJECT}",
+                        "choose {SUBJECT}",
+                        "select {SUBJECT}",
                         "{SUBJECT} music",
                         "{SUBJECT}"
                     ]
@@ -258,6 +280,16 @@
                 {
                     "name": "AMAZON.ScrollUpIntent",
                     "samples": []
+                },
+                {
+                    "name": "Recommend",
+                    "slots": [],
+                    "samples": [
+                        "recommend a song",
+                        "recommend me a song",
+                        "recommend some music to me",
+                        "recommend some music"
+                    ]
                 }
             ],
             "types": [
@@ -1137,11 +1169,6 @@
                         {
                             "name": {
                                 "value": "Pinback"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Arabesque"
                             }
                         },
                         {
@@ -3531,11 +3558,6 @@
                         },
                         {
                             "name": {
-                                "value": "Kung Fu"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Dead Stick Landing"
                             }
                         },
@@ -3977,11 +3999,6 @@
                         {
                             "name": {
                                 "value": "The Edd"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Science!"
                             }
                         },
                         {
@@ -4477,11 +4494,6 @@
                         {
                             "name": {
                                 "value": "Stellar Road"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Loop"
                             }
                         },
                         {
@@ -5552,11 +5564,6 @@
                         {
                             "name": {
                                 "value": "Holy Moses and the High Rollers"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "yeP!"
                             }
                         },
                         {
@@ -6652,11 +6659,6 @@
                         {
                             "name": {
                                 "value": "Moving Matter"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Epic"
                             }
                         },
                         {
@@ -8176,11 +8178,6 @@
                         },
                         {
                             "name": {
-                                "value": "Okay"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Yolk"
                             }
                         },
@@ -8551,11 +8548,6 @@
                         },
                         {
                             "name": {
-                                "value": "Rai"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "de portables"
                             }
                         },
@@ -8597,11 +8589,6 @@
                         {
                             "name": {
                                 "value": "School Bus Yellow"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Pocket"
                             }
                         },
                         {
@@ -9631,11 +9618,6 @@
                         },
                         {
                             "name": {
-                                "value": "Indigenous"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Col Bruce Hampton & The Pharaoh Gummitt"
                             }
                         },
@@ -9827,11 +9809,6 @@
                         {
                             "name": {
                                 "value": "Familia Rustika"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "AFRO"
                             }
                         },
                         {
@@ -11611,11 +11588,6 @@
                         },
                         {
                             "name": {
-                                "value": "Bomba"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Pimp Carriage"
                             }
                         },
@@ -12842,11 +12814,6 @@
                         {
                             "name": {
                                 "value": "The Dirk Quinn Band"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Back Home"
                             }
                         },
                         {
@@ -23256,11 +23223,6 @@
                         },
                         {
                             "name": {
-                                "value": "Kiwi"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Damian Calcagne Band"
                             }
                         },
@@ -27506,11 +27468,6 @@
                         },
                         {
                             "name": {
-                                "value": "American Folk"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Fat Mannequin"
                             }
                         },
@@ -29652,11 +29609,6 @@
                         {
                             "name": {
                                 "value": "FAUXSHOW"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Stoner"
                             }
                         },
                         {
@@ -36116,11 +36068,6 @@
                         },
                         {
                             "name": {
-                                "value": "Current State"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "sometimes charlie"
                             }
                         },
@@ -37806,12 +37753,20 @@
                     "values": [
                         {
                             "name": {
+                                "value": "unlockedrecordings",
+                                "synonyms": [
+                                    "Unlocked",
+                                    "Unlocked recordings"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
                                 "value": "etree",
                                 "synonyms": [
                                     "life",
                                     "CDs",
                                     "albums",
-                                    "concert",
                                     "concerts",
                                     "live",
                                     "live concerts"
@@ -37822,9 +37777,11 @@
                             "name": {
                                 "value": "georgeblood",
                                 "synonyms": [
-                                    "george blood",
                                     "seventy eighties",
+                                    "seventy eights",
+                                    "70 eighths",
                                     "78",
+                                    "george blood",
                                     "plates",
                                     "78s"
                                 ]
@@ -37881,6 +37838,7 @@
                             "name": {
                                 "value": "random",
                                 "synonyms": [
+                                    "some",
                                     "all",
                                     "any",
                                     "randomly"
