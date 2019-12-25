@@ -2,6 +2,11 @@ const _ = require('lodash');
 
 const camelCaseToScreamingSnake = require('../../../utils/camel-case-to-screaming-snake');
 
+function getSlotValue (slots, slotName) {
+  const id = _.get(slots, [slotName, 'resolutions', 'resolutionsPerAuthority', 0, 'values', 0, 'value', 'name']);
+  return id || _.get(slots, [slotName, 'value']);
+}
+
 /**
  * Create params layer
  *
@@ -22,7 +27,28 @@ module.exports = (handlerInput) => ({
     }
 
     const intent = handlerInput.requestEnvelope.request.intent || {};
-    const id = _.get(intent, ['slots', camelCaseToScreamingSnake(name), 'resolutions', 'resolutionsPerAuthority', 0, 'values', 0, 'value', 'name']);
-    return id || _.get(intent, ['slots', camelCaseToScreamingSnake(name), 'value']);
+    const slots = intent.slots;
+    if (!slots) {
+      return undefined;
+    }
+
+    const screamingSnakeName = camelCaseToScreamingSnake(name);
+    const res = getSlotValue(slots, screamingSnakeName);
+    if (res) {
+      return res;
+    }
+
+    // try to get synonyms
+    const nameRegEx = new RegExp(`${screamingSnakeName}\\.(.+)`);
+    const slotNames = Object.keys(slots);
+    const synonymSlots = slotNames.filter(
+      slotName => nameRegEx.test(slotName)
+    );
+
+    if (synonymSlots.length === 0) {
+      return undefined;
+    }
+
+    return getSlotValue(slots, synonymSlots[0]);
   },
 });

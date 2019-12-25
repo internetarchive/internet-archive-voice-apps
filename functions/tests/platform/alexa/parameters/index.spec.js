@@ -18,6 +18,7 @@ describe('platform', () => {
           CITY: { value: 'NY' },
           COLLECTION_ID: { value: 'etree' },
           BAND: { value: 'Grateful Dead' },
+          'SUBJECT.IA': { value: 'rock' },
           SWITCH: {
             name: 'VALUE',
             value: 'on',
@@ -68,6 +69,11 @@ describe('platform', () => {
       it(`should return undefined if we don't have slots`, () => {
         const params = paramsBuilder(mockHandlerInput({ slots: null }));
         expect(params.getByName('id')).to.be.undefined;
+      });
+
+      it('should get synonym slot', () => {
+        const params = paramsBuilder(handlerInput);
+        expect(params.getByName('subject')).to.be.equal('rock');
       });
     });
   });
