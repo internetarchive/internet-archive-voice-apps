@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.5.14](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.14) (2019-12-26)
+[Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.13...2.5.14)
+
+**Implemented enhancements:**
+
+- synonym slots \(parameters\) [\#486](https://github.com/internetarchive/internet-archive-voice-apps/issues/486) [[alexa](https://github.com/internetarchive/internet-archive-voice-apps/labels/alexa)]
+
+**Merged pull requests:**
+
+- Feature/486 synonym slots [\#487](https://github.com/internetarchive/internet-archive-voice-apps/pull/487) ([hyzhak](https://github.com/hyzhak))
+- chore\(alexa\): v29 [\#485](https://github.com/internetarchive/internet-archive-voice-apps/pull/485) ([hyzhak](https://github.com/hyzhak))
+
 ## [2.5.13](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.5.13) (2019-12-20)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.5.12...2.5.13)
 
@@ -247,7 +259,6 @@
 - Feature/370 reprompt playback actions on non playback stat [\#372](https://github.com/internetarchive/internet-archive-voice-apps/pull/372) ([hyzhak](https://github.com/hyzhak))
 - Feature/shuffle [\#371](https://github.com/internetarchive/internet-archive-voice-apps/pull/371) ([hyzhak](https://github.com/hyzhak))
 - Feature/loop on off [\#367](https://github.com/internetarchive/internet-archive-voice-apps/pull/367) ([hyzhak](https://github.com/hyzhak))
-- Feature/previous intent [\#362](https://github.com/internetarchive/internet-archive-voice-apps/pull/362) ([hyzhak](https://github.com/hyzhak))
 
 ## [2.3.1](https://github.com/internetarchive/internet-archive-voice-apps/tree/2.3.1) (2018-11-09)
 [Full Changelog](https://github.com/internetarchive/internet-archive-voice-apps/compare/2.3.0...2.3.1)
@@ -316,6 +327,7 @@
 
 **Merged pull requests:**
 
+- Feature/previous intent [\#362](https://github.com/internetarchive/internet-archive-voice-apps/pull/362) ([hyzhak](https://github.com/hyzhak))
 - play audiobook moby dick ch3 [\#327](https://github.com/internetarchive/internet-archive-voice-apps/pull/327) ([hyzhak](https://github.com/hyzhak))
 - Feature/books uploader [\#326](https://github.com/internetarchive/internet-archive-voice-apps/pull/326) ([hyzhak](https://github.com/hyzhak))
 - Feature/clean and update strings.js scheme [\#323](https://github.com/internetarchive/internet-archive-voice-apps/pull/323) ([hyzhak](https://github.com/hyzhak))
@@ -834,7 +846,6 @@
 - Make lint search all files [\#67](https://github.com/internetarchive/internet-archive-voice-apps/pull/67) ([juliascript](https://github.com/juliascript))
 - Feature/slot fulfillment [\#66](https://github.com/internetarchive/internet-archive-voice-apps/pull/66) ([hyzhak](https://github.com/hyzhak))
 - Change char back [\#65](https://github.com/internetarchive/internet-archive-voice-apps/pull/65) ([juliascript](https://github.com/juliascript))
-- Fix grammar - between/and or from/to [\#64](https://github.com/internetarchive/internet-archive-voice-apps/pull/64) ([juliascript](https://github.com/juliascript))
 - Add acknowledgers to make conversation more fluid [\#63](https://github.com/internetarchive/internet-archive-voice-apps/pull/63) ([juliascript](https://github.com/juliascript))
 - Fix string quotes \(invalid char\) [\#62](https://github.com/internetarchive/internet-archive-voice-apps/pull/62) ([juliascript](https://github.com/juliascript))
 - Change string to be - welcome to the live music collection ... [\#61](https://github.com/internetarchive/internet-archive-voice-apps/pull/61) ([juliascript](https://github.com/juliascript))
@@ -862,6 +873,7 @@
 
 **Merged pull requests:**
 
+- Fix grammar - between/and or from/to [\#64](https://github.com/internetarchive/internet-archive-voice-apps/pull/64) ([juliascript](https://github.com/juliascript))
 - Feature/use obj as parameter for say n tell [\#25](https://github.com/internetarchive/internet-archive-voice-apps/pull/25) ([hyzhak](https://github.com/hyzhak))
 - Hotfix/failed deploy [\#21](https://github.com/internetarchive/internet-archive-voice-apps/pull/21) ([hyzhak](https://github.com/hyzhak))
 - use firebase configs to set debug scope [\#20](https://github.com/internetarchive/internet-archive-voice-apps/pull/20) ([hyzhak](https://github.com/hyzhak))
