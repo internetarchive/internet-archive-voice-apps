@@ -110,9 +110,15 @@
                         {
                             "name": "YEAR",
                             "type": "AMAZON.FOUR_DIGIT_NUMBER"
+                        },
+                        {
+                            "name": "SUBJECT..IA",
+                            "type": "GENRES_IA"
                         }
                     ],
                     "samples": [
+                        "play {COLLECTION_ID}",
+                        "play {SUBJECT..IA}",
                         "can you play {SUBJECT} Music",
                         "play me {ORDER_BY} music",
                         "{ORDER_BY} Play {SUBJECT} {COLLECTION_ID}",
@@ -178,9 +184,14 @@
                         {
                             "name": "SUBJECT",
                             "type": "AMAZON.Genre"
+                        },
+                        {
+                            "name": "SUBJECT.IA",
+                            "type": "GENRES_IA"
                         }
                     ],
                     "samples": [
+                        "{SUBJECT.IA}",
                         "I want to listen to {SUBJECT} music",
                         "I want to listen to {SUBJECT}",
                         "choose {SUBJECT}",
@@ -37755,6 +37766,7 @@
                             "name": {
                                 "value": "unlockedrecordings",
                                 "synonyms": [
+                                    "unlock recordings",
                                     "Unlocked",
                                     "Unlocked recordings"
                                 ]
@@ -37856,6 +37868,19 @@
                                 "synonyms": [
                                     "record",
                                     "track"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "GENRES_IA",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "symphonies",
+                                "synonyms": [
+                                    "symphony"
                                 ]
                             }
                         }
