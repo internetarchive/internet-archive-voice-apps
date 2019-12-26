@@ -3,6 +3,11 @@
 Because Alexa doesn't give the way to add description to versions
 here will be the Changelog of them
 
+## v31-32
+
+- add support of "play <collection>" request
+- map "unlock recordings" to "unlocked recordings"
+
 ## v30
 
 - add custom `GENRES_IA` type for music genres missed in `AMAZON.Genre` (e.g. "symphony")

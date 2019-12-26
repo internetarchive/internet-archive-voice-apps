@@ -117,6 +117,7 @@
                         }
                     ],
                     "samples": [
+                        "play {COLLECTION_ID}",
                         "play {SUBJECT..IA}",
                         "can you play {SUBJECT} Music",
                         "play me {ORDER_BY} music",
@@ -37765,6 +37766,7 @@
                             "name": {
                                 "value": "unlockedrecordings",
                                 "synonyms": [
+                                    "unlock recordings",
                                     "Unlocked",
                                     "Unlocked recordings"
                                 ]
