@@ -84,7 +84,7 @@ function getSlot (app, name) {
 function getSlots (app) {
   const values = Object.assign({}, valuesGroup.getData(app));
   const skipped = skippedGroup.getData(app);
-  for (let slotName of skipped) {
+  for (const slotName of skipped) {
     delete values[slotName];
   }
   return values;

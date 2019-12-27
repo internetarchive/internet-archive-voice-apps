@@ -13,8 +13,8 @@ const previousSong = () => (ctx) => {
   debug('start');
   const { feeder } = ctx;
   if (!feeder.hasPrevious(ctx)) {
-    debug(`don't have previous song`);
-    return Promise.reject(new DoNotHavePreviousSongError(ctx, `don't have previous song`));
+    debug('don\'t have previous song');
+    return Promise.reject(new DoNotHavePreviousSongError(ctx, 'don\'t have previous song'));
   }
 
   return feeder.previous(ctx)

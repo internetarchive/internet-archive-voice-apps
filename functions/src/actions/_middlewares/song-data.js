@@ -53,7 +53,7 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
   let songSpeech;
 
   if (playback.isMuteSpeechBeforePlayback(app)) {
-    let wordless = selectors.find(playbackUIScheme.wordless, slotsWithEscapedSongDetails);
+    const wordless = selectors.find(playbackUIScheme.wordless, slotsWithEscapedSongDetails);
     if (wordless && wordless.speech) {
       songSpeech = wordless.speech;
     }

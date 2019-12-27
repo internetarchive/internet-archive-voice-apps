@@ -90,32 +90,32 @@ describe('platform', () => {
           response(assistant)({
             close: true,
             speech: [
-              `Well, there ain't nobody safer than someone who doesn't care.`,
-              `And it isn't even lonely when no one's ever there.`,
+              'Well, there ain\'t nobody safer than someone who doesn\'t care.',
+              'And it isn\'t even lonely when no one\'s ever there.',
             ],
           });
           expect(assistant.close).to.have.been.calledTwice;
           expect(assistant.close.args[0][0]).to.be.deep.equal({
-            speech: `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
+            speech: '<speak>Well, there ain\'t nobody safer than someone who doesn\'t care.</speak>'
           });
           expect(assistant.close.args[1][0]).to.be.deep.equal({
-            speech: `<speak>And it isn't even lonely when no one's ever there.</speak>`
+            speech: '<speak>And it isn\'t even lonely when no one\'s ever there.</speak>'
           });
         });
 
         it('should unpack array of speaches', () => {
           response(assistant)({
             speech: [
-              `Well, there ain't nobody safer than someone who doesn't care.`,
-              `And it isn't even lonely when no one's ever there.`,
+              'Well, there ain\'t nobody safer than someone who doesn\'t care.',
+              'And it isn\'t even lonely when no one\'s ever there.',
             ],
           });
           expect(assistant.ask).to.have.been.calledTwice;
           expect(assistant.ask.args[0][0]).to.be.deep.equal({
-            speech: `<speak>Well, there ain't nobody safer than someone who doesn't care.</speak>`
+            speech: '<speak>Well, there ain\'t nobody safer than someone who doesn\'t care.</speak>'
           });
           expect(assistant.ask.args[1][0]).to.be.deep.equal({
-            speech: `<speak>And it isn't even lonely when no one's ever there.</speak>`
+            speech: '<speak>And it isn\'t even lonely when no one\'s ever there.</speak>'
           });
         });
 
@@ -123,7 +123,7 @@ describe('platform', () => {
           response(assistant)({
             speech: [
               'Great choice!',
-              `Let's play song Title`,
+              'Let\'s play song Title',
             ],
             media: [{
               name: 'Jazz in Paris',

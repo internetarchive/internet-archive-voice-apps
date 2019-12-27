@@ -22,7 +22,7 @@ module.exports = {
   presets: {
     'your-favourite-album': {
       acknowledges: [
-        `Cool! You've chosen my favourite album.`,
+        'Cool! You\'ve chosen my favourite album.',
       ],
 
       defaults: {
@@ -47,7 +47,7 @@ module.exports = {
     '{{coverage}} {{year}} - great choice!',
     '{{year}} - it was excellent year!',
     'Ok! Lets go with {{creator.title}} band!',
-    `You've selected {{collection.title}}`,
+    'You\'ve selected {{collection.title}}',
   ],
 
   prompts: [{

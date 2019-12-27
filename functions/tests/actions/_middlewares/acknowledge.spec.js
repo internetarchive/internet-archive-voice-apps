@@ -40,7 +40,7 @@ describe('actions', () => {
           });
       });
 
-      it(`shouldn't find acknowledge when we don't have new values`, () => {
+      it('shouldn\'t find acknowledge when we don\'t have new values', () => {
         selectors = mockSelectors({
           findResult: 'Hello World!',
         });

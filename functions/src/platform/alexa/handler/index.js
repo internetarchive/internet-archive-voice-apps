@@ -17,7 +17,7 @@ module.exports = (actions) => {
   const region = process.env.AWS_REGION || 'us-west-1';
   debug('set AWS region', region);
 
-  let dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
+  const dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
     createTable: true,
     dynamoDBClient: new AWS.DynamoDB({ apiVersion: 'latest', region }),
     tableName: process.env.DYNAMO_DB_SESSION_TABLE || 'InternetArchiveSessions',

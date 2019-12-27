@@ -89,7 +89,7 @@ const transitionTo = (app, newState) => {
   debug(`transit from "${lastState}" to "${newState}"`);
 
   // drop a head to not exceed history limit
-  let history = _.takeRight(getHistory(app).concat(newState), MAX_DEPTH);
+  const history = _.takeRight(getHistory(app).concat(newState), MAX_DEPTH);
 
   setData(app, Object.assign({}, getData(app), { history }));
 };

@@ -110,7 +110,7 @@ module.exports = (db) => ({
 
     const firestore = conv.firestore;
     if (!conv.firestore) {
-      error(`for some reasons we don't have firestore data`);
+      error('for some reasons we don\'t have firestore data');
       return;
     }
 

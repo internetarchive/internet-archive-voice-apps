@@ -15,7 +15,7 @@ module.exports = () => (ctx) => {
   debug('start');
   const { slots, reprompt, speech } = ctx;
   if (!speech || speech.length === 0) {
-    debug(`don't have speech here`);
+    debug('don\'t have speech here');
     return Promise.resolve(ctx);
   } else {
     debug('slots:', slots);

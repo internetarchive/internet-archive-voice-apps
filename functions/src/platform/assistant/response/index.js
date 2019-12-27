@@ -73,7 +73,7 @@ module.exports = (conv) =>
     }
 
     if (responses.length === 0) {
-      warning(`doesn't have any response`);
+      warning('doesn\'t have any response');
       return;
     }
 

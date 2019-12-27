@@ -45,7 +45,7 @@ module.exports = (handlerInput) =>
         debug('previous token', previousToken);
         if (mediaResponseOnly) {
           // https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html#playbacknearlyfinished
-          debug(`card is not allowed`);
+          debug('card is not allowed');
         } else {
           debug('render card', m.name, m.description);
           if (m.imageURL) {
@@ -99,7 +99,7 @@ module.exports = (handlerInput) =>
 
     if (suggestions) {
       if (mediaResponseOnly) {
-        debug(`we shouldn't give hints`);
+        debug('we shouldn\'t give hints');
       } else {
         const textSuggestions = suggestions
           .filter(s => typeof s === 'string');

@@ -157,9 +157,9 @@ module.exports = (actionsMap) => {
 
   app.fallback(async (conv) => {
     debug('handle fallback');
-    let matchedHandler = getHandlerByIntent(conv.action);
+    const matchedHandler = getHandlerByIntent(conv.action);
     if (matchedHandler) {
-      debug(`doesn't match intent name but matched manually by action name`);
+      debug('doesn\'t match intent name but matched manually by action name');
       return matchedHandler(conv);
     }
 
@@ -170,7 +170,7 @@ module.exports = (actionsMap) => {
       return unhandledHandler(conv);
     }
 
-    warning(`something wrong we don't have unhandled handler`);
+    warning('something wrong we don\'t have unhandled handler');
     // the last chance answer if we haven't found unhandled handler
     conv.ask(_.sample(strings.intents.unhandled));
     await after.handle(conv);
@@ -205,7 +205,7 @@ module.exports = (actionsMap) => {
 
     // last chance to give response to user
     if (!globalErrorWasHandled) {
-      conv.ask(`Can you rephrase it?`);
+      conv.ask('Can you rephrase it?');
     }
 
     await after.handle(conv);

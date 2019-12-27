@@ -28,13 +28,14 @@ function handler (app) {
   switch (status) {
     case 'FINISHED':
       return handleFinished(app);
-    case 'FAILED':
+    case 'FAILED': {
       const { failureReason } = mediaStatusParam;
       const currentTrack = playlist.getCurrentSong(app);
 
       // only get such reason: 'AUDIO_NOT_PLAYABLE'
       warning(`Failure reason: "${failureReason}" for track ${currentTrack.audioURL}`);
       return dialog.close(app, strings.events.playlistIsEnded);
+    }
     default:
       // log that we got unknown status
       // for example (app.Media.Status.UNSPECIFIED)
@@ -51,7 +52,7 @@ function handler (app) {
 function handleFinished (app) {
   debug('handle finished');
   if (app.persist.isEmpty() || !playlist.getFeeder(app)) {
-    error(`something really strange we got end of music track but user's session is empty`);
+    error('something really strange we got end of music track but user\'s session is empty');
     // we are going to play short sample to hope that next time we would get session back
     dialog.playSong(app, {
       mediaResponseOnly: true,

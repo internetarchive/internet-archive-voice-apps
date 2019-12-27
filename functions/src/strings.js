@@ -100,11 +100,11 @@ module.exports = {
      * Exit intent
      */
     exit: [{
-      speech: `Alright, see you next time!`,
+      speech: 'Alright, see you next time!',
     }, {
-      speech: `Sure, see you later!`,
+      speech: 'Sure, see you later!',
     }, {
-      speech: `Sure, have a nice day!`,
+      speech: 'Sure, have a nice day!',
     }],
 
     fallback: {
@@ -207,12 +207,12 @@ module.exports = {
        * the rest gets from defaults
        */
       defaults: {
-        'order': 'random',
+        order: 'random',
         // restricted to the allowed collections
         // so user could ask
         // > play jazz
         // and we fetch all jazz from these collections
-        'collectionId': ['etree', 'georgeblood', 'unlockedrecordings'],
+        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
       },
 
       /**
@@ -222,15 +222,15 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{creator}} here. Let's start listening to them.`,
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `Let's play {{alias.subject}} music.`,
-          `Let's play music from {{creator}}.`,
-          `Let's play music from {{coverage}}.`,
-          `Let's dive into {{year}}.`,
-          `I have <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{year}}. Let's dive into them.`,
+          'I\'ve got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'I\'ve got <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{creator}} here. Let\'s start listening to them.',
+          'I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let\'s listen to them.',
+          'I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'Let\'s play {{alias.subject}} music.',
+          'Let\'s play music from {{creator}}.',
+          'Let\'s play music from {{coverage}}.',
+          'Let\'s dive into {{year}}.',
+          'I have <say-as interpret-as="cardinal">{{total}}</say-as> songs from {{year}}. Let\'s dive into them.',
         ],
       },
 
@@ -245,15 +245,15 @@ module.exports = {
        */
       repair: {
         speech: [
-          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
+          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have that. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
         },
       },
     },
@@ -336,10 +336,10 @@ module.exports = {
        */
       acknowledges: [
         'Okay! Lets go with the artist {{creator}}!',
-        `You've selected {{alias.collectionId}}.`,
-        `Okay! You've selected {{alias.collectionId}}.`,
-        `Got it! You've selected {{alias.collectionId}}.`,
-        `Alright! You've selected {{alias.collectionId}}.`,
+        'You\'ve selected {{alias.collectionId}}.',
+        'Okay! You\'ve selected {{alias.collectionId}}.',
+        'Got it! You\'ve selected {{alias.collectionId}}.',
+        'Alright! You\'ve selected {{alias.collectionId}}.',
       ],
 
       prompts: [{
@@ -375,13 +375,13 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `Here are some {{alias.subject}} songs.`,
-          `Let's play some {{alias.subject}} music.`,
-          `Let's play music from {{creator}}.`,
-          `Let's play music from {{coverage}}.`,
-          `Let's dive into {{year}}.`,
+          'I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let\'s listen to them.',
+          'I\'ve got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'Here are some {{alias.subject}} songs.',
+          'Let\'s play some {{alias.subject}} music.',
+          'Let\'s play music from {{creator}}.',
+          'Let\'s play music from {{coverage}}.',
+          'Let\'s dive into {{year}}.',
         ],
       },
 
@@ -397,16 +397,16 @@ module.exports = {
       repair: {
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
-          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have that. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?',
+          'I don\'t have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
         },
       },
     }, {
@@ -452,10 +452,10 @@ module.exports = {
        */
       acknowledges: [
         'Okay! Lets go with the artist {{creator}}!',
-        `You've selected {{alias.collectionId}}.`,
-        `Okay! You've selected {{alias.collectionId}}.`,
-        `Got it! You've selected {{alias.collectionId}}.`,
-        `Alright! You've selected {{alias.collectionId}}.`,
+        'You\'ve selected {{alias.collectionId}}.',
+        'Okay! You\'ve selected {{alias.collectionId}}.',
+        'Got it! You\'ve selected {{alias.collectionId}}.',
+        'Alright! You\'ve selected {{alias.collectionId}}.',
       ],
 
       prompts: [{
@@ -492,13 +492,13 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let's listen to them.`,
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `Here are some {{alias.subject}} songs.`,
-          `Let's play some {{alias.subject}} music.`,
-          `Let's play music from {{creator}}.`,
-          `Let's play music from {{coverage}}.`,
-          `Let's dive into {{year}}.`,
+          'I found <say-as interpret-as="cardinal">{{total}}</say-as> songs. Let\'s listen to them.',
+          'I\'ve got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'Here are some {{alias.subject}} songs.',
+          'Let\'s play some {{alias.subject}} music.',
+          'Let\'s play music from {{creator}}.',
+          'Let\'s play music from {{coverage}}.',
+          'Let\'s dive into {{year}}.',
         ],
       },
 
@@ -514,16 +514,16 @@ module.exports = {
       repair: {
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have any songs for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have that. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?`,
-          `I don't have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?`,
+          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have that. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}} for {{year}}. Maybe you would like to listen something else?',
+          'I don\'t have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
         },
       },
     }, {
@@ -565,7 +565,7 @@ module.exports = {
         '{{year}} - it was an excellent year!',
         'Okay! Lets go with {{creator}}!',
         'Alright! Lets go with {{creator}}!',
-        `You've selected {{alias.collectionId}}.`,
+        'You\'ve selected {{alias.collectionId}}.',
       ],
 
       /**
@@ -614,10 +614,10 @@ module.exports = {
          */
         repair: {
           speech: [
-            `We don't have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?`,
+            'We don\'t have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?',
           ],
           default: {
-            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+            speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
           },
         },
       }, {
@@ -644,13 +644,13 @@ module.exports = {
          */
         repair: {
           speech: [
-            `I don't have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?`,
-            `I don't have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.`,
-            `I don't have that concert. Maybe you would like {{suggestions.0}}?`,
-            `I don't have that concert in {{coverage}}. Maybe you would like {{suggestions.0}}?`,
+            'I don\'t have {{creator}} concerts for {{year}} in {{coverage}}. What about {{suggestions.0}}?',
+            'I don\'t have any concerts for {{year}} in {{coverage}}. But we do have {{suggestions.0}}.',
+            'I don\'t have that concert. Maybe you would like {{suggestions.0}}?',
+            'I don\'t have that concert in {{coverage}}. Maybe you would like {{suggestions.0}}?',
           ],
           default: {
-            speech: `I don't have that concert. Maybe you would like to try something else?`,
+            speech: 'I don\'t have that concert. Maybe you would like to try something else?',
           }
         },
       }, {
@@ -672,15 +672,15 @@ module.exports = {
          */
         repair: {
           speech: [
-            `I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.`,
-            `I don't have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.`,
-            `I don't have any concerts for {{year}}. Try {{years-interval.suggestions}}.`,
-            `I don't have that concert. Try {{years-interval.suggestions}}.`,
-            `I don't have any concert in {{coverage}}. Maybe you would like to try something else?`,
-            `I don't have concerts of {{creator}} in {{coverage}}. Maybe you would like to try something else?`,
+            'I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.',
+            'I don\'t have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.',
+            'I don\'t have any concerts for {{year}}. Try {{years-interval.suggestions}}.',
+            'I don\'t have that concert. Try {{years-interval.suggestions}}.',
+            'I don\'t have any concert in {{coverage}}. Maybe you would like to try something else?',
+            'I don\'t have concerts of {{creator}} in {{coverage}}. Maybe you would like to try something else?',
           ],
           default: {
-            speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+            speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
           },
         },
       }],
@@ -692,13 +692,13 @@ module.exports = {
       fulfillment: {
         feeder: 'albums',
         speech: [
-          `I found <say-as interpret-as="cardinal">{{total}}</say-as> concerts. Let's listen to them.`,
-          `Let's play this concert that {{creator}} played in {{year}}, in {{coverage}}.`,
-          `Let's play {{creator}} concerts.`,
-          `Let's play concerts from {{creator}}.`,
-          `Let's play {{alias.subject}} concerts.`,
-          `Let's play concerts from {{coverage}}.`,
-          `Let's dive into {{year}}.`,
+          'I found <say-as interpret-as="cardinal">{{total}}</say-as> concerts. Let\'s listen to them.',
+          'Let\'s play this concert that {{creator}} played in {{year}}, in {{coverage}}.',
+          'Let\'s play {{creator}} concerts.',
+          'Let\'s play concerts from {{creator}}.',
+          'Let\'s play {{alias.subject}} concerts.',
+          'Let\'s play concerts from {{coverage}}.',
+          'Let\'s dive into {{year}}.',
         ],
       },
     }],
@@ -727,11 +727,11 @@ module.exports = {
        * default values for slots
        */
       defaults: {
-        'order': 'random',
-        'collectionId': ['etree', 'georgeblood', 'unlockedrecordings'],
-        'coverage': { skip: true },
-        'creator': { skip: true },
-        'year': { skip: true },
+        order: 'random',
+        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
+        coverage: { skip: true },
+        creator: { skip: true },
+        year: { skip: true },
       },
 
       /**
@@ -741,9 +741,9 @@ module.exports = {
         feeder: 'albums-async',
         speech: [
           // use "songs" instead of "albums" request from @mark
-          `I've got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let's listen to them.`,
-          `Excellent! Let's play {{alias.subject}} music.`,
+          'I\'ve got <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'Great choice! I found <say-as interpret-as="cardinal">{{total}}</say-as> {{alias.subject}} songs. Let\'s listen to them.',
+          'Excellent! Let\'s play {{alias.subject}} music.',
         ],
       },
 
@@ -758,11 +758,11 @@ module.exports = {
        */
       repair: {
         speech: [
-          `I don't have {{alias.subject}}. Try {{suggestions.0}}, for example.`,
-          `I don't have {{alias.subject}}. Maybe you would like to listen something else?`,
+          'I don\'t have {{alias.subject}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have {{alias.subject}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: `I haven't found music matched your request, maybe you would like to listen something else?`,
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
         },
       },
     },
@@ -793,7 +793,7 @@ module.exports = {
 
     repeat: {
       empty: {
-        speech: `I don't see anything here to repeat.`,
+        speech: 'I don\'t see anything here to repeat.',
       },
     },
 
@@ -824,10 +824,10 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: `Excellent! I'll be saying the title to each song.`,
+        speech: 'Excellent! I\'ll be saying the title to each song.',
       },
       true: {
-        speech: `Okay, muting song titles.`,
+        speech: 'Okay, muting song titles.',
       },
     },
 
@@ -863,11 +863,11 @@ module.exports = {
 
     playback: {
       noInput: {
-        speech: `Sorry, I couldn't hear you. If you don't mind I will continue playback.`,
+        speech: 'Sorry, I couldn\'t hear you. If you don\'t mind I will continue playback.',
       },
 
       unknown: {
-        speech: `I'm not sure what you said. If you don't mind I will continue playback.`,
+        speech: 'I\'m not sure what you said. If you don\'t mind I will continue playback.',
       },
     },
 
@@ -877,11 +877,11 @@ module.exports = {
     }],
 
     shuffleOff: [{
-      speech: `Got it! I'll play songs in the original order`,
+      speech: 'Got it! I\'ll play songs in the original order',
     }],
 
     shuffleOn: [{
-      speech: `Got it! I'll play songs in a random order`,
+      speech: 'Got it! I\'ll play songs in a random order',
     }],
 
     yes: [{
@@ -904,7 +904,7 @@ module.exports = {
     },
 
     nothingToSay: {
-      speech: `I'm not sure what you said. Could you rephrase?`,
+      speech: 'I\'m not sure what you said. Could you rephrase?',
     }
   }
 };

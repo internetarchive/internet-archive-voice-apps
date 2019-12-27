@@ -28,7 +28,7 @@ module.exports = () => (ctx) => {
       reprompt,
     });
   } else {
-    error(`hm... we don't have anything to say.`);
+    error('hm... we don\'t have anything to say.');
     dialog.ask(app, strings.events.nothingToSay);
   }
 

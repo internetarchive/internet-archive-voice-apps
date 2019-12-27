@@ -53,7 +53,7 @@ describe('extensions', () => {
         expect(extensions.find((ex) => ex.name === 'apple')).to.be.equal(require('./fixtures/apple'));
       });
 
-      it(`shouldn't hit the index`, () => {
+      it('shouldn\'t hit the index', () => {
         expect(extensions.find((ex) => ex.name === 'index')).to.be.null;
       });
     });

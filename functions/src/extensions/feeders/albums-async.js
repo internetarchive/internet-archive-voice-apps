@@ -72,7 +72,7 @@ class AsyncAlbums extends DefaultFeeder {
       .then(({ songs, songsInFirstAlbum, totalNumOfAlbums }) => {
         // the only place where we modify state
         // so maybe we can put it out of this function?
-        debug(`let's create playlist for songs`);
+        debug('let\'s create playlist for songs');
         const cursor = this.getCursor(app, playlist);
         songs = this.processNewSongsBeforeMoveToNext({ app, query, playlist }, cursor, songs);
         playlist.create(app, songs, {
@@ -105,7 +105,7 @@ class AsyncAlbums extends DefaultFeeder {
 
     const feederConfig = this.getConfigForOrder(app, query);
     if (!feederConfig) {
-      warning(`something wrong we don't have config of feeder`);
+      warning('something wrong we don\'t have config of feeder');
     }
 
     debug('config of feeder', feederConfig);
@@ -128,7 +128,7 @@ class AsyncAlbums extends DefaultFeeder {
       )
       .then((albums) => {
         if (albums === null) {
-          warning(`we received none albums`);
+          warning('we received none albums');
           return;
         }
         debug(`get ${albums.items.length} albums`);
@@ -145,7 +145,7 @@ class AsyncAlbums extends DefaultFeeder {
                   delay: 100,
                 })
                 .catch(error => {
-                  warning(`we failed on fetching details about album:`, error);
+                  warning('we failed on fetching details about album:', error);
                   return null;
                 })
             )
@@ -175,7 +175,7 @@ class AsyncAlbums extends DefaultFeeder {
           }, []);
 
         let current = currentCursor;
-        let cursor = this.getCursor(app, playlist);
+        const cursor = this.getCursor(app, playlist);
 
         songs = songs.map(s => {
           current = orderStrategy.getNextCursorPosition({
@@ -192,7 +192,7 @@ class AsyncAlbums extends DefaultFeeder {
         });
 
         if (songs.length === 0) {
-          warning(`we received zero songs. It doesn't sound ok`);
+          warning('we received zero songs. It doesn\'t sound ok');
           // let's try again
           return this.fetchChunkOfSongs({ app, currentCursor, query, playlist });
         }
@@ -437,7 +437,7 @@ class AsyncAlbums extends DefaultFeeder {
           }
           return ctx;
         } else {
-          debug(`we don't have next song in playlist so we'll fetch new chunk of songs`);
+          debug('we don\'t have next song in playlist so we\'ll fetch new chunk of songs');
           return this
             .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, songsInFirstAlbum }) => {
@@ -473,7 +473,7 @@ class AsyncAlbums extends DefaultFeeder {
               // but we shouldn't exceed available size of chunk
               if (items.length > feederConfig.chunk.songs) {
                 debug('we exceed available space and should drop few songs');
-                let shift = items.length - feederConfig.chunk.songs;
+                const shift = items.length - feederConfig.chunk.songs;
                 debug(`drop ${shift} old song(s)`);
                 items = items.slice(shift);
                 // we don't need to slide in case of move
@@ -541,7 +541,7 @@ class AsyncAlbums extends DefaultFeeder {
           playlist.previous(app);
           return ctx;
         } else {
-          debug(`we don't have previous song in playlist so we'll fetch new chunk of songs`);
+          debug('we don\'t have previous song in playlist so we\'ll fetch new chunk of songs');
           return this
             .fetchChunkOfSongs({ app, currentCursor: newCurrentCursor, query, playlist })
             .then(({ songs, numOfSongsInLastAlbum }) => {

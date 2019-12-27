@@ -11,7 +11,7 @@ const welcomeStrings = require('../strings').intents.welcome.default;
  * @param app
  */
 function handler (app) {
-  let reprompt = welcomeStrings.reprompt || welcomeStrings.speech;
+  const reprompt = welcomeStrings.reprompt || welcomeStrings.speech;
 
   let speech;
   if (app.isFirstTry && app.isFirstTry()) {

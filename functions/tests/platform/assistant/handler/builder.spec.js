@@ -15,8 +15,8 @@ describe('platform', () => {
 
     it('should populate intent handlers without states', () => {
       const actionsMap = {
-        'welcome': { default: sinon.spy },
-        'hello': { default: sinon.spy }
+        welcome: { default: sinon.spy },
+        hello: { default: sinon.spy }
       };
       const res = builder({ actionsMap, after });
       expect(res).to.have.lengthOf(2);
@@ -43,8 +43,8 @@ describe('platform', () => {
         };
 
         actionsMap = {
-          'welcome': welcomeHandlers,
-          'hello': helloHandlers,
+          welcome: welcomeHandlers,
+          hello: helloHandlers,
         };
       });
 
@@ -83,7 +83,7 @@ describe('platform', () => {
           });
       });
 
-      it(`should run default handler when state is defined but we don't have handler`, () => {
+      it('should run default handler when state is defined but we don\'t have handler', () => {
         const res = builder({ actionsMap, after });
         app = mockApp({
           getData: {

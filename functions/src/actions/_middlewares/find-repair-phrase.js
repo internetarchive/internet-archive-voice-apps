@@ -34,7 +34,7 @@ module.exports = () => (ctx) => {
 
   debug('we choice repair phrase:', template);
   if (!template) {
-    warning(`can't find repair phrase, should use default`);
+    warning('can\'t find repair phrase, should use default');
     if (!_.has(repairScheme, 'default.speech')) {
       throw new Error(
         `repair scheme "${util.inspect(repairScheme)}" doesn't have default.speech option`

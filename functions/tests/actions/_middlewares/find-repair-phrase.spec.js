@@ -21,7 +21,7 @@ describe('actions', () => {
       });
 
       it('should appropriate repair phrase based on context', () => {
-        let mockTemplate = 'hello world!';
+        const mockTemplate = 'hello world!';
         const selectorsMock = {
           find: sinon.stub().returns(mockTemplate),
         };
@@ -32,7 +32,7 @@ describe('actions', () => {
           });
       });
 
-      it(`should use default repair phrase if didn't find matched`, () => {
+      it('should use default repair phrase if didn\'t find matched', () => {
         const selectorsMock = {
           find: sinon.stub().returns(null),
         };

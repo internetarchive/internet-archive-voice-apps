@@ -16,7 +16,7 @@ describe('actions', () => {
 
   describe('title option handler', () => {
     it('should store title option', () => {
-      let app = mockApp({
+      const app = mockApp({
         getByName: {
           value: 'false',
         }

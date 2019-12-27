@@ -61,7 +61,7 @@ class App {
    * Stop track playback
    */
   stopPlayback () {
-    debug(`stop playback is not supported by google assistant`);
+    debug('stop playback is not supported by google assistant');
   }
 }
 

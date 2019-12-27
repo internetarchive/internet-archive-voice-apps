@@ -20,7 +20,7 @@ module.exports = () => (context) => {
   const brokenSlotsNames = Object.keys(brokenSlots);
 
   if (brokenSlotsNames.length === 0) {
-    debug(`we don't have any missed slots`);
+    debug('we don\'t have any missed slots');
     return Promise.resolve(context);
   }
 
@@ -31,7 +31,7 @@ module.exports = () => (context) => {
   );
 
   if (!repairScheme) {
-    debug(`we don't have any matched prompts for:`, brokenSlotsNames, 'in:', slotScheme.prompts, 'so we use default one');
+    debug('we don\'t have any matched prompts for:', brokenSlotsNames, 'in:', slotScheme.prompts, 'so we use default one');
     // return Promise.resolve(context);
     repairScheme = slotScheme;
   }
@@ -39,7 +39,7 @@ module.exports = () => (context) => {
   const repair = repairScheme.repair || slotScheme.repair;
 
   if (!repair) {
-    warning(`we don't have any repair phrase in this slot scheme`, slotScheme);
+    warning('we don\'t have any repair phrase in this slot scheme', slotScheme);
     return Promise.resolve(context);
   }
 
@@ -51,7 +51,7 @@ module.exports = () => (context) => {
 
   debug('we choice repair phrase:', template);
   if (!template) {
-    warning(`can't find repair phrase, should use default`);
+    warning('can\'t find repair phrase, should use default');
     template = repair.speech[0];
   }
 

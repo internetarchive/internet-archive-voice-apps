@@ -17,7 +17,7 @@ describe('actions', () => {
 
   describe('welcome', () => {
     it('should greet user', () => {
-      let app = mockApp();
+      const app = mockApp();
       welcome.handler(app);
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
@@ -29,7 +29,7 @@ describe('actions', () => {
     });
 
     it('should reprompt with speech', () => {
-      let app = mockApp();
+      const app = mockApp();
       welcome.handler(app);
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
         .to.include('Want to listen to')
@@ -38,7 +38,7 @@ describe('actions', () => {
     });
 
     it('should reset query slots', () => {
-      let app = mockApp();
+      const app = mockApp();
       query.setSlot(app, 'collection', 'etree');
       query.setSlot(app, 'creator', 'The Grateful Dead');
       welcome.handler(app);
@@ -47,7 +47,7 @@ describe('actions', () => {
     });
 
     it('should reset playlist', () => {
-      let app = mockApp();
+      const app = mockApp();
       playlist.create(app, ['item-1', 'item-2']);
       welcome.handler(app);
       expect(playlist.isEmpty(app)).to.be.true;

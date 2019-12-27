@@ -15,7 +15,7 @@ describe('actions', () => {
       const speeches = [
         'Between {{yearsinterval.suggestions}}.',
         'Ok! Lets go with {{creator.title}} performer!',
-        `You've selected {{alias.collectionId}}.`,
+        'You\'ve selected {{alias.collectionId}}.',
       ];
       let templateResolvers;
       let yearsintervalHandler;

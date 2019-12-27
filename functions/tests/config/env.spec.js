@@ -21,7 +21,7 @@ describe('config', () => {
       process.env = orgEnv;
     });
 
-    it(`should return undefined if we don't have such variable`, () => {
+    it('should return undefined if we don\'t have such variable', () => {
       const alexaEnv = env('alexa');
       expect(alexaEnv('uknown', 'var')).to.be.undefined;
     });

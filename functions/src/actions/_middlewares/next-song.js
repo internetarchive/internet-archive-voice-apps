@@ -17,8 +17,8 @@ const nextSong = ({ move = true } = {}) => (ctx) => {
   const { feeder } = ctx;
   if (!feeder.hasNext(ctx)) {
     // TODO: Don't have next song
-    debug(`don't have next song`);
-    return Promise.reject(new DoNotHaveNextSongError(ctx, `don't have next song`));
+    debug('don\'t have next song');
+    return Promise.reject(new DoNotHaveNextSongError(ctx, 'don\'t have next song'));
   }
 
   return feeder.next(ctx, move);

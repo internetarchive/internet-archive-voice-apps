@@ -27,7 +27,7 @@ module.exports = () => (ctx) => {
 
   if (brokenSlotsNames.length === 0) {
     // TODO: should be excluded and non-empty brokenSlots should be mandated
-    debug(`we don't have any missed slots`);
+    debug('we don\'t have any missed slots');
     return Promise.resolve(ctx);
   }
 
@@ -39,7 +39,7 @@ module.exports = () => (ctx) => {
 
   // use parent slot scheme if we don't have specialized
   if (!repairSlotScheme) {
-    debug(`we don't have any matched prompts for:`, brokenSlotsNames, 'in:', slotScheme.prompts, 'so we use default one');
+    debug('we don\'t have any matched prompts for:', brokenSlotsNames, 'in:', slotScheme.prompts, 'so we use default one');
     repairSlotScheme = slotScheme;
   }
 
@@ -47,7 +47,7 @@ module.exports = () => (ctx) => {
   const repairScheme = repairSlotScheme.repair || slotScheme.repair;
 
   if (!repairScheme) {
-    warning(`we don't have any repair phrase in this slot scheme`, slotScheme);
+    warning('we don\'t have any repair phrase in this slot scheme', slotScheme);
     return Promise.resolve(ctx);
   }
 

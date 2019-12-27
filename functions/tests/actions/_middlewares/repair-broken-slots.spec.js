@@ -8,7 +8,7 @@ const mockSelectors = require('../../_utils/mocking/selectors');
 
 describe('actions', () => {
   describe('middlewares', () => {
-    let promptScheme = {
+    const promptScheme = {
       repair: {
         speech: [
           'Thanks!',
@@ -55,7 +55,7 @@ describe('actions', () => {
           });
       });
 
-      it(`shouldn't find acknowledge when we don't have broken slots`, () => {
+      it('shouldn\'t find acknowledge when we don\'t have broken slots', () => {
         const slotScheme = {
           acknowledges: [],
         };
@@ -68,13 +68,13 @@ describe('actions', () => {
           });
       });
 
-      it(`should get default repair phrases when we don't have prompts`, () => {
+      it('should get default repair phrases when we don\'t have prompts', () => {
         const slots = {
           name: 'value',
         };
         const slotScheme = {
           repair: {
-            speech: `We don't have this value`,
+            speech: 'We don\'t have this value',
           }
         };
         const brokenSlots = {
@@ -95,19 +95,19 @@ describe('actions', () => {
           });
       });
 
-      it(`should get default repair phrases when prompt doesn't have repair phrase`, () => {
+      it('should get default repair phrases when prompt doesn\'t have repair phrase', () => {
         const slots = {
           name: 'value',
         };
         const slotScheme = {
           repair: {
-            speech: `We don't have this value`,
+            speech: 'We don\'t have this value',
           }
         };
         const brokenSlots = {
           name: 'value',
         };
-        let promptScheme = {
+        const promptScheme = {
         };
         promptSelector = {
           getPromptsForSlots: sinon.stub().returns(promptScheme),
@@ -124,7 +124,7 @@ describe('actions', () => {
           });
       });
 
-      it(`should skip middleware if we don't have repair phrases here`, () => {
+      it('should skip middleware if we don\'t have repair phrases here', () => {
         const slots = {
           name: 'value',
         };
@@ -133,7 +133,7 @@ describe('actions', () => {
         const brokenSlots = {
           name: 'value',
         };
-        let promptScheme = {
+        const promptScheme = {
         };
         promptSelector = {
           getPromptsForSlots: sinon.stub().returns(promptScheme),

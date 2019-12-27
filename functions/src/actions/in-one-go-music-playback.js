@@ -34,13 +34,13 @@ const suggestions = require('./_middlewares/suggestions');
  */
 function handler (app) {
   const slots = query.getSlots(app);
-  let slotScheme = selectors.find(strings, slots);
+  const slotScheme = selectors.find(strings, slots);
   debug(`start handler "${slotScheme.name}"`);
 
   if (app.isNewSession()) {
     // this action is exposed outside as in-one-go-action
     // so for Alexa we should clean its attributes
-    debug(`it is new session we should drop all sessions's attributes`);
+    debug('it is new session we should drop all sessions\'s attributes');
     app.persist.dropAll();
   }
 
@@ -64,7 +64,7 @@ function handler (app) {
     .then(renderSpeech())
     .then(playSong())
     .catch((error) => {
-      debug(`we don't have playlist (or it is empty)`);
+      debug('we don\'t have playlist (or it is empty)');
       debug(error);
 
       if (error instanceof errors.HTTPError) {

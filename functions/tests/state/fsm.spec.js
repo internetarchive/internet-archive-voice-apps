@@ -102,7 +102,7 @@ describe('state', () => {
         expect(fsm.selectHandler(app, handlers)).to.be.equal(handlers.playback.help.default);
       });
 
-      it(`should select sub-handler and drop head if it doesn't fit`, () => {
+      it('should select sub-handler and drop head if it doesn\'t fit', () => {
         fsm.transitionTo(app, 'show');
         fsm.transitionTo(app, 'playback');
         fsm.transitionTo(app, 'help');

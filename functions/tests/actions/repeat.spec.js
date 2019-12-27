@@ -19,7 +19,7 @@ describe('actions', () => {
       const speech = 'Which direction do you go?';
       const reprompt = 'Where are you go?';
       const suggestions = ['west', 'east', 'north', 'south'];
-      let app = mockApp({
+      const app = mockApp({
         getData: {
           dialog: {
             lastPhrase: {

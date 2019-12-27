@@ -9,7 +9,7 @@ const { debug } = require('../utils/logger')('ia:actions:debug-action');
  * @param app
  */
 function handler (app) {
-  debug(`Start debug action handler`);
+  debug('Start debug action handler');
   dialog.close(app,
     `It is example of test debug action. 
     You could make any number of them, and exclude from git.`

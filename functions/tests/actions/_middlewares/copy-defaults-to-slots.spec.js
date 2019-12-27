@@ -28,7 +28,7 @@ describe('actions', () => {
           });
       });
 
-      it(`should shouldn't ovewrited already defined slots`, () => {
+      it('should shouldn\'t ovewrited already defined slots', () => {
         const app = mockApp();
         query.setSlot(app, 'band', 'other one');
         const slotScheme = {

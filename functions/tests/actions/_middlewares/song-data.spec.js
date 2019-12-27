@@ -13,7 +13,7 @@ describe('actions', () => {
   describe('middlewares', () => {
     let app;
     let selectors;
-    let strings = {
+    const strings = {
       description: 'description: {{title}}',
       wordless: [{ speech: 'speech' }],
     };

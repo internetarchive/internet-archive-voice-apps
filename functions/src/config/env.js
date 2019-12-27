@@ -14,10 +14,11 @@ module.exports = (platform) => (group, prop) => {
     case 'assistant':
       res = require('../platform/assistant/env')(group, prop);
       break;
-    default:
+    default: {
       const key = groupParamToEnvVarName(group, prop);
       res = key ? process.env[key] : process.env;
       break;
+    }
   }
 
   if (typeof res === 'string') {

@@ -25,7 +25,7 @@ const errorHandler = (error) => {
   if (config) {
     warning(`fail request ${config.method.toUpperCase()} ${config.url}`, error);
   } else {
-    warning(`fail`, error);
+    warning('fail', error);
   }
   return Promise.reject(new errors.HTTPError(error));
 };

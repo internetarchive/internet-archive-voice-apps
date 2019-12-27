@@ -24,7 +24,7 @@ function find (options, context) {
     .map(([key, value]) => key);
 
   if (!prioritySlots) {
-    debug(`we don't have priority slots so we will use the main set of slots`);
+    debug('we don\'t have priority slots so we will use the main set of slots');
     prioritySlots = slotNames;
   }
 

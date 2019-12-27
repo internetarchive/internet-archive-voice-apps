@@ -28,8 +28,8 @@ const { storeCurrentSongDataInContext } = require('../../_middlewares/store-curr
  */
 const skipHandlers = {
   'to-the-first': rewindToTheFirstSong(),
-  'back': previousSong(),
-  'forward': nextSong(),
+  back: previousSong(),
+  forward: nextSong(),
   'to-the-last': rewindToTheLastSong(),
 };
 

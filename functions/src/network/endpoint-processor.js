@@ -16,7 +16,7 @@ function preprocess (template, app, opts) {
     config, ['platforms', app.platform, 'endpoint']
   );
 
-  let url = mustache.render(
+  const url = mustache.render(
     template,
     Object.assign({}, opts, platformOpts)
   );
