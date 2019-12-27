@@ -7,7 +7,7 @@ const mockAlbumsProvider = require('../../_utils/mocking/provider/albums');
 
 describe('suggestions', () => {
   describe('creators', () => {
-    let albumsProvider = mockAlbumsProvider({});
+    const albumsProvider = mockAlbumsProvider({});
 
     beforeEach(() => {
       creators.__set__('albumsProvider', albumsProvider);

@@ -43,7 +43,7 @@ describe('providers', () => {
           });
       });
 
-      it(`should return empty list if we don't receive response with docs`, () => {
+      it('should return empty list if we don\'t receive response with docs', () => {
         const mock = new MockAdapter(creators.__get__('axios'));
         mock.onGet().reply(200, '<html><head></head><body></body></html>');
 

@@ -39,7 +39,7 @@ function playSong (app, options) {
     speech = description;
   }
 
-  let previousTrack = Object.assign({},
+  const previousTrack = Object.assign({},
     options.previousTrack,
     { contentURL: options.previousTrack && options.previousTrack.audioURL });
 

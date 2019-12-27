@@ -42,7 +42,7 @@ describe('actions', () => {
           });
       });
 
-      it(`should do nothing when we don't have speeches`, () => {
+      it('should do nothing when we don\'t have speeches', () => {
         return middleware()({
           slots
         })

@@ -66,7 +66,7 @@ describe('platform', () => {
           .to.have.property('message', 'An exception occurred while dispatching the request to the skill.');
       });
 
-      it(`should return undefined if we don't have slots`, () => {
+      it('should return undefined if we don\'t have slots', () => {
         const params = paramsBuilder(mockHandlerInput({ slots: null }));
         expect(params.getByName('id')).to.be.undefined;
       });

@@ -18,7 +18,7 @@ module.exports = (processing) => {
     return Promise.resolve(new Proxy({}, {
       get: function (object, name) {
         if (_.includes(['toString', 'valueOf'], name)) {
-          return () => `<Proxy of [context]>`;
+          return () => '<Proxy of [context]>';
         }
 
         if (_.includes(['inspect', 'then'], name) || (typeof name === 'symbol')) {

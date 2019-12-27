@@ -21,7 +21,7 @@ module.exports = () => (args) => {
     .filter(slotName => !(slotName in slots));
 
   if (missedSlots.length === 0) {
-    debug(`we don't have any missed slots`);
+    debug('we don\'t have any missed slots');
     return Promise.resolve(args);
   }
 
@@ -32,7 +32,7 @@ module.exports = () => (args) => {
   );
 
   if (!promptScheme) {
-    warning(`we don't have any matched prompts for:`, missedSlots, 'in:', slotScheme.prompts);
+    warning('we don\'t have any matched prompts for:', missedSlots, 'in:', slotScheme.prompts);
     return Promise.resolve(args);
   }
 

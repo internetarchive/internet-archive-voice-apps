@@ -22,7 +22,7 @@ describe('platform', () => {
       admin = require('firebase-admin');
       adminInitStub = sinon.stub(admin, 'initializeApp');
       functions = require('firebase-functions');
-      configStub = sinon.stub(functions, 'config').returns(require(`../../.runtimeconfig.json`));
+      configStub = sinon.stub(functions, 'config').returns(require('../../.runtimeconfig.json'));
     });
 
     after(() => {
@@ -35,7 +35,7 @@ describe('platform', () => {
       actions = {
         'global-error': { default: require('../../../src/actions/global-error').handler },
         'http-request-error': { default: require('../../../src/actions/http-request-error').handler },
-        'unhandled': { default: require('../../../src/actions/unhandled').handler }
+        unhandled: { default: require('../../../src/actions/unhandled').handler }
       };
 
       firestore = {};
@@ -52,7 +52,7 @@ describe('platform', () => {
 
     describe('handler', () => {
       it('should warn in case of missed action', () => {
-        let warning = sinon.spy();
+        const warning = sinon.spy();
         handlerBuilder.__set__('warning', warning);
 
         const handler = handlerBuilder(actions);
@@ -71,7 +71,7 @@ describe('platform', () => {
       });
 
       it('should gracefully ask in case of missed action', () => {
-        let warning = sinon.spy();
+        const warning = sinon.spy();
         handlerBuilder.__set__('warning', warning);
 
         const handler = handlerBuilder(actions);
@@ -84,7 +84,7 @@ describe('platform', () => {
 
         return wait()
           .then(() => {
-            expect(res.speech()).to.includes(`Sorry, I'm afraid I don't follow you.`);
+            expect(res.speech()).to.includes('Sorry, I\'m afraid I don\'t follow you.');
           });
       });
 
@@ -94,7 +94,7 @@ describe('platform', () => {
         'unhandled',
       ].forEach((action) => {
         it(`should warn in case of missed ${action} action`, () => {
-          let warning = sinon.spy();
+          const warning = sinon.spy();
           handlerBuilder.__set__('warning', warning);
           delete actions[action];
           handlerBuilder(actions);

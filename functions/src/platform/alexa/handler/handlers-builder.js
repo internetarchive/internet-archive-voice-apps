@@ -117,7 +117,7 @@ function findHandlersByInput (actions, handlerInput) {
     }
   }
 
-  debug(`haven't found any matched handlers`);
+  debug('haven\'t found any matched handlers');
 
   return null;
 }
@@ -148,7 +148,7 @@ module.exports = (actions) => {
       'which is required to handle http request errors.');
   }
 
-  const unhandledHandler = actions['unhandled'];
+  const unhandledHandler = actions.unhandled;
   if (!unhandledHandler) {
     warning(
       'we missed action handler actions/unhandled,' +
@@ -249,7 +249,7 @@ module.exports = (actions) => {
 
         const res = findHandlersByInput(actions, handlerInput);
         if (!res) {
-          warning(`we haven't found any valid handler`);
+          warning('we haven\'t found any valid handler');
           handlers = unhandledHandler;
           intent = 'unknown intent';
         } else {

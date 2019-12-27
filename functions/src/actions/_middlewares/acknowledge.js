@@ -21,7 +21,7 @@ module.exports = ({ prioritySlots = 'newValues', speeches = 'slotScheme.acknowle
 
   // we get new values
   if (prioritySlotNames.length === 0) {
-    debug(`we don't have any priority slots`);
+    debug('we don\'t have any priority slots');
     return Promise.resolve(ctx);
   }
 

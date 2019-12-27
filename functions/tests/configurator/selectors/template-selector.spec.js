@@ -29,7 +29,7 @@ describe('configurator', () => {
           })).to.be.true;
         });
 
-        it(`should skipped options which doesn't look like template`, () => {
+        it('should skipped options which doesn\'t look like template', () => {
           expect(selector.support([
             'But oh! that deep romantic chasm which slanted',
             'Down the green hill athwart a cedarn cover!',
@@ -49,7 +49,7 @@ describe('configurator', () => {
           })).to.be.equal(options[1]);
         });
 
-        it(`should return null in case when we don't have `, () => {
+        it('should return null in case when we don\'t have ', () => {
           expect(selector.find(options, {
             prioritySlots: ['collection'],
           })).to.be.null;

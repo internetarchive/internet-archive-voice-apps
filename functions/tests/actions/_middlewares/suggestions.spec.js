@@ -90,7 +90,7 @@ describe('actions', () => {
           });
       });
 
-      it(`should skip middleware when we don't have suggestions scheme`, () => {
+      it('should skip middleware when we don\'t have suggestions scheme', () => {
         const provider = sinon.stub().returns(Promise.resolve({
           items: suggestions,
         }));

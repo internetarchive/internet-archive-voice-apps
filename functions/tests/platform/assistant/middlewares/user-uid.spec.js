@@ -16,7 +16,7 @@ describe('platform', () => {
             expect(convOld.user).to.be.equal(newConv.user);
           });
 
-          it(`should not create new user's storage if we already have it`, () => {
+          it('should not create new user\'s storage if we already have it', () => {
             const convOld = { user: { storage: {} } };
             const newConv = { ...convOld };
             middleware(newConv);

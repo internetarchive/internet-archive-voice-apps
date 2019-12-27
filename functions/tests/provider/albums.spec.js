@@ -100,8 +100,8 @@ describe('albums', () => {
             '78rpm',
             'audio_music',
           ]);
-          expect(album.songs[0]).to.have.property('title', `(When Your Heart's On Fire) Smoke Gets in Your Eyes`);
-          expect(album.songs[1]).to.have.property('title', `The Continental (You Kiss While You're Dancing)`);
+          expect(album.songs[0]).to.have.property('title', '(When Your Heart\'s On Fire) Smoke Gets in Your Eyes');
+          expect(album.songs[1]).to.have.property('title', 'The Continental (You Kiss While You\'re Dancing)');
         });
     });
   });
@@ -177,7 +177,7 @@ describe('albums', () => {
         });
     });
 
-    it(`should skip order when we haven't explicitly specified it`, () => {
+    it('should skip order when we haven\'t explicitly specified it', () => {
       return albumsProvider
         .fetchAlbumsByQuery(app, {
           collectionId: 'collection-1',

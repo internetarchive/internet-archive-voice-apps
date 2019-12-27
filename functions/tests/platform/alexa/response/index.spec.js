@@ -33,15 +33,15 @@ describe('platform', () => {
       it('should unpack array of speeaches', () => {
         ask(handlerInput)({
           speech: [
-            `Well, there ain't nobody safer than someone who doesn't care.`,
-            `And it isn't even lonely when no one's ever there.`,
+            'Well, there ain\'t nobody safer than someone who doesn\'t care.',
+            'And it isn\'t even lonely when no one\'s ever there.',
           ],
         });
 
         expect(handlerInput.responseBuilder.speak).to.have.been
           .calledWith(
-            `Well, there ain't nobody safer than someone who doesn't care.\n` +
-            `And it isn't even lonely when no one's ever there.`
+            'Well, there ain\'t nobody safer than someone who doesn\'t care.\n' +
+            'And it isn\'t even lonely when no one\'s ever there.'
           );
       });
 
@@ -49,7 +49,7 @@ describe('platform', () => {
         ask(handlerInput)({
           speech: [
             'Great choice!',
-            `Let's play song Title`,
+            'Let\'s play song Title',
           ],
           media: [{
             name: 'song title',
@@ -74,7 +74,7 @@ describe('platform', () => {
         ask(handlerInput)({
           speech: [
             'Great choice!',
-            `Let's play song Title`,
+            'Let\'s play song Title',
           ],
           media: [{
             name: 'song title',
@@ -95,7 +95,7 @@ describe('platform', () => {
         expect(handlerInput.responseBuilder.speak).to.have.been
           .calledWith(
             'Great choice!\n' +
-            `Let's play song Title`
+            'Let\'s play song Title'
           );
 
         expect(handlerInput.responseBuilder.withStandardCard).to.have.been

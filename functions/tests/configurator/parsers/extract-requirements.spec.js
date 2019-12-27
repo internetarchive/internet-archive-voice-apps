@@ -22,7 +22,7 @@ describe('configurator', () => {
           .to.have.members(['collection']);
       });
 
-      it(`should consider slot as requrements if we don't resolver with the same name`, () => {
+      it('should consider slot as requrements if we don\'t resolver with the same name', () => {
         const templates = [
           'Hello {{very-rare-slot-name}}!',
         ];
@@ -57,7 +57,7 @@ describe('configurator', () => {
 
       it('should fetch callback requirements from resolvers', () => {
         const templates = [
-          `You've selected {{alias.collectionId}} collection.`,
+          'You\'ve selected {{alias.collectionId}} collection.',
         ];
 
         const res = extractor.extractRequrements(templates);

@@ -39,7 +39,7 @@ class SyncAlbum extends DefaultFeeder {
       .fetchAlbumsByQuery(app, slots)
       .then(albums => {
         if (albums === null) {
-          warning(`we received none albums`);
+          warning('we received none albums');
           return;
         }
         debug(`get ${albums.items.length} albums`);
@@ -100,7 +100,7 @@ class SyncAlbum extends DefaultFeeder {
         debug(`We get ${songs.length} songs`);
         // the only place where we modify state
         // so maybe we can put it out of this function?
-        debug(`let's create playlist for songs`);
+        debug('let\'s create playlist for songs');
         playlist.create(app, songs);
 
         return { total };

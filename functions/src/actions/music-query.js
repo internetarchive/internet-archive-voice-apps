@@ -50,7 +50,7 @@ function build (scheme) {
   async function handler (app) {
     debug('Start music query handler');
 
-    let ctx = await populateSlots({ app });
+    const ctx = await populateSlots({ app });
     const { slotScheme, newValues } = ctx;
     debug('new values', newValues);
 
@@ -77,7 +77,7 @@ function build (scheme) {
             .then(playSong());
         })
         .catch((error) => {
-          debug(`we don't have playlist (or it is empty)`);
+          debug('we don\'t have playlist (or it is empty)');
 
           let context = error;
           if (error instanceof middlewareErrors.MiddlewareError) {
@@ -179,9 +179,9 @@ function build (scheme) {
    * @param presetParamName
    */
   async function processPreset (app, slotScheme, { presetParamName = 'preset' } = {}) {
-    let name = app.params.getByName(presetParamName);
+    const name = app.params.getByName(presetParamName);
     if (!name) {
-      debug(`it wasn't preset`);
+      debug('it wasn\'t preset');
       return;
     }
 
@@ -194,7 +194,7 @@ function build (scheme) {
 
     const preset = slotScheme.presets[name];
     if (!('defaults' in preset)) {
-      warning(`but it doesn't have defaults`);
+      warning('but it doesn\'t have defaults');
       return;
     }
 

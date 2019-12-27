@@ -153,7 +153,7 @@ describe('actions / music query', () => {
     });
 
     describe('defaults', () => {
-      it(`should automatically populate to user state if we don't have it yet there`, () => {
+      it('should automatically populate to user state if we don\'t have it yet there', () => {
         app = mockApp({
           getByName: {},
         });
@@ -165,7 +165,7 @@ describe('actions / music query', () => {
           });
       });
 
-      it(`shouldn't populate to user state if we already have this slot`, () => {
+      it('shouldn\'t populate to user state if we already have this slot', () => {
         app = mockApp({
           getByName: {
             order: 'the-best',
@@ -215,14 +215,14 @@ describe('actions / music query', () => {
         revert();
       });
 
-      it(`shouldn't activate when we don't have enough filled slots`, () => {
+      it('shouldn\'t activate when we don\'t have enough filled slots', () => {
         return handler(app)
           .then(() => {
             expect(feeders.getByName).to.have.not.been.called;
           });
       });
 
-      it(`should activate when we have enough filled slots`, () => {
+      it('should activate when we have enough filled slots', () => {
         app = mockApp({
           getByName: {
             collection: 'live',
@@ -287,7 +287,7 @@ describe('actions / music query', () => {
             expect(dialog.ask).to.have.been.calledOnce;
             expect(dialog.ask.args[0][1])
               .to.have.property('speech')
-              .to.include(`Cool! You've chosen my favourite album.`);
+              .to.include('Cool! You\'ve chosen my favourite album.');
           });
       });
     });

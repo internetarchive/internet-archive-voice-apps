@@ -44,7 +44,7 @@ function getBody ({ action, data = {}, userStorage = {}, lastSeen = '2018-02-15T
 
       parameters: {},
     },
-    status: { 'code': 200, 'errorType': 'success', 'webhookTimedOut': false },
+    status: { code: 200, errorType: 'success', webhookTimedOut: false },
     sessionId: '1518710115665'
   };
 }

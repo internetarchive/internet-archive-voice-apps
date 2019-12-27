@@ -31,7 +31,7 @@ describe('actions', () => {
           });
       });
 
-      it(`shouldn't find return prompt when we don't have right prompts`, () => {
+      it('shouldn\'t find return prompt when we don\'t have right prompts', () => {
         const slots = {
           artist: 'The Band',
         };

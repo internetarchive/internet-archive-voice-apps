@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const mathjsExtensions = require('../../src/mathjs');
 
-let math = require('mathjs');
+const math = require('mathjs');
 
 describe('mathjs', () => {
   beforeEach(() => {

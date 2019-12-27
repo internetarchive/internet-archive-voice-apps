@@ -5,7 +5,7 @@ function handler (app) {
     case 'USER_INITIATED':
       info('user close session');
       break;
-    case 'ERROR':
+    case 'ERROR': {
       // send to sentry
       const e = app.params.getByName('error');
       error(e.type, e.message);
@@ -16,6 +16,7 @@ function handler (app) {
           break;
       }
       break;
+    }
     case 'EXCEEDED_MAX_REPROMPTS':
       info('exceeded max reptompts');
       break;

@@ -94,7 +94,7 @@ describe('integration', () => {
 
   describe('alexa', () => {
     scenarios.forEach(({ scenario, only = false, skip = false, dialog = [], launch = '' }) => {
-      let describeScenario = only ? describe.only : (skip ? describe.skip : describe);
+      const describeScenario = only ? describe.only : (skip ? describe.skip : describe);
       describeScenario(`dialog: "${scenario}"`, () => {
         before(() => {
           // mock requests to IA
@@ -225,7 +225,7 @@ describe('integration', () => {
           }
 
           it(message.join(' and '), () => {
-            let requestWasTriggered = {};
+            const requestWasTriggered = {};
             if (assistant && assistant.request) {
               assistant.request.forEach(
                 ({ url, res }) => {

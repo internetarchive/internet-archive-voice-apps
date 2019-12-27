@@ -84,7 +84,7 @@ module.exports = (rules = defaultRule) => ctx => {
   const newSlots = {};
   let hasChanged = false;
   const { newValues, slots = {} } = ctx;
-  for (let [slotName, originalValue] of Object.entries(newValues)) {
+  for (const [slotName, originalValue] of Object.entries(newValues)) {
     const slotRules = rules[slotName];
 
     let reducer = doNothing;

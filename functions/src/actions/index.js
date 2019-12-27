@@ -80,7 +80,7 @@ function fromJSON (json) {
         (app) => {
           // TODO: we should build action only once
           const module = require(handlerPath);
-          if (typeof module['build'] !== 'function') {
+          if (typeof module.build !== 'function') {
             throw new MissedHandlerBuildError();
           }
           const handlerObject = module.build(scheme);

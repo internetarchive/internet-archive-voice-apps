@@ -69,7 +69,7 @@ class Extensions {
     // TODO: maybe we should use require.resolve here?
     const extension = this._getByName(name);
     if (!extension) {
-      warning(`can't find module:`, name);
+      warning('can\'t find module:', name);
     }
     return extension;
   }

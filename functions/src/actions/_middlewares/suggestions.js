@@ -19,11 +19,11 @@ module.exports = ({ exclude = [] } = {}) => (ctx) => {
   debug('start');
   const { app, slots, suggestionsScheme } = ctx;
   if (!suggestionsScheme) {
-    warning(`skip middleware becase we don't have any suggestion scheme here`);
+    warning('skip middleware becase we don\'t have any suggestion scheme here');
     return Promise.resolve(ctx);
   }
 
-  let suggestions = suggestionsScheme.suggestions;
+  const suggestions = suggestionsScheme.suggestions;
 
   if (suggestions) {
     debug('have static suggestions', suggestions);

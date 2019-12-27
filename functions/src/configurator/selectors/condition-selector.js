@@ -7,7 +7,7 @@ function safieMathEval (condition, context) {
   try {
     return math.eval(condition, context);
   } catch (error) {
-    debug(`Get error from Math.js:`, error && error.message);
+    debug('Get error from Math.js:', error && error.message);
     return false;
   }
 }

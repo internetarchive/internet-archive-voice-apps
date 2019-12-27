@@ -17,7 +17,7 @@ module.exports = () => ctx => {
   debug(`we have [${slotScheme.slots}] to check`);
   newValues = slotScheme.slots
     .reduce((newValues, slotName) => {
-      let value = app.params.getByName(slotName);
+      const value = app.params.getByName(slotName);
       if (value) {
         newValues[slotName] = value;
       }

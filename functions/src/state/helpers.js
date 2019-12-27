@@ -54,7 +54,7 @@ module.exports = {
       }
 
       if (app === undefined) {
-        throw new Error(`Missed 'app' to get state`);
+        throw new Error('Missed \'app\' to get state');
       }
 
       return app.persist.getData(name) || defaults;
@@ -73,7 +73,7 @@ module.exports = {
       }
 
       if (app === undefined) {
-        throw new Error(`Missed 'app' to set state`);
+        throw new Error('Missed \'app\' to set state');
       }
 
       return app.persist.setData(name, value);
