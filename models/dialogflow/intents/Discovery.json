@@ -14,10 +14,12 @@
       "speech": []
     }
   ],
-  "priority": 0,
+  "priority": -1,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1523288285,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

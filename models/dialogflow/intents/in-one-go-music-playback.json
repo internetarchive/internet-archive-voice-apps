@@ -1,7 +1,7 @@
 {
   "id": "0ce279d8-6f4f-4c59-9215-db7aa5b2bcea",
   "name": "in-one-go-music-playback",
-  "auto": false,
+  "auto": true,
   "contexts": [],
   "responses": [
     {
@@ -15,6 +15,10 @@
           "dataType": "@order",
           "name": "order",
           "value": "$order",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -23,6 +27,10 @@
           "dataType": "@creators",
           "name": "creator",
           "value": "$creator",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -31,6 +39,10 @@
           "dataType": "@genres",
           "name": "subject",
           "value": "$subject",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -39,6 +51,10 @@
           "dataType": "@collections",
           "name": "collectionId",
           "value": "$collectionId",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -47,6 +63,10 @@
           "dataType": "@sys.geo-city",
           "name": "coverage",
           "value": "$coverage",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -55,6 +75,10 @@
           "dataType": "@sys.number-integer",
           "name": "year",
           "value": "$year",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         }
       ],
@@ -62,6 +86,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -72,7 +97,9 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1543932495,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

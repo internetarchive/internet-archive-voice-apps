@@ -13,6 +13,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": "Sorry, Unable to understand your request."
         }
       ],
@@ -23,7 +24,9 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1542833074,
   "fallbackIntent": true,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

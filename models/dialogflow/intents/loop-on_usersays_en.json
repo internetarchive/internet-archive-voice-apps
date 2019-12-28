@@ -1,6 +1,6 @@
 [
   {
-    "id": "c94f7944-6e0a-4975-bf39-b02e0247b13f",
+    "id": "0b0f3312-1eff-416a-b370-c80cee2ba0d5",
     "data": [
       {
         "text": "keep playing this",
@@ -9,22 +9,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1542205069
+    "updated": 0
   },
   {
-    "id": "afa37341-ebc9-4b13-aa5a-ba6d0fbeab71",
-    "data": [
-      {
-        "text": "repeat",
-        "userDefined": false
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 1542205069
-  },
-  {
-    "id": "c4e8e7ee-1e06-4cae-a051-89fb2a5f5d29",
+    "id": "bf8ba851-e89e-4bd4-a9c4-ccc5a4681173",
     "data": [
       {
         "text": "loop",
@@ -43,6 +31,6 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1542205069
+    "updated": 0
   }
 ]

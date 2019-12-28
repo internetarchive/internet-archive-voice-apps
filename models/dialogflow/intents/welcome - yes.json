@@ -17,6 +17,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": "You need to select 78s or Live Concerts"
         }
       ],
@@ -27,7 +28,9 @@
   "priority": 250000,
   "webhookUsed": false,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1522451601,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

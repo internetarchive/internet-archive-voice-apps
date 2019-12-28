@@ -11,9 +11,14 @@
       "parameters": [
         {
           "id": "e0368b4e-cbca-4656-a9e8-b43f38db931b",
+          "required": false,
           "dataType": "@media-types",
           "name": "media-types",
           "value": "$media-types",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         }
       ],
@@ -21,6 +26,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -31,7 +37,9 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1542128740,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

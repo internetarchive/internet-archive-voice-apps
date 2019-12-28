@@ -1,7 +1,7 @@
 {
   "id": "dd807f59-6f61-4c86-944c-b072d4b85b9a",
   "name": "music-query",
-  "auto": true,
+  "auto": false,
   "contexts": [],
   "responses": [
     {
@@ -21,6 +21,10 @@
           "dataType": "@collections",
           "name": "collectionId",
           "value": "$collectionId",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -29,6 +33,10 @@
           "dataType": "@sys.number",
           "name": "year",
           "value": "$year",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -37,6 +45,10 @@
           "dataType": "@sys.geo-city",
           "name": "coverage",
           "value": "$coverage",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -45,6 +57,10 @@
           "dataType": "@genres",
           "name": "subject",
           "value": "$subject",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -53,6 +69,10 @@
           "dataType": "@creators",
           "name": "creator",
           "value": "$creator",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         },
         {
@@ -61,6 +81,10 @@
           "dataType": "@order",
           "name": "order",
           "value": "$order",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
           "isList": false
         }
       ],
@@ -68,6 +92,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -78,7 +103,9 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1545170488,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

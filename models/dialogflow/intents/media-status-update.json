@@ -13,6 +13,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": "Failed to get media status."
         }
       ],
@@ -23,11 +24,13 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1539699216,
   "fallbackIntent": false,
   "events": [
     {
       "name": "actions_intent_MEDIA_STATUS"
     }
-  ]
+  ],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

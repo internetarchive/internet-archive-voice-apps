@@ -1,8 +1,8 @@
 [
   {
-    "value": "track",
+    "value": "record",
     "synonyms": [
-      "track"
+      "record"
     ]
   },
   {
@@ -12,9 +12,9 @@
     ]
   },
   {
-    "value": "record",
+    "value": "track",
     "synonyms": [
-      "record"
+      "track"
     ]
   }
 ]

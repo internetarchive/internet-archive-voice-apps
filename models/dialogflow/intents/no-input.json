@@ -13,6 +13,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -23,11 +24,13 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1519390427,
   "fallbackIntent": false,
   "events": [
     {
       "name": "actions_intent_NO_INPUT"
     }
-  ]
+  ],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

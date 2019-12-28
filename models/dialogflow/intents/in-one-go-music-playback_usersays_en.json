@@ -1,23 +1,424 @@
 [
   {
-    "id": "668a7754-7e58-4967-bb29-2c462faab77f",
+    "id": "fbc3f139-2d5c-412e-953a-79fee422ceb1",
     "data": [
       {
-        "text": "yes please play the hollies songs ",
+        "text": "play ",
         "userDefined": false
       },
       {
-        "text": "from the 70s",
+        "text": "unlocked",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "music",
         "meta": "@sys.ignore",
         "userDefined": false
       }
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1543932495
+    "updated": 0
   },
   {
-    "id": "d15eefba-4862-4505-a3b3-bce83a8553df",
+    "id": "914a7a9c-31f5-4a2b-b5be-06e79ee8887e",
+    "data": [
+      {
+        "text": "listen to ",
+        "userDefined": false
+      },
+      {
+        "text": "instrumental",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "166ed5fb-a62e-49eb-a687-7594fb1fd498",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " music for me",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e5ced748-6bad-4132-a463-231881c167b7",
+    "data": [
+      {
+        "text": "play me ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "eeb2fda4-4cc9-449c-a968-00b4ac62437e",
+    "data": [
+      {
+        "text": "play in order ",
+        "userDefined": false
+      },
+      {
+        "text": "concerts",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "mountainview",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ca",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "8800460d-1cc1-4334-9dba-28d7b81a60af",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "concerts",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": false
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "nyc",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "ny",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "cbd08357-e9f6-440f-888a-acb4114b007a",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "unlocked recordings",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "6522d846-299a-456e-8f20-85ea551d83ac",
+    "data": [
+      {
+        "text": "listen to classic ",
+        "userDefined": false
+      },
+      {
+        "text": "rock and roll",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "73de9688-08f2-4695-94ea-199bcd85e67b",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "1923",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4eac2b07-a051-404e-8723-907ecba296ec",
+    "data": [
+      {
+        "text": "play music of ",
+        "userDefined": false
+      },
+      {
+        "text": "2018",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e721b34c-a235-444e-8c19-0412bb09a5a9",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "me",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " music and turn it up so I can actually ",
+        "userDefined": false
+      },
+      {
+        "text": "hear",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " it",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "291abc78-c2ad-4df0-bde4-05b99f3c2d3d",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "2018",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      },
+      {
+        "text": " year",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "51e8e3f3-0fd5-4e7a-8823-0e63087e4ddf",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "2018",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "fa179205-a350-4e2f-bef8-7ad3fc290494",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "edb86d9e-c4a2-4266-94e3-9c33f16660b2",
+    "data": [
+      {
+        "text": "just play it ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "879317ba-de90-4d5f-99aa-2b8b4af11faa",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Xmas",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "dc0ae6d4-bdbe-4979-b0f2-5f5fc4a40bdf",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Christmas",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5d87af9e-45db-4d7b-89e3-15129943bee6",
     "data": [
       {
         "text": "play some ",
@@ -42,10 +443,10 @@
     ],
     "isTemplate": false,
     "count": 1,
-    "updated": 1543932495
+    "updated": 0
   },
   {
-    "id": "6f14f6d5-b0e8-4426-ae5d-44e5706e37ed",
+    "id": "48051a3f-cb34-4b0d-ab96-baf566fcb9aa",
     "data": [
       {
         "text": "play music",
@@ -57,7 +458,7 @@
     "updated": 0
   },
   {
-    "id": "5ef37fba-7509-4a99-89a3-bced4b6fa31f",
+    "id": "1d0fb580-5c18-4159-a503-ff9bab680283",
     "data": [
       {
         "text": "play",
@@ -69,25 +470,7 @@
     "updated": 0
   },
   {
-    "id": "c1999b9e-3718-42ff-a59e-0eaf5f96e8ae",
-    "data": [
-      {
-        "text": "play something from ",
-        "userDefined": false
-      },
-      {
-        "text": "278",
-        "alias": "year",
-        "meta": "@sys.number-integer",
-        "userDefined": false
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 0
-  },
-  {
-    "id": "4ea9abf8-5c7c-4ed3-9a7c-a832de17a38e",
+    "id": "f65b0804-7ce2-4e5f-b448-7ee626495ffc",
     "data": [
       {
         "text": "play ",
@@ -105,7 +488,7 @@
     "updated": 0
   },
   {
-    "id": "c7986ccf-3dd6-4851-8833-cab52725ef2b",
+    "id": "0f515a0f-95ff-4cce-b386-a324afa25f5b",
     "data": [
       {
         "text": "play ",
@@ -123,7 +506,35 @@
     "updated": 0
   },
   {
-    "id": "42272a20-c50d-4fa3-85b7-207ea73b399b",
+    "id": "f44e60d7-76c1-4b48-a0fc-384d26f37133",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "78",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "df74029f-c20b-4c22-a4a7-dc63beb42f1c",
     "data": [
       {
         "text": "play ",
@@ -141,7 +552,7 @@
     "updated": 0
   },
   {
-    "id": "9cce7f8c-b3f2-4c26-9b99-3daba5aa415b",
+    "id": "517ce42d-9ead-486d-98a9-6f08643cff49",
     "data": [
       {
         "text": "play ",
@@ -159,7 +570,7 @@
     "updated": 0
   },
   {
-    "id": "ab39ebb7-d761-43c3-a346-e6da3816391d",
+    "id": "3c516e1b-2f72-49d4-9d37-894792eb6665",
     "data": [
       {
         "text": "play ",
@@ -177,7 +588,7 @@
     "updated": 0
   },
   {
-    "id": "6e855711-19c2-4b98-b4fa-a84c84dad572",
+    "id": "4b534ed6-f81c-45a4-a39b-c950aa9ded66",
     "data": [
       {
         "text": "randomly",
@@ -211,7 +622,7 @@
     "updated": 0
   },
   {
-    "id": "1de637d1-e9a5-4bae-beb4-fd09894b7f19",
+    "id": "17e9bd62-8fde-42ab-91d3-709483a7ce2f",
     "data": [
       {
         "text": "ask internet archive ",
@@ -249,10 +660,10 @@
     "updated": 0
   },
   {
-    "id": "16155128-c0aa-43a6-a086-be4015e8ca23",
+    "id": "a7cb2158-f180-4f7f-b00d-04d4887f033e",
     "data": [
       {
-        "text": "Oscar",
+        "text": "ask",
         "meta": "@sys.ignore",
         "userDefined": false
       },
@@ -282,7 +693,7 @@
     "updated": 0
   },
   {
-    "id": "2e6aacf1-2ed9-414d-a467-9a45fc1bb63a",
+    "id": "ebe83155-d3a1-4ee5-b23d-82fd3de31e95",
     "data": [
       {
         "text": "play ",
@@ -300,7 +711,7 @@
     "updated": 0
   },
   {
-    "id": "4481c6f0-f88f-4c9d-98de-7cbb4c893869",
+    "id": "d4d6e6b3-a0c1-4b9e-b739-abfab224abd5",
     "data": [
       {
         "text": "play ",
@@ -318,7 +729,7 @@
     "updated": 0
   },
   {
-    "id": "62ac249f-5423-468f-870d-c7cfcc0aeebe",
+    "id": "35633a38-8d6c-41a8-b109-3d771b45218b",
     "data": [
       {
         "text": "ask the internet archive to ",
@@ -356,7 +767,45 @@
     "updated": 0
   },
   {
-    "id": "d728c4d2-4ff0-4424-91cb-7a195b64cc1f",
+    "id": "779745d6-a3f8-44ad-b8a8-5bf0540913d3",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "Vancouver",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "44514320-06bc-481e-b99a-c47af242ea5e",
     "data": [
       {
         "text": "I don\u0027t know pick one",
@@ -368,7 +817,7 @@
     "updated": 0
   },
   {
-    "id": "aa3f42ff-c17c-45e4-99d9-afede443646d",
+    "id": "d166b140-874a-4271-89a8-5c85d1d21eb2",
     "data": [
       {
         "text": "hey Google the ",
@@ -390,7 +839,7 @@
     "updated": 0
   },
   {
-    "id": "46caf6fd-1710-406d-992d-5811127983b5",
+    "id": "792a5b10-a428-44c1-b667-694c8599ee3d",
     "data": [
       {
         "text": "play ",
@@ -409,10 +858,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1521327086
+    "updated": 0
   },
   {
-    "id": "83afd9e4-2c87-4357-a5cc-d0d11fd656c7",
+    "id": "fe8ad642-4566-4274-a9fe-009ef3ad6a43",
     "data": [
       {
         "text": "play ",
@@ -437,10 +886,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "181696ea-91e4-4b84-bbb0-498a59e0cb80",
+    "id": "62fcc83e-93ff-4c21-ae2f-29c87f4c9e7a",
     "data": [
       {
         "text": "all",
@@ -471,10 +920,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "5a929cb8-0ebf-4047-94a9-9abe6542b493",
+    "id": "5b58f67d-3fa2-4c9d-b81c-33e361acf4b2",
     "data": [
       {
         "text": "play ",
@@ -499,10 +948,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "e647fab5-016c-42f1-adc5-0463d08874a2",
+    "id": "4d00e3ad-fe52-47e7-b240-602eeaec1735",
     "data": [
       {
         "text": "randomly",
@@ -536,7 +985,7 @@
     "updated": 0
   },
   {
-    "id": "e8af4ed0-2548-46a8-a773-1d778638ca96",
+    "id": "b58a4425-a848-414e-95bd-05c846de7321",
     "data": [
       {
         "text": "randomly",
@@ -570,7 +1019,7 @@
     "updated": 0
   },
   {
-    "id": "4ae80b1d-d717-4f3f-a7d1-89cf8463b83a",
+    "id": "4c5d57db-fb99-4a0d-b19b-a58e8673f504",
     "data": [
       {
         "text": "play ",
@@ -595,10 +1044,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "9ca0643a-3a38-434b-99e4-eddda070708f",
+    "id": "65dbeb83-a583-450f-af60-693e867c4a5d",
     "data": [
       {
         "text": "play ",
@@ -615,7 +1064,7 @@
         "userDefined": false
       },
       {
-        "text": "Brooklyn",
+        "text": "Rome",
         "alias": "coverage",
         "meta": "@sys.geo-city",
         "userDefined": true
@@ -623,10 +1072,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "61297716-312d-4f74-8030-762159a6271d",
+    "id": "2a1d7a6b-dd35-4cd3-9a27-27b5067b089b",
     "data": [
       {
         "text": "play ",
@@ -651,17 +1100,17 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "3c60d1c7-2758-4236-b732-7b1dcd46106f",
+    "id": "55c34788-f531-437f-8b49-100b2aa589f1",
     "data": [
       {
         "text": "play ",
         "userDefined": false
       },
       {
-        "text": "Ramones",
+        "text": "Radiators",
         "alias": "creator",
         "meta": "@creators",
         "userDefined": true
@@ -669,10 +1118,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "d19aaeeb-a0e9-4e59-8e48-2569945d2ed0",
+    "id": "8e7b9b95-22ab-4f85-aba2-d137c3055aeb",
     "data": [
       {
         "text": "play ",
@@ -697,10 +1146,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "56c824c5-597d-4d80-ac9c-c5f957072ba9",
+    "id": "3ac8589c-30b5-4647-9ed9-ae92edef437e",
     "data": [
       {
         "text": "Listen to ",
@@ -717,7 +1166,7 @@
         "userDefined": false
       },
       {
-        "text": "Story Corps",
+        "text": "Radiators",
         "alias": "creator",
         "meta": "@creators",
         "userDefined": false
@@ -725,10 +1174,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "f883cb67-784e-4361-a9b2-c5734b34a9ba",
+    "id": "969c9330-2656-41db-ac3d-a6546faf1d28",
     "data": [
       {
         "text": "play ",
@@ -753,10 +1202,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1521327086
+    "updated": 0
   },
   {
-    "id": "cacd41ef-6d80-494a-910c-3ccfaa2748cc",
+    "id": "7da0efd8-dfe2-4703-b8f8-001e215331dd",
     "data": [
       {
         "text": "play ",
@@ -781,10 +1230,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "c5ede247-4927-465b-a174-45728228fab3",
+    "id": "650e0079-2ece-4c28-8c8a-7bf8837ecfb3",
     "data": [
       {
         "text": "search the ",
@@ -809,10 +1258,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "00d735a8-d4e0-4086-8a47-fdf87531eb9a",
+    "id": "4f0cfeb0-717d-4277-9ee4-a498fc2ddc20",
     "data": [
       {
         "text": "hey Google ask the internet archive to ",
@@ -840,7 +1289,7 @@
     "updated": 0
   },
   {
-    "id": "caa79fc3-79fe-4c56-84f0-ebddb3a61d8f",
+    "id": "d3affcff-a812-4323-b89a-6974397d31e6",
     "data": [
       {
         "text": "play ",
@@ -865,10 +1314,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "ca513c1c-e3f5-4d5b-9ac3-db3fcfe6f375",
+    "id": "34480b15-6d3d-47d1-bb96-b44dea61e182",
     "data": [
       {
         "text": "Ask Internet Archive to play ",
@@ -885,7 +1334,7 @@
         "userDefined": false
       },
       {
-        "text": "Washington",
+        "text": "Rome",
         "alias": "coverage",
         "meta": "@sys.geo-city",
         "userDefined": true
@@ -906,7 +1355,35 @@
     "updated": 0
   },
   {
-    "id": "c4278006-aafc-488a-a6a6-0b667cce685b",
+    "id": "b0fcfcce-a543-4f7b-bdde-ad3f238100f4",
+    "data": [
+      {
+        "text": "ask the Internet Archive to ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "Unlocked Recordings",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e782aca0-2eb4-4552-9227-7841abd97ce5",
     "data": [
       {
         "text": "play something ",
@@ -921,10 +1398,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "40870aed-482a-487c-9686-e0ce46d6ba99",
+    "id": "3d28eba9-7284-437e-9ff7-21ded0cbb1d6",
     "data": [
       {
         "text": "play ",
@@ -949,10 +1426,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "b88a0a9f-8519-4f0c-8ffb-cb5d678b8f44",
+    "id": "56517dc2-c897-406d-8e7b-71d3af874ba3",
     "data": [
       {
         "text": "play ",
@@ -967,10 +1444,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "097384e2-465c-4cf2-92af-70f01787219d",
+    "id": "43e44648-2d0c-47ee-a770-3dc1baf8da14",
     "data": [
       {
         "text": "play ",
@@ -989,10 +1466,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "ab2f7caf-daf1-4129-998b-dddfc948bf67",
+    "id": "fd2d76ad-16e0-4f33-8870-bab25513d0a0",
     "data": [
       {
         "text": "ask the internet archive to ",
@@ -1017,10 +1494,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "5308d024-038b-4a10-9a8c-316adffb893d",
+    "id": "424b02e8-dfe3-4616-922d-c719af984374",
     "data": [
       {
         "text": "play ",
@@ -1045,10 +1522,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "68becf02-64d8-47ff-8e8e-944819623c35",
+    "id": "71903b1e-fd28-456e-b62f-7588b580c4b3",
     "data": [
       {
         "text": "78s",
@@ -1069,10 +1546,34 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "c07c73c9-1593-49f1-a267-f256f5569dd3",
+    "id": "bbbd4fcd-ff13-4512-ab2c-3267090ed8f7",
+    "data": [
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "Radiators",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "86160616-9fc0-47a8-a7a8-f89ada388c3c",
     "data": [
       {
         "text": "I want to listen songs",
@@ -1084,7 +1585,7 @@
     "updated": 0
   },
   {
-    "id": "89f2049d-187d-4c70-ad66-c6789ca9ddd2",
+    "id": "3e0ae10d-3136-43a7-a231-c1dd8bd1fd07",
     "data": [
       {
         "text": "play collection ",
@@ -1119,10 +1620,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1523896014
+    "updated": 0
   },
   {
-    "id": "dc3d413f-23be-49c1-9815-c6bd95f2d92a",
+    "id": "abb57eda-7a7b-4902-8ac5-c7ff38dc8bba",
     "data": [
       {
         "text": "randomly",
@@ -1131,11 +1632,11 @@
         "userDefined": true
       },
       {
-        "text": " play ",
+        "text": " play the ",
         "userDefined": false
       },
       {
-        "text": "the Cowboy Junkies",
+        "text": "Cowboy Junkies",
         "alias": "creator",
         "meta": "@creators",
         "userDefined": true
@@ -1143,10 +1644,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "55cf9a7c-8373-4298-9ee0-7c97a5e5ba46",
+    "id": "0fd237f6-ce62-4f53-8542-edecb3e33682",
     "data": [
       {
         "text": "play ",
@@ -1171,10 +1672,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "0e7ac901-8fd1-407b-8d87-788116baf789",
+    "id": "5d83c4f9-a096-4844-8d59-a00abf4d0c64",
     "data": [
       {
         "text": "randomly",
@@ -1195,10 +1696,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "06f689f3-c908-4539-a776-cb2fe86c7355",
+    "id": "31790648-b134-41d0-b8d5-49e3ed6a3ff0",
     "data": [
       {
         "text": "play ",
@@ -1223,10 +1724,38 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "0953f904-a51a-4cb9-9d8f-a9c43ad56955",
+    "id": "5cc7cb59-02c8-40cb-b53a-f44d78aef7cd",
+    "data": [
+      {
+        "text": "Randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " play ",
+        "userDefined": false
+      },
+      {
+        "text": "Christmas",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " Music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "64c879c7-91cf-4ec3-a258-1f51d359d857",
     "data": [
       {
         "text": "let\u0027s play ",
@@ -1241,10 +1770,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1523896014
+    "updated": 0
   },
   {
-    "id": "20928247-09e9-465a-bc0d-f67440709254",
+    "id": "d11d25f9-69e6-4f3c-a5e1-3ce94ef83965",
     "data": [
       {
         "text": "play ",
@@ -1259,44 +1788,55 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "eb93ebf8-63f5-4848-82ef-49412dd71fc9",
+    "id": "4dbc6f2b-964a-4036-8bb3-b42339e491cb",
     "data": [
       {
-        "text": "randomly",
-        "alias": "order",
-        "meta": "@order",
-        "userDefined": true
-      },
-      {
-        "text": " play ",
+        "text": "play ",
         "userDefined": false
       },
       {
-        "text": "jazz",
+        "text": "Ukrainian",
         "alias": "subject",
         "meta": "@genres",
         "userDefined": true
+      },
+      {
+        "text": " music",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "cc2814dc-0dc0-466b-bd1f-b4de5e11578a",
+    "data": [
+      {
+        "text": "play",
+        "meta": "@sys.ignore",
+        "userDefined": false
       },
       {
         "text": " ",
         "userDefined": false
       },
       {
-        "text": "78s",
-        "alias": "collectionId",
-        "meta": "@collections",
+        "text": "New York",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
         "userDefined": true
       }
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "24862241-f945-44d5-8dd6-0ceec8e744c8",
+    "id": "de91770b-6fc9-4014-9395-5ded7f1753b8",
     "data": [
       {
         "text": "play internet archive ",
@@ -1320,132 +1860,18 @@
       }
     ],
     "isTemplate": false,
-    "count": 0,
-    "updated": 1528051573
-  },
-  {
-    "id": "b89a6972-72cf-4b7a-81da-5070eb0775e7",
-    "data": [
-      {
-        "text": "play ",
-        "userDefined": false
-      },
-      {
-        "text": "Grateful Dead",
-        "alias": "creator",
-        "meta": "@creators",
-        "userDefined": true
-      },
-      {
-        "text": " ",
-        "userDefined": false
-      },
-      {
-        "text": "Washington",
-        "alias": "coverage",
-        "meta": "@sys.geo-city",
-        "userDefined": true
-      },
-      {
-        "text": " ",
-        "userDefined": false
-      },
-      {
-        "text": "1973",
-        "alias": "year",
-        "meta": "@sys.number-integer",
-        "userDefined": true
-      }
-    ],
-    "isTemplate": false,
     "count": 1,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "d47f13cb-333e-4702-9f97-cd03acb6190a",
-    "data": [
-      {
-        "text": "randomly",
-        "alias": "order",
-        "meta": "@order",
-        "userDefined": true
-      },
-      {
-        "text": " search ",
-        "userDefined": false
-      },
-      {
-        "text": "Grateful Dead",
-        "alias": "creator",
-        "meta": "@creators",
-        "userDefined": true
-      }
-    ],
-    "isTemplate": false,
-    "count": 2,
-    "updated": 1528051573
-  },
-  {
-    "id": "310cb045-3be2-4ac5-8f83-78039edba41f",
-    "data": [
-      {
-        "text": "randomly",
-        "alias": "order",
-        "meta": "@order",
-        "userDefined": true
-      },
-      {
-        "text": " search the ",
-        "userDefined": false
-      },
-      {
-        "text": "Grateful Dead",
-        "alias": "creator",
-        "meta": "@creators",
-        "userDefined": true
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 1528051573
-  },
-  {
-    "id": "89e7e69b-8b14-44ba-9767-1f31c697a654",
-    "data": [
-      {
-        "text": "search ",
-        "userDefined": false
-      },
-      {
-        "text": "Grateful Dead",
-        "alias": "creator",
-        "meta": "@creators",
-        "userDefined": false
-      },
-      {
-        "text": " ",
-        "userDefined": false
-      },
-      {
-        "text": "randomly",
-        "alias": "order",
-        "meta": "@order",
-        "userDefined": true
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 1523896014
-  },
-  {
-    "id": "9ba97e4a-ee45-4d0e-aea1-0a3e9e0443f8",
+    "id": "500e66fe-f2a4-4242-9044-14dfe810a92e",
     "data": [
       {
         "text": "hey Google play band ",
         "userDefined": false
       },
       {
-        "text": "Ramones",
+        "text": "Radiators",
         "alias": "creator",
         "meta": "@creators",
         "userDefined": true
@@ -1453,10 +1879,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "e994fc60-6634-4f8a-b3cf-bd5a71287ce2",
+    "id": "4d9cfa88-58da-45b0-b44a-2f7edca6c433",
     "data": [
       {
         "text": "randomly",
@@ -1480,14 +1906,24 @@
     "updated": 0
   },
   {
-    "id": "d27c0960-360c-4950-9632-e7e0f827d890",
+    "id": "aa07b861-d378-4fc4-8a58-5437829874b5",
     "data": [
       {
-        "text": "play concerts from ",
+        "text": "play ",
         "userDefined": false
       },
       {
-        "text": "Brooklyn, NY",
+        "text": "concerts",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "Rome",
         "alias": "coverage",
         "meta": "@sys.geo-city",
         "userDefined": true
@@ -1495,10 +1931,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "6920d88d-78a3-4fef-8f6c-436f8c4cccf9",
+    "id": "98248ebd-fc91-4340-9545-247b339cf8e4",
     "data": [
       {
         "text": "play ",
@@ -1523,10 +1959,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "3ecc0ce9-34c0-4a7c-bac5-781f74413165",
+    "id": "6ed36c56-053d-49dc-9f34-af56eb7c61a7",
     "data": [
       {
         "text": "play ",
@@ -1545,10 +1981,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "c7e3863c-30ff-4978-9545-668d37c737e4",
+    "id": "e17b41e5-124b-459f-be54-1da0436d995f",
     "data": [
       {
         "text": "randomly",
@@ -1579,10 +2015,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "78655c82-b02b-4bcd-be2b-a017e90b305b",
+    "id": "aaa4c306-31e3-4510-86dc-eeca688cb4b8",
     "data": [
       {
         "text": "play the ",
@@ -1607,10 +2043,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "156039bb-8524-4c02-8beb-7babe313b06e",
+    "id": "a6e6e7fe-773f-4620-8047-d7f262198cbb",
     "data": [
       {
         "text": "randomly",
@@ -1631,10 +2067,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   },
   {
-    "id": "7fe046be-02b6-4357-9edf-e5e30408eb24",
+    "id": "25cafacc-2727-4314-97ec-216fc3d5ddae",
     "data": [
       {
         "text": "play me some of them ",
@@ -1653,6 +2089,6 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1528051573
+    "updated": 0
   }
 ]

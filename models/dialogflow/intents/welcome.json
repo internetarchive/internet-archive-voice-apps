@@ -19,6 +19,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -29,7 +30,6 @@
   "priority": 500000,
   "webhookUsed": true,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1524246293,
   "fallbackIntent": false,
   "events": [
     {
@@ -38,5 +38,8 @@
     {
       "name": "GOOGLE_ASSISTANT_WELCOME"
     }
-  ]
+  ],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

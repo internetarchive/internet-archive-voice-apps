@@ -3,5 +3,7 @@
   "name": "creators",
   "isOverridable": true,
   "isEnum": false,
-  "automatedExpansion": false
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
 }

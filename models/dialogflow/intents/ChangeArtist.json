@@ -13,6 +13,7 @@
         {
           "type": 0,
           "lang": "en",
+          "condition": "",
           "speech": []
         }
       ],
@@ -20,10 +21,12 @@
       "speech": []
     }
   ],
-  "priority": 0,
+  "priority": -1,
   "webhookUsed": false,
   "webhookForSlotFilling": false,
-  "lastUpdate": 1523288276,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }

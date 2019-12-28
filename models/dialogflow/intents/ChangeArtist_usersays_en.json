@@ -1,6 +1,6 @@
 [
   {
-    "id": "b2952b09-76fe-41df-9326-f5c725293241",
+    "id": "b650d439-182c-45ba-80ef-b04ee6d4af8f",
     "data": [
       {
         "text": "Play another artist",
@@ -9,10 +9,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1518306736
+    "updated": 0
   },
   {
-    "id": "db894d33-ddd6-4693-99fb-21bc61dd87d1",
+    "id": "4112944e-6ebf-40fc-8217-24f567d15d27",
     "data": [
       {
         "text": "change artist",
@@ -21,10 +21,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1518306736
+    "updated": 0
   },
   {
-    "id": "1e07b356-0c14-4519-b2c8-9bb5818a02d7",
+    "id": "d7e90be5-f75c-4347-9f02-5757a0b23a8a",
     "data": [
       {
         "text": "play a different artist",
@@ -33,10 +33,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1518306736
+    "updated": 0
   },
   {
-    "id": "1c61e2f1-62ce-4ec4-a20b-900c4f576843",
+    "id": "cb2f3f05-9a94-4ef6-8df9-a004f206bcf5",
     "data": [
       {
         "text": "another artist",
@@ -45,10 +45,10 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1518306736
+    "updated": 0
   },
   {
-    "id": "7445183f-34d7-4259-9c77-691425bd2ffe",
+    "id": "bf7ac4cf-e1f9-42bd-9cd8-b545b5d30e94",
     "data": [
       {
         "text": "different artist",
@@ -57,6 +57,6 @@
     ],
     "isTemplate": false,
     "count": 0,
-    "updated": 1518306736
+    "updated": 0
   }
 ]

@@ -1,33 +1,36 @@
 [
   {
+    "value": "natural",
+    "synonyms": [
+      "as in album",
+      "as in cd",
+      "as it is",
+      "by songs",
+      "in order",
+      "natural"
+    ]
+  },
+  {
+    "value": "random",
+    "synonyms": [
+      "all",
+      "any",
+      "random",
+      "randomly",
+      "some",
+      "best"
+    ]
+  },
+  {
     "value": "the latest episode",
     "synonyms": [
       "the latest episode"
     ]
   },
   {
-    "value": "natural",
-    "synonyms": [
-      "natural",
-      "as it is",
-      "in order",
-      "by songs",
-      "as in cd",
-      "as in album"
-    ]
-  },
-  {
-    "value": "random",
-    "synonyms": [
-      "randomly",
-      "random",
-      "any",
-      "all"
-    ]
-  },
-  {
     "value": "best",
     "synonyms": [
+      "best",
       "the best",
       "your choice"
     ]

@@ -1,19 +1,25 @@
 {
-  "id": "f2167db0-f3bb-458e-8027-6d1fd12cdd10",
+  "id": "4f081c32-08c7-4716-998f-d857c28fcfe2",
   "name": "recommend",
   "auto": true,
   "contexts": [],
   "responses": [
     {
       "resetContexts": false,
-      "action": "recommend",
       "affectedContexts": [],
       "parameters": [],
       "messages": [
         {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": "What about Grateful Dead or The Cowboy Junkies. If you want to listen to more songs, then you can choose from Live Concerts, Christmas Music and 78 rpm songs and I will play the right music for you."
+        },
+        {
           "type": "suggestion_chips",
           "platform": "google",
           "lang": "en",
+          "condition": "",
           "suggestions": [
             {
               "title": "78s"
@@ -31,11 +37,6 @@
               "title": "play The Cowboy Junkies"
             }
           ]
-        },
-        {
-          "type": 0,
-          "lang": "en",
-          "speech": "What about Grateful Dead or The Cowboy Junkies. If you want to listen to more songs you can select from 78s, Live Concerts or Christmas Music."
         }
       ],
       "defaultResponsePlatforms": {
@@ -45,8 +46,11 @@
     }
   ],
   "priority": 500000,
-  "webhookUsed": false,
+  "webhookUsed": true,
   "webhookForSlotFilling": false,
   "fallbackIntent": false,
-  "events": []
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
 }
