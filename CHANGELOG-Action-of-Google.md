@@ -2,7 +2,7 @@
 
 ## v26
 
-- support phrases: "play <collection> music" and "<collection> music"
+- support phrases: `"play <collection> music"` and `"<collection> music"`
 
 ## v22
 
