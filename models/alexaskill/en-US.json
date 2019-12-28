@@ -117,6 +117,7 @@
                         }
                     ],
                     "samples": [
+                        "play {COLLECTION_ID} music",
                         "play {COLLECTION_ID}",
                         "play {SUBJECT..IA}",
                         "can you play {SUBJECT} Music",
@@ -160,6 +161,9 @@
                         }
                     ],
                     "samples": [
+                        "choose {COLLECTION_ID} music",
+                        "select {COLLECTION_ID} music",
+                        "{COLLECTION_ID} music",
                         "choose {COLLECTION_ID}",
                         "select {COLLECTION_ID}",
                         "I want to listen to {COLLECTION_ID} music",

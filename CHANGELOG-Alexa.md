@@ -3,6 +3,10 @@
 Because Alexa doesn't give the way to add description to versions
 here will be the Changelog of them
 
+## v34
+
+- *fix*: support 
+
 ## v33
 
 - *fix*: rename "symphony" to "symphonies" 
