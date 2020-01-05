@@ -1,5 +1,9 @@
 # Changelog of Action of Google Scheme
 
+## v28
+
+- add synonym `"unlocked music"` to collections entity `"unlocked recordings"`
+
 ## v26
 
 - support phrases: `"play <collection> music"` and `"<collection> music"`
