@@ -1,5 +1,33 @@
 [
   {
+    "id": "e97fd78f-b669-4a32-b981-24f39f5730d5",
+    "data": [
+      {
+        "text": "ask internet archive to play ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
     "id": "fbc3f139-2d5c-412e-953a-79fee422ceb1",
     "data": [
       {

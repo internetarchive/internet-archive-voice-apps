@@ -248,18 +248,6 @@
     "updated": 0
   },
   {
-    "id": "a0943952-f762-4fa6-9709-9f079dbee415",
-    "data": [
-      {
-        "text": "Grateful Dead",
-        "userDefined": false
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 0
-  },
-  {
     "id": "f345949f-8c4a-4ab3-a066-fad0e965cece",
     "data": [
       {
@@ -362,6 +350,96 @@
         "text": "78s",
         "alias": "collectionId",
         "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "fc4dca2a-e8c0-4af9-9a03-b33ac869ac97",
+    "data": [
+      {
+        "text": "go for ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4ed3ae4b-9e83-4a13-bfd3-ff59fa97b875",
+    "data": [
+      {
+        "text": "pick ",
+        "userDefined": false
+      },
+      {
+        "text": "78s",
+        "alias": "collectionId",
+        "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "3e5c6b8e-b2ba-4d54-b9f2-cb9d18fa1659",
+    "data": [
+      {
+        "text": "pick ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d6977050-a975-4967-a122-11ee9637dba5",
+    "data": [
+      {
+        "text": "choose ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "55855ba4-7ca1-4b48-b637-3bb6919858d6",
+    "data": [
+      {
+        "text": "select ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
         "userDefined": true
       }
     ],

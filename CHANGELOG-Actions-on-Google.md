@@ -1,5 +1,9 @@
 # Changelog of Action of Google Scheme
 
+## v29
+
+- remove training phrase "Grateful Dead" without entity extracting
+
 ## v28
 
 - add synonym `"unlocked music"` to collections entity `"unlocked recordings"`
