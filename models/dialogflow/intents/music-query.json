@@ -86,6 +86,30 @@
           "noInputPromptMessages": [],
           "outputDialogContexts": [],
           "isList": false
+        },
+        {
+          "id": "5b260042-3966-4bb5-bd80-9661f7bf30ec",
+          "required": false,
+          "dataType": "@sys.geo-state",
+          "name": "coverage-state",
+          "value": "$coverage-state",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "edbe46be-f2bb-4190-af7e-1540e916487f",
+          "required": false,
+          "dataType": "@sys.geo-country",
+          "name": "coverage-country",
+          "value": "$coverage-country",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
         }
       ],
       "messages": [

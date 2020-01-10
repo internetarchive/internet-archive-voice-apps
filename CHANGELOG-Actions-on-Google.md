@@ -1,5 +1,9 @@
 # Changelog of Action of Google Scheme
 
+## v30
+
+- distinguish State or Country in media query request `"<city>, <state> <year>"` (e.g. "New York, NY, 2005")
+
 ## v29
 
 - remove training phrase "Grateful Dead" without entity extracting

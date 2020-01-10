@@ -184,6 +184,136 @@
     "updated": 0
   },
   {
+    "id": "f68d4ccf-ac57-4ea6-953e-f34159440072",
+    "data": [
+      {
+        "text": "Seattle",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "USA",
+        "alias": "coverage-country",
+        "meta": "@sys.geo-country",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2000",
+        "alias": "year",
+        "meta": "@sys.number",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "25ab1157-44f0-495f-a646-b82a54a0559b",
+    "data": [
+      {
+        "text": "Kyiv",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "Ukraine",
+        "alias": "coverage-country",
+        "meta": "@sys.geo-country",
+        "userDefined": true
+      },
+      {
+        "text": " 2000",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1ee5cbc0-fd48-4860-9ce8-3f6159caf1b7",
+    "data": [
+      {
+        "text": "Kyiv",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "Ukraine",
+        "alias": "coverage-country",
+        "meta": "@sys.geo-country",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2014",
+        "alias": "year",
+        "meta": "@sys.number",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "28abee50-4b41-4206-9ef5-417219a5081c",
+    "data": [
+      {
+        "text": "Chicago",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "Illinois",
+        "alias": "coverage-state",
+        "meta": "@sys.geo-state",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2005",
+        "alias": "year",
+        "meta": "@sys.number",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
     "id": "ce31f2c6-f977-43c7-b50a-d0f42116de40",
     "data": [
       {
