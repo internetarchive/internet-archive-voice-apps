@@ -3,6 +3,10 @@
 Because Alexa doesn't give the way to add description to versions
 here will be the Changelog of them
 
+## v40
+
+- *improve*: support request like: `"play unlocked symphonies"` (combination of collection and `GENRES_IA`)
+
 ## v34
 
 - *fix*: support 
