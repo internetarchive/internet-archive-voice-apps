@@ -28,33 +28,6 @@
     "updated": 0
   },
   {
-    "id": "fbc3f139-2d5c-412e-953a-79fee422ceb1",
-    "data": [
-      {
-        "text": "play ",
-        "userDefined": false
-      },
-      {
-        "text": "unlocked",
-        "alias": "collectionId",
-        "meta": "@collections",
-        "userDefined": true
-      },
-      {
-        "text": " ",
-        "userDefined": false
-      },
-      {
-        "text": "music",
-        "meta": "@sys.ignore",
-        "userDefined": false
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 0
-  },
-  {
     "id": "914a7a9c-31f5-4a2b-b5be-06e79ee8887e",
     "data": [
       {
@@ -179,24 +152,6 @@
         "text": "ny",
         "meta": "@sys.ignore",
         "userDefined": false
-      }
-    ],
-    "isTemplate": false,
-    "count": 0,
-    "updated": 0
-  },
-  {
-    "id": "cbd08357-e9f6-440f-888a-acb4114b007a",
-    "data": [
-      {
-        "text": "play ",
-        "userDefined": false
-      },
-      {
-        "text": "unlocked recordings",
-        "alias": "collectionId",
-        "meta": "@collections",
-        "userDefined": true
       }
     ],
     "isTemplate": false,
@@ -713,6 +668,34 @@
         "text": "jazz",
         "alias": "subject",
         "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c4486154-8bdc-497c-8c50-d5c751889cd1",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington, DC",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
         "userDefined": true
       }
     ],

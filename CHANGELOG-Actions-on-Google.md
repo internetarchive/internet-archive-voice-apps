@@ -1,5 +1,10 @@
 # Changelog of Action of Google Scheme
 
+## v31
+
+- rewired `"play <collection>"` from intent `"in-on-go-music-playback"` to `"music query"` (e.g. _"play unlocked music"_ does't start playback but ask about genre instead)
+- `"ask internet archive to help"` for "help" intent
+
 ## v30
 
 - distinguish State or Country in media query request `"<city>, <state> <year>"` (e.g. "New York, NY, 2005")
