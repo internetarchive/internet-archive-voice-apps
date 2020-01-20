@@ -117,9 +117,10 @@
                         }
                     ],
                     "samples": [
+                        "play {YEAR} songs",
+                        "play {ORDER_BY} {SUBJECT}",
+                        "play {SUBJECT} from {COLLECTION_ID}",
                         "play {COLLECTION_ID} {SUBJECT..IA}",
-                        "play {COLLECTION_ID} music",
-                        "play {COLLECTION_ID}",
                         "play {SUBJECT..IA}",
                         "can you play {SUBJECT} Music",
                         "play me {ORDER_BY} music",
@@ -162,6 +163,8 @@
                         }
                     ],
                     "samples": [
+                        "play {COLLECTION_ID}",
+                        "play {COLLECTION_ID} music",
                         "choose {COLLECTION_ID} music",
                         "select {COLLECTION_ID} music",
                         "{COLLECTION_ID} music",

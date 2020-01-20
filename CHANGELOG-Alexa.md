@@ -3,6 +3,10 @@
 Because Alexa doesn't give the way to add description to versions
 here will be the Changelog of them
 
+## v46
+
+- *improve*: rewired `"play <collection>"` from intent `"in-on-go-music-playback"` to `"music query"` (e.g. _"play unlocked music"_ does't start playback but ask about genre instead)
+
 ## v40
 
 - *improve*: support request like: `"play unlocked symphonies"` (combination of collection and `GENRES_IA`)
