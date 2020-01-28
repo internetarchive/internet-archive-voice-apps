@@ -851,12 +851,12 @@ module.exports = {
         acknowledges: [
           'Welcome to music at the Internet Archive.'
         ],
-        speech: 'Want to listen to 78s, live concerts, Unlocked Recordings or Christmas music?',
+        speech: 'Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?',
         suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
 
       yes: {
-        speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>live concerts, <break strength="weak"/>or Christmas music',
+        speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>Live concerts, <break strength="weak"/>or Christmas music',
         suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
     },

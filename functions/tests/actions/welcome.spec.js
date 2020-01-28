@@ -34,7 +34,7 @@ describe('actions', () => {
       expect(dialog.ask.args[0][1]).to.have.property('reprompt')
         .to.include('Want to listen to')
         .and.include('78s')
-        .and.include('live');
+        .and.include('Live');
     });
 
     it('should reset query slots', () => {

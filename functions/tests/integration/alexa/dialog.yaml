@@ -1,7 +1,7 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, live concerts, Unlocked Recordings or Christmas music?'
+  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
