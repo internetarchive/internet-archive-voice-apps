@@ -471,6 +471,110 @@
     "updated": 0
   },
   {
+    "id": "5e606145-5b06-4a3b-9e77-b8d30d66be7c",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " music from ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington, DC",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " from the year ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d36ba3dd-afbd-4344-abe4-9caba06f9471",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "randomly",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington, DC",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": true
+      },
+      {
+        "text": " in ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "8966b917-afee-4dd0-99d3-68a1969e5a88",
+    "data": [
+      {
+        "text": "play music from ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington, DC",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1973",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
     "id": "0f515a0f-95ff-4cce-b386-a324afa25f5b",
     "data": [
       {

@@ -1,5 +1,8 @@
 # Changelog of Action of Google Scheme
 
+## v34
+- remove `"yes"` intent after `"welcome"` intent, because we cover it in the app
+
 ## v31
 
 - rewired `"play <collection>"` from intent `"in-on-go-music-playback"` to `"music query"` (e.g. _"play unlocked music"_ does't start playback but ask about genre instead)
