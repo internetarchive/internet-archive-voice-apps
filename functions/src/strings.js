@@ -406,7 +406,7 @@ module.exports = {
           'I don\'t have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen to something else?',
         },
       },
     }, {
@@ -523,7 +523,7 @@ module.exports = {
           'I don\'t have {{alias.subject}} of {{alias.collectionId}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen to something else?',
         },
       },
     }, {
@@ -617,7 +617,7 @@ module.exports = {
             'We don\'t have concerts by {{creator}}. Maybe you would like to listen to {{short-options.suggestions}}?',
           ],
           default: {
-            speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
+            speech: 'I haven\'t found music matched your request, maybe you would like to listen to something else?',
           },
         },
       }, {
@@ -762,7 +762,7 @@ module.exports = {
           'I don\'t have {{alias.subject}}. Maybe you would like to listen something else?',
         ],
         default: {
-          speech: 'I haven\'t found music matched your request, maybe you would like to listen something else?',
+          speech: 'I haven\'t found music matched your request, maybe you would like to listen to something else?',
         },
       },
     },
@@ -881,7 +881,7 @@ module.exports = {
     }],
 
     shuffleOn: [{
-      speech: 'Got it! I\'ll play songs in a random order',
+      speech: 'Got it! I\'ll play songs in random order',
     }],
 
     yes: [{
