@@ -606,7 +606,11 @@ module.exports = {
         /**
          * Template for creating suggestions
          */
-        suggestionTemplate: 'the {{creator}}',
+        suggestions: [
+          'the Of A Revolution',
+          'the Grateful Dead',
+          'the Ditty Bops'
+        ],
 
         /**
          * When user missed the available range
