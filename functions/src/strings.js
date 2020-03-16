@@ -871,10 +871,9 @@ module.exports = {
       },
     },
 
-    no: [{
-      speech: '<s>Could you please be more specific?</s> ' +
-        '<s>{{last.reprompt}}</s>',
-    }],
+    no: {
+      speech: '<s>No problem, anything else you would like to.</s> ',
+    },
 
     shuffleOff: [{
       speech: 'Got it! I\'ll play songs in the original order',
@@ -885,8 +884,8 @@ module.exports = {
     }],
 
     yes: [{
-      speech: '<s>Could you please be more specific?</s> ' +
-        '<s>{{last.reprompt}}</s>',
+        speech: 'Could you please be more specific, choose from <break strength="weak"/>78s, <break strength="weak"/>Live concerts, <break strength="weak"/>or Christmas music',
+        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
     }],
   },
 
