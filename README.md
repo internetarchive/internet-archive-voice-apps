@@ -4,8 +4,8 @@
 See the developer guide and release notes at https://developers.google.com/actions/ for more details.
 
 ### Steps for cloning project to your local machine
-1.Fork repository
-2.Go to directory ::`git clone <repository link>`
+1. Fork repository.
+2. Go to directory ::`git clone <repository link>`
 
 ### Steps for testing with Google Assistant
 #### Create and setup project in Actions Console
@@ -18,13 +18,13 @@ See the developer guide and release notes at https://developers.google.com/actio
 2. Go to `settings` and click `export and import`, then click `restore from zip`.
 3. zip the contents of `dialogflow` in `models/dialogflow/` and use that zip to restore the project. 
 #### Run Local Server
-Run server local with colorful logs
+0. Run server local with colorful logs
 0. Install node js if not installed before(Check for correct version of node by `node -v`.if not `nvm install 8.16.0` and `nvm use 8.16.0`)
 1. `npm install -g firebase-tools` 
 1. `firebase login`[On the opened tab in your browser,login with the same account you created project on google actions]
-2. `touch functions/.runtimeconfig.json` (This adds a new file with name runtimeconfig.json(For windows cli clone touch repository to use it `git clone https://www.github.com/zacharyjbaldwin/touch-for-windows.git`))
+2. `touch functions/.runtimeconfig.json` (For windows cli clone touch repository to use it `git clone https://www.github.com/zacharyjbaldwin/touch-for-windows.git`)
 2. `firebase init` (remove .firebaserc first)
-3.`firebase projects:list`[displays projects list with your account]
+3. `firebase projects:list`[displays projects list with your account]
 3. `firebase use --add` (choose the project you created in actions console, give an alias name)
 3. add fake keys (temporary workaround) refer [this](https://github.com/internetarchive/internet-archive-voice-apps/issues/434#issuecomment-453114249)
 3.`firebase deploy --only functions`
