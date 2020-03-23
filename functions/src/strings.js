@@ -115,7 +115,7 @@ module.exports = {
         '<s>Oops! You are still in Internet Archive Service. Do you want to continue?</s>'
     },
 
-    fallback_yes:{
+    fallback_yes: {
       speech: '<s> repeat the question or continue playback </s>'
     },
 
