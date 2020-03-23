@@ -1,0 +1,36 @@
+{
+    "id": "a4f899e5-70cb-4e13-8c0a-740bc45cb17d",
+    "parentId": "70e8ba9a-53da-4b8a-b87c-51f7fbe9e53a",
+    "rootParentId": "70e8ba9a-53da-4b8a-b87c-51f7fbe9e53a",
+    "name": "fallback - yes",
+    "auto": true,
+    "contexts": [
+      "fallback-followup"
+    ],
+    "responses": [
+      {
+        "resetContexts": false,
+        "action": "fallback.fallback-yes",
+        "affectedContexts": [],
+        "parameters": [],
+        "messages": [
+          {
+            "type": 0,
+            "lang": "en",
+            "condition": "",
+            "speech": "repeat the question or continue playback"
+          }
+        ],
+        "defaultResponsePlatforms": {},
+        "speech": []
+      }
+    ],
+    "priority": 500000,
+    "webhookUsed": true,
+    "webhookForSlotFilling": false,
+    "fallbackIntent": false,
+    "events": [],
+    "conditionalResponses": [],
+    "condition": "",
+    "conditionalFollowupEvents": []
+  }
