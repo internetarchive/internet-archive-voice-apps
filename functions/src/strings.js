@@ -112,7 +112,7 @@ module.exports = {
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
-        '<s>Oops! You are still in Internet Archive Service. Do you want to continue?</s>' + 
+        '<s>Oops! You are still in Internet Archive Service. Do you want to continue?</s>' +
         '<s>{{last.reprompt}}</s>',
     },
 
