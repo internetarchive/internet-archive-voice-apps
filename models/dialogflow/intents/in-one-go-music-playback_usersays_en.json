@@ -1,5 +1,269 @@
 [
   {
+    "id": "fefe1837-7370-45a8-af65-06f799a8b30f",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "something",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " from ",
+        "userDefined": false
+      },
+      {
+        "text": "1980",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "81a33e1d-0dbe-44ae-9a92-17c45c1db8eb",
+    "data": [
+      {
+        "text": "play me ",
+        "userDefined": false
+      },
+      {
+        "text": "another",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " song",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "f08b4f78-42d7-4591-b4bb-a9736c308ff2",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "something",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": false
+      },
+      {
+        "text": " else",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e00e5889-3739-4501-8089-43c3947216f9",
+    "data": [
+      {
+        "text": "whatever",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " you got",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a5c95a72-655f-4b9b-bdb2-4748664614ab",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "whatever",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " you got",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c4ac773d-522c-4634-975c-10b6e4ecc914",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "something",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " right",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "56465557-ca27-4d8b-99ee-bcffc0556a43",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "something",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "bfb10eb4-c36d-47a3-be86-cc41a50afdba",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1947",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "jazz",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "7849bf2b-f9ea-4c4f-9108-0597b923a785",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "2006",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "instrumental",
+        "alias": "subject",
+        "meta": "@genres",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1a132084-c38e-461a-a042-04c1745f8851",
+    "data": [
+      {
+        "text": "play ",
+        "userDefined": false
+      },
+      {
+        "text": "some",
+        "alias": "order",
+        "meta": "@order",
+        "userDefined": true
+      },
+      {
+        "text": " music from ",
+        "userDefined": false
+      },
+      {
+        "text": "1960",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "625b2af3-49f3-4b22-a91e-5e6a6a47ea19",
+    "data": [
+      {
+        "text": "play music from ",
+        "userDefined": false
+      },
+      {
+        "text": "Washington, DC",
+        "alias": "coverage",
+        "meta": "@sys.geo-city",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
     "id": "e97fd78f-b669-4a32-b981-24f39f5730d5",
     "data": [
       {
@@ -709,6 +973,34 @@
     "updated": 0
   },
   {
+    "id": "b3a80b0c-df16-4734-a1ed-b71f05a7f4c0",
+    "data": [
+      {
+        "text": "play the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " in the year ",
+        "userDefined": false
+      },
+      {
+        "text": "1968",
+        "alias": "year",
+        "meta": "@sys.number-integer",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
     "id": "17e9bd62-8fde-42ab-91d3-709483a7ce2f",
     "data": [
       {
@@ -874,6 +1166,46 @@
         "text": "78",
         "alias": "collectionId",
         "meta": "@collections",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2853804b-8ce1-43a0-a57b-de09ac555b93",
+    "data": [
+      {
+        "text": "play some ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
+        "userDefined": true
+      },
+      {
+        "text": " for me",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1dbe6791-5336-46ed-bb56-98681645d704",
+    "data": [
+      {
+        "text": "I would like to listen to the ",
+        "userDefined": false
+      },
+      {
+        "text": "Grateful Dead",
+        "alias": "creator",
+        "meta": "@creators",
         "userDefined": true
       }
     ],

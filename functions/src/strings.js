@@ -112,7 +112,7 @@ module.exports = {
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
-        '<s>{{platform.appName}} can not help with that.</s> ' +
+        '<s>{{platform.appName}} can not help with that. Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?</s> ' +
         '<s>{{last.reprompt}}</s>'
     },
 

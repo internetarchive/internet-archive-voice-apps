@@ -10,7 +10,7 @@
       "affectedContexts": [],
       "parameters": [
         {
-          "id": "e4cd9d31-7cbf-4adf-8f8d-3eb0cd176b62",
+          "id": "a1a6572c-ab9f-46a7-8b66-1119dc7f95f8",
           "required": false,
           "dataType": "@media-types",
           "name": "media-types",
