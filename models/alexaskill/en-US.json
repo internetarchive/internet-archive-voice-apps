@@ -2,6 +2,11 @@
     "interactionModel": {
         "languageModel": {
             "invocationName": "internet archive",
+            "modelConfiguration": {
+                "fallbackIntentSensitivity": {
+                    "level": "LOW"
+                }
+            },
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -10,6 +15,9 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
+                        "how to use this skill",
+                        "how to use this",
+                        "tell me how to use it",
                         "what can you do",
                         "what can you perform",
                         "what can you play",
@@ -57,6 +65,13 @@
                         }
                     ],
                     "samples": [
+                        "what {MEDIA_TYPE} am i listening to",
+                        "name the {MEDIA_TYPE}",
+                        " tell me about the {MEDIA_TYPE} ",
+                        " need the name of this {MEDIA_TYPE} ",
+                        "tell me the name of the {MEDIA_TYPE} that you are playing",
+                        "what are you playing right now",
+                        "what are you playing",
                         "what is playing",
                         "what is playing right now",
                         "what is it",
@@ -114,10 +129,28 @@
                         {
                             "name": "SUBJECT..IA",
                             "type": "GENRES_IA"
+                        },
+                        {
+                            "name": "COVERAGE",
+                            "type": "AMAZON.US_CITY"
                         }
                     ],
                     "samples": [
-                        "play {YEAR} songs",
+                        "play {ORDER_BY} from the {YEAR}",
+                        "play {ORDER_BY} else",
+                        "play me {ORDER_BY} song",
+                        "play {ORDER_BY} you want",
+                        "{ORDER_BY} you want",
+                        "play {ORDER_BY} right",
+                        "play {ORDER_BY}",
+                        "I would like to listen to the {CREATOR}",
+                        "play some {CREATOR} for me",
+                        "play {ORDER_BY} {YEAR} {SUBJECT}",
+                        "play {YEAR} {SUBJECT}",
+                        "play {ORDER_BY} music from {COVERAGE} from the year {YEAR}",
+                        "play {ORDER_BY} from {COVERAGE} in {YEAR}",
+                        "play music from {COVERAGE} {YEAR}",
+                        "play  {COVERAGE}  {YEAR}",
                         "play {ORDER_BY} {SUBJECT}",
                         "play {SUBJECT} from {COLLECTION_ID}",
                         "play {COLLECTION_ID} {SUBJECT..IA}",
@@ -160,11 +193,23 @@
                         {
                             "name": "YEAR",
                             "type": "AMAZON.FOUR_DIGIT_NUMBER"
+                        },
+                        {
+                            "name": "ORDER_BY",
+                            "type": "ORDERS"
                         }
                     ],
                     "samples": [
-                        "play {COLLECTION_ID}",
+                        "play {ORDER_BY} music from {COLLECTION_ID}",
+                        "play {ORDER_BY} from {COLLECTION_ID}",
+                        "play me {ORDER_BY} {COLLECTION_ID} music",
+                        "play me {ORDER_BY} {COLLECTION_ID}",
+                        "play me {COLLECTION_ID}",
+                        "listen to {COLLECTION_ID} music",
+                        "listen to {COLLECTION_ID}",
                         "play {COLLECTION_ID} music",
+                        "play {COLLECTION_ID}",
+                        "play {ORDER_BY} {COLLECTION_ID}",
                         "choose {COLLECTION_ID} music",
                         "select {COLLECTION_ID} music",
                         "{COLLECTION_ID} music",
@@ -252,7 +297,30 @@
                 },
                 {
                     "name": "AMAZON.FallbackIntent",
-                    "samples": []
+                    "samples": [
+                        "tell me the nearest restaurant",
+                        "tell me the score",
+                        "what is the score",
+                        "how far is the nearest restaurant",
+                        "tell me the international news",
+                        "tell me the national news",
+                        "tell me the latest news",
+                        "tell me local news",
+                        "tell me some news",
+                        "youtube",
+                        "spotify",
+                        "set an alarm",
+                        "book my tickets",
+                        "play movies",
+                        "movies",
+                        "send a message",
+                        "how far are we",
+                        "what time is it",
+                        "open spotify",
+                        "open youtube",
+                        "open whatsapp",
+                        "what is the weather"
+                    ]
                 },
                 {
                     "name": "AMAZON.LoopOffIntent",
@@ -306,6 +374,10 @@
                     "name": "Recommend",
                     "slots": [],
                     "samples": [
+                        "suggest some music",
+                        "suggest something",
+                        "suggest me a song",
+                        "suggest a song",
                         "recommend a song",
                         "recommend me a song",
                         "recommend some music to me",
@@ -36654,6 +36726,316 @@
                     "values": [
                         {
                             "name": {
+                                "value": "Indian"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Olympia"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Oldies"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Japanese"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lo-fi"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cologne"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cabaret"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Jota"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Bolero"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cape Breton"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Boogie Woogie"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Music Hall"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Billy Jones"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Schubert"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Caruso"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Odeon"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Scala"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Xylophone"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Carmen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mozart"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Quartet"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Trio"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Anthem"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cassette"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Variety"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Milano"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Weil"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Vox"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Strauss"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Ukulele"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Ballad"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Acapella"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Texas"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Saxophone"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Folk Song"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Exercise"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Orchestra"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Beethoven"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Hempel"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Medley"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Vintage"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Bagpipe"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Scotland"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Soprano"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Faust"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Wagner"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Duet"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Gramophone"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Chicago Blues"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Turkish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Experimental"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Flute"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Guitar"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Slovak"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Electric"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Banjo"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Clarinet"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Traditional"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Celtic"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "World Music"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Jam"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Groove"
+                            }
+                        },
+                        {
+                            "name": {
                                 "value": "78rpm"
                             }
                         },
@@ -36815,11 +37197,6 @@
                         {
                             "name": {
                                 "value": "Choral"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Boogie Woogie"
                             }
                         },
                         {
@@ -37860,6 +38237,9 @@
                             "name": {
                                 "value": "random",
                                 "synonyms": [
+                                    "another",
+                                    "something",
+                                    "whatever",
                                     "some",
                                     "all",
                                     "any",
