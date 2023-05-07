@@ -35,7 +35,6 @@
     "mustache": "^2.3.2",
     "node-fetch": "^2.6.9",
     "raven": "^2.6.4",
-    "replaceall": "^0.1.6",
     "uuid": "^7.0.0"
   },
   "devDependencies": {
