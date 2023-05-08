@@ -35,7 +35,7 @@
     "mustache": "^2.3.2",
     "node-fetch": "^3.3.1",
     "raven": "^2.6.4",
-    "uuid": "^7.0.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.4",
