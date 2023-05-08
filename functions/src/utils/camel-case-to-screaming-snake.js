@@ -5,12 +5,12 @@
  * @returns {*}
  */
 module.exports = (value) => {
-  var upperChars = value.match(/([A-Z])/g);
+  const upperChars = value.match(/([A-Z])/g);
   if (!upperChars) {
     return value.toUpperCase();
   }
 
-  for (var i = 0, n = upperChars.length; i < n; i++) {
+  for (let i = 0, n = upperChars.length; i < n; i++) {
     value = value.replace(new RegExp(upperChars[i]), '_' + upperChars[i].toLowerCase());
   }
 
