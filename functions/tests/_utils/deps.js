@@ -2,7 +2,7 @@
 // Place to add chai/mocha plugins
 //
 
-var chai = require('chai');
-var sinonChai = require('sinon-chai');
+const chai = require('chai');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);

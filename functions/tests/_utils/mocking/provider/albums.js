@@ -16,7 +16,8 @@ module.exports = function ({
     fetchAlbums: sinon.stub().returns(Promise.resolve(fetchAlbumsResolve)),
     fetchAlbumsByQuery: sinon.stub().returns(Promise.resolve(fetchAlbumsByQueryResolve)),
     fetchAlbumDetails: sinon.stub().returns(
-      fetchAlbumDetailsResolve ? Promise.resolve(fetchAlbumDetailsResolve)
+      fetchAlbumDetailsResolve
+        ? Promise.resolve(fetchAlbumDetailsResolve)
         : fetchAlbumDetailsReject && Promise.resolve(fetchAlbumDetailsReject)
     ),
   };

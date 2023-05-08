@@ -19,9 +19,11 @@ describe('feeders', () => {
     function mockNewAlbum (album, numOfAlbums = 3) {
       albumsProvider = Object.assign({}, albumsProvider, mockAlbumsProvider({
         fetchAlbumsByQueryResolve: {
-          items: album ? [{
-            identifier: album,
-          }] : [],
+          items: album
+            ? [{
+                identifier: album,
+              }]
+            : [],
           total: numOfAlbums,
         },
 

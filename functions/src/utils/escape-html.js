@@ -1,4 +1,4 @@
-var entityMap = {
+const entityMap = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
