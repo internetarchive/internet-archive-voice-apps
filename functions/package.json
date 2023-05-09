@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint ./",
     "uploader": "node ./uploader",
-    "mocha": "mocha --require ./tests/_utils/deps.js './tests/**/*.spec.js'",
+    "mocha": "mocha --bail --require ./tests/_utils/deps.js './tests/**/*.spec.js'",
     "start": "firebase serve --only functions:assistant",
     "start:alexa": "bst proxy lambda index-alexa",
     "deploy": "firebase deploy --only functions:assistant",
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "actions-on-google": "^2.12.0",
-    "ask-sdk": "^2.7.0",
+    "ask-sdk": "2.14.0",
+    "ask-sdk-dynamodb-persistence-adapter": "2.8.0",
     "axios": "^1.3.6",
     "bespoken-tools": "^2.6.7",
     "dashbot": "^11.1.0",
