@@ -90,7 +90,7 @@ describe('integration', () => {
   let sandbox;
   let axiosMock;
 
-  const scenarios = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
+  const scenarios = yaml.load(fs.readFileSync(path.resolve(__dirname, 'dialog.yaml'), 'utf8'));
 
   describe('alexa', () => {
     scenarios.forEach(({ scenario, only = false, skip = false, dialog = [], launch = '' }) => {
