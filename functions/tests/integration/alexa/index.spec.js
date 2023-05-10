@@ -174,8 +174,8 @@ describe('integration', () => {
 
           // mock attributes persistance
           sandbox = sinon.createSandbox({});
-          sandbox.replace(dynamoDbPersistenceAdapter, 'DynamoDbPersistenceAdapter', DynamoDBMock);
-
+          // Stub the getter property
+          sandbox.stub(dynamoDbPersistenceAdapter, 'DynamoDbPersistenceAdapter').get(() => DynamoDBMock);
           // always choose 1st option
           sandbox.replace(lodash, 'sample', sinon.stub().callsFake(ops => ops[0]));
 
