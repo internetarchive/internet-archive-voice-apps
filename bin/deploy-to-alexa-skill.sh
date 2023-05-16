@@ -17,8 +17,10 @@ mkdir -p ./deploy/alexa
 cp -r ./functions/src ./deploy/alexa/
 cp ./functions/index-alexa.js ./deploy/alexa/index-alexa.js
 cp ./functions/package.json ./deploy/alexa/package.json
-(cd ./deploy/alexa/; npm install --production)
-
+# aws-sdk is already available in AWS Lambda running the app, we delete it to
+# reduce the filesize because the unzipped code must be < 250MB
+# `npm install -g node-prune` is required
+(cd ./deploy/alexa/; npm install --production; rm -rf node_modules/aws-sdk; node-prune node_modules)
 # TODO show size of unzipped (it should be less then 250M)
 
 # zip files
@@ -26,9 +28,8 @@ echo -e "$checkit  zip files"
 FILE_NAME=skill-${PACKAGE_VERSION}.zip
 (cd ./deploy/alexa/; zip --quiet -r ../${FILE_NAME} *)
 
-# upload to s3
-# FIXME: doesn't work yet
-echo -e "$checkit  upload to S3"
-aws --debug s3 cp "./deploy/alexa/${FILE_NAME}" s3://internet-archive-repo/
+# Disabled auto upload to s3 for now.
+# echo -e "$checkit  upload to S3"
+# aws --debug s3 cp "./deploy/alexa/${FILE_NAME}" s3://internet-archive-repo/
 
 echo -e "$checkit  well done!"
