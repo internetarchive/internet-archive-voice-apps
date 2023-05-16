@@ -1,12 +1,16 @@
-const includes = require('./includes');
-const equal = require('./equal');
-const Parser = require('expr-eval').Parser;
-const parser = new Parser();
+/**
+ * All extensions for Math.js
+ */
 
-// FIXME: Need to improve this code to avoid duplications
+const builder = require('../extensions/builder');
+
+const extensions = builder.build({ root: __dirname });
+
 module.exports = {
-  parser, // Export the parser instance
+  /**
+   * Get all extensions and apply patch
+   */
   patch: () => {
-    parser.functions.equal = equal;
+    extensions.all().forEach(({ ext }) => ext());
   },
 };

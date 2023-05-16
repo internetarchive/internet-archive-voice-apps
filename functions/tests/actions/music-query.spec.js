@@ -4,10 +4,9 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../src/actions/music-query');
-const equal = require('../../src/mathjs/equal');
-const includes = require('../../src/mathjs/includes');
-const Parser = require('expr-eval').Parser;
+const mathjsExtensions = require('../../src/mathjs');
 const query = require('../../src/state/query');
+
 const mockApp = require('../_utils/mocking/platforms/app');
 const mockDialog = require('../_utils/mocking/dialog');
 const mockAlbumsFeeder = require('../_utils/mocking/feeders/albums');
@@ -89,9 +88,7 @@ describe('actions / music query', () => {
   describe('multiple slot schemes', () => {
     beforeEach(() => {
       handler = action.build(slotSchemeWithMultipleCases).handler;
-      const parser = new Parser();
-      parser.functions.equal = equal();
-      parser.functions.includes = includes();
+      mathjsExtensions.patch();
     });
 
     it('should get slot scheme without condition', () => {

@@ -1,28 +1,24 @@
-const { debug, timer, warning } = require('../../utils/logger')('ia:selectors:condition-selector');
-const equal = require('../../mathjs/equal');
-const includes = require('../../mathjs/includes');
-const Parser = require('expr-eval').Parser;
-const parser = new Parser();
+const math = require('mathjs');
 const util = require('util');
 
-parser.functions.equal = equal();
-parser.functions.includes = includes();
+const { debug, timer, warning } = require('../../utils/logger')('ia:selectors:condition-selector');
 
-function safieEval (condition, context) {
+function safieMathEval (condition, context) {
   try {
-    return parser.evaluate(condition, context);
+    return math.eval(condition, context);
   } catch (error) {
-    debug('Get error from eval:', error && error.message);
+    debug('Get error from Math.js:', error && error.message);
     return false;
   }
 }
 
 /**
- * Choose one option that satisfies the context or get the default option that doesn't have a condition.
+ * Choose one which satisfies context.
+ * Or get default which doesn't have condition
  *
  * @param options {Array.<Object>}
  * @param context {Object}
- * @returns {Object|null}
+ * @returns {string}
  */
 function find (options, context) {
   debug('select option by condition');
@@ -34,13 +30,14 @@ function find (options, context) {
   const stopFindOptionTimer = timer.start('find option');
   const option = options
     .filter(({ condition }) => condition)
-    .find(({ condition }) => {
-      const stopEvalTimer = timer.start('eval');
-      const res = safieEval(condition, context);
-      console.log(res);
-      stopEvalTimer();
-      return res;
-    });
+    .find(
+      ({ condition }) => {
+        const stopMathEvalTimer = timer.start('math.eval');
+        const res = safieMathEval(condition, context);
+        stopMathEvalTimer();
+        return res;
+      }
+    );
 
   stopFindOptionTimer();
 
