@@ -9,7 +9,9 @@ const packageJSON = require('../package.json');
 const appConfig = require('./config');
 const env = require('./config/env');
 const errors = require('./errors');
-const mathjsExtensions = require('./mathjs');
+const equal = require('../src/mathjs/equal');
+const includes = require('../src/mathjs/includes');
+const Parser = require('expr-eval').Parser;
 const axiosProfile = require('./performance/axios');
 const { debug, warning } = require('./utils/logger')('ia:axio:interceptions');
 
@@ -33,9 +35,9 @@ const errorHandler = (error) => {
 module.exports = ({ platform }) => {
   // turn-off escaping in MustacheJS
   mustache.escape = v => v;
-
-  mathjsExtensions.patch();
-
+  const parser = new Parser();
+  parser.functions.equal = equal();
+  parser.functions.includes = includes();
   const userAgent = mustache.render(
     appConfig.request.userAgent,
     Object.assign({}, packageJSON, { platform })
