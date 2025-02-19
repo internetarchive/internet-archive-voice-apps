@@ -1374,5 +1374,389 @@
     "synonyms": [
       "Overture"
     ]
+  },
+  {
+    "value": "Groove",
+    "synonyms": [
+      "Groove"
+    ]
+  },
+  {
+    "value": "Jam",
+    "synonyms": [
+      "Jam"
+    ]
+  },
+  {
+    "value": "World Music",
+    "synonyms": [
+      "World Music"
+    ]
+  },
+  {
+    "value": "Celtic",
+    "synonyms": [
+      "Celtic"
+    ]
+  },
+  {
+    "value": "Traditional",
+    "synonyms": [
+      "Traditional"
+    ]
+  },
+  {
+    "value": "Clarinet",
+    "synonyms": [
+      "Clarinet"
+    ]
+  },
+  {
+    "value": "Banjo",
+    "synonyms": [
+      "Banjo"
+    ]
+  },
+  {
+    "value": "Electric",
+    "synonyms": [
+      "Electric"
+    ]
+  },
+  {
+    "value": "Slovak",
+    "synonyms": [
+      "Slovak"
+    ]
+  },
+  {
+    "value": "Guitar",
+    "synonyms": [
+      "Guitar"
+    ]
+  },
+  {
+    "value": "British Recording",
+    "synonyms": [
+      "British Recording"
+    ]
+  },
+  {
+    "value": "Flute",
+    "synonyms": [
+      "Flute"
+    ]
+  },
+  {
+    "value": "Experimental",
+    "synonyms": [
+      "Experimental"
+    ]
+  },
+  {
+    "value": "Turkish",
+    "synonyms": [
+      "Turkish"
+    ]
+  },
+  {
+    "value": "Chicago Blues",
+    "synonyms": [
+      "Chicago Blues"
+    ]
+  },
+  {
+    "value": "Gramophone",
+    "synonyms": [
+      "Gramophone"
+    ]
+  },
+  {
+    "value": "Duet",
+    "synonyms": [
+      "Duet"
+    ]
+  },
+  {
+    "value": "Wagner",
+    "synonyms": [
+      "Wagner"
+    ]
+  },
+  {
+    "value": "Faust",
+    "synonyms": [
+      "Faust"
+    ]
+  },
+  {
+    "value": "Cowboy",
+    "synonyms": [
+      "Cowboy"
+    ]
+  },
+  {
+    "value": "Soprano",
+    "synonyms": [
+      "Soprano"
+    ]
+  },
+  {
+    "value": "Scotland",
+    "synonyms": [
+      "Scotland"
+    ]
+  },
+  {
+    "value": "Bagpipe",
+    "synonyms": [
+      "Bagpipe"
+    ]
+  },
+  {
+    "value": "Vintage",
+    "synonyms": [
+      "Vintage"
+    ]
+  },
+  {
+    "value": "Medley",
+    "synonyms": [
+      "Medley"
+    ]
+  },
+  {
+    "value": "Hempel",
+    "synonyms": [
+      "Hempel"
+    ]
+  },
+  {
+    "value": "Beethoven",
+    "synonyms": [
+      "Beethoven"
+    ]
+  },
+  {
+    "value": "Orchestra",
+    "synonyms": [
+      "Orchestra"
+    ]
+  },
+  {
+    "value": "Exercise",
+    "synonyms": [
+      "Exercise"
+    ]
+  },
+  {
+    "value": "Folk Song",
+    "synonyms": [
+      "Folk Song"
+    ]
+  },
+  {
+    "value": "Saxophone",
+    "synonyms": [
+      "Saxophone"
+    ]
+  },
+  {
+    "value": "Texas",
+    "synonyms": [
+      "Texas"
+    ]
+  },
+  {
+    "value": "Acapella",
+    "synonyms": [
+      "Acapella"
+    ]
+  },
+  {
+    "value": "Ballad",
+    "synonyms": [
+      "Ballad"
+    ]
+  },
+  {
+    "value": "Ukulele",
+    "synonyms": [
+      "Ukulele"
+    ]
+  },
+  {
+    "value": "Strauss",
+    "synonyms": [
+      "Strauss"
+    ]
+  },
+  {
+    "value": "Vox",
+    "synonyms": [
+      "Vox"
+    ]
+  },
+  {
+    "value": "Weil",
+    "synonyms": [
+      "Weil"
+    ]
+  },
+  {
+    "value": "Milano",
+    "synonyms": [
+      "Milano"
+    ]
+  },
+  {
+    "value": "Variety",
+    "synonyms": [
+      "Variety"
+    ]
+  },
+  {
+    "value": "Cassette",
+    "synonyms": [
+      "Cassette"
+    ]
+  },
+  {
+    "value": "Anthem",
+    "synonyms": [
+      "Anthem"
+    ]
+  },
+  {
+    "value": "Trio",
+    "synonyms": [
+      "Trio"
+    ]
+  },
+  {
+    "value": "Quartet",
+    "synonyms": [
+      "Quartet"
+    ]
+  },
+  {
+    "value": "Mozart",
+    "synonyms": [
+      "Mozart"
+    ]
+  },
+  {
+    "value": "Carmen",
+    "synonyms": [
+      "Carmen"
+    ]
+  },
+  {
+    "value": "Xylophone",
+    "synonyms": [
+      "Xylophone"
+    ]
+  },
+  {
+    "value": "Scala",
+    "synonyms": [
+      "Scala"
+    ]
+  },
+  {
+    "value": "Odeon",
+    "synonyms": [
+      "Odeon"
+    ]
+  },
+  {
+    "value": "Caruso",
+    "synonyms": [
+      "Caruso"
+    ]
+  },
+  {
+    "value": "Schubert",
+    "synonyms": [
+      "Schubert"
+    ]
+  },
+  {
+    "value": "Billy Jones",
+    "synonyms": [
+      "Billy Jones"
+    ]
+  },
+  {
+    "value": "Music Hall",
+    "synonyms": [
+      "Music Hall"
+    ]
+  },
+  {
+    "value": "Boogie Woogie",
+    "synonyms": [
+      "Boogie Woogie"
+    ]
+  },
+  {
+    "value": "Cape Breton",
+    "synonyms": [
+      "Cape Breton"
+    ]
+  },
+  {
+    "value": "Bolero",
+    "synonyms": [
+      "Bolero"
+    ]
+  },
+  {
+    "value": "Jota",
+    "synonyms": [
+      "Jota"
+    ]
+  },
+  {
+    "value": "Cabaret",
+    "synonyms": [
+      "Cabaret"
+    ]
+  },
+  {
+    "value": "Cologne",
+    "synonyms": [
+      "Cologne"
+    ]
+  },
+  {
+    "value": "lo-fi",
+    "synonyms": [
+      "lo-fi"
+    ]
+  },
+  {
+    "value": "Japanese",
+    "synonyms": [
+      "Japanese"
+    ]
+  },
+  {
+    "value": "Oldies",
+    "synonyms": [
+      "Oldies"
+    ]
+  },
+  {
+    "value": "Olympia",
+    "synonyms": [
+      "Olympia"
+    ]
+  },
+  {
+    "value": "Indian",
+    "synonyms": [
+      "Indian"
+    ]
   }
 ]
