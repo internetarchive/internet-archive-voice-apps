@@ -23,7 +23,7 @@ module.exports = {
   aliases: {
     collectionId: {
       etree: 'Live Concerts',
-      georgeblood: '78s',
+      // georgeblood: '78s',
       unlockedrecordings: 'Unlocked Recordings'
     },
     subject: {
@@ -112,7 +112,7 @@ module.exports = {
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
-        '<s>{{platform.appName}} can not help with that. Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?</s> ' +
+        '<s>{{platform.appName}} can not help with that. Want to listen to Live concerts, Unlocked Recordings or Christmas music?</s> ' +
         '<s>{{last.reprompt}}</s>'
     },
 
@@ -131,10 +131,9 @@ module.exports = {
           '<s>You are using Internet Archive service. </s>' +
           '<s>Here we have collections of ' +
           'Live Concerts, <break strength="weak"/> ' +
-          '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
           'Unlocked Recordings. </s>' +
           '<s>You can ask to playback music of specific genre by asking: </s>' +
-          '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
+          '<s>play classic music. </s>' +
           '<s>As well you can ask me to play specific artist. </s>' +
           '<s>For example by saying: </s>' +
           '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
@@ -165,11 +164,9 @@ module.exports = {
         '<s>If you want to listen to more songs, then you can choose from ' +
         'Live Concerts, <break strength="weak"/> ' +
         'Christmas Music, <break strength="weak"/> ' +
-        '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
         'Unlocked Recordings. </s>' +
         '<s>and I will pick the right music for you. </s>',
       suggestions: [
-        '78s',
         'Live Concerts',
         'Unlocked Recordings',
         'Christmas Music',
@@ -212,7 +209,7 @@ module.exports = {
         // so user could ask
         // > play jazz
         // and we fetch all jazz from these collections
-        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
+        collectionId: ['etree', 'unlockedrecordings'],
       },
 
       /**
@@ -587,7 +584,6 @@ module.exports = {
          * Fixed set of suggestions
          */
         suggestions: [
-          '78s',
           'Live Concerts',
           'Unlocked Recordings'
         ],
@@ -728,7 +724,7 @@ module.exports = {
        */
       defaults: {
         order: 'random',
-        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
+        collectionId: ['etree', 'unlockedrecordings'],
         coverage: { skip: true },
         creator: { skip: true },
         year: { skip: true },
@@ -851,13 +847,13 @@ module.exports = {
         acknowledges: [
           'Welcome to music at the Internet Archive.'
         ],
-        speech: 'Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?',
-        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
+        speech: 'Want to listen to Live concerts, Unlocked Recordings or Christmas music?',
+        suggestions: ['Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
 
       yes: {
-        speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>Live concerts, <break strength="weak"/>or Christmas music',
-        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
+        speech: 'Please choose <break strength="weak"/>Live concerts, <break strength="weak"/>or Christmas music',
+        suggestions: ['Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
     },
 
