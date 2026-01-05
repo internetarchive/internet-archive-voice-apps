@@ -66,6 +66,8 @@ module.exports = ({ exclude = [] } = {}) => (ctx) => {
           }
         );
       }
+      // Remove duplicates to avoid prompts like "The Grateful Dead or The Grateful Dead"
+      suggestions = _.uniq(suggestions);
       debug('new suggestions are:', suggestions);
       return {
         ...ctx,
