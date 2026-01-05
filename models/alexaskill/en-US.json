@@ -36654,11 +36654,6 @@
                     "values": [
                         {
                             "name": {
-                                "value": "78rpm"
-                            }
-                        },
-                        {
-                            "name": {
                                 "value": "Popular Music"
                             }
                         },
@@ -37792,20 +37787,6 @@
                                     "concerts",
                                     "live",
                                     "live concerts"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "georgeblood",
-                                "synonyms": [
-                                    "seventy eighties",
-                                    "seventy eights",
-                                    "70 eighths",
-                                    "78",
-                                    "george blood",
-                                    "plates",
-                                    "78s"
                                 ]
                             }
                         }

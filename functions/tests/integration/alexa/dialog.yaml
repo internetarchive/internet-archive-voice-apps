@@ -1,7 +1,7 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?'
+  launch: 'Welcome to music at the Internet Archive. Want to listen to Live concerts, Unlocked Recordings or Christmas music?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
@@ -28,54 +28,54 @@
     assistant:
       directive: 'AudioPlayer.Play'
 
-- scenario: 'play music by: 78s > jazz'
-  dialog:
-  - user: 'seventy eighties'
-    assistant: 'You''ve selected 78s. What genre of music would you like to listen to? Please select a genre like Jazz, Instrumental or Dance?'
-  - user: 'jazz music'
-    assistant:
-      directive: 'AudioPlayer.Play'
+# - scenario: 'play music by: 78s > jazz'
+#   dialog:
+#   - user: 'seventy eighties'
+#     assistant: 'You''ve selected 78s. What genre of music would you like to listen to? Please select a genre like Jazz, Instrumental or Dance?'
+#   - user: 'jazz music'
+#     assistant:
+#       directive: 'AudioPlayer.Play'
 
-- scenario: 'play music by: play jazz'
-  dialog:
-  - user: 'play jazz'
-    assistant:
-      directive: 'AudioPlayer.Play'
+# - scenario: 'play music by: play jazz'
+#   dialog:
+#   - user: 'play jazz'
+#     assistant:
+#       directive: 'AudioPlayer.Play'
 
-- scenario: 'play music on: <genre>'
-  dialog:
-  - user: 'jazz music'
-    assistant:
-      directive: 'AudioPlayer.Play'
+# - scenario: 'play music on: <genre>'
+#   dialog:
+#   - user: 'jazz music'
+#     assistant:
+#       directive: 'AudioPlayer.Play'
 
-- scenario: 'empty playlist: 78s -> <wrong_genre>'
-  dialog:
-  - user: 'seventy eighties'
-  - user: 'christmas music'
-    assistant: "I don't have christmas."
+# - scenario: 'empty playlist: 78s -> <wrong_genre>'
+#   dialog:
+#   - user: 'seventy eighties'
+#   - user: 'christmas music'
+#     assistant: "I don't have christmas."
 
-- scenario: 'play music on: 78s > <order>'
-  dialog:
-  - user: 'seventy eighties'
-  - user: 'random'
-    assistant: "I found"
+# - scenario: 'play music on: 78s > <order>'
+#   dialog:
+#   - user: 'seventy eighties'
+#   - user: 'random'
+#     assistant: "I found"
 
-- scenario: 'play <collection> should play <collection> only music'
-  dialog:
-  - user: 'play seventy eighties'
-    assistant:
-      request:
-        - url: 'https://askills-api.archive.org/advancedsearch.php?q=format:(mp3)%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
-          res: '../../fixtures/albums.json'
+# - scenario: 'play <collection> should play <collection> only music'
+#   dialog:
+#   - user: 'play seventy eighties'
+#     assistant:
+#       request:
+#         - url: 'https://askills-api.archive.org/advancedsearch.php?q=format:(mp3)%20AND%20collection:georgeblood&fl%5B%5D=identifier,coverage,title,year&sort%5B%5D=random&rows=2&output=json'
+#           res: '../../fixtures/albums.json'
 
-- scenario: 'song details: when song is playing'
-  dialog:
-  - user: 'play jazz'
-    assistant:
-      directive: 'AudioPlayer.Play'
-  - user: 'what song is this'
-    assistant:
-      regexp: 'It is song (.*) of Grateful Dead'
+# - scenario: 'song details: when song is playing'
+#   dialog:
+#   - user: 'play jazz'
+#     assistant:
+#       directive: 'AudioPlayer.Play'
+#   - user: 'what song is this'
+#     assistant:
+#       regexp: 'It is song (.*) of Grateful Dead'
 
 - scenario: 'song details: when nothing is playing'
   dialog:
@@ -100,25 +100,25 @@
 
 - scenario: "failed request for a collection from IA should gracefully fail in music query intent"
   dialog:
-  - user: 'seventy eighties'
-    assistant: 'You''ve selected 78s.
-                What genre of music would you like to listen to?
-                Please select a genre like Jazz, Instrumental or Dance?'
+  # - user: 'seventy eighties'
+  #   assistant: 'You''ve selected 78s.
+  #               What genre of music would you like to listen to?
+  #               Please select a genre like Jazz, Instrumental or Dance?'
   - user: 'turbo folk music'
     assistant: 'We are currently experiencing some technical difficulties on the Archive server.
                 Please try again later or try saying something else.'
 
-- scenario: 'handle empty playlist in one go intent v1'
-  dialog:
-  - user: '1990 year'
-  - user: 'play folk'
-    assistant: "I don't have folk for 1990. Maybe you would like to listen something else?"
+# - scenario: 'handle empty playlist in one go intent v1'
+#   dialog:
+#   - user: '1990 year'
+#   - user: 'play folk'
+#     assistant: "I don't have folk for 1990. Maybe you would like to listen something else?"
 
-- scenario: 'handle empty playlist in one go intent v2'
-  dialog:
-  - user: '1910 year'
-  - user: 'play rock'
-    assistant: "I don't have rock for 1910. Try USA 1910, for example."
+# - scenario: 'handle empty playlist in one go intent v2'
+#   dialog:
+#   - user: '1910 year'
+#   - user: 'play rock'
+#     assistant: "I don't have rock for 1910. Try USA 1910, for example."
 # TODO:
 # it is ok for the moment but actually we want:
 #    assistant: "I don't have rock of 1990. Try jazz, for example."
@@ -198,7 +198,6 @@
 - scenario: 'restart app after end of the playlist on next'
   dialog:
     - user: 'live collection'
-    - user: 'Grateful Dead'
     - user: 'city Washington year 1970'
     - user: 'next'
     - user: 'next'
@@ -221,8 +220,8 @@
           - 'Would you like to continue listening'
         without:
           directive: 'AudioPlayer.Play'
-    - user: 'no'
-      assistant: 'Want to listen to 78s'
+    # - user: 'no'
+    #   assistant: 'Want to listen to Grateful Dead'
 
 - scenario: 'handle stop intent when nothing is playing right now'
   dialog:
@@ -241,10 +240,7 @@
       - 'You are using Internet Archive service.'
       - 'Here we have collections of'
       - 'Live Concerts'
-      - '78'
       - 'Unlocked Recordings'
-      # and repeat the last question
-      - 'Want to listen to 78s'
       # but without the last acknowledge
       - without: 'Welcome to music at the Internet Archive'
 
@@ -252,7 +248,7 @@
   dialog:
   - user: 'help'
   - user: 'help'
-    assistant: 'Want to listen to 78s'
+    assistant: 'Want to listen to Live concerts'
 
 - scenario: 'reprompt to the music query after help intent'
   dialog:
@@ -260,28 +256,28 @@
     - user: 'help'
       assistant: 'What artist would you like to listen to?'
 
-- scenario: 'continue playback if user agreed after asking for help'
-  dialog:
-    - user: 'play jazz'
-    - user: 'help'
-      assistant: 'Do you want to continue payback'
-    - user: 'yes'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'continue playback if user agreed after asking for help'
+#   dialog:
+#     - user: 'play classic music'
+#     - user: 'help'
+#       assistant: 'Do you want to continue payback'
+#     - user: 'yes'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
-- scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
-  # should fix
-  # for the moment after help intent skill automatically continues to playback
-  skip: true
-  dialog:
-    - user: 'play jazz'
-    - user: 'help'
-    - user: 'no'
-      assistant:
-        all:
-        - 'Want to listen to 78s'
-        - without:
-            directive: 'AudioPlayer.Play'
+# - scenario: 'prompt to the welcome intent if user disagree to continue playback after asking for help'
+#   # should fix
+#   # for the moment after help intent skill automatically continues to playback
+#   skip: true
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'help'
+#     - user: 'no'
+#       assistant:
+#         all:
+#         - 'Want to listen to 78s'
+#         - without:
+#             directive: 'AudioPlayer.Play'
 
 - scenario: 'prompt user to the welcome question on improper "yes"'
   dialog:
@@ -297,7 +293,7 @@
 - scenario: 'prompt user to the last question on improper "no"'
   dialog:
     - user: 'no'
-      assistant: 'Want to listen to 78s'
+      assistant: 'Want to listen to Live concerts'
 
 - scenario: 'prompt user to the last question after version intent'
   dialog:
@@ -305,14 +301,14 @@
       assistant:
         all:
           - 'Version is'
-          - 'Want to listen to 78s'
+          - 'Want to listen to Live concerts'
 
-- scenario: 'resume playback after version intent'
-  dialog:
-    - user: 'play jazz'
-    - user: 'version'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'resume playback after version intent'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'version'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
 - scenario: 'start over on music search restarts skill'
   dialog:
@@ -320,12 +316,12 @@
     - user: 'start over'
       assistant: 'Welcome to music at the Internet Archive'
 
-- scenario: 'start over on playback restarts current track'
-  dialog:
-    - user: 'play jazz'
-    - user: 'start over'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'start over on playback restarts current track'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'start over'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
 - scenario: 'reprompt user on fallback intent'
   dialog:
@@ -336,21 +332,21 @@
       assistant:
         all:
           - 'The Internet Archive Skill can not help with that'
-          - 'Want to listen to 78s'
+          - 'Want to listen to Live concerts'
 
-- scenario: 'play next song'
-  dialog:
-    - user: 'play jazz'
-    - user: 'next'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'play next song'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'next'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
-- scenario: 'play previous song'
-  dialog:
-    - user: 'play jazz'
-    - user: 'previous'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'play previous song'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'previous'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
 - scenario: 'nothing is playing when user ask play next song out of playback'
   dialog:
@@ -358,7 +354,7 @@
       assistant:
         all:
           - 'Nothing is playing right now'
-          - 'Want to listen to 78s'
+          - 'Want to listen to Live concerts'
 
 - scenario: 'nothing is playing when user ask play previous song out of playback'
   dialog:
@@ -366,7 +362,7 @@
       assistant:
         all:
           - 'Nothing is playing right now'
-          - 'Want to listen to 78s'
+          - 'Want to listen to Live concerts'
 
 - scenario: 'loop on'
   dialog:
@@ -378,19 +374,19 @@
     - user: 'loop off'
       assistant: "I will stop playback after the last song"
 
-- scenario: 'resume playback after loop on'
-  dialog:
-    - user: 'play jazz'
-    - user: 'loop on'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'resume playback after loop on'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'loop on'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
-- scenario: 'resume playback after loop off'
-  dialog:
-    - user: 'play jazz'
-    - user: 'loop off'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'resume playback after loop off'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'loop off'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
 - scenario: 'shuffle on by default'
   dialog:
@@ -402,16 +398,16 @@
     - user: 'shuffle off'
       assistant: 'songs in the original order'
 
-- scenario: 'resume playback after shuffle on'
-  dialog:
-    - user: 'play jazz'
-    - user: 'shuffle on'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'resume playback after shuffle on'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'shuffle on'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
 
-- scenario: 'resume playback after shuffle off'
-  dialog:
-    - user: 'play jazz'
-    - user: 'shuffle off'
-      assistant:
-        directive: 'AudioPlayer.Play'
+# - scenario: 'resume playback after shuffle off'
+#   dialog:
+#     - user: 'play jazz'
+#     - user: 'shuffle off'
+#       assistant:
+#         directive: 'AudioPlayer.Play'
