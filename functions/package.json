@@ -1,11 +1,7 @@
 {
   "name": "audio-interface-of-internet-archive",
   "description": "Audio Interface of Internet Archive",
-<<<<<<< Updated upstream
-  "version": "2.5.18",
-=======
   "version": "2.5.19",
->>>>>>> Stashed changes
   "private": true,
   "author": "Internet Archive",
   "license": "AGPL-3.0",
