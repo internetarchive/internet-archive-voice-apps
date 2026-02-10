@@ -20,7 +20,7 @@
   "dependencies": {
     "actions-on-google": "^2.12.0",
     "ask-sdk": "^2.14.0",
-    "axios": "^1.6.0",
+    "axios": "^1.13.5",
     "bespoken-tools": "^2.6.7",
     "dashbot": "^12.1.0",
     "debug": "^4.3.4",
