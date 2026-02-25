@@ -47,7 +47,10 @@ describe('actions', () => {
         expect(middleware.mapSongDataToSlots()({ app, playlist })).to.have.property('then');
       });
 
-      it('should play song', () => {
+      it('should play song (with wordless speech when muteSpeech is true)', () => {
+        // Set muteSpeech to true to test the wordless behavior
+        playback.setMuteSpeechBeforePlayback(app, true);
+
         const slots = {
           id: '123456',
         };
@@ -61,7 +64,10 @@ describe('actions', () => {
           });
       });
 
-      it('should concat new speech with new one', () => {
+      it('should concat new speech with new one (using wordless when muteSpeech is true)', () => {
+        // Set muteSpeech to true to test the wordless behavior
+        playback.setMuteSpeechBeforePlayback(app, true);
+
         const slots = {
           id: '123456',
         };
@@ -75,7 +81,10 @@ describe('actions', () => {
           });
       });
 
-      it('should concat new speech with new one', () => {
+      it('should not add song speech when wordless is not found (muteSpeech is true)', () => {
+        // Set muteSpeech to true to test the wordless behavior
+        playback.setMuteSpeechBeforePlayback(app, true);
+
         selectors = mockSelectors({ findResult: [strings, null] });
         middleware.__set__('selectors', selectors);
 

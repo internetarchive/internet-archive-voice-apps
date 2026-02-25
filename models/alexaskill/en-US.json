@@ -10,10 +10,14 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
+                        "help",
                         "what can you do",
                         "what can you perform",
                         "what can you play",
-                        "can you help me"
+                        "can you help me",
+                        "give me examples",
+                        "what can i say",
+                        "how do i use this"
                     ]
                 },
                 {
@@ -223,9 +227,21 @@
                     "slots": [],
                     "samples": [
                         "What version is this",
+                        "which version",
+                        "what version",
                         "Tell me the version of app",
                         "version",
                         "What is the version of app"
+                    ]
+                },
+                {
+                    "name": "Exit",
+                    "slots": [],
+                    "samples": [
+                        "exit",
+                        "quit",
+                        "close",
+                        "leave"
                     ]
                 },
                 {
@@ -309,7 +325,10 @@
                         "recommend a song",
                         "recommend me a song",
                         "recommend some music to me",
-                        "recommend some music"
+                        "recommend some music",
+                        "what do you recommend",
+                        "suggest something",
+                        "give me a recommendation"
                     ]
                 }
             ],

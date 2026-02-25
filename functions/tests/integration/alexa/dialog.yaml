@@ -1,14 +1,14 @@
 ---
 
 - scenario: 'startup'
-  launch: 'Welcome to music at the Internet Archive. Want to listen to Live concerts, Unlocked Recordings or Christmas music?'
+  launch: 'Welcome to the Internet Archive music collection. Want to listen to Live concerts, Unlocked Recordings or Christmas music?'
 
 - scenario: 'play music by: live > artist > city > year'
   dialog:
   - user: 'live collection'
-    assistant: 'You''ve selected Live Concerts. What artist would you like to listen to? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits?'
+    assistant: 'You''ve selected Live Concerts. What artist would you like to hear? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits.'
   - user: 'Grateful Dead'
-    assistant: 'Okay! Lets go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+    assistant: 'Okay! Let''s go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
   - user: 'Washington'
     assistant:
       all:
@@ -21,9 +21,9 @@
 - scenario: 'play music by: live > artist > city year'
   dialog:
   - user: 'live collection'
-    assistant: 'You''ve selected Live Concerts. What artist would you like to listen to? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits?'
+    assistant: 'You''ve selected Live Concerts. What artist would you like to hear? For example, the Grateful Dead, the Phil Lesh and Friends or the Disco Biscuits.'
   - user: 'Grateful Dead'
-    assistant: 'Okay! Lets go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
+    assistant: 'Okay! Let''s go with Grateful Dead! Do you have a specific city and year in mind, like Washington, DC 1973, or would you like me to play something randomly?'
   - user: 'city Washington year 1970'
     assistant:
       directive: 'AudioPlayer.Play'
@@ -95,8 +95,7 @@
 - scenario: "failed request for a collection from IA should gracefully fail in one go intent"
   dialog:
   - user: 'play turbo folk'
-    assistant: 'We are currently experiencing some technical difficulties on the Archive server.
-                Please try again later or try saying something else.'
+    assistant: 'We are experiencing technical difficulties on the Archive server. Please try again in a bit, or try a different request.'
 
 - scenario: "failed request for a collection from IA should gracefully fail in music query intent"
   dialog:
@@ -105,8 +104,7 @@
   #               What genre of music would you like to listen to?
   #               Please select a genre like Jazz, Instrumental or Dance?'
   - user: 'turbo folk music'
-    assistant: 'We are currently experiencing some technical difficulties on the Archive server.
-                Please try again later or try saying something else.'
+    assistant: 'We are experiencing technical difficulties on the Archive server. Please try again in a bit, or try a different request.'
 
 # - scenario: 'handle empty playlist in one go intent v1'
 #   dialog:
@@ -163,7 +161,7 @@
           - 'playlist is ending'
           - 'Would you like to continue listening'
     - user: 'no'
-      assistant: 'Welcome to music at the Internet Archive'
+      assistant: 'Welcome to the Internet Archive music collection'
 
 - scenario: 'resume playback after end of the playlist on next'
   dialog:
@@ -242,7 +240,7 @@
       - 'Live Concerts'
       - 'Unlocked Recordings'
       # but without the last acknowledge
-      - without: 'Welcome to music at the Internet Archive'
+      - without: 'Welcome to the Internet Archive music collection'
 
 - scenario: 'reprompt the welcome question even on double help intent'
   dialog:
@@ -254,7 +252,7 @@
   dialog:
     - user: 'live collection'
     - user: 'help'
-      assistant: 'What artist would you like to listen to?'
+      assistant: 'What artist would you like to hear?'
 
 # - scenario: 'continue playback if user agreed after asking for help'
 #   dialog:
@@ -282,13 +280,13 @@
 - scenario: 'prompt user to the welcome question on improper "yes"'
   dialog:
     - user: 'yes'
-      assistant: 'Please choose'
+      assistant: 'Choose Live Concerts'
 
 - scenario: 'prompt user to the last question on improper "yes"'
   dialog:
     - user: 'live'
     - user: 'yes'
-      assistant: 'What artist would you like to listen to?'
+      assistant: 'What artist would you like to hear?'
 
 - scenario: 'prompt user to the last question on improper "no"'
   dialog:
@@ -314,7 +312,7 @@
   dialog:
     - user: 'live'
     - user: 'start over'
-      assistant: 'Welcome to music at the Internet Archive'
+      assistant: 'Welcome to the Internet Archive music collection'
 
 # - scenario: 'start over on playback restarts current track'
 #   dialog:
@@ -331,7 +329,7 @@
         intend: AMAZON.FallbackIntent
       assistant:
         all:
-          - 'The Internet Archive Skill can not help with that'
+          - 'can''t help with that'
           - 'Want to listen to Live concerts'
 
 # - scenario: 'play next song'

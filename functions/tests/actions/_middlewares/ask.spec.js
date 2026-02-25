@@ -25,6 +25,7 @@ describe('actions', () => {
           .then(() => {
             expect(dialog.ask).to.have.been.calledWith(app, {
               speech: 'One Two Tree',
+              text: 'One Two Tree',
               suggestions,
               reprompt: undefined,
             });
@@ -35,7 +36,10 @@ describe('actions', () => {
         const app = mockApp();
         return middleware()({ app })
           .then(() => {
-            expect(dialog.ask).to.have.been.calledWith(app, strings.events.nothingToSay);
+            expect(dialog.ask).to.have.been.calledWith(app, {
+              ...strings.events.nothingToSay,
+              text: strings.events.nothingToSay.speech,
+            });
           });
       });
     });

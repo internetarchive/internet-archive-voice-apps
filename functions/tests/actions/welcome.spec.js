@@ -22,7 +22,7 @@ describe('actions', () => {
       expect(dialog.ask).have.been.calledOnce;
       expect(dialog.ask.args[0][1]).to.have.property('reprompt');
       expect(dialog.ask.args[0][1]).to.have.property('speech')
-        .to.include('Welcome to music at the Internet Archive.');
+        .to.include('Welcome to the Internet Archive music collection.');
       expect(dialog.ask.args[0][1]).to.have.property('suggestions')
         .with.members(['Live Concerts', 'Unlocked Recordings', 'Christmas music']);
     });

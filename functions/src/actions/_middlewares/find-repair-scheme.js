@@ -48,7 +48,16 @@ module.exports = () => (ctx) => {
 
   if (!repairScheme) {
     warning('we don\'t have any repair phrase in this slot scheme', slotScheme);
-    return Promise.resolve(ctx);
+    // Provide a default repair scheme so findRepairPhrase doesn't crash
+    return Promise.resolve({
+      ...ctx,
+      repairScheme: {
+        speech: [
+          'I couldn\'t find a match for that. Could you try something else?',
+        ],
+      },
+      suggestionsScheme: repairSlotScheme,
+    });
   }
 
   return Promise.resolve({
