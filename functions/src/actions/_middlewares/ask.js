@@ -2,6 +2,11 @@ const { debug, error } = require('../../utils/logger/index')('ia:actions:hoh:ask
 const dialog = require('../../dialog/index');
 const strings = require('../../strings');
 
+const stripSSML = (text) => text
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
 /**
  * Middleware
  *
@@ -22,14 +27,20 @@ module.exports = () => (ctx) => {
   const { app, reprompt, speech, suggestions } = ctx;
 
   if (speech && speech.length > 0) {
+    const spoken = speech.join(' ');
     dialog.ask(app, {
-      speech: speech.join(' '),
+      speech: spoken,
+      text: stripSSML(spoken),
       suggestions: suggestions && suggestions.filter(s => s).slice(0, 3),
       reprompt,
     });
   } else {
     error('hm... we don\'t have anything to say.');
-    dialog.ask(app, strings.events.nothingToSay);
+    const fallback = strings.events.nothingToSay;
+    dialog.ask(app, {
+      ...fallback,
+      text: stripSSML(fallback.speech),
+    });
   }
 
   return Promise.resolve(ctx);
