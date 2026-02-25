@@ -28,7 +28,7 @@
     "firebase-functions": "^3.24.1",
     "glob": "^7.1.6",
     "hirestime": "^4.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "mathjs": "^5.10.3",
     "mustache": "^2.3.2",
     "raven": "^2.6.4",
