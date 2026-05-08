@@ -32,7 +32,7 @@
     "mathjs": "^5.10.3",
     "mustache": "^2.3.2",
     "raven": "^2.6.4",
-    "uuid": "^9.0.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.4",
