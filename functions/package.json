@@ -1,7 +1,7 @@
 {
   "name": "audio-interface-of-internet-archive",
   "description": "Audio Interface of Internet Archive",
-  "version": "2.5.18",
+  "version": "2.5.30",
   "private": true,
   "author": "Internet Archive",
   "license": "AGPL-3.0",
@@ -20,7 +20,7 @@
   "dependencies": {
     "actions-on-google": "^2.12.0",
     "ask-sdk": "^2.14.0",
-    "axios": "^1.6.0",
+    "axios": "^1.15.2",
     "bespoken-tools": "^2.6.7",
     "dashbot": "^12.1.0",
     "debug": "^4.3.4",
@@ -28,7 +28,7 @@
     "firebase-functions": "^3.24.1",
     "glob": "^7.1.6",
     "hirestime": "^4.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "mathjs": "^5.10.3",
     "mustache": "^2.3.2",
     "raven": "^2.6.4",

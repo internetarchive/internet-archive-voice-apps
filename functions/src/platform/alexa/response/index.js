@@ -92,7 +92,13 @@ module.exports = (handlerInput) =>
           }
         );
       });
+
+      // shouldEndSession:true is CORRECT for AudioPlayer.Play responses.
+      // Per Amazon docs: setting shouldEndSession:true ends the session,
+      // but audio CONTINUES playing and built-in intents (next, pause, skip)
+      // are PRESERVED and routed to the skill.
       handlerInput.responseBuilder.withShouldEndSession(true);
+      debug('[RESPONSE] Set shouldEndSession=true for AudioPlayer response (correct per Amazon docs)');
     } else {
       handlerInput.responseBuilder.withShouldEndSession(close);
     }

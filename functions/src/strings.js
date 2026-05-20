@@ -23,7 +23,7 @@ module.exports = {
   aliases: {
     collectionId: {
       etree: 'Live Concerts',
-      georgeblood: '78s',
+      // georgeblood: '78s',
       unlockedrecordings: 'Unlocked Recordings'
     },
     subject: {
@@ -56,6 +56,10 @@ module.exports = {
             <desc>Track - {{title}} of {{creator}}{{#coverage}} in {{coverage}}{{/coverage}}{{#year}}, {{year}}{{/year}}</desc>
           </audio>
         `,
+      }, {
+        // Default for Alexa and other platforms — brief track announcement
+        // keeps the session alive so subsequent skip/next commands continue working
+        speech: '{{title}}',
       }],
       title: '{{title}}',
       suggestionLink: 'on Archive.org',
@@ -82,6 +86,10 @@ module.exports = {
             <desc>Track - {{title}} of {{creator}}{{#year}} {{year}}{{/year}}</desc>
           </audio>
         `,
+      }, {
+        // Default for Alexa and other platforms — brief track announcement
+        // keeps the session alive so subsequent skip/next commands continue working
+        speech: '{{title}}',
       }],
       title: '{{title}}',
       suggestionLink: 'on Archive.org',
@@ -112,7 +120,8 @@ module.exports = {
       // because in alexa it is The Internet Archive Skill
       // but on Google Assistant it would be The Internet Archive Action
       speech:
-        '<s>{{platform.appName}} can not help with that. Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?</s> ' +
+        '<s>{{platform.appName}} can\'t help with that.</s> ' +
+        '<s>Try: play jazz, play Grateful Dead, or play Live Concerts.</s> ' +
         '<s>{{last.reprompt}}</s>'
     },
 
@@ -121,7 +130,7 @@ module.exports = {
     },
 
     globalError: {
-      speech: 'We had some problems performing your request. Please rephrase it.',
+      speech: 'Something went wrong while handling that. Please try again.',
       suggestions: ['reset'],
     },
 
@@ -131,10 +140,9 @@ module.exports = {
           '<s>You are using Internet Archive service. </s>' +
           '<s>Here we have collections of ' +
           'Live Concerts, <break strength="weak"/> ' +
-          '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
           'Unlocked Recordings. </s>' +
           '<s>You can ask to playback music of specific genre by asking: </s>' +
-          '<s>play jazz music <break strength="weak"/> or play classic music. </s>' +
+          '<s>play classic music. </s>' +
           '<s>As well you can ask me to play specific artist. </s>' +
           '<s>For example by saying: </s>' +
           '<s>play Grateful Dead <break strength="weak"/> or play the Cowboy Junkies. </s>' +
@@ -161,20 +169,16 @@ module.exports = {
 
     recommend: {
       speech:
-        '<s>What about Grateful Dead or The Cowboy Junkies. </s>' +
-        '<s>If you want to listen to more songs, then you can choose from ' +
-        'Live Concerts, <break strength="weak"/> ' +
-        'Christmas Music, <break strength="weak"/> ' +
-        '78 <say-as interpret-as="characters">rpm</say-as> songs <break strength="weak"/> and ' +
-        'Unlocked Recordings. </s>' +
-        '<s>and I will pick the right music for you. </s>',
+        '<s>Here are a couple of ideas: Grateful Dead or The Cowboy Junkies.</s>' +
+        '<s>You can also pick a collection: Live Concerts, Christmas Music, or Unlocked Recordings.</s>' +
+        '<s>Or say play jazz or play a concert in 1977.</s>',
       suggestions: [
-        '78s',
         'Live Concerts',
         'Unlocked Recordings',
         'Christmas Music',
         'play Grateful Dead',
-        'play The Cowboy Junkies'
+        'play The Cowboy Junkies',
+        'play jazz'
       ],
     },
 
@@ -182,7 +186,7 @@ module.exports = {
      * we got 4xx, 5xx response from a server
      */
     httpRequestError: {
-      speech: 'We are currently experiencing some technical difficulties on the Archive server. Please try again later or try saying something else.',
+      speech: 'We are experiencing technical difficulties on the Archive server. Please try again in a bit, or try a different request.',
     },
 
     /**
@@ -212,7 +216,7 @@ module.exports = {
         // so user could ask
         // > play jazz
         // and we fetch all jazz from these collections
-        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
+        collectionId: ['etree', 'unlockedrecordings'],
       },
 
       /**
@@ -245,7 +249,7 @@ module.exports = {
        */
       repair: {
         speech: [
-          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have anything for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have that. Try {{suggestions.0}}, for example.',
@@ -335,7 +339,7 @@ module.exports = {
        * to check our understanding
        */
       acknowledges: [
-        'Okay! Lets go with the artist {{creator}}!',
+        'Okay! Let\'s go with the artist {{creator}}!',
         'You\'ve selected {{alias.collectionId}}.',
         'Okay! You\'ve selected {{alias.collectionId}}.',
         'Got it! You\'ve selected {{alias.collectionId}}.',
@@ -354,7 +358,7 @@ module.exports = {
          * slots which we need for fulfillment
          */
         speech: [
-          'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
+          'What genre would you like to hear? For example, {{short-options.suggestions}}.',
         ],
 
         /**
@@ -397,7 +401,7 @@ module.exports = {
       repair: {
         speech: [
           // use "songs" instead of "albums" request from @mark
-          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have anything for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have that. Try {{suggestions.0}}, for example.',
@@ -451,7 +455,7 @@ module.exports = {
        * to check our understanding
        */
       acknowledges: [
-        'Okay! Lets go with the artist {{creator}}!',
+        'Okay! Let\'s go with the artist {{creator}}!',
         'You\'ve selected {{alias.collectionId}}.',
         'Okay! You\'ve selected {{alias.collectionId}}.',
         'Got it! You\'ve selected {{alias.collectionId}}.',
@@ -470,7 +474,7 @@ module.exports = {
          * slots which we need for fulfillment
          */
         speech: [
-          'What genre of music would you like to listen to? Please select a genre like {{short-options.suggestions}}?',
+          'What genre would you like to hear? For example, {{short-options.suggestions}}.',
         ],
 
         /**
@@ -514,7 +518,7 @@ module.exports = {
       repair: {
         speech: [
           // use "songs" instead of "albums" request from @mark
-          'I don’t have anything for {{year}}. Try {{suggestions.0}}, for example.',
+          'I don\'t have anything for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have {{creator}} songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have any songs for {{year}}. Try {{suggestions.0}}, for example.',
           'I don\'t have that. Try {{suggestions.0}}, for example.',
@@ -563,8 +567,8 @@ module.exports = {
         '{{coverage}} - good place!',
         '{{coverage}} {{year}} - great choice!',
         '{{year}} - it was an excellent year!',
-        'Okay! Lets go with {{creator}}!',
-        'Alright! Lets go with {{creator}}!',
+        'Okay! Let\'s go with {{creator}}!',
+        'Alright! Let\'s go with {{creator}}!',
         'You\'ve selected {{alias.collectionId}}.',
       ],
 
@@ -580,14 +584,13 @@ module.exports = {
         ],
 
         speech: [
-          'Would you like to listen to music from our collections of {{short-options.suggestions}}?',
+          'Which collection would you like: {{short-options.suggestions}}?',
         ],
 
         /**
          * Fixed set of suggestions
          */
         suggestions: [
-          '78s',
           'Live Concerts',
           'Unlocked Recordings'
         ],
@@ -600,7 +603,7 @@ module.exports = {
         ],
 
         speech: [
-          'What artist would you like to listen to? For example, {{short-options.suggestions}}?',
+          'What artist would you like to hear? For example, {{short-options.suggestions}}.',
         ],
 
         /**
@@ -672,7 +675,7 @@ module.exports = {
          */
         repair: {
           speech: [
-            'I don’t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.',
+            'I don\'t have anything for {{year}}. Available years for {{coverage}} are {{years-interval.suggestions}}.',
             'I don\'t have {{creator}} concerts from {{year}}. Try {{years-interval.suggestions}}.',
             'I don\'t have any concerts for {{year}}. Try {{years-interval.suggestions}}.',
             'I don\'t have that concert. Try {{years-interval.suggestions}}.',
@@ -728,7 +731,7 @@ module.exports = {
        */
       defaults: {
         order: 'random',
-        collectionId: ['etree', 'georgeblood', 'unlockedrecordings'],
+        collectionId: ['etree', 'unlockedrecordings'],
         coverage: { skip: true },
         creator: { skip: true },
         year: { skip: true },
@@ -774,15 +777,15 @@ module.exports = {
     },
 
     noInput: [{
-      speech: "Sorry, I couldn't hear you.",
+      speech: "Sorry, I didn't catch that.",
     }, {
-      speech: 'Sorry, can you repeat that? {{reprompt}}',
+      speech: 'Could you repeat that? {{reprompt}}',
     }, {
-      speech: "I'm sorry I'm having trouble here. Maybe we should try this again later.",
+      speech: "I'm having trouble right now. You can say help for ideas.",
     }],
 
     order: {
-      speech: 'Sorry, can you repeat that? {{reprompt}}',
+      speech: 'Could you repeat that? {{reprompt}}',
     },
 
     previous: {
@@ -799,7 +802,7 @@ module.exports = {
 
     resume: {
       fail: {
-        speech: 'Fail to resume.',
+        speech: 'Sorry, I couldn\'t resume that.',
       },
 
       empty: {
@@ -813,7 +816,7 @@ module.exports = {
       },
 
       fail: {
-        speech: 'Fail to resume playback.',
+        speech: 'Sorry, I couldn\'t resume playback.',
       },
 
       playback: {
@@ -824,15 +827,15 @@ module.exports = {
 
     titleOption: {
       false: {
-        speech: 'Excellent! I\'ll be saying the title to each song.',
+        speech: 'Okay, I\'ll say the title before each song.',
       },
       true: {
-        speech: 'Okay, muting song titles.',
+        speech: 'Okay, I\'ll stop saying song titles.',
       },
     },
 
     unhandled: [{
-      speech: "Sorry, I'm afraid I don't follow you.",
+      speech: "Sorry, I didn't get that. You can say help for examples.",
     }],
 
     version: {
@@ -849,39 +852,39 @@ module.exports = {
     welcome: {
       default: {
         acknowledges: [
-          'Welcome to music at the Internet Archive.'
+          'Welcome to the Internet Archive music collection.'
         ],
-        speech: 'Want to listen to 78s, Live concerts, Unlocked Recordings or Christmas music?',
-        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
+        speech: 'Want to listen to Live concerts, Unlocked Recordings or Christmas music?',
+        suggestions: ['Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
 
       yes: {
-        speech: 'Please choose <break strength="weak"/>78s, <break strength="weak"/>Live concerts, <break strength="weak"/>or Christmas music',
-        suggestions: ['78s', 'Live Concerts', 'Unlocked Recordings', 'Christmas music'],
+        speech: 'Great. Choose Live Concerts, Unlocked Recordings, or Christmas music.',
+        suggestions: ['Live Concerts', 'Unlocked Recordings', 'Christmas music'],
       },
     },
 
     playback: {
       noInput: {
-        speech: 'Sorry, I couldn\'t hear you. If you don\'t mind I will continue playback.',
+        speech: 'Sorry, I didn\'t catch that. I\'ll keep playing.',
       },
 
       unknown: {
-        speech: 'I\'m not sure what you said. If you don\'t mind I will continue playback.',
+        speech: 'I\'m not sure what you said. I\'ll keep playing.',
       },
     },
 
     no: [{
-      speech: '<s>Could you please be more specific?</s> ' +
+      speech: '<s>Could you be more specific?</s> ' +
         '<s>{{last.reprompt}}</s>',
     }],
 
     shuffleOff: [{
-      speech: 'Got it! I\'ll play songs in the original order',
+      speech: 'Got it! I\'ll play songs in the original order.',
     }],
 
     shuffleOn: [{
-      speech: 'Got it! I\'ll play songs in a random order',
+      speech: 'Got it! I\'ll play songs in a random order.',
     }],
 
     yes: [{
@@ -892,19 +895,19 @@ module.exports = {
 
   events: {
     failed: {
-      speech: 'fail on playback',
+      speech: 'Playback failed. Please try again.',
     },
 
     playlistIsEnded: {
-      speech: 'Playlist has ended. Would you like to continue listening?',
+      speech: 'That is the end of the playlist. Want to keep listening?',
     },
 
     playlistIsEndedFromBegin: {
-      speech: 'It was the first track. Would you like to continue listening from the last track?',
+      speech: 'That was the first track. Want to continue from the last track?',
     },
 
     nothingToSay: {
-      speech: 'I\'m not sure what you said. Could you rephrase?',
+      speech: 'I\'m not sure what you said. You can say help for examples.',
     }
   }
 };

@@ -11,7 +11,7 @@ const jsonify = require('../../../utils/jsonify');
 const { debug, warning, error } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
-function stripAmazonIntent (name) {
+function stripAmazonIntent(name) {
   const res = stripAmazonIntentReg.exec(name);
   if (res) {
     return res[1];
@@ -19,11 +19,11 @@ function stripAmazonIntent (name) {
   return name;
 }
 
-const stripRequestTypeReq = /^AudioPlayer\.(.*)$/;
-function stripRequestType (requestType) {
-  const req = stripRequestTypeReq.exec(requestType);
-  if (req) {
-    return req[1];
+const stripRequestTypeReq = /^(AudioPlayer|PlaybackController)\.(.*)$/;
+function stripRequestType(requestType) {
+  const match = stripRequestTypeReq.exec(requestType);
+  if (match) {
+    return match[2];
   }
   return requestType;
 }
@@ -36,7 +36,7 @@ function stripRequestType (requestType) {
  * @param handlerInput
  * @returns {Promise}
  */
-function fetchAttributes (handlerInput) {
+function fetchAttributes(handlerInput) {
   debug('fetch attributes');
   return handlerInput.attributesManager.getPersistentAttributes()
     .catch((err) => {
@@ -56,7 +56,7 @@ function fetchAttributes (handlerInput) {
  * @param app
  * @returns {Promise}
  */
-function storeAttributes (app, handlerInput) {
+function storeAttributes(app, handlerInput) {
   const persistentAttributes = app.persist.getData();
   debug('store attributes', util.inspect(persistentAttributes, { depth: null }));
   handlerInput.attributesManager.setPersistentAttributes(jsonify(persistentAttributes));
@@ -71,7 +71,7 @@ function storeAttributes (app, handlerInput) {
  *
  * @returns {handlers: *, name:String}|null
  */
-function findHandlersByInput (actions, handlerInput) {
+function findHandlersByInput(actions, handlerInput) {
   debug('findHandlersByInput');
   let name;
   let handlers;
@@ -164,7 +164,7 @@ module.exports = (actions) => {
    * @param handlerInput
    * @returns {Promise.<TResult>}
    */
-  function handle (handlers, intentName, handlerInput) {
+  function handle(handlers, intentName, handlerInput) {
     debug(`begin handle intent "${intentName}"`);
 
     let app;
@@ -180,17 +180,45 @@ module.exports = (actions) => {
       .catch((err) => {
         error(`fail on handling intent ${intentName}`, err);
 
-        if (err instanceof errors.HTTPError) {
-          return fsm.selectHandler(app, httpRequestErrorHandler)(app);
+        if (!app) {
+          error('app is not initialized, cannot recover');
+          return handlerInput.responseBuilder
+            .speak('Something went wrong. Please try again.')
+            .withShouldEndSession(false)
+            .getResponse();
         }
 
-        // we should be aware that even here we could got exception
-        // so maybe here is no simple way to give response to user
-        return fsm.selectHandler(app, globalErrorHandler)(app);
+        try {
+          if (err instanceof errors.HTTPError) {
+            return Promise.resolve(fsm.selectHandler(app, httpRequestErrorHandler)(app))
+              .then(() => storeAttributes(app, handlerInput))
+              .then(() => handlerInput.responseBuilder.getResponse());
+          }
+
+          return Promise.resolve(fsm.selectHandler(app, globalErrorHandler)(app))
+            .then(() => storeAttributes(app, handlerInput))
+            .then(() => handlerInput.responseBuilder.getResponse());
+        } catch (recoveryErr) {
+          error('error recovery itself failed:', recoveryErr);
+          return handlerInput.responseBuilder
+            .speak('Something went wrong. Please try again.')
+            .withShouldEndSession(false)
+            .getResponse();
+        }
       })
       .then(() => {
         debug(`end handle intent "${intentName}"`);
-        return handlerInput.responseBuilder.getResponse();
+        const response = handlerInput.responseBuilder.getResponse();
+
+        // Log the final response for debugging
+        debug('[FINAL RESPONSE]', JSON.stringify({
+          shouldEndSession: response.shouldEndSession,
+          hasOutputSpeech: !!response.outputSpeech,
+          hasReprompt: !!response.reprompt,
+          directives: response.directives && response.directives.map(d => ({ type: d.type }))
+        }));
+
+        return response;
       });
   }
 
