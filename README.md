@@ -40,6 +40,45 @@ Go to the fullfillment section of your dialogflow draft copy of our app and afte
 https://<id>.ngrok.io/<your project name>/us-central1/assistant
 ```
 
+### Steps for testing with Alexa
+The Alexa app workflow for dev/production is the following:
+* We create a zip file with the app code.
+* We upload the zip to an AWS S3 bucket.
+* We edit the AWS Lambda app to load the new app zip file.
+* In case the AWS Lambda app changes a lot (e.g. we upgrade Node version), its Lambda ID will change.
+In that case, we need to edit the Alexa skill in https://developer.amazon.com/alexa/console/ask# to load the new Lambda app.
+This final step is not required most of the times.
+* We use https://developer.amazon.com/alexa/console/ask# to test the app.
+
+More details follow.
+
+Node 12 is required. There is a problem with newer Node versions, `bespoken-tools`
+which is a key dependency, is not supporting it. Use `nvm install 12` and `nvm use 12`
+to switch to Node 12 before running any other command.
+
+The general idea is that there are 2 AWS S3 buckets, `dev` and `production`.
+You can access them via https://aws.amazon.com/ -> sign in -> S3.
+You need to create a `zip` with the app, you upload it to the relevant S3 bucket
+and then you go to AWS Lambda `dev` / `production` to select which app
+should be loaded via its S3 URL.
+(AWS -> Lambda -> edit app -> "upload from S3 .zip file").
+
+S3 buckets have multiple app versions. This way, you can also easily rollback to a previous version if needed.
+
+The script that produces the `app.zip` that we upload to S3 is `bin/deploy-to-alexa-skill.sh`.
+An important AWS Lambda limitation is that the unzip code filesize should be < 250MB.
+To achieve that, we do:
+```
+(cd ./deploy/alexa/; npm install --production; rm -rf node_modules/aws-sdk; node-prune node_modules)
+```
+`aws-sdk` is already preinstalled in AWS Lambda, so we don't need it.
+
+`npm install -g node-prune` is a pre-requisite. This tool removes files that are useless in production
+and reduces the total filesize a lot.
+
+After deploying to dev or production, use https://developer.amazon.com/alexa/console/ask#
+`ACTIONS -> Test` for testing.
+
 ### Setup Env
 
 #### Options

@@ -2,7 +2,7 @@
  * Playback settings
  */
 const { getData, setData } = require('./helpers').group('playback', {
-  muteSpeech: true,
+  muteSpeech: false,
 });
 
 /**

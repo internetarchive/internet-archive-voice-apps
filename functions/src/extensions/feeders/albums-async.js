@@ -63,7 +63,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build (ctx) {
+  build(ctx) {
     debug('# build async songs feeder');
     const { app, query, playlist } = ctx;
 
@@ -97,7 +97,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise.<T>}
    */
-  fetchChunkOfSongs ({ app, currentCursor, query, playlist }) {
+  fetchChunkOfSongs({ app, currentCursor, query, playlist }) {
     const slots = query.getSlots(app);
     debug('# fetchChunkOfSongs');
     debug('we have slots:', slots);
@@ -219,7 +219,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param songs
    * @returns {*[]}
    */
-  processNewSongsBeforeMoveToNext ({ app, query, playlist }, cursorCurrent, songs) {
+  processNewSongsBeforeMoveToNext({ app, query, playlist }, cursorCurrent, songs) {
     debug('# process songs on moving to next');
     const feederConfig = this.getConfigForOrder(app, query);
     const orderStrategy = orders.getByName(
@@ -257,7 +257,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {*[]}
    */
-  processNewSongsBeforeMoveToPrevious ({ app, query, playlist }, songs) {
+  processNewSongsBeforeMoveToPrevious({ app, query, playlist }, songs) {
     debug('# process songs on moving to previous');
     const cursor = this.getCursor(app, playlist);
     const feederConfig = this.getConfigForOrder(app, query);
@@ -293,7 +293,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param query
    * @returns {*}
    */
-  getConfigForOrder (app, query) {
+  getConfigForOrder(app, query) {
     const order = query.getSlot(app, 'order');
     const available = config.feeders[feederName];
     return available[order] || available.defaults;
@@ -307,11 +307,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {current: {album: number, song: number}, total: {albums: number, songs: number}}
    */
-  getCursor (app, playlist) {
+  getCursor(app, playlist) {
     return _.at(playlist.getExtra(app), 'cursor')[0] || defaultCursor;
   }
 
-  getCursorCurrent ({ app, playlist }) {
+  getCursorCurrent({ app, playlist }) {
     return this.getCursor(app, playlist).current;
   }
 
@@ -322,14 +322,14 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {*}
    */
-  getNextItem ({ app, playlist }) {
+  getNextItem({ app, playlist }) {
     try {
       return playlist.getNextItem(app);
     } catch (err) {
-      // sometimes we can add 0 new songs, because all of them were the same
-      // as we had before, so we don't have next song (yet)
-      // so it will be ok to repeat the last song, before we can get new one
+      // When playlist index goes out of bounds, fall back to the last item.
+      // This can happen if new song fetching/dedup left nothing to advance to.
       if (err instanceof PlaylistStateError) {
+        warning('getNextItem: playlist index out of bounds, falling back to last item (may cause repeat)');
         return playlist.getLastItem(app);
       }
 
@@ -337,7 +337,7 @@ class AsyncAlbums extends DefaultFeeder {
     }
   }
 
-  setCursorCurrent (ctx, current) {
+  setCursorCurrent(ctx, current) {
     debug('# setCursorCurrent', current);
     const { app, playlist } = ctx;
 
@@ -358,7 +358,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext ({ app, query, playlist }) {
+  hasNext({ app, query, playlist }) {
     if (playlist.isLoop(app)) {
       return true;
     }
@@ -387,7 +387,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasPrevious ({ app, query, playlist }) {
+  hasPrevious({ app, query, playlist }) {
     if (playlist.isLoop(app)) {
       return true;
     }
@@ -412,7 +412,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next (ctx, move = true) {
+  next(ctx, move = true) {
     debug('# next');
     const { app, query, playlist } = ctx;
     debug('get next song. move:', move);
@@ -449,9 +449,19 @@ class AsyncAlbums extends DefaultFeeder {
 
               const feederConfig = this.getConfigForOrder(app, query);
               let items = playlist.getItems(app);
+              const originalSongs = songs;
 
-              // drop all duplicates
+              // Remove duplicates already in the playlist
               songs = songs.filter(song => items.every(i => i[SONG_UID] !== song[SONG_UID]));
+
+              // If ALL fetched songs were filtered out as duplicates, allow them
+              // through to prevent an infinite repeat loop. This happens when the
+              // result set is small (e.g. a single concert) and all songs are
+              // already loaded in the playlist.
+              if (songs.length === 0 && originalSongs.length > 0) {
+                warning(`all ${originalSongs.length} fetched songs were duplicates - allowing through to prevent repeat loop`);
+                songs = originalSongs;
+              }
               if (playlist.getItems(app).length > 0 && !move && songs.length >= feederConfig.chunk.songs) {
                 // when we don't move we need to store one extra item
                 // and list of appended items more or equal to maximum size of chunk
@@ -522,7 +532,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  previous (ctx) {
+  previous(ctx) {
     debug('# move to the previous song');
     const { app, query, playlist } = ctx;
     const orderStrategy = orders.getByName(

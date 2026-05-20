@@ -35,17 +35,28 @@ const mapSongDataToSlots = ({ type = 'current' } = {}) => (ctx) => {
     return Promise.reject(new EmptySongDataError(ctx, 'there is no song data'));
   }
 
+  // Preserve original coverage and year from user's selection if they exist,
+  // so the response matches what the user selected rather than what the album has
+  const originalCoverage = slots.coverage;
+  const originalYear = slots.year;
+
   // we need to escape song data because they could have special symbols
   // like < or > but we should do it only for speech because it uses SSML
   const slotsWithEscapedSongDetails = {
     ...slots,
     ...escapeHTMLObject(song, { skipFields: ['audioURL', 'imageURL'] }),
+    // Preserve user-selected coverage and year
+    ...(originalCoverage && { coverage: originalCoverage }),
+    ...(originalYear && { year: originalYear }),
   };
 
   // in all other cases we could have these special symbols
   const slotsWithOriginalSongDetails = {
     ...slots,
     ...song,
+    // Preserve user-selected coverage and year to ensure response matches user's selection
+    ...(originalCoverage && { coverage: originalCoverage }),
+    ...(originalYear && { year: originalYear }),
   };
 
   const playbackUIScheme = selectors.find(availableStrings, slotsWithOriginalSongDetails);
