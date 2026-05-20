@@ -45,7 +45,7 @@ describe('platform', () => {
           );
       });
 
-      it('should stop listen when we start playing the audio', () => {
+      it('should NOT set shouldEndSession when playing audio (handlers-builder strips it)', () => {
         ask(handlerInput)({
           speech: [
             'Great choice!',
@@ -67,7 +67,10 @@ describe('platform', () => {
           ],
         });
 
-        expect(handlerInput.responseBuilder.withShouldEndSession).to.have.been.calledWith(true);
+        // Per Amazon docs: "Do not include shouldEndSession if response includes AudioPlayer directives."
+        // The response builder should NOT call withShouldEndSession for AudioPlayer responses.
+        // The handlers-builder.js will strip shouldEndSession from the final response.
+        expect(handlerInput.responseBuilder.withShouldEndSession).to.not.have.been.called;
       });
 
       it('should start playing audio file from passed url', () => {

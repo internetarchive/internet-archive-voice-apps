@@ -110,6 +110,38 @@ describe('actions', () => {
             expect(provider).to.not.be.called;
           });
       });
+
+      it('should remove duplicate suggestions', () => {
+        const duplicateItems = [
+          { creator: 'The Grateful Dead' },
+          { creator: 'The Grateful Dead' },
+          { creator: 'The Cowboy Junkies' }
+        ];
+        const provider = sinon.stub().returns(Promise.resolve({
+          items: duplicateItems,
+        }));
+        middleware.__set__('suggestionExtensions', {
+          getSuggestionProviderForSlots: sinon.stub().returns(provider),
+        });
+
+        const suggestionsScheme = {
+          confirm: ['creator'],
+          suggestionTemplate: 'the {{creator}}',
+        };
+
+        return middleware()({
+          app,
+          suggestionsScheme
+        })
+          .then((res) => {
+            expect(res.suggestions).to.have.lengthOf(2);
+            expect(res.suggestions).to.include('the The Grateful Dead');
+            expect(res.suggestions).to.include('the The Cowboy Junkies');
+            // Verify no duplicates
+            const gratefulDeadCount = res.suggestions.filter(s => s === 'the The Grateful Dead').length;
+            expect(gratefulDeadCount).to.equal(1);
+          });
+      });
     });
   });
 });
