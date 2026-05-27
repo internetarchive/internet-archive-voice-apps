@@ -11,7 +11,7 @@ const jsonify = require('../../../utils/jsonify');
 const { debug, warning, error } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const stripAmazonIntentReg = /^AMAZON\.(.*)Intent$/;
-function stripAmazonIntent(name) {
+function stripAmazonIntent (name) {
   const res = stripAmazonIntentReg.exec(name);
   if (res) {
     return res[1];
@@ -20,7 +20,7 @@ function stripAmazonIntent(name) {
 }
 
 const stripRequestTypeReq = /^(AudioPlayer|PlaybackController)\.(.*)$/;
-function stripRequestType(requestType) {
+function stripRequestType (requestType) {
   const match = stripRequestTypeReq.exec(requestType);
   if (match) {
     return match[2];
@@ -36,7 +36,7 @@ function stripRequestType(requestType) {
  * @param handlerInput
  * @returns {Promise}
  */
-function fetchAttributes(handlerInput) {
+function fetchAttributes (handlerInput) {
   debug('fetch attributes');
   return handlerInput.attributesManager.getPersistentAttributes()
     .catch((err) => {
@@ -56,7 +56,7 @@ function fetchAttributes(handlerInput) {
  * @param app
  * @returns {Promise}
  */
-function storeAttributes(app, handlerInput) {
+function storeAttributes (app, handlerInput) {
   const persistentAttributes = app.persist.getData();
   debug('store attributes', util.inspect(persistentAttributes, { depth: null }));
   handlerInput.attributesManager.setPersistentAttributes(jsonify(persistentAttributes));
@@ -71,7 +71,7 @@ function storeAttributes(app, handlerInput) {
  *
  * @returns {handlers: *, name:String}|null
  */
-function findHandlersByInput(actions, handlerInput) {
+function findHandlersByInput (actions, handlerInput) {
   debug('findHandlersByInput');
   let name;
   let handlers;
@@ -164,7 +164,7 @@ module.exports = (actions) => {
    * @param handlerInput
    * @returns {Promise.<TResult>}
    */
-  function handle(handlers, intentName, handlerInput) {
+  function handle (handlers, intentName, handlerInput) {
     debug(`begin handle intent "${intentName}"`);
 
     let app;

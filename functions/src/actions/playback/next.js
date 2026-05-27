@@ -11,7 +11,7 @@ const helpers = require('./_helpers');
  *
  * @param app
  */
-function handler(app) {
+function handler (app) {
   const requestType = app.params.getByName('type');
   const playerActivity = app.handlerInput &&
     app.handlerInput.requestEnvelope &&

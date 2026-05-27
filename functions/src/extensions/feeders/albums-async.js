@@ -63,7 +63,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise}
    */
-  build(ctx) {
+  build (ctx) {
     debug('# build async songs feeder');
     const { app, query, playlist } = ctx;
 
@@ -97,7 +97,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {Promise.<T>}
    */
-  fetchChunkOfSongs({ app, currentCursor, query, playlist }) {
+  fetchChunkOfSongs ({ app, currentCursor, query, playlist }) {
     const slots = query.getSlots(app);
     debug('# fetchChunkOfSongs');
     debug('we have slots:', slots);
@@ -219,7 +219,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param songs
    * @returns {*[]}
    */
-  processNewSongsBeforeMoveToNext({ app, query, playlist }, cursorCurrent, songs) {
+  processNewSongsBeforeMoveToNext ({ app, query, playlist }, cursorCurrent, songs) {
     debug('# process songs on moving to next');
     const feederConfig = this.getConfigForOrder(app, query);
     const orderStrategy = orders.getByName(
@@ -257,7 +257,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {*[]}
    */
-  processNewSongsBeforeMoveToPrevious({ app, query, playlist }, songs) {
+  processNewSongsBeforeMoveToPrevious ({ app, query, playlist }, songs) {
     debug('# process songs on moving to previous');
     const cursor = this.getCursor(app, playlist);
     const feederConfig = this.getConfigForOrder(app, query);
@@ -293,7 +293,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param query
    * @returns {*}
    */
-  getConfigForOrder(app, query) {
+  getConfigForOrder (app, query) {
     const order = query.getSlot(app, 'order');
     const available = config.feeders[feederName];
     return available[order] || available.defaults;
@@ -307,11 +307,11 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {current: {album: number, song: number}, total: {albums: number, songs: number}}
    */
-  getCursor(app, playlist) {
+  getCursor (app, playlist) {
     return _.at(playlist.getExtra(app), 'cursor')[0] || defaultCursor;
   }
 
-  getCursorCurrent({ app, playlist }) {
+  getCursorCurrent ({ app, playlist }) {
     return this.getCursor(app, playlist).current;
   }
 
@@ -322,7 +322,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {*}
    */
-  getNextItem({ app, playlist }) {
+  getNextItem ({ app, playlist }) {
     try {
       return playlist.getNextItem(app);
     } catch (err) {
@@ -337,7 +337,7 @@ class AsyncAlbums extends DefaultFeeder {
     }
   }
 
-  setCursorCurrent(ctx, current) {
+  setCursorCurrent (ctx, current) {
     debug('# setCursorCurrent', current);
     const { app, playlist } = ctx;
 
@@ -358,7 +358,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasNext({ app, query, playlist }) {
+  hasNext ({ app, query, playlist }) {
     if (playlist.isLoop(app)) {
       return true;
     }
@@ -387,7 +387,7 @@ class AsyncAlbums extends DefaultFeeder {
    * @param playlist
    * @returns {boolean}
    */
-  hasPrevious({ app, query, playlist }) {
+  hasPrevious ({ app, query, playlist }) {
     if (playlist.isLoop(app)) {
       return true;
     }
@@ -412,7 +412,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  next(ctx, move = true) {
+  next (ctx, move = true) {
     debug('# next');
     const { app, query, playlist } = ctx;
     debug('get next song. move:', move);
@@ -532,7 +532,7 @@ class AsyncAlbums extends DefaultFeeder {
    *
    * @returns {Promise.<T>}
    */
-  previous(ctx) {
+  previous (ctx) {
     debug('# move to the previous song');
     const { app, query, playlist } = ctx;
     const orderStrategy = orders.getByName(
