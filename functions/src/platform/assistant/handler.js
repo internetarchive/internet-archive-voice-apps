@@ -1,11 +1,6 @@
 const { dialogflow } = require('actions-on-google');
-const bst = require('bespoken-tools');
-const dashbotBuilder = require('dashbot');
 const functions = require('firebase-functions');
 const _ = require('lodash');
-const Raven = require('raven');
-
-const packageJSON = require('../../../package.json');
 
 const errors = require('../../errors');
 const strings = require('../../strings');
@@ -23,22 +18,6 @@ const userUIDMiddleware = require('./middlewares/user-uid');
 
 module.exports = (actionsMap) => {
   const app = dialogflow();
-
-  if (_.has(functions.config(), ['dashbot', 'key'])) {
-    const dashbot = dashbotBuilder(functions.config().dashbot.key, {
-      // it could be more useful if we would get callback on error and pass log through our logger
-      // but currently it uses console.log to log error
-      //
-      // more details in source:
-      // https://github.com/actionably/dashbot/blob/33376ff81af3962eb58ad8ebabc91827134333c5/src/make-request.js#L22
-      //
-      printErrors: false,
-    }).google;
-
-    dashbot.configHandler(app);
-  } else {
-    warning('dashbot key missing\n');
-  }
 
   let handlers = [];
   if (actionsMap) {
@@ -84,39 +63,6 @@ module.exports = (actionsMap) => {
   }
 
   app.middleware(pipelineMiddleware.start);
-
-  // Sentry middleware
-  if (functions.config().sentry) {
-    app.middleware((conv) => {
-      conv.raven = Raven.Client(
-        functions.config().sentry.url, {
-          sendTimeout: 10,
-          captureUnhandledRejections: true,
-          release: packageJSON.version,
-          tags: {
-            platform: 'assistant',
-          }
-        }
-      );
-      conv.raven.install();
-
-      // set user's context to Sentry
-      conv.raven.setContext({
-        user: conv.user,
-      });
-
-      // action context
-      conv.raven.captureBreadcrumb({
-        category: 'handle',
-        message: 'Handling of request',
-        level: 'info',
-        data: {
-          capabilities: conv.available.surfaces.capabilities,
-          sessionData: conv.user.storage,
-        },
-      });
-    });
-  }
 
   const db = dbConnector.connect();
 
@@ -178,9 +124,6 @@ module.exports = (actionsMap) => {
 
   app.catch(async (conv, err) => {
     error('We got unhandled error', err);
-    if (conv.raven) {
-      conv.raven.captureException(err);
-    }
 
     if (err instanceof errors.HTTPError) {
       if (httpRequestErrorHandler) {
@@ -197,9 +140,6 @@ module.exports = (actionsMap) => {
         globalErrorWasHandled = true;
       } catch (err) {
         error('error on global error handler', err);
-        if (conv.raven) {
-          conv.raven.captureException(err);
-        }
       }
     }
 
@@ -210,10 +150,5 @@ module.exports = (actionsMap) => {
 
     await after.handle(conv);
   });
-  if (_.has(functions.config(), ['bespoken', 'key'])) {
-    return functions.https.onRequest(bst.Logless.capture(functions.config().bespoken.key, app));
-  } else {
-    warning('bespoken key missing\n');
-    return functions.https.onRequest(app);
-  }
+  return functions.https.onRequest(app);
 };

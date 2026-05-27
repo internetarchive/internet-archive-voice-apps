@@ -4,7 +4,6 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 
 const action = rewire('../../src/actions/music-query');
-const mathjsExtensions = require('../../src/mathjs');
 const query = require('../../src/state/query');
 
 const mockApp = require('../_utils/mocking/platforms/app');
@@ -88,7 +87,6 @@ describe('actions / music query', () => {
   describe('multiple slot schemes', () => {
     beforeEach(() => {
       handler = action.build(slotSchemeWithMultipleCases).handler;
-      mathjsExtensions.patch();
     });
 
     it('should get slot scheme without condition', () => {
