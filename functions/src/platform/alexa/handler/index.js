@@ -3,7 +3,7 @@ const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-ada
 const AWS = require('aws-sdk');
 
 const pipeline = require('../../../performance/pipeline');
-const { debug, warning } = require('../../../utils/logger')('ia:platform:alexa:handler');
+const { debug } = require('../../../utils/logger')('ia:platform:alexa:handler');
 
 const ErrorHandler = require('./error-handler');
 const LogInterceptor = require('./log-interceptor');
@@ -24,7 +24,7 @@ module.exports = (actions) => {
   const handlers = handlersBuilder(actions);
   debug(`We can handle intents: ${handlers.map(({ intent }) => `"${intent}"`).join(', ')}`);
 
-  let lambda = Alexa.SkillBuilders.custom()
+  const lambda = Alexa.SkillBuilders.custom()
     .addRequestHandlers(...handlers)
     .addErrorHandlers(ErrorHandler)
     .addRequestInterceptors(
