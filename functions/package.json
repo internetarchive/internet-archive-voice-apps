@@ -17,9 +17,9 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
-    "actions-on-google": "^2.12.0",
+    "actions-on-google": "^3.0.0",
     "ask-sdk": "^2.14.0",
-    "axios": "^1.15.2",
+    "axios": "^1.16.1",
     "debug": "^4.3.4",
     "expr-eval": "^2.0.2",
     "firebase-admin": "^12.0.0",
