@@ -1,16 +1,33 @@
 const { debug, timer, warning } = require('../../utils/logger')('ia:selectors:condition-selector');
-const equal = require('../../mathjs/equal');
-const includes = require('../../mathjs/includes');
-const Parser = require('expr-eval').Parser;
-const parser = new Parser();
 const util = require('util');
 
-parser.functions.equal = equal();
-parser.functions.includes = includes();
+const ALLOWED_FUNCS = {
+  equal: (a, b) => a === b,
+  includes: (a, b) => {
+    const arr = Array.isArray(a) ? a : [a];
+    return arr.indexOf(b) >= 0;
+  },
+};
 
-function safieEval (condition, context) {
+// Supports: equal(var, "val"), includes(var, "val"), var == "val"
+function safeEval (condition, context) {
   try {
-    return parser.evaluate(condition, context);
+    const funcMatch = condition.match(/^(\w+)\((\w+),\s*["']([^"']+)["']\)$/);
+    if (funcMatch) {
+      const [, funcName, varName, value] = funcMatch;
+      const fn = ALLOWED_FUNCS[funcName];
+      if (!fn) return false;
+      return fn(context[varName], value);
+    }
+
+    const eqMatch = condition.match(/^(\w+)\s*==\s*["']([^"']+)["']$/);
+    if (eqMatch) {
+      const [, varName, value] = eqMatch;
+      return context[varName] === value;
+    }
+
+    debug('unsupported condition syntax:', condition);
+    return false;
   } catch (error) {
     debug('Get error from eval:', error && error.message);
     return false;
@@ -36,7 +53,7 @@ function find (options, context) {
     .filter(({ condition }) => condition)
     .find(({ condition }) => {
       const stopEvalTimer = timer.start('eval');
-      const res = safieEval(condition, context);
+      const res = safeEval(condition, context);
       stopEvalTimer();
       return res;
     });
