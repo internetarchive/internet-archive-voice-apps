@@ -27,7 +27,7 @@
     "hirestime": "^4.0.0",
     "lodash": "^4.18.1",
     "mustache": "^2.3.2",
-    "uuid": "^9.0.0"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.4",
@@ -56,6 +56,13 @@
     "serialize-javascript": "^7.0.5",
     "follow-redirects": "^1.15.9",
     "gcp-metadata": "^6.1.0",
-    "google-auth-library": "^9.6.3"
+    "google-auth-library": "^9.6.3",
+    "@grpc/grpc-js": "^1.10.12",
+    "brace-expansion": "^1.1.13",
+    "mocha": {
+      "brace-expansion": "^2.0.3"
+    },
+    "debug": "^4.3.4",
+    "uuid": "^11.1.1"
   }
 }
