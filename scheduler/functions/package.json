@@ -14,7 +14,7 @@
   "author": "",
   "license": "AGPL-3.0",
   "overrides": {
-    "@grpc/grpc-js": "^1.14.4",
+    "@grpc/grpc-js": "^1.14.6",
     "qs": "^6.16.0",
     "uuid": "^11.1.1",
     "form-data": "^4.0.6",
