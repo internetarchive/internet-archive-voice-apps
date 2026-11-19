@@ -231,7 +231,9 @@
                         "what version",
                         "Tell me the version of app",
                         "version",
-                        "What is the version of app"
+                        "What is the version of app",
+                        "what is the variant of app",
+                        "what is the variation of app"
                     ]
                 },
                 {
